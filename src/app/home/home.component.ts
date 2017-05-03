@@ -16,23 +16,22 @@ import { Title } from './title';
     Title
   ],
   // Our list of styles in our component. We may add more to compose many styles together
-  styleUrls: [ './home.component.css' ],
+  styleUrls: ['./home.component.css'],
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   // Set our default values
-  public localState = { value: '' };
-  private data;
+  public localState = {value: ''};
+  public data;
   // TypeScript public modifiers
-  constructor(
-    public appState: AppState,
-    public title: Title
-  ) {}
+  constructor(public appState: AppState,
+              public title: Title) {
+  }
 
   public ngOnInit() {
     // this.title.getData().subscribe(data => this.data = data);
-    this.data={lat: 1.290270, lng: 103.851959};
+    this.data = {lat: 1.290270, lng: 103.851959};
   }
 
   public submitState(value: string) {

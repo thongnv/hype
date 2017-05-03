@@ -6,7 +6,7 @@ import { CurateComponent } from './curate/curate.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 
 export const ROUTES: Routes = [
-  { path: '', redirectTo: '/home', pathMatch:'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home',  component: HomeComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},
   { path: 'discover',    component: DiscoverComponent },

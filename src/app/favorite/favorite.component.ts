@@ -5,13 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.css']
 })
+
 export class FavoriteComponent implements OnInit {
 
-  private data: any;
-  constructor() { }
+  public data: any;
 
-  ngOnInit() {
-    this.data={lat: 1.290570, lng: 105.851923};
+  public ngOnInit() {
+    this.data = {lat: 1.290570, lng: 105.851923};
   }
 
 }

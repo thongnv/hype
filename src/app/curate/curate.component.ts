@@ -7,11 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CurateComponent implements OnInit {
 
-  private data: any;
-  constructor() { }
+  public data: any;
 
-  ngOnInit() {
-    this.data={lat: 1.390570, lng: 103.351923};
+  public ngOnInit() {
+    this.data = {lat: 1.390570, lng: 103.351923};
   }
 
 }
