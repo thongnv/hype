@@ -1,0 +1,26 @@
+<div class="avatar-wrap">
+  <a class="avatar" [routerLink]="['/member']">
+    <img class="user-avatar" [src]="data.userAvatar" [alt]="data.userName" width="100">
+    <span class="user-name">{{data.userName}}</span>
+  </a>
+</div>
+<div class="follow-wrap">
+  <div class="follow-item">
+    <strong class="follow-number">{{data.userFollowing}}</strong>
+    <p>Following</p>
+  </div>
+  <div class="follow-item" >
+    <strong class="follow-number">{{data.userFollower}}</strong>
+    <p>Followers</p>
+  </div>
+</div>
+<div class="clear"></div>
+<div *ngIf="data.showNav">
+  <ul class="member-nav">
+    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">My Profile</li>
+    <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Setting</li>
+    <li [routerLink]="['/member/interest']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Interest</li>
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Favorites</li>
+    <li [routerLink]="['']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Logout</li>
+  </ul>
+</div>

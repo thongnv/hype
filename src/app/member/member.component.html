@@ -1,0 +1,16 @@
+<div class="row setting-wrap">
+  <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
+    <app-member-navigation [data]="userInfo"></app-member-navigation>
+  </div>
+  <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
+    <section>
+      <h3>Setting</h3>
+      <form [formGroup]="settingForm" (ngSubmit)="onSubmit($event)">
+        <label for="checkbox">Do you want to receive email notifications from us.
+        <input id="checkbox" type="checkbox" formControlName="receiveEmail">
+        </label>
+        <button type="submit">update</button>
+      </form>
+    </section>
+  </div>
+</div>
