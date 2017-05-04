@@ -20,7 +20,7 @@
 			"prefix": "app",
 			"styles": [
 				"styles.css",
-				"font-awesome-4.7.0/css/font-awesome.min.css"
+				"../node_modules/font-awesome/css/font-awesome.css"
 			],
 			"scripts": [],
 			"environmentSource": "environment.ts",
@@ -31,7 +31,7 @@
 		}
 	],
 	"addons": [
-		"font-awesome-4.7.0/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+		"../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
 	],
 	"defaults": {
 		"styleExt": "css",
