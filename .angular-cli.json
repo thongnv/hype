@@ -19,7 +19,8 @@
 			"testTsconfig": "tsconfig.spec.json",
 			"prefix": "app",
 			"styles": [
-				"styles.css"
+				"styles.css",
+				"font-awesome-4.7.0/css/font-awesome.min.css"
 			],
 			"scripts": [],
 			"environmentSource": "environment.ts",
@@ -28,6 +29,9 @@
 				"prod": "environment.ts"
 			}
 		}
+	],
+	"addons": [
+		"font-awesome-4.7.0/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
 	],
 	"defaults": {
 		"styleExt": "css",

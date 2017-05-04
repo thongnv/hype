@@ -7,7 +7,7 @@
         </a>
     </div>
     <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav hype-nav">
             <li class="active"><a [routerLink]="['./home']">LOGO</a></li>
             <li class="map-option">
                 <div ngbDropdown>
@@ -20,7 +20,32 @@
                 </div>
             </li>
             <li><a href="#">Search</a></li>
-            <li><a href="#">Account's Options</a></li>
+            <li class="right">
+                <div class="add-eventbtn">
+                    <i fa [name]="'plus'" [size]=2></i>
+                </div>
+            </li>
+            <li class="right"><div class="notif-bag">
+                <i fa [name] = "'bell-o'" [size]=2></i>
+                <span id="count-notif">4</span>
+            </div>
+            </li>
+
+            <li class="user-option map-option right">
+                <div ngbDropdown>
+                    <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+                        {{userInfo.userName}}<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="drop2">
+                        <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Setting</li>
+                        <li>Action 2</li>
+                        <li>Action 3</li>
+                    </ul>
+                </div>
+
+
+            </li>
+
         </ul>
     </div>
 </header>

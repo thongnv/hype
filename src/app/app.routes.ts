@@ -9,6 +9,7 @@ export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch:'full' },
   { path: 'home',  component: HomeComponent },
   { path: 'detail', loadChildren: './+detail#DetailModule'},
+  { path: 'member', loadChildren: './member#MemberModule'},
   { path: 'discover',    component: DiscoverComponent },
   { path: 'curate',    component: CurateComponent },
   { path: 'favorite',    component: FavoriteComponent },

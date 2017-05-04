@@ -35,6 +35,10 @@ import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AuthModule } from 'angular2-auth';
+import { AuthComponent } from './auth/auth.component';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -59,7 +63,8 @@ type StoreType = {
     GmapComponent,
     DiscoverComponent,
     CurateComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    AuthComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -69,7 +74,9 @@ type StoreType = {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ'
     }),
-      NgbModule.forRoot()
+      NgbModule.forRoot(),
+      AuthModule.forRoot(),
+    Angular2FontawesomeModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

@@ -3,8 +3,6 @@ import {
   OnInit
 } from '@angular/core';
 
-import { AppState } from '../app.service';
-import { Title } from './title';
 
 @Component({
   // The selector is what angular internally uses
@@ -12,9 +10,7 @@ import { Title } from './title';
   // where, in this case, selector is the string 'home'
   selector: 'home',  // <home></home>
   // We need to tell Angular's Dependency Injection which providers are in our app.
-  providers: [
-    Title
-  ],
+  providers: [ ],
   // Our list of styles in our component. We may add more to compose many styles together
   styleUrls: [ './home.component.css' ],
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
@@ -26,8 +22,6 @@ export class HomeComponent implements OnInit {
   private data;
   // TypeScript public modifiers
   constructor(
-    public appState: AppState,
-    public title: Title
   ) {}
 
   public ngOnInit() {
@@ -35,9 +29,4 @@ export class HomeComponent implements OnInit {
     this.data={lat: 1.290270, lng: 103.851959};
   }
 
-  public submitState(value: string) {
-    console.log('submitState', value);
-    this.appState.set('value', value);
-    this.localState.value = '';
-  }
 }

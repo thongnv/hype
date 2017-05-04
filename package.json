@@ -101,6 +101,8 @@
     "@types/uglify-js": "^2.6.28",
     "@types/webpack": "^2.2.15",
     "add-asset-html-webpack-plugin": "^1.0.2",
+    "angular2-auth": "^0.1.6",
+    "angular2-fontawesome": "^0.9.0",
     "angular2-google-maps": "^0.17.0",
     "angular2-template-loader": "^0.6.2",
     "assets-webpack-plugin": "^3.5.1",

@@ -23,9 +23,25 @@ nav a {
 body, html {
   height: 100%;
 }
+.clear{
+  clear: both;
+}
 .hype{
+  .hype-nav{
+    display: block;
+    width: 100%;
+  }
+  .left{
+    float: left;
+  }
+  .right{
+    float: right;
+  }
   .left-box{
     height: calc(100vh - 50px);
+  }
+  .height100vh{
+    height: 100vh;
   }
   .icon{
     display: inline-block;
@@ -45,5 +61,61 @@ body, html {
   }
   .icon-favorite{
     background: url("../assets/img/icon-favorite.png") no-repeat center center;
+  }
+//  Profile Setting
+  .user-avatar{
+    border-radius: 50%;
+    width: 60px;
+  }
+  .follow-item{
+    float: left;
+    text-align: center;
+    width:50%;
+  }
+  .avatar-wrap, .follow-wrap{
+    margin-top: 10px;
+    padding: 0 5px;
+    text-align: center;
+  }
+  .follow-wrap{
+    width: 100%;
+    border-bottom: 1px solid #c3c3c3;
+    float: left;
+  }
+  label{
+    font-weight: 300;
+  }
+  .col-left{
+    border-right: 1px solid #c3c3c3;
+    padding: 0;
+  }
+  .member-nav{
+    padding: 0px;
+    list-style: none;
+  }
+  .member-nav > li.active{
+    font-weight: 700;
+  }
+  .member-nav > li{
+    display: block;
+    width: 100%;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #c3c3c3;
+    text-align: left;
+    padding-left: 30%;
+    cursor: pointer;
+  }
+  //responsive
+  @media screen and(min-width: 768px){
+    .setting-wrap > div{
+      height: 100vh;
+    }
+  }
+  @media screen and(max-width: 767px){
+    .setting-wrap > div{
+      height: auto;
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import {AuthService} from "./auth/auth.service";
 
 @Injectable()
 export class DataResolver implements Resolve<any> {
@@ -12,5 +13,6 @@ export class DataResolver implements Resolve<any> {
 
 // an array of services to resolve routes with data
 export const APP_RESOLVER_PROVIDERS = [
-  DataResolver
+  DataResolver,
+    AuthService
 ];
