@@ -1,5 +1,9 @@
 import {InterestComponent} from "./interest/interest.component";
 import {MemberComponent} from "./member.component";
+import {ProfileEditComponent} from "./profile-edit/profile-edit.component";
+import {ProfilePublicComponent} from "./profile-public/profile-public.component";
+import {FollowingComponent} from "./following/following.component";
+import {FollowerComponent} from "./follower/follower.component";
 
 export const routes = [
   {
@@ -7,9 +11,11 @@ export const routes = [
       { path: '', component: MemberComponent },
       { path: 'setting', component: MemberComponent },
       { path: 'interest', component: InterestComponent },
-      { path: 'profile', loadChildren: './profile#ProfileModule' },
-      { path: 'follow', loadChildren: './follow#FollowModule' },
-      { path: 'favorite', loadChildren: './favorite#FavoriteModule' }
+      { path: 'profile-edit', component: ProfileEditComponent },
+      { path: 'profile', component: ProfilePublicComponent },
+      { path: 'following', component: FollowingComponent },
+      { path: 'follower', component: FollowerComponent },
+      { path: 'favorite', loadChildren: './favorite#FavoriteModule' },
     ]
   }
 ];

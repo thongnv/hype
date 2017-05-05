@@ -7,6 +7,10 @@ import { routes } from './member-routing.module';
 import { InterestComponent } from './interest/interest.component';
 import { MemberComponent } from './member.component';
 import { MemberNavigationComponent } from './member-navigation/member-navigation.component';
+import { FollowingComponent } from './following/following.component';
+import { FollowerComponent } from './follower/follower.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { ProfilePublicComponent } from './profile-public/profile-public.component';
 
 @NgModule({
   imports: [
@@ -18,7 +22,11 @@ import { MemberNavigationComponent } from './member-navigation/member-navigation
   declarations: [
     InterestComponent,
     MemberComponent,
-    MemberNavigationComponent
+    MemberNavigationComponent,
+    FollowingComponent,
+    FollowerComponent,
+    ProfileEditComponent,
+    ProfilePublicComponent
   ]
 })
 export class MemberModule {
