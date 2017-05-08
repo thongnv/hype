@@ -1,0 +1,7 @@
+<div class="follow-block-wrap" >
+  <div class="follow-block">
+    <img class="follow-avatar" [src]="item.avatar" [alt]="item.name" [width]="50" [height]="50" />
+    <span class="follow-name">{{item.name}}</span>
+    <span class="unfollow-btn" (click)="doUnfollow(item)">Unfollow</span>
+  </div>
+</div>

@@ -37,7 +37,9 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthModule } from 'angular2-auth';
 import { AuthComponent } from './auth/auth.component';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
+import {TranslateModule} from '@ngx-translate/core';
+import { CountryPickerModule } from 'angular2-countrypicker';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -64,7 +66,7 @@ type StoreType = {
     DiscoverComponent,
     CurateComponent,
     FavoriteComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -74,9 +76,13 @@ type StoreType = {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ'
     }),
-      NgbModule.forRoot(),
-      AuthModule.forRoot(),
-    Angular2FontawesomeModule
+    NgbModule.forRoot(),
+    AuthModule.forRoot(),
+    Angular2FontawesomeModule,
+    TranslateModule.forRoot(),
+    CountryPickerModule.forRoot({
+      baseUrl: 'assets/'
+    })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

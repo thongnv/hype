@@ -1,3 +1,33 @@
-<p>
-  profile-edit works!
-</p>
+<div class="row setting-wrap">
+  <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
+    <app-member-navigation [data]="userInfo"></app-member-navigation>
+  </div>
+  <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
+    <section>
+      <h3>My Profile</h3>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
+        <div class="row">
+          <div class="col-lg-6 form-group">
+            <input class="form-control" formControlName="firstName" placeholder="First Name">
+          </div>
+          <div class="col-lg-6 form-group">
+            <input class="form-control" formControlName="lastName" placeholder="Last Name">
+          </div>
+          <div class="col-lg-12 form-group">
+            <input class="form-control" type="email" formControlName="emailAddress" placeholder="Email Address">
+          </div>
+          <div class="col-lg-6 form-group">
+            <input class="form-control" formControlName="contactNumber" placeholder="Contact Number">
+          </div>
+          <div class="col-lg-6 form-group">
+            <select formControlName="country" class="form-control form-control-sm" name="countrypicker">
+              <option value="" selected="selected">Country</option>
+              <option *ngFor="let c of countries" value="{{c.cca3}}">{{c.name.common.toString()}}</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </section>
+  </div>
+</div>
