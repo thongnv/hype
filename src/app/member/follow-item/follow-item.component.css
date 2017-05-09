@@ -5,14 +5,24 @@
 
 }
 .follow-name{
-
+    height: 40px;
+    line-height: 18px;
 }
-.follow-avatar{
-
+.user-avatar{
+    float: left;
 }
 .follow-block-wrap{
 
 }
 .follow-block{
-
+    padding: 5px;
+    margin: 5px;
+    border-radius: 7px;
+    height: 84px;
+}
+.follow-action{
+    float: left;
+    padding-left: 10px;
+    height: 70px;
+    width: calc(100% - 80px);
 }

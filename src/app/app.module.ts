@@ -40,6 +40,7 @@ import { AuthComponent } from './auth/auth.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import {TranslateModule} from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
+// import { BrowserAnimationsModule } from @angular/platform-browser/animations
 
 // Application wide providers
 const APP_PROVIDERS = [
