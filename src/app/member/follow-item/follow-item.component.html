@@ -3,7 +3,8 @@
     <img class="user-avatar" [src]="item.avatar" [alt]="item.name" [width]="50" [height]="50" />
     <div class="follow-action">
       <div class="follow-name">{{item.name}}</div>
-      <span class="unfollow-btn btn btn-xs btn-warning" (click)="doUnfollow(item)">Unfollow</span>
+      <span class="unfollow-btn btn btn-xs btn-warning" [@show]="stateUnfollow" (click)="doUnfollow(item)">Unfollow</span>
+      <span class="unfollow-btn btn btn-xs btn-info" [@show]="stateFollow" (click)="doFollow(item)">Follow</span>
     </div>
   </div>
 </div>

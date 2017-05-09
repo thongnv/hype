@@ -4,6 +4,7 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../../node_modules/bootstrap/dist/css/bootstrap-theme.min.css';
 @import '../../node_modules/ng-bootstrap-to-bootstrap-3/dist/ng-bootstrap-to-bootstrap-3.min.css';
+@import 'font-awesome/css/font-awesome.min.css';
 nav {
   margin-top: 16px;
 }
@@ -109,6 +110,13 @@ body, html {
     padding-left: 30%;
     cursor: pointer;
   }
+  //following
+  .interest-item-wrap{
+    float: left;
+    transition: width 0.3s;
+    overflow: hidden;
+  }
+
   //responsive
   @media screen and(min-width: 768px){
     .setting-wrap > div{

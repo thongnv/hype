@@ -4,6 +4,7 @@ import { NoContentComponent } from './no-content';
 import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { FavoriteComponent } from './favorite/favorite.component';
+import {AuthComponent} from "./auth/auth.component";
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -13,5 +14,6 @@ export const ROUTES: Routes = [
   { path: 'discover',    component: DiscoverComponent },
   { path: 'curate',    component: CurateComponent },
   { path: 'favorite',    component: FavoriteComponent },
+  { path: 'auth',    component: AuthComponent },
   { path: '**',    component: NoContentComponent },
 ];

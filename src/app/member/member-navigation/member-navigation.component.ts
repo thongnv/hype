@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MemberNavigationComponent implements OnInit {
 
   @Input('data') public data: any;
+
   constructor() { }
 
   ngOnInit() {

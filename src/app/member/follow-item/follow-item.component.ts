@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 @Component({
   selector: 'app-follow-item',
@@ -6,23 +6,32 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./follow-item.component.css'],
   animations: [
     trigger("show", [
-      state("open", style({opacity: 1})),
-      state("closed", style({opacity: 0})),
-      transition("open <=> closed", animate( "3000ms" )),
+      state("1", style({opacity: 1, display: 'inline-block' })),
+      state("2", style({opacity: 0, display: 'none' })),
+      // transition("1 <=> 2", animate( "300ms" )),
     ])
   ],
 })
 export class FollowItemComponent implements OnInit {
 
   @Input('item') public item: any;
-  public state = 'open';
-  public timeOutRef;
-  constructor() { }
+  public stateFollow = '1';
+  public stateUnfollow = '2';
+  public text: string  = 'Unfollow';
+  constructor(private el: ElementRef) { }
 
   doUnfollow(item: any):void{
-    console.log("doUnfollow: ", item.name);
-    this.state = 'closed';
+    this.stateUnfollow = this.stateUnfollow === '1' ? "2": "1";
+    this.stateFollow = this.stateFollow === '1' ? "2": "1";
+    console.log("doUnfollow: ");
   }
+
+  doFollow(item: any):void{
+    this.stateFollow = this.stateFollow === '1' ? "2": "1";
+    this.stateUnfollow = this.stateUnfollow === '1' ? "2": "1";
+    console.log("doFollow: ");
+  }
+
   ngOnInit() {
     this.item.selected = 0;
   }

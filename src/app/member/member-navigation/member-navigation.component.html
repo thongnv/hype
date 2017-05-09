@@ -6,11 +6,11 @@
 </div>
 <div class="follow-wrap">
   <div class="follow-item" [routerLink]="['/member/following']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-    <strong class="follow-number">{{data.userFollowing}}</strong>
+    <strong class="follow-number">{{ data.userFollowing?.length }}</strong>
     <p>Following</p>
   </div>
   <div class="follow-item" [routerLink]="['/member/follower']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-    <strong class="follow-number">{{data.userFollower}}</strong>
+    <strong class="follow-number">{{ data.userFollower?.length }}</strong>
     <p>Followers</p>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NgModule,
   ApplicationRef
@@ -70,6 +71,7 @@ type StoreType = {
     AuthComponent
   ],
   imports: [ // import Angular's modules
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpModule,

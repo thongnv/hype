@@ -1,3 +1,13 @@
-<p>
-  follower works!
-</p>
+<div class="row setting-wrap">
+  <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
+    <app-member-navigation [data]="userInfo"></app-member-navigation>
+  </div>
+  <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
+    <section>
+      <h3>{{ userInfo.userFollower.length}} Follower</h3>
+      <div class="row">
+        <app-follow-item [item] = "follower" *ngFor="let follower of userInfo.userFollower" class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap"></app-follow-item>
+      </div>
+    </section>
+  </div>
+</div>
