@@ -42,6 +42,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import {TranslateModule} from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
 // import { BrowserAnimationsModule } from @angular/platform-browser/animations
+import { FacebookModule } from 'ngx-facebook';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -85,7 +86,8 @@ type StoreType = {
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
-    })
+    }),
+    FacebookModule.forRoot()
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
