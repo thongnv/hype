@@ -6,6 +6,10 @@ html, body{
 a.active {
   background-color: gray;
 }
+.row {
+  width: 100%;
+}
+
 .hype-header{
   margin-bottom: 0;
 }
@@ -74,9 +78,52 @@ a.active {
 .map-option li:hover{
   background: deepskyblue;
 }
-.map-option a{
-  text-transform: capitalize;
+.map-option input{
+  margin-top: 8px;
 }
+
+.nav>li {
+  margin-right: 15px;
+  margin-left: 10px;
+}
+
+.hype-nav>li i {
+  margin-top: 8px;
+}
+
+button.btn>i {
+  margin: 0;
+}
+.notif-bag {
+  position: relative;
+}
+
+#count-notif {
+  position: absolute;
+  top: 4px;
+  right: -4px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  text-align: center;
+  color: white;
+}
+
+.nav-search {
+  margin-top: 12px;
+
+}
+.nav-search>input {
+  position: absolute;
+  padding-left: 20px;
+}
+
+.nav-search>i {
+  position: absolute;
+  width: 300px;
+}
+
 @media (max-width: 991px) {
   .navbar-header {
     float: none;

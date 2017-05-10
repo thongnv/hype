@@ -6,7 +6,7 @@
             <span class="icon-bar"></span>
         </a>
     </div>
-    <div class="navbar-collapse collapse">
+    <div class="row navbar-collapse collapse">
         <ul class="nav navbar-nav hype-nav">
             <li class="active"><a [routerLink]="['./home']">LOGO</a></li>
             <li class="map-option">
@@ -19,7 +19,16 @@
                     </ul>
                 </div>
             </li>
-            <li><a href="#">Search</a></li>
+            <li class="map-option col-md-4">
+              <form action="">
+                  <div class="input-group">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i fa [name]="'search'" [size]=1></i></button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for any place or activities...">
+                  </div>
+              </form>
+            </li>
             <li class="right">
                 <div class="add-eventbtn">
                     <i fa [name]="'plus'" [size]=2></i>
