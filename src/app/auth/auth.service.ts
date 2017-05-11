@@ -1,11 +1,18 @@
 import { TokenService } from 'angular2-auth';
-import {Injectable} from "@angular/core";
+import {Injectable, Inject} from "@angular/core";
 import {Http} from "@angular/http";
+import {AppConfig, APP_CONFIG} from "../app.config";
 
 @Injectable()
 export class AuthService {
 
-    constructor(private _http: Http, private _tokenService: TokenService) {}
+    constructor(
+        private _http: Http,
+        private _tokenService: TokenService,
+        @Inject(APP_CONFIG) config: AppConfig
+    ) {
+        console.log("config: ", config);
+    }
 
     login(email: string, password: string) {
         this._http.post('/auth/login', { email: email, password: password }).subscribe(

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse } from 'ngx-facebook';
+import { AppSetting } from '../app.setting'
+import {AuthService} from "./auth.service";
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -7,13 +9,12 @@ import { FacebookService, InitParams, LoginResponse } from 'ngx-facebook';
 })
 export class AuthComponent implements OnInit {
 
-  constructor(private fb: FacebookService) {
+  constructor(
+      private fb: FacebookService,
+      private authService: AuthService
+  ) {
 
-    let initParams: InitParams = {
-      appId: '1248837375215411',
-      xfbml: true,
-      version: 'v2.9'
-    };
+    let initParams: InitParams = AppSetting.FACEBOOK;
 
     fb.init(initParams);
 
@@ -24,7 +25,6 @@ export class AuthComponent implements OnInit {
     this.fb.login()
         .then((response: LoginResponse) => console.log(response))
         .catch((error: any) => console.error(error));
-
   }
 
   ngOnInit() {

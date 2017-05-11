@@ -7,6 +7,7 @@ import {
   ApplicationRef,
   enableProdMode
 } from '@angular/core';
+
 // Environment Providers
 let PROVIDERS: any[] = [
   // common env directives
@@ -31,6 +32,7 @@ if ('production' === ENV) {
     // custom providers in production
   ];
 
+
 } else {
 
   _decorateModuleRef = (modRef: any) => {
@@ -49,7 +51,6 @@ if ('production' === ENV) {
     ...PROVIDERS,
     // custom providers in development
   ];
-
 }
 
 export const decorateModuleRef = _decorateModuleRef;
