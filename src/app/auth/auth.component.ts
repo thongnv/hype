@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
       private authService: AuthService
   ) {
 
+    console.log("AppSetting", AppSetting);
     let initParams: InitParams = AppSetting.FACEBOOK;
 
     fb.init(initParams);

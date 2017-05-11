@@ -1,11 +1,13 @@
 .login-container{
-    padding-top: 20%;
+    padding-top: 15%;
 }
 .login-container .btn{
     width: 100%;
 }
+
 @media only screen and (max-width: 480px) {
     .login-container *{
         font-size: 12px;
     }
+
 }

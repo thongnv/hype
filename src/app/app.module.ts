@@ -20,7 +20,6 @@ import {
  */
 import { ENV_PROVIDERS } from './environment';
 import { ROUTES } from './app.routes';
-import { APP_CONFIG, _CONFIG } from './app.config'
 // App is our top level component
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
@@ -48,8 +47,7 @@ import { FacebookModule } from 'ngx-facebook';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
-  AppState,
-  { provide: APP_CONFIG, useValue: _CONFIG }
+  AppState
 ];
 
 type StoreType = {
