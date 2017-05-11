@@ -3,7 +3,10 @@ import {
     OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import {AppState} from './app.service';
+
+import { Title } from '@angular/platform-browser';
+import { AppState } from './app.service';
+
 @Component({
     selector: 'app',
     encapsulation: ViewEncapsulation.None,
@@ -17,7 +20,12 @@ export class AppComponent implements OnInit {
 
     public userInfo: any;
 
-    constructor(public appState: AppState) {
+    constructor(public appState: AppState, private titleService: Title) {
+      titleService.setTitle('Hylo');
+    }
+
+    public setTitle( newTitle: string) {
+      this.titleService.setTitle( newTitle );
     }
 
     public mapOptions: any[];
