@@ -35,15 +35,12 @@ import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
 import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
-import { FavoriteComponent } from './favorite/favorite.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthComponent } from './auth/auth.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
-import {TranslateModule} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
-// import { BrowserAnimationsModule } from @angular/platform-browser/animations
-import { FacebookModule } from 'ngx-facebook';
+
 import {MainService} from "./services/main.service";
 
 // Application wide providers
@@ -70,9 +67,7 @@ type StoreType = {
     NoContentComponent,
     GmapComponent,
     DiscoverComponent,
-    CurateComponent,
-    FavoriteComponent,
-    AuthComponent
+    CurateComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -89,7 +84,6 @@ type StoreType = {
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
-    FacebookModule.forRoot(),
     LocalStorageModule.withConfig({
       prefix: 'hylo-app',
       storageType: 'localStorage'

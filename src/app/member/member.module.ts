@@ -15,6 +15,8 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { InterestItemComponent } from './interest-item/interest-item.component';
 import { FollowItemComponent } from './follow-item/follow-item.component';
+import {FavoriteComponent} from "./favorite/favorite.component";
+
 import {MainService} from "../services/main.service";
 
 @NgModule({
@@ -37,8 +39,8 @@ import {MainService} from "../services/main.service";
     ProfileEditComponent,
     ProfilePublicComponent,
     InterestItemComponent,
-    FollowItemComponent
-
+    FollowItemComponent,
+    FavoriteComponent
   ],
   providers: [MainService]
 })

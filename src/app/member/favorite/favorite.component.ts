@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AppState} from "../../app.service";
 
 @Component({
   selector: 'app-favorite',
@@ -9,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 export class FavoriteComponent implements OnInit {
 
   public data: any;
+  public userInfo: any;
+  constructor(
+      private appState: AppState
+  ) { }
 
-  public ngOnInit() {
-    this.data = {lat: 1.290570, lng: 105.851923};
+  demo(): void{
+    this.userInfo = this.appState.state.userInfo;
+  }
+
+  ngOnInit() {
+    this.demo();
   }
 
 }

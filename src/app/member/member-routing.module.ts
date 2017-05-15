@@ -4,6 +4,7 @@ import {ProfileEditComponent} from "./profile-edit/profile-edit.component";
 import {ProfilePublicComponent} from "./profile-public/profile-public.component";
 import {FollowingComponent} from "./following/following.component";
 import {FollowerComponent} from "./follower/follower.component";
+import {FavoriteComponent} from "./favorite/favorite.component";
 
 export const routes = [
   {
@@ -15,7 +16,7 @@ export const routes = [
       { path: 'profile', component: ProfilePublicComponent },
       { path: 'following', component: FollowingComponent },
       { path: 'follower', component: FollowerComponent },
-      { path: 'favorite', loadChildren: './favorite#FavoriteModule' },
+      { path: 'favorite', component: FavoriteComponent },
     ]
   }
 ];

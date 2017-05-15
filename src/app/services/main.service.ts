@@ -15,7 +15,7 @@ export class MainService {
     return new Promise((resolve, reject ) => {
 
       let token = {fb_token: fb_token};
-        let headers = new Headers({ "Content-Type": "application/json", "Accept": "application/json" });
+        let headers = new Headers({ "Content-Type": "application/json"});
       this._http.post(AppSetting.API_LOGIN, JSON.stringify(token), {headers: headers}).
       subscribe(
           (response) => {
@@ -35,21 +35,38 @@ export class MainService {
   }
 
   logout(){
+      console.log("logout");
       let logout_token = this._localStorageService.get("logout_token");
-      let headers = new Headers({ "Content-Type": "application/json", "Accept": "application/json" });
+      let headers = new Headers({ "Content-Type": "application/json" });
       let options = new RequestOptions({ headers: headers });
+
+      return new Promise((resolve, reject ) => {
+          this._http.get(AppSetting.API_LOGOUT+logout_token, options).
+          subscribe(
+              (response) => {
+                  console.log("API_LOGOUT: ", response.json());
+                  this._localStorageService.clearAll();
+                  resolve(response);
+              },
+              (err) => {
+                  console.debug(err);
+                  reject(err);
+              }
+          );
+      });
   }
 
   getUserProfile(){
+      console.log("getUserProfile");
     let csrf_token = <string>this._localStorageService.get("csrf_token");
-    let headers = new Headers({ "Content-Type": "application/json", "Accept": "application/json", "X-CSRF-Token": csrf_token});
+    let headers = new Headers({ "Content-Type": "application/json", "X-CSRF-Token": csrf_token});
     let options = new RequestOptions({ headers: headers });
 
     return new Promise((resolve, reject ) => {
-            this._http.get(AppSetting.API_GET_PROFILE, options).
+            this._http.get(AppSetting.API_USER_PROFILE, options).
             subscribe(
                 (response) => {
-                    console.log("USER PRO: ", response);
+                    console.log("USER PRO: ", response.json());
                     resolve(response);
                 },
                 (err) => {
@@ -60,7 +77,44 @@ export class MainService {
     });
   }
 
-  setUserProfile():void{
+  setUserProfile(userProfile: any){
+      console.log("setUserProfile");
+      let csrf_token = <string>this._localStorageService.get("csrf_token");
+      let headers = new Headers({ "Content-Type": "application/json", "X-CSRF-Token": csrf_token});
+      let options = new RequestOptions({ headers: headers });
+        console.log(userProfile);
+      // return new Promise((resolve, reject ) => {
+      //     this._http.post(AppSetting.API_USER_PROFILE,userProfile,  options).
+      //     subscribe(
+      //         (response) => {
+      //             console.log("USER PRO: ", response.json());
+      //             resolve(response);
+      //         },
+      //         (err) => {
+      //             console.debug(err);
+      //             reject(err);
+      //         }
+      //     );
+      // });
+  }
 
+  isLoggedIn(): any{
+      let csrf_token = <string>this._localStorageService.get("csrf_token");
+      let headers = new Headers({ "Content-Type": "application/json"});
+      let options = new RequestOptions({ headers: headers });
+
+      return new Promise((resolve, reject ) => {
+          this._http.get(AppSetting.API_LOGIN_STATUS, options).
+          subscribe(
+              (response) => {
+                  console.log("API_LOGIN_STATUS: ", response.json());
+                  resolve(response);
+              },
+              (err) => {
+                  console.debug(err);
+                  reject(err);
+              }
+          );
+      });
   }
 }

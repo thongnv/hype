@@ -3,8 +3,6 @@ import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
-import { FavoriteComponent } from './favorite/favorite.component';
-import {AuthComponent} from "./auth/auth.component";
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -13,7 +11,6 @@ export const ROUTES: Routes = [
   { path: 'member', loadChildren: './member#MemberModule'},
   { path: 'discover',    component: DiscoverComponent },
   { path: 'curate',    component: CurateComponent },
-  { path: 'favorite',    component: FavoriteComponent },
-  { path: 'auth',    component: AuthComponent },
+  { path: 'auth',    loadChildren: './auth#AuthModule' },
   { path: '**',    component: NoContentComponent },
 ];

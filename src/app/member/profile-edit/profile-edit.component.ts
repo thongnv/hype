@@ -38,9 +38,7 @@ export class ProfileEditComponent implements OnInit {
   ) {
     this.countryPickerService.getCountries().subscribe(countries => {
       this.countries = countries;
-      // console.log("countries: ", countries[0])
     });
-
   }
 
   demo(): void{
@@ -49,14 +47,18 @@ export class ProfileEditComponent implements OnInit {
 
   onSubmit(event): void{
     console.log(this.profileForm.value);
-    this.mainService.setUserProfile();
+    this.mainService.setUserProfile(this.profileForm.value);
   }
 
   getUserProfile():void{
     this.userProfile = this.mainService.getUserProfile();
   }
+  getLoginStatus():any{
+    this.mainService.isLoggedIn();
+  }
   ngOnInit() {
     this.demo();
+    this.getLoginStatus();
     this.getUserProfile();
   }
 

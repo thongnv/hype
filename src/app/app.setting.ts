@@ -1,7 +1,9 @@
 export class AppSetting{
     public static API_ENDPOINT='http://hypeweb.iypuat.com:5656/';
     public static API_LOGIN = 'http://hypeweb.iypuat.com:5656/hylo/fblogin?_format=json';
-    public static API_GET_PROFILE = "http://hypeweb.iypuat.com:5656/api/v1/profile?_format=json";
+    public static API_USER_PROFILE = "http://hypeweb.iypuat.com:5656/api/v1/profile?_format=json";
+    public static API_LOGOUT = "http://hypeweb.iypuat.com:5656/user/logout?_format=json&logout_token=";
+    public static API_LOGIN_STATUS = "http://hypeweb.iypuat.com:5656/user/login_status?_format=json";
     public static FACEBOOK = {
         appId: '289859484806086',
         xfbml: true,
