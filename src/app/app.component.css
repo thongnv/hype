@@ -10,8 +10,28 @@ a.active {
   width: 100%;
 }
 
+.navbar-nav>li.logo {
+  margin-left: 40px;
+  padding: 0;
+}
+.navbar-nav>li.logo>a {
+  margin: 0;
+  padding: 0;
+}
+.hype-nav>li.logo i {
+  margin-top: 4px;
+}
+
+li#site-name {
+  font-size: xx-large;
+  margin-left: 0;
+}
 .hype-header{
   margin-bottom: 0;
+}
+
+.user-option>a {
+  color: black;
 }
 
 .hype .sidebar{
@@ -83,7 +103,6 @@ a.active {
 }
 
 .nav>li {
-  margin-right: 15px;
   margin-left: 10px;
 }
 
@@ -98,16 +117,22 @@ button.btn>i {
   position: relative;
 }
 
+i#notif {
+  margin-top: -2px;
+}
+
 #count-notif {
   position: absolute;
-  top: 4px;
-  right: -4px;
+  top: 11px;
+  right: 9px;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background-color: red;
   text-align: center;
   color: white;
+  border: solid 2px;
+  font-size: small;
 }
 
 .nav-search {

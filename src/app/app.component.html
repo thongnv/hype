@@ -8,7 +8,8 @@
     </div>
     <div class="row navbar-collapse collapse">
         <ul class="nav navbar-nav hype-nav">
-            <li class="active"><a [routerLink]="['./home']">LOGO</a></li>
+            <li class="logo"><a [routerLink]="['./home']"><i fa [name] = "'circle-o'" [size]=3></i></a></li>
+            <li id="site-name"><a [routerLink]="['./home']">LOGO</a></li>
             <li class="map-option">
                 <div ngbDropdown>
                     <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
@@ -29,21 +30,24 @@
                   </div>
               </form>
             </li>
+
             <li class="right">
                 <div class="add-eventbtn">
                     <i fa [name]="'plus'" [size]=2></i>
                 </div>
             </li>
-            <li class="right"><div class="notif-bag">
-                <i fa [name] = "'bell-o'" [size]=2></i>
+            <li class="right"><a [routerLink]="['/member']" class="notif-bag">
+                <i id="notif" fa [name] = "'bell-o'" [size]=2></i>
                 <span id="count-notif">4</span>
-            </div>
+            </a>
             </li>
 
-            <li class="user-option map-option right">
-                <div ngbDropdown>
+            <li class="right">
+                <div class="user-option map-option right" ngbDropdown>
                     <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-                        {{userInfo.userName}}<span class="caret"></span>
+                      <i class="logo" fa [name] = "'user-circle-o'" [size]=2></i>
+                      {{userInfo.userName}}
+                      <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="drop2">
                         <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Setting</li>
@@ -51,8 +55,6 @@
                         <li>Action 3</li>
                     </ul>
                 </div>
-
-
             </li>
 
         </ul>
