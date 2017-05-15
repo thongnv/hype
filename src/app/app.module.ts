@@ -45,6 +45,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 // import { BrowserAnimationsModule } from @angular/platform-browser/animations
 import { FacebookModule } from 'ngx-facebook';
 import {MainService} from "./services/main.service";
+import { NavbarComponent } from './navbar/navbar.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -72,7 +73,8 @@ type StoreType = {
     DiscoverComponent,
     CurateComponent,
     FavoriteComponent,
-    AuthComponent
+    AuthComponent,
+    NavbarComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
