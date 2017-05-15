@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule, Http } from '@angular/http';
+import { HttpModule } from '@angular/http';
 
 import { routes } from './member-routing.module';
 import { InterestComponent } from './interest/interest.component';
@@ -15,6 +15,7 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { InterestItemComponent } from './interest-item/interest-item.component';
 import { FollowItemComponent } from './follow-item/follow-item.component';
+import {MainService} from "../services/main.service";
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { FollowItemComponent } from './follow-item/follow-item.component';
     ReactiveFormsModule,
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
-    })
+    }),
   ],
   declarations: [
     InterestComponent,
@@ -38,7 +39,8 @@ import { FollowItemComponent } from './follow-item/follow-item.component';
     InterestItemComponent,
     FollowItemComponent
 
-  ]
+  ],
+  providers: [MainService]
 })
 export class MemberModule {
   public static routes = routes;

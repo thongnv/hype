@@ -2,7 +2,7 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-
+import { MainService } from '../services/main.service';
 
 @Component({
   // The selector is what angular internally uses
@@ -20,13 +20,19 @@ export class HomeComponent implements OnInit {
   // Set our default values
   public localState = { value: '' };
   private data;
+  private userProfile: any;
   // TypeScript public modifiers
   constructor(
+      private mainService: MainService
   ) {}
 
+  getUserProfile(){
+    this.userProfile = this.mainService.getUserProfile()
+  }
   public ngOnInit() {
     // this.title.getData().subscribe(data => this.data = data);
     this.data={lat: 1.290270, lng: 103.851959};
+    this.getUserProfile();
   }
 
 }

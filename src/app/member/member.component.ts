@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AppState } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-member',
