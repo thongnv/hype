@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
 import { AppSetting } from '../app.setting'
-import { AuthService } from "../services/auth.service";
+import { MainService } from "../services/main.service";
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class AuthComponent implements OnInit {
   private loginData: any;
   constructor(
       private fb: FacebookService,
-      private authService: AuthService,
+      private mainService: MainService,
       private router: Router
   ) {
 
@@ -34,8 +34,7 @@ export class AuthComponent implements OnInit {
     this.fb.login(loginOptions)
         .then((res: LoginResponse) => {
           console.log('Logged in', res);
-          this.authService.login(res.authResponse.accessToken).then((respone)=>{
-            console.log("======================>", respone);
+          this.mainService.login(res.authResponse.accessToken).then((respone)=>{
             this.router.navigate(['/member']);
           })
         })

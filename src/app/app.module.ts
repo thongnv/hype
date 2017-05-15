@@ -37,21 +37,19 @@ import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthModule } from 'angular2-auth';
 import { AuthComponent } from './auth/auth.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import {TranslateModule} from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
+import { LocalStorageModule } from 'angular-2-local-storage';
 // import { BrowserAnimationsModule } from @angular/platform-browser/animations
 import { FacebookModule } from 'ngx-facebook';
-import {AuthService} from "./services/auth.service";
 import {MainService} from "./services/main.service";
 
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
-  AuthService,
   MainService
 ];
 
@@ -86,13 +84,16 @@ type StoreType = {
       apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ'
     }),
     NgbModule.forRoot(),
-    AuthModule.forRoot(),
     Angular2FontawesomeModule,
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    LocalStorageModule.withConfig({
+      prefix: 'hylo-app',
+      storageType: 'localStorage'
+    })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

@@ -38,7 +38,7 @@ export class ProfileEditComponent implements OnInit {
   ) {
     this.countryPickerService.getCountries().subscribe(countries => {
       this.countries = countries;
-      console.log("countries: ", countries[0])
+      // console.log("countries: ", countries[0])
     });
 
   }
