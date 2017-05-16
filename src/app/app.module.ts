@@ -40,9 +40,8 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawe
 import { TranslateModule } from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
-
-import { MainService } from "./services/main.service";
 import { NavbarComponent } from './navbar/navbar.component';
+import { MainService } from "./services/main.service";
 
 // Application wide providers
 const APP_PROVIDERS = [

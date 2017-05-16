@@ -20,11 +20,11 @@ export class ProfileEditComponent implements OnInit {
   private userProfile: any;
 
   public profileForm = this.fb.group({
-    firstName:  ["", Validators.required],
-    lastName:  ["", Validators.required],
-    emailAddress:  ["", Validators.email],
-    contactNumber:  ["", Validators.required],
-    country:  ["", Validators.required],
+    field_first_name:  ["", Validators.required],
+    field_last_name:  ["", Validators.required],
+    email:  ["", Validators.email],
+    field_contact_number:  ["", Validators.required],
+    field_country:  ["", Validators.required],
   });
 
 

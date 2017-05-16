@@ -8,19 +8,19 @@
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
         <div class="row">
           <div class="col-lg-6 form-group">
-            <input class="form-control" formControlName="firstName" placeholder="First Name">
+            <input class="form-control" formControlName="field_first_name" placeholder="First Name">
           </div>
           <div class="col-lg-6 form-group">
-            <input class="form-control" formControlName="lastName" placeholder="Last Name">
+            <input class="form-control" formControlName="field_last_name" placeholder="Last Name">
           </div>
           <div class="col-lg-12 form-group">
-            <input class="form-control" type="email" formControlName="emailAddress" placeholder="Email Address">
+            <input class="form-control" type="email" formControlName="email" placeholder="Email Address">
           </div>
           <div class="col-lg-6 form-group">
-            <input class="form-control" formControlName="contactNumber" placeholder="Contact Number">
+            <input class="form-control" formControlName="field_contact_number" placeholder="Contact Number">
           </div>
           <div class="col-lg-6 form-group">
-            <select formControlName="country" class="form-control form-control-sm" name="countrypicker">
+            <select formControlName="field_country" class="form-control form-control-sm" name="countrypicker">
               <option value="" selected="selected">Country</option>
               <option *ngFor="let c of countries" value="{{c.cca3}}">{{c.name.common.toString()}}</option>
             </select>
