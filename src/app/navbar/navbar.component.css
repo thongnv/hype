@@ -10,9 +10,10 @@
   margin-top: 4px;
 }
 
-li#site-name {
+#site-name {
+  font-family: sans-serif;
   font-size: xx-large;
-  margin-left: 0;
+  margin-left: 15px;
 }
 .hype-header{
   margin-bottom: 0;

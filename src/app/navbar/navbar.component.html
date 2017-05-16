@@ -9,16 +9,19 @@
   </div>
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
-      <li class="logo"><a [routerLink]="['./home']"><i fa [name]="'circle-o'" [size]=3></i></a></li>
-      <li id="site-name"><a [routerLink]="['./home']">LOGO</a></li>
+      <li class="logo">
+        <a [routerLink]="['./home']">
+          <i fa [name]="'circle-o'" [size]=3><span id="site-name">LOGO</span></i>
+        </a>
+      </li>
       <li class="map-option">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
             {{selectedMapOption.name}}<span class="caret"></span>
           </a>
-          <ul *ngIf="userInfo.mapOptions" class="dropdown-menu" aria-labelledby="drop1">
-            <li *ngFor="let option of userInfo.mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
+          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
+            <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
           </ul>
         </div>
       </li>

@@ -31,13 +31,12 @@ export class NavbarComponent implements OnInit {
   public ngOnInit() {
     this.demo();
     this.mapOptions = [
-      {id: 1, name: 'singapore'},
-      {id: 2, name: 'neighbourhood'},
+      {id: 1, name: 'Singapore'},
+      {id: 2, name: 'Neighbourhood'},
       {id: 3, name: 'option 2'},
       {id: 4, name: 'option 3'}
     ];
     this.selectedMapOption = this.mapOptions[0];
-    console.log(this.userInfo);
     console.log(this.appState);
   }
 
