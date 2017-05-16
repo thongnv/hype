@@ -20,15 +20,15 @@ export class MemberComponent implements OnInit {
       private appState: AppState
   ) { }
 
-  demo(): void{
+  public demo(): void {
     this.userInfo = this.appState.state.userInfo;
   }
 
-  onSubmit(event): void{
+  public onSubmit(event): void {
     console.log(this.settingForm.value);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.demo();
   }
 
