@@ -1,10 +1,17 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from "@angular/http";
-import {AppSetting} from '../app.setting';
-import {LocalStorageService} from 'angular-2-local-storage';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from "@angular/http";
+import { AppSetting } from '../app.setting';
+import { LocalStorageService } from 'angular-2-local-storage';
+import 'rxjs/add/operator/toPromise';
+import { User } from "../models/user";
 
 @Injectable()
 export class MainService {
+
+		private handleError(error: any): Promise<any> {
+			console.error(error);
+			return Promise.reject(error.message || error);
+		}
 
     constructor(private _localStorageService: LocalStorageService, private _http: Http) {
     }
@@ -63,8 +70,7 @@ export class MainService {
         return new Promise((resolve, reject) => {
             this._http.get(AppSetting.API_USER_PROFILE, options).subscribe(
                 (response) => {
-                    console.log("USER PRO: ", response.json());
-                    resolve(response);
+                    resolve(response.json());
                 },
                 (err) => {
                     console.debug(err);
@@ -73,6 +79,17 @@ export class MainService {
             );
         });
     }
+		getUserData() {
+
+			let csrf_token = <string>this._localStorageService.get("csrf_token");
+			let headers = new Headers({"Content-Type": "application/json", "X-CSRF-Token": csrf_token});
+			let options = new RequestOptions({headers: headers, withCredentials: true});
+
+			return this._http.get(AppSetting.API_USER_PROFILE, options)
+				.toPromise()
+				.then(resp => resp.json())
+				.catch(this.handleError);
+		}
 
     setUserProfile(userProfile: any) {
         let csrf_token = <string>this._localStorageService.get("csrf_token");
@@ -83,7 +100,7 @@ export class MainService {
             this._http.post(AppSetting.API_USER_PROFILE,userProfile,  options).
             subscribe(
                 (response) => {
-                    console.log("USER PRO: ", response.json());
+                    console.log("GET USER PRO: ", response.json());
                     resolve(response);
                 },
                 (err) => {
