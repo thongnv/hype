@@ -10,29 +10,32 @@ import { MainService } from '../services/main.service';
   // where, in this case, selector is the string 'home'
   selector: 'home',  // <home></home>
   // We need to tell Angular's Dependency Injection which providers are in our app.
-  providers: [ ],
+  providers: [],
   // Our list of styles in our component. We may add more to compose many styles together
-  styleUrls: [ './home.component.css' ],
+  styleUrls: ['./home.component.css'],
   // Every Angular template is first compiled by the browser before Angular runs it's compiler
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   // Set our default values
-  public localState = { value: '' };
+  public localState = {value: ''};
   private data;
   private userProfile: any;
   // TypeScript public modifiers
-  constructor(
-      private mainService: MainService
-  ) {}
+  constructor(private mainService: MainService) {}
 
-  getUserProfile(){
-    this.userProfile = this.mainService.getUserProfile()
-  }
   public ngOnInit() {
     // this.title.getData().subscribe(data => this.data = data);
-    this.data={lat: 1.290270, lng: 103.851959};
+    this.getLoginStatus();
+    this.data = {lat: 1.290270, lng: 103.851959};
     this.getUserProfile();
   }
 
+  private getLoginStatus(): any {
+    this.mainService.isLoggedIn();
+  }
+
+  private getUserProfile() {
+    this.userProfile = this.mainService.getUserProfile()
+  }
 }

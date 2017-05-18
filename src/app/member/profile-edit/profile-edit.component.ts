@@ -14,7 +14,6 @@ export class ProfileEditComponent implements OnInit {
 
     public userInfo: any;
     public countries: any[];
-    public userProfile: any;
     public profileForm = this.fb.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
@@ -96,9 +95,4 @@ export class ProfileEditComponent implements OnInit {
             console.log('userInfo: ', this.userInfo);
         });
     }
-
-    private getLoginStatus(): any {
-        this.mainService.isLoggedIn();
-    }
-
 }
