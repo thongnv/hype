@@ -1,19 +1,18 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MainService } from '../../services/main.service';
 
 @Component({
-  selector: 'app-interest-item',
-  templateUrl: './interest-item.component.html',
-  styleUrls: ['./interest-item.component.css']
+    selector: 'app-interest-item',
+    templateUrl: './interest-item.component.html',
+    styleUrls: ['./interest-item.component.css']
 })
-export class InterestItemComponent implements OnInit {
-  @Input('item') public item: any;
-  constructor() { }
+export class InterestItemComponent {
+    @Input('item') public item: any;
 
-  onSelect(item: any):void{
-    item.selected = (item.selected)? 0 : 1;
-  }
-  ngOnInit() {
-    this.item.selected = 0;
-  }
+    public constructor(private mainService: MainService) {
+    }
 
+    public onSelect(item: any): void {
+        item.bookmark = (item.bookmark) ? false : true;
+    }
 }

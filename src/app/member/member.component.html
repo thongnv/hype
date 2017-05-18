@@ -3,7 +3,7 @@
     <app-member-navigation [data]="userInfo"></app-member-navigation>
   </div>
   <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
-    <section>
+    <section *ngIf="userInfo">
       <h3>Setting</h3>
       <form [formGroup]="settingForm" (ngSubmit)="onSubmit($event)">
         <label for="checkbox">Do you want to receive email notifications from us.
