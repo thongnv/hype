@@ -42,6 +42,8 @@ import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from "./services/main.service";
+import { CustomGmapDirective } from './gmap/custom-gmap.directive';
+import { GmapService } from './services/gmap.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -68,7 +70,8 @@ type StoreType = {
     GmapComponent,
     DiscoverComponent,
     CurateComponent,
-    NavbarComponent
+    NavbarComponent,
+    CustomGmapDirective
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -93,7 +96,8 @@ type StoreType = {
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
-    Title
+    Title,
+    GmapService
   ]
 })
 export class AppModule {
