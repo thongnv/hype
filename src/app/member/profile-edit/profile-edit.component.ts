@@ -92,7 +92,6 @@ export class ProfileEditComponent implements OnInit {
 
             this.appState.set('userInfo', this.userInfo);
             console.log('response: ', response);
-            console.log('userInfo: ', this.userInfo);
         });
     }
 }

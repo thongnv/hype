@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppState } from '../../app.service';
+import { MainService } from '../../services/main.service';
 
 @Component({
   selector: 'app-profile-public',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePublicComponent implements OnInit {
 
-  constructor() { }
+  public userInfo: any;
+  public publicProfile: any;
 
-  ngOnInit() {
+  public constructor(private appState: AppState, private mainService: MainService) {
   }
 
+  public demo(): void {
+    this.userInfo = this.appState.state.userInfo;
+  }
+
+  public ngOnInit() {
+    this.demo();
+    this.mainService.getUserPublicProfile().then((resp) => {
+      console.log('getUserPublicProfile', resp);
+      this.publicProfile = resp.favorite;
+    });
+  }
 }

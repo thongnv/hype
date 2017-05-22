@@ -99,11 +99,22 @@ export class MainService {
 
   public getUserFollow(followFlag: string): Promise<any> {
     const followUrl = (followFlag === 'following') ? AppSetting.API_USER_FOLLOWING :
-                                                    AppSetting.API_USER_FOLLOWER;
+      AppSetting.API_USER_FOLLOWER;
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(followUrl, options)
+      .toPromise()
+      .then((resp) => resp.json().result)
+      .catch(this.handleError);
+  }
+
+  public updateUserFollow(uid: number): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    let targetUser = {uid};
+    return this._http.post(AppSetting.API_USER_UNFOLLOW, JSON.stringify(targetUser), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -117,7 +128,7 @@ export class MainService {
 
     return this._http.get(AppSetting.API_USER_INTEREST, options)
       .toPromise()
-      .then((resp) => resp.json().interests)
+      .then((resp) => resp.json())
       .catch(this.handleError);
   }
 
@@ -125,7 +136,37 @@ export class MainService {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.post(AppSetting.API_USER_INTEREST, (item), options)
+    return this._http.post(AppSetting.API_USER_INTEREST, JSON.stringify(item), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getUserFavorite(type: string): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(AppSetting.API_USER_ACTIVITY, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getArticle(type: string): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(AppSetting.API_ARTICLE, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getUserPublicProfile(): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(AppSetting.API_ENDPOINT_DEMO, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

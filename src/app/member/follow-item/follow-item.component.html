@@ -1,10 +1,10 @@
 <div class="follow-block-wrap">
   <div class="follow-block">
-    <img class="user-avatar" [src]="item.avatar" [alt]="item.name" [width]="50" [height]="50" />
+    <!--<img class="user-avatar" src="{{item.avatar}}" [alt]="item.name" [width]="50" [height]="50" />-->
     <div class="follow-action">
       <div class="follow-name">{{item.name}}</div>
-      <span class="unfollow-btn btn btn-xs btn-warning" [@show]="stateUnfollow" (click)="doUnfollow(item)">Unfollow</span>
-      <span class="unfollow-btn btn btn-xs btn-info" [@show]="stateFollow" (click)="doFollow(item)">Follow</span>
+      <span class="unfollow-btn btn btn-xs btn-warning" [@unfollow]="stateFollow" (click)="updateFollow(item)">Unfollow</span>
+      <span class="unfollow-btn btn btn-xs btn-info" [@follow]="stateFollow" (click)="updateFollow(item)">Follow</span>
     </div>
   </div>
 </div>

@@ -1,15 +1,23 @@
+const _ENV = 'develop';
+
+const API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
+
 export class AppSetting {
-    // public static API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
-    public static API_LOGIN = 'http://hypeweb.iypuat.com:5656/hylo/fblogin?_format=json';
-    public static API_USER_PROFILE = 'http://hypeweb.iypuat.com:5656/api/v1/profile?_format=json';
-    public static API_LOGOUT = 'http://hypeweb.iypuat.com:5656/hylo/logout?_format=json';
-    public static API_LOGIN_STATUS = 'http://hypeweb.iypuat.com:5656/user/login_status?_format=json';
-    public static API_USER_FOLLOWING = 'http://hypeweb.iypuat.com:5656/api/user/flag/follow/list?type=following&page=1&limit=10&_format=json';
-    public static API_USER_FOLLOWER = 'http://hypeweb.iypuat.com:5656/api/user/flag/follow/list?type=follower&page=1&limit=10&_format=json';
-    public static API_USER_INTEREST = 'http://hypeweb.iypuat.com:5656/api/v1/user/interest?_format=json';
-    public static FACEBOOK = {
-        appId: '289859484806086',
-        xfbml: true,
-        version: 'v2.9'
-    };
+  public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
+  public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile?_format=json';
+  public static API_LOGOUT = API_ENDPOINT + 'api/user/logout?_format=json';
+  public static API_LOGIN_STATUS = API_ENDPOINT + 'user/login_status?_format=json';
+  public static API_USER_FOLLOWING = API_FOLLOW + '/list?_format=json&limit=10&type=following';
+  public static API_USER_FOLLOWER = API_FOLLOW + '/list?_format=json&limit=10&type=follower';
+  public static API_USER_UNFOLLOW = API_FOLLOW + '?_format=json';
+  public static API_USER_INTEREST = API_ENDPOINT + 'api/v1/user/interest?_format=json';
+  public static API_USER_ACTIVITY = API_ENDPOINT + '/api/v1/user/activity?_format=json';
+  public static API_ARTICLE = API_ENDPOINT + '/articles?_format=json';
+  public static API_ENDPOINT_DEMO = 'http://hylo.dev/assets/mock-data/mock-data.json';
+  public static FACEBOOK = {
+    appId: '289859484806086',
+    xfbml: true,
+    version: 'v2.9'
+  };
 }

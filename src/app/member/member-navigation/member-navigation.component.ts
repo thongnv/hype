@@ -9,9 +9,10 @@ export class MemberNavigationComponent implements OnInit {
 
   @Input('data') public data: any;
 
-  constructor() { }
+  public constructor() {
+  }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

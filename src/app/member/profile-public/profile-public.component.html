@@ -1,1 +1,95 @@
-<h1>OK</h1>
+<div class="row setting-wrap">
+  <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
+    <app-member-navigation [data]="userInfo"></app-member-navigation>
+  </div>
+  <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
+    <div>
+      <h3 class="favorites-title">Favorites</h3>
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Event</a></li>
+        <li><a data-toggle="tab" href="#menu1">Lists</a></li>
+        <li><a data-toggle="tab" href="#menu2">Places</a></li>
+      </ul>
+
+      <div class="tab-content">
+
+        <div id="event" class="tab-pane fade in active">
+          <div class="wrap-each-items">
+            <div class="avatar-profile">
+              <div class="month">APR</div>
+              <div class="date-number">21</div>
+              <div class="heart"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+            </div>
+            <div class="information-profile">
+              <div class="top-content">
+                <h4 class="information-title">Lorem ipsum Lorem ipsum</h4>
+                <p class="detail-information">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti iure blanditiis ex numquam
+                  minus, ipsum aliquam nam sit provident. Consectetur adipisicing consectetur.</p>
+              </div>
+              <div class="bottom-content">
+                <h5 class="mentioned">Mentioned by</h5>
+                <ul class="mentioned-item">
+                  <li><a href="#"></a></li>
+                  <li><a href="#"></a></li>
+                  <li><a href="#"></a></li>
+                </ul>
+              </div>
+              <div class="price-button">Free</div>
+              <div class="right-arrow">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          <div class="wrap-each-items">
+            <div class="avatar-profile">
+              <div class="month">APR</div>
+              <div class="date-number">21</div>
+              <div class="heart"><i class="fa fa-heart-o" aria-hidden="true"></i></div>
+            </div>
+            <div class="information-profile">
+              <div class="top-content">
+                <h4 class="information-title">Lorem ipsum Lorem ipsum</h4>
+                <p class="detail-information">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti iure blanditiis ex numquam
+                  minus, ipsum aliquam nam sit provident. Consectetur adipisicing consectetur.</p>
+              </div>
+              <div class="bottom-content">
+                <h5 class="mentioned">Mentioned by</h5>
+                <ul class="mentioned-item">
+                  <li><a href="#"></a></li>
+                  <li><a href="#"></a></li>
+                  <li><a href="#"></a></li>
+                </ul>
+              </div>
+              <div class="price-button">Free</div>
+              <div class="right-arrow">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+
+
+          <!--<app-profile-public-item [item]="profilePublic" *ngFor="let profilePublic of userInfo.userFollower"></app-profile-public-item>-->
+
+          <!--<app-follow-item [item]="follower" *ngFor="let follower of userInfo.userFollower"
+class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap"></app-follow-item>-->
+
+
+        </div>
+
+        <div id="menu1" class="tab-pane fade">
+          <h3>Menu 1</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+          <h3>Menu 2</h3>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+            rem aperiam.</p>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <h3>Menu 3</h3>
+          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

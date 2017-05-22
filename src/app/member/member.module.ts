@@ -18,6 +18,8 @@ import { FollowItemComponent } from './follow-item/follow-item.component';
 import {FavoriteComponent} from "./favorite/favorite.component";
 
 import {MainService} from "../services/main.service";
+import { FavoriteListComponent } from './favorite-list/favorite-list.component';
+import { FavoritePlaceComponent } from './favorite-place/favorite-place.component';
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import {MainService} from "../services/main.service";
     ProfilePublicComponent,
     InterestItemComponent,
     FollowItemComponent,
-    FavoriteComponent
+    FavoriteComponent,
+    FavoriteListComponent,
+    FavoritePlaceComponent
   ],
   providers: [MainService]
 })

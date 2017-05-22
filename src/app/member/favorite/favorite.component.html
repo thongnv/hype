@@ -3,8 +3,11 @@
         <app-member-navigation [data]="userInfo"></app-member-navigation>
     </div>
     <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
-        <section>
-            <h3>Favorite</h3>
+        <section *ngIf="userInfo.activities">
+            <h3>Favorites</h3>
+          <ul>
+            <li *ngFor="let act of userInfo.activities">{{act.data.title}}</li>
+          </ul>
         </section>
     </div>
 </div>

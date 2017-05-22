@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AppState } from '../app.service';
-import { MainService } from "../services/main.service";
+import { MainService } from '../services/main.service';
 
 @Component({
     selector: 'app-member',
@@ -37,8 +37,7 @@ export class MemberComponent implements OnInit {
                 following: this.userInfo.followingNumber,
                 follower: this.userInfo.followerNumber,
             }
-        }
-        console.log('sending updated setting: ', userSetting);
+        };
         this.mainService.setUserProfile(userSetting).then((resp) => {
             console.log('updated setting: ', resp);
         });
@@ -53,7 +52,7 @@ export class MemberComponent implements OnInit {
 
         this.mainService.getUserProfile().then((response) => {
             this.settingForm.patchValue({
-                receiveEmail: parseInt(response.field_notify_email)
+                receiveEmail: parseInt(response.field_notify_email, 2)
             });
             this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
             this.userInfo.firstName = response.field_first_name;
@@ -65,7 +64,6 @@ export class MemberComponent implements OnInit {
             this.userInfo.followerNumber = response.follow.follower;
             this.userInfo.contactNumber = response.field_contact_number;
             this.userInfo.receiveEmail = response.field_notify_email;
-            this.appState.set('userInfo', this.userInfo);
         });
     }
 
