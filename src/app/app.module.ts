@@ -28,7 +28,7 @@ import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -41,8 +41,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MainService } from "./services/main.service";
-import { CustomGmapDirective } from './gmap/custom-gmap.directive';
+import { MainService } from './services/main.service';
+import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 import { GmapService } from './services/gmap.service';
 
 // Application wide providers
@@ -62,7 +62,7 @@ type StoreType = {
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
 @NgModule({
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -71,14 +71,14 @@ type StoreType = {
     DiscoverComponent,
     CurateComponent,
     NavbarComponent,
-    CustomGmapDirective
+    GmapClustererDirective
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES, { useHash: false, preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ'
     }),
@@ -97,15 +97,15 @@ type StoreType = {
     ENV_PROVIDERS,
     APP_PROVIDERS,
     Title,
-    GmapService
+    GmapService,
+    GoogleMapsAPIWrapper
   ]
 })
 export class AppModule {
 
-  constructor(
-    public appRef: ApplicationRef,
-    public appState: AppState
-  ) {}
+  constructor(public appRef: ApplicationRef,
+              public appState: AppState) {
+  }
 
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {
@@ -133,7 +133,7 @@ export class AppModule {
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
-    store.restoreInputValues  = createInputTransfer();
+    store.restoreInputValues = createInputTransfer();
     // remove styles
     removeNgStyles();
   }
