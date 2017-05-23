@@ -3,7 +3,6 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import 'rxjs/add/operator/toPromise';
-import { promise } from 'selenium-webdriver';
 import { AppState } from '../app.service';
 
 @Injectable()

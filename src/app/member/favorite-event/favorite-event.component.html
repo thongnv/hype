@@ -1,0 +1,28 @@
+<div class="wrap-each-items" *ngIf="item">
+  <div class="avatar-profile">
+    <div class="fav-item-image">
+      <img [src]="item.image" width="140" height="140">
+    </div>
+    <div class="img-layer">
+      <div class="month">{{item.date_created | date:'MMM'}}</div>
+      <div class="date-number">{{item.date_created | date:'dd '}}</div>
+      <div class="heart"><i class="icon-sm" [class.icon-heart]="!item.selected" [class.icon-heart-selected]="item.selected" aria-hidden="true"></i></div>
+    </div>
+  </div>
+  <div class="information-profile">
+    <div class="top-content">
+      <h4 class="information-title">{{item.title}}</h4>
+      <p class="detail-information">{{item.description}}</p>
+    </div>
+    <div class="bottom-content">
+      <h5 class="mentioned">Mentioned by</h5>
+      <ul class="mentioned-item">
+        <li *ngFor="let ment of item.mentioned_by"><a class="mentioned-item-wrap"><img [src]="ment.avatar" width="29"
+                                                                                        height="28"></a></li>
+      </ul>
+    </div>
+    <div class="price-button">Free</div>
+    <div class="right-arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+  </div>
+</div>
+

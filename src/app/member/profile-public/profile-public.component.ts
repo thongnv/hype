@@ -11,8 +11,15 @@ export class ProfilePublicComponent implements OnInit {
 
   public userInfo: any;
   public publicProfile: any;
+  public favorite: any;
+  public selectedFavoriteType: any;
 
   public constructor(private appState: AppState, private mainService: MainService) {
+    this.selectedFavoriteType = 'event';
+  }
+
+  public onSelectFavoriteType(type: string): void {
+    this.selectedFavoriteType = type;
   }
 
   public demo(): void {
@@ -23,7 +30,8 @@ export class ProfilePublicComponent implements OnInit {
     this.demo();
     this.mainService.getUserPublicProfile().then((resp) => {
       console.log('getUserPublicProfile', resp);
-      this.publicProfile = resp.favorite;
+      this.publicProfile = resp.public_profile;
+      this.favorite = resp.favorite;
     });
   }
 }

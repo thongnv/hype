@@ -7,6 +7,7 @@ import { FollowerComponent } from './follower/follower.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { FavoriteListComponent } from './favorite-list/favorite-list.component';
 import { FavoritePlaceComponent } from './favorite-place/favorite-place.component';
+import { FavoriteEventComponent } from './favorite-event/favorite-event.component';
 
 export const routes = [
     {
@@ -19,8 +20,12 @@ export const routes = [
         {path: 'following', component: FollowingComponent},
         {path: 'follower', component: FollowerComponent},
         {path: 'favorite', component: FavoriteComponent},
+        {path: 'favorite/event', component: FavoriteEventComponent},
         {path: 'favorite/list', component: FavoriteListComponent},
         {path: 'favorite/place', component: FavoritePlaceComponent},
+        {path: 'profile/event', component: FavoriteEventComponent},
+        {path: 'profile/list', component: FavoriteListComponent},
+        {path: 'profile/place', component: FavoritePlaceComponent},
     ]
     }
 ];

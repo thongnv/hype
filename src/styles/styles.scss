@@ -44,24 +44,36 @@ body, html {
   .height100vh{
     height: 100vh;
   }
-  .icon{
+  .icon, .icon-sm{
     display: inline-block;
-    width: 50px;
-    height: 50px;
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
   }
+  .icon{
+    width: 50px;
+    height: 50px;
+  }
+  .icon-sm{
+    width: 35px;
+    height: 35px;
+  }
   .icon-trend{
-    background: url("../assets/img/icon-trend.png") no-repeat center center;
+    background: url("../assets/icon/icon-trend.png") no-repeat center center;
   }
   .icon-discover{
-    background: url("../assets/img/icon-discover.png") no-repeat center center;
+    background: url("../assets/icon/icon-discover.png") no-repeat center center;
   }
   .icon-curated{
-    background: url("../assets/img/icon-curated.png") no-repeat center center;
+    background: url("../assets/icon/icon-curated.png") no-repeat center center;
   }
   .icon-favorite{
-    background: url("../assets/img/icon-favorite.png") no-repeat center center;
+    background: url("../assets/icon/icon-favorite.png") no-repeat center center;
+  }
+  .icon-heart-selected{
+    background: url("../assets/icon/favorite-selected.png") no-repeat center center;
+  }
+  .icon-heart{
+    background: url("../assets/icon/favorite.png") no-repeat center center;
   }
 //  Profile Setting
   .user-avatar{
@@ -116,7 +128,132 @@ body, html {
     transition: width 0.3s;
     overflow: hidden;
   }
+  //favorite
+  .fav-component{
+    .favorites-title {
+      margin-left: 20px;
+    }
+    .nav-tabs li:first-child {
+      margin-left: 20px;
+    }
+    .nav-tabs li:nth-child(2) {
+      border-right: 0;
+      border-left: 0;
+    }
+    .nav-tabs li {
+      border: 1px solid #ccc;
+    }
+    .tab-content {
+      margin-left: 20px;
+    }
+    .nav-tabs li a {
+      border: 0px;
+      width: 80px;
+      text-align: center;
+      color: #555;
+    }
 
+
+    .wrap-each-items {
+      border-bottom: 1px solid #ccc;
+      width: 70%;
+      height: 180px;
+      margin-top: 30px;
+    }
+    .avatar-profile {
+      width: 140px;
+      height: 140px;
+      background: #ccc;
+      float: left;
+      margin-right: 10px;
+      position: relative;
+      color: #ffffff;
+    }
+    .month {
+      position: absolute;
+      top: 12%;
+      left: 8%;
+      font-size: 16px;
+    }
+    .date-number {
+      position: absolute;
+      top: 25%;
+      left: 6%;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .heart {
+      position: absolute;
+      top: 8%;
+      right: 10%;
+      font-size: 22px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    h4.information-title  {
+      margin-top: 0px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    p.detail-information {
+      width: 82%;
+      font-size: 13px;
+      margin-bottom: 21px;
+    }
+    .information-profile {
+      width: 70%;
+      float: left;
+      margin-left: 8px;
+      position: relative;
+    }
+    h5.mentioned {
+      float: left;
+      text-transform: uppercase;
+      margin-top: 0px;
+      font-size: 10px;
+      width: 15%;
+      line-height: 16px;
+      margin-right: 18px;
+      color: #bfbfbf;
+    }
+    ul.mentioned-item li {
+      list-style: none;
+      background: #ccc;
+      float: left;
+      margin-right: 8px;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #ccc;
+    }
+    .price-button{
+      position: absolute;
+      top: 0%;
+      right: 0%;
+      border: 2px solid #555;
+      padding: 5px 12px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      color: #000;
+      font-weight: bold;
+    }
+    .right-arrow {
+      position: absolute;
+      top: 39%;
+      right: 1%;
+      font-size: 22px;
+      color: #bdbcbc;
+      font-weight: normal;
+    }
+    .fav-item-image{
+      width: 140px;
+      height: 140px;
+      opacity: 0.6;
+      border-radius: 4px;
+      background-color: #070707;
+    }
+  }
+  //END favorite
   //responsive
   @media screen and(min-width: 768px){
     .setting-wrap > div{

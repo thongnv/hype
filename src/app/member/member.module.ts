@@ -15,11 +15,13 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { InterestItemComponent } from './interest-item/interest-item.component';
 import { FollowItemComponent } from './follow-item/follow-item.component';
-import {FavoriteComponent} from "./favorite/favorite.component";
+import { FavoriteComponent } from './favorite/favorite.component';
 
-import {MainService} from "../services/main.service";
+import { MainService } from '../services/main.service';
 import { FavoriteListComponent } from './favorite-list/favorite-list.component';
 import { FavoritePlaceComponent } from './favorite-place/favorite-place.component';
+import { FavoriteEventComponent } from './favorite-event/favorite-event.component';
+import { FavoritePipe } from './favorite.pipe';
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import { FavoritePlaceComponent } from './favorite-place/favorite-place.componen
     FollowItemComponent,
     FavoriteComponent,
     FavoriteListComponent,
-    FavoritePlaceComponent
+    FavoritePlaceComponent,
+    FavoriteEventComponent,
+    FavoritePipe
   ],
   providers: [MainService]
 })
