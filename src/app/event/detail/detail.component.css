@@ -1,0 +1,32 @@
+.One-Direction-Concer {
+  width: 640px;
+  height: 34px;
+  font-family: Roboto, Helvetica, sans-serif;
+  font-size: larger;
+  font-weight: bold;
+  line-height: 1.13;
+  text-align: left;
+  color: #3b3b3b;
+}
+.icon_left {
+  width: 10px;
+  height: 17px;
+  object-fit: contain;
+}
+.event-title {
+  display: table;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+.bold {
+  font-weight: bold;
+}
+.comment {
+  margin-bottom: 8px;
+  margin-left: 3px;
+}
+

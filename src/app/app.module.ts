@@ -44,6 +44,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 import { GmapService } from './services/gmap.service';
+import { EventDetailComponent } from './event/detail/detail.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -71,7 +72,8 @@ type StoreType = {
     DiscoverComponent,
     CurateComponent,
     NavbarComponent,
-    GmapClustererDirective
+    GmapClustererDirective,
+    EventDetailComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
