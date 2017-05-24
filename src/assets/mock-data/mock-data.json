@@ -5,7 +5,8 @@
     "follow": {
       "following": 12,
       "follower": 22
-    }
+    },
+    "showNav": "true"
   },
   "favorite": [
     {
@@ -38,7 +39,7 @@
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "event",
       "selected": "true",
-      "price": "free",
+      "price": "$12-$23",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
         {
@@ -57,12 +58,12 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111113",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "event",
       "selected": "false",
-      "price": "free",
+      "price": "$12-$23",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
         {
@@ -81,12 +82,12 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111114",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "list",
       "selected": "true",
-      "price": "free",
+      "price": "$12-$23",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
         {
@@ -105,12 +106,12 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111115",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "list",
       "selected": "false",
-      "price": "free",
+      "price": "$12-$23",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
         {
@@ -129,12 +130,12 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111116",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "list",
       "selected": "true",
-      "price": "free",
+      "price": "$12-$23",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
         {
@@ -153,12 +154,12 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111117",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "place",
       "selected": "false",
-      "price": "free",
+      "price": "$12-$23",
       "vote": "3",
       "image": "assets/img/avatar/demoavatar.png",
       "mentioned_by": [
@@ -178,7 +179,7 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111118",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "place",
@@ -203,7 +204,7 @@
       "date_created": "2017-05-21 13:34:00"
     },
     {
-      "id": "1111112",
+      "id": "1111119",
       "title": "Lorem ipsum Lorem ipsum",
       "description": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum",
       "type": "place",

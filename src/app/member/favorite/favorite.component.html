@@ -1,13 +1,23 @@
 <div class="row setting-wrap">
-    <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
-        <app-member-navigation [data]="userInfo"></app-member-navigation>
+  <div class="col-lg-2 col-sm-4 col-xs-12 col-left">
+    <app-member-navigation [data]="userInfo"></app-member-navigation>
+  </div>
+  <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
+    <div class="fav-component">
+      <h3 class="favorites-title">Favorites</h3>
+      <ul class="nav nav-tabs">
+        <li><a (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Event</a></li>
+        <li><a (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</a></li>
+        <li><a (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</a></li>
+      </ul>
+
+      <div class="tab-content" *ngIf="favorite">
+        <div *ngFor="let fav of favorite | favorite: selectedFavoriteType">
+          <app-favorite-event *ngIf="selectedFavoriteType === 'event'" [item]="fav" (onClickLike)="onClickLike($event)" (onClickDelete)="onClickDelete($event)"></app-favorite-event>
+          <app-favorite-list *ngIf="selectedFavoriteType === 'list'" [item]="fav" (onClickDelete)="onClickDelete($event)"></app-favorite-list>
+          <app-favorite-place *ngIf="selectedFavoriteType === 'place'" [item]="fav" (onClickDelete)="onClickDelete($event)"></app-favorite-place>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-10 col-sm-8 col-xs-12 col-right">
-        <section *ngIf="userInfo.activities">
-            <h3>Favorites</h3>
-          <ul>
-            <li *ngFor="let act of userInfo.activities">{{act.data.title}}</li>
-          </ul>
-        </section>
-    </div>
+  </div>
 </div>

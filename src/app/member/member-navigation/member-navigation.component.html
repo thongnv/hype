@@ -24,3 +24,10 @@
     <li [routerLink]="['/auth/logout']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Logout</li>
   </ul>
 </div>
+<div *ngIf="!data.showNav">
+  <ul class="member-nav">
+    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">{{data.userName}}</li>
+    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">List</li>
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Activities</li>
+  </ul>
+</div>

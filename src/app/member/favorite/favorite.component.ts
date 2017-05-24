@@ -12,20 +12,54 @@ export class FavoriteComponent implements OnInit {
 
   public data: any;
   public userInfo: any;
+  public selectedFavoriteType: any;
+  public favorite: any;
 
   constructor(private appState: AppState, private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
+    this.selectedFavoriteType = 'event';
+  }
+  public onSelectFavoriteType(type: string): void {
+    this.selectedFavoriteType = type;
+  }
+  public onClickLike(item: any): void {
+    this.favorite.forEach((fav, index) => {
+      if (fav.id === item.id) {
+        this.favorite[index] = item;
+      }
+    });
+    console.log('onClickLike: ', item);
   }
 
+  public onClickDelete(item: any) {
+    let selectedId = null;
+    this.favorite.forEach((fav, index) => {
+      if (fav && fav.id === item.id) {
+        selectedId = index;
+        return true;
+      }
+    });
+    if (selectedId != null) {
+      delete this.favorite[selectedId];
+      this.favorite = this.favorite.filter((fav) => fav.id !== selectedId);
+      console.log('deleted ', selectedId);
+    } else {
+      console.log('CAN NOT delete');
+    }
+  }
   public ngOnInit() {
-    this.getUserProfile();
-    this.getUserFavorite('activity');
+    // this.getUserProfile();
+    // this.getUserFavorite('activity');
+    this.mainService.getUserPublicProfile().then((resp) => {
+      console.log('getUserPublicProfile', resp);
+      this.userInfo = resp.public_profile;
+      this.favorite = resp.favorite;
+    });
   }
 
   private getUserFavorite(type: string) {
     this.mainService.getUserFavorite(type).then((resp) => {
-      console.log(resp);
-      this.userInfo.activities = resp.data;
+      this.userInfo.favorite = resp;
       this.appState.set('userInfo', this.userInfo);
     });
   }

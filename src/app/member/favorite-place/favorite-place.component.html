@@ -1,3 +1,21 @@
-<div class="fav-item-wrap" *ngIf="item">
-  <p class="fav-item-title">{{item.title}}</p>
+<div class="wrap-each-items" *ngIf="item">
+  <div class="avatar-profile">
+    <div class="fav-item-image">
+      <img [src]="item.image" width="140" height="140">
+    </div>
+  </div>
+  <div class="information-profile">
+    <div class="top-content">
+      <h4 class="information-title">{{item.title}}</h4>
+      <ul class="stars-list">
+        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+      </ul>
+      <p class="detail-information">{{item.description}}</p>
+    </div>
+    <div class="close-button" (click)="onDeleteEmit(item)"><i class="fa fa-times" aria-hidden="true"></i></div>
+  </div>
 </div>

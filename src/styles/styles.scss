@@ -230,12 +230,14 @@ body, html {
       position: absolute;
       top: 0%;
       right: 0%;
-      border: 2px solid #555;
-      padding: 5px 12px;
-      border-radius: 8px;
-      text-transform: uppercase;
-      color: #000;
+      color: #ec3d62;
       font-weight: bold;
+      font-size: 14px;
+    }
+    .price-button.free-price{
+      color: #3b3b3b;
+      font-weight: 100;
+      text-transform: capitalize;
     }
     .right-arrow {
       position: absolute;
@@ -248,9 +250,20 @@ body, html {
     .fav-item-image{
       width: 140px;
       height: 140px;
-      opacity: 0.6;
       border-radius: 4px;
+    }
+    .month, .date-number,.heart{
+      z-index: 2;
+    }
+    .img-layer{
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       background-color: #070707;
+      opacity: 0.6;
+      z-index:1;
     }
   }
   //END favorite

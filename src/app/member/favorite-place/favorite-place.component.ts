@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MainService } from '../../services/main.service';
-import { AppState } from '../../app.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-favorite-place',
@@ -9,11 +7,12 @@ import { AppState } from '../../app.service';
 })
 export class FavoritePlaceComponent implements OnInit {
   @Input('item') public item: any;
-
-  public constructor(private mainService: MainService) {
+  @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
+  public constructor() {
   }
 
-  public onClickLike(): void {
+  public onDeleteEmit(item: any): void {
+    this.onClickDelete.emit(item);
   }
 
   public ngOnInit() {

@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MainService } from '../../services/main.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-favorite-event',
@@ -9,14 +8,18 @@ import { MainService } from '../../services/main.service';
 export class FavoriteEventComponent implements OnInit {
   @Input('item') public item: any;
 
-  public constructor(private mainService: MainService) {
-  }
+  @Output('onClickLike') public onClickLike = new EventEmitter<any>();
+  @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
 
-  public onClickLike(): void {
+  public constructor() {
   }
-
+  public onLikeEmit(item: any) {
+    item.selected = item.selected ? false : true;
+    this.onClickLike.emit(item);
+  }
+  public onDeleteEmit(item: any): void {
+    this.onClickDelete.emit(item);
+  }
   public ngOnInit() {
-    console.log(this.item);
   }
-
 }
