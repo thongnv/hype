@@ -7,9 +7,6 @@ export enum Direction {UNKNOWN, NEXT, PREV}
   selector: 'carousel',
   template: `
     <div (mouseenter)="pause()" (mouseleave)="play()" class="carousel slide">
-      <ol class="carousel-indicators" [hidden]="slides.length <= 1">
-        <li *ngFor="let s of slides" [class.active]="s.active === true" (click)="select(s)"></li>
-      </ol>
       <div class="carousel-inner">
         <ng-content></ng-content>
       </div>
@@ -21,25 +18,39 @@ export enum Direction {UNKNOWN, NEXT, PREV}
       </a>
     </div>
 
-    <div class="row">
-      <div *ngFor="let image of images">
-        <img [src]="image">
+    <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
+      <div class="carousel-inner carousel-indicators" [hidden]="slides.length <= 1">
+        <div *ngFor="let s of slides" [class.active]="s.active === true" (click)="select(s)"
+             [ngStyle]="{'background-image': 'url(' + images[s.index].image + ')'}">
+        </div>
       </div>
     </div>
-  `
+  `,
+  styleUrls: ['./detail.component.css']
 })
 export class CarouselComponent implements OnDestroy {
+
   @Input() public noWrap: boolean;
   @Input() public noPause: boolean;
   @Input() public noTransition: boolean;
-  @Input() public interval: number;
+  @Input('images') public images: any[];
+
+  @Input()
+  public get interval(): number {
+    return this._interval;
+  }
+
+  public set interval(value: number) {
+    this._interval = value;
+    this.restartTimer();
+  }
 
   public slides: SlideComponent[] = [];
-  public images = [];
   private currentInterval: any;
   private isPlaying: boolean;
   private destroyed: boolean = false;
   private currentSlide: SlideComponent;
+  private _interval: number;
 
   public ngOnDestroy() {
     this.destroyed = true;

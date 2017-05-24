@@ -167,3 +167,15 @@
 .carousel-control.right {
   background-color: transparent;
 }
+
+.event-location {
+  margin-top: 20px;
+}
+
+.event-location > span {
+  font-weight: bold
+}
+
+.sebm-google-map-container {
+  height: 250px;
+}

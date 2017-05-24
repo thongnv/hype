@@ -20,10 +20,14 @@ export class EventDetailComponent implements OnInit {
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
+  public lat: number;
+  public lng: number;
   private images = [];
 
   constructor() {
     this.addNewSlide();
+    this.lat = 1.290270;
+    this.lng = 103.851959;
   }
 
   public ngOnInit() {
