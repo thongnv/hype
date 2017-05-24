@@ -1,0 +1,55 @@
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ"></script>
+<article class="row new-list">
+  <header>
+    <ul>
+      <li>List Info</li>
+      <li>Preview</li>
+    </ul>
+  </header>
+  <div class="form-wrap">
+    <form class="form-horizontal" [formGroup]="listFormData" (ngSubmit)="onSubmit()">
+      <div class="input-box col-xs-12 col-md-6">
+        <h3 class="">create a list</h3>
+        <small>A list is a write-up with places or activities tagged to it</small>
+        <div class="form-group">
+          <label for="list-name">List Name</label>
+          <input formControlName="listName" id="list-name" class="form-control" type="text">
+        </div>
+        <div class="form-group">
+          <label for="list-description">What is your list about? Tell us your story</label>
+          <textarea  formControlName="listDescription" id="list-description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="list-category">Category</label>
+          <select name="" id="list-category"  formControlName="listCategory">
+            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input formControlName="listImages" type='file' (change)="readUrl($event)" multiple="multiple">
+          <div *ngFor="let img of previewUrl" class="preview-wrap">
+            <img [src]="img" width="100"/>
+            <a class="fa fa-times" (click)="onRemovePreview(img)"></a>
+          </div>
+        </div>
+      </div>
+      <div class="image-box col-xs-12 col-md-6">
+        <div class="image-item form-group">
+          <strong>#1</strong>
+          <app-gmap-auto-place (onChangePlace)="updatePlace($event)"></app-gmap-auto-place>
+          <textarea class="form-control" name="" id="" cols="20" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn btn-success" (click)="onAddPlace()">
+            <i class="fa fa-plus"></i>&nbsp;Add Item
+          </button>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-success">Preview</button>
+      </div>
+    </form>
+  </div>
+</article>

@@ -272,6 +272,11 @@ body, html {
     .setting-wrap > div{
       height: calc(100vh - 50px);
     }
+    .navbar-nav>li>a{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      line-height: 20px;
+    }
   }
   @media screen and(max-width: 767px){
     .setting-wrap > div{

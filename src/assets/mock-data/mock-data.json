@@ -228,5 +228,13 @@
       ],
       "date_created": "2017-05-21 13:34:00"
     }
+  ],
+  "categories": [
+    {"id":0, "name":"category 0"},
+    {"id":1, "name":"category 1"},
+    {"id":2, "name":"category 2"},
+    {"id":3, "name":"category 3"},
+    {"id":4, "name":"category 4"},
+    {"id":5, "name":"category 5"}
   ]
 }

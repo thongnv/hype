@@ -1,16 +1,13 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule,
-  ApplicationRef
+  NgModule, ModuleWithProviders, ApplicationRef
 } from '@angular/core';
 import {
-  removeNgStyles,
-  createNewHosts,
-  createInputTransfer
+  removeNgStyles, createNewHosts, createInputTransfer
 } from '@angularclass/hmr';
 import {
   RouterModule,
@@ -45,9 +42,11 @@ import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 import { GmapService } from './services/gmap.service';
 import { EventDetailComponent } from './event/detail/detail.component';
+import { CurateNewComponent } from './curate-new/curate-new.component';
 import { SlideComponent } from './event/detail/slide.component';
-import { CarouselComponent } from './event/detail/carousel.component';
 
+import { CarouselComponent } from './event/detail/carousel.component';
+import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -76,17 +75,21 @@ type StoreType = {
     NavbarComponent,
     GmapClustererDirective,
     EventDetailComponent,
+    CurateNewComponent,
     SlideComponent,
-    CarouselComponent
+    CarouselComponent,
+    GmapAutoPlaceComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ'
+      apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
+      libraries: ['places']
     }),
     NgbModule.forRoot(),
     Angular2FontawesomeModule,
