@@ -153,6 +153,13 @@
   </div>
 
   <div class="col-md-5">
-    b
+    <div class="row">
+      <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [images]="images">
+        <slide *ngFor="let image of images; let index=index"
+               [active]="image.active">
+          <img [src]="image.image" style="margin:auto;">
+        </slide>
+      </carousel>
+    </div>
   </div>
 </div>
