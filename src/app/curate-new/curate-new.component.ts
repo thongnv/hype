@@ -15,7 +15,6 @@ export class CurateNewComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public previewUrl: string[] = [];
-  public places: any[] = [];
 
   public listFormData = this.fb.group({
     listName: ['', Validators.required],
@@ -27,15 +26,6 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public fb: FormBuilder, private mainService: MainService,
               private appState: AppState, private router: Router) {
-    this.places.push({
-      id: 1,
-      location: {
-        lat: '',
-        lng: '',
-        name: ''
-      },
-      description: ''
-    });
     this.onAddPlace();
   }
 
@@ -51,7 +41,6 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onRemovePreview(imageUrl) {
-    console.log(imageUrl);
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
