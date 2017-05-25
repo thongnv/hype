@@ -2,7 +2,7 @@ export interface User {
   firstName: string;
   lastName: string;
   contactNumber: string;
-  avatar: 'assets/img/avatar/demoavatar.png';
+  avatar: string;
   followingNumber: number;
   followerNumber: number;
   receiveEmail: number;
@@ -13,17 +13,18 @@ export interface User {
 }
 
 export interface HyloEvent {
+  creator: User;
   name: string;
   location: Location;
   detail: string;
   category: string;
-  time: string;
+  date: string;
   price: string;
   call2action: Call2Action;
   mentions: Icon[];
   images: string[];
   rating: number;
-  comments: HyloComment[];
+  experiences: Experience[];
 }
 
 export interface Location {
@@ -42,12 +43,19 @@ export interface Call2Action {
   link: string;
 }
 
-export interface HyloComment {
-  rating: number;
-  comment: string;
-  images: string[];
+export interface Experience {
   user: User;
+  rating: number;
+  date: string;
+  text: string;
+  images: string[];
   comments: HyloComment[];
   likeNumber: number;
-  date: string;
+}
+
+export interface HyloComment {
+  user: User;
+  text: string;
+  likeNumber: number;
+  replies: HyloComment[];
 }

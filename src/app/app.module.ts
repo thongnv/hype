@@ -47,6 +47,7 @@ import { SlideComponent } from './event/detail/slide.component';
 
 import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
+import { EventService } from './services/event.service';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -107,7 +108,8 @@ type StoreType = {
     APP_PROVIDERS,
     Title,
     GmapService,
-    GoogleMapsAPIWrapper
+    GoogleMapsAPIWrapper,
+    EventService
   ]
 })
 export class AppModule {

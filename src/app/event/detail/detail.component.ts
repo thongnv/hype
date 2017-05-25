@@ -1,15 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-let IMAGES = [
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car1.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car2.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car3.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car4.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car5.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
-  'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
-];
+import { HyloEvent, User } from '../../app.interface';
+import { AppState } from '../../app.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-detail',
@@ -20,22 +12,25 @@ export class EventDetailComponent implements OnInit {
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
-  public lat: number;
-  public lng: number;
-  private images = [];
+  public noTransition: boolean = false;
 
-  constructor() {
+  public slides = [];
+  public event: HyloEvent;
+  private user: User;
+
+  constructor(private appState: AppState, private eventService: EventService) {
+    this.event = eventService.getEvent('123');
+    this.user = this.appState.state.userInfo;
     this.addNewSlide();
-    this.lat = 1.290270;
-    this.lng = 103.851959;
   }
 
   public ngOnInit() {
+    // TODO
   }
 
   private addNewSlide() {
-    for (let image of IMAGES) {
-      this.images.push({image});
+    for (let image of this.event.images) {
+      this.slides.push({image});
     }
   }
 

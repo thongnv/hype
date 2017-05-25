@@ -5,57 +5,48 @@
            srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x"
            class="icon_left">
-      <span class="One-Direction-Concer"> One Direction Concert in Singapore </span>
+      <span class="One-Direction-Concer" [innerHTML]="event.name"></span>
     </div>
 
     <hr>
 
     <div class="row">
-      <div class="col-md-1 align-center">
-        <p><i fa [name]="'map-marker'" [size]=1></i></p>
-        <p><i fa [name]="'calendar'" [size]=1></i></p>
-        <p><i fa [name]="'tag'" [size]=1></i></p>
-        <p><i fa [name]="'ticket'" [size]=1></i></p>
+      <div class="col-md-3">
+        <p>Location</p>
+        <p>Date / Time</p>
+        <p>Price Range</p>
+        <p>Mentioned by</p>
       </div>
-      <div class="col-md-8">
-        <p class="event-place"> Singapore Indoor </p>
-        <p>1st April 2017</p>
-        <p>$$$</p>
-        <p>Buy Tickets</p>
+      <div class="col-md-6">
+        <p class="event-place" [innerHTML]="event.location.name"></p>
+        <p [innerHTML]="event.date"></p>
+        <p [innerHTML]="event.price + ' ' + event.call2action.action"></p>
+        <p>
+          <span *ngFor="let mention of event.mentions">
+            <img [src]="mention.iconUrl">
+          </span>
+        </p>
       </div>
       <div class="col-md-3 align-center">
         <p>CREATED BY</p>
-        <i fa [name]="'user-circle-o'" [size]=4></i>
+        <img class="user-avatar" [src]="event.creator.avatar">
+        <p [innerHTML]="event.creator.firstName + ' ' + event.creator.lastName"></p>
+        <p [innerHTML]="event.rating + '/5'"></p>
       </div>
     </div>
 
     <hr>
 
     <div>
-      <h5 class="bold">MENTIONED BY</h5>
-      <i fa [name]="'square-o'" [size]=4></i>
-      <i fa [name]="'square-o'" [size]=4></i>
-      <i fa [name]="'square-o'" [size]=4></i>
-      <i fa [name]="'square-o'" [size]=4></i>
-    </div>
-
-    <hr>
-
-    <div>
-      <h5 class="bold">DETAILS</h5>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum
+      <h5 class="bold">Details</h5>
+      <p [innerHTML]="event.detail">
       </p>
     </div>
 
     <hr>
 
     <div>
-      <h5 class="bold">POST YOUR EXPERIENCE</h5>
+      <h5 class="bold">Post your experience</h5>
       <p>
         <i fa [name]="'star-o'" [size]=1></i>
         <i fa [name]="'star-o'" [size]=1></i>
@@ -65,29 +56,26 @@
       </p>
       <p>
         <textarea style="min-width: 90%" placeholder="What's your experience here?">
-          this is a text
         </textarea>
       </p>
       <p>
-        <i fa [name]="'camera'" [size]=4></i>
+        <a>+ Add Images</a>
       </p>
     </div>
 
     <hr>
 
-    <div>
-      <h5 class="bold">EXPERIENCES (2)</h5>
+    <h5 class="bold">Experiences (<span [innerHTML]="event.experiences.length"></span>)</h5>
+    <div *ngFor="let experience of event.experiences">
       <div class="row">
         <div class="col-md-2">
-          <i fa [name]="'user-circle-o'" [size]=3></i>
+          <img [src]="experience.user.avatar" class="user-avatar">
         </div>
         <div class="col-md-6">
-          <p>
-            Derek Ang
+          <p [innerHTML]="experience.user.firstName + ' ' + experience.user.lastName">
           </p>
           <div>
-            <div>4th April</div>
-            <div>2017</div>
+            <div [innerHTML]="experience.date"></div>
           </div>
         </div>
         <div class="col-md-4">
@@ -99,29 +87,18 @@
         </div>
       </div>
       <div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-          est
-          laborum
-        </p>
+        <p [innerHTML]="experience.text"></p>
       </div>
-      <div>
-        <i fa [name]="'image'" [size]=5></i>
-        <i fa [name]="'image'" [size]=5></i>
-        <i fa [name]="'image'" [size]=5></i>
-        <i fa [name]="'image'" [size]=5></i>
-        <i fa [name]="'image'" [size]=5></i>
-      </div>
+      <span *ngFor="let image of experience.images">
+        <img [src]="image" style="width: 100px; height: 100px">
+      </span>
 
       <div class="row">
         <div class="col-md-2">
-          <i fa [name]="'thumbs-o-up'" [size]=1></i> 6 Likes
+          <i fa [name]="'thumbs-o-up'" [size]=1></i> <span [innerHTML]="experience.likeNumber"></span> Likes
         </div>
         <div class="col-md-8">
-          <i fa [name]="'comment-o'" [size]=1></i> Comment
+          <i fa [name]="'comment-o'" [size]=1></i> <span [innerHTML]="experience.comments.length"></span> Comments
         </div>
         <div class="col-md-2 align-right">
           Report
@@ -131,44 +108,54 @@
       <hr>
 
       <div class="row comment">
-        <div class="col-md-1">
-          <i fa [name]="'user-circle-o'" [size]=2></i>
+        <div class="col-md-2">
+          <img class="user-avatar-small" [src]="user.avatar">
         </div>
-        <textarea class="col-md-10" placeholder="Write your comment"></textarea>
+        <textarea class="col-md-9" placeholder="Write your comment"></textarea>
       </div>
-      <div class="row comment">
-        <div class="col-md-1">
-          <i fa [name]="'user-circle-o'" [size]=2></i>
+
+      <div class="row comment" *ngFor="let comment of experience.comments">
+        <div class="col-md-2">
+          <img class="user-avatar-small" [src]="comment.user.avatar">
         </div>
         <div class="col-md-9">
-          <span style="font-weight: bold">HK Lim</span>
-          I was there too. Awesome concert ever...
+          <span style="font-weight: bold" [innerHTML]="comment.user.firstName + ' ' + comment.user.lastName"></span>
+          <span [innerHTML]="comment.text"></span>
         </div>
       </div>
 
-      <p class="align-right">View All Comments</p>
+      <div class="row">
+        <p class="col-md-4"><a>View more comments</a></p>
+        <p class="col-md-8" style="float: right;">2/5</p>
+      </div>
 
     </div>
+
+    <hr>
 
   </div>
 
   <div class="col-md-5">
+
     <div class="row">
-      <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [images]="images">
-        <slide *ngFor="let image of images; let index=index"
-               [active]="image.active">
-          <img [src]="image.image" style="margin:auto;">
+      <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                [carouselSlides]="slides">
+        <slide *ngFor="let slide of slides; let index=index"
+               [active]="slide.active">
+          <img [src]="slide.image" style="margin:auto;">
         </slide>
       </carousel>
     </div>
 
     <div class="event-location">
       <p>Location</p>
-      <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="13">
-        <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+      <sebm-google-map [latitude]="event.location.lat" [longitude]="event.location.lng" [zoom]="13">
+        <sebm-google-map-marker [latitude]="event.location.lat"
+                                [longitude]="event.location.lng">
+        </sebm-google-map-marker>
       </sebm-google-map>
-
     </div>
 
   </div>
+
 </div>
