@@ -21,6 +21,8 @@ export class SlideComponent implements OnInit, OnDestroy {
   @HostBinding('class.carousel-item')
   private addClass: boolean = true;
 
+  private image: string;
+
   constructor(private carousel: CarouselComponent) {
   }
 

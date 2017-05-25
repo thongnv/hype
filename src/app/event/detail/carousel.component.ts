@@ -21,7 +21,7 @@ export enum Direction {UNKNOWN, NEXT, PREV}
     <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
       <div class="carousel-inner carousel-indicators" [hidden]="slides.length <= 1">
         <div *ngFor="let s of slides" [class.active]="s.active === true" (click)="select(s)"
-             [ngStyle]="{'background-image': 'url(' + images[s.index].image + ')'}">
+             [ngStyle]="{'background-image': 'url(' + carouselSlides[s.index].image + ')'}">
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@ export class CarouselComponent implements OnDestroy {
   @Input() public noWrap: boolean;
   @Input() public noPause: boolean;
   @Input() public noTransition: boolean;
-  @Input('images') public images: any[];
+  @Input('carouselSlides') public carouselSlides: SlideComponent[];
 
   @Input()
   public get interval(): number {
