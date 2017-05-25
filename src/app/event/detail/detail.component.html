@@ -79,11 +79,12 @@
           </div>
         </div>
         <div class="col-md-4">
-          <i fa [name]="'star'" [size]=1></i>
-          <i fa [name]="'star'" [size]=1></i>
-          <i fa [name]="'star'" [size]=1></i>
-          <i fa [name]="'star'" [size]=1></i>
-          <i fa [name]="'star-o'" [size]=1></i>
+          <span *ngFor="let i of experience.rating | myArray">
+            <i fa [name]="'star'" [size]=1></i>
+          </span>
+          <span *ngFor="let i of 5 - experience.rating | myArray">
+            <i fa [name]="'star-o'" [size]=1></i>
+          </span>
         </div>
       </div>
       <div>
