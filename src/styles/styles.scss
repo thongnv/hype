@@ -267,6 +267,15 @@ body, html {
     }
   }
   //END favorite
+  //Gmap-place
+  .image-box .panel-heading {
+    padding: 5px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    font-weight: 600;
+  }
+  //END Gmap-places
   //responsive
   @media screen and(min-width: 768px){
     .setting-wrap > div{

@@ -14,6 +14,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   @Output('onChangePlace') public onChangePlace = new EventEmitter<any>();
   @ViewChild('search')
   public searchElementRef: ElementRef;
+  public imageUrl: string = '';
 
   public constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
   }
@@ -38,5 +39,17 @@ export class GmapAutoPlaceComponent implements OnInit {
         });
       });
     });
+  }
+
+  public readUrl(event) {
+    console.log('image:',event.target.files[0]);
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.imageUrl = event.target.result;
+        this.group.controls.image.patchValue(event.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 }

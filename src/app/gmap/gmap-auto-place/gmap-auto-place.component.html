@@ -1,10 +1,21 @@
-<div [formGroup]="group">
-  <input formControlName="place" placeholder="search for location" autocorrect="off" autocapitalize="off"
-         spellcheck="off" type="text" class="form-control" #search>
-  <input hidden type="text" formControlName="lat" >
-  <input hidden type="text" formControlName="lng" >
-  <small [hidden]="group.controls.place.valid" class="text-danger">
-    Place is required
-  </small>
-  <textarea *ngIf="description" formControlName="description" class="form-control" name="" id="" cols="20" rows="3"></textarea>
+<div [formGroup]="group" class="gmap-place col-xs-12">
+  <div class="form-group">
+    <input formControlName="place" placeholder="Search & tag an activity or place" autocorrect="off"
+           autocapitalize="off"
+           spellcheck="off" type="text" class="form-control" #search>
+    <input hidden type="text" formControlName="lat">
+    <input hidden type="text" formControlName="lng">
+    <small [hidden]="group.controls.place.valid" class="text-danger">This field is required</small>
+  </div>
+  <div class="form-group">
+    <textarea *ngIf="description" formControlName="description" class="form-control" name="" id="" cols="20" rows="3"
+              placeholder="Write your comments"></textarea>
+  </div>
+  <div class="form-group" *ngIf="image">
+    <label class="upload-image-label" for="fileImg">
+      <input [hidden]="true" formControlName="image" type='text'>
+      <input id="fileImg" type='file' (change)="readUrl($event)">
+      <img [src]="imageUrl" width="100%"/>
+    </label>
+  </div>
 </div>

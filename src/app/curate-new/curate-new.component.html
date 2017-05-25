@@ -1,4 +1,5 @@
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ"></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ"></script>
 <article class="row new-list">
   <header>
     <ul>
@@ -7,49 +8,51 @@
     </ul>
   </header>
   <div class="form-wrap">
-    <form class="form-horizontal" [formGroup]="listFormData" (ngSubmit)="onSubmit()">
+    <form class="" [formGroup]="listFormData" (ngSubmit)="onSubmit()">
       <div class="input-box col-xs-12 col-md-6">
         <h3 class="">create a list</h3>
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
-          <label for="list-name">List Name</label>
+          <label class="control-label" for="list-name">List Name</label>
           <input formControlName="listName" id="list-name" class="form-control" type="text">
+          <small [hidden]="listFormData.controls.listName.valid" class="text-danger">This field is required</small>
         </div>
         <div class="form-group">
-          <label for="list-description">What is your list about? Tell us your story</label>
-          <textarea  formControlName="listDescription" id="list-description" class="form-control"></textarea>
+          <label class="control-label" for="list-description">What is your list about? Tell us your story</label>
+          <textarea formControlName="listDescription" id="list-description" class="form-control"></textarea>
         </div>
         <div class="form-group">
-          <label for="list-category">Category</label>
-          <select name="" id="list-category"  formControlName="listCategory">
+          <label class="control-label" for="list-category">Category</label>
+          <select class="form-control" name="" id="list-category" formControlName="listCategory">
             <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
           </select>
         </div>
-        <div class="form-group">
-          <input formControlName="listImages" type='file' (change)="readUrl($event)" multiple="multiple">
-          <div *ngFor="let img of previewUrl" class="preview-wrap">
-            <img [src]="img" width="100"/>
-            <a class="fa fa-times" (click)="onRemovePreview(img)"></a>
-          </div>
+        <div class="form-group list-img-box">
+          <label class="control-label" id="list-img-label" for="listImg">
+            <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' (change)="readUrl($event)" multiple="multiple">
+          </label>
+            <div *ngFor="let img of previewUrl" class="preview-wrap">
+              <img [src]="img"/>
+              <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+            </div>
+
         </div>
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Create</button>
-          <button type="button" class="btn btn-success">Preview</button>
-        </div>
+
       </div>
       <div class="image-box col-xs-12 col-md-6">
         <div formArrayName="listPlaces">
           <div *ngFor="let place of listFormData.controls.listPlaces.controls; let i=index" class="panel panel-default">
             <div class="panel-heading">
               <span># {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right" *ngIf="listFormData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)"></span>
+              <span class="glyphicon glyphicon-remove pull-right"
+                    *ngIf="listFormData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)"></span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]" [description]="true"></app-gmap-auto-place>
+              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]" [description]="true"
+                                   [image]="true"></app-gmap-auto-place>
             </div>
           </div>
         </div>
-
         <div class="form-group">
           <button type="button" class="btn btn-success" (click)="onAddPlace()">
             <i class="fa fa-plus"></i>&nbsp;Add Item
@@ -57,6 +60,10 @@
         </div>
       </div>
 
+      <div class="form-actions col-xs-12 col-md-12">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-success">Preview</button>
+      </div>
     </form>
   </div>
 </article>

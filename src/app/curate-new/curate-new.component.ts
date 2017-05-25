@@ -98,10 +98,6 @@ export class CurateNewComponent implements OnInit {
     // this.appState.set('userDraftList', userDraftList);
   }
 
-  public updatePlace(place: any) {
-    console.log('update place: ', place);
-  }
-
   public ngOnInit() {
     this.mainService.getUserPublicProfile().then((resp) => {
       this.categories = resp.categories;
@@ -113,7 +109,8 @@ export class CurateNewComponent implements OnInit {
       place: ['', Validators.required],
       description: [''],
       lat: [''],
-      lng: ['']
+      lng: [''],
+      image: ['']
     });
   }
 }
