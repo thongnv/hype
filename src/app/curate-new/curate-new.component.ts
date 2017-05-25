@@ -1,6 +1,8 @@
 import { Component, ContentChild, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
+import { AppState } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curate-new',
@@ -10,7 +12,6 @@ import { MainService } from '../services/main.service';
 
 export class CurateNewComponent implements OnInit {
   public userInfo: any;
-  public publicProfile: any;
   public favorite: any;
   public categories: any[];
   public previewUrl: string[] = [];
@@ -23,9 +24,9 @@ export class CurateNewComponent implements OnInit {
     listImages: ['', Validators.required],
     listPlaces: this.fb.array([])
   });
-  @ContentChild('templatePlace') public testEl: any;
 
-  constructor(public fb: FormBuilder, private mainService: MainService) {
+  constructor(public fb: FormBuilder, private mainService: MainService,
+              private appState: AppState, private router: Router) {
     this.places.push({
       id: 1,
       location: {
@@ -41,13 +42,7 @@ export class CurateNewComponent implements OnInit {
   public onAddPlace() {
     const control = <FormArray> this.listFormData.controls['listPlaces'];
     const placeCtrl = this.initAddress();
-
     control.push(placeCtrl);
-
-    /* subscribe to individual address value changes */
-    // addrCtrl.valueChanges.subscribe(x => {
-    //   console.log(x);
-    // })
   }
 
   public removeAddress(i: number) {
@@ -60,19 +55,6 @@ export class CurateNewComponent implements OnInit {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
-  }
-
-  public onAddPlace2() {
-    console.log('add');
-    this.places.push({
-      id: 1,
-      location: {
-        lat: '',
-        lng: '',
-        name: ''
-      },
-      description: ''
-    });
   }
 
   public readUrl(event) {
@@ -95,7 +77,15 @@ export class CurateNewComponent implements OnInit {
       images: this.previewUrl
     };
     console.log('userDraftList', userDraftList);
-    // this.appState.set('userDraftList', userDraftList);
+  }
+  public onPreview() {
+    let userDraftList = {
+      infor: this.listFormData.value,
+      images: this.previewUrl
+    };
+    this.appState.set('userDraftList', userDraftList);
+    console.log('userDraftList', this.appState.state.userDraftList);
+    this.router.navigate(['/curate/preview']);
   }
 
   public ngOnInit() {

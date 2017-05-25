@@ -1,10 +1,8 @@
-<script
-    src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ"></script>
 <article class="row new-list">
   <header>
     <ul>
-      <li>List Info</li>
-      <li>Preview</li>
+      <li class="internal-link" [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">List Info</li>
+      <li class="internal-link" [routerLink]="['/curate/preview']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Preview</li>
     </ul>
   </header>
   <div class="form-wrap">
@@ -24,6 +22,7 @@
         <div class="form-group">
           <label class="control-label" for="list-category">Category</label>
           <select class="form-control" name="" id="list-category" formControlName="listCategory">
+            <option value="" selected = "selected">Select a category</option>
             <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
           </select>
         </div>
@@ -35,9 +34,7 @@
               <img [src]="img"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
-
         </div>
-
       </div>
       <div class="image-box col-xs-12 col-md-6">
         <div formArrayName="listPlaces">
@@ -62,7 +59,7 @@
 
       <div class="form-actions col-xs-12 col-md-12">
         <button type="submit" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-success">Preview</button>
+        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
     </form>
   </div>

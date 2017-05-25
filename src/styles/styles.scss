@@ -275,6 +275,9 @@ body, html {
     border-top-right-radius: 3px;
     font-weight: 600;
   }
+  .internal-link.active{
+    font-weight: 600;
+  }
   //END Gmap-places
   //responsive
   @media screen and(min-width: 768px){

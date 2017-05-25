@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FacebookService, InitParams, LoginResponse, LoginOptions} from 'ngx-facebook';
-import { AppSetting } from '../app.setting'
-import { MainService } from "../services/main.service";
+import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
+import { AppSetting } from '../app.setting';
+import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,19 +11,15 @@ import { Router } from '@angular/router';
 })
 export class AuthComponent implements OnInit {
 
-  private loginData: any;
-  constructor(
-      private fb: FacebookService,
-      private mainService: MainService,
-      private router: Router
-  ) {
+  constructor(private fb: FacebookService,
+              private mainService: MainService,
+              private router: Router) {
 
     let initParams: InitParams = AppSetting.FACEBOOK;
-    fb.init(initParams);
-
+    this.fb.init(initParams);
   }
 
-  loginWithOptions() {
+  public loginWithOptions() {
 
     const loginOptions: LoginOptions = {
       enable_profile_selector: true,
@@ -32,20 +28,21 @@ export class AuthComponent implements OnInit {
     };
 
     this.fb.login(loginOptions)
-        .then((res: LoginResponse) => {
-          console.log('Logged in', res);
-          this.mainService.login(res.authResponse.accessToken).then((respone)=>{
-            this.router.navigate(['/member']);
-          })
-        })
-        .catch(this.handleError);
+      .then((res: LoginResponse) => {
+        console.log('Logged in', res);
+        this.mainService.login(res.authResponse.accessToken).then((respone) => {
+          this.router.navigate(['/member']);
+        });
+      })
+      .catch(this.handleError);
 
+  }
+
+  public ngOnInit() {
   }
 
   private handleError(error) {
     console.error('Error processing action', error);
-  }
-  ngOnInit() {
   }
 
 }

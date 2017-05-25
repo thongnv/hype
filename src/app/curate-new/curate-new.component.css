@@ -20,7 +20,9 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
     background-repeat: repeat-x;
 }
-
+.new-list .form-actions{
+    margin-top: 15px;
+}
 .preview-wrap .delete-btn:hover{
     text-decoration: none;
 }
@@ -64,4 +66,7 @@
 }
 .new-list .image-box .panel:first-child{
     margin-top: 50px;
+}
+.input-box > h3{
+    text-transform: capitalize;
 }

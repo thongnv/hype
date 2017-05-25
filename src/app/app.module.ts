@@ -48,6 +48,7 @@ import { SlideComponent } from './event/detail/slide.component';
 import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { EventService } from './services/event.service';
+import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -79,7 +80,8 @@ type StoreType = {
     CurateNewComponent,
     SlideComponent,
     CarouselComponent,
-    GmapAutoPlaceComponent
+    GmapAutoPlaceComponent,
+    CuratePreviewComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
