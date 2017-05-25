@@ -32,6 +32,10 @@
             <a class="fa fa-times" (click)="onRemovePreview(img)"></a>
           </div>
         </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="button" class="btn btn-success">Preview</button>
+        </div>
       </div>
       <div class="image-box col-xs-12 col-md-6">
         <div formArrayName="listPlaces">
@@ -41,7 +45,7 @@
               <span class="glyphicon glyphicon-remove pull-right" *ngIf="listFormData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)"></span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]"></app-gmap-auto-place>
+              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]" [description]="true"></app-gmap-auto-place>
             </div>
           </div>
         </div>
@@ -52,10 +56,7 @@
           </button>
         </div>
       </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-success">Preview</button>
-      </div>
+
     </form>
   </div>
 </article>

@@ -92,10 +92,9 @@ export class CurateNewComponent implements OnInit {
   public onSubmit() {
     let userDraftList = {
       infor: this.listFormData.value,
-      images: this.previewUrl,
-      places: this.places
+      images: this.previewUrl
     };
-    console.log('this.listFormData', this.listFormData.value);
+    console.log('userDraftList', userDraftList);
     // this.appState.set('userDraftList', userDraftList);
   }
 
