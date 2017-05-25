@@ -1,0 +1,93 @@
+<article class="row new-list">
+  <header>
+    <ul>
+      <li>Event Info</li>
+      <li>Preview</li>
+    </ul>
+  </header>
+  <div class="form-wrap">
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit(eventForm.value, eventForm.valid)">
+      <div class="row">
+        <div class="input-box col-xs-12 col-md-6">
+          <h3 class="">Share an Event</h3>
+          <small>An event is an activity tagged to a place </small>
+          <div class="form-group">
+            <label for="event-name">Name</label>
+            <input formControlName="eventName" id="event-name" class="form-control" type="text">
+          </div>
+          <div class="form-group">
+            <label for="event-details">Details</label>
+            <textarea  formControlName="eventDetail" id="event-details" class="form-control"></textarea>
+          </div>
+          <!--<div class="form-group" >-->
+            <!--<label >Location/Place</label>-->
+            <!--<app-gmap-auto-place formControlName="eventPlace" (onChangePlace)="updatePlace($event)" [description]="false" [image]="false">-->
+            <!--</app-gmap-auto-place>-->
+          <!--</div>-->
+          <div class="form-group">
+            <label for="event-category">Category</label>
+            <select name="" id="event-category"  formControlName="eventCategory">
+              <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="image-box col-xs-12 col-md-5 col-md-offset-1">
+          <div class="form-group list-img-box">
+            <label class="control-label" id="list-img-label" for="eventImg">
+              <input class="form-control col-xs-12" id="eventImg" formControlName="eventImages" type='file' (change)="readUrl($event)" multiple="multiple">
+            </label>
+            <div *ngFor="let img of previewUrl" class="preview-wrap">
+              <img [src]="img"/>
+              <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <a (click)="showMore = !showMore">Optional info +</a>
+      </div>
+      <div *ngIf="showMore" class="row">
+        <div class="input-box col-xs-12 col-md-6">
+          <div class="form-group">
+            <label for="event-date">Date & Time</label>
+            <input id="event-date" required [(ngModel)]="date" formControlName="eventDate" ngui-datetime-picker />
+          </div>
+
+          <div class="form-group">
+            <label for="event-price">Price</label>
+            <input formControlName="eventPrice" id="event-price" class="form-control" type="text">
+          </div>
+          <div class="field-group">
+            <label>Call to action</label>
+            <div class="form-group" formGroupName="call2action">
+              <select name="" id="event-type"  formControlName="eventType">
+                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+              </select>
+              <input formControlName="eventLink" id="event-link" class="form-control" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="image-box col-xs-12 col-md-5 col-md-offset-1">
+          <div class="form-group">
+            <label>Mentions by</label>
+            <div formArrayName="eventMentions">
+              <div class="form-group" *ngFor="let mention of eventForm.get('eventMentions').controls; let i=index">
+                <input type="text" class="form-control" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-success" (click)="addMention()">
+              <i class="fa fa-plus"></i>&nbsp;Add Mention
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions col-xs-12 col-md-12">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-success">Preview</button>
+      </div>
+    </form>
+  </div>
+</article>

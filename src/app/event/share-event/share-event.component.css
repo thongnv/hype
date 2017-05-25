@@ -1,0 +1,50 @@
+.event-list .form-actions{
+  margin-top: 15px;
+}
+.preview-wrap .delete-btn:hover{
+  text-decoration: none;
+}
+.preview-wrap .delete-btn{
+  top: 3px;
+  right: 5px;
+  position: absolute;
+  background: #64b5f6;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+}
+.preview-wrap img{
+  width: calc(100% - 3px);
+  padding: 3px;
+}
+.preview-wrap{
+  float: left;
+  width: calc(100% / 3);
+  position: relative;
+  margin:0;
+}
+#list-img-label{
+  background: url('../../../assets/icon/icon-camera-128.png') no-repeat center left;
+  min-height: 60px;
+  min-width: 60px;
+  margin: 15px;
+  cursor: pointer;
+  background-size: 100% 100%;
+  position: absolute;
+}
+#eventImg{
+  display: none;
+}
+.list-img-box{
+  position: relative;
+  min-height: 80px;
+}
+.event-list .image-box .panel:first-child{
+  margin-top: 50px;
+}
+.input-box > h3{
+  text-transform: capitalize;
+}

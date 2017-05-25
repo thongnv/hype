@@ -5,6 +5,7 @@ import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { EventDetailComponent } from './event/detail/detail.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
+import { ShareEventComponent } from './event/share-event/share-event.component';
 import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 
 export const ROUTES: Routes = [
@@ -15,6 +16,7 @@ export const ROUTES: Routes = [
   { path: 'discover',    component: DiscoverComponent },
   { path: 'curate',    component: CurateComponent },
   { path: 'curate/new',    component: CurateNewComponent},
+  { path: 'share-event',    component: ShareEventComponent},
   { path: 'curate/preview',    component: CuratePreviewComponent},
   { path: 'event/:id',    component: EventDetailComponent },
   { path: 'auth',    loadChildren: './auth#AuthModule' },

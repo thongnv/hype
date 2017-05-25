@@ -35,6 +35,7 @@ import { CurateComponent } from './curate/curate.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -47,6 +48,7 @@ import { SlideComponent } from './event/detail/slide.component';
 
 import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
+import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 import { MyArray } from './shared/pipes';
@@ -81,6 +83,7 @@ type StoreType = {
     CurateNewComponent,
     SlideComponent,
     CarouselComponent,
+    ShareEventComponent,
     GmapAutoPlaceComponent,
     CuratePreviewComponent,
     MyArray
@@ -105,7 +108,8 @@ type StoreType = {
     LocalStorageModule.withConfig({
       prefix: 'hylo-app',
       storageType: 'localStorage'
-    })
+    }),
+    NguiDatetimePickerModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
