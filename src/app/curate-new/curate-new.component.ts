@@ -1,8 +1,6 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, ContentChild, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
-import { AppState } from '../app.service';
-import { MapsAPILoader } from 'angular2-google-maps/core';
 
 @Component({
   selector: 'app-curate-new',
@@ -22,11 +20,39 @@ export class CurateNewComponent implements OnInit {
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.email],
-    listImages: ['', Validators.required]
+    listImages: ['', Validators.required],
+    listPlaces: this.fb.array([])
   });
+  @ContentChild('templatePlace') public testEl: any;
 
-  constructor(public fb: FormBuilder, private mainService: MainService, private appState: AppState,
-              private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
+  constructor(public fb: FormBuilder, private mainService: MainService) {
+    this.places.push({
+      id: 1,
+      location: {
+        lat: '',
+        lng: '',
+        name: ''
+      },
+      description: ''
+    });
+    this.onAddPlace();
+  }
+
+  public onAddPlace() {
+    const control = <FormArray> this.listFormData.controls['listPlaces'];
+    const placeCtrl = this.initAddress();
+
+    control.push(placeCtrl);
+
+    /* subscribe to individual address value changes */
+    // addrCtrl.valueChanges.subscribe(x => {
+    //   console.log(x);
+    // })
+  }
+
+  public removeAddress(i: number) {
+    const control = <FormArray> this.listFormData.controls['listPlaces'];
+    control.removeAt(i);
   }
 
   public onRemovePreview(imageUrl) {
@@ -36,8 +62,17 @@ export class CurateNewComponent implements OnInit {
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
   }
 
-  public onAddPlace() {
+  public onAddPlace2() {
     console.log('add');
+    this.places.push({
+      id: 1,
+      location: {
+        lat: '',
+        lng: '',
+        name: ''
+      },
+      description: ''
+    });
   }
 
   public readUrl(event) {
@@ -56,10 +91,11 @@ export class CurateNewComponent implements OnInit {
 
   public onSubmit() {
     let userDraftList = {
-      infor: this.listFormData,
+      infor: this.listFormData.value,
       images: this.previewUrl,
       places: this.places
     };
+    console.log('this.listFormData', this.listFormData.value);
     // this.appState.set('userDraftList', userDraftList);
   }
 
@@ -70,6 +106,15 @@ export class CurateNewComponent implements OnInit {
   public ngOnInit() {
     this.mainService.getUserPublicProfile().then((resp) => {
       this.categories = resp.categories;
+    });
+  }
+
+  private initAddress() {
+    return this.fb.group({
+      place: ['', Validators.required],
+      description: [''],
+      lat: [''],
+      lng: ['']
     });
   }
 }

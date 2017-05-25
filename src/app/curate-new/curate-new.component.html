@@ -34,10 +34,16 @@
         </div>
       </div>
       <div class="image-box col-xs-12 col-md-6">
-        <div class="image-item form-group">
-          <strong>#1</strong>
-          <app-gmap-auto-place (onChangePlace)="updatePlace($event)"></app-gmap-auto-place>
-          <textarea class="form-control" name="" id="" cols="20" rows="3"></textarea>
+        <div formArrayName="listPlaces">
+          <div *ngFor="let place of listFormData.controls.listPlaces.controls; let i=index" class="panel panel-default">
+            <div class="panel-heading">
+              <span># {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="listFormData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)"></span>
+            </div>
+            <div class="panel-body" [formGroupName]="i">
+              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]"></app-gmap-auto-place>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">

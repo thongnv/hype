@@ -1,1 +1,10 @@
-<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" ref-search>
+<div [formGroup]="group">
+  <input formControlName="place" placeholder="search for location" autocorrect="off" autocapitalize="off"
+         spellcheck="off" type="text" class="form-control" #search>
+  <input type="text" formControlName="lat" >
+  <input type="text" formControlName="lng" >
+  <small [hidden]="group.controls.place.valid" class="text-danger">
+    Place is required
+  </small>
+  <textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"></textarea>
+</div>
