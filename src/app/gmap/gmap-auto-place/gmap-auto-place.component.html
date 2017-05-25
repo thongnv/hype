@@ -6,5 +6,5 @@
   <small [hidden]="group.controls.place.valid" class="text-danger">
     Place is required
   </small>
-  <textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"></textarea>
+  <textarea *ngIf="description" formControlName="description" class="form-control" name="" id="" cols="20" rows="3"></textarea>
 </div>

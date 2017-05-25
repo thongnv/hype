@@ -9,6 +9,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class GmapAutoPlaceComponent implements OnInit {
   @Input('group') public group: FormGroup;
+  @Input('description') public description: boolean;
+  @Input('image') public image: boolean;
   @Output('onChangePlace') public onChangePlace = new EventEmitter<any>();
   @ViewChild('search')
   public searchElementRef: ElementRef;
