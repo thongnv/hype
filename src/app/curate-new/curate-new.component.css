@@ -48,9 +48,12 @@
     position: relative;
     margin:0;
 }
+.list-img-box label:first-child{
+    width: 100%;
+}
 #list-img-label{
     cursor: pointer;
-    width: 100%;
+
     color: #ec3d62;
 }
 #listImg{

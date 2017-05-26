@@ -2,8 +2,6 @@ import { Component, ContentChild, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { AppState } from '../app.service';
-import { Router } from '@angular/router';
-import { letProto } from 'rxjs/operator/let';
 
 @Component({
   selector: 'app-curate-new',
@@ -93,7 +91,7 @@ export class CurateNewComponent implements OnInit {
   }
 
   public switchView() {
-    this.showPreview = this.showPreview ? false : true;
+    this.showPreview = !this.showPreview;
   }
 
   private initAddress() {
@@ -126,3 +124,4 @@ export class CurateNewComponent implements OnInit {
       }
     }
   }
+}
