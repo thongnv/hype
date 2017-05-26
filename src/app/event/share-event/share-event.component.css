@@ -27,14 +27,21 @@
   margin:0;
 }
 #list-img-label{
-  background: url('../../../assets/icon/icon-camera-128.png') no-repeat center left;
-  min-height: 60px;
-  min-width: 60px;
-  margin: 15px;
   cursor: pointer;
-  background-size: 100% 100%;
-  position: absolute;
+  width: 100%;
+  color: #ec3d62;
 }
+#list-img-label{
+  cursor: pointer;
+  width: 100px;
+  color: #ec3d62;
+  clear: both;
+  display: block;
+}
+#listImg{
+  display: none;
+}
+
 #eventImg{
   display: none;
 }

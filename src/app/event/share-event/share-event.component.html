@@ -29,22 +29,21 @@
               <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
             </select>
           </div>
-
-        </div>
-        <div class="image-box col-xs-12 col-md-5 col-md-offset-1">
           <div class="form-group list-img-box">
-            <label class="control-label" id="list-img-label" for="eventImg">
-              <input class="form-control col-xs-12" id="eventImg" formControlName="eventImages" type='file' (change)="readUrl($event)" multiple="multiple">
+            <label class="control-label">Images</label>
+            <label class="control-label " id="list-img-label" for="listImg">
+              <i class="fa fa-plus"></i>&nbsp;Add images
+              <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
+                     (change)="readUrl($event)" multiple="multiple">
             </label>
-            <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="img"/>
-              <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+            <div class="list-img-wrap">
+              <div *ngFor="let img of previewUrl" class="preview-wrap">
+                <img [src]="img"/>
+                <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-md-12">
-        <a (click)="showMore = !showMore">Optional info +</a>
       </div>
       <div *ngIf="showMore" class="row">
         <div class="input-box col-xs-12 col-md-6">
@@ -52,7 +51,6 @@
             <label for="event-date">Date & Time</label>
             <input id="event-date" required [(ngModel)]="date" formControlName="eventDate" ngui-datetime-picker />
           </div>
-
           <div class="form-group">
             <label for="event-price">Price</label>
             <input formControlName="eventPrice" id="event-price" class="form-control" type="text">
@@ -66,8 +64,6 @@
               <input formControlName="eventLink" id="event-link" class="form-control" type="text">
             </div>
           </div>
-        </div>
-        <div class="image-box col-xs-12 col-md-5 col-md-offset-1">
           <div class="form-group">
             <label>Mentions by</label>
             <div formArrayName="eventMentions">
@@ -82,6 +78,9 @@
             </button>
           </div>
         </div>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <a (click)="showMore = !showMore">Optional info +</a>
       </div>
       <div class="form-actions col-xs-12 col-md-12">
         <button type="submit" class="btn btn-primary">Create</button>

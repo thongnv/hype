@@ -69,10 +69,6 @@ export class ShareEventComponent implements OnInit {
     mentions.push(new FormControl());
   }
 
-  public updatePlace(place) {
-    console.log(place);
-  }
-
   public onSubmit(model: HyloEvent, isValid: boolean): void {
     console.log(model);
   }
