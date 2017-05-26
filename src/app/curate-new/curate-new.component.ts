@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { AppState } from '../app.service';
 import { Router } from '@angular/router';
+import { letProto } from 'rxjs/operator/let';
 
 @Component({
   selector: 'app-curate-new',
@@ -17,6 +18,11 @@ export class CurateNewComponent implements OnInit {
   public previewUrl: string[] = [];
   public markers: any[] = [];
   public showPreview: boolean = false;
+
+  public NextPhotoInterval: number = 5000;
+  public noLoopSlides: boolean = false;
+  public noTransition: boolean = false;
+  public slides: any[] = [];
 
   public listFormData = this.fb.group({
     listName: ['', Validators.required],
@@ -102,6 +108,7 @@ export class CurateNewComponent implements OnInit {
 
   // for preview
   private initMap() {
+    this.slides = [];
     this.showPreview = true;
     if (this.appState.state.userDraftList.infor.listPlaces.length) {
       for (let place of this.appState.state.userDraftList.infor.listPlaces) {
@@ -109,6 +116,13 @@ export class CurateNewComponent implements OnInit {
           this.markers.push({lat: place.lat, lng: place.lng});
         }
       }
+      if (this.appState.state.userDraftList.images.length) {
+        for (let img of this.appState.state.userDraftList.images) {
+          if (img) {
+            this.slides.push({image: img, active: false});
+          }
+        }
+
+      }
     }
   }
-}

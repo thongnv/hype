@@ -1,3 +1,25 @@
+.new-list{
+    padding: 15px;
+    display: block;
+    min-height: 1px;
+    width: 100%;
+}
+.new-list header ul li{
+    display: inline-block;
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+}
+.new-list header ul{
+    margin: 0;
+    background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+    background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+    background-repeat: repeat-x;
+}
 .new-list .form-actions{
     margin-top: 15px;
 }
@@ -27,13 +49,9 @@
     margin:0;
 }
 #list-img-label{
-    background: url('../../assets/icon/icon-camera-128.png') no-repeat center left;
-    min-height: 60px;
-    min-width: 60px;
-    margin: 15px;
     cursor: pointer;
-    background-size: 100% 100%;
-    position: absolute;
+    width: 100%;
+    color: #ec3d62;
 }
 #listImg{
     display: none;
@@ -55,4 +73,29 @@
 .map-box, .list-box{
     float: left;
     width: 50%;
+}
+.internal-link{
+    color: #3b3b3b;
+}
+.internal-link.active{
+    font-weight: 600;
+    color: #2a6be1;
+}
+.place-item-header{
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    word-break: keep-all;
+}
+.place-detail-btn{
+    color: #2a6be1;
+}
+.place-index{
+    height: 30px;
+    line-height: 30px;
+    min-width: 50px;
+    border: 1px solid #b3b3b3;
 }

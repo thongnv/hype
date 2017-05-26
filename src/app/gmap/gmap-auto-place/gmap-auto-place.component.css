@@ -2,10 +2,9 @@
     display: none;
 }
 .upload-image-label{
-    background: url('../../../assets/icon/icon-camera-128.png') no-repeat center left;
-    min-height: 60px;
     min-width: 60px;
+    width: 100%;
     margin: 0;
     cursor: pointer;
-    background-size: 100% 100%;
+    color: #ec3d62;
 }
