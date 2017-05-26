@@ -29,8 +29,8 @@ export class ShareEventComponent implements OnInit {
       eventCategory: ['', Validators.required],
       eventPlace: this.fb.group({
         place: ['', Validators.required],
-        lat: '',
-        lng: '',
+        lat: [''],
+        lng: [''],
       }),
       eventDate: ['', Validators.required],
       eventPrice: ['', Validators.required],

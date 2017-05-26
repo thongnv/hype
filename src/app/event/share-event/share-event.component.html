@@ -19,11 +19,10 @@
             <label for="event-details">Details</label>
             <textarea  formControlName="eventDetail" id="event-details" class="form-control"></textarea>
           </div>
-          <!--<div class="form-group" >-->
-            <!--<label >Location/Place</label>-->
-            <!--<app-gmap-auto-place formControlName="eventPlace" (onChangePlace)="updatePlace($event)" [description]="false" [image]="false">-->
-            <!--</app-gmap-auto-place>-->
-          <!--</div>-->
+          <div class="form-group" >
+            <label >Location/Place</label>
+            <app-gmap-auto-place [group]="eventForm.controls.eventPlace" [description]="false" [image]="false"></app-gmap-auto-place>
+          </div>
           <div class="form-group">
             <label for="event-category">Category</label>
             <select name="" id="event-category"  formControlName="eventCategory">
