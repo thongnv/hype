@@ -5,15 +5,18 @@
       <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
     </ul>
   </header>
+
   <div class="form-wrap" [class.hide]="showPreview">
-    <form class="" [formGroup]="listFormData" (ngSubmit)="onSubmit()">
+
+    <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+
       <div class="input-box col-xs-12 col-md-6">
-        <h3 class="">create a list</h3>
+        <h3>create a list</h3>
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
           <label class="control-label" for="list-name">List Name</label>
           <input formControlName="listName" id="list-name" class="form-control" type="text">
-          <small [hidden]="listFormData.controls.listName.valid" class="text-danger">This field is required</small>
+          <small [hidden]="formData.controls.listName.valid" class="text-danger">This field is required</small>
         </div>
         <div class="form-group">
           <label class="control-label" for="list-description">What is your list about? Tell us your story</label>
@@ -29,7 +32,8 @@
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg">
-            <i class="fa fa-plus"></i>&nbsp;Add images
+            <i class="fa fa-plus"></i>
+            &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file'
                    (change)="readUrl($event)" multiple="multiple">
           </label>
@@ -41,18 +45,21 @@
           </div>
         </div>
       </div>
+
       <div class="image-box col-xs-12 col-md-6">
         <div formArrayName="listPlaces">
-          <div *ngFor="let place of listFormData.controls.listPlaces.controls; let i=index" class="panel panel-default">
+          <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">
               <span># {{i + 1}}</span>
               <span class="glyphicon glyphicon-remove pull-right"
-                    *ngIf="listFormData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
+                    *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="listFormData.controls.listPlaces.controls[i]" [description]="true"
-                                   [image]="true"></app-gmap-auto-place>
+              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]"
+                                   [description]="true"
+                                   [image]="true">
+              </app-gmap-auto-place>
             </div>
           </div>
         </div>
@@ -62,18 +69,21 @@
           </button>
         </div>
       </div>
+
       <div class="form-actions col-xs-12 col-md-12">
         <button type="submit" class="btn btn-primary">Create</button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
+
     </form>
+
   </div>
 
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.userDraftList">
     <div class="col-xs-12 list-box">
       <div class="carousel-box">
         <div class="carousel-header">
-          <strong>{{appState.state.userDraftList.infor.listName}}</strong>
+          <strong>{{appState.state.userDraftList.info.listName}}</strong>
         </div>
         <div class="carousel">
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
@@ -85,11 +95,12 @@
           </carousel>
         </div>
         <div class="description text-justify">
-          <p>{{appState.state.userDraftList.infor.listDescription}}</p>
+          <p>{{appState.state.userDraftList.info.listDescription}}</p>
         </div>
       </div>
-      <div *ngFor="let plc of appState.state.userDraftList.infor.listPlaces; let index=index" class="place-item-wrap ">
-        <div class="place-item-header"><strong class="pull-left place-index">#{{index}}</strong>{{plc.place}}<strong class="pull-right place-detail-btn">details</strong></div>
+      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap ">
+        <div class="place-item-header"><strong class="pull-left place-index">#{{index}}</strong>{{plc.place}}<strong
+          class="pull-right place-detail-btn">details</strong></div>
         <div class="place-item-img">
           <img [src]="plc.image" [alt]="plc.place" width="100%">
         </div>

@@ -1,4 +1,4 @@
-import { Component, ContentChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { AppState } from '../app.service';
@@ -22,27 +22,28 @@ export class CurateNewComponent implements OnInit {
   public noTransition: boolean = false;
   public slides: any[] = [];
 
-  public listFormData = this.fb.group({
+  public formData = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.email],
     listImages: ['', Validators.required],
-    listPlaces: this.fb.array([])
+    listPlaces: this.formBuilder.array([])
   });
 
-  constructor(public fb: FormBuilder, private mainService: MainService,
-              public appState: AppState) {
+  constructor(public formBuilder: FormBuilder,
+              public appState: AppState,
+              private mainService: MainService) {
     this.onAddPlace();
   }
 
   public onAddPlace() {
-    const control = <FormArray> this.listFormData.controls['listPlaces'];
+    const control = <FormArray> this.formData.controls['listPlaces'];
     const placeCtrl = this.initAddress();
     control.push(placeCtrl);
   }
 
   public removeAddress(i: number) {
-    const control = <FormArray> this.listFormData.controls['listPlaces'];
+    const control = <FormArray> this.formData.controls['listPlaces'];
     control.removeAt(i);
   }
 
@@ -53,13 +54,12 @@ export class CurateNewComponent implements OnInit {
   }
 
   public readUrl(event) {
-    console.log(event.target.files.length);
     let reader = [];
     if (event.target.files && event.target.files[0]) {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
-        reader[i].onload = (event) => {
-          this.previewUrl.push(event.target.result);
+        reader[i].onload = (e) => {
+          this.previewUrl.push(e.target.result);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -68,7 +68,7 @@ export class CurateNewComponent implements OnInit {
 
   public onSubmit() {
     let userDraftList = {
-      infor: this.listFormData.value,
+      info: this.formData.value,
       images: this.previewUrl
     };
     console.log('userDraftList', userDraftList);
@@ -76,7 +76,7 @@ export class CurateNewComponent implements OnInit {
 
   public onPreview() {
     let userDraftList = {
-      infor: this.listFormData.value,
+      info: this.formData.value,
       images: this.previewUrl
     };
     this.appState.set('userDraftList', userDraftList);
@@ -95,7 +95,7 @@ export class CurateNewComponent implements OnInit {
   }
 
   private initAddress() {
-    return this.fb.group({
+    return this.formBuilder.group({
       place: ['', Validators.required],
       description: [''],
       lat: [''],
@@ -108,8 +108,8 @@ export class CurateNewComponent implements OnInit {
   private initMap() {
     this.slides = [];
     this.showPreview = true;
-    if (this.appState.state.userDraftList.infor.listPlaces.length) {
-      for (let place of this.appState.state.userDraftList.infor.listPlaces) {
+    if (this.appState.state.userDraftList.info.listPlaces.length) {
+      for (let place of this.appState.state.userDraftList.info.listPlaces) {
         if (place.lat && place.lng) {
           this.markers.push({lat: place.lat, lng: place.lng});
         }
