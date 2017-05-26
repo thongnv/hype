@@ -1,11 +1,11 @@
 <article class="row new-list">
   <header>
     <ul>
-      <li class="internal-link" [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">List Info</li>
-      <li class="internal-link" [routerLink]="['/curate/preview']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Preview</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">List Info</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
     </ul>
   </header>
-  <div class="form-wrap">
+  <div class="form-wrap" [class.hide]="showPreview">
     <form class="" [formGroup]="listFormData" (ngSubmit)="onSubmit()">
       <div class="input-box col-xs-12 col-md-6">
         <h3 class="">create a list</h3>
@@ -62,5 +62,24 @@
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
     </form>
+  </div>
+
+  <div class="preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.userDraftList">
+    <div class="col-xs-12 list-box">
+      <div class="carousel-box">
+        <div class="carousel-header">
+          <strong>{{appState.state.userDraftList.infor.listName}}</strong>
+        </div>
+        <div class="carousel"></div>
+        <div class="description text-justify">
+          <p>{{appState.state.userDraftList.infor.listDescription}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 map-box">
+      <sebm-google-map [latitude]="1.290270" [longitude]="103.851959" [zoom]="12">
+        <gmap-cluster [markers]="markers"></gmap-cluster>
+      </sebm-google-map>
+    </div>
   </div>
 </article>

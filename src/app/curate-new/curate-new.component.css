@@ -48,3 +48,11 @@
 .input-box > h3{
     text-transform: capitalize;
 }
+/*for preview*/
+.sebm-google-map-container{
+    height:  calc(100vh - 100px);
+}
+.map-box, .list-box{
+    float: left;
+    width: 50%;
+}

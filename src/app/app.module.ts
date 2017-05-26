@@ -50,7 +50,6 @@ import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
-import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 import { MyArray } from './shared/pipes';
 // Application wide providers
 const APP_PROVIDERS = [
@@ -85,7 +84,6 @@ type StoreType = {
     CarouselComponent,
     ShareEventComponent,
     GmapAutoPlaceComponent,
-    CuratePreviewComponent,
     MyArray
   ],
   imports: [ // import Angular's modules

@@ -15,6 +15,8 @@ export class CurateNewComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public previewUrl: string[] = [];
+  public markers: any[] = [];
+  public showPreview: boolean = false;
 
   public listFormData = this.fb.group({
     listName: ['', Validators.required],
@@ -25,7 +27,7 @@ export class CurateNewComponent implements OnInit {
   });
 
   constructor(public fb: FormBuilder, private mainService: MainService,
-              private appState: AppState, private router: Router) {
+              public appState: AppState) {
     this.onAddPlace();
   }
 
@@ -67,6 +69,7 @@ export class CurateNewComponent implements OnInit {
     };
     console.log('userDraftList', userDraftList);
   }
+
   public onPreview() {
     let userDraftList = {
       infor: this.listFormData.value,
@@ -74,13 +77,17 @@ export class CurateNewComponent implements OnInit {
     };
     this.appState.set('userDraftList', userDraftList);
     console.log('userDraftList', this.appState.state.userDraftList);
-    this.router.navigate(['/curate/preview']);
+    this.initMap();
   }
 
   public ngOnInit() {
     this.mainService.getUserPublicProfile().then((resp) => {
       this.categories = resp.categories;
     });
+  }
+
+  public switchView() {
+    this.showPreview = this.showPreview ? false : true;
   }
 
   private initAddress() {
@@ -91,5 +98,17 @@ export class CurateNewComponent implements OnInit {
       lng: [''],
       image: ['']
     });
+  }
+
+  // for preview
+  private initMap() {
+    this.showPreview = true;
+    if (this.appState.state.userDraftList.infor.listPlaces.length) {
+      for (let place of this.appState.state.userDraftList.infor.listPlaces) {
+        if (place.lat && place.lng) {
+          this.markers.push({lat: place.lat, lng: place.lng});
+        }
+      }
+    }
   }
 }
