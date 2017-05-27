@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Call2Action, HyloComment, HyloEvent, Icon} from '../../app.interface';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
+import { Call2Action, HyloComment, HyloEvent, Icon } from '../../app.interface';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MainService } from '../../services/main.service';
 import { AppState } from '../../app.service';
 
@@ -11,37 +11,38 @@ import { AppState } from '../../app.service';
 })
 
 export class ShareEventComponent implements OnInit {
-  public eventForm = FormGroup;
+  public eventForm: FormGroup = this.fb.group({
+    eventName: ['', Validators.required],
+    eventDetail: ['', Validators.required],
+    eventCategory: ['', Validators.required],
+    eventPlace: this.fb.group({
+      place: ['', Validators.required],
+      lat: [''],
+      lng: [''],
+    }),
+    eventDate: ['', Validators.required],
+    eventPrice: ['', Validators.required],
+    call2action: this.fb.group({
+      eventType: ['buy', Validators.required],
+      eventLink: ['', Validators.required],
+    }),
+    eventImages: ['', Validators.required],
+    eventMentions: this.fb.array(['']),
+  });
+  public categories: any[];
   public previewUrl: string[] = [];
   public showMore: boolean = false;
+  public showPreview: boolean = false;
+  public slides: any[] = [];
   public types = [
     { value: 'buy', display: 'Buy Ticket' },
     { value: 'more', display: 'More info' }
   ];
   constructor(public fb: FormBuilder, private mainService: MainService,
-              private appState: AppState) {
+              public appState: AppState) {
   }
 
   public ngOnInit() {
-    this.eventForm = this.fb.group({
-      eventName: ['', Validators.required],
-      eventDetail: ['', Validators.required],
-      eventCategory: ['', Validators.required],
-      eventPlace: this.fb.group({
-        place: ['', Validators.required],
-        lat: [''],
-        lng: [''],
-      }),
-      eventDate: ['', Validators.required],
-      eventPrice: ['', Validators.required],
-      call2action: this.fb.group({
-        eventType: ['buy', Validators.required],
-        eventLink: ['', Validators.required],
-      }),
-      eventImages: ['', Validators.required],
-      eventMentions: this.fb.array(['']),
-    });
-
   }
 
   public onRemovePreview(imageUrl) {
@@ -51,13 +52,12 @@ export class ShareEventComponent implements OnInit {
   }
 
   public readUrl(event) {
-    console.log(event.target.files.length);
     let reader = [];
     if (event.target.files && event.target.files[0]) {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
-        reader[i].onload = (event) => {
-          this.previewUrl.push(event.target.result);
+        reader[i].onload = (e) => {
+          this.previewUrl.push(e.target.result);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -69,8 +69,31 @@ export class ShareEventComponent implements OnInit {
     mentions.push(new FormControl());
   }
 
-  public onSubmit(model: HyloEvent, isValid: boolean): void {
-    console.log(model);
+  public switchView() {
+    this.showPreview = !this.showPreview;
   }
 
+  public onSubmit(): void {
+    let event = this.eventForm.value;
+    event.eventImages = this.previewUrl;
+    console.log(event);
+  }
+
+  public onPreview() {
+    let event = this.eventForm.value;
+    event.eventImages = this.previewUrl;
+    this.appState.set('eventPreview', event);
+    console.log('ee', this.appState.state.eventPreview);
+    this.initPreview();
+  }
+
+  public initPreview() {
+    this.showPreview = true;
+    this.slides = [];
+    for (let img of this.previewUrl) {
+      if (img) {
+        this.slides.push({image: img, active: false});
+      }
+    }
+  }
 }

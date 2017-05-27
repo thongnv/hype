@@ -1,12 +1,12 @@
 <article class="row new-list">
   <header>
     <ul>
-      <li>Event Info</li>
-      <li>Preview</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">Event Info</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
     </ul>
   </header>
-  <div class="form-wrap">
-    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit(eventForm.value, eventForm.valid)">
+  <div class="form-wrap" [class.hide]="showPreview">
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="input-box col-xs-12 col-md-6">
           <h3 class="">Share an Event</h3>
@@ -49,7 +49,7 @@
         <div class="input-box col-xs-12 col-md-6">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
-            <input id="event-date" required [(ngModel)]="date" formControlName="eventDate" ngui-datetime-picker />
+            <input id="event-date" required  formControlName="eventDate" ngui-datetime-picker />
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -67,7 +67,7 @@
           <div class="form-group">
             <label>Mentions by</label>
             <div formArrayName="eventMentions">
-              <div class="form-group" *ngFor="let mention of eventForm.get('eventMentions').controls; let i=index">
+              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
                 <input type="text" class="form-control" [formControlName]="i">
               </div>
             </div>
@@ -84,8 +84,104 @@
       </div>
       <div class="form-actions col-xs-12 col-md-12">
         <button type="submit" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-success">Preview</button>
+        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
     </form>
+  </div>
+  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.eventPreview">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="event-title">
+          <img src="../../../assets/icon/icon-left/icon-left.png"
+               srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
+             ../../../assets/icon/icon-left/icon-left@3x.png 3x"
+               class="icon_left">
+          <span class="One-Direction-Concer" [innerHTML]="appState.state.eventPreview.eventName"></span>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-md-3">
+            <p>Location</p>
+            <p>Date / Time</p>
+            <p>Price Range</p>
+            <p>Mentioned by</p>
+          </div>
+          <div class="col-md-6">
+            <p class="event-place" [innerHTML]="appState.state.eventPreview.eventPlace.place"></p>
+            <p [innerHTML]="appState.state.eventPreview.eventDate"></p>
+              <p>
+                <span class="price">{{appState.state.eventPreview.eventPrice}}</span>
+                <a [href]="appState.state.eventPreview.call2action.eventLink">Buy Ticket</a>
+              </p>
+
+            <p *ngIf="appState.state.eventPreview.eventMentions">
+              <span *ngFor="let mention of appState.state.eventPreview.eventMentions">
+                <a *ngIf="mention" [href]="mention" target="_blank"><img [src]="'https://www.google.com/s2/favicons?domain=' + mention"></a>
+              </span>
+            </p>
+          </div>
+          <!--<div class="col-md-3 align-center">-->
+            <!--<p>CREATED BY</p>-->
+            <!--<img class="user-avatar" [src]="event.creator.avatar">-->
+            <!--<p [innerHTML]="eventPreview.creator.firstName + ' ' + event.creator.lastName"></p>-->
+            <!--<p [innerHTML]="eventPreview.rating + '/5'"></p>-->
+          <!--</div>-->
+        </div>
+
+        <hr>
+
+        <div>
+          <h5 class="bold">Details</h5>
+          <p [innerHTML]="appState.state.eventPreview.eventDetail">
+          </p>
+        </div>
+
+        <hr>
+
+        <div>
+          <h5 class="bold">Post your experience</h5>
+          <p>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+          </p>
+          <p>
+        <textarea style="min-width: 90%" placeholder="What's your experience here?">
+        </textarea>
+          </p>
+          <p>
+            <a>+ Add Images</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+
+        <div class="row">
+          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                    [carouselSlides]="slides">
+            <slide *ngFor="let slide of slides; let index=index"
+                   [active]="slide.active"
+                   [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+            </slide>
+          </carousel>
+        </div>
+
+        <div class="event-location">
+          <p>Location</p>
+          <sebm-google-map [latitude]="appState.state.eventPreview.eventPlace.lat" [longitude]="appState.state.eventPreview.eventPlace.lng" [zoom]="13">
+            <sebm-google-map-marker [latitude]="appState.state.eventPreview.eventPlace.lat"
+                                    [longitude]="appState.state.eventPreview.eventPlace.lng">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+
+      </div>
+
+    </div>
   </div>
 </article>

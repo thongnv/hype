@@ -1,3 +1,29 @@
+.new-list{
+  padding: 15px;
+  display: block;
+  min-height: 1px;
+  width: 100%;
+}
+.new-list header ul li{
+  display: inline-block;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+}
+.new-list header ul{
+  margin: 0;
+  background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+  background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+  background-repeat: repeat-x;
+}
+.new-list .form-actions{
+  margin-top: 15px;
+}
+
 .event-list .form-actions{
   margin-top: 15px;
 }
@@ -55,3 +81,21 @@
 .input-box > h3{
   text-transform: capitalize;
 }
+
+.internal-link{
+  color: #3b3b3b;
+}
+.internal-link.active{
+  font-weight: 600;
+  color: #2a6be1;
+}
+
+.carousel-inner{
+  width:100%;
+  max-height: 400px !important;
+}
+
+.sebm-google-map-container {
+  height: 300px;
+}
+
