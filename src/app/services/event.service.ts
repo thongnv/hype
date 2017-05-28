@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HyloEvent } from '../app.interface';
+import { Experience, HyloComment, HyloEvent } from '../app.interface';
 
 @Injectable()
 export class EventService {
 
   constructor() {
+    // TODO
   }
 
   public getEvent(eventId: string): HyloEvent {
@@ -34,7 +35,7 @@ export class EventService {
       price: '$$$',
       call2action: {
         action: 'Buy Tickets',
-        link: ''
+        link: '#'
       },
       mentions: [
         {url: 'url', iconUrl: 'icon'},
@@ -43,14 +44,12 @@ export class EventService {
         {url: 'url', iconUrl: 'icon'},
       ],
       images: [
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car1.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car2.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car3.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car4.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car5.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
-        'http://www.angulartypescript.com/wp-content/uploads/2016/03/car6.jpg',
+        'http://vnreview.vn/image/16/60/64/1660648.jpg',
+        'http://vnreview.vn/image/16/61/86/1661861.jpg',
+        'http://vnreview.vn/image/16/61/81/1661819.jpg',
+        'http://vnreview.vn/image/16/61/82/1661822.jpg',
+        'http://vnreview.vn/image/16/61/82/1661825.jpg',
+        'http://vnreview.vn/image/13/43/44/1343446.jpg',
       ],
       rating: 3.9,
       experiences: [
@@ -190,6 +189,29 @@ export class EventService {
         }
       ]
     };
+  }
+
+  public getComments(start: number, experienceIndex: number): HyloComment[] {
+      return [
+        {
+          user: {
+            firstName: 'HK',
+            lastName: 'Lin',
+            contactNumber: '23243',
+            avatar: 'assets/img/avatar/demoavatar.png',
+            followingNumber: 2,
+            followerNumber: 1,
+            receiveEmail: 0,
+            userFollowing: [],
+            userFollower: [],
+            showNav: true,
+            acceptNotification: true,
+          },
+          text: 'I was there too. Awesome concert ever...',
+          likeNumber: 0,
+          replies: []
+        }
+      ];
   }
 
 }

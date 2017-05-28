@@ -5,7 +5,7 @@
            srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x"
            class="icon_left">
-      <span class="One-Direction-Concer" [innerHTML]="event.name"></span>
+      <span class="event-name">{{name}}</span>
     </div>
 
     <hr>
@@ -18,20 +18,20 @@
         <p>Mentioned by</p>
       </div>
       <div class="col-md-6">
-        <p class="event-place" [innerHTML]="event.location.name"></p>
-        <p [innerHTML]="event.date"></p>
-        <p [innerHTML]="event.price + ' ' + event.call2action.action"></p>
+        <p class="event-place">{{location.name}}</p>
+        <p>{{date}}</p>
+        <p>{{price}} <span> <a href="{{call2action.link}}">{{call2action.action}}</a></span></p>
         <p>
-          <span *ngFor="let mention of event.mentions">
+          <span *ngFor="let mention of mentions">
             <img [src]="mention.iconUrl">
           </span>
         </p>
       </div>
       <div class="col-md-3 align-center">
         <p>CREATED BY</p>
-        <img class="user-avatar" [src]="event.creator.avatar">
-        <p [innerHTML]="event.creator.firstName + ' ' + event.creator.lastName"></p>
-        <p [innerHTML]="event.rating + '/5'"></p>
+        <img class="user-avatar" [src]="creator.avatar">
+        <p>{{creator.firstName + ' ' + creator.lastName}}</p>
+        <p>{{rating + '/5'}}</p>
       </div>
     </div>
 
@@ -39,100 +39,48 @@
 
     <div>
       <h5 class="bold">Details</h5>
-      <p [innerHTML]="event.detail">
-      </p>
+      <p>{{detail}}</p>
     </div>
 
     <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h5 class="bold">Experiences ({{experiences.length}})</h5>
+      </div>
+      <div class="col-md-6">
+        <h5 class="bold">Post your experience</h5>
+      </div>
+    </div>
+
+    <event-experience
+      *ngFor="let experience of experiences; let index=index"
+      [experience]="experience">
+    </event-experience>
 
     <div>
-      <h5 class="bold">Post your experience</h5>
-      <p>
-        <i fa [name]="'star-o'" [size]=1></i>
-        <i fa [name]="'star-o'" [size]=1></i>
-        <i fa [name]="'star-o'" [size]=1></i>
-        <i fa [name]="'star-o'" [size]=1></i>
-        <i fa [name]="'star-o'" [size]=1></i>
-      </p>
-      <p>
-        <textarea style="min-width: 90%" placeholder="What's your experience here?">
-        </textarea>
-      </p>
-      <p>
-        <a>+ Add Images</a>
-      </p>
-    </div>
-
-    <hr>
-
-    <h5 class="bold">Experiences (<span [innerHTML]="event.experiences.length"></span>)</h5>
-    <div *ngFor="let experience of event.experiences">
-      <div class="row">
-        <div class="col-md-2">
-          <img [src]="experience.user.avatar" class="user-avatar">
-        </div>
-        <div class="col-md-6">
-          <p [innerHTML]="experience.user.firstName + ' ' + experience.user.lastName">
-          </p>
-          <div>
-            <div [innerHTML]="experience.date"></div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <span *ngFor="let i of experience.rating | myArray">
-            <i fa [name]="'star'" [size]=1></i>
-          </span>
-          <span *ngFor="let i of 5 - experience.rating | myArray">
-            <i fa [name]="'star-o'" [size]=1></i>
-          </span>
-        </div>
-      </div>
-      <div>
-        <p [innerHTML]="experience.text"></p>
-      </div>
-      <span *ngFor="let image of experience.images">
-        <img [src]="image" style="width: 100px; height: 100px">
-      </span>
-
-      <div class="row">
-        <div class="col-md-2">
-          <i fa [name]="'thumbs-o-up'" [size]=1></i> <span [innerHTML]="experience.likeNumber"></span> Likes
-        </div>
-        <div class="col-md-8">
-          <i fa [name]="'comment-o'" [size]=1></i> <span [innerHTML]="experience.comments.length"></span> Comments
-        </div>
-        <div class="col-md-2 align-right">
-          Report
-        </div>
-      </div>
-
-      <hr>
 
       <div class="row comment">
         <div class="col-md-2">
-          <img class="user-avatar-small" [src]="user.avatar">
+          <img class="user-avatar" [src]="user.avatar">
         </div>
-        <textarea class="col-md-9" placeholder="Write your comment"></textarea>
-      </div>
+        <div class="col-md-4">
+          <i fa [name]="'star-o'" [size]=2></i>
+          <i fa [name]="'star-o'" [size]=2></i>
+          <i fa [name]="'star-o'" [size]=2></i>
+          <i fa [name]="'star-o'" [size]=2></i>
+          <i fa [name]="'star-o'" [size]=2></i>
+        </div>
 
-      <div class="row comment" *ngFor="let comment of experience.comments">
-        <div class="col-md-2">
-          <img class="user-avatar-small" [src]="comment.user.avatar">
-        </div>
-        <div class="col-md-9">
-          <span style="font-weight: bold" [innerHTML]="comment.user.firstName + ' ' + comment.user.lastName"></span>
-          <span [innerHTML]="comment.text"></span>
-        </div>
-      </div>
-
-      <div class="row">
-        <p class="col-md-4"><a>View more comments</a></p>
-        <p class="col-md-8" style="float: right;">2/5</p>
+        <p>
+          <textarea style="min-width: 90%; min-height: 150px" placeholder="What's your experience here?"></textarea>
+        </p>
+        <p>
+          <a>+ Add Images</a>
+        </p>
       </div>
 
     </div>
-
-    <hr>
 
   </div>
 
@@ -150,9 +98,9 @@
 
     <div class="event-location">
       <p>Location</p>
-      <sebm-google-map [latitude]="event.location.lat" [longitude]="event.location.lng" [zoom]="13">
-        <sebm-google-map-marker [latitude]="event.location.lat"
-                                [longitude]="event.location.lng">
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13">
+        <sebm-google-map-marker [latitude]="location.lat"
+                                [longitude]="location.lng">
         </sebm-google-map-marker>
       </sebm-google-map>
     </div>

@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule, ApplicationRef
+  NgModule, ModuleWithProviders, ApplicationRef
 } from '@angular/core';
 import {
   removeNgStyles, createNewHosts, createInputTransfer
@@ -45,7 +45,6 @@ import { GmapService } from './services/gmap.service';
 import { EventDetailComponent } from './event/detail/detail.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
 import { SlideComponent } from './event/detail/slide.component';
-
 import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
@@ -53,6 +52,8 @@ import { EventService } from './services/event.service';
 import { MyArray } from './shared/pipes';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
+import { CommentComponent } from './event/detail/comment.component';
+import { ExperienceComponent } from './event/detail/experience.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -86,6 +87,8 @@ type StoreType = {
     CarouselComponent,
     ShareEventComponent,
     GmapAutoPlaceComponent,
+    CommentComponent,
+    ExperienceComponent,
     MyArray,
     CustomMarkerComponent,
     CurateDetailComponent
