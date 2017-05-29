@@ -33,6 +33,7 @@ import { FavoritePipe } from './favorite.pipe';
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
+
   ],
   declarations: [
     InterestComponent,

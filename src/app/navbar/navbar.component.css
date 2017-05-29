@@ -199,7 +199,17 @@ i#notif {
   position: absolute;
   width: 300px;
 }
-
+/*for notifications bage*/
+.notification-item{
+  border-left: 3px solid pink;
+}
+.notification-item.has_read{
+  border-left: 3px solid white;
+}
+#notifications .notification-item:first-child{
+  cursor: default;
+}
+/*END for notifications bage*/
 @media (max-width: 991px) {
   .navbar-header {
     float: none;

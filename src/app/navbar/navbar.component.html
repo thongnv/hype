@@ -15,8 +15,8 @@
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             {{selectedMapOption.name}}<span class="caret"></span>
           </a>
-          <ul *ngIf="userInfo.mapOptions" class="dropdown-menu" aria-labelledby="drop1">
-            <li *ngFor="let option of userInfo.mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
+          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
+            <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
           </ul>
         </div>
       </li>
@@ -41,47 +41,24 @@
       <li class="right">
 
 
-        <div class="user-option map-option right" ngbDropdown>
+        <div *ngIf="notifications" class="user-option map-option right" ngbDropdown>
           <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             <i id="notif" fa [name]="'bell-o'" [size]=2></i>
-            <span id="count-notif"><b>4</b></span>
+            <span id="count-notif"><b>{{notifications.length}}</b></span>
           </a>
           <ul class="dropdown-menu" id="notifications">
             <li>
-              <span class="notify-left"><a href="#">Notifications</a></span>
-              <span class="mark-all-right"><a href="#">Mark all ass read</a></span>
+              <span class="notify-left">Notifications</span>
+              <span class="mark-all-right" (click)="onMarkAllRead()">Mark all as read</span>
               <div class="arrow-up"></div>
             </li>
-
-            <li>
-              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
+            <li *ngFor="let notif of notifications" [class.has_read]="notif.has_read === 'true'" class="notification-item">
+              <div class="icon-notification"><img [src]="notif.user_avatar" [alt]="notif.user_name" width="30" height="30"></div>
               <div class="content-notification">
-                <p class="title-notifications"><b>Amos Tan</b> just comment on your post.</p>
-                <p class="time-ago">20 mins ago</p>
+                <p class="title-notifications"><b>{{notif.user_name}}</b> {{notif.title}}</p>
+                <p class="time-ago">{{notif.created_time}}</p>
               </div>
             </li>
-            <li>
-              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
-              <div class="content-notification">
-                <p class="title-notifications">New ABC restaurent available for you to try out this weekend.</p>
-                <p class="time-ago">1 day ago</p>
-              </div>
-            </li>
-            <li>
-              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
-              <div class="content-notification">
-                <p class="title-notifications"><b>Amos Tan</b> started following you. Thank you, please.</p>
-                <p class="time-ago">20 mins ago</p>
-              </div>
-            </li>
-            <li>
-              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
-              <div class="content-notification">
-                <p class="title-notifications"><b>Nicole Li</b> just create a new list.</p>
-                <p class="time-ago">20 mins ago</p>
-              </div>
-            </li>
-
           </ul>
         </div>
 

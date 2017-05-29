@@ -33,7 +33,6 @@ import { GmapComponent } from './gmap/gmap.component';
 import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { CountryPickerModule } from 'angular2-countrypicker';
@@ -54,6 +53,8 @@ import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.compon
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CommentComponent } from './event/detail/comment.component';
 import { ExperienceComponent } from './event/detail/experience.component';
+import { MemberModule } from './member/member.module';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -106,7 +107,6 @@ type StoreType = {
       libraries: ['places']
     }),
     NgbModule.forRoot(),
-    Angular2FontawesomeModule,
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
@@ -115,8 +115,10 @@ type StoreType = {
       prefix: 'hylo-app',
       storageType: 'localStorage'
     }),
+    Angular2FontawesomeModule,
     NguiDatetimePickerModule,
-    Ng2ScrollableModule
+    Ng2ScrollableModule,
+    MemberModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

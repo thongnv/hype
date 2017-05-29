@@ -2,7 +2,7 @@
 <aside class="sidebar">
     <ul class="navbar-collapse list-tap">
         <li [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <img src="/assets/img/icons/Trending.png" alt="Trending">
+            <img [src]="'/assets/img/icons/Trending.png'" alt="Trending">
             <span>Trending Event</span>
         </li>
         <li [routerLink]="['./discover']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
@@ -18,7 +18,7 @@
             <span>Favorites</span>
         </li>
     </ul>
-</aside>
+</aside>1
 <main class="main">
     <div class="outlet">
         <router-outlet class="content"></router-outlet>
