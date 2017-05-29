@@ -1,0 +1,39 @@
+<article>
+  <div class="list-preview-wrap" *ngIf="curate">
+    <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll">
+      <div class="carousel-box" id="preview-carousel">
+        <div class="carousel-header">
+          <strong>{{curate.info.listName}}</strong>
+        </div>
+        <div class="carousel">
+          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                    [carouselSlides]="slides">
+            <slide *ngFor="let slide of slides; let index=index"
+                   [active]="slide.active">
+              <img [src]="slide.image" style="margin:auto;">
+            </slide>
+          </carousel>
+        </div>
+        <div class="description text-justify">
+          <p>{{curate.info.listDescription}}</p>
+        </div>
+      </div>
+      <div *ngFor="let plc of curate.info.listPlaces; let index=index" class="place-item-wrap"
+           [id]="'place-'+index">
+        <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong
+            class="place-name">{{plc.place}}</strong><span class="pull-right place-detail-btn">details</span></div>
+        <div class="place-item-img">
+          <img [src]="plc.image" [alt]="plc.place" width="100%">
+        </div>
+        <p class="place-item-description">{{plc.description}}</p>
+      </div>
+    </div>
+    <div class="col-xs-12 map-box">
+      <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
+                           (onClick)="markerClick($event)">
+        </app-custom-marker>
+      </sebm-google-map>
+    </div>
+  </div>
+</article>
