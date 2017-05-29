@@ -34,13 +34,15 @@ a.active {
   margin: 0;
   text-align: center;
 }
-.hype .list-tap > li .icon{
-  -moz-transition: all 0.2s;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  transform: scale(0.95);
+.hype .list-tap li img {
+  width: 30px;
+  height: 30px;
+}
+.hype .list-tap li span {
+    color: #3b3b3b;
+    font-size: 12px;
+    text-align: center;
+    line-height: 14px;
 }
 .hype .list-tap > li{
   cursor: pointer;

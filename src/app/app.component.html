@@ -1,15 +1,27 @@
 <app-navbar></app-navbar>
 <aside class="sidebar">
     <ul class="navbar-collapse list-tap">
-        <li [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"><i class="icon icon-trend"></i><span>Trending</span></li>
-        <li [routerLink]="['./discover']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"><i class="icon icon-discover"></i><span>Discover Places</span></li>
-        <li [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"><i class="icon icon-curated"></i><span>Curated</span></li>
-        <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}"><i class="icon icon-favorite"></i><span>Favorites</span></li>
+        <li [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            <img src="/assets/img/icons/Trending.png" alt="Trending">
+            <span>Trending Event</span>
+        </li>
+        <li [routerLink]="['./discover']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            <img src="/assets/img/icons/Discover.png" alt="Discover">
+            <span>Discover Places</span>
+        </li>
+        <li [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            <img src="/assets/img/icons/Curated.png" alt="Curated">
+            <span>Curated</span>
+        </li>
+        <li [routerLink]="['./favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+            <img src="/assets/img/icons/Favourites.png" alt="Favourites">
+            <span>Favorites</span>
+        </li>
     </ul>
 </aside>
 <main class="main">
     <div class="outlet">
-        <router-outlet></router-outlet>
+        <router-outlet class="content"></router-outlet>
     </div>
 </main>
 
