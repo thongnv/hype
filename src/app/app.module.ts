@@ -51,7 +51,6 @@ import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.c
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 import { MyArray } from './shared/pipes';
-import { ListItemComponent } from './curate-new/list-item/list-item.component';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 // Application wide providers
@@ -88,7 +87,6 @@ type StoreType = {
     ShareEventComponent,
     GmapAutoPlaceComponent,
     MyArray,
-    ListItemComponent,
     CustomMarkerComponent,
     CurateDetailComponent
   ],
