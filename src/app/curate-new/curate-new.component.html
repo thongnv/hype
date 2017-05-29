@@ -1,8 +1,9 @@
 <article class="row new-list">
   <header>
     <ul>
-      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">List Info</li>
-      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
+      <li class="internal-link" (click)="switchView(false)" [class.active]="!showPreview">List Info</li>
+      <li class="internal-link" (click)="switchView(true)" [class.active]="showPreview">Preview</li>
+      <li class="pull-right" *ngIf="showPreview"><a class="btn btn-success" (click)="onSubmit()">Publish this</a></li>
     </ul>
   </header>
 
@@ -80,8 +81,8 @@
   </div>
 
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.userDraftList">
-    <div class="col-xs-12 list-box">
-      <div class="carousel-box">
+    <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll">
+      <div class="carousel-box" id="preview-carousel">
         <div class="carousel-header">
           <strong>{{appState.state.userDraftList.info.listName}}</strong>
         </div>
@@ -98,9 +99,11 @@
           <p>{{appState.state.userDraftList.info.listDescription}}</p>
         </div>
       </div>
-      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap ">
-        <div class="place-item-header"><strong class="pull-left place-index">#{{index}}</strong>{{plc.place}}<strong
-          class="pull-right place-detail-btn">details</strong></div>
+      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap"
+           [id]="'place-'+index">
+        <div class="place-item-header"><strong
+            class="pull-left place-index">#{{index+1}}</strong><strong class="place-name">{{plc.place}}</strong><span
+            class="pull-right place-detail-btn">details</span></div>
         <div class="place-item-img">
           <img [src]="plc.image" [alt]="plc.place" width="100%">
         </div>
@@ -108,8 +111,10 @@
       </div>
     </div>
     <div class="col-xs-12 map-box">
-      <sebm-google-map [latitude]="1.290270" [longitude]="103.851959" [zoom]="12">
-        <gmap-cluster [markers]="markers"></gmap-cluster>
+      <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
+                           (onClick)="markerClick($event)">
+        </app-custom-marker>
       </sebm-google-map>
     </div>
   </div>

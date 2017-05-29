@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule, ModuleWithProviders, ApplicationRef
+  NgModule, ApplicationRef
 } from '@angular/core';
 import {
   removeNgStyles, createNewHosts, createInputTransfer
@@ -26,7 +26,7 @@ import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
-
+import { Ng2ScrollableModule } from 'ng2-scrollable';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
@@ -51,6 +51,9 @@ import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.c
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 import { MyArray } from './shared/pipes';
+import { ListItemComponent } from './curate-new/list-item/list-item.component';
+import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
+import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -84,7 +87,10 @@ type StoreType = {
     CarouselComponent,
     ShareEventComponent,
     GmapAutoPlaceComponent,
-    MyArray
+    MyArray,
+    ListItemComponent,
+    CustomMarkerComponent,
+    CurateDetailComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -94,7 +100,8 @@ type StoreType = {
     HttpModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
+      // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
+      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places']
     }),
     NgbModule.forRoot(),
@@ -107,7 +114,8 @@ type StoreType = {
       prefix: 'hylo-app',
       storageType: 'localStorage'
     }),
-    NguiDatetimePickerModule
+    NguiDatetimePickerModule,
+    Ng2ScrollableModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

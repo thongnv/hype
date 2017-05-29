@@ -7,6 +7,7 @@ import { EventDetailComponent } from './event/detail/detail.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
+import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const ROUTES: Routes = [
   { path: 'member', loadChildren: './member#MemberModule'},
   { path: 'discover',    component: DiscoverComponent },
   { path: 'curate',    component: CurateComponent },
+  { path: 'curate-detail/:id',    component: CurateDetailComponent },
   { path: 'curate/new',    component: CurateNewComponent},
   { path: 'share-event',    component: ShareEventComponent},
   { path: 'event/:id',    component: EventDetailComponent },

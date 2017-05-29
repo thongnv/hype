@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { AppState } from '../app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curate-new',
@@ -22,6 +23,11 @@ export class CurateNewComponent implements OnInit {
   public noTransition: boolean = false;
   public slides: any[] = [];
 
+  public lat: number = 1.290270;
+  public lng: number = 103.851959;
+  public zoom: number = 12;
+
+  public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
@@ -32,7 +38,8 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               public appState: AppState,
-              private mainService: MainService) {
+              private mainService: MainService,
+              private router: Router) {
     this.onAddPlace();
   }
 
@@ -71,7 +78,8 @@ export class CurateNewComponent implements OnInit {
       info: this.formData.value,
       images: this.previewUrl
     };
-    console.log('userDraftList', userDraftList);
+    console.log('userDraftList', JSON.stringify(userDraftList));
+    this.router.navigate(['/curate-detail/123abc']);
   }
 
   public onPreview() {
@@ -90,8 +98,50 @@ export class CurateNewComponent implements OnInit {
     });
   }
 
-  public switchView() {
-    this.showPreview = !this.showPreview;
+  public switchView(status: boolean) {
+    this.showPreview = status;
+    if (status) {
+      this.initMap();
+    }
+  }
+
+  public onScroll(event) {
+    let baseHeight = event.target.clientHeight;
+    let realScrollTop = event.target.scrollTop + baseHeight;
+    let currentHeight: number = baseHeight;
+
+    if (event.target.children.length > 1) {
+      for (let i = 0; i < event.target.children.length; i++) {
+        let currentClientH = event.target.children[i].clientHeight;
+        currentHeight += currentClientH;
+        if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+          if (this.currentHighlightedMarker !== i) {
+            this.currentHighlightedMarker = i;
+            this.highlightMarker(i);
+          }
+        }
+      }
+    }
+  }
+
+  public markerClick(markerId) {
+    console.log('markerClick', markerId);
+    // console.log('scroll to: ', document.getElementById('place-' + markerId).offsetTop);
+    // window.scrollTo(0, document.getElementById('place-' + markerId).offsetTop);
+  }
+
+  private highlightMarker(markerId: number): void {
+    if (this.markers[markerId]) {
+      this.markers.forEach((marker, index) => {
+        if (index === markerId) {
+          this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
+        } else {
+          this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
+        }
+      });
+    }
   }
 
   private initAddress() {
@@ -106,12 +156,20 @@ export class CurateNewComponent implements OnInit {
 
   // for preview
   private initMap() {
+    this.currentHighlightedMarker = 0;
     this.slides = [];
+    this.markers = [];
     this.showPreview = true;
     if (this.appState.state.userDraftList.info.listPlaces.length) {
+      let index = 0;
       for (let place of this.appState.state.userDraftList.info.listPlaces) {
         if (place.lat && place.lng) {
-          this.markers.push({lat: place.lat, lng: place.lng});
+          if (index === 0) {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
+          } else {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
+          }
+          index++;
         }
       }
       if (this.appState.state.userDraftList.images.length) {

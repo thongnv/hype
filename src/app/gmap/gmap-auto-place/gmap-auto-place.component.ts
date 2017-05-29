@@ -3,6 +3,7 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
+  moduleId: module.id.toString(),
   selector: 'app-gmap-auto-place',
   templateUrl: './gmap-auto-place.component.html',
   styleUrls: ['./gmap-auto-place.component.css']
@@ -22,7 +23,8 @@ export class GmapAutoPlaceComponent implements OnInit {
   public ngOnInit() {
     this.mapsAPILoader.load().then(() => {
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address']
+        // types: ['address'],
+        componentRestrictions: {country: 'sg'}
       });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
