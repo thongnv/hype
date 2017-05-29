@@ -1,89 +1,201 @@
-.navbar-nav>li.logo {
+
+#notifications {
+  left: -1000%;
+  width: 350px;
+  top: 95%;
+}
+
+ul#notifications li:first-child {
+  position: relative;
+}
+
+span.mark-all-right {
+  float: right;
+}
+
+.icon-notification {
+  float: left;
+}
+
+ul#notifications li i.logo {
+  margin: 10px 20px 33px;
+}
+
+ul#notifications li span.notify-left {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+ul#notifications li span.notify-left a {
+  color: #3b3b3b;
+}
+
+ul#notifications li span.mark-all-right {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+ul#notifications li span.mark-all-right a {
+  color: #ec3d62;
+}
+
+ul#notifications li p.time-ago {
+  line-height: 1px;
+}
+
+ul#notifications li p {
+  text-transform: none;
+  font-size: 13px;
+}
+
+.arrow-up {
+  width: 0px;
+  height: 0px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 12px solid #fff;
+  position: absolute;
+  top: -54%;
+  right: 13%;
+}
+
+.navbar-nav > li.logo {
   margin-left: 40px;
   padding: 0;
 }
-.navbar-nav>li.logo>a {
+
+.navbar-nav > li.logo > a {
   margin: 0;
   padding: 0;
 }
-.hype-nav>li.logo i {
+
+.hype-nav > li.logo i {
   margin-top: 4px;
 }
 
-#site-name {
-  font-family: sans-serif;
+li#site-name {
   font-size: xx-large;
-  margin-left: 15px;
+  margin-left: 30px;
 }
-.hype-header{
+
+.hype-header {
   margin-bottom: 0;
+  background: #ec3d62;
 }
 
-.user-option>a {
-  color: black;
+.user-option > a {
+  color: white;
+  letter-spacing: 1px;
+  text-transform: capitalize;
 }
 
-.map-option{
+.map-option {
   height: 50px;
   line-height: 50px;
 }
-.map-option li{
+
+.map-option li {
   line-height: 20px;
   padding: 5px;
   cursor: pointer;
   transition: all 0.3s;
   text-transform: capitalize;
-}
-.map-option li:hover{
-  background: deepskyblue;
-}
-.map-option input{
-  margin-top: 8px;
+  clear: both;
 }
 
-.nav>li {
+.map-option li:hover {
+  background: deepskyblue;
+}
+
+.map-option input {
+  margin-top: 8px;
+  border-radius: 5px 5px;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  font-size: 30px;
+  font-family: ArialRoundedMTBold, sans-serif;
+}
+
+.nav > li {
   margin-left: 20px;
 }
 
-.hype-nav>li i {
-  margin-top: 8px;
+[role=button] {
+  color: #fff;
+  font-size: 14px;
+  font-family: Roboto-Medium, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-button.btn>i {
+[role=button]:hover {
+  text-decoration: none;
+}
+
+.map-option button.btn-default {
+  background: url('/assets/img/homepage/icon-search.png') no-repeat;
+  padding: 10px 10px;
+  position: relative;
+  border: none;
+  left: -133%;
+  top: 2px;
+}
+
+.hype-nav > li img {
+  margin-top: 15px;
+}
+
+.hype-nav > li img[alt="icon-down"] {
+  margin-top: 0px;
+}
+
+button.btn > i {
   margin: 0;
 }
+
 .notif-bag {
   position: relative;
 }
 
 i#notif {
-  margin-top: -2px;
+  margin-top: 10px;
+  color: #9b1935;
+  background: transparent;
 }
 
 #count-notif {
   position: absolute;
-  top: 11px;
-  right: 9px;
+  top: -12px;
+  right: -3px;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  background-color: red;
+  width: 18px;
+  height: 18px;
+  background-color: white;
   text-align: center;
   color: white;
-  border: solid 2px;
+  border: none;
   font-size: small;
+}
+
+#count-notif b {
+  position: relative;
+  top: -15px;
+  color: #9b1935;
 }
 
 .nav-search {
   margin-top: 12px;
 
 }
-.nav-search>input {
+
+.nav-search > input {
   position: absolute;
   padding-left: 20px;
 }
 
-.nav-search>i {
+.nav-search > i {
   position: absolute;
   width: 300px;
 }
@@ -92,37 +204,45 @@ i#notif {
   .navbar-header {
     float: none;
   }
+
   .navbar-toggle {
     display: block;
   }
 
   .navbar-collapse {
     border-top: 1px solid transparent;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
+
   .navbar-collapse.collapse {
-    display: none!important;
+    display: none !important;
   }
+
   .navbar-nav {
-    float: none!important;
+    float: none !important;
     margin: 7.5px -15px;
   }
-  .navbar-nav>li {
+
+  .navbar-nav > li {
     float: none;
   }
-  .navbar-nav>li>a {
+
+  .navbar-nav > li > a {
     padding-top: 10px;
     padding-bottom: 10px;
   }
+
   .navbar-text {
     float: none;
     margin: 15px 0;
   }
+
   /* since 3.1.0 */
   .navbar-collapse.collapse.in {
-    display: block!important;
+    display: block !important;
   }
+
   .collapsing {
-    overflow: hidden!important;
+    overflow: hidden !important;
   }
 }

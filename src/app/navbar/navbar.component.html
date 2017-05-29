@@ -1,7 +1,6 @@
 <header class="navbar navbar-default navbar-fixed-top hype-header">
   <div class="navbar-header">
-    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"
-            (click)="toggleState()">
+    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" (click)="toggleState()">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -9,53 +8,94 @@
   </div>
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
-      <li class="logo">
-        <a [routerLink]="['./home']">
-          <i fa [name]="'circle-o'" [size]=3><span id="site-name">LOGO</span></i>
-        </a>
-      </li>
+      <!--<li class="logo"><a [routerLink]="['./home']"><i fa [name]="'circle-o'" [size]=3></i></a></li>-->
+      <li id="site-name"><a [routerLink]="['./home']">Hylo</a></li>
       <li class="map-option">
         <div ngbDropdown>
-          <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
-             ngbDropdownToggle>
+          <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             {{selectedMapOption.name}}<span class="caret"></span>
           </a>
-          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
-            <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
+          <ul *ngIf="userInfo.mapOptions" class="dropdown-menu" aria-labelledby="drop1">
+            <li *ngFor="let option of userInfo.mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
           </ul>
         </div>
       </li>
       <li class="map-option col-md-4">
         <form action="">
           <div class="input-group">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button"><i fa [name]="'search'" [size]=1></i></button>
-                    </span>
-            <input type="text" class="form-control" placeholder="Search for any place or activities...">
+            
+            <input type="text" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button"></button>
+            </span>
           </div>
         </form>
       </li>
 
       <li class="right">
         <div class="add-eventbtn">
-          <i fa [name]="'plus'" [size]=2></i>
+          <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
         </div>
       </li>
-      <li class="right"><a [routerLink]="['/member']" class="notif-bag">
-        <i id="notif" fa [name]="'bell-o'" [size]=2></i>
-        <span id="count-notif">4</span>
-      </a>
+
+      <li class="right">
+
+
+        <div class="user-option map-option right" ngbDropdown>
+          <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+            <i id="notif" fa [name]="'bell-o'" [size]=2></i>
+            <span id="count-notif"><b>4</b></span>
+          </a>
+          <ul class="dropdown-menu" id="notifications">
+            <li>
+              <span class="notify-left"><a href="#">Notifications</a></span>
+              <span class="mark-all-right"><a href="#">Mark all ass read</a></span>
+              <div class="arrow-up"></div>
+            </li>
+
+            <li>
+              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
+              <div class="content-notification">
+                <p class="title-notifications"><b>Amos Tan</b> just comment on your post.</p>
+                <p class="time-ago">20 mins ago</p>
+              </div>
+            </li>
+            <li>
+              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
+              <div class="content-notification">
+                <p class="title-notifications">New ABC restaurent available for you to try out this weekend.</p>
+                <p class="time-ago">1 day ago</p>
+              </div>
+            </li>
+            <li>
+              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
+              <div class="content-notification">
+                <p class="title-notifications"><b>Amos Tan</b> started following you. Thank you, please.</p>
+                <p class="time-ago">20 mins ago</p>
+              </div>
+            </li>
+            <li>
+              <div class="icon-notification"><i class="logo" fa [name]="'user-circle-o'" [size]=2></i></div>
+              <div class="content-notification">
+                <p class="title-notifications"><b>Nicole Li</b> just create a new list.</p>
+                <p class="time-ago">20 mins ago</p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+
       </li>
 
       <li class="right">
         <div class="user-option map-option right" ngbDropdown>
-          <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false"
-             ngbDropdownToggle>
+          <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             <i class="logo" fa [name]="'user-circle-o'" [size]=2></i>
-            {{appState.state.userInfo.userName}}
-            <span class="caret"></span>
+            {{userInfo.userName}}
+            <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
-          <ul class="dropdown-menu" aria-labelledby="drop2">
+          <ul class="dropdown-menu" aria-labelledby="drop3">
             <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
             </li>
             <li>Action 2</li>
