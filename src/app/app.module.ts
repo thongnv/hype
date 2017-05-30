@@ -48,6 +48,7 @@ import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
+import { CompanyService } from './services/company.service';
 import { MyArray } from './shared/pipes';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
@@ -57,6 +58,7 @@ import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -95,7 +97,8 @@ type StoreType = {
     MyArray,
     CustomMarkerComponent,
     CurateDetailComponent,
-    CurateListPipe
+    CurateListPipe,
+    CompanyDetailComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -130,7 +133,8 @@ type StoreType = {
     Title,
     GmapService,
     GoogleMapsAPIWrapper,
-    EventService
+    EventService,
+    CompanyService,
   ]
 })
 export class AppModule {
