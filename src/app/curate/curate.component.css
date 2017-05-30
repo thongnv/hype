@@ -135,5 +135,13 @@ ul.list-items li a img {
     margin-right: 10px;
     float: left;
 }
-
+.list-category li.active{
+    color: #2a6be1;
+}
+.list-category li{
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 14px;
+    color: #3b3b3b;
+}
 /*right box end*/

@@ -3,7 +3,7 @@
     <div class="col-lg-8 col-xs-12 left-box">
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li *ngFor="let cat of categories"><a (click)="onSelectCategory(cat.id)">{{cat.name}}</a></li>
+          <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.id)" [class.active]="cat.id===selectedCategory">{{cat.name}}</li>
         </ul>
       </div>
       <div class="primary-content">
