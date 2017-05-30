@@ -55,6 +55,7 @@ import { CommentComponent } from './event/detail/comment.component';
 import { ExperienceComponent } from './event/detail/experience.component';
 import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
+import { MomentModule } from 'angular2-moment';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -118,7 +119,8 @@ type StoreType = {
     Angular2FontawesomeModule,
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
-    MemberModule
+    MemberModule,
+    MomentModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

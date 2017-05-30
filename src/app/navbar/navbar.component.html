@@ -23,7 +23,6 @@
       <li class="map-option col-md-4">
         <form action="">
           <div class="input-group">
-            
             <input type="text" class="form-control" placeholder="Search...">
             <span class="input-group-btn">
               <button class="btn btn-default" type="button"></button>
@@ -31,16 +30,12 @@
           </div>
         </form>
       </li>
-
       <li class="right">
         <div class="add-eventbtn">
           <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
         </div>
       </li>
-
       <li class="right">
-
-
         <div *ngIf="notifications" class="user-option map-option right" ngbDropdown>
           <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             <i id="notif" fa [name]="'bell-o'" [size]=2></i>
@@ -56,15 +51,12 @@
               <div class="icon-notification"><img [src]="notif.user_avatar" [alt]="notif.user_name" width="30" height="30"></div>
               <div class="content-notification">
                 <p class="title-notifications"><b>{{notif.user_name}}</b> {{notif.title}}</p>
-                <p class="time-ago">{{notif.created_time}}</p>
+                <p class="time-ago">{{notif.created_time | amTimeAgo}}</p>
               </div>
             </li>
           </ul>
         </div>
-
-
       </li>
-
       <li class="right">
         <div class="user-option map-option right" ngbDropdown>
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
@@ -80,7 +72,6 @@
           </ul>
         </div>
       </li>
-
     </ul>
   </div>
 </header>
