@@ -1,10 +1,48 @@
 <section>
   <div class="row">
-    <div class="col-lg-5 col-xs-12 left-box">
-      <h1 x-large class="sample-content">Curated</h1>
+    <div class="col-lg-8 col-xs-12 left-box">
+      <div class="top-content">
+        <ul *ngIf="categories" class="list-category">
+          <li class="active"><a (click)="onSelectCategory()">All</a></li>
+          <li *ngFor="let cat of categories"><a (click)="onSelectCategory(cat)">{{cat.name}}</a></li>
+        </ul>
+      </div>
+      <div  *ngIf="articles" class="primary-content">
+        <div class="wrap-post-content">
+          <div *ngFor="let art of articles" class="post-content">
+            <h4 class="title-post-content">{{art.info.listName}}</h4>
+            <p class="author">
+              By: <a href="#">{{art.info.author}}</a>
+            </p>
+            <span class="time-posts">{{art.info.created_time | amTimeAgo}}</span>
+          </div>
+        </div>
+        <h4>What's news</h4>
+        <div class="wrap-post-news">
+          <div class="post-news">
+            <div class="image-post-news"></div>
+            <h4 class="title-post-news">Lorem Ipsum Lorem Ipsum</h4>
+            <p class="author-post-news">
+              By: <a href="#">Mary Tan</a>
+            </p>
+            <span class="time-post-news">8 hours ago</span>
+            <p class="content-post-news">
+              Morbi placerat metus in purus ullamcorper, nec va lectus efficitur.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-7 col-xs-12 gmap-box">
-      <app-gmap [params] ='data'></app-gmap>
+    <div class="col-lg-4 col-xs-12 right-box">
+      <h3>Trending this week</h3>
+      <ul class="list-items">
+        <li>
+          <a href="#">
+            <img src="/assets/img/curated/curate.jpg" alt="8 pic" width="60" height="60">
+            <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 
