@@ -5,12 +5,37 @@ import { HyloComment, User } from '../../app.interface';
 @Component({
   selector: 'app-comment',
   template: `
-    <div class="col-md-2">
-      <img class="user-avatar-small" [src]="user.avatar">
+    <div class="avatar-comment-ago">
+      <a href="#">
+        <img class="img-circle" [src]="user.avatar" alt="user avatar" width="50"
+             height="50">
+      </a>
     </div>
-    <div class="col-md-9">
-      <span style="font-weight: bold" [innerHTML]="user.firstName + ' ' + user.lastName"></span>
-      <span [innerHTML]="text"></span>
+
+    <div class="content-comment-ago">
+      <div class="top-content-comment">
+        <a href="#"><b>{{user.firstName + ' ' + user.lastName}}</b></a>
+        <span>{{text}}</span>
+      </div>
+      <div class="bottom-like-reply-comment">
+        <div class="likes-area">
+          <a href="#">
+            <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
+          </a>
+          <a href="#">
+            Likes
+          </a>
+        </div>
+        <div class="reply-area">
+          <a href="#">
+            <img src="/assets/img/eventdetailpage/icon-reply.png" alt="icon-reply">
+          </a>
+          <a href="#">
+            Reply
+          </a>
+        </div>
+
+      </div>
     </div>
   `,
   styleUrls: ['./detail.component.css']

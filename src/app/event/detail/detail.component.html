@@ -1,110 +1,122 @@
-<div class="row">
-  <div class="col-md-7">
-    <div class="event-title">
-      <img src="../../../assets/icon/icon-left/icon-left.png"
-           srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
-             ../../../assets/icon/icon-left/icon-left@3x.png 3x"
-           class="icon_left">
-      <span class="event-name">{{name}}</span>
-    </div>
+<section>
+  <div class="row">
+    <div class="col-lg-6 col-xs-12 left-box">
 
-    <hr>
-
-    <div class="row">
-      <div class="col-md-3">
-        <p>Location</p>
-        <p>Date / Time</p>
-        <p>Price Range</p>
-        <p>Mentioned by</p>
+      <!-- title event start -->
+      <div class="title-event border-bottom">
+        <a href="#" class="left-arrow">
+          <img src="/assets/img/eventdetailpage/icon-left.png" alt="icon-left">
+        </a>
+        <h3>{{name}}</h3>
       </div>
-      <div class="col-md-6">
-        <p class="event-place">{{location.name}}</p>
-        <p>{{date}}</p>
-        <p>{{price}} <span> <a href="{{call2action.link}}">{{call2action.action}}</a></span></p>
-        <p>
-          <span *ngFor="let mention of mentions">
-            <img [src]="mention.iconUrl">
-          </span>
-        </p>
-      </div>
-      <div class="col-md-3 align-center">
-        <p>CREATED BY</p>
-        <img class="user-avatar" [src]="creator.avatar">
-        <p>{{creator.firstName + ' ' + creator.lastName}}</p>
-        <p>{{rating + '/5'}}</p>
-      </div>
-    </div>
+      <!-- title event end -->
 
-    <hr>
-
-    <div>
-      <h5 class="bold">Details</h5>
-      <p>{{detail}}</p>
-    </div>
-
-    <hr>
-
-    <div class="row">
-      <div class="col-md-6">
-        <h5 class="bold">Experiences ({{experiences.length}})</h5>
-      </div>
-      <div class="col-md-6">
-        <h5 class="bold">Post your experience</h5>
-      </div>
-    </div>
-
-    <event-experience
-      *ngFor="let experience of experiences; let index=index"
-      [experience]="experience">
-    </event-experience>
-
-    <div>
-
-      <div class="row comment">
-        <div class="col-md-2">
-          <img class="user-avatar" [src]="user.avatar">
+      <!-- wrap primary content event start -->
+      <div class="wrap-primary-content-event border-bottom">
+        <!-- information event start -->
+        <div class="information-event border-bottom padding-top-30 padding-bottom-35">
+          <ul class="left-content-information-event">
+            <li>
+              <p>location</p><span>{{location.name}}</span>
+            </li>
+            <li>
+              <p>date / time</p><span>{{date}}</span>
+            </li>
+            <li>
+              <p>price range</p><span>{{price}} <b>.</b>
+              <a href="{{call2action.link}}"><strong>{{call2action.action}}</strong></a>
+            </span>
+            </li>
+            <li>
+              <p>Mentioned by</p>
+              <ul class="list-mention" *ngFor="let mention of mentions">
+                <li><a href="#"><img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="right-creater-information-event text-center">
+            <h4 class="title-creater">Created by</h4>
+            <div class="avatar-creater">
+              <a href="#">
+                <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
+                     height="70">
+              </a>
+            </div>
+            <p class="name-creater">
+              <a href="#">
+                {{creator.firstName + ' ' + creator.lastName}}
+              </a>
+            </p>
+            <p class="point-creater">
+              <a href="#">
+                {{rating}}/5
+              </a>
+            </p>
+          </div>
         </div>
-        <div class="col-md-4">
-          <i fa [name]="'star-o'" [size]=2></i>
-          <i fa [name]="'star-o'" [size]=2></i>
-          <i fa [name]="'star-o'" [size]=2></i>
-          <i fa [name]="'star-o'" [size]=2></i>
-          <i fa [name]="'star-o'" [size]=2></i>
-        </div>
+        <!-- information event end -->
 
-        <p>
-          <textarea style="min-width: 90%; min-height: 150px" placeholder="What's your experience here?"></textarea>
-        </p>
-        <p>
-          <a>+ Add Images</a>
-        </p>
+        <!-- detail event start -->
+        <div class="detail-event border-bottom clearfix padding-top-30 padding-bottom-35">
+          <h4 class="title-detail-event margin-bottom-25">Details</h4>
+          <p class="content-detail-event">{{detail}}</p>
+        </div>
+        <!-- detail event end -->
+
+        <!-- experiences area start -->
+        <div class="experience-top">
+          <h4 class="title-experiences-area margin-bottom-25">Experiences ({{experiences.length}})</h4>
+          <a href="#" class="post-your-experience">Post your experience</a>
+        </div>
+        <event-experience
+          *ngFor="let experience of experiences; let index=index"
+          [experience]="experience">
+        </event-experience>
+        <!-- experiences area end -->
+
+        <!-- post your experience start -->
+        <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35">
+          <img src="/assets/img/eventdetailpage/derek.jpg" alt="user avatar" class="img-circle" width="70" height="70">
+          <ul class="list-stars-on-post">
+            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
+            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
+            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
+            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
+            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
+          </ul>
+          <div class="content-your-post clearfix">
+            <textarea name="" id="" cols="30" rows="10" placeholder="What's your experience here?"></textarea>
+          </div>
+          <div class="add-image-area">
+            <a>+ Add Images </a>
+          </div>
+        </div>
+        <!-- post your experience end -->
+
+      </div>
+    </div>
+
+    <div class="col-lg-5 col-xs-12 gmap-box margin-bottom-25">
+
+        <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                  [carouselSlides]="slides">
+          <slide *ngFor="let slide of slides; let index=index"
+                 [active]="slide.active">
+            <img [src]="slide.image" style="margin:auto;">
+          </slide>
+        </carousel>
+
+      <div class="map-location-area" style="display: block;">
+        <h4 class="title-map-location margin-bottom-25">Location</h4>
+        <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13">
+          <sebm-google-map-marker [latitude]="location.lat"
+                                  [longitude]="location.lng">
+          </sebm-google-map-marker>
+        </sebm-google-map>
       </div>
 
     </div>
 
   </div>
-
-  <div class="col-md-5">
-
-    <div class="row">
-      <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                [carouselSlides]="slides">
-        <slide *ngFor="let slide of slides; let index=index"
-               [active]="slide.active">
-          <img [src]="slide.image" style="margin:auto;">
-        </slide>
-      </carousel>
-    </div>
-
-    <div class="event-location">
-      <p>Location</p>
-      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13">
-        <sebm-google-map-marker [latitude]="location.lat"
-                                [longitude]="location.lng">
-        </sebm-google-map-marker>
-      </sebm-google-map>
-    </div>
-
-  </div>
-
-</div>
+</section>

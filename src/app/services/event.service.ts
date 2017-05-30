@@ -38,10 +38,10 @@ export class EventService {
         link: '#'
       },
       mentions: [
-        {url: 'url', iconUrl: 'icon'},
-        {url: 'url', iconUrl: 'icon'},
-        {url: 'url', iconUrl: 'icon'},
-        {url: 'url', iconUrl: 'icon'},
+        {url: 'url', iconUrl: '/assets/img/eventdetailpage/mention.jpg'},
+        {url: 'url', iconUrl: '/assets/img/eventdetailpage/mention.jpg'},
+        {url: 'url', iconUrl: '/assets/img/eventdetailpage/mention.jpg'},
+        {url: 'url', iconUrl: '/assets/img/eventdetailpage/mention.jpg'},
       ],
       images: [
         'http://vnreview.vn/image/16/60/64/1660648.jpg',
@@ -56,12 +56,17 @@ export class EventService {
         {
           rating: 4,
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-          images: ['img1', 'img2', 'img3'],
+          images: [
+            '/assets/img/eventdetailpage/abc.jpg',
+            '/assets/img/eventdetailpage/abc.jpg',
+            '/assets/img/eventdetailpage/abc.jpg',
+            '/assets/img/eventdetailpage/abc.jpg'
+          ],
           user: {
             firstName: 'Derek',
             lastName: 'Ang',
             contactNumber: '123',
-            avatar: 'assets/img/avatar/demoavatar.png',
+            avatar: '/assets/img/eventdetailpage/derek.jpg',
             followingNumber: 2,
             followerNumber: 12,
             receiveEmail: 1,
@@ -101,7 +106,7 @@ export class EventService {
             firstName: 'Derek',
             lastName: 'Ang',
             contactNumber: '123',
-            avatar: 'assets/img/avatar/demoavatar.png',
+            avatar: '/assets/img/eventdetailpage/derek.jpg',
             followingNumber: 2,
             followerNumber: 12,
             receiveEmail: 1,
@@ -116,7 +121,7 @@ export class EventService {
                 firstName: 'HK',
                 lastName: 'Lin',
                 contactNumber: '23243',
-                avatar: 'assets/img/avatar/demoavatar.png',
+                avatar: '/assets/img/eventdetailpage/tank.jpg',
                 followingNumber: 2,
                 followerNumber: 1,
                 receiveEmail: 0,
@@ -134,7 +139,7 @@ export class EventService {
                 firstName: 'HK',
                 lastName: 'Lin',
                 contactNumber: '23243',
-                avatar: 'assets/img/avatar/demoavatar.png',
+                avatar: '/assets/img/eventdetailpage/tank.jpg',
                 followingNumber: 2,
                 followerNumber: 1,
                 receiveEmail: 0,
