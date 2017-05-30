@@ -6,63 +6,88 @@ import { EventDetailComponent } from './detail.component';
 @Component({
   selector: 'event-experience',
   template: `
-    <div class="row">
-      <div class="col-md-2">
-        <img [src]="user.avatar" class="user-avatar">
+    <div class="experiences-area border-bottom padding-top-30 padding-bottom-35">
+      <div class="information-experience">
+        <img class="img-circle" [src]="user.avatar" alt="user avatar" width="70"
+             height="70">
+        <div class="content-info-experience">
+          <h4>{{user.firstName + ' ' + user.lastName}}</h4>
+          <p class="info-date-experience">
+            {{date}}
+          </p>
+        </div>
+        <ul class="list-stars-review-experience">
+          <li *ngFor="let i of rating | myArray"><a>
+            <img src="/assets/img/eventdetailpage/small-star-selected.png"
+                 alt="small-star-selected"></a>
+          </li>
+
+          <li *ngFor="let i of 5 - rating | myArray"><a>
+            <img src="/assets/img/eventdetailpage/small-star.png"
+                 alt="small-star"></a></li>
+        </ul>
       </div>
-      <div class="col-md-6">
-        <p>{{user.firstName + ' ' + user.lastName}}</p>
-        <div>
-          <div>{{date}}</div>
+      <p class="detail-info-experience clearfix">
+        {{text}}
+      </p>
+      <ul class="list-pictures-experience">
+        <li *ngFor="let image of images">
+          <a><img [src]="image" alt="" width="100" height="100"></a>
+        </li>
+      </ul>
+
+      <div class="likes-comments-experience-area clearfix">
+        <div class="likes-area">
+          <a>
+            <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
+          </a>
+          <a href="#">
+            {{likeNumber}} Likes
+          </a>
+        </div>
+        <div class="comments-area">
+          <a href="#">
+            <img src="/assets/img/eventdetailpage/icon-comment.png" alt="icon-comment">
+          </a>
+          <a href="#">
+            {{comments.length}} Comments
+          </a>
+        </div>
+        <div class="report-area">
+          <a href="#">
+            <img src="/assets/img/eventdetailpage/icon-report.png" alt="icon-report">
+          </a>
+          <a href="#">
+            Report
+          </a>
         </div>
       </div>
-      <div class="col-md-4">
-          <span *ngFor="let i of rating | myArray">
-            <i fa [name]="'star'" [size]=1></i>
-          </span>
-        <span *ngFor="let i of 5 - rating | myArray">
-            <i fa [name]="'star-o'" [size]=1></i>
-          </span>
-      </div>
-    </div>
-    <div>
-      <p>{{text}}</p>
-    </div>
-    <span *ngFor="let image of images">
-        <img [src]="image" style="width: 100px; height: 100px">
-      </span>
 
-    <div class="row">
-      <div class="col-md-2">
-        <i fa [name]="'thumbs-o-up'" [size]=1></i> <span>{{likeNumber}}</span> Likes
-      </div>
-      <div class="col-md-8">
-        <i fa [name]="'comment-o'" [size]=1></i> <span>{{comments.length}}</span> Comments
-      </div>
-      <div class="col-md-2 align-right">
-        Report
-      </div>
     </div>
 
-    <hr>
+    <!-- write your comment start -->
+    <div class="write-your-comment border-bottom padding-top-30 padding-bottom-35">
 
-    <div class="row comment">
-      <div class="col-md-2">
-        <img class="user-avatar-small" [src]="user.avatar">
+      <div class="write-comment-area">
+        <img class="img-circle" [src]="user.avatar" alt="user avatar" width="50" height="50">
+        <textarea #msgInput placeholder="Write your comment"
+                  (keydown.enter)="addComment(msgInput);false"></textarea>
       </div>
-      <textarea class="col-md-9" #msgInput placeholder="Write your comment" (keydown.enter)="addComment(msgInput);false"></textarea>
+
+      <ul class="list-comments-ago">
+        <li *ngFor="let comment of comments">
+          <app-comment [comment]="comment">
+          </app-comment>
+        </li>
+      </ul>
+
+      <div class="view-more-comments clearfix" *ngIf="comments.length > 2">
+        <a class="button-view-more-comments" (click)="addComments()">View more comments</a>
+        <span class="count-comments">2 of 5</span>
+      </div>
+
     </div>
-
-    <app-comment class="row comment" *ngFor="let comment of comments"
-                 [comment]="comment">
-    </app-comment>
-    
-    <div *ngIf="comments.length > 2">
-      <a (click)="addComments()">View more comments</a> 
-    </div>
-
-    <hr>
-
+    <!-- write your comment end -->
   `,
   styleUrls: ['./detail.component.css']
 })
