@@ -32,9 +32,7 @@ if ('production' === ENV) {
     // custom providers in production
   ];
 
-
 } else {
-
   _decorateModuleRef = (modRef: any) => {
     const appRef = modRef.injector.get(ApplicationRef);
     const cmpRef = appRef.components[0];

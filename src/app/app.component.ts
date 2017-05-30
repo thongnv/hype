@@ -7,7 +7,6 @@ import {
 import { Title } from '@angular/platform-browser';
 import { AppState } from './app.service';
 
-
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,

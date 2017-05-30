@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'favorite'
+  name: 'myFavorite'
 })
 export class FavoritePipe implements PipeTransform {
 

@@ -3,13 +3,14 @@
     <div class="col-lg-8 col-xs-12 left-box">
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li class="active"><a (click)="onSelectCategory()">All</a></li>
-          <li *ngFor="let cat of categories"><a (click)="onSelectCategory(cat)">{{cat.name}}</a></li>
+          <li *ngFor="let cat of categories"><a (click)="onSelectCategory(cat.id)">{{cat.name}}</a></li>
         </ul>
       </div>
-      <div  *ngIf="articles" class="primary-content">
-        <div class="wrap-post-content">
-          <div *ngFor="let art of articles" class="post-content">
+      <div class="primary-content">
+        <div *ngIf="featuredArticles" class="wrap-post-content">
+          <div *ngFor="let art of featuredArticles | myCurateList : selectedCategory"
+               class="post-content">
+            <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
             <h4 class="title-post-content">{{art.info.listName}}</h4>
             <p class="author">
               By: <a href="#">{{art.info.author}}</a>
@@ -18,16 +19,19 @@
           </div>
         </div>
         <h4>What's news</h4>
-        <div class="wrap-post-news">
-          <div class="post-news">
-            <div class="image-post-news"></div>
-            <h4 class="title-post-news">Lorem Ipsum Lorem Ipsum</h4>
+        <div *ngIf="latestArticles" class="wrap-post-news">
+          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory"
+               class="post-news">
+            <div class="image-post-news">
+              <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
+            </div>
+            <h4 class="title-post-news">{{art.info.listName}}</h4>
             <p class="author-post-news">
-              By: <a href="#">Mary Tan</a>
+              By: <a href="#">{{art.info.author}}</a>
             </p>
-            <span class="time-post-news">8 hours ago</span>
+            <span class="time-post-news">{{art.info.created_time | amTimeAgo}}</span>
             <p class="content-post-news">
-              Morbi placerat metus in purus ullamcorper, nec va lectus efficitur.
+              {{art.info.description}}
             </p>
           </div>
         </div>
@@ -35,11 +39,11 @@
     </div>
     <div class="col-lg-4 col-xs-12 right-box">
       <h3>Trending this week</h3>
-      <ul class="list-items">
-        <li>
+      <ul *ngIf="trending" class="list-items">
+        <li *ngFor="let art of trending">
           <a href="#">
-            <img src="/assets/img/curated/curate.jpg" alt="8 pic" width="60" height="60">
-            <p>Lorem Ipsum Lorem Ipsum Lorem Ipsum</p>
+            <img [src]="art.images[0]" [alt]="art.info.listName" width="60" height="60">
+            <p>{{art.info.listName}}</p>
           </a>
         </li>
       </ul>

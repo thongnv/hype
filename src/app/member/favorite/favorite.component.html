@@ -12,7 +12,7 @@
       </ul>
 
       <div class="tab-content" *ngIf="favorite">
-        <div *ngFor="let fav of favorite | favorite: selectedFavoriteType">
+        <div *ngFor="let fav of favorite | myFavorite: selectedFavoriteType">
           <app-favorite-event *ngIf="selectedFavoriteType === 'event'" [item]="fav" (onClickLike)="onClickLike($event)" (onClickDelete)="onClickDelete($event)"></app-favorite-event>
           <app-favorite-list *ngIf="selectedFavoriteType === 'list'" [item]="fav" (onClickDelete)="onClickDelete($event)"></app-favorite-list>
           <app-favorite-place *ngIf="selectedFavoriteType === 'place'" [item]="fav" (onClickDelete)="onClickDelete($event)"></app-favorite-place>

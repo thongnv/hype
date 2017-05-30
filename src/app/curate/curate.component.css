@@ -23,9 +23,6 @@ ul.list-category li a {
 ul.list-category li.active a {
     color: #2a6be1;
 }
-
-
-
 .wrap-post-content {
     display: block;
 }
@@ -55,17 +52,9 @@ p.author a {
     height: 260px;
     position: relative;
 }
-.post-content:nth-child(1) {
-    background: url(/assets/img/curated/1.jpg);
-    background-size: 110%;
-}
-.post-content:nth-child(2) {
-    background: url(/assets/img/curated/2.jpg);
-    background-size: 110%;
-}
-.post-content:nth-child(3) {
-    background: url(/assets/img/curated/3.jpg);
-    background-size: 110%;
+.post-content .post-content-img{
+    width: 100%;
+    height: 260px;
 }
 .post-content h4 {
     color: #fff;
@@ -81,7 +70,6 @@ span.time-posts {
     color: #fff;
     font-size: 12px;
 }
-
 .post-news {
     width: 30%;
     float: left;
@@ -95,7 +83,6 @@ span.time-posts {
     width: 100%;
     height: 256px;
 }
-
 h4.title-post-news  {
     margin: 25px 0px;
     font-size: 17px;
@@ -117,7 +104,6 @@ span.time-post-news {
 p.content-post-news {
     clear: both;
 }
-
 /*left box end*/
 
 /*right box start*/
@@ -149,6 +135,5 @@ ul.list-items li a img {
     margin-right: 10px;
     float: left;
 }
-
 
 /*right box end*/
