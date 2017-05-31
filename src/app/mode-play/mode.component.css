@@ -1,0 +1,69 @@
+
+.noUi-horizontal .noUi-handle {
+    border-radius: 50%;
+}
+.noUi-horizontal{
+    height: 5px;
+}
+.filterFromMode .btn-filter-block{
+    height: 38px;
+    background-color: #f6f6f6;
+    box-shadow: 1px 1px 3px 0 #d8d8d8;
+    border: solid 1px #d8d8d8;
+}
+.filterFromMode .btn-filter-block label{
+    width: 33.33333%;
+    height:38px;
+    opacity: 0.5;
+    font-family: Roboto;
+    font-size: 16px;
+    text-align: center;
+    color: #3b3b3b;
+    border: none;
+}
+.filterFromMode .btn-filter-block label:hover{
+    background-color: #2a6be1;
+    color: #ffffff;
+    opacity: 1;
+    border-radius: 0;
+}
+.filterFromMode .btn-filter-block label.active{
+    border-radius: 0px;
+    background-color: #2a6be1;
+    box-shadow:none;
+    outline: none;
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 1;
+}
+
+.filterCategory .btn-filter-block{
+    height: 88px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+    padding-top: 10px;
+}
+.filterCategory .btn-filter-block label{
+    width: 12.6%;
+    opacity: 0.4;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 1.17;
+    text-align: center;
+    color: #3b3b3b;
+    background: transparent;
+    background: transparent;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+}
+.filterCategory .btn-filter-block label img{
+    width: 30px;
+    height: 30px;
+}
+.filterCategory .btn-filter-block label.active{
+    color: #3b3b3b;
+    opacity: 1;
+}
