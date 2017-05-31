@@ -60,7 +60,6 @@ import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
-import { CssCarouselComponent } from './css-carousel/css-carousel.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -100,7 +99,6 @@ type StoreType = {
     CustomMarkerComponent,
     CurateDetailComponent,
     CurateListPipe,
-    CssCarouselComponent,
     SlimScroll
   ],
   imports: [ // import Angular's modules
