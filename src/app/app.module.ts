@@ -59,6 +59,10 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { NouisliderModule } from 'ng2-nouislider';
+import {ModeComponent} from "./mode-play/mode.component";
+import {BaseApiService} from "./services/service_base.service";
+import {CategoryService} from "./services/category.service";
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -99,6 +103,8 @@ type StoreType = {
     CurateDetailComponent,
     CurateListPipe,
     CompanyDetailComponent
+    CurateListPipe,
+    ModeComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -106,6 +112,7 @@ type StoreType = {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    NouisliderModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({
       // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
@@ -135,6 +142,9 @@ type StoreType = {
     GoogleMapsAPIWrapper,
     EventService,
     CompanyService,
+    EventService,
+    BaseApiService,
+    CategoryService
   ]
 })
 export class AppModule {
