@@ -1,3 +1,344 @@
-.carousel.fdi-Carousel.slide{
-  display: none !important;
+* {
+  margin: 0;
+  padding: 0;
 }
+
+.clearfix {
+  clear: both;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+h3 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #3b3b3b;
+  text-transform: capitalize;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3b3b3b;
+  text-transform: capitalize;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.margin-bottom-25 {
+  margin-bottom: 25px;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.padding-bottom-35 {
+  padding-bottom: 35px;
+}
+
+/*title event start*/
+
+.title-event {
+  padding: 36px 0;
+}
+
+.title-event a.left-arrow {
+  float: left;
+  margin: 6px 25px 0 10px;
+}
+
+/*title event end*/
+
+.wrap-primary-content-event {
+  padding: 0 20px 30px 40px;
+}
+
+/*information event start*/
+.information-event {
+  float: left;
+  width: 100%;
+}
+
+.left-content-information-event {
+  list-style: none;
+  float: left;
+  width: 70%;
+}
+
+.left-content-information-event > li {
+  margin-bottom: 30px;
+}
+
+.left-content-information-event > li > p {
+  float: left;
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 25%;
+  margin-right: 40px;
+}
+
+.left-content-information-event > li > span {
+  font-size: 13px;
+}
+
+.left-content-information-event > li > span > b {
+  position: relative;
+  top: -3px;
+  margin: 0 5px;
+}
+
+.left-content-information-event > li > span > strong {
+  font-size: 14px;
+  color: #ec3d62;
+}
+
+.list-mention {
+  list-style: none;
+}
+
+.list-mention > li {
+  float: left;
+  margin-right: 16px;
+}
+
+.list-mention > li > a {
+  border-radius: 7px;
+  border: 1px solid #e6e6e6;
+  padding: 5px 4px 8px;
+}
+
+.right-creater-information-event {
+  float: left;
+}
+
+h4.title-creater {
+  margin-bottom: 11px;
+}
+
+p.name-creater {
+  margin: 10px 0;
+}
+
+p.name-creater a {
+  color: #3b3b3b;
+}
+
+p.point-creater a {
+  color: #3b3b3b;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/*information event end*/
+
+/*detail event start*/
+
+.content-detail-event {
+  font-size: 13px;
+}
+
+/*detail event end*/
+
+/*experience area start*/
+.experience-top {
+  margin-top: 20px;
+  position: relative;
+}
+
+.experiences-area {
+  position: relative;
+}
+
+a.post-your-experience {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  color: #ec3d62;
+  text-transform: capitalize;
+  font-size: 15px;
+}
+
+.information-experience img {
+  display: block;
+  float: left;
+}
+
+.content-info-experience {
+  float: left;
+  margin: 12px;
+  line-height: 40px;
+}
+
+ul.list-stars-review-experience {
+  list-style: none;
+  float: left;
+  margin: 20px;
+}
+
+ul.list-stars-review-experience li {
+  float: left;
+  margin-right: 8px;
+}
+
+p.detail-info-experience {
+  font-size: 14px;
+  margin: 20px 0;
+  color: #3b3b3b;
+}
+
+ul.list-pictures-experience {
+  list-style: none;
+}
+
+ul.list-pictures-experience li {
+  float: left;
+  margin-right: 10px;
+}
+
+ul.list-pictures-experience li img {
+  border-radius: 8px;
+}
+
+.likes-comments-experience-area {
+  padding-top: 40px;
+}
+
+.likes-comments-experience-area a {
+  color: #3b3b3b;
+}
+
+.likes-area {
+  float: left;
+  margin-right: 40px;
+}
+
+.comments-area {
+  float: left;
+}
+
+.report-area {
+  float: right;
+}
+
+/*experience area end*/
+
+/*write your comment start*/
+
+.write-comment-area img {
+  float: left;
+  display: block;
+}
+
+.write-comment-area textarea {
+  width: 80%;
+  height: 60px;
+  margin-top: 0;
+  margin-left: 20px;
+  border-radius: 6px;
+  background: #e8e8e8;
+  padding: 10px;
+}
+
+ul.list-comments-ago {
+  list-style: none;
+}
+
+ul.list-comments-ago li {
+  margin-left: 70px;
+  margin-top: 20px;
+  clear: both;
+}
+
+ul.list-comments-ago li .avatar-comment-ago {
+  float: left;
+  margin-right: 15px;
+  clear: both;
+}
+
+.content-comment-ago {
+  line-height: 25px;
+}
+
+.top-content-comment a b {
+  color: #3b3b3b;
+}
+
+.likes-area a {
+  color: #3b3b3b;
+}
+
+.reply-area a {
+  color: #3b3b3b;
+}
+
+.view-more-comments {
+  margin-top: 30px;
+}
+
+a.button-view-more-comments {
+  color: #ec3d62;
+}
+
+span.count-comments {
+  float: right;
+  margin-right: 30px;
+}
+
+/*write your comment end*/
+
+#likes-comments-experience-second {
+  padding-top: 10px;
+}
+
+/*post your experience start*/
+.post-your-experience img {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+
+ul.list-stars-on-post {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.content-your-post textarea {
+  width: 100%;
+  height: 140px;
+  margin: 30px 0;
+  background: #e8e8e8;
+  padding: 15px;
+}
+
+.add-image-area a {
+  color: #ec3d62;
+}
+
+.company-info{
+  padding: 15px 0;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+}
+.compnay-info p{
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+}
+.company-info p span{
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.63;
+  text-align: left;
+  color: #3b3b3b;
+  min-width: 110px;
+  display: inline-block;
+}
+

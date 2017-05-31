@@ -10,7 +10,11 @@ export class CompanyService {
   public getCompany(companyID: string) {
     return {
       name: 'ABC Restaurant',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,' +
+      'sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet,' +
+      'sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet,' +
+      'sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet,' +
+      ' consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
       rating: 3.9,
       location: {
         lat: 1.290270,

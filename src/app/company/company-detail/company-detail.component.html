@@ -34,7 +34,7 @@
       <a href="#" class="post-your-experience">Write a review</a>
     </div>
     <div *ngFor="let review of company.reviews; let i = index">
-      <div class="experiences-area border-bottom padding-top-30 padding-bottom-35">
+      <div class="experiences-area border-bottom padding-top-30 padding-bottom-35 clearfix">
       <div class="information-experience">
         <img class="img-circle" [src]="review.user.avatar" alt="user avatar" width="70"
              height="70">
