@@ -99,8 +99,12 @@
 
     <div class="col-lg-5 col-xs-12 gmap-box margin-bottom-25">
 
-        <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                  [carouselSlides]="slides">
+        <carousel
+          [interval]="NextPhotoInterval"
+          [noWrap]="noLoopSlides"
+          [noTransition]="noTransition"
+          [noThumbnail]="noThumbnail"
+          [carouselSlides]="slides">
           <slide *ngFor="let slide of slides; let index=index"
                  [active]="slide.active">
             <img [src]="slide.image" style="margin:auto;">

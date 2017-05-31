@@ -28,6 +28,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
+  public noThumbnail: boolean = false;
   public slides = [];
 
   constructor(private appState: AppState, public eventService: EventService) {
