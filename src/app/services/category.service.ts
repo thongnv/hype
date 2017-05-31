@@ -12,7 +12,7 @@ export class CategoryService {
     }
 
     public getCategories(params:any) {
-        let seq = this.api.get('http://localhost:3001/assets/mock_data/term_'+params.type+'.json').share();
+        let seq = this.api.get('http://localhost:3001/assets/mock-data/term_'+params.type+'.json').share();
         seq
             .map(res => res.json())
             .subscribe(res => {
