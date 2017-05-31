@@ -27,6 +27,9 @@ import { NoContentComponent } from './no-content';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
+import { TruncateModule } from 'ng2-truncate'
+import { SlimScroll } from 'angular-io-slimscroll';
+
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
@@ -57,6 +60,7 @@ import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
+import { CssCarouselComponent } from './css-carousel/css-carousel.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -95,7 +99,9 @@ type StoreType = {
     MyArray,
     CustomMarkerComponent,
     CurateDetailComponent,
-    CurateListPipe
+    CurateListPipe,
+    CssCarouselComponent,
+    SlimScroll
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -122,7 +128,8 @@ type StoreType = {
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
     MemberModule,
-    MomentModule
+    MomentModule,
+    TruncateModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

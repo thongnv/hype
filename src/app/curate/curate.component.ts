@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-curate',
   templateUrl: './curate.component.html',
-  styleUrls: ['./curate.component.css']
+  styleUrls: ['./curate.component.css'],
+  providers: [NgbCarouselConfig]
 })
 export class CurateComponent implements OnInit {
   public data: any;
@@ -14,8 +16,10 @@ export class CurateComponent implements OnInit {
   public categories: any[];
   public trending: any[];
   public selectedCategory: any;
-
-  public constructor(private mainService: MainService) {
+  public constructor(private mainService: MainService, public config: NgbCarouselConfig) {
+    config.interval = 10000;
+    config.wrap = false;
+    config.keyboard = false;
   }
 
   public ngOnInit() {

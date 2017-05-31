@@ -48,8 +48,7 @@ export class NavbarComponent implements OnInit {
 
   public onMarkAllRead() {
     this.notifications.forEach((notif) => {
-      notif.has_read = true;
+      notif.has_read = 'true';
     });
-    alert("OK");
   }
 }

@@ -41,20 +41,27 @@
             <i id="notif" fa [name]="'bell-o'" [size]=2></i>
             <span id="count-notif"><b>{{notifications.length}}</b></span>
           </a>
-          <ul class="dropdown-menu" id="notifications">
-            <li>
-              <span class="notify-left">Notifications</span>
-              <span class="mark-all-right" (click)="onMarkAllRead()">Mark all as read</span>
-              <div class="arrow-up"></div>
-            </li>
-            <li *ngFor="let notif of notifications" [class.has_read]="notif.has_read === 'true'" class="notification-item">
-              <div class="icon-notification"><img [src]="notif.user_avatar" [alt]="notif.user_name" width="30" height="30"></div>
-              <div class="content-notification">
-                <p class="title-notifications"><b>{{notif.user_name}}</b> {{notif.title}}</p>
-                <p class="time-ago">{{notif.created_time | amTimeAgo}}</p>
+
+            <ul class="dropdown-menu" id="notifications" >
+              <li>
+                <span class="notify-left">Notifications</span>
+                <span class="mark-all-right" (click)="onMarkAllRead()">Mark all as read</span>
+                <div class="arrow-up"></div>
+              </li>
+              <div slimScroll
+                   width="auto"
+                   height="290px"
+                   size="7px">
+              <li *ngFor="let notif of notifications" [class.has_read]="notif.has_read === 'true'" class="notification-item">
+                <div class="icon-notification"><img [src]="notif.user_avatar" [alt]="notif.user_name" width="30" height="30"></div>
+                <div class="content-notification">
+                  <p class="title-notifications"><strong>{{notif.user_name}}</strong> {{notif.title | truncate: 75}}</p>
+                  <p class="time-ago">{{notif.created_time | amTimeAgo}}</p>
+                </div>
+              </li>
               </div>
-            </li>
-          </ul>
+            </ul>
+
         </div>
       </li>
       <li class="right">

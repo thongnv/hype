@@ -3,25 +3,29 @@
     <div class="col-lg-8 col-xs-12 left-box">
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.id)" [class.active]="cat.id===selectedCategory">{{cat.name}}</li>
+          <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.id)"
+              [class.active]="cat.id===selectedCategory">{{cat.name}}
+          </li>
         </ul>
       </div>
       <div class="primary-content">
-        <div *ngIf="featuredArticles" class="wrap-post-content">
-          <div *ngFor="let art of featuredArticles | myCurateList : selectedCategory"
-               class="post-content">
-            <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
-            <h4 class="title-post-content">{{art.info.listName}}</h4>
-            <p class="author">
-              By: <a href="#">{{art.info.author}}</a>
-            </p>
-            <span class="time-posts">{{art.info.created_time | amTimeAgo}}</span>
-          </div>
+        <div *ngIf="featuredArticles" class="wrap-post-content wrapper">
+          <ngb-carousel>
+            <ng-template ngbSlide *ngFor="let art of featuredArticles | myCurateList : selectedCategory">
+              <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
+              <div class="carousel-caption">
+                <h4 class="title-post-content">{{art.info.listName}}</h4>
+                <p class="author">
+                  By: <a href="#">{{art.info.author}}</a>
+                </p>
+                <span class="time-posts">{{art.info.created_time | amTimeAgo}}</span>
+              </div>
+            </ng-template>
+          </ngb-carousel>
         </div>
         <h4>What's news</h4>
         <div *ngIf="latestArticles" class="wrap-post-news">
-          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory"
-               class="post-news">
+          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory" class="post-news">
             <div class="image-post-news">
               <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
             </div>
@@ -31,7 +35,7 @@
             </p>
             <span class="time-post-news">{{art.info.created_time | amTimeAgo}}</span>
             <p class="content-post-news">
-              {{art.info.description}}
+              {{art.info.listDescription | truncate : 60}}
             </p>
           </div>
         </div>
@@ -41,9 +45,9 @@
       <h3>Trending this week</h3>
       <ul *ngIf="trending" class="list-items">
         <li *ngFor="let art of trending">
-          <a href="#">
+          <a [title]="art.info.listName">
             <img [src]="art.images[0]" [alt]="art.info.listName" width="60" height="60">
-            <p>{{art.info.listName}}</p>
+            <p>{{art.info.listName | truncate : 50}}</p>
           </a>
         </li>
       </ul>
