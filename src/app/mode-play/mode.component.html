@@ -16,61 +16,131 @@
                 </div>
             </form>
             <hr>
-            <pre>{{filterFromMode.value.filterMode}}</pre>
             <form [formGroup]="filterCategory" class="filterCategory">
-                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic"
-                     formControlName="filterCategory">
-                    <label class="btn btn-default">
-                        <img src="../../assets/img/icons/All.png" alt="All">
+                <div *ngIf="filterFromMode.value.filterMode !='play' || filterFromMode.value.filterMode =='all'">
+                    <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic"
+                         formControlName="filterCategory">
+                        <label class="btn btn-default">
+                            <img src="../../assets/img/icons/All.png" alt="All">
                         <span class="clearfix">
                             <input type="radio" value="all"> All
                         </span>
-                    </label>
+                        </label>
+                        <label class="btn btn-default" *ngFor="let term of categories.eat">
+                            <img src="{{term.url}}" alt="{{term.name}}">
+                            <span class="clearfix"> </span>
+                            <input type="radio" value="{{term.tid}}">{{term.name}}
 
-                    <label class="btn btn-default" *ngFor="let term of categories">
-                        <img src="{{term.url}}" alt="{{term.name}}">
-                        <span class="clearfix">
-                        <input type="radio" value="{{term.tid}}">{{term.name}}
-                            </span>
-                    </label>
+                        </label>
+                    </div>
                 </div>
+                <div *ngIf="filterFromMode.value.filterMode =='play' || filterFromMode.value.filterMode =='all'">
+                    <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic"
+                         formControlName="filterCategory">
+                        <label class="btn btn-default" *ngIf="filterFromMode.value.filterMode !='all'">
+                            <img src="../../assets/img/icons/All.png" alt="All">
+                        <span class="clearfix">
+                            <input type="radio" value="all"> All
+                        </span>
+                        </label>
+                        <label class="btn btn-default" *ngFor="let term of categories.play">
+                            <div *ngIf="filterFromMode.value.filterMode=='play'">
+                                <img src="{{term.url}}" alt="{{term.name}}">
+                                <span class="clearfix"></span>
+                                <input type="radio" value="{{term.tid}}">{{term.name}}
+
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
             </form>
             <hr>
             <ngb-tabset>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Price Range <span></span></ng-template>
+                <ngb-tab class="tabFilter">
+                    <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
+                                                            aria-hidden="true"></i><span></span></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="10" [step]="0.05" [(ngModel)]="someRange3"
+                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="someRange3"
                                     style="margin-top: 4em;"></nouislider>
-                        {{someRange3}}
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab>
-                    <ng-template ngbTabTitle>Cuisine</ng-template>
+                    <ng-template ngbTabTitle>Cuisine <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="10" [step]="0.05" [(ngModel)]="someRange3"
-                                    style="margin-top: 4em;"></nouislider>
-                        {{someRange3}}
+                        <div *ngIf="filterFromMode.value.filterMode !='play'">
+                            <div *ngFor="let item of filterData.eat; let in =index" style="margin-left: 40px">
+                                <div class="checkbox">
+                                    <input type="checkbox" [(ngModel)]="cuisine" name="cuisine--{{item.tid}}"
+                                           value="{{item.tid}}">{{item.name}}
+                                </div>
+                                <div class="" *ngIf="item.sub" style="margin-left: 30px;">
+                                    <div class="checkbox" *ngFor="let sb of item.sub; let i = index">
+                                        <input type="checkbox" [(ngModel)]="cuisine" value="{{sb.tid}}">{{sb.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab>
-                    <ng-template ngbTabTitle>Ratings</ng-template>
+                    <ng-template ngbTabTitle>Ratings <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="10" [step]="0.05" [(ngModel)]="someRange3"
-                                    style="margin-top: 4em;"></nouislider>
-                        {{someRange3}}
+                        <div *ngIf="filterFromMode.value.filterMode !='play'">
+                            <ngb-rating [(rate)]="currentRate">
+                                <ng-template let-fill="fill">
+                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                        </div>
+
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab>
-                    <ng-template ngbTabTitle>Best For</ng-template>
+                    <ng-template ngbTabTitle>Best For <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="10" [step]="0.05" [(ngModel)]="someRange3"
-                                    style="margin-top: 4em;"></nouislider>
-                        {{someRange3}}
+                        <div *ngIf="filterFromMode.value.filterMode !='play'">
+                            <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
+                                <div class="checkbox">
+                                    <input type="checkbox" [(ngModel)]="best" name="best--{{item.tid}}"
+                                           value="{{item.tid}}">{{item.name}}
+                                </div>
+                            </div>
+                        </div>
                     </ng-template>
-                    <ng-template ngbTabFooter>Best For</ng-template>
                 </ngb-tab>
             </ngb-tabset>
+            <div class="pull-right actionFilter">
+                <label class="btn btn-default" (click)="filterCancel()">Cancel</label>
+                <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+            <div class="list-event">
+                <div class="list-header">
+                    <div class="pull-left">Filter</div>
+                    <div class="pull-right">Clear</div>
+                </div>
+                <div class="clearfix"></div>
+                <hr>
+                <div class="items" *ngFor="let item of items; let index =index">
+                    <div class="list-items">
+                        <div class="avatar">
+                            <div class="badge">#{{index}}</div>
+                            <img src="{{item.index}}">
+                        </div>
+                        <div class="item-content">
+                            <h3 class="name">{{item.name}}</h3>
+                            <div class="clearfix"></div>
+                            <ngb-rating [rate]="3" disabled="true"></ngb-rating>
+                            <div class="box-content">
+                                <p>{{item.email}} | {{item.phone}}</p>
+                                <p>{{item.address}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-6 col-xs-12 gmap-box">
             <app-gmap [params]='data'></app-gmap>

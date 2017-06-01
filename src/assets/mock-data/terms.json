@@ -1,0 +1,101 @@
+{
+  "eat": [
+    {
+      "tid": 1,
+      "name": "Restaurant",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 2,
+      "name": "Cafe",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 3,
+      "name": "Bar",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 4,
+      "name": "Buffe",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 5,
+      "name": "Unique",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 6,
+      "name": "Learn",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 7,
+      "name": "Pure For",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 8,
+      "name": "Pure 234",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 9,
+      "name": "Pure 234",
+      "url": "../../assets/img/icons/All.png"
+    }
+  ],
+  "play": [
+    {
+      "tid": 1,
+      "name": "Chill Out",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 2,
+      "name": "Sweat",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 3,
+      "name": "Appreciate",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 4,
+      "name": "Adrenaline",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 5,
+      "name": "Unique",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 6,
+      "name": "Learn",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 7,
+      "name": "Pure For",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 8,
+      "name": "Pure 242",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 9,
+      "name": "Pure we",
+      "url": "../../assets/img/icons/All.png"
+    },
+    {
+      "tid": 10,
+      "name": "Pure as",
+      "url": "../../assets/img/icons/All.png"
+    }
+  ]
+}

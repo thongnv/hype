@@ -2,18 +2,33 @@
 .noUi-horizontal .noUi-handle {
     border-radius: 50%;
 }
-.noUi-horizontal{
+
+.noUi-horizontal {
     height: 5px;
 }
-.filterFromMode .btn-filter-block{
+
+.noUi-horizontal .noUi-handle {
+    width: 28px;
+    height: 28px;
+    left: -17px;
+    top: -12px;
+    outline: none;
+}
+
+.noUi-handle:before {
+    left: 10px;
+}
+
+.filterFromMode .btn-filter-block {
     height: 38px;
     background-color: #f6f6f6;
     box-shadow: 1px 1px 3px 0 #d8d8d8;
     border: solid 1px #d8d8d8;
 }
-.filterFromMode .btn-filter-block label{
+
+.filterFromMode .btn-filter-block label {
     width: 33.33333%;
-    height:38px;
+    height: 38px;
     opacity: 0.5;
     font-family: Roboto;
     font-size: 16px;
@@ -21,16 +36,18 @@
     color: #3b3b3b;
     border: none;
 }
-.filterFromMode .btn-filter-block label:hover{
+
+.filterFromMode .btn-filter-block label:hover {
     background-color: #2a6be1;
     color: #ffffff;
     opacity: 1;
     border-radius: 0;
 }
-.filterFromMode .btn-filter-block label.active{
+
+.filterFromMode .btn-filter-block label.active {
     border-radius: 0px;
     background-color: #2a6be1;
-    box-shadow:none;
+    box-shadow: none;
     outline: none;
     color: #ffffff;
     font-family: Roboto;
@@ -39,13 +56,14 @@
     opacity: 1;
 }
 
-.filterCategory .btn-filter-block{
+.filterCategory .btn-filter-block {
     height: 88px;
     background-color: #ffffff;
     box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
     padding-top: 10px;
 }
-.filterCategory .btn-filter-block label{
+
+.filterCategory .btn-filter-block label {
     width: 12.6%;
     opacity: 0.4;
     font-family: Roboto;
@@ -59,11 +77,132 @@
     box-shadow: none;
     outline: none;
 }
-.filterCategory .btn-filter-block label img{
+
+.filterCategory .btn-filter-block label:hover, .filterCategory .btn-filter-block label:focus {
+    color: #3b3b3b;
+    opacity: 1;
+    background: transparent;
+    border: 0;
+    outline: none;
+}
+
+.filterCategory .btn-filter-block label img {
     width: 30px;
     height: 30px;
 }
-.filterCategory .btn-filter-block label.active{
+
+.filterCategory .btn-filter-block label.active {
     color: #3b3b3b;
     opacity: 1;
+}
+
+.left-box .actionFilter label {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 1;
+    text-align: right;
+
+}
+
+.left-box .actionFilter label.apply {
+    color: #ec3d62;
+}
+
+.justify-content-start li.nav-item a {
+    border: none;
+    background: transparent;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: right;
+    color: #3b3b3b;
+}
+
+.justify-content-start.nav-tabs .nav-link.active,
+.justify-content-start.nav-tabs .nav-link.active:hover,
+.justify-content-start.nav-tabs .nav-link.active:focus {
+    border: none;
+}
+
+.justify-content-start.nav-tabs .nav-link.active i:before,
+.justify-content-start.nav-tabs .nav-link.active:hover i:before,
+.justify-content-start.nav-tabs .nav-link.active:focus i:before {
+    content: "\f106";
+}
+
+.avatar, .avatar img {
+    width: 120px;
+    height: 110px;
+    float: left;
+    margin-top: 5px;
+    position: relative;
+    border-radius: 10px;
+}
+
+.list-items {
+    display: block;
+    background: white;
+    font-size: 1em;
+    height: 130px;
+    line-height: 1.2em;
+}
+.list-items .avatar .badge{
+    position: absolute;
+    z-index: 9;
+    border-radius: 50%;
+    top: -10px;
+    left: -5px;
+    width: 34px;
+    height: 34px;
+    background-color: #5052ea;
+    padding-top: 12px;
+
+}
+.items {
+    padding: 10px 0;
+    border-bottom: 1px solid #d1dadf;
+}
+
+.item-content {
+    display: inline-block;
+    padding: 5px;
+    vertical-align: middle;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.item-content .box-content{
+    margin-top: 15px;
+}
+.justify-content-start .text-center{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.name {
+    display: inline-block;
+    font-weight: bold;
+    margin-top: 0px;
+    font-size: 16px;
+}
+
+.badge {
+    opacity: 1;
+}
+
+.tab-pane .star {
+    font-size: 3.5rem;
+    color: #b0c4de;
+}
+
+.tab-pane .filled {
+    color: #1e90ff;
+}
+.tab-pane .d-inline-flex{
+    outline: none;
+}
+.item-content .d-inline-flex span{
+    cursor: default;
 }
