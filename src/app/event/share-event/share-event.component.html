@@ -9,53 +9,45 @@
   <!--header end-->
 
   <!--form wrap start-->
-  <div class="form-wrap" [class.hide]="showPreview">
+  <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
     <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-        <div class="input-box row">
-          <h3 class="">Share an Event</h3>
-          <small>An event is an activity tagged to a place </small>
-          <div class="form-group">
-            <label for="event-name">Name</label>
-            <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control" type="text">
-          </div>
-          <div class="form-group">
-            <label for="event-details">Details</label>
-            <textarea placeholder="What is the event about" formControlName="eventDetail" id="event-details" class="form-control"></textarea>
-          </div>
-          <div class="form-group">
-            <label>Location/Place</label>
-            <app-gmap-auto-place [group]="eventForm.controls.eventPlace" [description]="false" [image]="false"></app-gmap-auto-place>
-          </div>
-          <div class="form-group">
-            <label for="event-category">Category</label>
-            <select name="" id="event-category" formControlName="eventCategory">
-              <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
-            </select>
-          </div>
-          <div class="form-group list-img-box">
-            <label class="control-label">Images</label>
-            <label class="control-label " id="list-img-label" for="listImg">
-              <i class="fa fa-plus"></i>&nbsp;Add images
-              <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
-                     (change)="readUrl($event)" multiple="multiple">
-            </label>
-            <div class="list-img-wrap">
-              <div *ngFor="let img of previewUrl" class="preview-wrap">
-                <img [src]="img" />
-                <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
-              </div>
+      <div class="input-box row">
+        <h3 class="col-md-12 col-xs-12">Share an Event</h3>
+        <small class="col-md-12 col-xs-12">An event is an activity tagged to a place </small>
+        <div class="form-group col-md-12 col-xs-12">
+          <label for="event-name">Name</label>
+          <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control" type="text">
+        </div>
+        <div class="form-group col-md-12 col-xs-12">
+          <label for="event-details">Details</label>
+          <textarea placeholder="What is the event about" formControlName="eventDetail" id="event-details" class="form-control"></textarea>
+        </div>
+        <div class="form-group col-md-12 col-xs-12">
+          <label>Location/Place</label>
+          <app-gmap-auto-place [group]="eventForm.controls.eventPlace" [description]="false" [image]="false"></app-gmap-auto-place>
+        </div>
+        <div class="form-group col-md-12 col-xs-12">
+          <label for="event-category">Category</label>
+          <select name="" id="event-category" formControlName="eventCategory">
+            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+          </select>
+        </div>
+        <div class="form-group list-img-box col-md-12 col-xs-12">
+          <label class="control-label">Images</label>
+          <label class="control-label " id="list-img-label" for="listImg">
+            <i class="fa fa-plus"></i>&nbsp;Add images
+            <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
+                   (change)="readUrl($event)" multiple="multiple">
+          </label>
+          <div class="list-img-wrap">
+            <div *ngFor="let img of previewUrl" class="preview-wrap">
+              <img [src]="img" />
+              <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
-          <div class="option-info">
-            <a (click)="showMore = !showMore">
-              <i class="fa fa-plus" aria-hidden="true"></i> Optional info
-            </a>
-          </div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Share</button>
-            <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
-          </div>
         </div>
+      </div>
+
       <div *ngIf="showMore" class="row">
         <div class="input-box col-xs-12 col-md-6">
           <div class="form-group">
@@ -90,13 +82,16 @@
           </div>
         </div>
       </div>
-      <!--<div class="col-xs-12 col-md-12">
-        <a (click)="showMore = !showMore">Optional info +</a>
+
+      <div class="option-info col-xs-12 col-md-12">
+        <a (click)="showMore = !showMore">
+          <i class="fa fa-plus" aria-hidden="true"></i> Optional info
+        </a>
       </div>
       <div class="form-actions col-xs-12 col-md-12">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Share</button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
-      </div>-->
+      </div>
     </form>
   </div>
   <!--form wrap end-->
@@ -113,7 +108,7 @@
 
         <hr>
 
-        <div class="row">
+        <div class="row information-event">
           <div class="col-md-3">
             <p>Location</p>
             <p>Date / Time</p>
@@ -144,7 +139,7 @@
 
         <hr>
 
-        <div>
+        <div class="detail-event">
           <h5 class="bold">Details</h5>
           <p [innerHTML]="appState.state.eventPreview.eventDetail">
           </p>
@@ -152,7 +147,7 @@
 
         <hr>
 
-        <div>
+        <div class="post-experience">
           <h5 class="bold">Post your experience</h5>
           <p>
             <i fa [name]="'star-o'" [size]=1></i>
@@ -162,8 +157,7 @@
             <i fa [name]="'star-o'" [size]=1></i>
           </p>
           <p>
-            <textarea style="min-width: 90%" placeholder="What's your experience here?">
-        </textarea>
+            <textarea style="min-width: 90%" placeholder="What's your experience here?"></textarea>
           </p>
           <p>
             <a>+ Add Images</a>
