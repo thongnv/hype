@@ -1,30 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .clearfix {
   clear: both;
 }
-
-.row {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: 30px;
-  font-weight: bold;
-  color: #3b3b3b;
-  text-transform: capitalize;
-}
-
-h4 {
-  font-size: 16px;
-  font-weight: bold;
-  color: #3b3b3b;
-  text-transform: capitalize;
-}
-
 .border-bottom {
   border-bottom: 1px solid #eaeaea;
 }
@@ -341,4 +317,28 @@ ul.list-stars-on-post {
   min-width: 110px;
   display: inline-block;
 }
+.map-fix{
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+}
+.sebm-google-map-container {
+  height: 100vh;
+}
 
+.content{
+  overflow: hidden;
+}
+
+article{
+  margin: 0 auto;
+  position: relative;
+}
+
+.experience-top .left-arrow{
+  float: left;
+  padding: 0 15px 0 0;
+  display: inline-block;
+  cursor: pointer;
+}
