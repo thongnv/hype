@@ -1,15 +1,20 @@
 <section>
   <div class="row">
+    <!--left box start-->
     <div class="col-lg-8 col-xs-12 left-box">
+
+      <!--top content start-->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
           <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.id)" [class.active]="cat.id===selectedCategory">{{cat.name}}</li>
         </ul>
       </div>
+      <!--top content end-->
+
+      <!--primary content start-->
       <div class="primary-content">
         <div *ngIf="featuredArticles" class="wrap-post-content">
-          <div *ngFor="let art of featuredArticles | myCurateList : selectedCategory"
-               class="post-content">
+          <div *ngFor="let art of featuredArticles | myCurateList : selectedCategory" class="post-content">
             <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
             <h4 class="title-post-content">{{art.info.listName}}</h4>
             <p class="author">
@@ -20,8 +25,7 @@
         </div>
         <h4>What's news</h4>
         <div *ngIf="latestArticles" class="wrap-post-news">
-          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory"
-               class="post-news">
+          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory" class="post-news">
             <div class="image-post-news">
               <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
             </div>
@@ -36,18 +40,23 @@
           </div>
         </div>
       </div>
+      <!--primary content end-->
     </div>
+    <!--left box end-->
+
+    <!--right box start-->
     <div class="col-lg-4 col-xs-12 right-box">
       <h3>Trending this week</h3>
       <ul *ngIf="trending" class="list-items">
         <li *ngFor="let art of trending">
           <a href="#">
             <img [src]="art.images[0]" [alt]="art.info.listName" width="60" height="60">
-            <p>{{art.info.listName}}</p>
+            <p class="title-trending">{{art.info.listName}}</p>
           </a>
         </li>
       </ul>
     </div>
+    <!--right box end-->
   </div>
 
 </section>
