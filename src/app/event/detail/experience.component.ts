@@ -41,23 +41,23 @@ import { EventDetailComponent } from './detail.component';
           <a>
             <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
           </a>
-          <a href="#">
+          <a>
             {{likeNumber}} Likes
           </a>
         </div>
         <div class="comments-area">
-          <a href="#">
+          <a>
             <img src="/assets/img/eventdetailpage/icon-comment.png" alt="icon-comment">
           </a>
-          <a href="#">
+          <a>
             {{comments.length}} Comments
           </a>
         </div>
         <div class="report-area">
-          <a href="#">
+          <a>
             <img src="/assets/img/eventdetailpage/icon-report.png" alt="icon-report">
           </a>
-          <a href="#">
+          <a>
             Report
           </a>
         </div>

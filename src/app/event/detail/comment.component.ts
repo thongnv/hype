@@ -6,7 +6,7 @@ import { HyloComment, User } from '../../app.interface';
   selector: 'app-comment',
   template: `
     <div class="avatar-comment-ago">
-      <a href="#">
+      <a>
         <img class="img-circle" [src]="user.avatar" alt="user avatar" width="50"
              height="50">
       </a>
@@ -14,23 +14,23 @@ import { HyloComment, User } from '../../app.interface';
 
     <div class="content-comment-ago">
       <div class="top-content-comment">
-        <a href="#"><b>{{user.firstName + ' ' + user.lastName}}</b></a>
+        <a><b>{{user.firstName + ' ' + user.lastName}}</b></a>
         <span>{{text}}</span>
       </div>
       <div class="bottom-like-reply-comment">
         <div class="likes-area">
-          <a href="#">
+          <a>
             <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
           </a>
-          <a href="#">
+          <a>
             Likes
           </a>
         </div>
         <div class="reply-area">
-          <a href="#">
+          <a>
             <img src="/assets/img/eventdetailpage/icon-reply.png" alt="icon-reply">
           </a>
-          <a href="#">
+          <a>
             Reply
           </a>
         </div>

@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule, ModuleWithProviders, ApplicationRef
+  NgModule, ApplicationRef
 } from '@angular/core';
 import {
   removeNgStyles, createNewHosts, createInputTransfer
@@ -60,9 +60,10 @@ import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { NouisliderModule } from 'ng2-nouislider';
-import {ModeComponent} from "./mode-play/mode.component";
-import {BaseApiService} from "./services/service_base.service";
-import {CategoryService} from "./services/category.service";
+import { ModeComponent } from './mode-play/mode.component';
+import { BaseApiService } from './services/service_base.service';
+import { CategoryService } from './services/category.service';
+import { StarRatingModule } from 'angular-star-rating';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -132,7 +133,8 @@ type StoreType = {
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
     MemberModule,
-    MomentModule
+    MomentModule,
+    StarRatingModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -174,8 +176,7 @@ export class AppModule {
   public hmrOnDestroy(store: StoreType) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // save state
-    const state = this.appState._state;
-    store.state = state;
+    store.state = this.appState._state;
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values
