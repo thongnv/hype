@@ -9,6 +9,7 @@
 *{
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+  color: #3b3b3b;
 }
 nav {
   margin-top: 16px;
@@ -32,6 +33,17 @@ body, html {
 .clear{
   clear: both;
 }
+.noleft{
+  margin-left: 0 !important;
+}
+.noright{
+  margin-right: 0 !important;
+}
+.text-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .hype{
   .hype-nav{
     display: block;
@@ -43,9 +55,7 @@ body, html {
   .right{
     float: right;
   }
-  .left-box{
-    height: calc(100vh - 50px);
-  }
+
   .height100vh{
     height: 100vh;
   }
@@ -353,10 +363,6 @@ body, html {
     text-transform: capitalize;
   }
   /*for preview*/
-  .sebm-google-map-container,.list-box
-  {
-    height:  calc(100vh - 150px);
-  }
   .list-box{
     overflow-y: scroll;
     margin-right: -35px;
@@ -436,6 +442,7 @@ body, html {
     border-radius: 50%;
     margin: 0 10px;
     opacity: .3;
+    cursor: pointer;
   }
   #curate-carousel .carousel-control.left{
     background: transparent url('../assets/icon/L.png') no-repeat center center ;
@@ -457,6 +464,9 @@ body, html {
   #curate-carousel .item.carousel-item{
     transition: all 1s;
     //width: 33.3%;
+  }
+  #curate-carousel .carousel-caption *{
+    color: #ffffff;
   }
   #curate-carousel .carousel-caption{
     width: 100%;
@@ -482,23 +492,24 @@ body, html {
     left: 15px;
     right: 15px;
     bottom: 10px;
-    color: #ffffff;
   }
-  #curate-carousel .carousel-content .post-title-content{
+  .post-title-content{
     font-size: 18px;
     line-height: 18px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     margin-bottom: 10px;
+    font-weight: bold;
   }
-  #curate-carousel .carousel-content .post-author .time-post{
+  .post-author .time-post{
     opacity: 0.6;
   }
-  #curate-carousel .carousel-content .post-author .auth-name{
-    margin-right: 5px;
+  .post-author .auth-name{
+    margin-right: 10px;
   }
-  #curate-carousel .carousel-content .post-author *{
+  .post-author{
+    margin-bottom: 10px;
+    line-height: 12px;
+  }
+  .post-author *{
     font-size: 12px;
     line-height: 12px;
     font-weight: 300;
@@ -515,9 +526,23 @@ body, html {
       padding-bottom: 10px;
       line-height: 20px;
     }
+    .sebm-google-map-container,.list-box
+    {
+      height:  calc(100vh - 150px);
+    }
+    .left-box{
+      height: calc(100vh - 50px);
+    }
   }
   @media screen and(max-width: 767px){
     .setting-wrap > div{
+      height: auto;
+    }
+    .sebm-google-map-container,.list-box
+    {
+      height:  100vh;
+    }
+    .left-box{
       height: auto;
     }
   }

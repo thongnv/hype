@@ -1,6 +1,6 @@
 <section>
   <div class="row">
-    <div class="col-lg-8 col-xs-12 left-box">
+    <div class="col-lg-9 col-xs-12 left-box">
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
           <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.id)"
@@ -9,18 +9,18 @@
         </ul>
       </div>
       <!--top content end-->
-
       <!--primary content start-->
       <div class="primary-content">
-        <div *ngIf="featuredArticles" class="wrap-post-content">
-          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'" [noPause]="noPause"
-                                 [noTransition]="noTransition">
+        <div *ngIf="featuredArticles" class="row wrap-post-content">
+          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'"
+                                 [noPause]="noPause"
+                                 [noTransition]="noTransition" class="col-xs-12 col-lg-12">
             <app-slide-carousel *ngFor="let slideGroup of featuredArticles| MyTripleSlide: selectedCategory">
               <div class="slide-group" *ngFor="let slidez of slideGroup">
                 <img [src]="slidez.images[0]" style="margin:auto;">
                 <div class="carousel-caption">
                   <div class="carousel-content">
-                    <strong class="post-title-content">{{slidez.info.listName}}</strong>
+                    <strong class="post-title-content text-ellipsis">{{slidez.info.listName}}</strong>
                     <strong class="post-author">
                       <span class="auth-name">By: {{slidez.info.author}}</span>
                       <span class="time-post">{{slidez.info.created_time | amTimeAgo}}</span>
@@ -32,19 +32,21 @@
           </app-boostrap-carousel>
         </div>
         <h4>What's news</h4>
-        <div *ngIf="latestArticles" class="wrap-post-news">
-          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory" class="post-news">
+        <div *ngIf="latestArticles" class="row wrap-post-news">
+          <div *ngFor="let art of latestArticles | myCurateList : selectedCategory" class="col-xs-12 col-lg-4 post-news">
             <div class="image-post-news">
               <img class="post-content-img" [src]="art.images[0]" [alt]="art.info.listName">
             </div>
-            <h4 class="title-post-news">{{art.info.listName}}</h4>
-            <p class="author-post-news">
-              By: <span>{{art.info.author}}</span>
-            </p>
-            <span class="time-post-news">{{art.info.created_time | amTimeAgo}}</span>
-            <p class="content-post-news">
-              {{art.info.listDescription | truncate : 60}}
-            </p>
+            <div class="new-info">
+              <h4 class="post-title-content text-ellipsis">{{art.info.listName}}</h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{art.info.author}}</span>
+                <span class="time-post">{{art.info.created_time | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{art.info.listDescription | truncate : 60}}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -53,13 +55,13 @@
     <!--left box end-->
 
     <!--right box start-->
-    <div class="col-lg-4 col-xs-12 right-box">
+    <div class="col-lg-3 col-xs-12 right-box">
       <h3>Trending this week</h3>
       <ul *ngIf="trending" class="list-items">
         <li *ngFor="let art of trending">
           <a [title]="art.info.listName">
             <img [src]="art.images[0]" [alt]="art.info.listName" width="60" height="60">
-            <p class="title-trending">{{art.info.listName | truncate : 50}}</p>
+            <p class="title-trending">{{art.info.listName | truncate : 48}}</p>
           </a>
         </li>
       </ul>
