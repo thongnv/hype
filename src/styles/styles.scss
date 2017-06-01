@@ -414,12 +414,96 @@ body, html {
   .carousel-header{
     margin: 10px 0;
   }
-  .place-item-description{
+  .place-item-description.active{
     padding: 10px;
     margin: 0;
     text-align: justify;
   }
   //END CURATE
+  //CURATE LIST
+  #curate-carousel .carousel-control .glyphicon{
+    display: none;
+  }
+  #curate-carousel .carousel-control:hover{
+    opacity: .9;
+  }
+  #curate-carousel .carousel-control{
+    width: 44px;
+    height: 44px;
+    top: calc(50% - 22px);
+    background: transparent;
+    line-height: 44px;
+    border-radius: 50%;
+    margin: 0 10px;
+    opacity: .3;
+  }
+  #curate-carousel .carousel-control.left{
+    background: transparent url('../assets/icon/L.png') no-repeat center center ;
+  }
+  #curate-carousel .carousel-control.right{
+    background: transparent url('../assets/icon/R.png') no-repeat center center ;
+  }
+  #curate-carousel .carousel-inner img{
+    width: 100%;
+    height: 275px;
+  }
+  #curate-carousel .carousel-inner .slide-group{
+    width: 33.3%;
+    float: left;
+    display: inline-block;
+    position: relative;
+    height: 275px;
+  }
+  #curate-carousel .item.carousel-item{
+    transition: all 1s;
+    //width: 33.3%;
+  }
+  #curate-carousel .carousel-caption{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(7, 7, 7, 0.3), rgba(7, 7, 7, 0.6));
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  #curate-carousel .carousel-indicators{
+    display: none;
+    //top: 0;
+  }
+  #curate-carousel .carousel-content > strong{
+    width: 100%;
+    display: block;
+  }
+  #curate-carousel .carousel-content{
+    position: absolute;
+    height: 40px;
+    left: 15px;
+    right: 15px;
+    bottom: 10px;
+    color: #ffffff;
+  }
+  #curate-carousel .carousel-content .post-title-content{
+    font-size: 18px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 10px;
+  }
+  #curate-carousel .carousel-content .post-author .time-post{
+    opacity: 0.6;
+  }
+  #curate-carousel .carousel-content .post-author .auth-name{
+    margin-right: 5px;
+  }
+  #curate-carousel .carousel-content .post-author *{
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 300;
+  }
+  //END CURATE LIST
 
   //responsive
   @media screen and(min-width: 768px){

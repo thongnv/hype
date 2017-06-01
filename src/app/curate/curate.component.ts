@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
-import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-curate',
   templateUrl: './curate.component.html',
-  styleUrls: ['./curate.component.css'],
-  providers: [NgbCarouselConfig]
+  styleUrls: ['./curate.component.css']
 })
 export class CurateComponent implements OnInit {
   public data: any;
@@ -15,11 +13,14 @@ export class CurateComponent implements OnInit {
   public latestArticles: any[] = [];
   public categories: any[];
   public trending: any[];
+  public slides: any[] = [];
   public selectedCategory: any;
-  public constructor(private mainService: MainService, public config: NgbCarouselConfig) {
-    config.interval = 10000;
-    config.wrap = false;
-    config.keyboard = false;
+  public NextPhotoInterval: number = 3000;
+  public noLoopSlides: boolean = false;
+  public noPause: boolean = true;
+  public noTransition: boolean = false;
+
+  public constructor(private mainService: MainService) {
   }
 
   public ngOnInit() {
@@ -41,9 +42,6 @@ export class CurateComponent implements OnInit {
           this.latestArticles.push((item));
         }
       });
-      console.log('featuredArticles: ', this.featuredArticles);
-      console.log('latestArticles: ', this.latestArticles);
-      console.log('selectedCategory: ', this.selectedCategory);
     });
   }
 

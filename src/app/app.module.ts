@@ -60,6 +60,10 @@ import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
+import { BoostrapCarouselComponent } from './boostrap-carousel/boostrap-carousel.component';
+import { SlideCarouselComponent } from './slide-carousel/slide-carousel.component';
+import { SwipperComponent } from './swipper/swipper.component';
+import { TripleSlidePipe } from './shared/triple-slide.pipe';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -72,7 +76,6 @@ type StoreType = {
   restoreInputValues: () => void,
   disposeOldHosts: () => void
 };
-
 /**
  * `AppModule` is the main entry point into Angular2's bootstraping process
  */
@@ -99,7 +102,10 @@ type StoreType = {
     CustomMarkerComponent,
     CurateDetailComponent,
     CurateListPipe,
-    SlimScroll
+    SlimScroll,
+    BoostrapCarouselComponent,
+    SlideCarouselComponent,
+    TripleSlidePipe
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -127,7 +133,7 @@ type StoreType = {
     Ng2ScrollableModule,
     MemberModule,
     MomentModule,
-    TruncateModule,
+    TruncateModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -139,11 +145,9 @@ type StoreType = {
   ]
 })
 export class AppModule {
-
   constructor(public appRef: ApplicationRef,
               public appState: AppState) {
   }
-
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {
       return;
