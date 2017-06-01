@@ -62,12 +62,8 @@ import { CompanyDetailComponent } from './company/company-detail/company-detail.
 import { NouisliderModule } from 'ng2-nouislider';
 import { ModeComponent } from './mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
+import { CategoryService } from './services/category.service';
 import { StarRatingModule } from 'angular-star-rating';
-import {ModeComponent} from "./mode-play/mode.component";
-import {BaseApiService} from "./services/service_base.service";
-import {ModeService} from "./services/mode.service";
-
-
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -150,7 +146,7 @@ type StoreType = {
     CompanyService,
     EventService,
     BaseApiService,
-    ModeService
+    CategoryService
   ]
 })
 export class AppModule {
