@@ -8,6 +8,9 @@
           </li>
         </ul>
       </div>
+      <!--top content end-->
+
+      <!--primary content start-->
       <div class="primary-content">
         <div *ngIf="featuredArticles" class="wrap-post-content">
           <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'" [noPause]="noPause"
@@ -45,18 +48,23 @@
           </div>
         </div>
       </div>
+      <!--primary content end-->
     </div>
+    <!--left box end-->
+
+    <!--right box start-->
     <div class="col-lg-4 col-xs-12 right-box">
       <h3>Trending this week</h3>
       <ul *ngIf="trending" class="list-items">
         <li *ngFor="let art of trending">
           <a [title]="art.info.listName">
             <img [src]="art.images[0]" [alt]="art.info.listName" width="60" height="60">
-            <p>{{art.info.listName | truncate : 50}}</p>
+            <p class="title-trending">{{art.info.listName | truncate : 50}}</p>
           </a>
         </li>
       </ul>
     </div>
+    <!--right box end-->
   </div>
 
 </section>

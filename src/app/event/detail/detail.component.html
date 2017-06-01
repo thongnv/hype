@@ -4,7 +4,7 @@
 
       <!-- title event start -->
       <div class="title-event border-bottom">
-        <a href="#" class="left-arrow">
+        <a class="left-arrow">
           <img src="/assets/img/eventdetailpage/icon-left.png" alt="icon-left">
         </a>
         <h3>{{name}}</h3>
@@ -30,7 +30,7 @@
             <li>
               <p>Mentioned by</p>
               <ul class="list-mention" *ngFor="let mention of mentions">
-                <li><a href="#"><img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
+                <li><a><img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
                 </li>
               </ul>
             </li>
@@ -38,18 +38,18 @@
           <div class="right-creater-information-event text-center">
             <h4 class="title-creater">Created by</h4>
             <div class="avatar-creater">
-              <a href="#">
+              <a>
                 <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
                      height="70">
               </a>
             </div>
             <p class="name-creater">
-              <a href="#">
+              <a>
                 {{creator.firstName + ' ' + creator.lastName}}
               </a>
             </p>
             <p class="point-creater">
-              <a href="#">
+              <a>
                 {{rating}}/5
               </a>
             </p>
@@ -67,7 +67,7 @@
         <!-- experiences area start -->
         <div class="experience-top">
           <h4 class="title-experiences-area margin-bottom-25">Experiences ({{experiences.length}})</h4>
-          <a href="#" class="post-your-experience">Post your experience</a>
+          <a class="post-your-experience">Post your experience</a>
         </div>
         <event-experience
           *ngFor="let experience of experiences; let index=index"
@@ -76,21 +76,54 @@
         <!-- experiences area end -->
 
         <!-- post your experience start -->
-        <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35">
-          <img src="/assets/img/eventdetailpage/derek.jpg" alt="user avatar" class="img-circle" width="70" height="70">
-          <ul class="list-stars-on-post">
-            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
-            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
-            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
-            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
-            <li><a href="#"><img src="/assets/img/eventdetailpage/star.png" alt="star"></a></li>
-          </ul>
-          <div class="content-your-post clearfix">
-            <textarea name="" id="" cols="30" rows="10" placeholder="What's your experience here?"></textarea>
-          </div>
-          <div class="add-image-area">
-            <a>+ Add Images </a>
-          </div>
+        <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35" *ngIf="!userRated">
+          <img [src]="user.avatar" alt="user avatar" class="img-circle" width="70" height="70">
+          <form class="form-horizontal" [formGroup]="experienceForm" (ngSubmit)="onSubmit()">
+            <div class="list-stars-on-post">
+              <star-rating-comp
+                [id]="starRatingConfig.id"
+                [rating]="starRatingConfig.rating"
+                [step]="starRatingConfig.step"
+                [showHalfStars]="starRatingConfig.showHalfStars"
+                [numOfStars]="starRatingConfig.numOfStars"
+                [size]="starRatingConfig.size"
+                [space]="starRatingConfig.space"
+                [staticColor]="starRatingConfig.staticColor"
+                [disabled]="starRatingConfig.disabled"
+                [hoverEnabled]="starRatingConfig.hoverEnabled"
+                [starType]="starRatingConfig.starType"
+                [labelText]="starRatingConfig.labelText"
+                [labelPosition]="starRatingConfig.labelPosition"
+                [labelVisible]="starRatingConfig.labelVisible"
+                [direction]="starRatingConfig.direction"
+                [readOnly]="starRatingConfig.readOnly"
+                [getColor]="starRatingConfig.getColor"
+                [getHalfStarVisible]="starRatingConfig.getHalfStarVisible"
+                (onRatingChange)="starRatingConfig.onRatingChange($event)"
+              ></star-rating-comp>
+            </div>
+
+            <div class="content-your-post clearfix">
+              <textarea #msgInput
+                        (keydown.enter)="addExperience(msgInput);false"
+                        cols="30" rows="10" placeholder="What's your experience here?"
+              ></textarea>
+            </div>
+
+            <div class="add-image-area">
+              <label class="control-label " id="list-img-label" for="listImg">
+                + Add images
+                <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file'
+                       (change)="readUrl($event)" multiple="multiple">
+              </label>
+              <div class="list-img-wrap">
+                <div *ngFor="let img of previewUrl" class="preview-wrap">
+                  <img [src]="img"/>
+                  <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         <!-- post your experience end -->
 
@@ -99,13 +132,17 @@
 
     <div class="col-lg-5 col-xs-12 gmap-box margin-bottom-25">
 
-        <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                  [carouselSlides]="slides">
-          <slide *ngFor="let slide of slides; let index=index"
-                 [active]="slide.active">
-            <img [src]="slide.image" style="margin:auto;">
-          </slide>
-        </carousel>
+      <carousel
+        [interval]="NextPhotoInterval"
+        [noWrap]="noLoopSlides"
+        [noTransition]="noTransition"
+        [noThumbnail]="noThumbnail"
+        [carouselSlides]="slides">
+        <slide *ngFor="let slide of slides; let index=index"
+               [active]="slide.active">
+          <img [src]="slide.image" style="margin:auto;">
+        </slide>
+      </carousel>
 
       <div class="map-location-area" style="display: block;">
         <h4 class="title-map-location margin-bottom-25">Location</h4>

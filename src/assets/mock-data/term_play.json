@@ -1,0 +1,37 @@
+[
+  {
+    "tid": 1,
+    "name": "Chill Out",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 2,
+    "name": "Sweat",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 3,
+    "name": "Appreciate",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 4,
+    "name": "Adrenaline",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 5,
+    "name": "Unique",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 5,
+    "name": "Learn",
+    "url": "../../assets/img/icons/All.png"
+  },
+  {
+    "tid": 5,
+    "name": "Pure For",
+    "url": "../../assets/img/icons/All.png"
+  }
+]

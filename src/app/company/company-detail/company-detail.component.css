@@ -1,35 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-a {
-  cursor: pointer;
-  text-decoration: none;
-}
-
 .clearfix {
   clear: both;
 }
-
-.row {
-  margin-top: 20px;
-}
-
-h3 {
-  font-size: 30px;
-  font-weight: bold;
-  color: #3b3b3b;
-  text-transform: capitalize;
-}
-
-h4 {
-  font-size: 16px;
-  font-weight: bold;
-  color: #3b3b3b;
-  text-transform: capitalize;
-}
-
 .border-bottom {
   border-bottom: 1px solid #eaeaea;
 }
@@ -324,140 +295,50 @@ ul.list-stars-on-post {
   color: #ec3d62;
 }
 
-/*post your experience end*/
-
-/*carousel start*/
-
-.slides {
-  list-style: none;
-  position: relative;
-  width: 500%; /* Number of panes * 100% */
-  overflow: hidden; /* Clear floats */
-  /* Slide effect Animations*/
-  -moz-animation: carousel 30s infinite;
-  -webkit-animation: carousel 30s infinite;
-  animation: carousel 30s infinite;
+.company-info{
+  padding: 15px 0;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
-
-.slides > li {
-  position: relative;
-  float: left;
-  width: 20%; /* 100 / number of panes */
+.compnay-info p{
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
 }
-
-.carousel img {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-}
-
-.carousel h2 {
-  margin-bottom: 0;
-  font-size: 1em;
-  padding: 1.5em 0.5em 1.5em 0.5em;
-  position: absolute;
-  right: 0;
-  left: 0;
-  text-align: center;
-  color: #fff;
-  background-color: rgba(0, 0, 0, 0.75);
-  text-transform: uppercase;
-}
-
-@keyframes carousel {
-  0% {
-    left: -5%;
-  }
-  11% {
-    left: -5%;
-  }
-  12.5% {
-    left: -105%;
-  }
-  23.5% {
-    left: -105%;
-  }
-  25% {
-    left: -205%;
-  }
-  36% {
-    left: -205%;
-  }
-  37.5% {
-    left: -305%;
-  }
-  48.5% {
-    left: -305%;
-  }
-  50% {
-    left: -405%;
-  }
-  61% {
-    left: -405%;
-  }
-  62.5% {
-    left: -305%;
-  }
-  73.5% {
-    left: -305%;
-  }
-  75% {
-    left: -205%;
-  }
-  86% {
-    left: -205%;
-  }
-  87.5% {
-    left: -105%;
-  }
-  98.5% {
-    left: -105%;
-  }
-  100% {
-    left: -5%;
-  }
-}
-
-.carousel-indicators {
-  position: relative;
-  top: 10px;
-  width: 100%;
-  overflow: hidden;
-  left: 0;
-  z-index: 15;
-  padding-left: 0;
-  margin-left: 0;
-  list-style: none;
-}
-
-.carousel-indicators > div {
+.company-info p span{
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.63;
+  text-align: left;
+  color: #3b3b3b;
+  min-width: 110px;
   display: inline-block;
-  float: left;
-  width: 125px;
-  height: 125px;
-  border-radius: 0;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  margin: 0;
-  text-indent: -999px;
-  cursor: pointer;
-  border: 1px solid #fff;
 }
-
-.carousel-indicators > .active {
-  width: 125px;
-  height: 125px;
-  border: solid 1px black;
+.map-fix{
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
 }
-
-.carousel-control.right {
-  background-color: transparent;
-}
-
-/*carousel end*/
-
-/*gmap start*/
 .sebm-google-map-container {
-  height: 250px;
+  height: 100vh;
 }
-/*gmap end*/
+
+.content{
+  overflow: hidden;
+}
+
+article{
+  margin: 0 auto;
+  position: relative;
+}
+
+.experience-top .left-arrow{
+  float: left;
+  padding: 0 15px 0 0;
+  display: inline-block;
+  cursor: pointer;
+}

@@ -8,3 +8,24 @@
     cursor: pointer;
     color: #ec3d62;
 }
+.gmap-place .form-group input:first-child {
+    width: 90%;
+    height: 48px;
+    border-radius: 4px;
+    background-color: #e8e8e8;
+    box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
+}
+.gmap-place .form-group small {
+    display: block;
+    margin: 20px 0px;
+}
+.gmap-place .form-group textarea {
+    width: 90%;
+    height: 96px;
+    border-radius: 4px;
+    background-color: #e8e8e8;
+    box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
+}
+.gmap-place .form-group label {
+    margin-top: 20px;
+}

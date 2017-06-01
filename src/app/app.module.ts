@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule, ModuleWithProviders, ApplicationRef
+  NgModule, ApplicationRef
 } from '@angular/core';
 import {
   removeNgStyles, createNewHosts, createInputTransfer
@@ -51,6 +51,7 @@ import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
+import { CompanyService } from './services/company.service';
 import { MyArray } from './shared/pipes';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
@@ -62,8 +63,13 @@ import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
 import { BoostrapCarouselComponent } from './boostrap-carousel/boostrap-carousel.component';
 import { SlideCarouselComponent } from './slide-carousel/slide-carousel.component';
-import { SwipperComponent } from './swipper/swipper.component';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { NouisliderModule } from 'ng2-nouislider';
+import { ModeComponent } from './mode-play/mode.component';
+import { BaseApiService } from './services/service_base.service';
+import { ModeService } from './services/mode.service';
+import { StarRatingModule } from 'angular-star-rating';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -105,7 +111,10 @@ type StoreType = {
     SlimScroll,
     BoostrapCarouselComponent,
     SlideCarouselComponent,
-    TripleSlidePipe
+    TripleSlidePipe,
+    CompanyDetailComponent,
+    CurateListPipe,
+    ModeComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -113,6 +122,7 @@ type StoreType = {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    NouisliderModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({
       // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
@@ -133,6 +143,7 @@ type StoreType = {
     Ng2ScrollableModule,
     MemberModule,
     MomentModule,
+    StarRatingModule,
     TruncateModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
@@ -141,13 +152,19 @@ type StoreType = {
     Title,
     GmapService,
     GoogleMapsAPIWrapper,
-    EventService
+    EventService,
+    CompanyService,
+    EventService,
+    BaseApiService,
+    ModeService
   ]
 })
 export class AppModule {
+
   constructor(public appRef: ApplicationRef,
               public appState: AppState) {
   }
+
   public hmrOnInit(store: StoreType) {
     if (!store || !store.state) {
       return;
@@ -169,8 +186,7 @@ export class AppModule {
   public hmrOnDestroy(store: StoreType) {
     const cmpLocation = this.appRef.components.map((cmp) => cmp.location.nativeElement);
     // save state
-    const state = this.appState._state;
-    store.state = state;
+    store.state = this.appState._state;
     // recreate root elements
     store.disposeOldHosts = createNewHosts(cmpLocation);
     // save input values

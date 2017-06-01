@@ -18,7 +18,7 @@ export enum Direction {UNKNOWN, NEXT, PREV}
       </a>
     </div>
 
-    <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
+    <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0" *ngIf="!noThumbnail">
       <div class="carousel-inner carousel-indicators" [hidden]="slides.length <= 1">
         <div *ngFor="let s of slides" [class.active]="s.active === true" (click)="select(s)"
              [ngStyle]="{'background-image': 'url(' + carouselSlides[s.index].image + ')'}">
@@ -33,6 +33,7 @@ export class CarouselComponent implements OnDestroy {
   @Input() public noWrap: boolean;
   @Input() public noPause: boolean;
   @Input() public noTransition: boolean;
+  @Input() public noThumbnail: boolean;
   @Input('carouselSlides') public carouselSlides: SlideComponent[];
 
   @Input()

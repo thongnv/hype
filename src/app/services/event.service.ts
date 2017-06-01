@@ -101,7 +101,11 @@ export class EventService {
         {
           rating: 4,
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-          images: ['img1', 'img2', 'img3'],
+          images: [
+            '/assets/img/eventdetailpage/abc.jpg',
+            '/assets/img/eventdetailpage/abc.jpg',
+            '/assets/img/eventdetailpage/abc.jpg'
+          ],
           user: {
             firstName: 'Derek',
             lastName: 'Ang',

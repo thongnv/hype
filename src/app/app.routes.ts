@@ -8,6 +8,8 @@ import { CurateNewComponent } from './curate-new/curate-new.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
+import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
+import { ModeComponent } from "./mode-play/mode.component";
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +22,8 @@ export const ROUTES: Routes = [
   { path: 'curate/new',    component: CurateNewComponent},
   { path: 'share-event',    component: ShareEventComponent},
   { path: 'event/:id',    component: EventDetailComponent },
+  { path: 'company/:id',    component: CompanyDetailComponent },
   { path: 'auth',    loadChildren: './auth#AuthModule' },
+  { path: 'mode/play',    component: ModeComponent },
   { path: '**',    component: NoContentComponent },
 ];
