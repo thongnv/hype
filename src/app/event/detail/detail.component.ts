@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Call2Action, Experience, HyloEvent, Icon, User, Location } from '../../app.interface';
 import { AppState } from '../../app.service';
@@ -11,6 +11,7 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./detail.component.css']
 })
 export class EventDetailComponent implements HyloEvent, OnInit {
+  @ViewChild('msgInput') public msgInput: ElementRef;
 
   public creator: User;
   public name: string;
@@ -68,6 +69,10 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.initEvent(event);
     this.initSlide();
     this.initRating();
+  }
+
+  public onClickFocusMsgInput() {
+    this.msgInput.nativeElement.focus();
   }
 
   public addExperience(msgInput) {
