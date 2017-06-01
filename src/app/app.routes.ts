@@ -9,7 +9,7 @@ import { ShareEventComponent } from './event/share-event/share-event.component';
 import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
-import {ModeComponent} from "./mode-play/mode.component";
+import { ModeComponent } from "./mode-play/mode.component";
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

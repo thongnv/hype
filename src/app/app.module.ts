@@ -102,7 +102,7 @@ type StoreType = {
     CustomMarkerComponent,
     CurateDetailComponent,
     CurateListPipe,
-    CompanyDetailComponent
+    CompanyDetailComponent,
     CurateListPipe,
     ModeComponent
   ],
