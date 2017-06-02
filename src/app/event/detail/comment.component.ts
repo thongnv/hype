@@ -15,12 +15,12 @@ import { HyloComment, User } from '../../app.interface';
     <div class="content-comment-ago">
       <div class="top-content-comment">
         <a><b>{{user.firstName + ' ' + user.lastName}}</b></a>
-        <span>{{text}}</span>
+        <span [innerHTML]="text"></span>
       </div>
       <div class="bottom-like-reply-comment">
         <div class="likes-area">
           <a>
-            <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
+            <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
           </a>
           <a>
             Likes
@@ -28,7 +28,7 @@ import { HyloComment, User } from '../../app.interface';
         </div>
         <div class="reply-area">
           <a>
-            <img src="/assets/img/eventdetailpage/icon-reply.png" alt="icon-reply">
+            <img src="/assets/img/event/detail/icon-reply.png" alt="icon-reply">
           </a>
           <a>
             Reply
@@ -47,8 +47,10 @@ export class CommentComponent implements HyloComment, OnInit {
   public replies: HyloComment[];
   public user: User;
   public text: string;
+  public liked: boolean;
 
   constructor() {
+    // TODO
   }
 
   public ngOnInit() {
@@ -56,5 +58,6 @@ export class CommentComponent implements HyloComment, OnInit {
     this.replies = this.comment.replies;
     this.user = this.comment.user;
     this.text = this.comment.text;
+    this.liked = this.comment.liked;
   }
 }

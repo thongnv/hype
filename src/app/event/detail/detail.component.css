@@ -117,23 +117,23 @@ h4 {
   padding: 5px 4px 8px;
 }
 
-.right-creater-information-event {
+.right-creator-information-event {
   float: left;
 }
 
-h4.title-creater {
+h4.title-creator {
   margin-bottom: 11px;
 }
 
-p.name-creater {
+p.name-creator {
   margin: 10px 0;
 }
 
-p.name-creater a {
+p.name-creator a {
   color: #3b3b3b;
 }
 
-p.point-creater a {
+p.avg-rating {
   color: #3b3b3b;
   font-weight: bold;
   font-size: 24px;

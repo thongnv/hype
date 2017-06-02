@@ -18,12 +18,13 @@ export interface HyloEvent {
   location: Location;
   detail: string;
   category: string;
-  date: string;
+  date: Date;
   price: string;
   call2action: Call2Action;
   mentions: Icon[];
   images: string[];
   rating: number;
+  rated: boolean;
   experiences: Experience[];
 }
 
@@ -46,11 +47,12 @@ export interface Call2Action {
 export interface Experience {
   user: User;
   rating: number;
-  date: string;
+  date: Date;
   text: string;
   images: string[];
   comments: HyloComment[];
   likeNumber: number;
+  liked: boolean;
 }
 
 export interface HyloComment {
@@ -58,4 +60,5 @@ export interface HyloComment {
   text: string;
   likeNumber: number;
   replies: HyloComment[];
+  liked: boolean;
 }

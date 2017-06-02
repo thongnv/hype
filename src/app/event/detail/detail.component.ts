@@ -11,6 +11,7 @@ import { EventService } from '../../services/event.service';
   styleUrls: ['./detail.component.css']
 })
 export class EventDetailComponent implements HyloEvent, OnInit {
+
   @ViewChild('msgInput') public msgInput: ElementRef;
 
   public creator: User;
@@ -18,12 +19,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public location: Location;
   public detail: string;
   public category: string;
-  public date: string;
+  public date: Date;
   public price: string;
   public call2action: Call2Action;
   public mentions: Icon[];
   public images: string[];
   public rating: number;
+  public rated: boolean = false;
   public experiences: Experience[];
 
   public user: User;
@@ -56,7 +58,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       firstName: 'Penny',
       lastName: 'Lim',
       contactNumber: '23243',
-      avatar: '/assets/img/eventdetailpage/tank.jpg',
+      avatar: '/assets/img/event/detail/tank.jpg',
       followingNumber: 12,
       followerNumber: 1,
       receiveEmail: 2,
@@ -65,7 +67,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       showNav: true,
       acceptNotification: true,
     };
-    let event: HyloEvent = this.eventService.getEvent('123');
+    let event: HyloEvent = this.eventService.getEventDetail();
     this.initEvent(event);
     this.initSlide();
     this.initRating();
@@ -80,12 +82,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       user: this.user,
       text: msgInput.value,
       likeNumber: 0,
+      liked: false,
       comments: [],
       rating: this.userRating,
-      date: this.formatDate(new Date()),
+      date: new Date(),
       images: [
-        '/assets/img/eventdetailpage/abc.jpg',
-        '/assets/img/eventdetailpage/abc.jpg',
+        '/assets/img/event/detail/abc.jpg',
+        '/assets/img/event/detail/abc.jpg',
       ],
     };
     this.experiences.push(experience);
@@ -149,7 +152,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.starRatingConfig.size = 'large';
     this.starRatingConfig.space = 'around';
     this.starRatingConfig.staticColor = 'no';
-    this.starRatingConfig.disabled  = false;
+    this.starRatingConfig.disabled = false;
     this.starRatingConfig.starType = 'svg';
     this.starRatingConfig.labelPosition = 'right';
     this.starRatingConfig.labelText = '';
@@ -169,20 +172,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.starRatingConfig.onRatingChange = ($event) => {
       this.userRating = $event.rating;
     };
-  }
-
-  private formatDate(date) {
-    let monthNames = [
-      'January', 'February', 'March',
-      'April', 'May', 'June', 'July',
-      'August', 'September', 'October',
-      'November', 'December'
-    ];
-    let day = date.getDate();
-    let monthIndex = date.getMonth();
-    let year = date.getFullYear();
-
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import { HyloComment, User, Experience } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
@@ -13,23 +13,21 @@ import { EventDetailComponent } from './detail.component';
         <div class="content-info-experience">
           <h4>{{user.firstName + ' ' + user.lastName}}</h4>
           <p class="info-date-experience">
-            {{date}}
+            {{date | date:'d MMMM y'}}
           </p>
         </div>
         <ul class="list-stars-review-experience">
           <li *ngFor="let i of rating | myArray"><a>
-            <img src="/assets/img/eventdetailpage/small-star-selected.png"
+            <img src="/assets/img/event/detail/small-star-selected.png"
                  alt="small-star-selected"></a>
           </li>
 
           <li *ngFor="let i of 5 - rating | myArray"><a>
-            <img src="/assets/img/eventdetailpage/small-star.png"
+            <img src="/assets/img/event/detail/small-star.png"
                  alt="small-star"></a></li>
         </ul>
       </div>
-      <p class="detail-info-experience clearfix">
-        {{text}}
-      </p>
+      <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
       <ul class="list-pictures-experience">
         <li *ngFor="let image of images">
           <a><img [src]="image" alt="" width="100" height="100"></a>
@@ -39,7 +37,7 @@ import { EventDetailComponent } from './detail.component';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a>
-            <img src="/assets/img/eventdetailpage/icon-like.png" alt="icon-like">
+            <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
           </a>
           <a>
             {{likeNumber}} Likes
@@ -47,7 +45,7 @@ import { EventDetailComponent } from './detail.component';
         </div>
         <div class="comments-area">
           <a>
-            <img src="/assets/img/eventdetailpage/icon-comment.png" alt="icon-comment">
+            <img src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
           </a>
           <a>
             {{comments.length}} Comments
@@ -55,7 +53,7 @@ import { EventDetailComponent } from './detail.component';
         </div>
         <div class="report-area">
           <a>
-            <img src="/assets/img/eventdetailpage/icon-report.png" alt="icon-report">
+            <img src="/assets/img/event/detail/icon-report.png" alt="icon-report">
           </a>
           <a>
             Report
@@ -69,9 +67,9 @@ import { EventDetailComponent } from './detail.component';
     <div class="write-your-comment border-bottom padding-top-30 padding-bottom-35">
 
       <div class="write-comment-area">
-        <img class="img-circle" [src]="user.avatar" alt="user avatar" width="50" height="50">
-        <textarea #msgInput placeholder="Write your comment"
-                  (keydown.enter)="addComment(msgInput);false"></textarea>
+        <img class="img-circle" [src]="currentUser.avatar" alt="user avatar" width="50" height="50">
+        <textarea #commentInput placeholder="Write your comment"
+                  (keydown.enter)="addComment(commentInput);false"></textarea>
       </div>
 
       <ul class="list-comments-ago">
@@ -94,18 +92,24 @@ import { EventDetailComponent } from './detail.component';
 export class ExperienceComponent implements Experience, OnInit {
   @Input() public index: number;
   @Input() public experience: Experience;
+
+  @ViewChild('commentInput') public commentInput: ElementRef;
+
+  public currentUser: User;
   public user: User;
   public rating: number;
-  public date: string;
+  public date: Date;
   public text: string;
   public images: string[];
   public comments: HyloComment[];
   public likeNumber: number;
+  public liked: boolean;
 
   constructor(private event: EventDetailComponent) {
   }
 
   public ngOnInit() {
+    this.currentUser = this.event.user;
     this.user = this.experience.user;
     this.rating = this.experience.rating;
     this.date = this.experience.date;
@@ -113,6 +117,7 @@ export class ExperienceComponent implements Experience, OnInit {
     this.images = this.experience.images;
     this.comments = this.experience.comments;
     this.likeNumber = this.experience.likeNumber;
+    this.liked = this.experience.liked;
   }
 
   public addComment(msgInput) {
@@ -120,6 +125,7 @@ export class ExperienceComponent implements Experience, OnInit {
       user: this.event.user,
       text: msgInput.value,
       likeNumber: 0,
+      liked: false,
       replies: []
     };
     this.comments.push(comment);

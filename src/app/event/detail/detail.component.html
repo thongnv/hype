@@ -5,7 +5,7 @@
       <!-- title event start -->
       <div class="title-event border-bottom">
         <a class="left-arrow">
-          <img src="/assets/img/eventdetailpage/icon-left.png" alt="icon-left">
+          <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
         </a>
         <h3>{{name}}</h3>
       </div>
@@ -20,7 +20,7 @@
               <p>location</p><span>{{location.name}}</span>
             </li>
             <li>
-              <p>date / time</p><span>{{date}}</span>
+              <p>date / time</p><span>{{date | date:'d MMMM y'}}</span>
             </li>
             <li>
               <p>price range</p><span>{{price}} <b>.</b>
@@ -30,28 +30,25 @@
             <li>
               <p>Mentioned by</p>
               <ul class="list-mention" *ngFor="let mention of mentions">
-                <li><a><img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
+                <li><a [href]="mention.url" target="_blank">
+                  <img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
                 </li>
               </ul>
             </li>
           </ul>
-          <div class="right-creater-information-event text-center">
-            <h4 class="title-creater">Created by</h4>
-            <div class="avatar-creater">
-              <a>
+          <div class="right-creator-information-event text-center">
+            <h4 class="title-creator">Created by</h4>
+            <a>
+              <p class="avatar-creator">
                 <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
                      height="70">
-              </a>
-            </div>
-            <p class="name-creater">
-              <a>
+              </p>
+              <p class="name-creator">
                 {{creator.firstName + ' ' + creator.lastName}}
-              </a>
-            </p>
-            <p class="point-creater">
-              <a>
-                {{rating}}/5
-              </a>
+              </p>
+            </a>
+            <p class="avg-rating" *ngIf="rating">
+              {{rating}}/5
             </p>
           </div>
         </div>
@@ -60,7 +57,7 @@
         <!-- detail event start -->
         <div class="detail-event border-bottom clearfix padding-top-30 padding-bottom-35">
           <h4 class="title-detail-event margin-bottom-25">Details</h4>
-          <p class="content-detail-event">{{detail}}</p>
+          <p class="content-detail-event" [innerHTML]="detail"></p>
         </div>
         <!-- detail event end -->
 
