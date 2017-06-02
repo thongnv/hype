@@ -1,8 +1,9 @@
+
 .clearfix {
   clear: both;
 }
 .border-bottom {
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #f7f7f7;
 }
 
 .margin-bottom-25 {
@@ -121,22 +122,133 @@ p.point-creater a {
 /*detail event end*/
 
 /*experience area start*/
+.reviews-wrap {
+  padding: 20px 40px;
+}
 .experience-top {
   margin-top: 20px;
   position: relative;
 }
-
-.experiences-area {
-  position: relative;
+.experience-top h4 {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
 }
-
-a.post-your-experience {
+.experience-top a {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ec3d62;
   position: absolute;
   top: 4%;
   right: 4%;
-  color: #ec3d62;
-  text-transform: capitalize;
-  font-size: 15px;
+}
+
+
+.information-experience {
+  margin-top: 10px;
+}
+.information-experience div {
+  display: inline-block;
+}
+.experience-avatar {
+  margin-right: 10px;
+}
+.experience-avatar img {
+  width: 45px;
+  height: 45px;
+}
+.content-info-experience {
+  position: relative;
+  top: 14px;
+}
+.content-info-experience h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+.content-info-experience p {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+.wrap-list-stars {
+    margin-left: 60px;
+}
+.wrap-list-stars .list-stars-review-experience {
+  list-style: none;
+  padding-left: 0px;
+}
+.wrap-list-stars .list-stars-review-experience li {
+  display: inline-block;
+}
+.detail-info-experience {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin: 30px 0px 20px;
+}
+.list-pictures-experience {
+  padding-left: 0px;
+  list-style: none;
+}
+.list-pictures-experience li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-pictures-experience li a img {
+  width: 70px;
+  height: 70px;
+  border-radius: 2px; 
+  border: solid 1px #e8e8e8; 
+}
+.like-area img {
+  width: 20px;
+  height: 20px;
+}
+.like-area span {
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #5052ea;
+}
+
+.view-all-reviews-button {
+  padding-left: 40px;
+  text-align: center;
+}
+.view-all-reviews-button a {
+  background: #2a6be1;
+  display: block;
+  font-size: 14px;
+  line-height: 1;
+  text-align: center;
+  color: #ffffff;
+  padding: 10px 20px;
+}
+
+
+
+
+
+
+
+
+/*.experiences-area {
+  position: relative;
 }
 
 .information-experience img {
@@ -199,7 +311,7 @@ ul.list-pictures-experience li img {
 
 .report-area {
   float: right;
-}
+}*/
 
 /*experience area end*/
 
@@ -295,28 +407,7 @@ ul.list-stars-on-post {
   color: #ec3d62;
 }
 
-.company-info{
-  padding: 15px 0;
-  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
-}
-.compnay-info p{
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.43;
-  text-align: left;
-  color: #3b3b3b;
-}
-.company-info p span{
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.63;
-  text-align: left;
-  color: #3b3b3b;
-  min-width: 110px;
-  display: inline-block;
-}
+
 .map-fix{
   position: fixed;
   height: 100vh;
@@ -336,13 +427,139 @@ article{
   position: relative;
 }
 
-.experience-top .left-arrow{
-  float: left;
-  padding: 0 15px 0 0;
-  display: inline-block;
+.post-your-experience{
   cursor: pointer;
 }
 
-.post-your-experience{
-  cursor: pointer;
+/*company wrap start*/
+.company-wrap .carousel {
+  height: 380px;
+}
+.company-wrap .company-header {
+  padding: 20px 40px 47px;
+}
+.company-wrap .company-header div {
+  display: inline-block;
+}
+.company-wrap .company-header h3 {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.13;
+  text-align: left;
+  color: #3b3b3b;
+}
+.company-wrap .rating-start {
+    margin-left: 40px;
+    margin-right: 11px;
+    position: relative;
+    bottom: 5px;
+}
+.company-wrap .rating-start i {
+    color: #ec3d62;
+}
+.google-plus-point {
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+  opacity: 0.95;
+  border-radius: 2px;
+  border: solid 1px #e6e6e6;
+  padding: 6px 10px;
+  position: relative;
+  bottom: 5px;
+  left: 10px;
+}
+.google-plus-point .rating-number {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  color: #3b3b3b;
+  padding-right: 10px;
+  border-right: solid 1px #eaeaea;
+}
+.google-plus-point .google-plus-dropdown-button {
+  margin-left: 10px;
+}
+.google-plus-dropdown-button .fa-google-plus {
+  background: #de4931;
+  color: #fff;
+  padding: 5px 4px;
+}
+.google-plus-dropdown-button .fa-angle-down  {
+  color: #3b3b3b;
+  font-size: 20px;
+  margin-left: 8px;
+  position: relative;
+  top: 3px;
+}
+.company-description {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin-top: 25px;
+}
+
+
+.company-info{
+  padding: 25px 40px;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+}
+.company-info p,
+.company-info p a {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin-bottom: 22px;
+}
+.company-info p span {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.63;
+  text-align: left;
+  color: #3b3b3b;
+  min-width: 110px;
+  display: inline-block;
+  margin-right: 30px;
+}
+
+
+/*company wrap end*/
+
+/*review wrap start*/
+
+
+
+
+/*review wrap end*/
+
+
+/*responsive*/
+@media (min-width: 1200px) {
+
+}
+@media only screen and (min-width: 992px) {
+
+}
+@media only screen and (min-width: 769px) {
+  article {
+    margin: 0px;
+    padding: 0px;
+  }
+  .content {
+    padding: 0px;
+    width: 51.3%;
+  }
+  .map-fix {
+    padding: 0px;
+    /*width: 51.1%;*/
+  }
+
+}
+@media only screen and (max-width: 768px) {
+
 }

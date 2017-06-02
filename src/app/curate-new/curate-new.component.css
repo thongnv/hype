@@ -20,6 +20,9 @@ header ul li {
     width: 6%;
     text-align: left;
 }
+header ul li.pull-right {
+    width: 9%;
+}
 
 /*header end*/
 
