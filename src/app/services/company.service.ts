@@ -37,16 +37,16 @@ export class CompanyService {
           rating: 4,
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
           images: [
-            '/assets/img/eventdetailpage/abc.jpg',
-            '/assets/img/eventdetailpage/abc.jpg',
-            '/assets/img/eventdetailpage/abc.jpg',
-            '/assets/img/eventdetailpage/abc.jpg'
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg'
           ],
           user: {
             firstName: 'Derek',
             lastName: 'Ang',
             contactNumber: '123',
-            userAvatar: '/assets/img/eventdetailpage/derek.jpg',
+            userAvatar: '/assets/img/event/detail/derek.jpg',
             followingNumber: 2,
             followerNumber: 12,
             receiveEmail: 1,
@@ -66,7 +66,7 @@ export class CompanyService {
             firstName: 'Derek',
             lastName: 'Ang',
             contactNumber: '123',
-            userAvatar: '/assets/img/eventdetailpage/derek.jpg',
+            userAvatar: '/assets/img/event/detail/derek.jpg',
             followingNumber: 2,
             followerNumber: 12,
             receiveEmail: 1,
