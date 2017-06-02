@@ -43,6 +43,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   public ngOnInit() {
+    // TODO
   }
 
   public onRemovePreview(imageUrl) {

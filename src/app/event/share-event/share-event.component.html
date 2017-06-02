@@ -9,7 +9,9 @@
   <!--header end-->
 
   <!--form wrap start-->
+
   <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
+
     <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
       <div class="input-box row">
         <h3 class="col-md-12 col-xs-12">Share an Event</h3>
@@ -19,9 +21,12 @@
           <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control" type="text">
         </div>
         <div class="form-group col-md-12 col-xs-12">
-          <label for="event-details">Details</label>
-          <textarea placeholder="What is the event about" formControlName="eventDetail" id="event-details" class="form-control"></textarea>
+          <label>Details</label>
+          <div class="row">
+            <app-tinymce formControlName='eventDetail'></app-tinymce>
+          </div>
         </div>
+
         <div class="form-group col-md-12 col-xs-12">
           <label>Location/Place</label>
           <app-gmap-auto-place [group]="eventForm.controls.eventPlace" [description]="false" [image]="false"></app-gmap-auto-place>

@@ -38,6 +38,7 @@ import { CurateComponent } from './curate/curate.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+import { TinymceModule } from 'angular2-tinymce';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -146,7 +147,8 @@ type StoreType = {
     MemberModule,
     MomentModule,
     StarRatingModule,
-    TruncateModule
+    TruncateModule,
+    TinymceModule.withConfig({})
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
