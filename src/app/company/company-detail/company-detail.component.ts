@@ -13,8 +13,11 @@ import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 export class CompanyDetailComponent implements OnInit {
   public images: string[];
   public company: any;
+  public reviews: any;
+  public user: any;
   public commentPosition = 'out';
   public companyStatus = 'default';
+  public showForm = false;
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -28,6 +31,8 @@ export class CompanyDetailComponent implements OnInit {
   public ngOnInit() {
     this.company = this.companyService.getCompany('123');
     this.images = this.company.images;
+    this.reviews = this.company.reviews;
+    this.user = this.appState.state.userInfo;
     this.initSlide();
   }
 
@@ -36,9 +41,26 @@ export class CompanyDetailComponent implements OnInit {
     this.companyStatus = 'hidden';
   }
 
+  public showComment() {
+    this.showForm = true;
+  }
+
   public backCompany() {
     this.commentPosition = 'out';
     this.companyStatus = 'default';
+  }
+
+  public updateReview(event) {
+    if (event === false) {
+      this.showForm = false;
+    }
+
+    if (event.text) {
+      event.date = new Date();
+      event.user = this.user;
+      this.reviews.push(event);
+      this.showForm = false;
+    }
   }
 
   private initSlide() {

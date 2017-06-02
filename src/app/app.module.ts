@@ -70,6 +70,7 @@ import { ModeComponent } from './mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
 import { StarRatingModule } from 'angular-star-rating';
+import { WriteReviewComponent } from './company/write-review/write-review.component';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -114,7 +115,8 @@ type StoreType = {
     TripleSlidePipe,
     CompanyDetailComponent,
     CurateListPipe,
-    ModeComponent
+    ModeComponent,
+    WriteReviewComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
