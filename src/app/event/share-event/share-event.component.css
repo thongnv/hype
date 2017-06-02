@@ -88,8 +88,18 @@ header ul li {
 .form-group.list-img-box label {
   text-align: left;
 }
+.form-group button {
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+.form-group button i {
+    color: #fff;
+}
 .option-info {
   margin-left: 10px;
+}
+.form-group .ngui-datetime-picker-wrapper input {
+    padding: 10px;
 }
 .option-info a {
     color: #2a6be1;
@@ -114,6 +124,7 @@ header ul li {
 /*form wrap end*/
 
 /*preview start*/
+
 .list-preview-wrap .event-title {
     margin: 24px;
     font-weight: bold;
@@ -131,11 +142,34 @@ header ul li {
 .list-preview-wrap .information-event {
     margin-left: 25px;
 }
-.list-preview-wrap .detail-event  {
+.list-preview-wrap .information-event .col-md-3 p {
+    color: #3b3b3b;
+    font-size: 16px;
+    font-weight: bold;
+}
+.list-preview-wrap .information-event .col-md-6 p a {
+    color: #ec3d62;
+    font-size: 16px;
+}
+.list-preview-wrap .detail-event {
     margin: 10px 30px 10px 40px;
 }
+.list-preview-wrap .detail-event h5 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 40px;
+}
 .list-preview-wrap .post-experience {
-    margin: 40px;
+    margin: 20px 40px;
+    padding-top: 50px;
+    position: relative;
+}
+.list-preview-wrap .post-experience h5 {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    color: #ec3d62;
+    font-size: 16px;
 }
 .list-preview-wrap .post-experience textarea {
     width: 100%;
@@ -145,6 +179,19 @@ header ul li {
     box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
     padding: 14px;
 }
-
+.list-preview-wrap .col-md-5 .row {
+    float: left;
+    margin: 20px -10px;
+}
+.list-preview-wrap .col-md-5 .event-location {
+    clear: both;
+    padding-top: 30px;
+}
+.list-preview-wrap .col-md-5 .event-location > p {
+    color: #3b3b3b;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 
 /*preview end*/
