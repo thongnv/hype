@@ -1,6 +1,6 @@
 <sebm-google-map-marker [latitude]="marker.lat"
                         [longitude]="marker.lng" [opacity]="marker.opacity" [label]="label"
-                        [openInfoWindow]="true" (markerClick) = "markerClick()" [iconUrl]="marker.icon">
+                        [openInfoWindow]="marker.openInfoWindow" (markerClick) = "markerClick()" [iconUrl]="marker.icon">
   <sebm-google-map-info-window [maxWidth]="264" [isOpen]="marker.isOpen" [disableAutoPan]="true">
     <ng-content></ng-content>
   </sebm-google-map-info-window>

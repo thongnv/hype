@@ -47,6 +47,12 @@ body, html {
   white-space: nowrap;
 }
 .hype{
+  .table-wrap{
+    display: table;
+  }
+  .table-cell{
+    display: table-cell;
+  }
   .home-page .gm-style-iw{
     top: 10px !important;
     left: 10px !important;
@@ -136,10 +142,6 @@ body, html {
   }
   label{
     font-weight: 300;
-  }
-  .col-left{
-    border-right: 1px solid #c3c3c3;
-    padding: 0;
   }
   .member-nav{
     padding: 0;
@@ -539,23 +541,31 @@ body, html {
     font-weight: 300;
   }
   //END CURATE LIST
-
+  //MEMBER
+  .col-right, .setting-wrap{
+    border-left: 1px solid #eaeaea;
+  }
+  //END MEMBER
   //responsive
   @media screen and(min-width: 768px){
     .setting-wrap > div{
-      height: calc(100vh - 50px);
+      min-height: calc(100vh - 50px);
+      padding: 0;
     }
     .navbar-nav>li>a{
       padding-top: 10px;
       padding-bottom: 10px;
       line-height: 20px;
     }
-    .sebm-google-map-container,.list-box
-    {
-      height:  calc(100vh - 150px);
+    .new-list{
+      .sebm-google-map-container,.list-box
+      {
+        height:  calc(100vh - 150px);
+      }
     }
-    .left-box{
-      height: calc(100vh - 50px);
+    .sebm-google-map-container
+    {
+      height:  calc(100vh - 50px);
     }
   }
   @media screen and(max-width: 767px){

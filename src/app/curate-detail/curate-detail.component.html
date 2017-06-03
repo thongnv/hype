@@ -5,14 +5,14 @@
         <div class="carousel-header">
           <strong>{{curate.info.listName}}</strong>
         </div>
-        <div class="carousel">
-          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                    [carouselSlides]="slides">
-            <slide *ngFor="let slide of slides; let index=index"
-                   [active]="slide.active">
-              <img [src]="slide.image" style="margin:auto;">
-            </slide>
-          </carousel>
+        <div *ngIf="slides" class="carousel">
+          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides"
+                                 [noPause]="noPause"
+                                 [noTransition]="noTransition">
+            <app-slide-carousel *ngFor="let slide of slides; let index=index">
+              <img [src]="slide.image">
+            </app-slide-carousel>
+          </app-boostrap-carousel>
         </div>
         <div class="description text-justify">
           <p>{{curate.info.listDescription}}</p>

@@ -142,7 +142,8 @@ export class HomeComponent implements OnInit {
           parent: 'event_' + item.id,
           isOpen: false,
           price: item.price,
-          icon: MARKER_ICON
+          icon: MARKER_ICON,
+          openInfoWindow: true
         });
       });
       this.lists.forEach((item) => {
@@ -166,7 +167,8 @@ export class HomeComponent implements OnInit {
             image: item.images[0],
             parent: 'list_' + item.id,
             isOpen: false,
-            icon: MARKER_ICON
+            icon: MARKER_ICON,
+            openInfoWindow: true
           });
         }
       });

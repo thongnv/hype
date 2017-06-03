@@ -3,6 +3,7 @@
     padding-left: 0;
     padding-right: 0;
     border-right: 1px solid #eaeaea;
+    border-left: 1px solid #eaeaea;
 }
 .top-content {
     padding: 30px 40px;
@@ -153,15 +154,9 @@ ul.list-items li a img {
     }
 }
 @media only screen and (min-width: 769px) {
-    .left-box{
-        padding-right: 0;
-        width: calc(75% - 20px);
-    }
 }
 @media only screen and (max-width: 768px) {
     .left-box{
-        padding-right: 0;
-        width: 100%;
         height: auto;
         border-right: none;
     }

@@ -19,12 +19,14 @@
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
           <label class="control-label" for="list-name">List Name</label>
-          <input formControlName="listName" id="list-name" class="form-control" type="text" placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
+          <input formControlName="listName" id="list-name" class="form-control" type="text"
+                 placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
           <small [hidden]="formData.controls.listName.valid" class="text-danger">This field is required</small>
         </div>
         <div class="form-group">
           <label class="control-label" for="list-description">What is your list about? Tell us your story</label>
-          <textarea placeholder="What is your list about?" formControlName="listDescription" id="list-description" class="form-control"></textarea>
+          <textarea placeholder="What is your list about?" formControlName="listDescription" id="list-description"
+                    class="form-control"></textarea>
         </div>
         <div class="form-group">
           <label class="control-label" for="list-category">Category</label>
@@ -43,7 +45,7 @@
           </label>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="img" />
+              <img [src]="img"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
@@ -59,11 +61,13 @@
           <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">
               <span># {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right" *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
+              <span class="glyphicon glyphicon-remove pull-right"
+                    *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" [description]="true" [image]="true">
+              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" [description]="true"
+                                   [image]="true">
               </app-gmap-auto-place>
             </div>
           </div>
@@ -92,21 +96,25 @@
         <div class="carousel-header">
           <strong>{{appState.state.userDraftList.info.listName}}</strong>
         </div>
-        <div class="carousel">
-          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition" [carouselSlides]="slides">
-            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active">
-              <img [src]="slide.image" style="margin:auto;">
-            </slide>
-          </carousel>
+        <div *ngIf="slides" class="carousel">
+          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides"
+                                 [noPause]="noPause"
+                                 [noTransition]="noTransition">
+            <app-slide-carousel *ngFor="let slide of slides; let index=index">
+                <img [src]="slide.image">
+            </app-slide-carousel>
+          </app-boostrap-carousel>
         </div>
         <div class="description text-justify">
           <p>{{appState.state.userDraftList.info.listDescription}}</p>
         </div>
       </div>
-      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
-        <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong class="place-name">{{plc.place}}</strong>
+      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap"
+           [id]="'place-'+index">
+        <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong
+            class="place-name">{{plc.place}}</strong>
           <span
-            class="pull-right place-detail-btn">details</span>
+              class="pull-right place-detail-btn">details</span>
         </div>
         <div class="place-item-img">
           <img [src]="plc.image" [alt]="plc.place" width="100%">
@@ -116,7 +124,8 @@
     </div>
     <div class="col-xs-12 map-box">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index" (onClick)="markerClick($event)" [hasLabel]="true">
+        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
+                           (onClick)="markerClick($event)" [hasLabel]="true">
         </app-custom-marker>
       </sebm-google-map>
     </div>

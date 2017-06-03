@@ -1,6 +1,6 @@
 <section>
-    <div class="row">
-        <div class="col-lg-6 col-xs-12 left-box">
+    <div class="setting-wrap">
+        <div class="col-lg-6 col-xs-12 left-box table-cell">
             <h1 x-large class="sample-content">Mode Play</h1>
             <form [formGroup]="filterFromMode" class="filterFromMode">
                 <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterMode">
@@ -142,7 +142,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-12 gmap-box">
+        <div class="col-lg-6 col-xs-12 gmap-box table-cell">
             <app-gmap [params]='data'></app-gmap>
         </div>
     </div>
