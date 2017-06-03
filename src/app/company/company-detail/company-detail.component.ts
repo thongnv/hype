@@ -3,7 +3,7 @@ import { CompanyService } from '../../services/company.service';
 import { ExperienceComponent } from './experience.component';
 import { AppState } from '../../app.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
-
+import * as moment from 'moment/moment';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -56,7 +56,7 @@ export class CompanyDetailComponent implements OnInit {
     }
 
     if (event.text) {
-      event.date = new Date();
+      event.date = moment().unix();
       event.user = this.user;
       this.reviews.push(event);
       this.showForm = false;

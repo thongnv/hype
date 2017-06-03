@@ -65,7 +65,7 @@
                                 <div class="content-info-experience">
                                     <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
                                     <p class="info-date-experience">
-                                        {{review.date}}
+                    			{{review.date * 1000 | date:'dd MMMM y'}}
                                     </p>
                                 </div>
                                 <div class="wrap-list-stars">
@@ -122,44 +122,41 @@
                             <div class="content-info-experience">
                                 <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
                                 <p class="info-date-experience">
-                                    {{review.date}}
-                                </p>
-                            </div>
-                            <div class="wrap-list-stars">
-                                <ul class="list-stars-review-experience">
-                                    <li *ngFor="let i of review.rating | myArray">
-                                        <a>
-                                            <img src="/assets/img/event/detail/small-star-selected.png" alt="small-star-selected"></a>
-                                    </li>
-                                    <li *ngFor="let i of 5 - review.rating | myArray">
-                                        <a>
-                                            <img src="/assets/img/event/detail/small-star.png" alt="small-star"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <p class="detail-info-experience clearfix">
-                            {{review.text}}
-                        </p>
-                        <ul class="list-pictures-experience">
-                            <li *ngFor="let image of review.images">
-                                <a><img [src]="image" alt="" width="100" height="100"></a>
-                            </li>
-                        </ul>
-                        <div class="like-area">
-                            <img src="/assets/img/event/detail/icon-like.png" alt="icon-left">
-                            <span>7 Likes</span>
-                        </div>
-                    </div>
-                </div>
+		                  {{review.date * 1000 | date:'dd MMMM y'}}
+                </p>
+              </div>
+              <ul class="list-stars-review-experience">
+                <li *ngFor="let i of review.rating | myArray"><a>
+                  <img src="/assets/img/event/detail/small-star-selected.png"
+                       alt="small-star-selected"></a>
+                </li>
+
+                <li *ngFor="let i of 5 - review.rating | myArray"><a>
+                  <img src="/assets/img/event/detail/small-star.png"
+                       alt="small-star"></a></li>
+              </ul>
             </div>
-            <app-write-review [status]="showForm" (change)="updateReview($event)"></app-write-review>
+            <p class="detail-info-experience clearfix">
+              {{review.text}}
+            </p>
+            <ul class="list-pictures-experience">
+              <li *ngFor="let image of review.images">
+                <a><img [src]="image" alt="" width="100" height="100"></a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="col-md-6 map-fix">
-            <sebm-google-map [latitude]="company.location.lat" [longitude]="company.location.lng" [zoom]="12">
-                <sebm-google-map-marker [latitude]="company.location.lat" [longitude]="company.location.lng">
-                </sebm-google-map-marker>
-            </sebm-google-map>
-        </div>
+      </div>
+
+      <app-write-review [status]="showForm" (change)="updateReview($event)"></app-write-review>
+
     </div>
+    <div class="col-md-6 map-fix">
+      <sebm-google-map [latitude]="company.location.lat" [longitude]="company.location.lng" [zoom]="12">
+        <sebm-google-map-marker [latitude]="company.location.lat"
+                                [longitude]="company.location.lng">
+        </sebm-google-map-marker>
+      </sebm-google-map>
+    </div>
+  </div>
 </article>
