@@ -99,8 +99,7 @@
             </slide>
           </carousel>
         </div>
-        <div class="description text-justify">
-          <p>{{appState.state.userDraftList.info.listDescription}}</p>
+        <div class="description text-justify" [innerHTML]="appState.state.userDraftList.info.listDescription">
         </div>
       </div>
       <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
