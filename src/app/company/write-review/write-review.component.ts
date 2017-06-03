@@ -61,5 +61,7 @@ export class WriteReviewComponent implements OnInit {
     this.review.images = this.previewUrl;
     this.review.rating = this.currentRate;
     this.change.emit(this.review);
+    this.reviewForm.reset();
+    this.previewUrl = [];
   }
 }
