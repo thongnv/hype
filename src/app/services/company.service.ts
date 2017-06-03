@@ -56,7 +56,7 @@ export class CompanyService {
             acceptNotification: true,
           },
           likeNumber: 22,
-          date: '4 April 2017',
+          date: 1495238400,
         },
         {
           rating: 4,
@@ -81,7 +81,7 @@ export class CompanyService {
             acceptNotification: true,
           },
           likeNumber: 22,
-          date: '4 April 2017',
+          date: 1495238400,
         }
       ]
     };
