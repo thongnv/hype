@@ -29,15 +29,34 @@ import { EventDetailComponent } from './detail.component';
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
       <ul class="list-pictures-experience">
-        <li *ngFor="let image of images">
-          <a><img [src]="image" alt="" width="100" height="100"></a>
+        <li *ngFor="let img of thumbImages; let i=index">
+          <div class="float-left view-more" *ngIf="i<=4">
+            <span *ngIf="i==4 && thumbImages.length > 5">
+              <a class="more" (click)="OpenImageModel(img.img,thumbImages)"> 
+                +{{thumbImages.length - 5}} more
+              </a>
+              <span class="overlay"></span>
+            </span>
+            <img class="list-img" src="{{img.thumb}}" (click)="OpenImageModel(img.img,thumbImages)"
+                 alt='Image {{i}}' width="100" height="100"/>
+          </div>
         </li>
       </ul>
+      <div *ngIf="openModalWindow">
+        <ImageModal
+          [modalImages]="thumbImages"
+          [imagePointer]="imagePointer"
+          (cancelEvent)="cancelImageModel()">
+        </ImageModal>
+      </div>
 
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
-          <a>
+          <a *ngIf="!liked">
             <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
+          </a>
+          <a *ngIf="liked">
+            <img src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
           <a>
             {{likeNumber}} Likes
@@ -95,12 +114,16 @@ export class ExperienceComponent implements Experience, OnInit {
 
   @ViewChild('commentInput') public commentInput: ElementRef;
 
+  public openModalWindow: boolean = false;
+  public imagePointer: number;
+
   public currentUser: User;
   public user: User;
   public rating: number;
   public date: Date;
   public text: string;
   public images: string[];
+  public thumbImages: any[] = [];
   public comments: HyloComment[];
   public likeNumber: number;
   public liked: boolean;
@@ -118,6 +141,16 @@ export class ExperienceComponent implements Experience, OnInit {
     this.comments = this.experience.comments;
     this.likeNumber = this.experience.likeNumber;
     this.liked = this.experience.liked;
+
+    for (let i of this.images) {
+      this.thumbImages.push(
+        {
+          thumb: i,
+          img: i,
+          description: 'Thumb Image'
+        }
+      );
+    }
   }
 
   public addComment(msgInput) {
@@ -144,5 +177,23 @@ export class ExperienceComponent implements Experience, OnInit {
 
   public getComments(start: number, range: number): HyloComment[] {
     return this.event.eventService.getComments(start, range);
+  }
+
+  public OpenImageModel(imageSrc, images) {
+    let imageModalPointer;
+    for (let i = 0; i < images.length; i++) {
+      if (imageSrc === images[i].img) {
+        imageModalPointer = i;
+        console.log('========> ', i);
+        break;
+      }
+    }
+    this.openModalWindow = true;
+    this.images = images;
+    this.imagePointer = imageModalPointer;
+  }
+
+  public cancelImageModel() {
+    this.openModalWindow = false;
   }
 }

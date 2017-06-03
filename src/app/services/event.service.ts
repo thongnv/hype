@@ -133,6 +133,7 @@ export class EventService {
           images: this.extractImages(item.comment_images),
           comments: this.extractComments(item.children),
           likeNumber: item.like_comment,
+          liked: item.user_like
         }
       );
     }
@@ -224,15 +225,15 @@ let MOCK_EVENT = {
         "author_avatar": "/assets/img/event/detail/tank.jpg",
         "pid": 0,
         "comment_images": [
-          {
-            "url": 'http://vnreview.vn/image/16/60/64/1660648.jpg'
-          },
-          {
-            "url": 'http://vnreview.vn/image/16/60/64/1660648.jpg'
-          },
-          {
-            "url": 'http://vnreview.vn/image/16/60/64/1660648.jpg'
-          }
+          {url: 'http://vnreview.vn/image/16/60/64/1660648.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/69/1664694.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/72/1664721.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/72/1664724.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/73/1664733.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/73/1664730.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/68/1664686.jpg'},
+          {url: 'http://vnreview.vn/image/16/64/70/1664700.jpg'},
+
         ],
         "rating": 2,
         "like_comment": 0,

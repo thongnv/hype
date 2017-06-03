@@ -27,8 +27,9 @@ import { NoContentComponent } from './no-content';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
-import { TruncateModule } from 'ng2-truncate'
+import { TruncateModule } from 'ng2-truncate';
 import { SlimScroll } from 'angular-io-slimscroll';
+import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
@@ -117,7 +118,8 @@ type StoreType = {
     CompanyDetailComponent,
     CurateListPipe,
     ModeComponent,
-    WriteReviewComponent
+    WriteReviewComponent,
+    ImageModal
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
