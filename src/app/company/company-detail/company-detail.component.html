@@ -100,11 +100,12 @@
                 <!-- wrap xx end -->
                 <div class="view-all-reviews-button">
                     <a class="view-all" (click)="viewReviews()">
-            View All Reviews (24)
-          </a>
+                        View All Reviews (24)
+                    </a>
                 </div>
             </div>
-            <!-- wrap xx end -->
+
+
             <div class="all-reviews-wrap" [@slideInOutAnimation]="commentPosition">
                 <div class="experience-top">
                     <a (click)="backCompany()" class="left-arrow">
@@ -114,7 +115,7 @@
                     <a (click)="showComment()" class="post-your-experience">Write a review</a>
                 </div>
                 <div *ngFor="let review of reviews; let i = index">
-                    <div class="experiences-area border-bottom padding-top-30 padding-bottom-35 clearfix">
+                    <div class="experiences-area border-bottom padding-bottom-35 clearfix">
                         <div class="information-experience">
                             <div class="experience-avatar">
                                 <img class="img-circle" [src]="review.user.userAvatar" alt="user avatar">
@@ -122,31 +123,37 @@
                             <div class="content-info-experience">
                                 <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
                                 <p class="info-date-experience">
-		                  {{review.date * 1000 | date:'dd MMMM y'}}
-                </p>
-              </div>
-              <ul class="list-stars-review-experience">
-                <li *ngFor="let i of review.rating | myArray"><a>
-                  <img src="/assets/img/event/detail/small-star-selected.png"
-                       alt="small-star-selected"></a>
-                </li>
+        		                  {{review.date * 1000 | date:'dd MMMM y'}}
+                                </p>
+                            </div>
+                            <div class="wrap-list-stars">
+                                <ul class="list-stars-review-experience">
+                                    <li *ngFor="let i of review.rating | myArray"><a>
+                                      <img src="/assets/img/event/detail/small-star-selected.png"
+                                           alt="small-star-selected"></a>
+                                    </li>
 
-                <li *ngFor="let i of 5 - review.rating | myArray"><a>
-                  <img src="/assets/img/event/detail/small-star.png"
-                       alt="small-star"></a></li>
-              </ul>
+                                    <li *ngFor="let i of 5 - review.rating | myArray"><a>
+                                      <img src="/assets/img/event/detail/small-star.png"
+                                           alt="small-star"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="detail-info-experience clearfix">
+                          {{review.text}}
+                        </p>
+                        <ul class="list-pictures-experience">
+                          <li *ngFor="let image of review.images">
+                            <a><img [src]="image" alt=""></a>
+                          </li>
+                        </ul>
+                        <div class="like-area">
+                            <img src="/assets/img/event/detail/icon-like.png" alt="icon-left">
+                            <span>7 Likes</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="detail-info-experience clearfix">
-              {{review.text}}
-            </p>
-            <ul class="list-pictures-experience">
-              <li *ngFor="let image of review.images">
-                <a><img [src]="image" alt="" width="100" height="100"></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
       <app-write-review [status]="showForm" (change)="updateReview($event)"></app-write-review>
 
