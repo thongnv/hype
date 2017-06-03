@@ -23,8 +23,8 @@
           <small [hidden]="formData.controls.listName.valid" class="text-danger">This field is required</small>
         </div>
         <div class="form-group">
-          <label class="control-label" for="list-description">What is your list about? Tell us your story</label>
-          <textarea placeholder="What is your list about?" formControlName="listDescription" id="list-description" class="form-control"></textarea>
+          <label>What is your list about? Tell us your story</label>
+          <app-tinymce formControlName='listDescription'></app-tinymce>
         </div>
         <div class="form-group">
           <label class="control-label" for="list-category">Category</label>
