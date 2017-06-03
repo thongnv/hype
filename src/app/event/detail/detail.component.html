@@ -29,8 +29,9 @@
             </li>
             <li>
               <p>Mentioned by</p>
-              <ul class="list-mention" *ngFor="let mention of mentions">
-                <li><a [href]="mention.url" target="_blank">
+              <ul class="list-mention">
+                <li *ngFor="let mention of mentions">
+                  <a [href]="mention.url" target="_blank">
                   <img [src]="mention.iconUrl" alt="mention" width="20" height="20"></a>
                 </li>
               </ul>

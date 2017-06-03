@@ -66,7 +66,7 @@ export class EventService {
       },
       images: this.extractImages(data.field_image),
       detail: data.body,
-      date: data.created,
+      date: data.created * 1000,
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
@@ -128,7 +128,7 @@ export class EventService {
             acceptNotification: true,
           },
           rating: item.rating,
-          date: item.created,
+          date: item.created * 1000,
           text: item.comment_body,
           images: this.extractImages(item.comment_images),
           comments: this.extractComments(item.children),

@@ -457,6 +457,10 @@ ul.list-stars-on-post {
 /*carousel end*/
 
 /*gmap start*/
+.map-location-area {
+  margin-top: 60px;
+}
+
 .sebm-google-map-container {
   height: 250px;
 }
