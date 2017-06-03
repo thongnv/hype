@@ -61,7 +61,12 @@ export class CompanyService {
         {
           rating: 4,
           text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-          images: ['img1', 'img2', 'img3'],
+          images: [
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg',
+            '/assets/img/event/detail/abc.jpg'
+          ],
           user: {
             firstName: 'Derek',
             lastName: 'Ang',
