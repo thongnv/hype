@@ -33,7 +33,7 @@ export class CurateComponent implements OnInit {
       this.categories = resp.categories;
       this.categories.unshift({id: 'all', name: 'All'});
       this.selectedCategory = this.categories[0].id;
-      this.trending = resp.trending;
+      this.trending = resp.trending_list;
       this.articles = resp.curate_list;
       this.articles.forEach((item) => {
         if (item.info.type === 'popular_pick') {

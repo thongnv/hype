@@ -62,3 +62,10 @@ export interface HyloComment {
   replies: HyloComment[];
   liked: boolean;
 }
+
+export interface EventType {
+  id: number;
+  name: string;
+  iconUrl: string;
+  selected: boolean;
+}

@@ -14,7 +14,9 @@
 nav {
   margin-top: 16px;
 }
-
+a{
+  cursor: pointer;
+}
 nav a {
   background-color: $nav-button-color;
   color: white;
@@ -45,6 +47,26 @@ body, html {
   white-space: nowrap;
 }
 .hype{
+  .home-page .gm-style-iw{
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+  .home-page .gm-style-iw + div{
+    display: none;
+  }
+  .free-price-button {
+    height: 14px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    color: #5052ea;
+  }
+  .free-price {
+    opacity: 0.5;
+    color: #3b3b3b;
+    font-weight: 500;
+  }
   .hype-nav{
     display: block;
     width: 100%;
@@ -175,6 +197,9 @@ body, html {
       height: 180px;
       margin-top: 30px;
     }
+    .avatar-profile *{
+      color: #ffffff;
+    }
     .avatar-profile {
       width: 140px;
       height: 140px;
@@ -182,7 +207,6 @@ body, html {
       float: left;
       margin-right: 10px;
       position: relative;
-      color: #ffffff;
     }
     .month {
       position: absolute;

@@ -1,5 +1,5 @@
 <div class="wrap-each-items" *ngIf="item">
-  <div class="close-button text-right" (click)="onDeleteEmit(item)"><i class="fa fa-times" aria-hidden="true"></i></div>
+  <div *ngIf="canDelete" class="close-button text-right" (click)="onDeleteEmit(item)"><i class="fa fa-times" aria-hidden="true"></i></div>
   <div class="avatar-profile">
     <div class="fav-item-image">
       <img [src]="item.image" width="140" height="140">

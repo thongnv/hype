@@ -31,7 +31,9 @@ export class AuthComponent implements OnInit {
       .then((res: LoginResponse) => {
         console.log('Logged in', res);
         this.mainService.login(res.authResponse.accessToken).then((respone) => {
+          console.log('login-respone: ', respone);
           this.router.navigate(['/member']);
+          // this.router.navigate(['/member/quyet-tran-dinh']);
         });
       })
       .catch(this.handleError);

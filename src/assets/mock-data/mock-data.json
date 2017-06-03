@@ -1,4 +1,19 @@
 {
+  "profile": {
+    "uid": "9",
+    "name": "Quy\u1ebft Tr\u1ea7n \u0110inh",
+    "email": "dinhquyet.92@gmail.com",
+    "field_first_name": null,
+    "field_last_name": null,
+    "field_contact_number": null,
+    "field_country": null,
+    "field_image": "https:\/\/s3.amazonaws.com\/hylowebsite\/avatar\/pictures\/2017-06\/1671412126309664.jpg",
+    "field_notify_email": "1",
+    "follow": {
+      "follower": "0",
+      "following": "0"
+    }
+  },
   "public_profile": {
     "user_name": "derekang",
     "avatar": "assets/img/avatar/demoavatar.png",
@@ -31,7 +46,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.290270,
+        "lng": 103.851959,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111112",
@@ -55,7 +75,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.344473,
+        "lng": 103.851209,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111113",
@@ -79,7 +104,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.340526,
+        "lng": 103.811899,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111114",
@@ -103,7 +133,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.350136,
+        "lng": 103.847089,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111115",
@@ -127,7 +162,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.357741,
+        "lng": 103.911140,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111116",
@@ -151,7 +191,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.401942,
+        "lng": 103.792272,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111117",
@@ -176,7 +221,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.348268,
+        "lng": 103.685977,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111118",
@@ -201,7 +251,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.332750,
+        "lng": 103.957678,
+        "name": "Singapore Indoor Stadium"
+      }
     },
     {
       "id": "1111119",
@@ -226,7 +281,12 @@
           "avatar": "assets/img/avatar/demoavatar.png"
         }
       ],
-      "date_created": "2017-05-21 13:34:00"
+      "date_created": "2017-05-21 13:34:00",
+      "location": {
+        "lat": 1.295908,
+        "lng": 103.845847,
+        "name": "Singapore Indoor Stadium"
+      }
     }
   ],
   "categories": [
@@ -285,6 +345,7 @@
   },
   "curate_list": [
     {
+      "id": "11111",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -293,11 +354,19 @@
         "listName": "Vivamus dignissim arcu eget nunc maximus luctus. Proin ac ligula neque.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.251914,
+          "lng": 103.672893,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "11112",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -306,11 +375,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.380697,
+          "lng": 103.706219,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11113",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -319,11 +396,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.409830,
+          "lng": 103.751385,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11114",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -332,11 +417,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.435061,
+          "lng": 103.810856,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11115",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -345,11 +438,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.439807,
+          "lng": 103.715402,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11116",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -358,11 +459,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.229790,
+          "lng": 103.761201,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11117",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-21 15:45:01",
@@ -371,11 +480,19 @@
         "listName": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
         "listDescription": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         "listCategory": "1",
-        "listImages": ""
+        "listImages": "",
+        "location": {
+          "lat": 1.242252,
+          "lng": 103.833395,
+          "name": "Singapore Indoor Stadium"
+        }
       },
-      "images": ["assets/img/curated/curate2.jpg"]
+      "images": [
+        "assets/img/curated/curate2.jpg"
+      ]
     },
     {
+      "id": "11118",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-30 11:45:01",
@@ -386,9 +503,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate3.jpg"]
+      "images": [
+        "assets/img/curated/curate3.jpg"
+      ]
     },
     {
+      "id": "11119",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -399,9 +519,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate4.jpg"]
+      "images": [
+        "assets/img/curated/curate4.jpg"
+      ]
     },
     {
+      "id": "111110",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -412,9 +535,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111111",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -425,9 +551,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111112",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -438,9 +567,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111113",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -451,9 +583,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111114",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -464,9 +599,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111115",
       "info": {
         "author": "Mary tan",
         "created_time": "2017-09-01 15:45:01",
@@ -477,9 +615,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111116",
       "info": {
         "author": "Mary tan 2",
         "created_time": "2017-09-01 15:45:01",
@@ -490,9 +631,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111117",
       "info": {
         "author": "Mary tan 2",
         "created_time": "2017-09-01 15:45:01",
@@ -503,9 +647,12 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
+      "id": "111118",
       "info": {
         "author": "Mary tan 2",
         "created_time": "2017-09-01 15:45:01",
@@ -516,17 +663,126 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     }
   ],
-  "trending": [
+  "notifications": [
+    {
+      "id": "1111",
+      "user_name": "Amos Tan",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "created_time": "2017-05-29 13:30:30",
+      "has_read": "false"
+    },
+    {
+      "id": "1112",
+      "user_name": "Tony Nguyen",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "In placerat egestas diam vel convallis.",
+      "created_time": "2017-05-21 15:30:30",
+      "has_read": "false"
+    },
+    {
+      "id": "1113",
+      "user_name": "David Son",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Sed bibendum massa nec tristique tincidunt. Maecenas sodales luctus nunc nec posuere.",
+      "created_time": "2017-05-01 19:30:30",
+      "has_read": "false"
+    },
+    {
+      "id": "1114",
+      "user_name": "Lorem ipsum",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
+      "created_time": "2017-04-29 10:30:30",
+      "has_read": "true"
+    },
+    {
+      "id": "1115",
+      "user_name": "Lorem ipsum",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
+      "created_time": "2017-04-29 10:30:30",
+      "has_read": "true"
+    },
+    {
+      "id": "1116",
+      "user_name": "Lorem ipsum",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
+      "created_time": "2017-04-29 10:30:30",
+      "has_read": "true"
+    },
+    {
+      "id": "1117",
+      "user_name": "Lorem ipsum",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
+      "created_time": "2017-04-29 10:30:30",
+      "has_read": "true"
+    },
+    {
+      "id": "1118",
+      "user_name": "Lorem ipsum",
+      "user_avatar": "assets/img/avatar/demoavatar.png",
+      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
+      "created_time": "2017-04-29 10:30:30",
+      "has_read": "true"
+    }
+  ],
+  "trending": {
+    "event_type": [
+      {
+        "id": "1",
+        "name": "All",
+        "iconUrl": "/assets/img/icons/All.png"
+      },
+      {
+        "id": "2",
+        "name": "Sports",
+        "iconUrl": "/assets/img/icons/Sports.png"
+      },
+      {
+        "id": "3",
+        "name": "Concert",
+        "iconUrl": "/assets/img/icons/Concert.png"
+      },
+      {
+        "id": "4",
+        "name": "Food",
+        "iconUrl": "/assets/img/icons/Food.png"
+      },
+      {
+        "id": "5",
+        "name": "Promo",
+        "iconUrl": "/assets/img/icons/Promo.png"
+      },
+      {
+        "id": "6",
+        "name": "Family",
+        "iconUrl": "/assets/img/icons/Family.png"
+      },
+      {
+        "id": "7",
+        "name": "Hotels",
+        "iconUrl": "/assets/img/icons/Hotels.png"
+      }
+    ]
+  },
+  "trending_list": [
     {
       "info": {
         "listName": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget efficitur leo.",
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
       "info": {
@@ -535,7 +791,9 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
       "info": {
@@ -544,7 +802,9 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
       "info": {
@@ -553,7 +813,9 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     },
     {
       "info": {
@@ -562,73 +824,9 @@
         "listCategory": "1",
         "listImages": ""
       },
-      "images": ["assets/img/curated/curate.jpg"]
-    }
-  ],
-  "notifications": [
-    {
-      "id":"1111",
-      "user_name": "Amos Tan",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "created_time": "2017-05-29 13:30:30",
-      "has_read": "false"
-    },
-    {
-      "id":"1112",
-      "user_name": "Tony Nguyen",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "In placerat egestas diam vel convallis.",
-      "created_time": "2017-05-21 15:30:30",
-      "has_read": "false"
-    },
-    {
-      "id":"1113",
-      "user_name": "David Son",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Sed bibendum massa nec tristique tincidunt. Maecenas sodales luctus nunc nec posuere.",
-      "created_time": "2017-05-01 19:30:30",
-      "has_read": "false"
-    },
-    {
-      "id":"1114",
-      "user_name": "Lorem ipsum",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
-      "created_time": "2017-04-29 10:30:30",
-      "has_read": "true"
-    },
-    {
-      "id":"1115",
-      "user_name": "Lorem ipsum",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
-      "created_time": "2017-04-29 10:30:30",
-      "has_read": "true"
-    },
-    {
-      "id":"1116",
-      "user_name": "Lorem ipsum",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
-      "created_time": "2017-04-29 10:30:30",
-      "has_read": "true"
-    },
-    {
-      "id":"1117",
-      "user_name": "Lorem ipsum",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
-      "created_time": "2017-04-29 10:30:30",
-      "has_read": "true"
-    },
-    {
-      "id":"1118",
-      "user_name": "Lorem ipsum",
-      "user_avatar": "assets/img/avatar/demoavatar.png",
-      "title": "Nulla vitae metus bibendum diam ultrices accumsan in convallis libero.",
-      "created_time": "2017-04-29 10:30:30",
-      "has_read": "true"
+      "images": [
+        "assets/img/curated/curate.jpg"
+      ]
     }
   ]
 }

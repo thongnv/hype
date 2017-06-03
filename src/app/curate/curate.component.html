@@ -16,7 +16,7 @@
           <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'"
                                  [noPause]="noPause"
                                  [noTransition]="noTransition" class="col-xs-12 col-lg-12">
-            <app-slide-carousel *ngFor="let slideGroup of featuredArticles| MyTripleSlide: selectedCategory">
+            <app-slide-carousel *ngFor="let slideGroup of featuredArticles| myTripleSlide: selectedCategory">
               <div class="slide-group" *ngFor="let slidez of slideGroup">
                 <img [src]="slidez.images[0]" style="margin:auto;">
                 <div class="carousel-caption">

@@ -56,12 +56,13 @@ export class MainService {
     });
   }
 
-  public getUserProfile(): Promise<any> {
+  public getUserProfile(slugName?: string): Promise<any> {
 
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get(AppSetting.API_USER_PROFILE, options)
+    console.log('options: ', options);
+    return this._http.get(AppSetting.API_USER_PROFILE + slugName + '?_format=json', options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -172,7 +173,7 @@ export class MainService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error(error);
+    // console.error(error);
     return Promise.reject(error.message || error);
   }
 }

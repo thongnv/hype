@@ -44,7 +44,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
 
   public readUrl(event) {
-    console.log('image:',event.target.files[0]);
+    console.log('image:', event.target.files[0]);
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (event) => {

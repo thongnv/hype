@@ -8,8 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CustomMarkerComponent {
   @Input('marker') public marker: any;
   @Input('index') public index: any;
+  @Input('hasLabel') public hasLabel: boolean;
   @Output('onClick') public onClick = new EventEmitter<any>();
 
+  public label;
+  public constructor() {
+    this.label = this.hasLabel ? (this.index + 1).toString() : '';
+  }
   public markerClick() {
     this.onClick.emit(this.index);
   }
