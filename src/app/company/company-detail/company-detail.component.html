@@ -75,7 +75,7 @@
                 <div class="content-info-experience">
                   <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
                   <p class="info-date-experience">
-                    {{review.date}}
+                    {{review.date * 1000 | date:'d MMMM y'}}
                   </p>
                 </div>
                 <div class="wrap-list-stars">
@@ -138,7 +138,7 @@
               <div class="content-info-experience">
                 <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
                 <p class="info-date-experience">
-                  {{review.date}}
+                  {{review.date * 1000 | date:'d MMMM y'}}
                 </p>
               </div>
               <ul class="list-stars-review-experience">
