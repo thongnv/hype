@@ -121,32 +121,50 @@ p.avg-rating a {
 
 /*detail event end*/
 
+
+
+
 /*experience area start*/
 .reviews-wrap {
+  padding: 20px 40px;
+}
+.all-reviews-wrap {
   padding: 20px 40px;
 }
 .experience-top {
   margin-top: 20px;
   position: relative;
 }
-.experience-top h4 {
+.experience-top h4.title-experiences-area {
   font-size: 18px;
   font-weight: 500;
   line-height: 1;
   text-align: left;
   color: #3b3b3b;
 }
-.experience-top a {
+.experience-top h4.title-experiences-reviews-area {
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.13;
+  text-align: left;
+  color: #3b3b3b;
+  margin-left: 20px;
+}
+.experience-top a.post-your-experience {
   font-size: 16px;
   line-height: 1.5;
   text-align: center;
   color: #ec3d62;
   position: absolute;
-  top: 4%;
+  bottom: -22%;
   right: 4%;
 }
-
-
+.experience-top a.left-arrow {
+  position: absolute;
+  left: -4%;
+  top: 17%;
+  cursor: pointer;
+}
 .information-experience {
   margin-top: 10px;
 }
@@ -242,78 +260,10 @@ p.avg-rating a {
 
 
 
-
-
-
-
-
-/*.experiences-area {
-  position: relative;
-}
-
-.information-experience img {
-  display: block;
-  float: left;
-}
-
-.content-info-experience {
-  float: left;
-  margin: 12px;
-  line-height: 40px;
-}
-
-ul.list-stars-review-experience {
-  list-style: none;
-  float: left;
-  margin: 20px;
-}
-
-ul.list-stars-review-experience li {
-  float: left;
-  margin-right: 8px;
-}
-
-p.detail-info-experience {
-  font-size: 14px;
-  margin: 20px 0;
-  color: #3b3b3b;
-}
-
-ul.list-pictures-experience {
-  list-style: none;
-}
-
-ul.list-pictures-experience li {
-  float: left;
-  margin-right: 10px;
-}
-
-ul.list-pictures-experience li img {
-  border-radius: 8px;
-}
-
-.likes-comments-experience-area {
-  padding-top: 40px;
-}
-
-.likes-comments-experience-area a {
-  color: #3b3b3b;
-}
-
-.likes-area {
-  float: left;
-  margin-right: 40px;
-}
-
-.comments-area {
-  float: left;
-}
-
-.report-area {
-  float: right;
-}*/
-
 /*experience area end*/
+
+
+
 
 /*write your comment start*/
 

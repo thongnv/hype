@@ -1,178 +1,165 @@
 <article class="container">
-  <div class="row">
-    <div class="content col-md-6">
-      <!-- wrap xx start -->
-      <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
-        <!-- company wrap start -->
-        <div class="company-wrap">
-
-          <!-- carousel start -->
-          <div class="carousel">
-            <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                      [noThumbnail]="true" [carouselSlides]="slides">
-              <slide *ngFor="let slide of slides; let index=index"
-                     [active]="slide.active"
-                     [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
-              </slide>
-            </carousel>
-          </div>
-          <!-- carousel end -->
-
-          <!-- company header start -->
-          <div class="company-header">
-            <h3>{{company.name}}</h3>
-            <div class="rating-start">
-              <i fa [name]="'star'" [size]=1></i>
-              <i fa [name]="'star'" [size]=1></i>
-              <i fa [name]="'star'" [size]=1></i>
-              <i fa [name]="'star'" [size]=1></i>
-              <i fa [name]="'star'" [size]=1></i>
-            </div>
-            <!-- <p class="rating-number">{{company.rating}}/5</p> -->
-            <div class="google-plus-point">
-              <div class="rating-number">
-                {{company.rating}}/5
-              </div>
-              <div class="google-plus-dropdown-button">
-                <a href="#">
-                  <i class="fa fa-google-plus" aria-hidden="true"></i>
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-            <div class="company-description">
-              {{company.description}}
-            </div>
-          </div>
-          <!-- company header end -->
-
-          <!-- company info start -->
-          <div class="company-info">
-            <p><span>Location</span> {{company.location.name}}</p>
-            <p><span>Website</span> <a [href]="company.website">{{company.website}}</a></p>
-            <p><span>Phone No.</span> <a [href]="company.phone">{{company.phone}}</a></p>
-            <p><span>Opening Hours</span> {{company.openingHours}}</p>
-          </div>
-          <!-- company info end -->
-
-        </div>
-        <!-- company wrap end -->
-
-        <!-- reviews wrap start -->
-        <div class="reviews-wrap">
-          <div class="experience-top">
-            <h4 class="title-experiences-area">Latest  Reviews</h4>
-            <a (click)="showComment()" class="post-your-experience">Write a review</a>
-          </div>
-
-          <div *ngFor="let review of reviews; let i = index ">
-            <div class="experiences-area border-bottom padding-bottom-35 clearfix">
-
-              <div class="information-experience">
-                <div class="experience-avatar">
-                  <img class="img-circle" [src]="review.user.userAvatar" alt="user avatar">
+    <div class="row">
+        <div class="content col-md-6">
+            <!-- wrap xx start -->
+            <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
+                <!-- company wrap start -->
+                <div class="company-wrap">
+                    <!-- carousel start -->
+                    <div class="carousel">
+                        <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition" [noThumbnail]="true" [carouselSlides]="slides">
+                            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active" [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+                            </slide>
+                        </carousel>
+                    </div>
+                    <!-- carousel end -->
+                    <!-- company header start -->
+                    <div class="company-header">
+                        <h3>{{company.name}}</h3>
+                        <div class="rating-start">
+                            <i fa [name]="'star'" [size]=1></i>
+                            <i fa [name]="'star'" [size]=1></i>
+                            <i fa [name]="'star'" [size]=1></i>
+                            <i fa [name]="'star'" [size]=1></i>
+                            <i fa [name]="'star'" [size]=1></i>
+                        </div>
+                        <!-- <p class="rating-number">{{company.rating}}/5</p> -->
+                        <div class="google-plus-point">
+                            <div class="rating-number">
+                                {{company.rating}}/5
+                            </div>
+                            <div class="google-plus-dropdown-button">
+                                <a href="#">
+                                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="company-description">
+                            {{company.description}}
+                        </div>
+                    </div>
+                    <!-- company header end -->
+                    <!-- company info start -->
+                    <div class="company-info">
+                        <p><span>Location</span> {{company.location.name}}</p>
+                        <p><span>Website</span> <a [href]="company.website">{{company.website}}</a></p>
+                        <p><span>Phone No.</span> <a [href]="company.phone">{{company.phone}}</a></p>
+                        <p><span>Opening Hours</span> {{company.openingHours}}</p>
+                    </div>
+                    <!-- company info end -->
                 </div>
-                <div class="content-info-experience">
-                  <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
-                  <p class="info-date-experience">
-                    {{review.date}}
-                  </p>
+                <!-- company wrap end -->
+                <!-- reviews wrap start -->
+                <div class="reviews-wrap">
+                    <div class="experience-top">
+                        <h4 class="title-experiences-area">Latest Reviews</h4>
+                        <a (click)="showComment()" class="post-your-experience">Write a review</a>
+                    </div>
+                    <div *ngFor="let review of reviews; let i = index ">
+                        <div class="experiences-area border-bottom padding-bottom-35 clearfix">
+                            <div class="information-experience">
+                                <div class="experience-avatar">
+                                    <img class="img-circle" [src]="review.user.userAvatar" alt="user avatar">
+                                </div>
+                                <div class="content-info-experience">
+                                    <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
+                                    <p class="info-date-experience">
+                                        {{review.date}}
+                                    </p>
+                                </div>
+                                <div class="wrap-list-stars">
+                                    <ul class="list-stars-review-experience">
+                                        <li *ngFor="let i of review.rating | myArray">
+                                            <a>
+                                                <img src="/assets/img/event/detail/small-star-selected.png" alt="small-star-selected"></a>
+                                        </li>
+                                        <li *ngFor="let i of 5 - review.rating | myArray">
+                                            <a>
+                                                <img src="/assets/img/event/detail/small-star.png" alt="small-star"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="detail-info-experience clearfix">
+                                {{review.text}}
+                            </p>
+                            <ul class="list-pictures-experience">
+                                <li *ngFor="let image of review.images">
+                                    <a><img [src]="image" alt=""></a>
+                                </li>
+                            </ul>
+                            <div class="like-area">
+                                <img src="/assets/img/event/detail/icon-like.png" alt="icon-left">
+                                <span>7 Likes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- reviews wrap end -->
                 </div>
-                <div class="wrap-list-stars">
-                  <ul class="list-stars-review-experience">
-                    <li *ngFor="let i of review.rating | myArray"><a>
-                      <img src="/assets/img/event/detail/small-star-selected.png"
-                           alt="small-star-selected"></a>
-                    </li>
-
-                    <li *ngFor="let i of 5 - review.rating | myArray"><a>
-                      <img src="/assets/img/event/detail/small-star.png"
-                           alt="small-star"></a></li>
-                  </ul>
-                </div>
-
-              </div>
-
-              <p class="detail-info-experience clearfix">
-                {{review.text}}
-              </p>
-
-              <ul class="list-pictures-experience">
-                <li *ngFor="let image of review.images">
-                  <a><img [src]="image" alt=""></a>
-                </li>
-              </ul>
-
-              <div class="like-area">
-                <img src="/assets/img/event/detail/icon-like.png" alt="icon-left">
-                <span>7 Likes</span>
-              </div>
-
-            </div>
-          </div>
-          <!-- reviews wrap end -->
-        </div>
-        <!-- wrap xx end -->
-
-        <div class="view-all-reviews-button">
-          <a class="view-all" (click)="viewReviews()">
+                <!-- wrap xx end -->
+                <div class="view-all-reviews-button">
+                    <a class="view-all" (click)="viewReviews()">
             View All Reviews (24)
           </a>
-        </div>
-
-      </div>
-
-      <div class="all-reviews-wrap" [@slideInOutAnimation]="commentPosition">
-        <div class="experience-top">
-          <a (click)="backCompany()" class="left-arrow">
-            <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
-          </a>
-          <h4 class="title-experiences-area">Latest  Reviews</h4>
-          <a (click)="showComment()" class="post-your-experience">Write a review</a>
-        </div>
-        <div *ngFor="let review of reviews; let i = index">
-          <div class="experiences-area border-bottom padding-top-30 padding-bottom-35 clearfix">
-            <div class="information-experience">
-              <img class="img-circle" [src]="review.user.userAvatar" alt="user avatar" width="70"
-                   height="70">
-              <div class="content-info-experience">
-                <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
-                <p class="info-date-experience">
-                  {{review.date}}
-                </p>
-              </div>
-              <ul class="list-stars-review-experience">
-                <li *ngFor="let i of review.rating | myArray"><a>
-                  <img src="/assets/img/event/detail/small-star-selected.png"
-                       alt="small-star-selected"></a>
-                </li>
-
-                <li *ngFor="let i of 5 - review.rating | myArray"><a>
-                  <img src="/assets/img/event/detail/small-star.png"
-                       alt="small-star"></a></li>
-              </ul>
+                </div>
             </div>
-            <p class="detail-info-experience clearfix">
-              {{review.text}}
-            </p>
-            <ul class="list-pictures-experience">
-              <li *ngFor="let image of review.images">
-                <a><img [src]="image" alt="" width="100" height="100"></a>
-              </li>
-            </ul>
-          </div>
+            <!-- wrap xx end -->
+            <div class="all-reviews-wrap" [@slideInOutAnimation]="commentPosition">
+                <div class="experience-top">
+                    <a (click)="backCompany()" class="left-arrow">
+                        <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
+                    </a>
+                    <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
+                    <a (click)="showComment()" class="post-your-experience">Write a review</a>
+                </div>
+                <div *ngFor="let review of reviews; let i = index">
+                    <div class="experiences-area border-bottom padding-top-30 padding-bottom-35 clearfix">
+                        <div class="information-experience">
+                            <div class="experience-avatar">
+                                <img class="img-circle" [src]="review.user.userAvatar" alt="user avatar">
+                            </div>
+                            <div class="content-info-experience">
+                                <h4>{{review.user.firstName + ' ' + review.user.lastName}}</h4>
+                                <p class="info-date-experience">
+                                    {{review.date}}
+                                </p>
+                            </div>
+                            <div class="wrap-list-stars">
+                                <ul class="list-stars-review-experience">
+                                    <li *ngFor="let i of review.rating | myArray">
+                                        <a>
+                                            <img src="/assets/img/event/detail/small-star-selected.png" alt="small-star-selected"></a>
+                                    </li>
+                                    <li *ngFor="let i of 5 - review.rating | myArray">
+                                        <a>
+                                            <img src="/assets/img/event/detail/small-star.png" alt="small-star"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="detail-info-experience clearfix">
+                            {{review.text}}
+                        </p>
+                        <ul class="list-pictures-experience">
+                            <li *ngFor="let image of review.images">
+                                <a><img [src]="image" alt="" width="100" height="100"></a>
+                            </li>
+                        </ul>
+                        <div class="like-area">
+                            <img src="/assets/img/event/detail/icon-like.png" alt="icon-left">
+                            <span>7 Likes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-write-review [status]="showForm" (change)="updateReview($event)"></app-write-review>
         </div>
-      </div>
-
-      <app-write-review [status]="showForm" (change)="updateReview($event)"></app-write-review>
-
+        <div class="col-md-6 map-fix">
+            <sebm-google-map [latitude]="company.location.lat" [longitude]="company.location.lng" [zoom]="12">
+                <sebm-google-map-marker [latitude]="company.location.lat" [longitude]="company.location.lng">
+                </sebm-google-map-marker>
+            </sebm-google-map>
+        </div>
     </div>
-    <div class="col-md-6 map-fix">
-      <sebm-google-map [latitude]="company.location.lat" [longitude]="company.location.lng" [zoom]="12">
-        <sebm-google-map-marker [latitude]="company.location.lat"
-                                [longitude]="company.location.lng">
-        </sebm-google-map-marker>
-      </sebm-google-map>
-    </div>
-  </div>
 </article>
