@@ -150,9 +150,7 @@ header ul li {
     text-transform: capitalize;
     font-weight: bold;
 }
-.list-preview-wrap .information-event {
-    margin-left: 25px;
-}
+
 .list-preview-wrap .information-event .col-md-3 p {
     color: #3b3b3b;
     font-size: 16px;
@@ -206,3 +204,52 @@ header ul li {
 }
 
 /*preview end*/
+
+.left-content-information-event {
+  list-style: none;
+  float: left;
+  width: 70%;
+}
+
+.left-content-information-event > li {
+  margin-bottom: 30px;
+}
+
+.left-content-information-event > li > p {
+  float: left;
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 25%;
+  margin-right: 40px;
+}
+
+.left-content-information-event > li > span {
+  font-size: 13px;
+}
+
+.left-content-information-event > li > span > b {
+  position: relative;
+  top: -3px;
+  margin: 0 5px;
+}
+
+.left-content-information-event > li > span > strong {
+  font-size: 14px;
+  color: #ec3d62;
+}
+
+
+.list-mention {
+  list-style: none;
+}
+
+.list-mention > li {
+  float: left;
+  margin-right: 16px;
+}
+
+.list-mention > li > a {
+  border-radius: 7px;
+  border: 1px solid #e6e6e6;
+  padding: 5px 4px 8px;
+}

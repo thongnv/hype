@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Call2Action, HyloComment, HyloEvent, Icon } from '../../app.interface';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import * as moment from 'moment/moment';
 import { MainService } from '../../services/main.service';
 import { AppState } from '../../app.service';
 
@@ -29,7 +29,20 @@ export class ShareEventComponent implements OnInit {
     eventImages: ['', Validators.required],
     eventMentions: this.fb.array(['']),
   });
-  public categories: any[];
+  public categories: any[] = [
+    {
+      id: 1,
+      name: 'Category 1'
+    },
+    {
+      id: 2,
+      name: 'Category 2'
+    },
+    {
+      id: 3,
+      name: 'Category 3'
+    },
+  ];
   public previewUrl: string[] = [];
   public showMore: boolean = false;
   public showPreview: boolean = false;
@@ -70,6 +83,10 @@ export class ShareEventComponent implements OnInit {
     mentions.push(new FormControl());
   }
 
+  public setTime(event) {
+    console.log(moment(event).unix());
+  }
+
   public switchView() {
     this.showPreview = !this.showPreview;
   }
@@ -84,7 +101,6 @@ export class ShareEventComponent implements OnInit {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
     this.appState.set('eventPreview', event);
-    console.log('ee', this.appState.state.eventPreview);
     this.initPreview();
   }
 

@@ -34,7 +34,8 @@
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-category">Category</label>
           <select name="" id="event-category" formControlName="eventCategory">
-            <option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</option>
+            <option value="" selected="selected">Select a category</option>
+            <option *ngFor="let cat of categories, let i = index"  [value]="cat.id">{{cat.name}}</option>
           </select>
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
@@ -52,12 +53,16 @@
           </div>
         </div>
       </div>
-
+      <div class="option-info col-xs-12 col-md-12">
+        <a (click)="showMore = !showMore">
+          <i class="fa" [class.fa-plus]="!showMore" [class.fa-minus]="showMore"  aria-hidden="true"></i> Optional info
+        </a>
+      </div>
       <div *ngIf="showMore" class="row">
         <div class="input-box col-xs-12 col-md-6">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
-            <input id="event-date" required formControlName="eventDate" ngui-datetime-picker />
+            <input id="event-date" required formControlName="eventDate" ngui-datetime-picker  />
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -88,11 +93,6 @@
         </div>
       </div>
 
-      <div class="option-info col-xs-12 col-md-12">
-        <a (click)="showMore = !showMore">
-          <i class="fa fa-plus" aria-hidden="true"></i> Optional info
-        </a>
-      </div>
       <div class="form-actions col-xs-12 col-md-12">
         <button type="submit" class="btn btn-primary">Share</button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
@@ -114,32 +114,32 @@
         <hr>
 
         <div class="row information-event">
-          <div class="col-md-3">
-            <p>Location</p>
-            <p>Date / Time</p>
-            <p>Price Range</p>
-            <p>Mentioned by</p>
-          </div>
-          <div class="col-md-6">
-            <p class="event-place" [innerHTML]="appState.state.eventPreview.eventPlace.place"></p>
-            <p [innerHTML]="appState.state.eventPreview.eventDate"></p>
-            <p>
-              <span class="price">{{appState.state.eventPreview.eventPrice}}</span>
-              <a [href]="appState.state.eventPreview.call2action.eventLink">Buy Ticket</a>
-            </p>
-
-            <p *ngIf="appState.state.eventPreview.eventMentions">
-              <span *ngFor="let mention of appState.state.eventPreview.eventMentions">
-                <a *ngIf="mention" [href]="mention" target="_blank"><img [src]="'https://www.google.com/s2/favicons?domain=' + mention"></a>
+          <ul class="left-content-information-event">
+            <li>
+              <p>location</p><span>{{appState.state.eventPreview.eventPlace.place}}</span>
+            </li>
+            <li>
+              <p>date / time</p><span>{{appState.state.eventPreview.eventDate}}</span>
+            </li>
+            <li>
+              <p>price range</p>
+              <span>{{appState.state.eventPreview.eventPrice}}<b>.</b>
+                <a href="{{appState.state.eventPreview.call2action.eventLink}}">
+                  <strong>{{appState.state.eventPreview.call2action.eventLink}}</strong>
+                </a>
               </span>
-            </p>
-          </div>
-          <!--<div class="col-md-3 align-center">-->
-          <!--<p>CREATED BY</p>-->
-          <!--<img class="user-avatar" [src]="event.creator.avatar">-->
-          <!--<p [innerHTML]="eventPreview.creator.firstName + ' ' + event.creator.lastName"></p>-->
-          <!--<p [innerHTML]="eventPreview.rating + '/5'"></p>-->
-          <!--</div>-->
+            </li>
+            <li>
+              <p>Mentioned by</p>
+              <ul class="list-mention">
+                <li *ngFor="let mention of appState.state.eventPreview.eventMentions">
+                  <a [href]="mention" target="_blank">
+                    <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </div>
 
         <hr>
