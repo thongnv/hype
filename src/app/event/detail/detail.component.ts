@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Call2Action, Experience, HyloEvent, Icon, User, Location } from '../../app.interface';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
+import moment = require('moment');
 
 @Component({
   selector: 'app-detail',
@@ -85,7 +86,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       liked: false,
       comments: [],
       rating: this.userRating,
-      date: new Date(),
+      date: moment().unix(),
       images: [
         '/assets/img/event/detail/abc.jpg',
         '/assets/img/event/detail/abc.jpg',
