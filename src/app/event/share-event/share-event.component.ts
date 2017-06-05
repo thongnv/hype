@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment/moment';
 import { MainService } from '../../services/main.service';
@@ -52,7 +53,7 @@ export class ShareEventComponent implements OnInit {
     { value: 'more', display: 'More info' }
   ];
   constructor(public fb: FormBuilder, private mainService: MainService,
-              public appState: AppState) {
+              public appState: AppState, private router: Router) {
   }
 
   public ngOnInit() {
@@ -94,7 +95,7 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    console.log(event);
+    this.router.navigate(['/event/1']);
   }
 
   public onPreview() {
