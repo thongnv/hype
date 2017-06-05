@@ -17,14 +17,15 @@ import { EventDetailComponent } from './detail.component';
           </p>
         </div>
         <ul class="list-stars-review-experience">
-          <li *ngFor="let i of rating | myArray"><a>
+          <li *ngFor="let i of rating | myArray">
             <img src="/assets/img/event/detail/small-star-selected.png"
-                 alt="small-star-selected"></a>
+                 alt="small-star-selected">
           </li>
 
-          <li *ngFor="let i of 5 - rating | myArray"><a>
+          <li *ngFor="let i of 5 - rating | myArray">
             <img src="/assets/img/event/detail/small-star.png"
-                 alt="small-star"></a></li>
+                 alt="small-star">
+          </li>
         </ul>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
@@ -52,10 +53,10 @@ import { EventDetailComponent } from './detail.component';
 
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
-          <a *ngIf="!liked">
+          <a *ngIf="!liked" (click)="like()">
             <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
           </a>
-          <a *ngIf="liked">
+          <a *ngIf="liked" (click)="unLike()">
             <img src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
           <a>
@@ -195,5 +196,15 @@ export class ExperienceComponent implements Experience, OnInit {
 
   public cancelImageModel() {
     this.openModalWindow = false;
+  }
+
+  public like() {
+    this.liked = true;
+    this.likeNumber += 1;
+  }
+
+  public unLike() {
+    this.liked = false;
+    this.likeNumber -= 1;
   }
 }

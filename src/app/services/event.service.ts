@@ -245,7 +245,7 @@ let MOCK_EVENT = {
       {
         "cid": "35",
         "author_name": "admin",
-        "author_avatar": "",
+        "author_avatar": "/assets/img/event/detail/abc.jpg",
         "pid": 0,
         "comment_images": [
           {
@@ -267,7 +267,7 @@ let MOCK_EVENT = {
           {
             "cid": "37",
             "author_name": "admin",
-            "author_avatar": "",
+            "author_avatar": "/assets/img/event/detail/hklin.jpg",
             "pid": "35",
             "comment_images": [
               {
@@ -295,7 +295,7 @@ let MOCK_EVENT = {
       {
         "cid": "36",
         "author_name": "admin",
-        "author_avatar": "",
+        "author_avatar": "/assets/img/event/detail/derek.jpg",
         "pid": 0,
         "comment_images": [
           {
