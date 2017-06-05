@@ -1,6 +1,7 @@
 <section>
-    <div class="setting-wrap">
-        <div class="col-lg-6 col-xs-12 left-box table-cell">
+    <div class="row">
+        <div class="col-lg-6 col-xs-12 left-box">
+            <h1 x-large class="sample-content">Mode Play</h1>
             <form [formGroup]="filterFromMode" class="filterFromMode">
                 <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterMode">
                     <label class="btn btn-default">
@@ -14,7 +15,7 @@
                     </label>
                 </div>
             </form>
-
+            <hr>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div *ngIf="filterFromMode.value.filterMode !='play' || filterFromMode.value.filterMode =='all'">
                     <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
@@ -131,8 +132,39 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-xs-12 gmap-box table-cell">
-            <app-gmap [params]='data'></app-gmap>
+        <div class="col-lg-6 col-xs-12 gmap-box">
+            <div class="box-map" style="margin-top: 20px">
+                <sebm-google-map
+                        [latitude]="lat"
+                        [longitude]="lng"
+                        [zoom]="mapZoom"
+                        [disableDefaultUI]="false"
+                        [zoomControl]="false"
+                        [streetViewControl]="false"
+                        (mapClick)="mapClicked($event)"
+                >
+                    <sebm-google-map-circle [latitude]="lat" [longitude]="lng"
+                                            [radius]="1000"
+                                            [fillColor]="'red'"
+                                            [circleDraggable]="true"
+                                            [editable]="true"
+                                            [clickable]="true"
+                                            (radiusChange)="markerRadiusChange($event)"
+                                            (dragEnd)="markerDragEnd($event)"
+                    >
+                        <sebm-google-map-marker
+                                *ngFor="let m of markers; let i = index"
+                                (markerClick)="clickedMarker(m.label, i)"
+                                [latitude]="m.lat"
+                                [longitude]="m.lng"
+                                [label]="m.label"
+                                [markerDraggable]="true"
+                                (mapClick)="mapClicked($event)"
+                        >
+                        </sebm-google-map-marker>
+                    </sebm-google-map-circle>
+                </sebm-google-map>
+            </div>
         </div>
     </div>
 </section>

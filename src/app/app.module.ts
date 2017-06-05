@@ -25,7 +25,7 @@ import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper,CircleManager } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
 import { TruncateModule } from 'ng2-truncate';
 import { SlimScroll } from 'angular-io-slimscroll';

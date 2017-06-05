@@ -1,8 +1,21 @@
-import { Component, OnInit,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,NgZone } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
-import "rxjs/Rx";
+import {PolyMouseEvent} from "angular2-google-maps/core/services/google-maps-types";
+import {LatLngBounds} from "angular2-google-maps/core/services/google-maps-types";
+import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
+import {MapsAPILoader} from "angular2-google-maps/esm/core/services/maps-api-loader/maps-api-loader";
+import {SebmGoogleMap} from "angular2-google-maps/esm/core/directives/google-map";
+
+declare let google:any;
+
+interface marker {
+    lat: number;
+    lng: number;
+    label?: string;
+    draggable: boolean;
+}
 
 @Component({
     moduleId: "hylo-mode",
@@ -16,7 +29,7 @@ import "rxjs/Rx";
 
 export class ModeComponent implements OnInit {
 
-    public data:any;
+    public markers:any;
     public categories:any = [];
     public someValue:number = 5;
     public someRange3:number[] = [50, 300];
@@ -26,8 +39,16 @@ export class ModeComponent implements OnInit {
     public items = [];
     public filterData:any = [];
     public currentRate = 3;
+    public cuisine = [{}];
+    public latlngBounds:any;
+    public mapZoom:number = 12;
+    public lat:number = 21.030596;
+    public lng:number = 105.786215;
+    public searchCenter = {lat: this.lat, lng: this.lng};
 
-    public constructor(private formBuilder:FormBuilder, private modeService:ModeService, private rateComfig:NgbRatingConfig) {
+    public constructor(private formBuilder:FormBuilder,
+                       private modeService:ModeService,
+                       private rateConfig:NgbRatingConfig,private wrapper: GoogleMapsAPIWrapper) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -37,15 +58,27 @@ export class ModeComponent implements OnInit {
             filterCategory: 'all'
         });
 
-        this.rateComfig.max = 5;
-        this.rateComfig.readonly = false;
+        this.rateConfig.max = 5;
+        this.rateConfig.readonly = false;
+
+
     }
 
     public ngOnInit() {
-        this.data = {lat: 1.390570, lng: 103.351923};
         this.getCategories();
         this.getDataModes();
         this.getFilter();
+
+        this.markers = [
+            {lat: 21.033933, lng: 105.786635},
+            {lat: 21.033492, lng: 105.793051},
+            {lat: 21.038319, lng: 105.821257},
+            {lat: 21.023623485099524, lng: 105.699462890625},
+            {lat: 20.99574010656533, lng: 105.6991195678711},
+            {lat: 20.976186585026024, lng: 105.80657958984375},
+            {lat: 20.937071867747825, lng: 105.6005859375}
+        ];
+
     }
 
     onChange(value:number) {
@@ -76,13 +109,45 @@ export class ModeComponent implements OnInit {
         });
     }
 
-    filterCancel() {
+    markerDragEnd($event:MouseEvent) {
+        console.log('dragEnd', $event);
+        //Update center map
+        this.lat = $event.coords.lat;
+        this.lng = $event.coords.lng;
+
 
     }
 
-    filterSubmit() {
-        this.getDataModes();
+    markerRadiusChange(event) {
+        console.log("Radius Change", event);
+        let radius = parseInt(event, 10) * 5000;
+        console.log(radius);
+        var bounds = new google.maps.LatLngBounds();
+
+        let searchCenter = new google.maps.LatLng(this.lat, this.lng);
+        console.log(searchCenter);
+        for (var i = 0; i < this.markers.length; i++) {
+            if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng), searchCenter) < radius) {
+                bounds.extend(new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng));
+            }
+        }
+        console.log(bounds);
     }
 
+    clickedMarker(label:string, index:number) {
+        console.log(`clicked the marker: ${label || index}`)
+    }
+
+    mapClicked($event:MouseEvent) {
+        console.log({
+            latitude: $event.coords.lat,
+            longitude: $event.coords.lng,
+        });
+        this.markers.push({
+            lat: $event.coords.lat,
+            lng: $event.coords.lng,
+            draggable: false
+        });
+    }
 
 }

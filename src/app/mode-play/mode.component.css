@@ -235,3 +235,7 @@ nouislider.ng2-nouislider {
 }
 
 
+
+.sebm-google-map-container {
+    height: 600px !important;
+}
