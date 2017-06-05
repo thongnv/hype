@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Call2Action, Experience, HyloEvent, Icon, User, Location } from '../../app.interface';
+import * as moment from 'moment/moment';
+
+import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser } from '../../app.interface';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
-import moment = require('moment');
 
 @Component({
   selector: 'app-detail',
@@ -15,21 +16,20 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   @ViewChild('msgInput') public msgInput: ElementRef;
 
-  public creator: User;
-  public name: string;
-  public location: Location;
-  public detail: string;
-  public category: string;
-  public date: number;
-  public price: string;
-  public call2action: Call2Action;
-  public mentions: Icon[];
-  public images: string[];
-  public rating: number;
-  public rated: boolean = false;
-  public experiences: Experience[];
+  public creator: BaseUser = {name: '', avatar: ''};
+  public name: string = '';
+  public location: Location = {name: '', lat: 0, lng: 0};
+  public detail: string = '';
+  public category: string = '';
+  public date: number = 0;
+  public price: string = '';
+  public call2action: Call2Action = {action: '', link: ''};
+  public mentions: Icon[] = [];
+  public images: string[] = [];
+  public rating: number = 0;
+  public experiences: Experience[] = [];
 
-  public user: User;
+  public user: BaseUser = {name: '', avatar: ''};
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -38,7 +38,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   public previewUrl: string[] = [];
 
-  public starRatingConfig: any;
+  public starRatingConfig: any = {};
   public userRating: number = 0;
   public userRated: boolean = false;
 
@@ -56,21 +56,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   public ngOnInit() {
     this.user = {
-      firstName: 'Penny',
-      lastName: 'Lim',
-      contactNumber: '23243',
+      name: 'Penny Lim',
       avatar: '/assets/img/event/detail/tank.jpg',
-      followingNumber: 12,
-      followerNumber: 1,
-      receiveEmail: 2,
-      userFollowing: [],
-      userFollower: [],
-      showNav: true,
-      acceptNotification: true,
     };
-    let event: HyloEvent = this.eventService.getEventDetail();
-    this.initEvent(event);
-    this.initSlide();
+    this.eventService.getEventDetail().then((resp) => {
+      let event: HyloEvent = this.eventService.extractEventDetail(resp);
+      this.initEvent(event);
+      this.initSlide(this.images);
+    });
     this.initRating();
   }
 
@@ -138,14 +131,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.experiences = event.experiences;
   }
 
-  private initSlide() {
-    for (let image of this.images) {
+  private initSlide(images) {
+    for (let image of images) {
       this.slides.push({image});
     }
   }
 
   private initRating() {
-    this.starRatingConfig = {};
     this.starRatingConfig.id = 1221;
     this.starRatingConfig.rating = 0;
     this.starRatingConfig.showHalfStars = false;

@@ -24,7 +24,7 @@
             </li>
             <li>
               <p>price range</p><span>{{price}} <b>.</b>
-              <a href="{{call2action.link}}"><strong>{{call2action.action}}</strong></a>
+              <a href="{{call2action.link}}" target="_blank"><strong>{{call2action.action}}</strong></a>
             </span>
             </li>
             <li>
@@ -45,7 +45,7 @@
                      height="70">
               </p>
               <p class="name-creator">
-                {{creator.firstName + ' ' + creator.lastName}}
+                {{creator.name}}
               </p>
             </a>
             <p class="avg-rating" *ngIf="rating">

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { HyloComment, User } from '../../app.interface';
+import { BaseUser, HyloComment, User } from '../../app.interface';
 
 @Component({
   selector: 'app-comment',
@@ -14,7 +14,7 @@ import { HyloComment, User } from '../../app.interface';
 
     <div class="content-comment-ago">
       <div class="top-content-comment">
-        <a><b>{{user.firstName + ' ' + user.lastName}}</b></a>
+        <a><b>{{user.name}}</b></a>
         <span [innerHTML]="text"></span>
       </div>
       <div class="bottom-like-reply-comment">
@@ -40,7 +40,7 @@ export class CommentComponent implements HyloComment, OnInit {
 
   public likeNumber: number;
   public replies: HyloComment[];
-  public user: User;
+  public user: BaseUser;
   public text: string;
   public liked: boolean;
 

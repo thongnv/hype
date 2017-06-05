@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
-import { HyloComment, User, Experience } from '../../app.interface';
+import { HyloComment, Experience, BaseUser } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { EventDetailComponent } from './detail.component';
         <img class="img-circle" [src]="user.avatar" alt="user avatar" width="70"
              height="70">
         <div class="content-info-experience">
-          <h4>{{user.firstName + ' ' + user.lastName}}</h4>
+          <h4>{{user.name}}</h4>
           <p class="info-date-experience">
             {{date | date:'d MMMM y'}}
           </p>
@@ -118,8 +118,8 @@ export class ExperienceComponent implements Experience, OnInit {
   public openModalWindow: boolean = false;
   public imagePointer: number;
 
-  public currentUser: User;
-  public user: User;
+  public currentUser: BaseUser;
+  public user: BaseUser;
   public rating: number;
   public date: number;
   public text: string;
@@ -170,14 +170,6 @@ export class ExperienceComponent implements Experience, OnInit {
     // TODO: add comments
     // load comments by calling comment API
     // variable: experience.comments
-    comments = this.getComments(this.comments.length, 2);
-    for (let comment of comments) {
-      this.comments.push(comment);
-    }
-  }
-
-  public getComments(start: number, range: number): HyloComment[] {
-    return this.event.eventService.getComments(start, range);
   }
 
   public OpenImageModel(imageSrc, images) {
@@ -185,7 +177,6 @@ export class ExperienceComponent implements Experience, OnInit {
     for (let i = 0; i < images.length; i++) {
       if (imageSrc === images[i].img) {
         imageModalPointer = i;
-        console.log('========> ', i);
         break;
       }
     }
