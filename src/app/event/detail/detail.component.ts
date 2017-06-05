@@ -19,7 +19,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public location: Location;
   public detail: string;
   public category: string;
-  public date: Date;
+  public date: number;
   public price: string;
   public call2action: Call2Action;
   public mentions: Icon[];

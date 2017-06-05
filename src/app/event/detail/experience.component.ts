@@ -121,7 +121,7 @@ export class ExperienceComponent implements Experience, OnInit {
   public currentUser: User;
   public user: User;
   public rating: number;
-  public date: Date;
+  public date: number;
   public text: string;
   public images: string[];
   public thumbImages: any[] = [];
