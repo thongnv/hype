@@ -389,10 +389,6 @@ body, html {
     text-transform: capitalize;
   }
   /*for preview*/
-  .list-box{
-    overflow-y: scroll;
-    margin-right: -35px;
-  }
   .map-box, .list-box{
     float: left;
     width: 50%;
@@ -453,6 +449,7 @@ body, html {
   }
   //END CURATE
   //CURATE LIST
+
   #curate-carousel .carousel-control .glyphicon{
     display: none;
   }
@@ -543,7 +540,7 @@ body, html {
   //END CURATE LIST
   //MEMBER
   .setting-wrap{
-    width: 100%
+    width: 100%;
   }
   .col-right, .setting-wrap{
     border-left: 1px solid #eaeaea;
