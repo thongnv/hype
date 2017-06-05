@@ -18,7 +18,7 @@ export interface HyloEvent {
   location: Location;
   detail: string;
   category: string;
-  date: Date;
+  date: number;
   price: string;
   call2action: Call2Action;
   mentions: Icon[];
@@ -47,7 +47,7 @@ export interface Call2Action {
 export interface Experience {
   user: User;
   rating: number;
-  date: Date;
+  date: number;
   text: string;
   images: string[];
   comments: HyloComment[];
