@@ -19,17 +19,12 @@ import { HyloComment, User } from '../../app.interface';
       </div>
       <div class="bottom-like-reply-comment">
         <div class="likes-area">
-          <a>
-            <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
-          </a>
-          <a>
-            Likes
+          <a (click)="toggleLike()">
+            <span *ngIf="!liked">Like</span>
+            <span *ngIf="liked">Liked</span>
           </a>
         </div>
         <div class="reply-area">
-          <a>
-            <img src="/assets/img/event/detail/icon-reply.png" alt="icon-reply">
-          </a>
           <a>
             Reply
           </a>
@@ -59,5 +54,9 @@ export class CommentComponent implements HyloComment, OnInit {
     this.user = this.comment.user;
     this.text = this.comment.text;
     this.liked = this.comment.liked;
+  }
+
+  public toggleLike() {
+    this.liked = !this.liked;
   }
 }
