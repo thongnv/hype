@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { MapsAPILoader } from 'angular2-google-maps/core';
+import { } from '@types/googlemaps';
 import { FormGroup } from '@angular/forms';
+import { FileReaderEvent } from '../../app.interface';
 
 @Component({
   moduleId: module.id.toString(),
@@ -28,7 +30,6 @@ export class GmapAutoPlaceComponent implements OnInit {
       });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
-
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
           this.onChangePlace.emit(place);
           console.log('==>', place);
@@ -47,9 +48,9 @@ export class GmapAutoPlaceComponent implements OnInit {
     console.log('image:', event.target.files[0]);
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
-      reader.onload = (event) => {
-        this.imageUrl = event.target.result;
-        this.group.controls.image.patchValue(event.target.result);
+      reader.onload = (e: FileReaderEvent) => {
+        this.imageUrl = e.target.result;
+        this.group.get('image').patchValue(e.target.result);
       };
       reader.readAsDataURL(event.target.files[0]);
     }
