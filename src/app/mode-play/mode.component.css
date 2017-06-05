@@ -19,83 +19,54 @@
     left: 10px;
 }
 
-.filterFromMode .btn-filter-block {
+/*filterFromMode start*/
+.filterFromMode {
+    padding: 20px;
+    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+}
+.filterFromMode .btn-block label {
     height: 38px;
-    background-color: #f6f6f6;
-    box-shadow: 1px 1px 3px 0 #d8d8d8;
-    border: solid 1px #d8d8d8;
-}
-
-.filterFromMode .btn-filter-block label {
-    width: 33.33333%;
-    height: 38px;
-    opacity: 0.5;
-    font-family: Roboto;
-    font-size: 16px;
-    text-align: center;
-    color: #3b3b3b;
-    border: none;
-}
-
-.filterFromMode .btn-filter-block label:hover {
-    background-color: #2a6be1;
-    color: #ffffff;
-    opacity: 1;
-    border-radius: 0;
-}
-
-.filterFromMode .btn-filter-block label.active {
-    border-radius: 0px;
-    background-color: #2a6be1;
-    box-shadow: none;
-    outline: none;
-    color: #ffffff;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 500;
-    opacity: 1;
-}
-
-.filterCategory .btn-filter-block {
-    height: 88px;
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
     padding-top: 10px;
+    border: none;
+    width: 33%;
+    font-weight: 500;
+}
+.filterFromMode .btn-block label.active {
+    border-radius: 4px;
+    background: #2a6be1;
+    color: #fff;
+    text-shadow: none;
 }
 
-.filterCategory .btn-filter-block label {
-    width: 12.6%;
-    opacity: 0.4;
-    font-family: Roboto;
-    font-size: 12px;
-    line-height: 1.17;
-    text-align: center;
-    color: #3b3b3b;
+/*filterFromMode end*/
+.filterCategory {
+    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+}
+.filterCategory .btn-filter-block label  {
     background: transparent;
-    background: transparent;
-    border: 0px;
+    border: none;
     box-shadow: none;
-    outline: none;
+    padding: 10px 0px;
+    width: 14%;
+    text-align: center;
 }
-
-.filterCategory .btn-filter-block label:hover, .filterCategory .btn-filter-block label:focus {
-    color: #3b3b3b;
-    opacity: 1;
-    background: transparent;
-    border: 0;
-    outline: none;
-}
-
 .filterCategory .btn-filter-block label img {
     width: 30px;
     height: 30px;
 }
-
-.filterCategory .btn-filter-block label.active {
+.filterCategory .btn-filter-block label span {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.17;
+    text-align: center;
     color: #3b3b3b;
-    opacity: 1;
 }
-
+.left-box .actionFilter {
+    padding-bottom: 20px;
+    margin-top: 30px;
+    text-align: right;
+    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+}
 .left-box .actionFilter label {
     background: transparent;
     border: none;
@@ -140,7 +111,7 @@
     float: left;
     margin-top: 5px;
     position: relative;
-    border-radius: 10px;
+    border-radius: 4px;
 }
 
 .list-items {
@@ -154,16 +125,20 @@
     position: absolute;
     z-index: 9;
     border-radius: 50%;
-    top: -10px;
-    left: -5px;
+    top: -8px;
+    left: -12px;
     width: 34px;
     height: 34px;
     background-color: #5052ea;
-    padding-top: 12px;
-
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    color: #ffffff;
 }
 .items {
-    padding: 10px 0;
+    padding: 10px;
     border-bottom: 1px solid #d1dadf;
 }
 
@@ -175,7 +150,16 @@
     margin-left: 15px;
 }
 .item-content .box-content{
-    margin-top: 15px;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.43;
+    text-align: left;
+    color: #3b3b3b;
+}
+.item-content span:nth-child(2n) {
+    color: #ec3d62;
+    font-size: 20px;
 }
 .justify-content-start .text-center{
     padding-top: 30px;
@@ -206,3 +190,48 @@
 .item-content .d-inline-flex span{
     cursor: default;
 }
+ul.nav-tabs li.nav-item {
+    width: 140px;
+    clear: both;
+    display: inline-block;
+}
+ul.nav-tabs li.nav-item:first-child {
+}
+ul.nav-tabs li.nav-item a.nav-link {
+    text-align: left;
+    padding: 0px;
+}
+ul.nav-tabs li.nav-item a.nav-link i {
+    font-size: 25px;
+    position: relative;
+    top: 2px;
+    margin-left: 7px;
+}
+ul.nav-tabs {
+    margin-left: 20px;
+    margin-top: 20px;
+}
+nouislider.ng2-nouislider {
+    width: 50%;
+    margin: 40px auto 20px;
+}
+.list-event {
+    padding: 20px;
+}
+.list-event .list-header {
+    margin-bottom: 20px;
+}
+.list-event .list-header .pull-left {
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+}
+.list-event .list-header .pull-right {
+    font-size: 12px;
+    line-height: 1;
+    text-align: right;
+    color: #ec3d62;
+}
+
+
