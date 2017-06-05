@@ -25,8 +25,15 @@ export class MainService {
           this._localStorageService.set('logout_token', response.json().logout_token);
           this._localStorageService.set('user_name', response.json().current_user.name);
           this._localStorageService.set('uid', response.json().current_user.uid);
-
-          resolve(response);
+          this._localStorageService.set('slug', response.json().current_user.slug);
+          this._localStorageService.set('field_first_name',
+            response.json().current_user.field_first_name
+          );
+          this._localStorageService.set('field_last_name',
+            response.json().current_user.field_last_name
+          );
+          console.log('_localStorageService: ', this._localStorageService.get('csrf_token'));
+          resolve(response.json());
         },
         (err) => {
           console.debug(err);
@@ -37,9 +44,11 @@ export class MainService {
   }
 
   public logout(): Promise<any> {
-    let logoutToken = this._localStorageService.get('logout_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': logoutToken});
+    let csrfToken = this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
+    console.log('csrfToken: ', csrfToken);
+    console.log('options: ', options);
     return new Promise((resolve, reject) => {
       this._http.post(AppSetting.API_LOGOUT, options).subscribe(
         (response) => {

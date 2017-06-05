@@ -59,12 +59,13 @@ export class MemberComponent implements OnInit {
 
   private getUserProfile(slugName?: string): void {
 
-    // this.mainService.getUserProfile(slugName).then((response) => {
-    this.mainService.getUserPublicProfile().then((response) => {
+    this.mainService.getUserProfile(slugName).then((response) => {
+    // this.mainService.getUserPublicProfile().then((response) => {
       this.settingForm.patchValue({
         receiveEmail: parseInt(response.profile.field_notify_email, 2)
       });
-      this.userInfo.userName = response.profile.field_first_name + ' ' + response.profile.field_last_name;
+      this.userInfo.userName = response.profile.field_first_name +
+        ' ' + response.profile.field_last_name;
       this.userInfo.firstName = response.profile.field_first_name;
       this.userInfo.lastName = response.profile.field_last_name;
       this.userInfo.userAvatar = response.profile.field_image;

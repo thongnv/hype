@@ -32,16 +32,15 @@ export class AuthComponent implements OnInit {
         console.log('Logged in', res);
         this.mainService.login(res.authResponse.accessToken).then((respone) => {
           console.log('login-respone: ', respone);
-          this.router.navigate(['/member']);
-          // this.router.navigate(['/member/quyet-tran-dinh']);
+          // this.router.navigate(['/member']);
+          // this.router.navigate(['/member/' + respone.current_user.slug]);
         });
       })
       .catch(this.handleError);
 
   }
 
-  public ngOnInit() {
-  }
+  public ngOnInit() {}
 
   private handleError(error) {
     console.error('Error processing action', error);
