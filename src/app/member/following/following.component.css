@@ -1,0 +1,6 @@
+.infinite-list{
+    height: calc(100vh - 145px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%;
+}

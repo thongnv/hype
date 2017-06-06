@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AppState } from '../../app.service';
 
 @Component({
   selector: 'app-member-navigation',
@@ -10,7 +11,7 @@ export class MemberNavigationComponent implements OnInit {
   @Input('data') public data: any;
   public show: boolean;
 
-  public constructor() {
+  public constructor(public appState: AppState) {
     this.show = false;
   }
 

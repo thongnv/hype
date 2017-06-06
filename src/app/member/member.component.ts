@@ -45,6 +45,8 @@ export class MemberComponent implements OnInit {
       if (resp.status) {
         this.alertType = 'success';
         this.msgContent = 'Updated user information successful.';
+        this.userInfo.receiveEmail = userSetting.field_notify_email;
+        this.appState.set('userInfo', this.userInfo);
       } else {
         this.alertType = 'danger';
         this.msgContent = 'Updated user information failed.';
@@ -53,6 +55,7 @@ export class MemberComponent implements OnInit {
         });
       }
     });
+    this.userInfo.showNav = true;
   }
 
   public ngOnInit() {

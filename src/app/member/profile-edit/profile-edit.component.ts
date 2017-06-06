@@ -67,8 +67,8 @@ export class ProfileEditComponent implements OnInit {
           if (resp.status) {
             this.alertType = 'success';
             this.msgContent = 'Updated user information successful.';
-            this.userInfo.userName = userProfile.field_first_name + ' ' +
-              userProfile.field_last_name;
+            this.userInfo.firstName = userProfile.field_first_name;
+            this.userInfo.lastName = userProfile.field_last_name;
             this.appState.set('userInfo', this.userInfo);
           } else {
             this.alertType = 'danger';
@@ -82,6 +82,7 @@ export class ProfileEditComponent implements OnInit {
 
   private initUserData(): void {
     this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = true;
   }
 
   private getUserProfile(): void {

@@ -10,21 +10,35 @@ import { CuratePreviewComponent } from './curate-preview/curate-preview.componen
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { ModeComponent } from './mode-play/mode.component';
+import { FollowingComponent } from './member/following/following.component';
+import { MemberComponent } from './member/member.component';
+import { InterestComponent } from './member/interest/interest.component';
+import { ProfileEditComponent } from './member/profile-edit/profile-edit.component';
+import { FollowerComponent } from './member/follower/follower.component';
+import { FavoriteComponent } from './member/favorite/favorite.component';
+import { ProfilePublicComponent } from './member/profile-public/profile-public.component';
 
 export const ROUTES: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home',  component: HomeComponent },
-  { path: 'detail', loadChildren: './+detail#DetailModule'},
-  { path: 'member', loadChildren: './member#MemberModule'},
-  { path: 'discover',    component: DiscoverComponent },
-  { path: 'curate',    component: CurateComponent },
-  { path: 'curate-detail/:id',    component: CurateDetailComponent },
-  { path: 'curate/new',    component: CurateNewComponent},
-  { path: 'share-event',    component: ShareEventComponent},
-  { path: 'event/:id',    component: EventDetailComponent },
-  { path: 'company/:id',    component: CompanyDetailComponent },
-  { path: 'auth',    loadChildren: './auth#AuthModule' },
-  { path: 'mode/play',    component: ModeComponent },
-  { path: '**',    component: NoContentComponent },
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
+  {path: 'detail', loadChildren: './+detail#DetailModule'},
+  {path: 'discover', component: DiscoverComponent},
+  {path: 'curate', component: CurateComponent},
+  {path: 'curate-detail/:id', component: CurateDetailComponent},
+  {path: 'curate/new', component: CurateNewComponent},
+  {path: 'share-event', component: ShareEventComponent},
+  {path: 'event/:id', component: EventDetailComponent},
+  {path: 'company/:id', component: CompanyDetailComponent},
+  {path: 'auth', loadChildren: './auth#AuthModule'},
+  {path: 'mode/play', component: ModeComponent},
+  {path: 'member/following', component: FollowingComponent},
+  {path: 'member/setting', component: MemberComponent},
+  {path: 'member/interest', component: InterestComponent},
+  {path: 'member/profile-edit', component: ProfileEditComponent},
+  {path: 'member/following', component: FollowingComponent},
+  {path: 'member/follower', component: FollowerComponent},
+  {path: 'member/favorite', component: FavoriteComponent},
+  {path: 'member/profiles', component: ProfilePublicComponent},
+  {path: '**', component: NoContentComponent},
 
 ];

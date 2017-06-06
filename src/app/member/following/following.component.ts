@@ -13,6 +13,9 @@ export class FollowingComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
   public followingPage: number = 0;
+  public set: any = {
+    offset: 0, endOfList: false, loadingInProgress: false
+  };
 
   constructor(private appState: AppState,
               private mainService: MainService) {
@@ -26,8 +29,45 @@ export class FollowingComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.userInfo.showNav = false;
     this.getUserProfile();
     this.getUserFollow('following', this.followingPage);
+  }
+
+  public onFollowScrollDown(data) {
+    console.log('clientHeight: ', data.srcElement.clientHeight);
+    console.log('scrollTop: ', data.srcElement.scrollTop);
+    console.log('scrollHeight: ', data.srcElement.scrollHeight);
+    let elm = data.srcElement;
+    if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
+      this.loadMore();
+    }
+  }
+
+  public loadMore(): void {
+    if (!this.set.loadingInProgress) {
+      if (this.set.offset > 9999) {    // detect the end of list
+        this.set.endOfList = true;
+      } else {
+        this.set.loadingInProgress = true;
+        let count = 0;
+        this.mainService.getUserFollow('following', this.followingPage).then((response) => {
+          response.forEach((item) => {
+            count++;
+            this.userInfo.userFollowing.push(item);
+          });
+          if (count === 0) {
+            this.set.endOfList = true;
+          } else {
+            let max = this.set.offset + count;
+            this.set.offset = max;
+          }
+          this.set.loadingInProgress = false;
+          console.log('response', response);
+          console.log('this.userInfo.userFollowing', this.userInfo.userFollowing);
+        });
+      }
+    }
   }
 
   public updateFollow(item: any) {

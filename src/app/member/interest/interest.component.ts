@@ -15,6 +15,7 @@ export class InterestComponent implements OnInit {
 
   constructor(private appState: AppState, private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = true;
   }
 
   public onSubmit() {

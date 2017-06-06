@@ -26,6 +26,7 @@ export class FollowerComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.userInfo.showNav = false;
     this.getUserProfile();
     this.getUserFollow('follower', this.followingPage);
   }

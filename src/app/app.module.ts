@@ -25,7 +25,7 @@ import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper,CircleManager } from 'angular2-google-maps/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
 import { TruncateModule } from 'ng2-truncate';
 import { SlimScroll } from 'angular-io-slimscroll';
@@ -72,7 +72,23 @@ import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
 import { WriteReviewComponent } from './company/write-review/write-review.component';
 import { EventItemComponent } from './event/event-item/event-item.component';
-import {GeocodeMarkerComponent} from "./gmap/gmap-geocode-marker/gmap-geocode-marker";
+import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-marker';
+import { FollowingComponent } from './member/following/following.component';
+import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
+import { FollowItemComponent } from './member/follow-item/follow-item.component';
+import { BoostrapAlertComponent } from './member/boostrap-alert/boostrap-alert.component';
+import { FavoritePipe } from './shared/favorite.pipe';
+import { FavoriteEventComponent } from './member/favorite-event/favorite-event.component';
+import { InterestComponent } from './member/interest/interest.component';
+import { MemberComponent } from './member/member.component';
+import { FollowerComponent } from './member/follower/follower.component';
+import { ProfileEditComponent } from './member/profile-edit/profile-edit.component';
+import { ProfilePublicComponent } from './member/profile-public/profile-public.component';
+import { InterestItemComponent } from './member/interest-item/interest-item.component';
+import { FavoriteComponent } from './member/favorite/favorite.component';
+import { FavoriteListComponent } from './member/favorite-list/favorite-list.component';
+import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.component';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -121,7 +137,24 @@ type StoreType = {
     WriteReviewComponent,
     ImageModal,
     EventItemComponent,
-    GeocodeMarkerComponent
+    GeocodeMarkerComponent,
+    MemberNavigationComponent,
+    FollowingComponent,
+    FollowerComponent,
+    FollowItemComponent,
+    BoostrapAlertComponent,
+    InterestComponent,
+    MemberComponent,
+    MemberNavigationComponent,
+    ProfileEditComponent,
+    ProfilePublicComponent,
+    InterestItemComponent,
+    FavoriteComponent,
+    FavoriteListComponent,
+    FavoritePlaceComponent,
+    FavoriteEventComponent,
+    FavoritePipe,
+    BoostrapAlertComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -134,7 +167,7 @@ type StoreType = {
     AgmCoreModule.forRoot({
       // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places','geometry']
+      libraries: ['places', 'geometry']
     }),
     NgbModule.forRoot(),
     TranslateModule.forRoot(),
@@ -150,7 +183,11 @@ type StoreType = {
     Ng2ScrollableModule,
     MomentModule,
     TruncateModule,
-    TinymceModule.withConfig({})
+    TinymceModule.withConfig({}),
+    ReactiveFormsModule,
+    CountryPickerModule.forRoot({
+      baseUrl: 'assets/'
+    }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -162,7 +199,7 @@ type StoreType = {
     CompanyService,
     EventService,
     BaseApiService,
-    ModeService
+    ModeService,
   ]
 })
 export class AppModule {
