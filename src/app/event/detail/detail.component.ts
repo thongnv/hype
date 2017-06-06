@@ -42,6 +42,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public userRating: number = 0;
   public userRated: boolean = false;
 
+  public mapReady: boolean = false;
+
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
@@ -56,19 +58,20 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     public formBuilder: FormBuilder,
     public rateConfig: NgbRatingConfig
   ) {
-    // TODO
+    this.eventService.getEventDetail().then((resp) => {
+      let event = EventService.extractEventDetail(resp);
+      this.initEvent(event);
+      this.initSlide(this.images);
+      this.mapReady = true;
+    });
   }
 
   public ngOnInit() {
+    // this.user = this.appState.state.userInfo;
     this.user = {
       name: 'Penny Lim',
       avatar: '/assets/img/event/detail/tank.jpg',
     };
-    this.eventService.getEventDetail().then((resp) => {
-      let event: HyloEvent = EventService.extractEventDetail(resp);
-      this.initEvent(event);
-      this.initSlide(this.images);
-    });
     this.initRating();
   }
 
@@ -78,28 +81,18 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   public addExperience(msgInput) {
     let experience: Experience = {
-      user: this.user,
+      author: this.user,
       text: msgInput.value,
       likeNumber: 0,
       liked: false,
       comments: [],
       rating: this.userRating,
-      date: moment().unix(),
-      images: [
-        '/assets/img/event/detail/abc.jpg',
-        '/assets/img/event/detail/abc.jpg',
-      ],
-    };
-    this.experiences.push(experience);
-    msgInput.value = '';
-    this.userRated = true;
-  }
-
-  public onSubmit() {
-    let userDraftList = {
-      info: this.experienceForm.value,
+      date: moment().unix() * 1000,
       images: this.previewUrl
     };
+    this.experiences.push(experience);
+    this.experienceForm.reset();
+    this.userRated = true;
   }
 
   public onRemovePreview(imageUrl) {

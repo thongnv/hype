@@ -30,8 +30,8 @@ export class EventService {
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
-        lat: data.field_location_place.field_latitude,
-        lng: data.field_location_place.field_longitude
+        lat: Number(data.field_location_place.field_latitude),
+        lng: Number(data.field_location_place.field_longitude)
       },
       name: data.title,
       price: data.field_event_option.field_price,
@@ -88,7 +88,7 @@ function  extractExperiences(data): Experience[] {
   for (let item of data) {
     experiences.push(
       {
-        user: {
+        author: {
           name: item.author_name,
           avatar: item.author_avatar,
         },

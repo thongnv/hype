@@ -219,7 +219,7 @@ ul.list-pictures-experience li img {
 
 .likes-area {
   float: left;
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
 .comments-area {
@@ -272,7 +272,15 @@ ul.list-comments-ago li .avatar-comment-ago {
 .top-content-comment a b {
   color: #3b3b3b;
 }
-
+.avatar-comment-ago {
+  float: left;
+  margin-right: 2%;
+  margin-top: 1%;
+}
+.top-content-comment a {
+  float: left;
+  margin-right: 2%;
+}
 .likes-area a {
   color: #3b3b3b;
 }

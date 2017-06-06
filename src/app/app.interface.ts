@@ -49,7 +49,7 @@ export interface Call2Action {
 }
 
 export interface Experience {
-  user: BaseUser;
+  author: BaseUser;
   rating: number;
   date: number;
   text: string;
