@@ -60,7 +60,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       avatar: '/assets/img/event/detail/tank.jpg',
     };
     this.eventService.getEventDetail().then((resp) => {
-      let event: HyloEvent = this.eventService.extractEventDetail(resp);
+      let event: HyloEvent = EventService.extractEventDetail(resp);
       this.initEvent(event);
       this.initSlide(this.images);
     });

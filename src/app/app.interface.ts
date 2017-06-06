@@ -1,4 +1,4 @@
-export interface User {
+export interface User extends BaseUser {
   firstName: string;
   lastName: string;
   contactNumber: string;
@@ -12,8 +12,13 @@ export interface User {
   acceptNotification: true;
 }
 
+export interface BaseUser {
+  avatar: string;
+  name: string;
+}
+
 export interface HyloEvent {
-  creator: User;
+  creator: BaseUser;
   name: string;
   location: Location;
   detail: string;
@@ -24,7 +29,6 @@ export interface HyloEvent {
   mentions: Icon[];
   images: string[];
   rating: number;
-  rated: boolean;
   experiences: Experience[];
 }
 
@@ -45,7 +49,7 @@ export interface Call2Action {
 }
 
 export interface Experience {
-  user: User;
+  user: BaseUser;
   rating: number;
   date: number;
   text: string;
@@ -56,7 +60,7 @@ export interface Experience {
 }
 
 export interface HyloComment {
-  user: User;
+  user: BaseUser;
   text: string;
   likeNumber: number;
   replies: HyloComment[];

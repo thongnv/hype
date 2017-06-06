@@ -18,25 +18,7 @@ let MOCK_ACTIONS = [
 @Injectable()
 export class EventService {
 
-  public event: HyloEvent;
-
-  constructor(private _localStorageService: LocalStorageService,
-              private _http: Http) {
-  }
-
-  public getEventDetail(): Promise<any> {
-    let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/sau-tat-ca?_format=json', options)
-      .toPromise()
-      .then(
-        (resp) => resp.json()
-      )
-      .catch(handleError);
-  }
-
-  public extractEventDetail(data): HyloEvent {
+  public static extractEventDetail(data): HyloEvent {
     return {
       creator: {
         name: data.user_post.name,
@@ -61,6 +43,22 @@ export class EventService {
       rating: data.average_rating,
       experiences: extractExperiences(data.comments.data)
     };
+  }
+
+  constructor(private _localStorageService: LocalStorageService,
+              private _http: Http) {
+  }
+
+  public getEventDetail(): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/sau-tat-ca?_format=json', options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(handleError);
   }
 }
 
