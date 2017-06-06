@@ -18,11 +18,19 @@ export class GeocodeMarkerComponent implements OnInit {
     public markers:any = [];
 
     public constructor(private mapsAPILoader:MapsAPILoader, private ngZone:NgZone) {
-
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position)=> {
+                this.lat = position.coords.latitude;
+                this.lng = position.coords.longitude;
+            });
+        } else {
+            this.lat = 0;
+            this.lng =0;
+        }
     }
 
     public ngOnInit() {
-        this.mapsAPILoader.load().then((map)=> {
+        this.mapsAPILoader.load().then(()=> {
             let mapCenter = new google.maps.Marker({
                 position: new google.maps.LatLng(this.lat, this.lng),
                 draggable: true
@@ -50,6 +58,8 @@ export class GeocodeMarkerComponent implements OnInit {
             position: new google.maps.LatLng(this.lat, this.lng),
             draggable: true
         });
+        console.log(this.currentRadius);
+        console.log(radius);
 
         let searchCenter = mapCenter.getPosition();
         if (this.currentRadius < parseInt(radius)) {
@@ -72,29 +82,30 @@ export class GeocodeMarkerComponent implements OnInit {
 
     }
 
-    public markerDragEnd($event:MouseEvent) {
-        this.lat = $event.coords.lat;
-        this.lng = $event.coords.lng;
+    public markerDragEnd($event) {
+        if($event.coords) {
+            this.lat = $event.coords.lat;
+            this.lng = $event.coords.lng;
 
-        let mapCenter = new google.maps.Marker({
-            position: new google.maps.LatLng(this.lat, this.lng),
-            draggable: true
-        });
-        let searchCenter = mapCenter.getPosition();
-        for (var i = 0; i < this.inputMarker.length; i++) {
-            let myMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(this.inputMarker[i].lat, this.inputMarker[i].lng),
+            let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
                 draggable: true
             });
-            let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-            console.log(geometry);
-            if (parseInt(geometry) < this.currentRadius) {
-                this.markers.push(this.inputMarker[i]);
-                console.log(this.markers);
-            } else {
-                this.markers = [];
+            let searchCenter = mapCenter.getPosition();
+            for (var i = 0; i < this.inputMarker.length; i++) {
+                let myMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(this.inputMarker[i].lat, this.inputMarker[i].lng),
+                    draggable: true
+                });
+                let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                console.log(geometry);
+                if (parseInt(geometry) < this.currentRadius) {
+                    this.markers.push(this.inputMarker[i]);
+                    console.log(this.markers);
+                } else {
+                    this.markers = [];
+                }
             }
         }
-
     }
 }

@@ -112,13 +112,13 @@ export class ModeComponent implements OnInit,AfterViewInit {
     }
 
 
-    markerDragEnd($event:MouseEvent) {
-        console.log('dragEnd', $event);
-        //Update center map
-        this.lat = $event.coords.lat;
-        this.lng = $event.coords.lng;
-
-
+    markerDragEnd($event) {
+        if($event.coords) {
+            console.log('dragEnd', $event);
+            //Update center map
+            this.lat = $event.coords.lat;
+            this.lng = $event.coords.lng;
+        }
     }
 
     markerRadiusChange(event) {
@@ -131,16 +131,18 @@ export class ModeComponent implements OnInit,AfterViewInit {
         console.log(`clicked the marker: ${label || index}`)
     }
 
-    mapClicked($event:MouseEvent) {
-        console.log({
-            latitude: $event.coords.lat,
-            longitude: $event.coords.lng,
-        });
-        this.markers.push({
-            lat: $event.coords.lat,
-            lng: $event.coords.lng,
-            draggable: false
-        });
+    mapClicked($event) {
+        if($event.coords) {
+            console.log({
+                latitude: $event.coords.lat,
+                longitude: $event.coords.lng,
+            });
+            this.markers.push({
+                lat: $event.coords.lat,
+                lng: $event.coords.lng,
+                draggable: false
+            });
+        }
     }
 
     private renderMaker() {
