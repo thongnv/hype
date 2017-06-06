@@ -1,6 +1,11 @@
-const _ENV = 'develop';
+let _ENV = 'develop';
+let API_ENDPOINT = '';
+if (_ENV === 'develop') {
+  API_ENDPOINT = 'http://hylo.dev/';
+} else {
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+}
 
-const API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
 export class AppSetting {
@@ -14,7 +19,7 @@ export class AppSetting {
   public static API_USER_INTEREST = API_ENDPOINT + 'api/v1/user/interest?_format=json';
   public static API_USER_ACTIVITY = API_ENDPOINT + '/api/v1/user/activity?_format=json';
   public static API_ARTICLE = API_ENDPOINT + '/articles?_format=json';
-  public static API_ENDPOINT_DEMO = 'http://hylo.dev/assets/mock-data/mock-data.json';
+  public static API_ENDPOINT_DEMO = API_ENDPOINT + '/assets/mock-data/mock-data.json';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,
