@@ -3,10 +3,10 @@
     <app-member-navigation [data]="userInfo"></app-member-navigation>
   </div>
   <div class="col-lg-10 col-sm-8 col-xs-12 col-right table-cell">
-    <section *ngIf="userInfo">
-      <h3>My Profile</h3>
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <div class="row">
+    <section *ngIf="userInfo" class="col-xs-12">
+      <div class="row">
+        <h3 class="col-xs-12">My Profile</h3>
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
           <div class="col-lg-6 form-group">
             <input class="form-control" formControlName="firstName" placeholder="First Name">
           </div>
@@ -17,7 +17,9 @@
             <input class="form-control" type="email" formControlName="email" placeholder="Email Address">
           </div>
           <div class="col-lg-6 form-group">
-            <input class="form-control" formControlName="contactNumber" placeholder="Contact Number">
+            <input class="form-control" formControlName="contactNumber" placeholder="Contact Number" maxlength="10"
+                   minlength="10"
+                   pattern="06([0-9]{8})">
           </div>
           <div class="col-lg-6 form-group">
             <select formControlName="country" class="form-control form-control-sm" name="countrypicker">
@@ -26,9 +28,12 @@
               </option>
             </select>
           </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Update</button>
-      </form>
+          <div class="form-actions col-xs-12">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+      </div>
+
     </section>
   </div>
 </div>

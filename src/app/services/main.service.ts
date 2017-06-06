@@ -66,12 +66,13 @@ export class MainService {
   }
 
   public getUserProfile(slugName?: string): Promise<any> {
-
     let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let currentSlug = <string> this._localStorageService.get('slug');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
+    let slug = slugName ? slugName : currentSlug;
     console.log('options: ', options);
-    return this._http.get(AppSetting.API_USER_PROFILE + slugName + '?_format=json', options)
+    return this._http.get(AppSetting.API_USER_PROFILE + slug + '?_format=json', options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -79,10 +80,11 @@ export class MainService {
 
   public setUserProfile(userProfile: any): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let currentSlug = <string> this._localStorageService.get('slug');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-
-    return this._http.post(AppSetting.API_USER_PROFILE, JSON.stringify(userProfile), options)
+    return this._http.post(AppSetting.API_USER_PROFILE + currentSlug + '?_format=json',
+      JSON.stringify(userProfile), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

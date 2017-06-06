@@ -100,7 +100,8 @@
     font-size: 13px;
 }
 #filters {
-    margin-left: 25px;
+    /*margin-left: 25px;*/
+    float: right;
 }
 .btn-group button.active {
     background: #2a6be1;

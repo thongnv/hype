@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-
   constructor(private fb: FacebookService,
               private mainService: MainService,
               private router: Router) {
@@ -33,14 +32,16 @@ export class AuthComponent implements OnInit {
         this.mainService.login(res.authResponse.accessToken).then((respone) => {
           console.log('login-respone: ', respone);
           // this.router.navigate(['/member']);
-          // this.router.navigate(['/member/' + respone.current_user.slug]);
+          this.router.navigate(['./member/profile-edit']);
         });
       })
       .catch(this.handleError);
 
   }
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    console.log('login initial');
+  }
 
   private handleError(error) {
     console.error('Error processing action', error);

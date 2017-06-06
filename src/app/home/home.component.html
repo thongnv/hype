@@ -22,9 +22,13 @@
                   class="btn btn-default text-capitalize" [class.active]="order===selectedEventOrder">{{order.name}}
           </button>
         </div>
-        <a href="#" class="price-range">price range <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-        <a href="#" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-        <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
+        <div class="clear"></div>
+        <div>
+          <a href="#" class="price-range">price range <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+          <a href="#" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+          <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
+        </div>
+
       </div>
       <div class="clear"></div>
       <div class="result-wrap" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true"

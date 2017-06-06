@@ -59,7 +59,6 @@ import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.compon
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CommentComponent } from './event/detail/comment.component';
 import { ExperienceComponent } from './event/detail/experience.component';
-import { MemberModule } from './member/member.module';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
@@ -148,7 +147,6 @@ type StoreType = {
     Angular2FontawesomeModule,
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
-    MemberModule,
     MomentModule,
     StarRatingModule,
     TruncateModule,

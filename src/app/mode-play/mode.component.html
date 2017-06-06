@@ -14,7 +14,7 @@
                     </label>
                 </div>
             </form>
-            
+
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div *ngIf="filterFromMode.value.filterMode !='play' || filterFromMode.value.filterMode =='all'">
                     <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <ngb-tabset>
                 <ngb-tab class="tabFilter">
                     <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down" aria-hidden="true"></i><span></span></ng-template>
@@ -104,8 +104,9 @@
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
-            
-            <div class="list-event">
+
+            <div class="list-event" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true"
+                 [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
                 <div class="list-header">
                     <div class="pull-left">Sort By</div>
                     <div class="pull-right">Clear Filters</div>

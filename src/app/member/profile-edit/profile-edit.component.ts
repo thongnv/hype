@@ -18,7 +18,7 @@ export class ProfileEditComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     email: ['', Validators.email],
-    contactNumber: ['', Validators.required],
+    contactNumber: ['', Validators.pattern],
     country: ['', Validators.required],
   });
 
@@ -45,25 +45,28 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    console.log(this.profileForm.valid);
     console.log(this.profileForm.value);
-    let userProfile = {
-      field_first_name: this.profileForm.value.firstName,
-      field_last_name: this.profileForm.value.lastName,
-      email: this.profileForm.value.email,
-      field_contact_number: this.profileForm.value.contactNumber,
-      field_country: this.profileForm.value.country,
-      field_notify_email: this.userInfo.receiveEmail,
-      follow: {
-        following: this.userInfo.followingNumber,
-        follower: this.userInfo.followerNumber,
-      }
-    };
-    this.mainService.setUserProfile(userProfile).then(
-      () => {
-        this.userInfo.userName = userProfile.field_first_name + ' ' + userProfile.field_last_name;
-        this.appState.set('userInfo', this.userInfo);
-      }
-    );
+    if (this.profileForm.valid) {
+      let userProfile = {
+        field_first_name: this.profileForm.value.firstName,
+        field_last_name: this.profileForm.value.lastName,
+        email: this.profileForm.value.email,
+        field_contact_number: this.profileForm.value.contactNumber,
+        field_country: this.profileForm.value.country,
+        field_notify_email: this.userInfo.receiveEmail,
+        follow: {
+          following: this.userInfo.followingNumber,
+          follower: this.userInfo.followerNumber,
+        }
+      };
+      this.mainService.setUserProfile(userProfile).then(
+        () => {
+          this.userInfo.userName = userProfile.field_first_name + ' ' + userProfile.field_last_name;
+          this.appState.set('userInfo', this.userInfo);
+        }
+      );
+    }
   }
 
   private demo(): void {
@@ -89,7 +92,7 @@ export class ProfileEditComponent implements OnInit {
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
-
+      this.userInfo.showNav = true;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
     });

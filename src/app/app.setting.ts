@@ -5,7 +5,7 @@ const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
 export class AppSetting {
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
-  public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile?_format=json';
+  public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile/';
   public static API_LOGOUT = API_ENDPOINT + 'api/user/logout?_format=json';
   public static API_LOGIN_STATUS = API_ENDPOINT + 'user/login_status?_format=json';
   public static API_USER_FOLLOWING = API_FOLLOW + '/list?_format=json&limit=10&type=following';

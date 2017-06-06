@@ -1,10 +1,10 @@
 <section>
   <div class="list-preview-wrap setting-wrap table-wrap" *ngIf="curate">
     <div class="col-xs-12 col-md-6 list-box table-cell">
-      <div (scroll)="onScroll($event)" id="hScroll" slimScroll width="100%" height="calc(100vh - 50px)" size="7px"
+      <div style="padding: 15px;" (scroll)="onScroll($event)" id="hScroll" slimScroll width="calc(100%)" height="calc(100vh - 50px)" size="7px"
            [alwaysVisible]="true"
            [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
-        <div class="carousel-box" id="preview-carousel">
+        <div class="carousel-box" id="curate-carousel">
           <div class="carousel-header">
             <strong>{{curate.info.listName}}</strong>
           </div>
