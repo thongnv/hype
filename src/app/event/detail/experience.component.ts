@@ -87,7 +87,7 @@ import { EventDetailComponent } from './detail.component';
     <div class="write-your-comment border-bottom padding-top-30 padding-bottom-35">
 
       <div class="write-comment-area">
-        <img class="img-circle" [src]="currentUser.userAvatar" alt="user avatar" width="50" height="50">
+        <img class="img-circle" [src]="currentUser.avatar" alt="user avatar" width="50" height="50">
         <textarea #commentInput placeholder="Write your comment"
                   (keydown.enter)="addComment(commentInput);false"></textarea>
       </div>

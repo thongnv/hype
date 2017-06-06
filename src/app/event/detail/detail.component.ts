@@ -67,7 +67,11 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public ngOnInit() {
-    this.user = this.appState.state.userInfo;
+    // this.user = this.appState.state.userInfo;
+    this.user = {
+      name: 'Penny Lim',
+      avatar: '/assets/img/event/detail/tank.jpg',
+    };
     this.initRating();
   }
 
@@ -83,22 +87,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       liked: false,
       comments: [],
       rating: this.userRating,
-      date: moment().unix(),
-      images: [
-        '/assets/img/event/detail/abc.jpg',
-        '/assets/img/event/detail/abc.jpg',
-      ]
-    };
-    this.experiences.push(experience);
-    msgInput.value = '';
-    this.userRated = true;
-  }
-
-  public onSubmit() {
-    let userDraftList = {
-      info: this.experienceForm.value,
+      date: moment().unix() * 1000,
       images: this.previewUrl
     };
+    this.experiences.push(experience);
+    this.experienceForm.reset();
+    this.userRated = true;
   }
 
   public onRemovePreview(imageUrl) {

@@ -75,7 +75,7 @@
 
         <!-- post your experience start -->
         <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35" *ngIf="!userRated">
-          <img [src]="user.userAvatar" alt="user avatar" class="img-circle" width="70" height="70">
+          <img [src]="user.avatar" alt="user avatar" class="img-circle" width="70" height="70">
           <form class="form-horizontal" [formGroup]="experienceForm" (ngSubmit)="onSubmit()">
             <div class="list-stars-on-post">
               <ngb-rating [(rate)]="userRating">
