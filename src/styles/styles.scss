@@ -137,7 +137,6 @@ body, html {
   }
   .follow-wrap{
     width: 100%;
-    border-bottom: 1px solid #c3c3c3;
     float: left;
   }
   label{
@@ -145,6 +144,7 @@ body, html {
   }
   .member-nav{
     padding: 0;
+    margin: 0;
     list-style: none;
   }
   .member-nav > li.active{
@@ -156,12 +156,22 @@ body, html {
     float: left;
     height: 30px;
     line-height: 30px;
-    border-bottom: 1px solid #c3c3c3;
     text-align: left;
     padding-left: 30%;
     cursor: pointer;
   }
   //following
+  .count-follow{
+    width: 640px;
+    height: 34px;
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1.13;
+    text-align: left;
+    color: #3b3b3b;
+  }
+  //END follow
   .interest-item-wrap{
     float: left;
     transition: width 0.3s;

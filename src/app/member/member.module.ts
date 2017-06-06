@@ -22,6 +22,7 @@ import { FavoriteListComponent } from './favorite-list/favorite-list.component';
 import { FavoritePlaceComponent } from './favorite-place/favorite-place.component';
 import { FavoriteEventComponent } from './favorite-event/favorite-event.component';
 import { FavoritePipe } from '../shared/favorite.pipe';
+import { BoostrapAlertComponent } from './boostrap-alert/boostrap-alert.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { FavoritePipe } from '../shared/favorite.pipe';
     FavoriteListComponent,
     FavoritePlaceComponent,
     FavoriteEventComponent,
-    FavoritePipe
+    FavoritePipe,
+    BoostrapAlertComponent
   ],
   providers: [MainService]
 })

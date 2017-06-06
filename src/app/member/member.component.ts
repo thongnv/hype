@@ -11,21 +11,22 @@ import { MainService } from '../services/main.service';
 })
 export class MemberComponent implements OnInit {
 
-  public userInfo: any;
+  public userInfo: any = {};
   public settingForm = this.fb.group({
     receiveEmail: true
   });
-  private sub: any;
-  private slugName: any;
+
+  public alertType: string;
+  public msgContent: string;
+  // private sub: any;
+  // private slugName: any;
+
 
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
               private appState: AppState,
               private mainService: MainService) {
-  }
-
-  public demo(): void {
-    this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = true;
   }
 
   public onSubmit(event): void {
@@ -41,26 +42,37 @@ export class MemberComponent implements OnInit {
         follower: this.userInfo.followerNumber,
       }
     };
+    console.log('sending setting data: ', userSetting);
     this.mainService.setUserProfile(userSetting).then((resp) => {
       console.log('updated setting: ', resp);
+      if (resp.status) {
+        this.alertType = 'success';
+        this.msgContent = 'Updated user information successful.';
+      } else {
+        this.alertType = 'danger';
+        this.msgContent = 'Updated user information failed.';
+        this.settingForm.patchValue({
+          receiveEmail: parseInt(this.userInfo.receiveEmail, 2)
+        });
+      }
     });
   }
 
   public ngOnInit() {
-    this.demo();
-    // this.getUserProfile();
-    this.sub = this.route.params.subscribe((params) => {
-      this.slugName = params['id']; // (+) converts string 'id' to a number
-      // In a real app: dispatch action to load the details here.
-      console.log('USER: ', this.slugName);
-      this.getUserProfile(this.slugName);
-    });
+    // this.demo();
+    this.getUserProfile();
+    // this.sub = this.route.params.subscribe((params) => {
+    //   this.slugName = params['id']; // (+) converts string 'id' to a number
+    //   // In a real app: dispatch action to load the details here.
+    //   console.log('USER: ', this.slugName);
+    //   this.getUserProfile(this.slugName);
+    // });
   }
 
-  private getUserProfile(slugName?: string): void {
+  private getUserProfile(): void {
 
-    this.mainService.getUserProfile(slugName).then((response) => {
-    // this.mainService.getUserPublicProfile().then((response) => {
+    this.mainService.getUserProfile(null).then((response) => {
+      // this.mainService.getUserPublicProfile().then((response) => {
       this.settingForm.patchValue({
         receiveEmail: parseInt(response.field_notify_email, 2)
       });
@@ -75,6 +87,7 @@ export class MemberComponent implements OnInit {
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
+      this.userInfo.showNav = true;
       console.log('====> userProfile response: ', response);
     });
   }

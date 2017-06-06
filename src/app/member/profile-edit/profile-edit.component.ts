@@ -16,12 +16,13 @@ export class ProfileEditComponent implements OnInit {
   public countries: any[];
   public profileForm = this.fb.group({
     firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
+    lastName: [''],
     email: ['', Validators.email],
-    contactNumber: ['', Validators.pattern],
-    country: ['', Validators.required],
+    contactNumber: ['', Validators.pattern('([0-9]{11})')],
+    country: [''],
   });
-
+  public alertType: string;
+  public msgContent: string;
   constructor(public fb: FormBuilder,
               private appState: AppState,
               private countryPickerService: CountryPickerService,
@@ -60,10 +61,19 @@ export class ProfileEditComponent implements OnInit {
           follower: this.userInfo.followerNumber,
         }
       };
+      console.log('sending data: ', userProfile);
       this.mainService.setUserProfile(userProfile).then(
-        () => {
-          this.userInfo.userName = userProfile.field_first_name + ' ' + userProfile.field_last_name;
-          this.appState.set('userInfo', this.userInfo);
+        (resp) => {
+          if (resp.status) {
+            this.alertType = 'success';
+            this.msgContent = 'Updated user information successful.';
+            this.userInfo.userName = userProfile.field_first_name + ' ' + userProfile.field_last_name;
+            this.appState.set('userInfo', this.userInfo);
+          } else {
+            this.alertType = 'danger';
+            this.msgContent = 'Updated user information failed.';
+          }
+
         }
       );
     }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style } from '@angular/animations';
 import { MainService } from '../../services/main.service';
+
 @Component({
   selector: 'app-follow-item',
   templateUrl: './follow-item.component.html',
@@ -22,6 +23,8 @@ export class FollowItemComponent implements OnInit {
 
   @Input('item') public item: any;
   @Input('flag') public flag: any;
+
+  @Output('onUpdate') public onUpdate = new EventEmitter<any>();
   public stateFollow: string;
 
   constructor(private mainService: MainService) {
@@ -29,9 +32,9 @@ export class FollowItemComponent implements OnInit {
 
   public updateFollow(item: any): void {
     this.mainService.updateUserFollow(item.id).then((resp) => {
-      console.log('resp: ', resp);
       if (resp.status) {
         this.stateFollow = this.stateFollow === 'yes' ? 'no' : 'yes';
+        this.onUpdate.emit(item);
       }
     });
   }

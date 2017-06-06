@@ -11,17 +11,28 @@ import { MainService } from '../../services/main.service';
 export class FollowerComponent implements OnInit {
 
   public userInfo: any;
+  public followingPage: number = 0;
 
   public constructor(private appState: AppState, private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
+
+    let followingPage = this.appState.state.followingPaging;
+    if (followingPage !== undefined) {
+      this.followingPage = followingPage;
+    }
+    this.appState.set('followingPage', this.followingPage);
+    console.log('followingPage', this.followingPage);
   }
 
   public ngOnInit() {
     this.getUserProfile();
-    this.getUserFollow('follower');
+    this.getUserFollow('follower', this.followingPage);
   }
-  private getUserFollow(followFlag: string): void {
-    this.mainService.getUserFollow(followFlag).then((response) => {
+  public updateFollow() {
+    this.getUserProfile();
+  }
+  private getUserFollow(followFlag: string, page: number): void {
+    this.mainService.getUserFollow(followFlag, page).then((response) => {
       this.userInfo.userFollower = response;
       console.log('response', response);
       this.appState.set('userInfo', this.userInfo);

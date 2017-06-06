@@ -1,11 +1,11 @@
 <div class="setting-wrap table-wrap">
-  <div class="col-lg-2 col-sm-4 col-xs-12 col-left table-cell">
+  <div class="col-lg-3 col-sm-4 col-xs-12 col-left table-cell">
     <app-member-navigation [data]="userInfo"></app-member-navigation>
   </div>
-  <div class="col-lg-10 col-sm-8 col-xs-12 col-right table-cell">
-    <section>
-      <h3>Your Interests</h3>
-      <div *ngIf="interests" class="row">
+  <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
+    <section class="row">
+      <h3 class="col-xs-12">Your Interests</h3>
+      <div *ngIf="interests" class="col-xs-12">
         <div *ngFor="let interest of interests" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
           <app-interest-item [item] = "interest" ></app-interest-item>
         </div>

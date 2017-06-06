@@ -36,7 +36,6 @@ export class AuthComponent implements OnInit {
         });
       })
       .catch(this.handleError);
-
   }
 
   public ngOnInit() {

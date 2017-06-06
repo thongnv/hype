@@ -1,33 +1,48 @@
-<div class="avatar-wrap">
-  <a class="avatar" [routerLink]="['/member/profile']">
-    <img class="user-avatar" [src]="data.userAvatar" [alt]="data.userName" width="100">
-    <span class="user-name">{{data.userName}}</span>
-  </a>
-</div>
-<div class="follow-wrap">
-  <div class="follow-item" [routerLink]="['/member/following']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-    <strong class="follow-number">{{ data.followingNumber }}</strong>
-    <p>Following</p>
+<div class="user-info-wrap">
+  <div *ngIf="show" class="avatar-wrap">
+    <a class="avatar" [routerLink]="['/member/profile']">
+      <img class="user-avatar" [src]="data.userAvatar" [alt]="data.userName" width="100">
+      <span class="user-name">{{data.userName}}</span>
+    </a>
   </div>
-  <div class="follow-item" [routerLink]="['/member/follower']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-    <strong class="follow-number">{{ data.followerNumber }}</strong>
-    <p>Followers</p>
+  <div class="follow-wrap">
+    <div class="follow-item" [routerLink]="['/member/following']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+      <strong class="follow-number">{{ data.followingNumber }}</strong>
+      <p class="follow-number-label">Following</p>
+    </div>
+    <div class="follow-item" [routerLink]="['/member/follower']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">
+      <strong class="follow-number">{{ data.followerNumber }}</strong>
+      <p class="follow-number-label">Followers</p>
+    </div>
   </div>
 </div>
 <div class="clear"></div>
 <div *ngIf="data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">My Profile</li>
-    <li [routerLink]="['/member/setting']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Setting</li>
-    <li [routerLink]="['/member/interest']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Interest</li>
-    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Favorites</li>
-    <li [routerLink]="['/auth/logout']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Logout</li>
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My
+      Profile
+    </li>
+    <li [routerLink]="['/member/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
+    </li>
+    <li [routerLink]="['/member/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      Interest
+    </li>
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      Favorites
+    </li>
+    <li [routerLink]="['/auth/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Logout</li>
   </ul>
 </div>
 <div *ngIf="!data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">{{data.userName}}</li>
-    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">List</li>
-    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">Activities</li>
+    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      {{data.userName}}
+    </li>
+    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">List</li>
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      Activities
+    </li>
   </ul>
 </div>

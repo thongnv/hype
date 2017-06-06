@@ -1,12 +1,17 @@
 <div class="setting-wrap table-wrap">
-  <div class="col-lg-2 col-sm-4 col-xs-12 col-left table-cell">
+  <div class="col-lg-3 col-sm-4 col-xs-12 col-left table-cell">
     <app-member-navigation [data]="userInfo"></app-member-navigation>
   </div>
-  <div class="col-lg-10 col-sm-8 col-xs-12 col-right table-cell">
+  <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <section *ngIf="userInfo.userFollowing">
-      <h3>{{userInfo.userFollowing.length}} Following</h3>
-      <div class="row">
-        <app-follow-item [item] = "following" [flag] = "'following'" *ngFor="let following of userInfo.userFollowing" class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap"></app-follow-item>
+      <h3 class="col-xs-12 count-follow">{{userInfo.userFollowing.length}} Followings</h3>
+      <div class="col-xs-12">
+        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
+      </div>
+      <div class="col-xs-12">
+        <app-follow-item [item] = "following" [flag] = "'following'" *ngFor="let following of userInfo.userFollowing"
+                   (onUpdate)="updateFollow($event)" class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
+        </app-follow-item>
       </div>
     </section>
   </div>

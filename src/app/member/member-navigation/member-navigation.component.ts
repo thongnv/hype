@@ -8,11 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MemberNavigationComponent implements OnInit {
 
   @Input('data') public data: any;
+  public show: boolean;
 
   public constructor() {
+    this.show = false;
   }
 
   public ngOnInit() {
+    this.show = this.data ? true : false;
   }
 
 }
