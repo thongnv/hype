@@ -2,7 +2,7 @@
   <div *ngIf="show" class="avatar-wrap">
     <a class="avatar" [routerLink]="['/member/profile']">
       <img class="user-avatar" [src]="data.userAvatar" [alt]="data.userName" width="100">
-      <span class="user-name">{{data.userName}}</span>
+      <span class="user-name" *ngIf="data.firstName && data.lastName">{{data.userName}}</span>
     </a>
   </div>
   <div class="follow-wrap">
@@ -37,10 +37,10 @@
 </div>
 <div *ngIf="!data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-      {{data.userName}}
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      {{data.email}}
     </li>
-    <li [routerLink]="['/member/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">List</li>
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">List</li>
     <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       Activities
     </li>

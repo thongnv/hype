@@ -59,7 +59,7 @@ export class FollowerComponent implements OnInit {
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
-
+      this.userInfo.showNav = false;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
     });

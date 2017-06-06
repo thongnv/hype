@@ -10,23 +10,23 @@
           <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
         </div>
         <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-          <div class="col-lg-6 form-group has-feedback" [class.has-error]="!profileForm.controls['firstName'].valid">
+          <div class="col-lg-6 form-group has-feedback" [class.has-error]="!profileForm.controls['firstName'].valid && profileForm.controls['firstName'].touched">
             <input class="form-control" formControlName="firstName" placeholder="First Name">
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            <div *ngIf="!profileForm.controls['firstName'].valid" class="help-block with-errors">This field is invalid.</div>
+            <div *ngIf="!profileForm.controls['firstName'].valid && profileForm.controls['firstName'].touched" class="help-block with-errors">This field is invalid.</div>
           </div>
           <div class="col-lg-6 form-group">
             <input class="form-control" formControlName="lastName" placeholder="Last Name">
           </div>
-          <div class="col-lg-12 form-group has-feedback" [class.has-error]="!profileForm.controls['email'].valid">
+          <div class="col-lg-12 form-group has-feedback" [class.has-error]="!profileForm.controls['email'].valid && profileForm.controls['email'].touched">
             <input class="form-control" type="email" formControlName="email" placeholder="Email Address">
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            <div *ngIf="!profileForm.controls['email'].valid" class="help-block with-errors">This email address is invalid.</div>
+            <div *ngIf="!profileForm.controls['email'].valid && profileForm.controls['email'].touched" class="help-block with-errors">This email address is invalid.</div>
           </div>
-          <div class="col-lg-6 form-group has-feedback" [class.has-error]="!profileForm.controls['contactNumber'].valid">
+          <div class="col-lg-6 form-group has-feedback" [class.has-error]="!profileForm.controls['contactNumber'].valid && profileForm.controls['contactNumber'].touched">
             <input class="form-control" formControlName="contactNumber" placeholder="Contact Number" >
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            <div *ngIf="!profileForm.controls['contactNumber'].valid" class="help-block with-errors">This field is invalid.</div>
+            <div *ngIf="!profileForm.controls['contactNumber'].valid && profileForm.controls['contactNumber'].touched" class="help-block with-errors">This field is invalid.</div>
           </div>
           <div class="col-lg-6 form-group">
             <select formControlName="country" class="form-control form-control-sm" name="countrypicker">
