@@ -75,7 +75,6 @@
     font-size: 12px;
     line-height: 1;
     text-align: right;
-
 }
 
 .left-box .actionFilter label.apply {
@@ -175,7 +174,14 @@
 .badge {
     opacity: 1;
 }
-
+.tab-pane > div > div > span {
+    text-align: center;
+}
+.tab-pane > div > div {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;  
+}
 .tab-pane .star {
     font-size: 3.5rem;
     color: #b0c4de;
@@ -208,8 +214,7 @@ ul.nav-tabs li.nav-item a.nav-link i {
     margin-left: 7px;
 }
 ul.nav-tabs {
-    margin-left: 20px;
-    margin-top: 20px;
+    margin: 20px;
 }
 nouislider.ng2-nouislider {
     width: 50%;

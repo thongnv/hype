@@ -15,7 +15,7 @@
                     </label>
                 </div>
             </form>
-            <hr>
+            
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div *ngIf="filterFromMode.value.filterMode !='play' || filterFromMode.value.filterMode =='all'">
                     <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
@@ -106,32 +106,35 @@
             </div>
             <div class="clearfix"></div>
 
-            <div class="list-event" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true"
-                 [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
-                <div class="list-header">
-                    <div class="pull-left">Sort By</div>
-                    <div class="pull-right">Clear Filters</div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="items" *ngFor="let item of items; let index = 'index'">
-                    <div class="list-items">
-                        <div class="avatar">
-                            <div class="badge">#{{index}}</div>
-                            <img src="{{item.index}}">
-                        </div>
-                        <div class="item-content">
-                            <h3 class="name">{{item.name}}</h3>
-                            <div class="clearfix"></div>
-                            <ngb-rating [rate]="3" disabled="true"></ngb-rating>
-                            <div class="box-content">
-                                <p>{{item.email}} | {{item.phone}}</p>
-                                <p>{{item.address}}</p>
+            <div class="result-wrap" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+                <div class="list-event">
+                    <div class="list-header">
+                        <div class="pull-left">Sort By</div>
+                        <div class="pull-right">Clear Filters</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="items" *ngFor="let item of items; let index = 'index'">
+                        <div class="list-items">
+                            <div class="avatar">
+                                <div class="badge">#{{index}}</div>
+                                <img src="{{item.index}}">
+                            </div>
+                            <div class="item-content">
+                                <h3 class="name">{{item.name}}</h3>
+                                <div class="clearfix"></div>
+                                <ngb-rating [rate]="3" disabled="true"></ngb-rating>
+                                <div class="box-content">
+                                    <p>{{item.email}} | {{item.phone}}</p>
+                                    <p>{{item.address}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-6 col-xs-12 gmap-box table-cell">
+            <app-gmap [params]='data'></app-gmap>
         <div class="col-lg-6 col-xs-12 gmap-box">
             <div class="box-map" style="margin-top: 20px">
                 <sebm-google-map
