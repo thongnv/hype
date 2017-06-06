@@ -1,0 +1,20 @@
+<sebm-google-map-circle [latitude]="lat" [longitude]="lng"
+                        [radius]="currentRadius"
+                        [fillColor]="'red'"
+                        [circleDraggable]="true"
+                        [editable]="true"
+                        [clickable]="true"
+                        (radiusChange)="markerRadiusChange($event)"
+                        (dragEnd)="markerDragEnd($event)"
+>
+    <sebm-google-map-marker
+            *ngFor="let m of markers; let i = index"
+            (markerClick)="clickedMarker(m, i)"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]="m.label"
+            [markerDraggable]="true"
+            (mapClick)="mapClicked($event)"
+    >
+    </sebm-google-map-marker>
+</sebm-google-map-circle>

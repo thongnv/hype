@@ -46,16 +46,16 @@
     <div class="col-lg-6 col-xs-12 gmap-box">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
         <div *ngFor="let marker of markers; let index=index">
-          <app-custom-marker [marker]="marker" [index]="marker.parent" (onClick)="markerClick($event)" [hasLabel]="false">
-              <div class="ginfo-img-wrap pull-left">
-                <img [src]="marker.image" [alt]="marker.infoTitle" width="80" height="86">
-              </div>
-              <div class="ginfo-detail pull-right">
-                <h5 class="ginfo-detail-title">{{marker.infoTitle+marker.infoTitle | truncate : 32}}</h5>
-                <div *ngIf="marker.price" class="free-price-button text-left"
-                      [class.free-price]="marker.price.toLowerCase() === 'free'">{{marker.price}}</div>
-              </div>
-          </app-custom-marker>
+          <!--<app-custom-marker [marker]="marker" [index]="marker.parent" (onClick)="markerClick($event)" [hasLabel]="false">-->
+              <!--<div class="ginfo-img-wrap pull-left">-->
+                <!--<img [src]="marker.image" [alt]="marker.infoTitle" width="80" height="86">-->
+              <!--</div>-->
+              <!--<div class="ginfo-detail pull-right">-->
+                <!--<h5 class="ginfo-detail-title">{{marker.infoTitle+marker.infoTitle | truncate : 32}}</h5>-->
+                <!--<div *ngIf="marker.price" class="free-price-button text-left"-->
+                      <!--[class.free-price]="marker.price.toLowerCase() === 'free'">{{marker.price}}</div>-->
+              <!--</div>-->
+          <!--</app-custom-marker>-->
         </div>
       </sebm-google-map>
     </div>

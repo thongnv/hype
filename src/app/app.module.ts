@@ -72,6 +72,7 @@ import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
 import { WriteReviewComponent } from './company/write-review/write-review.component';
 import { EventItemComponent } from './event/event-item/event-item.component';
+import {GeocodeMarkerComponent} from "./gmap/gmap-geocode-marker/gmap-geocode-marker";
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -119,7 +120,8 @@ type StoreType = {
     ModeComponent,
     WriteReviewComponent,
     ImageModal,
-    EventItemComponent
+    EventItemComponent,
+    GeocodeMarkerComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -132,7 +134,7 @@ type StoreType = {
     AgmCoreModule.forRoot({
       // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places']
+      libraries: ['places','geometry']
     }),
     NgbModule.forRoot(),
     TranslateModule.forRoot(),

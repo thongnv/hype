@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation,NgZone } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
@@ -27,9 +27,9 @@ interface marker {
 })
 
 
-export class ModeComponent implements OnInit {
+export class ModeComponent implements OnInit,AfterViewInit {
 
-    public markers:any;
+    public markers:any = [];
     public categories:any = [];
     public someValue:number = 5;
     public someRange3:number[] = [50, 300];
@@ -41,14 +41,14 @@ export class ModeComponent implements OnInit {
     public currentRate = 3;
     public cuisine = [{}];
     public latlngBounds:any;
-    public mapZoom:number = 12;
+    public mapZoom:number = 10;
     public lat:number = 21.030596;
     public lng:number = 105.786215;
-    public searchCenter = {lat: this.lat, lng: this.lng};
+    public currentRadius:any = 3000;
 
     public constructor(private formBuilder:FormBuilder,
                        private modeService:ModeService,
-                       private rateConfig:NgbRatingConfig,private wrapper: GoogleMapsAPIWrapper) {
+                       private rateConfig:NgbRatingConfig, private wrapper:GoogleMapsAPIWrapper) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -61,14 +61,6 @@ export class ModeComponent implements OnInit {
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
 
-
-    }
-
-    public ngOnInit() {
-        this.getCategories();
-        this.getDataModes();
-        this.getFilter();
-
         this.markers = [
             {lat: 21.033933, lng: 105.786635},
             {lat: 21.033492, lng: 105.793051},
@@ -78,7 +70,17 @@ export class ModeComponent implements OnInit {
             {lat: 20.976186585026024, lng: 105.80657958984375},
             {lat: 20.937071867747825, lng: 105.6005859375}
         ];
+    }
 
+    public ngOnInit() {
+        this.getCategories();
+        this.getDataModes();
+        this.getFilter();
+        // this.renderMaker(5000);
+    }
+
+    ngAfterViewInit() {
+        //this.renderMaker();
     }
 
     onChange(value:number) {
@@ -109,6 +111,7 @@ export class ModeComponent implements OnInit {
         });
     }
 
+
     markerDragEnd($event:MouseEvent) {
         console.log('dragEnd', $event);
         //Update center map
@@ -120,18 +123,8 @@ export class ModeComponent implements OnInit {
 
     markerRadiusChange(event) {
         console.log("Radius Change", event);
-        let radius = parseInt(event, 10) * 5000;
-        console.log(radius);
-        var bounds = new google.maps.LatLngBounds();
-
-        let searchCenter = new google.maps.LatLng(this.lat, this.lng);
-        console.log(searchCenter);
-        for (var i = 0; i < this.markers.length; i++) {
-            if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng), searchCenter) < radius) {
-                bounds.extend(new google.maps.LatLng(this.markers[i].lat, this.markers[i].lng));
-            }
-        }
-        console.log(bounds);
+        let radius = parseInt(event);
+        //this.renderMaker();
     }
 
     clickedMarker(label:string, index:number) {
@@ -150,4 +143,7 @@ export class ModeComponent implements OnInit {
         });
     }
 
+    private renderMaker() {
+
+    }
 }

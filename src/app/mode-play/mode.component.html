@@ -143,26 +143,27 @@
                         [streetViewControl]="false"
                         (mapClick)="mapClicked($event)"
                 >
-                    <sebm-google-map-circle [latitude]="lat" [longitude]="lng"
-                                            [radius]="1000"
-                                            [fillColor]="'red'"
-                                            [circleDraggable]="true"
-                                            [editable]="true"
-                                            [clickable]="true"
-                                            (radiusChange)="markerRadiusChange($event)"
-                                            (dragEnd)="markerDragEnd($event)"
-                    >
-                        <sebm-google-map-marker
-                                *ngFor="let m of markers; let i = index"
-                                (markerClick)="clickedMarker(m.label, i)"
-                                [latitude]="m.lat"
-                                [longitude]="m.lng"
-                                [label]="m.label"
-                                [markerDraggable]="true"
-                                (mapClick)="mapClicked($event)"
-                        >
-                        </sebm-google-map-marker>
-                    </sebm-google-map-circle>
+                    <!--<sebm-google-map-circle [latitude]="lat" [longitude]="lng"-->
+                                            <!--[radius]="1000"-->
+                                            <!--[fillColor]="'red'"-->
+                                            <!--[circleDraggable]="true"-->
+                                            <!--[editable]="true"-->
+                                            <!--[clickable]="true"-->
+                                            <!--(radiusChange)="markerRadiusChange($event)"-->
+                                            <!--(dragEnd)="markerDragEnd($event)"-->
+                    <!--&gt;-->
+                        <!--<sebm-google-map-marker-->
+                                <!--*ngFor="let m of markers; let i = index"-->
+                                <!--(markerClick)="clickedMarker(m.label, i)"-->
+                                <!--[latitude]="m.lat"-->
+                                <!--[longitude]="m.lng"-->
+                                <!--[label]="m.label"-->
+                                <!--[markerDraggable]="true"-->
+                                <!--(mapClick)="mapClicked($event)"-->
+                        <!--&gt;-->
+                        <!--</sebm-google-map-marker>-->
+                    <!--</sebm-google-map-circle>-->
+                    <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius" (radiusChange)="markerRadiusChange($event)" [lat]="lat" [lng]="lng"></gmap-geocode-marker>
                 </sebm-google-map>
             </div>
         </div>
