@@ -12,7 +12,8 @@ export class FollowerComponent implements OnInit {
 
   public userInfo: any;
   public followingPage: number = 0;
-
+  public msgContent: string;
+  public alertType: string;
   public constructor(private appState: AppState, private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
 
@@ -28,8 +29,15 @@ export class FollowerComponent implements OnInit {
     this.getUserProfile();
     this.getUserFollow('follower', this.followingPage);
   }
-  public updateFollow() {
-    this.getUserProfile();
+  public updateFollow(item: any) {
+    console.log('item', item);
+    if (item.stateFollow === 'yes') {
+      this.userInfo.followingNumber--;
+    } else {
+      this.userInfo.followingNumber++;
+    }
+    this.alertType = 'success';
+    this.msgContent = 'Update following successful';
   }
   private getUserFollow(followFlag: string, page: number): void {
     this.mainService.getUserFollow(followFlag, page).then((response) => {

@@ -18,9 +18,6 @@ export class MemberComponent implements OnInit {
 
   public alertType: string;
   public msgContent: string;
-  // private sub: any;
-  // private slugName: any;
-
 
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
@@ -59,20 +56,12 @@ export class MemberComponent implements OnInit {
   }
 
   public ngOnInit() {
-    // this.demo();
     this.getUserProfile();
-    // this.sub = this.route.params.subscribe((params) => {
-    //   this.slugName = params['id']; // (+) converts string 'id' to a number
-    //   // In a real app: dispatch action to load the details here.
-    //   console.log('USER: ', this.slugName);
-    //   this.getUserProfile(this.slugName);
-    // });
   }
 
   private getUserProfile(): void {
 
     this.mainService.getUserProfile(null).then((response) => {
-      // this.mainService.getUserPublicProfile().then((response) => {
       this.settingForm.patchValue({
         receiveEmail: parseInt(response.field_notify_email, 2)
       });

@@ -31,7 +31,14 @@ export class FollowingComponent implements OnInit {
   }
 
   public updateFollow(item: any) {
-    this.getUserProfile();
+    console.log('item', item);
+    if (item.stateFollow === 'yes') {
+      this.userInfo.followingNumber--;
+    } else {
+      this.userInfo.followingNumber++;
+    }
+    this.alertType = 'success';
+    this.msgContent = 'Update following successful';
   }
 
   private getUserFollow(followFlag: string, page: number): void {

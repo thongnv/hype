@@ -34,6 +34,7 @@ export class FollowItemComponent implements OnInit {
     this.mainService.updateUserFollow(item.id).then((resp) => {
       if (resp.status) {
         this.stateFollow = this.stateFollow === 'yes' ? 'no' : 'yes';
+        item.stateFollow = this.stateFollow;
         this.onUpdate.emit(item);
       }
     });

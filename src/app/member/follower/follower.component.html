@@ -6,6 +6,9 @@
     <section *ngIf="userInfo.userFollower">
       <h3 class="col-xs-12 count-follow">{{ userInfo.userFollower.length}} Followers</h3>
       <div class="col-xs-12">
+        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
+      </div>
+      <div class="">
         <app-follow-item *ngFor="let follower of userInfo.userFollower"  [item] = "follower" [flag]="'follower'"
                          (onUpdate)="updateFollow($event)"
                          class="col-lg-3 col-md-4 col-sm-6 col-xs-12 interest-item-wrap">
