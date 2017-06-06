@@ -24,6 +24,7 @@
     box-shadow: 1px 1px 3px 0 rgba(230, 230, 230, 0.5);
     border: solid 0.7px #e8e8e8;
     padding: 10px;
+    margin-bottom: 20px;
 }
 .follow-action{
     float: left;
