@@ -4,7 +4,7 @@
     <ul>
       <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">Event Info</li>
       <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
-      <li class="pull-right" ><a class="btn btn-success" (click)="onSubmit()">Share this</a></li>
+      <li class="share-event"><a class="btn btn-success" (click)="onSubmit()">Share this</a></li>
     </ul>
   </header>
   <!--header end-->
@@ -20,11 +20,19 @@
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
           <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control" type="text">
+          <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
+               class="text-danger">
+            Name event is required
+          </small>
         </div>
         <div class="form-group col-md-12 col-xs-12">
           <label>Details</label>
           <div class="row">
             <app-tinymce formControlName='eventDetail'></app-tinymce>
+            <small *ngIf="eventForm.get('eventDetail').touched && eventForm.get('eventDetail').hasError('required')"
+                   class="text-danger">
+              Event detail is required
+            </small>
           </div>
         </div>
 
@@ -36,8 +44,12 @@
           <label for="event-category">Category</label>
           <select name="" id="event-category" formControlName="eventCategory">
             <option value="" selected="selected">Select a category</option>
-            <option *ngFor="let cat of categories, let i = index"  [value]="cat.id">{{cat.name}}</option>
+            <option *ngFor="let cat of categories, let i = index"  [value]="cat.tid">{{cat.name}}</option>
           </select>
+          <small *ngIf="eventForm.get('eventCategory').touched && eventForm.get('eventCategory').hasError('required')"
+                 class="text-danger">
+            Event category is required
+          </small>
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
           <label class="control-label">Images</label>
@@ -48,7 +60,7 @@
           </label>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="img" />
+              <img [src]="img.url" />
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
@@ -95,7 +107,7 @@
       </div>
 
       <div class="form-actions col-xs-12 col-md-12">
-        <button type="submit" class="btn btn-primary">Share</button>
+        <button type="submit" [disabled]="eventForm.invalid" class="btn btn-primary">Share</button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
     </form>
@@ -126,7 +138,7 @@
               <p>price range</p>
               <span>{{appState.state.eventPreview.eventPrice}}<b>.</b>
                 <a href="{{appState.state.eventPreview.call2action.eventLink}}">
-                  <strong>{{appState.state.eventPreview.call2action.eventLink}}</strong>
+                  <strong>{{appState.state.eventPreview.call2action.eventType == '1' ? 'Buy Ticket' : 'More Detail'}}</strong>
                 </a>
               </span>
             </li>

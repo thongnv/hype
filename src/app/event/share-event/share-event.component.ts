@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment/moment';
-import { MainService } from '../../services/main.service';
 import { AppState } from '../../app.service';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-share-event',
@@ -21,39 +21,29 @@ export class ShareEventComponent implements OnInit {
       lat: [''],
       lng: [''],
     }),
-    eventDate: ['', Validators.required],
-    eventPrice: ['', Validators.required],
+    eventDate: [''],
+    eventPrice: [''],
     call2action: this.fb.group({
-      eventType: ['buy', Validators.required],
-      eventLink: ['', Validators.required],
+      eventType: ['1'],
+      eventLink: [''],
     }),
-    eventImages: ['', Validators.required],
+    eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
-  public categories: any[] = [
-    {
-      id: 1,
-      name: 'Category 1'
-    },
-    {
-      id: 2,
-      name: 'Category 2'
-    },
-    {
-      id: 3,
-      name: 'Category 3'
-    },
-  ];
-  public previewUrl: string[] = [];
+  public categories: any[];
+  public previewUrl: any[] = [];
   public showMore: boolean = false;
   public showPreview: boolean = false;
   public slides: any[] = [];
   public types = [
-    { value: 'buy', display: 'Buy Ticket' },
-    { value: 'more', display: 'More info' }
+    { value: '1', display: 'Buy Ticket' },
+    { value: '2', display: 'More info' }
   ];
-  constructor(public fb: FormBuilder, private mainService: MainService,
+  constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState, private router: Router) {
+    this.eventService.getCategoryEvent().then(
+      (response) => this.categories = response.data
+    );
   }
 
   public ngOnInit() {
@@ -72,7 +62,14 @@ export class ShareEventComponent implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
-          this.previewUrl.push(e.target.result);
+          let img = {
+            url: e.target.result,
+            value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+            filename: event.target.files[i].name,
+            filemime: event.target.files[i].type
+          };
+
+          this.previewUrl.push(img);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -95,7 +92,13 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    this.router.navigate(['/event/1']);
+    event.created = moment(event.eventDate).unix();
+    let data = this.mapEvent(event);
+    this.eventService.postEvent(data).then((response) => {
+      if (response.status) {
+        this.router.navigate([response.data.slug]);
+      }
+    });
   }
 
   public onPreview() {
@@ -110,8 +113,29 @@ export class ShareEventComponent implements OnInit {
     this.slides = [];
     for (let img of this.previewUrl) {
       if (img) {
-        this.slides.push({image: img, active: false});
+        this.slides.push({image: img.url, active: false});
       }
     }
+  }
+
+  public mapEvent(event) {
+    return {
+      title: event.eventName,
+      body: event.eventDetail,
+      created: event.created,
+      field_images: event.eventImages,
+      field_event_category: event.eventCategory,
+      field_location_place: [{
+        field_latitude: event.eventPlace.lat,
+        field_longitude: event.eventPlace.lng,
+        field_location_address: event.eventPlace.place
+      }],
+      field_event_option: [{
+        field_call_to_action_group: event.call2action.eventType,
+        field_call_to_action_link: event.call2action.eventLink,
+        field_price: event.eventPrice,
+        field_mentioned_by: event.eventMentions
+      }]
+    };
   }
 }

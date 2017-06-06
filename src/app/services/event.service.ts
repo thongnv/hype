@@ -60,6 +60,33 @@ export class EventService {
       )
       .catch(handleError);
   }
+
+  public postEvent(data): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.post(
+      'http://hypeweb.iypuat.com:5656/api/v1/event?_format=json',
+      data,
+      options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(handleError);
+  }
+
+  public getCategoryEvent(): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/category/event?_format=json', options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(handleError);
+  }
 }
 
 function extractImages(data): string[] {
