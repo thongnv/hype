@@ -41,7 +41,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.demo();
+    this.initUserData();
     this.getUserProfile();
   }
 
@@ -67,7 +67,8 @@ export class ProfileEditComponent implements OnInit {
           if (resp.status) {
             this.alertType = 'success';
             this.msgContent = 'Updated user information successful.';
-            this.userInfo.userName = userProfile.field_first_name + ' ' + userProfile.field_last_name;
+            this.userInfo.userName = userProfile.field_first_name + ' ' +
+              userProfile.field_last_name;
             this.appState.set('userInfo', this.userInfo);
           } else {
             this.alertType = 'danger';
@@ -79,7 +80,7 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  private demo(): void {
+  private initUserData(): void {
     this.userInfo = this.appState.state.userInfo;
   }
 

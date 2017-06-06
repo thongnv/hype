@@ -56,9 +56,12 @@ export class MemberComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.initUserData();
     this.getUserProfile();
   }
-
+  private initUserData(): void {
+    this.userInfo = this.appState.state.userInfo;
+  }
   private getUserProfile(): void {
 
     this.mainService.getUserProfile(null).then((response) => {
