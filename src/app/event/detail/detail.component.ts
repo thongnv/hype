@@ -6,6 +6,7 @@ import * as moment from 'moment/moment';
 import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser } from '../../app.interface';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-detail',
@@ -38,7 +39,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   public previewUrl: string[] = [];
 
-  public starRatingConfig: any = {};
   public userRating: number = 0;
   public userRated: boolean = false;
 
@@ -50,7 +50,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  constructor(private appState: AppState, public eventService: EventService, public formBuilder: FormBuilder) {
+  constructor(
+    private appState: AppState,
+    public eventService: EventService,
+    public formBuilder: FormBuilder,
+    public rateConfig: NgbRatingConfig
+  ) {
     // TODO
   }
 
@@ -138,33 +143,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   private initRating() {
-    this.starRatingConfig.id = 1221;
-    this.starRatingConfig.rating = 0;
-    this.starRatingConfig.showHalfStars = false;
-    this.starRatingConfig.numOfStars = 5;
-    this.starRatingConfig.size = 'large';
-    this.starRatingConfig.space = 'around';
-    this.starRatingConfig.staticColor = 'no';
-    this.starRatingConfig.disabled = false;
-    this.starRatingConfig.starType = 'svg';
-    this.starRatingConfig.labelPosition = 'right';
-    this.starRatingConfig.labelText = '';
-    this.starRatingConfig.labelVisible = false;
-    this.starRatingConfig.speed = 'slow';
-    this.starRatingConfig.hoverEnabled = true;
-    this.starRatingConfig.direction = 'ltr';
-    this.starRatingConfig.step = 1;
-    this.starRatingConfig.readOnly = false;
-    this.starRatingConfig.getColor = (rating: number, numOfStars: number, staticColor?: any) => {
-      return staticColor || 'ok';
-    };
-    this.starRatingConfig.getHalfStarVisible = (rating): boolean => {
-      return Math.abs(rating % 1) > 0;
-    };
-    // Outputs
-    this.starRatingConfig.onRatingChange = ($event) => {
-      this.userRating = $event.rating;
-    };
+    this.rateConfig.max = 5;
+    this.rateConfig.readonly = false;
   }
 
 }

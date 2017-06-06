@@ -70,7 +70,6 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { ModeComponent } from './mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
-import { StarRatingModule } from 'angular-star-rating';
 import { WriteReviewComponent } from './company/write-review/write-review.component';
 import { EventItemComponent } from './event/event-item/event-item.component';
 // Application wide providers
@@ -148,7 +147,6 @@ type StoreType = {
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
     MomentModule,
-    StarRatingModule,
     TruncateModule,
     TinymceModule.withConfig({})
   ],

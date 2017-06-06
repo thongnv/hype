@@ -301,6 +301,22 @@ span.count-comments {
 }
 
 /*post your experience start*/
+ngb-rating {
+  outline: none;
+  position: relative;
+  top: 8px;
+  margin-left: 10px;
+}
+
+.star {
+  font-size: 3.5rem;
+  color: rgba(182, 182, 182, 0.5);
+}
+
+.filled {
+  color: #ec3d62;;
+}
+
 .post-your-experience img {
   display: block;
   float: left;
