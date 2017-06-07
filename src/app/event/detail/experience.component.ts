@@ -167,7 +167,8 @@ export class ExperienceComponent implements Experience, OnInit {
         liked: false,
         replies: []
       };
-      this.eventService.postComment(comment).then(
+      let eventSlugName = this.event.slugName;
+      this.eventService.postComment(eventSlugName, comment).then(
         (resp) => console.log(resp)
       );
       this.comments.push(comment);

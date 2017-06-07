@@ -41,6 +41,7 @@ export class EventService {
       },
       mentions: extractMentions(data.field_event_option.field_mentioned_by),
       rating: data.average_rating,
+      userRated: data.user_vote,
       experiences: extractExperiences(data.comments.data)
     };
   }
@@ -49,11 +50,15 @@ export class EventService {
               private _http: Http) {
   }
 
-  public getEventDetail(): Promise<any> {
+  public getEventDetail(slugName): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-CSRF-Token': csrfToken
+    });
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/em-chua-18?_format=json', options)
+    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/' + slugName + '?_format=json', options)
       .toPromise()
       .then(
         (resp) => resp.json()
@@ -88,9 +93,13 @@ export class EventService {
       .catch(handleError);
   }
 
-  public postExperience(experience: Experience): Promise<any> {
+  public postExperience(eventSlug: string, experience: Experience): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrfToken});
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-CSRF-Token': csrfToken
+    });
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
       rate: experience.rating,
@@ -98,7 +107,7 @@ export class EventService {
       comment_images: experience.images
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18',
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/' + eventSlug,
       JSON.stringify(data),
       options
     ).toPromise()
@@ -108,7 +117,7 @@ export class EventService {
       .catch(handleError);
   }
 
-  public postComment(comment: HyloComment): Promise<any> {
+  public postComment(eventSlug: string, comment: HyloComment): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
@@ -117,7 +126,7 @@ export class EventService {
       message: comment.text,
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18',
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/' + eventSlug,
       JSON.stringify(data),
       options
     ).toPromise()

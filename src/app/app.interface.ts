@@ -29,6 +29,7 @@ export interface HyloEvent {
   mentions: Icon[];
   images: Image[];
   rating: number;
+  userRated: boolean;
   experiences: Experience[];
 }
 
