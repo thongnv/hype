@@ -9,6 +9,7 @@ if (_ENV === 'develop') {
 const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
 export class AppSetting {
+  public static API_ENDPOINT = API_ENDPOINT;
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
   public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile/';
   public static API_LOGOUT = API_ENDPOINT + 'api/user/logout?_format=json';
@@ -19,7 +20,9 @@ export class AppSetting {
   public static API_USER_INTEREST = API_ENDPOINT + 'api/v1/user/interest?_format=json';
   public static API_USER_ACTIVITY = API_ENDPOINT + '/api/v1/user/activity?_format=json';
   public static API_ARTICLE = API_ENDPOINT + '/articles?_format=json';
-  public static API_ENDPOINT_DEMO = 'http://hylo.dev/' + '/assets/mock-data/mock-data.json';
+  public static API_ENDPOINT_DEMO = 'http://hylo.dev:8000/assets/mock-data/mock-data.json';
+
+  public static API_TRENDING = 'api/v1/trending?_format=json';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,

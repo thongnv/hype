@@ -1,9 +1,9 @@
-<div *ngIf="item" class="wrap-each-items">
+<div *ngFor="let item of events" class="wrap-each-items">
   <div class="avatar-profile">
-    <a class="avatar-picture"><img [src]="item.image" width="140" height="140"></a>
+    <a class="avatar-picture"><img [src]="item.field_images[0]" width="140" height="140"></a>
     <div class="cover-avatar-picture"></div>
-    <div class="month">{{item.date_created | date:'MMM'}}</div>
-    <div class="date-number">{{item.date_created | date:'dd '}}</div>
+    <div class="month">{{item.created}}</div>
+    <div class="date-number">{{item.created}}</div>
     <div class="heart" (click)="onLikeEmit(item)">
       <i class="icon-sm" [class.icon-heart]="!item.selected"
          [class.icon-heart-selected]="item.selected" aria-hidden="true"></i>
@@ -11,16 +11,19 @@
   </div>
   <div class="information-profile">
     <div class="top-content">
-      <h4 class="information-title"><p class="pull-left text-ellipsis real-title">{{item.title}}</p> <span class="free-price-button text-capitalize pull-right" [class.free-price]="item.price == 'free'">{{item.price}}</span></h4>
-      <p class="detail-information">{{item.description | truncate: 85}}</p>
+      <h4 class="information-title"><p class="pull-left text-ellipsis real-title" *ngIf="item.title">{{item.title}}</p>
+        <span *ngIf="item.field_event_option.field_price" class="free-price-button text-capitalize pull-right" [class.free-price]="item.field_event_option.field_price == 'free'">{{item.field_event_option.field_price}}</span>
+      </h4>
+      <p class="detail-information" [innerHTML]="item.body"></p>
     </div>
     <div class="bottom-content">
       <h5 class="mentioned">Mentioned by</h5>
-      <ul class="mentioned-item">
-        <li *ngFor="let ment of item.mentioned_by">
-          <a class="mentioned-item-wrap" target="_blank"><img [src]="ment.avatar" width="28" height="28"></a>
+      <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
+        <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
+          <a class="mentioned-item-wrap" target="_blank"><img [src]="ment" width="28" height="28"></a>
         </li>
       </ul>
     </div>
   </div>
+
 </div>

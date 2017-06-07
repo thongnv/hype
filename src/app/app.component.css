@@ -66,3 +66,23 @@ a.active {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
+.noUi-horizontal .noUi-handle {
+  border-radius: 50%;
+}
+
+.noUi-horizontal {
+  height: 5px;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 28px;
+  height: 28px;
+  left: -17px;
+  top: -12px;
+  outline: none;
+}
+
+.noUi-handle:before {
+  left: 10px;
+}

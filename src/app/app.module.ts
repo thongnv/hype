@@ -89,6 +89,8 @@ import { InterestItemComponent } from './member/interest-item/interest-item.comp
 import { FavoriteComponent } from './member/favorite/favorite.component';
 import { FavoriteListComponent } from './member/favorite-list/favorite-list.component';
 import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.component';
+import {HomeService} from "./services/home.service";
+import {Daterangepicker} from "ng2-daterangepicker/index";
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -190,6 +192,7 @@ type StoreType = {
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
+    Daterangepicker
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -202,6 +205,7 @@ type StoreType = {
     EventService,
     BaseApiService,
     ModeService,
+      HomeService
   ]
 })
 export class AppModule {
