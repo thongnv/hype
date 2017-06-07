@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 export class ProfilePublicComponent implements OnInit {
 
   public userInfo: any;
-  public publicProfile: any;
   public favorite: any;
   public selectedFavoriteType: any;
   private sub: any;
@@ -59,24 +58,17 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log('xOK');
     this.demo();
-    // this.mainService.getUserPublicProfile().then((resp) => {
-    //   this.publicProfile = resp.public_profile;
-    //   this.favorite = resp.favorite;
-    //   this.userInfo.showNav = false;
-    // });
     this.sub = this.route.params.subscribe((params) => {
-      this.slugName = params['id']; // (+) converts string 'id' to a number
-      // In a real app: dispatch action to load the details here.
+      this.slugName = params['slug'];
       console.log('USER: ', this.slugName);
-      this.getUserProfile(this.slugName);
+      this.getUserPublicProfile(this.slugName);
     });
   }
 
-  private getUserProfile(slugName?: string): void {
+  private getUserPublicProfile(slugName?: string): void {
 
-    this.mainService.getUserProfile(slugName).then((response) => {
+    this.mainService.getUserPublicProfile(slugName).then((response) => {
       // this.mainService.getUserPublicProfile().then((response) => {
       this.userInfo.userName = response.field_first_name +
         ' ' + response.field_last_name;

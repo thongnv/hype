@@ -38,7 +38,7 @@ export const ROUTES: Routes = [
   {path: 'member/following', component: FollowingComponent},
   {path: 'member/follower', component: FollowerComponent},
   {path: 'member/favorite', component: FavoriteComponent},
-  {path: 'member/profiles', component: ProfilePublicComponent},
+  {path: 'member/:slug', component: ProfilePublicComponent},
   {path: '**', component: NoContentComponent},
 
 ];
