@@ -17,10 +17,11 @@ a {
 }
 
 h3 {
-  font-size: 30px;
-  font-weight: bold;
   color: #3b3b3b;
   text-transform: capitalize;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: left;
 }
 
 h4 {
@@ -49,7 +50,7 @@ h4 {
 /*title event start*/
 
 .title-event {
-  padding: 36px 0;
+  padding: 15px 0px 30px;
 }
 
 .title-event a.left-arrow {
@@ -82,13 +83,22 @@ h4 {
 .left-content-information-event > li > p {
   float: left;
   text-transform: capitalize;
-  font-weight: bold;
   width: 25%;
   margin-right: 40px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  color: #3b3b3b;
 }
 
 .left-content-information-event > li > span {
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+  text-align: left;
+  color: #3b3b3b;
 }
 
 .left-content-information-event > li > span > b {
@@ -114,7 +124,7 @@ h4 {
 .list-mention > li > a {
   border-radius: 7px;
   border: 1px solid #e6e6e6;
-  padding: 5px 4px 8px;
+  padding: 10px 5px;
 }
 
 .right-creator-information-event {
@@ -123,10 +133,42 @@ h4 {
 
 h4.title-creator {
   margin-bottom: 11px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+  color: #3b3b3b;
 }
-
+h4.title-detail-event {
+  margin-bottom: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+  color: #3b3b3b;
+}
+h4.title-experiences-area {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+}
+p.content-detail-event {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+}
 p.name-creator {
   margin: 10px 0;
+  font-family: Roboto;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+  color: #3b3b3b;
+  text-transform: capitalize;
 }
 
 p.name-creator a {
@@ -151,7 +193,7 @@ p.avg-rating {
 
 /*experience area start*/
 .experience-top {
-  margin-top: 20px;
+  margin-top: 30px;
   position: relative;
 }
 
@@ -165,7 +207,7 @@ a.post-your-experience {
   right: 4%;
   color: #ec3d62;
   text-transform: capitalize;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .information-experience img {
@@ -178,11 +220,25 @@ a.post-your-experience {
   margin: 12px;
   line-height: 40px;
 }
-
+.content-info-experience h4 {
+  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+.content-info-experience p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 40px;
+    text-align: left;
+    color: #3b3b3b;
+}
 ul.list-stars-review-experience {
   list-style: none;
   float: left;
-  margin: 20px;
+  margin: 10px 40px;
 }
 
 ul.list-stars-review-experience li {
@@ -191,9 +247,12 @@ ul.list-stars-review-experience li {
 }
 
 p.detail-info-experience {
-  font-size: 14px;
-  margin: 20px 0;
-  color: #3b3b3b;
+    padding: 20px 0;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 30px;
+    text-align: left;
+    color: #3b3b3b;
 }
 
 ul.list-pictures-experience {
@@ -213,21 +272,35 @@ ul.list-pictures-experience li img {
   padding-top: 40px;
 }
 
-.likes-comments-experience-area a {
-  color: #3b3b3b;
+.likes-comments-experience-area div {
+  display: inline-block;
 }
 
 .likes-area {
-  float: left;
   margin-right: 20px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
 }
-
-.comments-area {
-  float: left;
+.comments-area a {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
 }
-
 .report-area {
   float: right;
+}
+.report-area a {
+  font-weight: 300;
+  opacity: 0.6;
+  font-size: 12px;
+  line-height: 1;
+  text-align: right;
+  color: #3b3b3b;
 }
 
 /*experience area end*/
@@ -270,8 +343,29 @@ ul.list-comments-ago li .avatar-comment-ago {
 }
 
 .top-content-comment a b {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.29;
+  text-align: left;
   color: #3b3b3b;
 }
+.top-content-comment span {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+}
+.bottom-like-reply-comment {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 30px;
+    text-align: left;
+}
+.bottom-like-reply-comment div {
+  display: inline-block;
+}
+
 .avatar-comment-ago {
   float: left;
   margin-right: 2%;
@@ -342,9 +436,13 @@ ul.list-stars-on-post {
   margin: 30px 0;
   background: #e8e8e8;
   padding: 15px;
+  border-radius: 4px;
 }
 
-.add-image-area a {
+.add-image-area label {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
   color: #ec3d62;
 }
 
