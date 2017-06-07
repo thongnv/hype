@@ -76,7 +76,7 @@
         <!-- post your experience start -->
         <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35" *ngIf="!userRated">
           <img [src]="user.avatar" alt="user avatar" class="img-circle" width="70" height="70">
-          <form class="form-horizontal" [formGroup]="experienceForm" (ngSubmit)="onSubmit()">
+          <form class="form-horizontal" [formGroup]="experienceForm">
             <div class="list-stars-on-post">
               <ngb-rating [(rate)]="userRating">
                 <ng-template let-fill="fill">
@@ -100,7 +100,7 @@
               </label>
               <div class="list-img-wrap">
                 <div *ngFor="let img of previewUrl" class="preview-wrap">
-                  <img [src]="img"/>
+                  <img [src]="img.url"/>
                   <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
                 </div>
               </div>

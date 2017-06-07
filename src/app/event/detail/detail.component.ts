@@ -3,10 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import * as moment from 'moment/moment';
 
-import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser } from '../../app.interface';
+import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { MainService } from '../../services/main.service';
 
 @Component({
   selector: 'app-detail',
@@ -26,7 +27,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public price: string = '';
   public call2action: Call2Action = {action: '', link: ''};
   public mentions: Icon[] = [];
-  public images: string[] = [];
+  public images: Image[] = [];
   public rating: number = 0;
   public experiences: Experience[] = [];
 
@@ -37,7 +38,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public noThumbnail: boolean = false;
   public slides = [];
 
-  public previewUrl: string[] = [];
+  public previewUrl: Image[] = [];
 
   public userRating: number = 0;
   public userRated: boolean = false;
@@ -52,26 +53,27 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  constructor(
-    private appState: AppState,
-    public eventService: EventService,
-    public formBuilder: FormBuilder,
-    public rateConfig: NgbRatingConfig
+  constructor(public appState: AppState,
+              public mainService: MainService,
+              public eventService: EventService,
+              public formBuilder: FormBuilder,
+              public rateConfig: NgbRatingConfig
   ) {
-    this.eventService.getEventDetail().then((resp) => {
-      let event = EventService.extractEventDetail(resp);
-      this.initEvent(event);
-      this.initSlide(this.images);
-      this.mapReady = true;
+    this.eventService.getEventDetail().then(
+      (resp) => {
+        let event = EventService.extractEventDetail(resp);
+        this.initEvent(event);
+        this.initSlide(this.images);
+        this.mapReady = true;
+      }
+    );
+    this.mainService.getUserProfile().then((response) => {
+      this.user.name = response.name;
+      this.user.avatar = response.field_image;
     });
   }
 
   public ngOnInit() {
-    // this.user = this.appState.state.userInfo;
-    this.user = {
-      name: 'Penny Lim',
-      avatar: '/assets/img/event/detail/tank.jpg',
-    };
     this.initRating();
   }
 
@@ -90,9 +92,19 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       date: moment().unix() * 1000,
       images: this.previewUrl
     };
+    let data = {
+      rate: experience.rating,
+      message: experience.text,
+      comment_images: this.previewUrl
+    };
+    this.eventService.postExperience(data).then(
+      (resp) => {
+        console.log(resp);
+        this.experienceForm.reset();
+        this.userRated = true;
+      }
+    );
     this.experiences.push(experience);
-    this.experienceForm.reset();
-    this.userRated = true;
   }
 
   public onRemovePreview(imageUrl) {
@@ -107,7 +119,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
-          this.previewUrl.push(e.target.result);
+          let img = {
+            url: e.target.result,
+            value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+            filename: event.target.files[i].name,
+            filemime: event.target.files[i].type,
+            filesize: event.target.files[i].size
+          };
+          this.previewUrl.push(img);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -131,7 +150,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   private initSlide(images) {
     for (let image of images) {
-      this.slides.push({image});
+      this.slides.push({image: image.url});
     }
   }
 

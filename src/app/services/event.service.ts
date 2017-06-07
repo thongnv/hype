@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 
-import { Experience, HyloComment, HyloEvent, Icon } from '../app.interface';
+import { Experience, HyloComment, HyloEvent, Icon, Image } from '../app.interface';
 
 let MOCK_ACTIONS = [
   'Buy Tickets',
@@ -53,7 +53,7 @@ export class EventService {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/sau-tat-ca?_format=json', options)
+    return this._http.get('http://hypeweb.iypuat.com:5656/api/v1/event/em-chua-18?_format=json', options)
       .toPromise()
       .then(
         (resp) => resp.json()
@@ -87,12 +87,51 @@ export class EventService {
       )
       .catch(handleError);
   }
+
+  public postExperience(data): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.post(
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18',
+      JSON.stringify(data),
+      options
+    ).toPromise()
+      .then(
+        (resp) => console.log(resp.json())
+      )
+      .catch(handleError);
+  }
+
+  public postComment(comment: HyloComment): Promise<any> {
+    // let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let csrfToken = '2VC_B3EYIZL7T6pfaT2O9b94XOAaQ9PYBxpdVAkaTUM';
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.post(
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18?_format=json',
+      JSON.stringify(comment),
+      options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(handleError);
+  }
 }
 
-function extractImages(data): string[] {
+function extractImages(data): Image[] {
   let images = [];
   for (let item of data) {
-    images.push(item.url);
+    images.push(
+      {
+      url: item.url,
+      value: '',
+      filename: '',
+      filemime: '',
+      filesize: '',
+    }
+  );
   }
   return images;
 }
@@ -102,8 +141,8 @@ function  extractMentions(data): Icon[] {
   for (let item of data) {
     mentions.push(
       {
-        url: item.item,
-        iconUrl: 'https://www.google.com/s2/favicons?domain=' + item.item,
+        url: item,
+        iconUrl: 'https://www.google.com/s2/favicons?domain=' + item
       }
     );
   }

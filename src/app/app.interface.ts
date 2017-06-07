@@ -27,7 +27,7 @@ export interface HyloEvent {
   price: string;
   call2action: Call2Action;
   mentions: Icon[];
-  images: string[];
+  images: Image[];
   rating: number;
   experiences: Experience[];
 }
@@ -53,7 +53,7 @@ export interface Experience {
   rating: number;
   date: number;
   text: string;
-  images: string[];
+  images: Image[];
   comments: HyloComment[];
   likeNumber: number;
   liked: boolean;
@@ -81,4 +81,12 @@ export interface FileReaderEventTarget extends EventTarget {
 export interface FileReaderEvent extends Event {
   target: FileReaderEventTarget;
   getMessage(): string;
+}
+
+export interface Image {
+  url: string;
+  value: string;
+  filename: string;
+  filemime: string;
+  filesize: number;
 }

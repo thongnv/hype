@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
-import { HyloComment, Experience, BaseUser } from '../../app.interface';
+import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
 
 @Component({
@@ -123,7 +123,7 @@ export class ExperienceComponent implements Experience, OnInit {
   public rating: number;
   public date: number;
   public text: string;
-  public images: string[];
+  public images: Image[];
   public thumbImages: any[] = [];
   public comments: HyloComment[];
   public likeNumber: number;
@@ -146,8 +146,8 @@ export class ExperienceComponent implements Experience, OnInit {
     for (let i of this.images) {
       this.thumbImages.push(
         {
-          thumb: i,
-          img: i,
+          thumb: i.url,
+          img: i.url,
           description: 'Thumb Image'
         }
       );
@@ -162,6 +162,9 @@ export class ExperienceComponent implements Experience, OnInit {
       liked: false,
       replies: []
     };
+    this.event.eventService.postComment(comment).then(
+      (resp) => console.log(resp)
+    );
     this.comments.push(comment);
     msgInput.value = '';
   }
