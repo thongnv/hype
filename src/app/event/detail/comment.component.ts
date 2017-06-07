@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { BaseUser, HyloComment, User } from '../../app.interface';
+import { BaseUser, HyloComment } from '../../app.interface';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'app-comment',
@@ -38,17 +39,21 @@ import { BaseUser, HyloComment, User } from '../../app.interface';
 export class CommentComponent implements HyloComment, OnInit {
   @Input() public comment: HyloComment;
 
+  public id: number;
+  public pid: number;
   public likeNumber: number;
   public replies: HyloComment[];
   public user: BaseUser;
   public text: string;
   public liked: boolean;
 
-  constructor() {
+  constructor(private eventService: EventService) {
     // TODO
   }
 
   public ngOnInit() {
+    this.id = this.comment.id;
+    this.pid = this.comment.pid;
     this.likeNumber = this.comment.likeNumber;
     this.replies = this.comment.replies;
     this.user = this.comment.user;
@@ -58,5 +63,9 @@ export class CommentComponent implements HyloComment, OnInit {
 
   public toggleLike() {
     this.liked = !this.liked;
+    let comment = this;
+    this.eventService.toggleLike(comment).then(
+      (resp) => console.log(resp)
+    );
   }
 }

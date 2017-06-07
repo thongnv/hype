@@ -49,6 +49,7 @@ export interface Call2Action {
 }
 
 export interface Experience {
+  id: number;
   author: BaseUser;
   rating: number;
   date: number;
@@ -60,6 +61,8 @@ export interface Experience {
 }
 
 export interface HyloComment {
+  id: number;
+  pid: number;
   user: BaseUser;
   text: string;
   likeNumber: number;

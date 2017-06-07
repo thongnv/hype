@@ -88,10 +88,15 @@ export class EventService {
       .catch(handleError);
   }
 
-  public postExperience(data): Promise<any> {
+  public postExperience(experience: Experience): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
+    let data = {
+      rate: experience.rating,
+      message: experience.text,
+      comment_images: experience.images
+    };
     return this._http.post(
       'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18',
       JSON.stringify(data),
@@ -104,15 +109,37 @@ export class EventService {
   }
 
   public postComment(comment: HyloComment): Promise<any> {
-    // let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let csrfToken = '2VC_B3EYIZL7T6pfaT2O9b94XOAaQ9PYBxpdVAkaTUM';
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
+    let data = {
+      pid: comment.pid,
+      message: comment.text,
+    };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18?_format=json',
-      JSON.stringify(comment),
-      options)
-      .toPromise()
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/em-chua-18',
+      JSON.stringify(data),
+      options
+    ).toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(handleError);
+  }
+
+  public toggleLike(comment: HyloComment|Experience): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    let data = {
+      cid: comment.id,
+      like: comment.liked
+    };
+    return this._http.post(
+      'http://hypeweb.iypuat.com:5656/api/v1/comment/like',
+      JSON.stringify(data),
+      options
+    ).toPromise()
       .then(
         (resp) => resp.json()
       )
@@ -154,6 +181,7 @@ function  extractExperiences(data): Experience[] {
   for (let item of data) {
     experiences.push(
       {
+        id: item.cid,
         author: {
           name: item.author_name,
           avatar: item.author_avatar,
@@ -163,7 +191,7 @@ function  extractExperiences(data): Experience[] {
         text: item.comment_body,
         images: extractImages(item.comment_images),
         comments: extractComments(item.children),
-        likeNumber: item.like_comment,
+        likeNumber: Number(item.like_comment),
         liked: item.user_like
       }
     );
@@ -172,16 +200,18 @@ function  extractExperiences(data): Experience[] {
 }
 
 function  extractComments(data): HyloComment[] {
-  let comments = [];
+  let comments: HyloComment[] = [];
   for (let item of data) {
     comments.push(
       {
+        id: item.cid,
+        pid: item.pid,
         user: {
           name: item.author_name,
           avatar: item.author_avatar,
         },
         text: item.comment_body,
-        likeNumber: item.like_comment,
+        likeNumber: Number(item.like_comment),
         liked: item.user_like,
         replies: []
       }
@@ -191,5 +221,6 @@ function  extractComments(data): HyloComment[] {
 }
 
 function  handleError(error: any): Promise<any> {
+  console.log(error);
   return Promise.reject(error.message || error);
 }

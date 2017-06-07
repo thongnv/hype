@@ -57,8 +57,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public mainService: MainService,
               public eventService: EventService,
               public formBuilder: FormBuilder,
-              public rateConfig: NgbRatingConfig
-  ) {
+              public rateConfig: NgbRatingConfig) {
     this.eventService.getEventDetail().then(
       (resp) => {
         let event = EventService.extractEventDetail(resp);
@@ -82,29 +81,27 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public addExperience(msgInput) {
-    let experience: Experience = {
-      author: this.user,
-      text: msgInput.value,
-      likeNumber: 0,
-      liked: false,
-      comments: [],
-      rating: this.userRating,
-      date: moment().unix() * 1000,
-      images: this.previewUrl
-    };
-    let data = {
-      rate: experience.rating,
-      message: experience.text,
-      comment_images: this.previewUrl
-    };
-    this.eventService.postExperience(data).then(
-      (resp) => {
-        console.log(resp);
-        this.experienceForm.reset();
-        this.userRated = true;
-      }
-    );
-    this.experiences.push(experience);
+    if (msgInput.value.trim()) {
+      let experience: Experience = {
+        id: 0,
+        author: this.user,
+        text: msgInput.value,
+        likeNumber: 0,
+        liked: false,
+        comments: [],
+        rating: this.userRating,
+        date: moment().unix() * 1000,
+        images: this.previewUrl
+      };
+      this.eventService.postExperience(experience).then(
+        (resp) => {
+          console.log(resp);
+          this.experienceForm.reset();
+          this.userRated = true;
+        }
+      );
+      this.experiences.push(experience);
+    }
   }
 
   public onRemovePreview(imageUrl) {

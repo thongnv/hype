@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
+import { EventService } from '../../services/event.service';
 
 @Component({
   selector: 'event-experience',
@@ -53,15 +54,11 @@ import { EventDetailComponent } from './detail.component';
 
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
-          <a *ngIf="!liked" (click)="like()">
-            <img src="/assets/img/event/detail/icon-like.png" alt="icon-like">
+          <a  (click)="toggleLikeExperience()">
+            <img *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
+            <img *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
-          <a *ngIf="liked" (click)="unLike()">
-            <img src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
-          </a>
-          <a>
             {{likeNumber}} Likes
-          </a>
         </div>
         <div class="comments-area">
           <a>
@@ -119,6 +116,8 @@ export class ExperienceComponent implements Experience, OnInit {
   public imagePointer: number;
 
   public currentUser: BaseUser;
+
+  public id: number;
   public author: BaseUser;
   public rating: number;
   public date: number;
@@ -129,11 +128,14 @@ export class ExperienceComponent implements Experience, OnInit {
   public likeNumber: number;
   public liked: boolean;
 
-  constructor(private event: EventDetailComponent) {
+  constructor(
+    private eventService: EventService,
+    private event: EventDetailComponent) {
   }
 
   public ngOnInit() {
     this.currentUser = this.event.user;
+    this.id = this.experience.id;
     this.author = this.experience.author;
     this.rating = this.experience.rating;
     this.date = this.experience.date;
@@ -155,24 +157,37 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public addComment(msgInput) {
-    let comment: HyloComment = {
-      user: this.event.user,
-      text: msgInput.value,
-      likeNumber: 0,
-      liked: false,
-      replies: []
-    };
-    this.event.eventService.postComment(comment).then(
-      (resp) => console.log(resp)
-    );
-    this.comments.push(comment);
-    msgInput.value = '';
+    if (msgInput.value.trim()) {
+      let comment: HyloComment = {
+        id: 0,
+        pid: this.id,
+        user: this.event.user,
+        text: msgInput.value,
+        likeNumber: 0,
+        liked: false,
+        replies: []
+      };
+      this.eventService.postComment(comment).then(
+        (resp) => console.log(resp)
+      );
+      this.comments.push(comment);
+      msgInput.value = '';
+    }
   }
 
   public addComments(comments: HyloComment[]) {
     // TODO: add comments
     // load comments by calling comment API
     // variable: experience.comments
+  }
+
+  public toggleLikeExperience() {
+    this.liked = !this.liked;
+    this.likeNumber += this.liked ? 1 : -1;
+    let experience = this;
+    this.eventService.toggleLike(experience).then(
+      (resp) => console.log(resp)
+    );
   }
 
   public OpenImageModel(imageSrc, images) {
@@ -194,11 +209,6 @@ export class ExperienceComponent implements Experience, OnInit {
 
   public like() {
     this.liked = true;
-    this.likeNumber += 1;
   }
 
-  public unLike() {
-    this.liked = false;
-    this.likeNumber -= 1;
-  }
 }
