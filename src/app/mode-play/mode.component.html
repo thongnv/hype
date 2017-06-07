@@ -1,7 +1,6 @@
 <section>
     <div class="row">
         <div class="col-lg-6 col-xs-12 left-box">
-            <h1 x-large class="sample-content">Mode Play</h1>
             <form [formGroup]="filterFromMode" class="filterFromMode">
                 <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterMode">
                     <label class="btn btn-default">
@@ -105,8 +104,6 @@
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
-<<<<<<< HEAD
-
             <div class="result-wrap" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
                 <div class="list-event">
                     <div class="list-header">
@@ -128,10 +125,12 @@
                                     <p>{{item.email}} | {{item.phone}}</p>
                                     <p>{{item.address}}</p>
                                 </div>
-=======
-
-            <div class="list-event" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true"
-                 [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-event" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
                 <div class="list-header">
                     <div class="pull-left">Sort By</div>
                     <div class="pull-right">Clear Filters</div>
@@ -150,7 +149,6 @@
                             <div class="box-content">
                                 <p>{{item.email}} | {{item.phone}}</p>
                                 <p>{{item.address}}</p>
->>>>>>> 89905c33f576e2ee99fb4736a397ca94bd8fcf93
                             </div>
                         </div>
                     </div>
