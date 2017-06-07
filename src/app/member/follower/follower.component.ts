@@ -14,6 +14,10 @@ export class FollowerComponent implements OnInit {
   public followingPage: number = 0;
   public msgContent: string;
   public alertType: string;
+  public set: any = {
+    offset: 0, endOfList: false, loadingInProgress: false
+  };
+
   public constructor(private appState: AppState, private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
 
@@ -23,6 +27,30 @@ export class FollowerComponent implements OnInit {
     }
     this.appState.set('followingPage', this.followingPage);
     console.log('followingPage', this.followingPage);
+  }
+  public loadMore(): void {
+    if (!this.set.loadingInProgress) {
+      if (this.set.offset > 9999) {    // detect the end of list
+        this.set.endOfList = true;
+      } else {
+        this.set.loadingInProgress = true;
+        let count = 0;
+        this.mainService.getUserFollow('following', ++this.followingPage).then((response) => {
+          response.forEach((item) => {
+            count++;
+            this.userInfo.userFollowing.push(item);
+          });
+          if (count === 0) {
+            this.set.endOfList = true;
+            this.followingPage--;
+          } else {
+            let max = this.set.offset + count;
+            this.set.offset = max;
+          }
+          this.set.loadingInProgress = false;
+        });
+      }
+    }
   }
 
   public ngOnInit() {

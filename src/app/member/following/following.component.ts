@@ -35,9 +35,6 @@ export class FollowingComponent implements OnInit {
   }
 
   public onFollowScrollDown(data) {
-    console.log('clientHeight: ', data.srcElement.clientHeight);
-    console.log('scrollTop: ', data.srcElement.scrollTop);
-    console.log('scrollHeight: ', data.srcElement.scrollHeight);
     let elm = data.srcElement;
     if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
       this.loadMore();
@@ -51,20 +48,19 @@ export class FollowingComponent implements OnInit {
       } else {
         this.set.loadingInProgress = true;
         let count = 0;
-        this.mainService.getUserFollow('following', this.followingPage).then((response) => {
+        this.mainService.getUserFollow('following', ++this.followingPage).then((response) => {
           response.forEach((item) => {
             count++;
             this.userInfo.userFollowing.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
+            this.followingPage--;
           } else {
             let max = this.set.offset + count;
             this.set.offset = max;
           }
           this.set.loadingInProgress = false;
-          console.log('response', response);
-          console.log('this.userInfo.userFollowing', this.userInfo.userFollowing);
         });
       }
     }

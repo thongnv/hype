@@ -13,17 +13,14 @@
            width="100%"
            height="calc(100vh - 145px)"
            size="7px"
-           [alwaysVisible]="true"
            [railVisible]="true"
            [railOpacity]="0.1"
            [railColor]="'#ec3d62'"
            [color]="'#ec3d62'">
-        <div *ngFor="let id of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
           <app-follow-item [item]="following" [flag]="'following'" *ngFor="let following of userInfo.userFollowing"
                            (onUpdate)="updateFollow($event)"
                            class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
           </app-follow-item>
-        </div>
         <div ngui-infinite-list-end>
           <div *ngIf="set.loadingInProgress">Loading</div>
           <div *ngIf="set.endOfList">End Of List</div>
