@@ -17,7 +17,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   @Output('onChangePlace') public onChangePlace = new EventEmitter<any>();
   @ViewChild('search')
   public searchElementRef: ElementRef;
-  public imageUrl: string = '';
+  public imageUrl: any;
 
   public constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
   }
@@ -49,8 +49,13 @@ export class GmapAutoPlaceComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {
-        this.imageUrl = e.target.result;
-        this.group.get('image').patchValue(e.target.result);
+        this.imageUrl = {
+          url: e.target.result,
+          value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+          filename: event.target.files[0].name,
+          filemime: event.target.files[0].type
+        };
+        this.group.get('image').patchValue(this.imageUrl);
       };
       reader.readAsDataURL(event.target.files[0]);
     }

@@ -176,6 +176,32 @@ export class MainService {
       .catch(this.handleError);
   }
 
+  public getCategoryArticle(): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(AppSetting.API_CATEGORIES_ARTICLE, options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(this.handleError);
+  }
+
+  public postArticle(data) {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.post(AppSetting.API_ARTICLE,
+      data,
+      options)
+      .toPromise()
+      .then(
+        (resp) => resp.json()
+      )
+      .catch(this.handleError);
+  }
+
   public getUserPublicProfile(): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});

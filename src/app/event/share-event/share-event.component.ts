@@ -76,6 +76,46 @@ export class ShareEventComponent implements OnInit {
     }
   }
 
+  public resize(img, MAX_WIDTH: number, MAX_HEIGHT: number, callback) {
+    // This will wait until the img is loaded before calling this function
+    return img.onload = () => {
+
+      // Get the images current width and height
+      let width = img.width;
+      let height = img.height;
+
+      // Set the WxH to fit the Max values (but maintain proportions)
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+
+      // create a canvas object
+      let canvas = document.createElement('canvas');
+
+      // Set the canvas to the new calculated dimensions
+      canvas.width = width;
+      canvas.height = height;
+      let ctx = canvas.getContext('2d');
+
+      ctx.drawImage(img, 0, 0,  width, height);
+
+      // Get this encoded as a jpeg
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      let dataUrl = canvas.toDataURL('image/jpeg');
+
+      // callback with the results
+      callback(dataUrl, img.src.length, dataUrl.length);
+    };
+  }
+
   public addMention() {
     const mentions = this.eventForm.get('eventMentions') as FormArray;
     mentions.push(new FormControl());

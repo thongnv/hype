@@ -42,6 +42,7 @@ import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { TinymceModule } from 'angular2-tinymce';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
+import { ImageUploadModule } from 'ng2-imageupload';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -185,6 +186,7 @@ type StoreType = {
     TruncateModule,
     TinymceModule.withConfig({}),
     ReactiveFormsModule,
+    ImageUploadModule,
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
