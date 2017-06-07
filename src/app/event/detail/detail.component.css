@@ -340,6 +340,7 @@ ul.list-comments-ago li .avatar-comment-ago {
 
 .content-comment-ago {
   line-height: 25px;
+  padding-left: 66px;
 }
 
 .top-content-comment a b {
@@ -357,10 +358,10 @@ ul.list-comments-ago li .avatar-comment-ago {
   color: #3b3b3b;
 }
 .bottom-like-reply-comment {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 30px;
-    text-align: left;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
 }
 .bottom-like-reply-comment div {
   display: inline-block;
