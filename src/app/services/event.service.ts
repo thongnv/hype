@@ -112,7 +112,7 @@ export class EventService {
       options
     ).toPromise()
       .then(
-        (resp) => console.log(resp.json())
+        (resp) => resp.json()
       )
       .catch(handleError);
   }
@@ -157,6 +157,9 @@ export class EventService {
 }
 
 function extractImages(data): Image[] {
+  if (!data) {
+    return [];
+  }
   let images = [];
   for (let item of data) {
     images.push(
