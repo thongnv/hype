@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
-import { EventService } from '../services/event.service';
-import { AppState } from '../app.service';
 import { Router } from '@angular/router';
-import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
 @Component({
   selector: 'app-curate-new',
@@ -25,7 +22,7 @@ export class CurateNewComponent implements OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides: any[] = [];
-
+  public previewData: any;
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
@@ -34,15 +31,13 @@ export class CurateNewComponent implements OnInit {
   public formData = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
-    listCategory: ['', Validators.email],
-    listImages: ['', Validators.required],
+    listCategory: ['', Validators.required],
+    listImages: [''],
     listPlaces: this.formBuilder.array([])
   });
 
   constructor(public formBuilder: FormBuilder,
-              public appState: AppState,
               private mainService: MainService,
-              private eventService: EventService,
               private router: Router) {
     this.onAddPlace();
   }
@@ -62,13 +57,6 @@ export class CurateNewComponent implements OnInit {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
-  }
-
-  public selected(imageResult: ImageResult) {
-    let data = imageResult.resized
-      && imageResult.resized.dataURL
-      || imageResult.dataURL;
-    console.log(data);
   }
 
   public readUrl(event) {
@@ -95,7 +83,6 @@ export class CurateNewComponent implements OnInit {
     this.listPlaces = [];
     let address = article.listPlaces;
     for (let add of address) {
-      console.log(add);
       this.listPlaces.push({
         field_place_comment: add.description,
         field_latitude: add.lat,
@@ -107,22 +94,16 @@ export class CurateNewComponent implements OnInit {
     article.listPlaces = this.listPlaces;
     article.listImages = this.previewUrl;
     let  data = this.mapArticle(article);
-    console.log(data);
-    this.mainService.postArticle(data).then(
-      (response) => {
-        console.log(response);
+    this.mainService.postArticle(data).then((response) => {
+      if (response.status) {
+        this.router.navigate([response.data.slug]);
       }
-    );
-    // this.router.navigate(['/curate-detail/123abc']);
+    });
   }
 
   public onPreview() {
-    let userDraftList = {
-      info: this.formData.value,
-      images: this.previewUrl
-    };
-    console.log(userDraftList);
-    this.appState.set('userDraftList', userDraftList);
+    this.previewData = this.formData.value;
+    this.previewData.images = this.previewUrl;
     this.initMap();
   }
 
@@ -204,9 +185,9 @@ export class CurateNewComponent implements OnInit {
     this.slides = [];
     this.markers = [];
     this.showPreview = true;
-    if (this.appState.state.userDraftList.info.listPlaces.length) {
+    if (this.previewData.listPlaces.length) {
       let index = 0;
-      for (let place of this.appState.state.userDraftList.info.listPlaces) {
+      for (let place of this.previewData.listPlaces) {
         if (place.lat && place.lng) {
           if (index === 0) {
             this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
@@ -216,8 +197,8 @@ export class CurateNewComponent implements OnInit {
           index++;
         }
       }
-      if (this.appState.state.userDraftList.images.length) {
-        for (let img of this.appState.state.userDraftList.images) {
+      if (this.previewData.images.length) {
+        for (let img of this.previewData.images) {
           if (img) {
             this.slides.push({image: img.url, active: false});
           }
