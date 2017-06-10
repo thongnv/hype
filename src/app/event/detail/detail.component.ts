@@ -8,7 +8,7 @@ import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -57,19 +57,25 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     public eventService: EventService,
     public formBuilder: FormBuilder,
     public rateConfig: NgbRatingConfig,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe((e) => {
-      this.slugName = e.id;
-      this.eventService.getEventDetail(this.slugName).then(
+      this.slugName = e.slug;
+      this.eventService.getEventDetail(this.slugName).subscribe(
         (resp) => {
           let event = EventService.extractEventDetail(resp);
-          this.initEvent(event);
+          this.loadData(event);
           this.initSlide(this.images);
           this.mapReady = true;
-        });
-      }
-    );
+        },
+        (error) => {
+          console.log(error);
+          this.router.navigate(['PageNotFound']).then();
+        }
+      );
+    });
+
     this.mainService.getUserProfile().then((response) => {
       this.user.name = response.name;
       this.user.avatar = response.field_image;
@@ -98,7 +104,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         images: this.previewUrl
       };
       let eventSlugName = this.slugName;
-      this.eventService.postExperience(eventSlugName, experience).then(
+      this.eventService.postExperience(eventSlugName, experience).subscribe(
         (resp) => {
           console.log(resp);
           this.experienceForm.reset();
@@ -136,7 +142,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     }
   }
 
-  private initEvent(event) {
+  private loadData(event) {
     this.creator = event.creator;
     this.name = event.name;
     this.location = event.location;

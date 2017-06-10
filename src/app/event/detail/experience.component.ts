@@ -172,12 +172,17 @@ export class ExperienceComponent implements Experience, OnInit {
         replies: []
       };
       let eventSlugName = this.event.slugName;
-      this.eventService.postComment(eventSlugName, comment).then(
-        (resp) => console.log(resp)
+      this.eventService.postComment(eventSlugName, comment).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.comments.push(comment);
+          this.commentIndex += 1;
+          msgInput.value = '';
+        },
+        (error) => {
+          console.log(error);
+        }
       );
-      this.comments.push(comment);
-      msgInput.value = '';
-      this.commentIndex += 1;
     }
   }
 
@@ -193,8 +198,11 @@ export class ExperienceComponent implements Experience, OnInit {
     this.liked = !this.liked;
     this.likeNumber += this.liked ? 1 : -1;
     let experience = this;
-    this.eventService.toggleLike(experience).then(
-      (resp) => console.log(resp)
+    this.eventService.toggleLike(experience).subscribe(
+      (resp) => console.log(resp),
+      (error) => {
+        console.log(error);
+      }
     );
   }
 
