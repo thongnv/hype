@@ -8,6 +8,7 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 
 import { Experience, HyloComment, HyloEvent, Icon, Image } from '../app.interface';
+import { AppSetting } from '../app.setting';
 
 let MOCK_ACTIONS = [
   'Buy Tickets',
@@ -88,7 +89,7 @@ export class EventService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
-      'http://hypeweb.iypuat.com:5656/api/v1/category/event?_format=json', options
+      AppSetting.API_CATEGORIES_EVENT, options
     )
     .map((res: Response) => {
       return res.json();

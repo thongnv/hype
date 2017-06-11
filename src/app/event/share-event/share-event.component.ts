@@ -45,8 +45,8 @@ export class ShareEventComponent implements OnInit {
               public appState: AppState,
               public sanitizer: DomSanitizer,
               private router: Router) {
-    this.eventService.getCategoryEvent().then(
-      (response) => this.categories = response.data
+    this.eventService.getCategoryEvent().subscribe(
+      (response: any) => this.categories = response.data
     );
   }
 
@@ -100,7 +100,7 @@ export class ShareEventComponent implements OnInit {
     event.eventImages = this.previewUrl;
     event.created = moment(event.eventDate).unix();
     let data = this.mapEvent(event);
-    this.eventService.postEvent(data).then((response) => {
+    this.eventService.postEvent(data).subscribe((response: any) => {
       if (response.status) {
         this.router.navigate([response.data.slug]);
       }
