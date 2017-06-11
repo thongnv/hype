@@ -1,0 +1,6 @@
+<ul class="star-vote-list">
+  <li *ngFor="let star of [1,2,3,4,5]">
+    <i [class.star-selected]="star <= stars" [class.star]="star > stars" class="point" aria-hidden="true"
+       (click)="onClick(star)"></i>
+  </li>
+</ul>

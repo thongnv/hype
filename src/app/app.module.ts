@@ -91,6 +91,8 @@ import { FavoriteListComponent } from './member/favorite-list/favorite-list.comp
 import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.component';
 import { HomeService } from './services/home.service';
 import { Daterangepicker } from 'ng2-daterangepicker';
+import { NotificationComponent } from './navbar/notification/notification.component';
+import { StarVoteComponent } from './star-vote/star-vote.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -157,7 +159,9 @@ type StoreType = {
     FavoritePlaceComponent,
     FavoriteEventComponent,
     FavoritePipe,
-    BoostrapAlertComponent
+    BoostrapAlertComponent,
+    NotificationComponent,
+    StarVoteComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,

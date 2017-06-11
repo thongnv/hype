@@ -21,7 +21,7 @@
                          (onUpdate)="updateFollow($event)"
                          class="col-lg-3 col-md-4 col-sm-6 col-xs-12 interest-item-wrap">
         </app-follow-item>
-        <div class="list-bottom" ngui-infinite-list-end>
+        <div class="list-bottom">
           <div *ngIf="set.loadingInProgress">Loading</div>
           <div *ngIf="set.endOfList">End Of List</div>
         </div>

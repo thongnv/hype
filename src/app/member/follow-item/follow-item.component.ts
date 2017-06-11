@@ -8,13 +8,13 @@ import { MainService } from '../../services/main.service';
   styleUrls: ['./follow-item.component.css'],
   animations: [
     trigger('follow', [
-      state('yes', style({opacity: 1, display: 'inline-block'})),
+      state('yes', style({opacity: .5, display: 'inline-block'})),
       state('no', style({opacity: 0, display: 'none'})),
       // transition('1 <=> 2', animate( '300ms' )),
     ]),
     trigger('unfollow', [
       state('yes', style({opacity: 0, display: 'none'})),
-      state('no', style({opacity: 1, display: 'inline-block'})),
+      state('no', style({opacity: .5, display: 'inline-block'})),
       // transition('1 <=> 2', animate( '300ms' )),
     ])
   ],

@@ -90,24 +90,6 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public isLoggedIn(): any {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers, withCredentials: true});
-
-    return new Promise((resolve, reject) => {
-      this._http.get(AppSetting.API_LOGIN_STATUS, options).subscribe(
-        (response) => {
-          console.log('API_LOGIN_STATUS: ', response.json());
-          resolve(response);
-        },
-        (err) => {
-          console.debug(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
   public getUserFollow(followFlag: string, page: number): Promise<any> {
     let currentSlug = <string> this._localStorageService.get('slug');
     const followUrl = (followFlag === 'following') ?
@@ -202,11 +184,70 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public getUserPublicProfile(): Promise<any> {
+  public getUserPublicProfile(slugName?: string): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(AppSetting.API_ENDPOINT_DEMO, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getNotifications(page: number) {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(AppSetting.API_NOTIFICATION + '&limit=10&page=' + page, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public updateNotifications(type: string, mid?: string) {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.post(AppSetting.API_NOTIFICATION, JSON.stringify({type, mid}), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getUserEvent(slugName?: string, page?: number): Promise<any> {
+    let currentSlug = <string> this._localStorageService.get('slug');
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+
+    return this._http.get(AppSetting.API_FAVORITE_EVENT +
+      '&page=' + page + '&slug=/user/' + (slugName !== '' ? slugName : currentSlug), options)
+      .toPromise()
+      .then((resp) => resp.json().data)
+      .catch(this.handleError);
+  }
+
+  public getUserList(slugName?: string, page?: number): Promise<any> {
+    let currentSlug = <string> this._localStorageService.get('slug');
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+
+    return this._http.get(AppSetting.API_FAVORITE_LIST +
+      '&page=' + page + '&slug=/user/' + (slugName !== '' ? slugName : currentSlug), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getUserPlace(slugName?: string, page?: number): Promise<any> {
+    let currentSlug = <string> this._localStorageService.get('slug');
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+
+    return this._http.get(AppSetting.API_FAVORITE_PLACE +
+      '&limit=10&page=' + page + '&slug=' + (slugName !== '' ? slugName : currentSlug), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
