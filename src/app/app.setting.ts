@@ -1,7 +1,7 @@
 let _ENV = 'product';
 let API_ENDPOINT = '';
 if (_ENV === 'develop') {
-  API_ENDPOINT = 'http://hylo.dev/';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 } else {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 }
@@ -23,8 +23,10 @@ export class AppSetting {
   public static API_CATEGORIES_ARTICLE = API_ENDPOINT + 'api/v1/category/article/?_format=json';
   public static API_CATEGORIES_EVENT = API_ENDPOINT + 'api/v1/category/event/?_format=json';
   public static API_ENDPOINT_DEMO = 'http://hylo.dev:8000/assets/mock-data/mock-data.json';
+  public static API_ENDPOINT_LIKE = API_ENDPOINT +'api/user/flag/bookmark?_format=json'
 
-  public static API_TRENDING = 'api/v1/trending?_format=json';
+
+  public static API_TRENDING =API_ENDPOINT+ 'api/v1/trending?_format=json';
   public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';
   public static API_USER_PUBLIC_PROFILE = API_ENDPOINT + 'api/v1/profile/';
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place?_format=json';

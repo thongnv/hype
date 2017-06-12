@@ -3,12 +3,12 @@
         <div class="col-lg-6 col-xs-12 left-box">
             <div class="type-events">
                 <ul>
-                    <li *ngFor="let event of eventType, let index = index" (click)="onSelectEventType(index)"
-                        [class.active]="event.selected" class="type-event-item">
-                        <img [src]="event.iconUrl" width="30" height="30">
+                    <li *ngFor="let event of categories, let index = index" (click)="onSelectEventType(event)"
+                        [class.active]="event.tid==selected" class="type-event-item">
+                        <img [src]="event.icon" width="30" height="30">
                         <span class="type-event-name text-capitalize">{{event.name}}</span>
                     </li>
-                    <li class="type-event-more"><b></b><b></b><b></b></li>
+                    <li *ngIf="categories?.length >10" class="type-event-more"><b></b><b></b><b></b></li>
                 </ul>
             </div>
             <div class="filter-events clearfix">
@@ -26,13 +26,14 @@
                 </div>
                 <div class="clear"></div>
                 <div>
-                    <ngb-tabset>
+                    <ngb-tabset class="homFilter">
                         <ngb-tab class="tabFilter">
                             <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
                                                                     aria-hidden="true"></i><span></span></ng-template>
                             <ng-template ngbTabContent>
-                                <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="priceRange"
+                                <nouislider [connect]="true" [min]="0" [max]="300" [step]="10" [(ngModel)]="priceRange" (ngModelChange)="onChangePrice($event)"
                                             style="margin-top: 4em;"></nouislider>
+                                {{priceRange}}
                             </ng-template>
                         </ngb-tab>
                         <ngb-tab class="tabFilter">
@@ -66,7 +67,6 @@
             >
                 <gmap-geocode-marker [events]="events" [currentRadius]="currentRadius" (radiusChange)="markerRadiusChange($event)" [lat]="lat" [lng]="lng"></gmap-geocode-marker>
             </sebm-google-map>
-            {{events}}
         </div>
     </div>
 
