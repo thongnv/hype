@@ -1,10 +1,11 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-share-event',
@@ -44,9 +45,14 @@ export class ShareEventComponent implements OnInit {
   constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState,
               public sanitizer: DomSanitizer,
+              private loaderService: LoaderService,
               private router: Router) {
+    this.loaderService.show();
     this.eventService.getCategoryEvent().subscribe(
-      (response: any) => this.categories = response.data
+      (response: any) => {
+        this.categories = response.data;
+        this.loaderService.hide();
+      }
     );
   }
 
@@ -100,8 +106,10 @@ export class ShareEventComponent implements OnInit {
     event.eventImages = this.previewUrl;
     event.created = moment(event.eventDate).unix();
     let data = this.mapEvent(event);
+    this.loaderService.show();
     this.eventService.postEvent(data).subscribe((response: any) => {
       if (response.status) {
+        this.loaderService.hide();
         this.router.navigate([response.data.slug]);
       }
     });

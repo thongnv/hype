@@ -93,6 +93,8 @@ import { HomeService } from './services/home.service';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { NotificationComponent } from './navbar/notification/notification.component';
 import { StarVoteComponent } from './star-vote/star-vote.component';
+import { LoaderComponent } from './shared/loader/loader.component';
+import { LoaderService } from './shared/loader/loader.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -161,7 +163,8 @@ type StoreType = {
     FavoritePipe,
     BoostrapAlertComponent,
     NotificationComponent,
-    StarVoteComponent
+    StarVoteComponent,
+    LoaderComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -203,6 +206,7 @@ type StoreType = {
     APP_PROVIDERS,
     Title,
     GmapService,
+    LoaderService,
     GoogleMapsAPIWrapper,
     EventService,
     CompanyService,
