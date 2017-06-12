@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
-import { AppState } from '../app.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +13,8 @@ export class CurateNewComponent implements OnInit {
   public userInfo: any;
   public favorite: any;
   public categories: any[];
-  public previewUrl: string[] = [];
+  public previewUrl: any[] = [];
+  public listPlaces: any[] = [];
   public markers: any[] = [];
   public showPreview: boolean = false;
 
@@ -22,7 +22,7 @@ export class CurateNewComponent implements OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides: any[] = [];
-
+  public previewData: any;
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
@@ -31,13 +31,12 @@ export class CurateNewComponent implements OnInit {
   public formData = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
-    listCategory: ['', Validators.email],
-    listImages: ['', Validators.required],
+    listCategory: ['', Validators.required],
+    listImages: [''],
     listPlaces: this.formBuilder.array([])
   });
 
   constructor(public formBuilder: FormBuilder,
-              public appState: AppState,
               private mainService: MainService,
               private router: Router) {
     this.onAddPlace();
@@ -66,7 +65,13 @@ export class CurateNewComponent implements OnInit {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
-          this.previewUrl.push(e.target.result);
+          let img = {
+            url: e.target.result,
+            value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+            filename: event.target.files[i].name,
+            filemime: event.target.files[i].type
+          };
+          this.previewUrl.push(img);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -74,27 +79,37 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onSubmit() {
-    let userDraftList = {
-      info: this.formData.value,
-      images: this.previewUrl
-    };
-    console.log('userDraftList', JSON.stringify(userDraftList));
-    this.router.navigate(['/curate-detail/123abc']);
+    let article = this.formData.value;
+    this.listPlaces = [];
+    let address = article.listPlaces;
+    for (let add of address) {
+      this.listPlaces.push({
+        field_place_comment: add.description,
+        field_latitude: add.lat,
+        field_longitude: add.lng,
+        field_place_address: add.place,
+        field_place_images: [add.image],
+      });
+    }
+    article.listPlaces = this.listPlaces;
+    article.listImages = this.previewUrl;
+    let  data = this.mapArticle(article);
+    this.mainService.postArticle(data).then((response) => {
+      if (response.status) {
+        this.router.navigate([response.data.slug]);
+      }
+    });
   }
 
   public onPreview() {
-    let userDraftList = {
-      info: this.formData.value,
-      images: this.previewUrl
-    };
-    this.appState.set('userDraftList', userDraftList);
-    console.log('userDraftList', this.appState.state.userDraftList);
+    this.previewData = this.formData.value;
+    this.previewData.images = this.previewUrl;
     this.initMap();
   }
 
   public ngOnInit() {
-    this.mainService.getUserPublicProfile().then((resp) => {
-      this.categories = resp.categories;
+    this.mainService.getCategoryArticle().then((resp) => {
+      this.categories = resp.data;
     });
   }
 
@@ -122,6 +137,16 @@ export class CurateNewComponent implements OnInit {
         }
       }
     }
+  }
+
+  public mapArticle(article) {
+    return {
+      title: article.listName,
+      body: article.listDescription,
+      field_images: article.listImages,
+      category: article.listCategory,
+      field_places: article.listPlaces
+    };
   }
 
   public markerClick(markerId) {
@@ -160,9 +185,9 @@ export class CurateNewComponent implements OnInit {
     this.slides = [];
     this.markers = [];
     this.showPreview = true;
-    if (this.appState.state.userDraftList.info.listPlaces.length) {
+    if (this.previewData.listPlaces.length) {
       let index = 0;
-      for (let place of this.appState.state.userDraftList.info.listPlaces) {
+      for (let place of this.previewData.listPlaces) {
         if (place.lat && place.lng) {
           if (index === 0) {
             this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
@@ -172,10 +197,10 @@ export class CurateNewComponent implements OnInit {
           index++;
         }
       }
-      if (this.appState.state.userDraftList.images.length) {
-        for (let img of this.appState.state.userDraftList.images) {
+      if (this.previewData.images.length) {
+        for (let img of this.previewData.images) {
           if (img) {
-            this.slides.push({image: img, active: false});
+            this.slides.push({image: img.url, active: false});
           }
         }
 

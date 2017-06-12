@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
 
     this.fb.login(loginOptions)
       .then((res: LoginResponse) => {
-        console.log('Logged in', res);
+        console.log('Logged in FB: ', res);
         this.mainService.login(res.authResponse.accessToken).then((respone) => {
           console.log('login-respone: ', respone);
           // this.router.navigate(['/member']);

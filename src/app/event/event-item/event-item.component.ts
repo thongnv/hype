@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class EventItemComponent {
 
-  @Input('item') public item: any;
+  @Input('events') public events: any;
 
   @Output('onClickLike') public onClickLike = new EventEmitter<any>();
 

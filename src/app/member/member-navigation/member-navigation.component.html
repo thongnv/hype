@@ -1,8 +1,8 @@
 <div class="user-info-wrap">
   <div *ngIf="show" class="avatar-wrap">
-    <a class="avatar" [routerLink]="['/member/profile']">
-      <img class="user-avatar" [src]="data.userAvatar" [alt]="data.userName" width="100">
-      <span class="user-name" *ngIf="data.firstName || data.lastName">{{data.firstName}}&nbsp;{{data.lastName}}</span>
+    <a class="avatar">
+      <img class="user-avatar pull-left" [src]="data.userAvatar" [alt]="data.userName" width="100">
+      <span class="user-name" *ngIf="data.firstName || data.lastName">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
     </a>
   </div>
   <div class="follow-wrap">
@@ -21,27 +21,27 @@
 <div class="clear"></div>
 <div *ngIf="data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">My
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My
       Profile
     </li>
-    <li [routerLink]="['/member/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
+    <li [routerLink]="['/member/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">Setting
     </li>
-    <li [routerLink]="['/member/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLink]="['/member/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">
       Interest
     </li>
-    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">
       Favorites
     </li>
-    <li [routerLink]="['/auth/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Logout</li>
+    <li [routerLink]="['/auth/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">Logout</li>
   </ul>
 </div>
 <div *ngIf="!data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">
       {{data.email}}
     </li>
-    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">List</li>
-    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLink]="['/member/profile-edit']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">List</li>
+    <li [routerLink]="['/member/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">
       Activities
     </li>
   </ul>

@@ -2,7 +2,6 @@ export interface User extends BaseUser {
   firstName: string;
   lastName: string;
   contactNumber: string;
-  avatar: string;
   followingNumber: number;
   followerNumber: number;
   receiveEmail: number;
@@ -29,6 +28,7 @@ export interface HyloEvent {
   mentions: Icon[];
   images: Image[];
   rating: number;
+  userRated: boolean;
   experiences: Experience[];
 }
 

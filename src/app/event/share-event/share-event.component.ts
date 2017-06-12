@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
@@ -30,6 +31,7 @@ export class ShareEventComponent implements OnInit {
     eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
+  public previewData: any;
   public categories: any[];
   public previewUrl: any[] = [];
   public showMore: boolean = false;
@@ -40,9 +42,11 @@ export class ShareEventComponent implements OnInit {
     { value: '2', display: 'More info' }
   ];
   constructor(public fb: FormBuilder, private eventService: EventService,
-              public appState: AppState, private router: Router) {
-    this.eventService.getCategoryEvent().then(
-      (response) => this.categories = response.data
+              public appState: AppState,
+              public sanitizer: DomSanitizer,
+              private router: Router) {
+    this.eventService.getCategoryEvent().subscribe(
+      (response: any) => this.categories = response.data
     );
   }
 
@@ -58,22 +62,24 @@ export class ShareEventComponent implements OnInit {
 
   public readUrl(event) {
     let reader = [];
+    let images = [];
     if (event.target.files && event.target.files[0]) {
       for (let i = 0; i < event.target.files.length; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
-            url: e.target.result,
+            url: URL.createObjectURL(event.target.files[i]),
             value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
             filename: event.target.files[i].name,
             filemime: event.target.files[i].type
           };
-
+          console.log(i);
           this.previewUrl.push(img);
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
     }
+    console.log(images);
   }
 
   public addMention() {
@@ -94,7 +100,7 @@ export class ShareEventComponent implements OnInit {
     event.eventImages = this.previewUrl;
     event.created = moment(event.eventDate).unix();
     let data = this.mapEvent(event);
-    this.eventService.postEvent(data).then((response) => {
+    this.eventService.postEvent(data).subscribe((response: any) => {
       if (response.status) {
         this.router.navigate([response.data.slug]);
       }
@@ -104,7 +110,7 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    this.appState.set('eventPreview', event);
+    this.previewData = event;
     this.initPreview();
   }
 

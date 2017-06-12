@@ -8,6 +8,7 @@ import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from '../../services/main.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -30,20 +31,17 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public images: Image[] = [];
   public rating: number = 0;
   public experiences: Experience[] = [];
-
   public user: BaseUser = {name: '', avatar: ''};
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public noThumbnail: boolean = false;
   public slides = [];
-
   public previewUrl: Image[] = [];
-
   public userRating: number = 0;
   public userRated: boolean = false;
-
   public mapReady: boolean = false;
+  public slugName = '';
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -53,19 +51,31 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  constructor(public appState: AppState,
-              public mainService: MainService,
-              public eventService: EventService,
-              public formBuilder: FormBuilder,
-              public rateConfig: NgbRatingConfig) {
-    this.eventService.getEventDetail().then(
-      (resp) => {
-        let event = EventService.extractEventDetail(resp);
-        this.initEvent(event);
-        this.initSlide(this.images);
-        this.mapReady = true;
-      }
-    );
+  constructor(
+    public appState: AppState,
+    public mainService: MainService,
+    public eventService: EventService,
+    public formBuilder: FormBuilder,
+    public rateConfig: NgbRatingConfig,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.params.subscribe((e) => {
+      this.slugName = e.slug;
+      this.eventService.getEventDetail(this.slugName).subscribe(
+        (resp) => {
+          let event = EventService.extractEventDetail(resp);
+          this.loadData(event);
+          this.initSlide(this.images);
+          this.mapReady = true;
+        },
+        (error) => {
+          console.log(error);
+          this.router.navigate(['PageNotFound']).then();
+        }
+      );
+    });
+
     this.mainService.getUserProfile().then((response) => {
       this.user.name = response.name;
       this.user.avatar = response.field_image;
@@ -93,11 +103,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         date: moment().unix() * 1000,
         images: this.previewUrl
       };
-      this.eventService.postExperience(experience).then(
+      let eventSlugName = this.slugName;
+      this.eventService.postExperience(eventSlugName, experience).subscribe(
         (resp) => {
           console.log(resp);
           this.experienceForm.reset();
           this.userRated = true;
+          this.rating = resp.average_rating;
         }
       );
       this.experiences.push(experience);
@@ -130,7 +142,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     }
   }
 
-  private initEvent(event) {
+  private loadData(event) {
     this.creator = event.creator;
     this.name = event.name;
     this.location = event.location;
@@ -142,6 +154,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.mentions = event.mentions;
     this.images = event.images;
     this.rating = event.rating;
+    this.userRated = event.userRated;
     this.experiences = event.experiences;
   }
 
