@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../shared/loader/loader.service';
 
 @Component({
   selector: 'app-curate-new',
@@ -38,6 +39,7 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
+              private loaderService: LoaderService,
               private router: Router) {
     this.onAddPlace();
   }
@@ -94,8 +96,10 @@ export class CurateNewComponent implements OnInit {
     article.listPlaces = this.listPlaces;
     article.listImages = this.previewUrl;
     let  data = this.mapArticle(article);
+    this.loaderService.show();
     this.mainService.postArticle(data).then((response) => {
       if (response.status) {
+        this.loaderService.show();
         this.router.navigate([response.data.slug]);
       }
     });
