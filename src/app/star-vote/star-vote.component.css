@@ -1,0 +1,27 @@
+.star-vote-list{
+    list-style: none;
+    margin: 10px 0 14px 0;
+    display: block;
+    width: 100%;
+    height: 15px;
+    overflow: hidden;
+    padding: 0;
+}
+.star-vote-list > li{
+    float: left;
+    margin-right: 4px;
+}
+
+.star-vote-list > li .point{
+    width: 13px;
+    height: 12px;
+    display: inline-block;
+    object-fit: contain;
+    cursor: pointer;
+}
+.star-vote-list > li .star{
+    background: url('../../assets/img/icons/small_star.png') no-repeat center center;
+}
+.star-vote-list > li .star-selected{
+    background: url('../../assets/img/icons/small_star_selected.png') no-repeat center center;
+}

@@ -35,7 +35,7 @@ import { EventService } from '../../services/event.service';
           <div class="float-left view-more" *ngIf="i<=4">
             <span *ngIf="i==4 && thumbImages.length > 5">
               <a class="more" (click)="OpenImageModel(img.img,thumbImages)"> 
-                +{{thumbImages.length - 5}} more
+                +{{thumbImages.length - 5}}
               </a>
               <span class="overlay"></span>
             </span>
@@ -54,11 +54,11 @@ import { EventService } from '../../services/event.service';
 
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
-          <a  (click)="toggleLikeExperience()">
+          <a (click)="toggleLikeExperience()">
             <img *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
             <img *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
-            {{likeNumber}} Likes
+          {{likeNumber}} Likes
         </div>
         <div class="comments-area">
           <a>
@@ -90,15 +90,15 @@ import { EventService } from '../../services/event.service';
       </div>
 
       <ul class="list-comments-ago">
-        <li *ngFor="let comment of comments">
+        <li *ngFor="let comment of comments.slice(0, commentIndex)">
           <app-comment [comment]="comment">
           </app-comment>
         </li>
       </ul>
 
-      <div class="view-more-comments clearfix" *ngIf="comments.length > 2">
-        <a class="button-view-more-comments" (click)="addComments()">View more comments</a>
-        <span class="count-comments">2 of 5</span>
+      <div class="view-more-comments clearfix" *ngIf="commentIndex < comments.length && comments.length > 2">
+        <a class="button-view-more-comments" (click)="viewMoreComments()">View more comments</a>
+        <span class="count-comments">{{commentIndex}} of {{comments.length}}</span>
       </div>
 
     </div>
@@ -127,6 +127,7 @@ export class ExperienceComponent implements Experience, OnInit {
   public comments: HyloComment[];
   public likeNumber: number;
   public liked: boolean;
+  public commentIndex = 2;
 
   constructor(
     private eventService: EventService,
@@ -145,6 +146,9 @@ export class ExperienceComponent implements Experience, OnInit {
     this.likeNumber = this.experience.likeNumber;
     this.liked = this.experience.liked;
 
+    if (this.commentIndex > this.comments.length) {
+      this.commentIndex = this.comments.length;
+    }
     for (let i of this.images) {
       this.thumbImages.push(
         {
@@ -168,26 +172,37 @@ export class ExperienceComponent implements Experience, OnInit {
         replies: []
       };
       let eventSlugName = this.event.slugName;
-      this.eventService.postComment(eventSlugName, comment).then(
-        (resp) => console.log(resp)
+      this.eventService.postComment(eventSlugName, comment).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.comments.push(comment);
+          this.commentIndex += 1;
+          msgInput.value = '';
+        },
+        (error) => {
+          console.log(error);
+        }
       );
-      this.comments.push(comment);
-      msgInput.value = '';
     }
   }
 
-  public addComments(comments: HyloComment[]) {
-    // TODO: add comments
-    // load comments by calling comment API
-    // variable: experience.comments
+  public viewMoreComments() {
+    if (this.commentIndex + 10 < this.comments.length) {
+      this.commentIndex += 10;
+    } else {
+      this.commentIndex = this.comments.length;
+    }
   }
 
   public toggleLikeExperience() {
     this.liked = !this.liked;
     this.likeNumber += this.liked ? 1 : -1;
     let experience = this;
-    this.eventService.toggleLike(experience).then(
-      (resp) => console.log(resp)
+    this.eventService.toggleLike(experience).subscribe(
+      (resp) => console.log(resp),
+      (error) => {
+        console.log(error);
+      }
     );
   }
 
@@ -206,10 +221,6 @@ export class ExperienceComponent implements Experience, OnInit {
 
   public cancelImageModel() {
     this.openModalWindow = false;
-  }
-
-  public like() {
-    this.liked = true;
   }
 
 }

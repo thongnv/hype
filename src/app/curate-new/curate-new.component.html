@@ -21,7 +21,9 @@
           <label class="control-label" for="list-name">List Name</label>
           <input formControlName="listName" id="list-name" class="form-control" type="text"
                  placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
-          <small [hidden]="formData.controls.listName.valid" class="text-danger">This field is required</small>
+          <small *ngIf="formData.get('listName').touched && formData.get('listName').hasError('required')" class="text-danger">
+            List Name is require
+          </small>
         </div>
         <div class="form-group">
           <label class="control-label">What is your list about? Tell us your story</label>
@@ -33,6 +35,9 @@
             <option value="" selected="selected">Select a category</option>
             <option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>
           </select>
+          <small *ngIf="formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
+            List Category is require
+          </small>
         </div>
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
@@ -40,7 +45,7 @@
             <i class="fa fa-plus"></i>
             &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file'
-                   imageUpload (imageSelected)="selected($event)" multiple="multiple">
+                   imageUpload (change)="readUrl($event)"  multiple="multiple">
           </label>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
@@ -50,7 +55,7 @@
           </div>
         </div>
         <div class="form-actions clearfix">
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" [disabled]="formData.invalid" class="btn btn-primary">Create</button>
           <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
         </div>
       </div>
@@ -77,25 +82,19 @@
           </button>
         </div>
       </div>
-
-      <!--<div class="form-actions col-xs-12 col-md-12">
-        <button type="submit" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
-      </div>-->
-
     </form>
 
   </div>
   <!--form wrap end-->
 
   <!--list preview wrap start-->
-  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.userDraftList">
+  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll"
          style="height: calc(100vh - 150px); overflow: auto; margin-right: -35px;">
       <div class="carousel-box" id="curate-carousel">
         <div class="carousel-header">
           <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
-          <strong>{{appState.state.userDraftList.info.listName}}</strong>
+          <strong>{{previewData.listName}}</strong>
         </div>
         <div *ngIf="slides" class="carousel">
           <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides"
@@ -105,20 +104,22 @@
             </app-slide-carousel>
           </app-boostrap-carousel>
         </div>
-        <div class="description text-justify" [innerHTML]="appState.state.userDraftList.info.listDescription">
+        <div class="description text-justify" [innerHTML]="previewData.listDescription">
         </div>
       </div>
-      <div *ngFor="let plc of appState.state.userDraftList.info.listPlaces; let index=index" class="place-item-wrap"
-           [id]="'place-'+index">
-        <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong
-            class="place-name">{{plc.place}}</strong>
-          <span class="pull-right place-detail-btn">details</span>
+      <ng-container *ngIf="previewData.listPlaces">
+        <div  *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap"
+             [id]="'place-'+index">
+          <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong
+              class="place-name">{{plc.place}}</strong>
+            <span class="pull-right place-detail-btn">details</span>
+          </div>
+          <div class="place-item-img">
+            <img [src]="plc.image.url" [alt]="plc.place" width="100%">
+          </div>
+          <p class="place-item-description">{{plc.description}}</p>
         </div>
-        <div class="place-item-img">
-          <img [src]="plc.image.url" [alt]="plc.place" width="100%">
-        </div>
-        <p class="place-item-description">{{plc.description}}</p>
-      </div>
+      </ng-container>
     </div>
     <div class="col-xs-12 map-box">
       <!--<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">-->

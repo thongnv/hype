@@ -1,0 +1,37 @@
+<div *ngIf="notifications" class="user-option map-option right" ngbDropdown>
+  <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
+     ngbDropdownToggle>
+    <i id="notif" fa [name]="'bell-o'" [size]=2></i>
+    <span id="count-notif"><b>{{notifications.unread}}</b></span>
+  </a>
+
+  <ul class="dropdown-menu" id="notifications">
+    <li>
+      <span class="notify-left">Notifications</span>
+      <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>
+      <div class="arrow-up"></div>
+    </li>
+    <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="290px" size="7px"
+         [railVisible]="true"
+         [railOpacity]="0.1"
+         [railColor]="'#ec3d62'"
+         [color]="'#ec3d62'">
+      <li *ngFor="let notif of notifications.results" [class.has_read]="notif.viewed !== null"
+          class="notification-item"
+          (click)="onClickItem(notif)">
+        <div class="icon-notification"><img [src]="notif.sender.field_image" width="30" height="30"></div>
+        <div class="content-notification">
+          <p class="title-notifications">
+            <strong>{{notif.sender.first_name | truncate: 10}}&nbsp;{{notif.sender.last_name | truncate: 10}}</strong>
+            {{notif.message | truncate: 75}}</p>
+          <p class="time-ago text-lowercase">{{notif.created | amFromUnix | amTimeAgo}}</p>
+        </div>
+      </li>
+      <div class="list-bottom">
+        <div *ngIf="loadingInProgress">Loading</div>
+        <div *ngIf="endOfList">End Of List</div>
+      </div>
+    </div>
+  </ul>
+
+</div>

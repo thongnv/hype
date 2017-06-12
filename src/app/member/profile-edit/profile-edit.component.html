@@ -18,10 +18,8 @@
           <div class="col-lg-6 form-group">
             <input class="form-control" formControlName="lastName" placeholder="Last Name">
           </div>
-          <div class="col-lg-12 form-group has-feedback" [class.has-error]="!profileForm.controls['email'].valid && profileForm.controls['email'].touched">
-            <input class="form-control" type="email" formControlName="email" placeholder="Email Address">
-            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-            <div *ngIf="!profileForm.controls['email'].valid && profileForm.controls['email'].touched" class="help-block with-errors">This email address is invalid.</div>
+          <div class="col-lg-12 form-group">
+            <p class="form-control" placeholder="Email Address">{{userInfo.email}}</p>
           </div>
           <div class="col-lg-6 form-group has-feedback" [class.has-error]="!profileForm.controls['contactNumber'].valid && profileForm.controls['contactNumber'].touched">
             <input class="form-control" formControlName="contactNumber" placeholder="Contact Number" >

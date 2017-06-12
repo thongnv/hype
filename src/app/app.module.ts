@@ -55,7 +55,7 @@ import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.c
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 import { CompanyService } from './services/company.service';
-import { MyArray } from './shared/pipes';
+import { MyArray } from './shared/num-to-array.pipe';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CommentComponent } from './event/detail/comment.component';
@@ -89,8 +89,10 @@ import { InterestItemComponent } from './member/interest-item/interest-item.comp
 import { FavoriteComponent } from './member/favorite/favorite.component';
 import { FavoriteListComponent } from './member/favorite-list/favorite-list.component';
 import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.component';
-import {HomeService} from "./services/home.service";
-import {Daterangepicker} from "ng2-daterangepicker/index";
+import { HomeService } from './services/home.service';
+import { Daterangepicker } from 'ng2-daterangepicker';
+import { NotificationComponent } from './navbar/notification/notification.component';
+import { StarVoteComponent } from './star-vote/star-vote.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -157,7 +159,9 @@ type StoreType = {
     FavoritePlaceComponent,
     FavoriteEventComponent,
     FavoritePipe,
-    BoostrapAlertComponent
+    BoostrapAlertComponent,
+    NotificationComponent,
+    StarVoteComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -205,7 +209,7 @@ type StoreType = {
     EventService,
     BaseApiService,
     ModeService,
-      HomeService
+    HomeService
   ]
 })
 export class AppModule {

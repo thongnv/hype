@@ -4,7 +4,6 @@
     <ul>
       <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">Event Info</li>
       <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
-      <li class="share-event"><a class="btn btn-success" (click)="onSubmit()">Share this</a></li>
     </ul>
   </header>
   <!--header end-->
@@ -60,7 +59,7 @@
           </label>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="img.url" />
+              <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
@@ -115,13 +114,13 @@
   <!--form wrap end-->
 
   <!--list preview wrap start-->
-  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="appState.state.eventPreview">
+  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
       <div class="col-md-7">
         <div class="event-title">
           <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
-          <span class="One-Direction-Concer" [innerHTML]="appState.state.eventPreview.eventName"></span>
+          <span class="One-Direction-Concer" [innerHTML]="previewData.eventName"></span>
         </div>
 
         <hr>
@@ -129,23 +128,23 @@
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
-              <p>location</p><span>{{appState.state.eventPreview.eventPlace.place}}</span>
+              <p>location</p><span>{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <p>date / time</p><span>{{appState.state.eventPreview.eventDate}}</span>
+              <p>date / time</p><span>{{previewData.eventDate}}</span>
             </li>
             <li>
               <p>price range</p>
-              <span>{{appState.state.eventPreview.eventPrice}}<b>.</b>
-                <a href="{{appState.state.eventPreview.call2action.eventLink}}">
-                  <strong>{{appState.state.eventPreview.call2action.eventType == '1' ? 'Buy Ticket' : 'More Detail'}}</strong>
+              <span>{{previewData.eventPrice}}<b>.</b>
+                <a href="{{previewData.call2action.eventLink}}">
+                  <strong>{{previewData.call2action.eventType == '1' ? 'Buy Ticket' : 'More Detail'}}</strong>
                 </a>
               </span>
             </li>
             <li>
               <p>Mentioned by</p>
               <ul class="list-mention">
-                <li *ngFor="let mention of appState.state.eventPreview.eventMentions">
+                <li *ngFor="let mention of previewData.eventMentions">
                   <a [href]="mention" target="_blank">
                     <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
                   </a>
@@ -159,7 +158,7 @@
 
         <div class="detail-event">
           <h5 class="bold">Details</h5>
-          <p [innerHTML]="appState.state.eventPreview.eventDetail">
+          <p [innerHTML]="previewData.eventDetail">
           </p>
         </div>
 
@@ -194,9 +193,9 @@
 
         <div class="event-location">
           <p>Location</p>
-          <sebm-google-map [latitude]="appState.state.eventPreview.eventPlace.lat" [longitude]="appState.state.eventPreview.eventPlace.lng"
+          <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
             [zoom]="13">
-            <sebm-google-map-marker [latitude]="appState.state.eventPreview.eventPlace.lat" [longitude]="appState.state.eventPreview.eventPlace.lng">
+            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng">
             </sebm-google-map-marker>
           </sebm-google-map>
         </div>

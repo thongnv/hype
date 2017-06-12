@@ -90,7 +90,6 @@ export class ProfileEditComponent implements OnInit {
       this.profileForm.patchValue({
         firstName: response.field_first_name,
         lastName: response.field_last_name,
-        email: response.email,
         contactNumber: response.field_contact_number,
         country: response.field_country,
       });

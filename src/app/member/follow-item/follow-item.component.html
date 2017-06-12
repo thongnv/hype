@@ -2,7 +2,7 @@
   <div class="follow-block">
     <img class="user-avatar" src="{{item.avatar}}" [alt]="item.name" [width]="50" [height]="50" />
     <div class="follow-action">
-      <div class="follow-name">{{item.name}}</div>
+      <div class="follow-name text-ellipsis">{{item.name}}</div>
       <span class="unfollow-btn" [@unfollow]="stateFollow" (click)="updateFollow(item)">Unfollow</span>
       <span class="unfollow-btn follow" [@follow]="stateFollow" (click)="updateFollow(item)">Follow</span>
     </div>
