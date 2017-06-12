@@ -93,3 +93,7 @@ export interface Image {
   filemime: string;
   filesize: number;
 }
+
+export interface LoaderState {
+  show: boolean;
+}

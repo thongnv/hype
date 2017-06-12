@@ -4,9 +4,17 @@ import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import 'rxjs/add/operator/toPromise';
 import { AppState } from '../app.service';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class MainService {
+  private defaultHeaders = new Headers({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')});
+
   public constructor(private _localStorageService: LocalStorageService,
                      private _http: Http,
                      private _appState: AppState) {
@@ -148,14 +156,17 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public getArticle(type: string): Promise<any> {
-    let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+  public getArticle(slugName): Observable<Response> {
+    let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get(AppSetting.API_ARTICLE, options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(this.handleError);
+    return this._http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/article/' + slugName + '?_format=json' , options
+    ).map((res) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error.json()));
+      });
   }
 
   public getCategoryArticle(): Promise<any> {
