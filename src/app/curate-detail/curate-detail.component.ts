@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
+import { LoaderService } from '../shared/loader/loader.service';
 
 @Component({
   selector: 'app-curate-detail',
@@ -10,6 +12,7 @@ export class CurateDetailComponent implements OnInit {
   public curate: any;
   public currentHighlightedMarker: any;
   public markers: any[] = [];
+  public slugName: string = '';
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -19,7 +22,23 @@ export class CurateDetailComponent implements OnInit {
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
-  public constructor(private mainService: MainService) {
+  public constructor(private mainService: MainService,
+                     private loaderService: LoaderService,
+                     private route: ActivatedRoute,
+                     private router: Router) {
+    this.route.params.subscribe((e) => {
+      this.loaderService.hide();
+      this.slugName = e.slug;
+      this.mainService.getArticle(this.slugName).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+          // this.router.navigate(['PageNotFound']).then();
+        }
+      );
+    });
   }
 
   public ngOnInit() {

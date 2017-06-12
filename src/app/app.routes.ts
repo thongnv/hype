@@ -23,7 +23,7 @@ export const ROUTES: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'discover', component: DiscoverComponent},
   {path: 'curate', component: CurateComponent},
-  {path: 'curate-detail/:id', component: CurateDetailComponent},
+  {path: 'article/:slug', component: CurateDetailComponent},
   {path: 'curate/new', component: CurateNewComponent},
   {path: 'share-event', component: ShareEventComponent},
   {path: 'event/:slug', component: EventDetailComponent},
