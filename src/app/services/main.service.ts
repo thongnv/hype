@@ -176,7 +176,7 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public getUserPublicProfile(): Promise<any> {
+  public getUserPublicProfile(slugName?: string): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
