@@ -99,7 +99,7 @@ export class CurateNewComponent implements OnInit {
     this.loaderService.show();
     this.mainService.postArticle(data).then((response) => {
       if (response.status) {
-        this.loaderService.show();
+        this.loaderService.hide();
         this.router.navigate([response.data.slug]);
       }
     });
