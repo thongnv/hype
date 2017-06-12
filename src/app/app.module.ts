@@ -95,6 +95,7 @@ import { NotificationComponent } from './navbar/notification/notification.compon
 import { StarVoteComponent } from './star-vote/star-vote.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { LoaderService } from './shared/loader/loader.service';
+import { ReviewComponent } from './company/company-detail/review.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -130,6 +131,7 @@ type StoreType = {
     GmapAutoPlaceComponent,
     CommentComponent,
     ExperienceComponent,
+    ReviewComponent,
     MyArray,
     CustomMarkerComponent,
     CurateDetailComponent,

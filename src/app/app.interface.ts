@@ -97,3 +97,15 @@ export interface Image {
 export interface LoaderState {
   show: boolean;
 }
+
+export interface Company {
+  name: string;
+  description: string;
+  rating: number;
+  location: Location;
+  website: string;
+  phone: string;
+  openingHours: string[];
+  images: Image[];
+  reviews: Experience[];
+}

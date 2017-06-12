@@ -129,9 +129,8 @@ export class ExperienceComponent implements Experience, OnInit {
   public liked: boolean;
   public commentIndex = 2;
 
-  constructor(
-    private eventService: EventService,
-    private event: EventDetailComponent) {
+  constructor(private eventService: EventService,
+              private event: EventDetailComponent) {
   }
 
   public ngOnInit() {
