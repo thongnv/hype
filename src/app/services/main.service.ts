@@ -124,23 +124,26 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public getUserInterest(): Promise<any> {
-
+  public getUserInterest(slugName?: string, page?: number): Promise<any> {
+    let currentSlug = <string> this._localStorageService.get('slug');
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-
-    return this._http.get(AppSetting.API_USER_INTEREST, options)
+    slugName = slugName ? slugName : currentSlug;
+    return this._http.get(AppSetting.API_USER_INTEREST + slugName + '?_format=json', options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
   }
 
-  public updateUserInterests(item: any): Promise<any> {
+  public updateUserInterests(slugName?: string, item?: any[]): Promise<any> {
+    let currentSlug = <string> this._localStorageService.get('slug');
+    slugName = slugName ? slugName : currentSlug;
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.post(AppSetting.API_USER_INTEREST, JSON.stringify(item), options)
+    return this._http.post(AppSetting.API_USER_INTEREST +
+      slugName + '?_format=json', JSON.stringify(item), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -232,7 +235,7 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
 
     return this._http.get(AppSetting.API_FAVORITE_EVENT +
-      '&page=' + page + '&slug=/user/' + (slugName !== '' ? slugName : currentSlug), options)
+      '&page=' + page + '&slug=/user/' + (slugName ? slugName : currentSlug), options)
       .toPromise()
       .then((resp) => resp.json().data)
       .catch(this.handleError);
@@ -245,7 +248,7 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
 
     return this._http.get(AppSetting.API_FAVORITE_LIST +
-      '&page=' + page + '&slug=/user/' + (slugName !== '' ? slugName : currentSlug), options)
+      '&page=' + page + '&slug=/user/' + (slugName ? slugName : currentSlug), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -258,7 +261,7 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
 
     return this._http.get(AppSetting.API_FAVORITE_PLACE +
-      '&limit=10&page=' + page + '&slug=' + (slugName !== '' ? slugName : currentSlug), options)
+      '&limit=10&page=' + page + '&slug=' + (slugName ? slugName : currentSlug), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

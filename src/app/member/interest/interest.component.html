@@ -3,15 +3,16 @@
     <app-member-navigation [data]="userInfo"></app-member-navigation>
   </div>
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
-    <section class="row">
-      <h3 class="col-xs-12">Your Interests</h3>
+    <section class="">
+      <h3 class="col-xs-12 setting-title">Your Interests</h3>
       <div *ngIf="interests" class="col-xs-12">
         <div *ngFor="let interest of interests" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
           <app-interest-item [item] = "interest" ></app-interest-item>
         </div>
-
       </div>
-      <button class="btn btn-primary" (click)="onSubmit()">Update</button>
+      <div class="col-xs-12 col-lg-12">
+        <button class="btn btn-primary btn-update-interest" (click)="onSubmit()">Update</button>
+      </div>
     </section>
   </div>
 </div>
