@@ -31,12 +31,13 @@ export class HomeComponent implements OnInit {
     public eventOrder:any[] = [];
     public selectedEventOrder:any;
     public events:any = [];
+    private listItems:any[] = [];
     public showMap = false;
     public lists:any[] = [];
     public markers:any[] = [];
     public mapZoom:number = 12;
-    public lat:number = 1.3174364;
-    public lng:number = 103.8619751;
+    public lat:number = 1.3089757786697331;
+    public lng:number = 103.8258969783783;
     public currentRadius:any = 5000;
     public priceRange:number[] = [0, 50];
     public categories:any[];
@@ -53,8 +54,8 @@ export class HomeComponent implements OnInit {
         'w_start': '',
         'w_end': '',
         'type': '',
-        'lat': this.lat,
-        'lng': this.lng,
+        'lat': '',
+        'lng': '',
         'radius': this.currentRadius,
         'price': ''
     }
@@ -105,7 +106,18 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = this.eventFilter[0];
         this.showMap = false;
         this.selected = false;
+        this.showDate = false;
+        this.showPrice = false;
         this.loaderService.show();
+        this.params.filter = '';
+        this.params.limit = 10;
+        this.params.cate = '';
+        this.params.w_end = '';
+        this.params.w_start = '';
+        this.params.radius = 5000;
+        this.params.price = '';
+        this.params.type = '';
+        this.params.order = '';
         this.getTrending();
     }
 
@@ -160,8 +172,9 @@ export class HomeComponent implements OnInit {
         let params = this.params;
         console.log(params);
         this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
-            this.loadMap(response.data);
+            this.listItems = response.data;
             this.loaderService.hide();
+            this.loadMap();
         });
     }
 
@@ -245,42 +258,82 @@ export class HomeComponent implements OnInit {
         this.showMap = false;
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
-        this.params.type = 'event';
         this.params.lat = event.coords.lat;
         this.params.lng = event.coords.lng;
         this.loaderService.show();
         this.getTrending();
     }
 
-    private loadMap(events:any) {
-
+    private loadMap() {
+        this.resetData();
         this.mapsAPILoader.load().then(()=> {
             let mapCenter = new google.maps.Marker({
                 position: new google.maps.LatLng(this.lat, this.lng),
                 draggable: true
             });
             let searchCenter = mapCenter.getPosition();
-            for (var i = 0; i < events.length; i++) {
-                let myMarker = new google.maps.Marker({
-                    position: new google.maps.LatLng(events[i].field_location_place.field_latitude, events[i].field_location_place.field_longitude),
-                    draggable: true
-                });
-                console.log(events[i].field_location_place.field_latitude);
-                let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                if (parseInt(geometry) < this.currentRadius) {
-                    this.events.push(events[i]);
-                    this.markers.push({
-                        lat: events[i].field_location_place.field_latitude,
-                        lng: events[i].field_location_place.field_longitude,
-                        label: events[i].title,
-                        opacity: 0.4,
-                        isOpenInfo: false
+            for (var i = 0; i < this.listItems.length; i++) {
+                if (typeof this.listItems[i].field_location_place.length === "undefined") {
+                    let EMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(this.listItems[i].field_location_place.field_latitude, this.listItems[i].field_location_place.field_longitude),
+                        draggable: true
                     });
+                    let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
+                    if (parseInt(egeometry) < this.currentRadius) {
+                        this.events.push(this.listItems[i]);
+                        this.markers.push({
+                            lat: this.listItems[i].field_location_place.field_latitude,
+                            lng: this.listItems[i].field_location_place.field_longitude,
+                            label: this.listItems[i].title,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
+                    }
+                }
+                else {
+                    if (this.listItems[i].field_location_place[0].field_latitude) {
+                        let AMarker = new google.maps.Marker({
+                            position: new google.maps.LatLng(this.listItems[i].field_location_place[0].field_latitude, this.listItems[i].field_location_place[0].field_longitude),
+                            draggable: true
+                        });
+
+                        let egeometry = google.maps.geometry.spherical.computeDistanceBetween(AMarker.getPosition(), searchCenter);
+                        if (parseInt(egeometry) < this.currentRadius) {
+                            this.events.push(this.listItems[i]);
+                            this.markers.push({
+                                lat: this.listItems[i].field_location_place[0].field_latitude,
+                                lng: this.listItems[i].field_location_place[0].field_longitude,
+                                label: this.listItems[i].title,
+                                opacity: 0.6,
+                                isOpenInfo: false
+                            });
+                        }
+                    }
+
                 }
 
             }
+            this.loaderService.hide();
             console.log(this.markers);
             this.showMap = true;
         });
+    }
+
+    private resetData() {
+        this.markers = [];
+        this.events = [];
+    }
+
+    public showPrice:boolean = false;
+    public showDate:boolean = false;
+
+    public showRagePrice() {
+        this.showPrice = true;
+        this.showDate = false;
+    }
+
+    public showWhen() {
+        this.showDate = true;
+        this.showPrice = false;
     }
 }
