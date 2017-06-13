@@ -209,7 +209,7 @@ p.avg-rating a {
   font-weight: 500;
   line-height: 1;
   text-align: left;
-  color: #3b3b3b; 
+  color: #3b3b3b;
 }
 
 .content-info-experience p {
@@ -439,13 +439,13 @@ article {
   text-align: left;
   color: #3b3b3b;
 }
+
 .company-wrap .company-header p.open-now-button {
     font-size: 16px;
     line-height: 1.5;
     text-align: left;
     color: #1fbe90;
-    cursor: pointer;
-    margin: 0px;
+    margin: 0;
 }
 
 .company-wrap .rating-star {
