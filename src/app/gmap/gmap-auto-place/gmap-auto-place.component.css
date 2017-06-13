@@ -18,6 +18,7 @@
 .gmap-place .form-group small {
     display: block;
     margin: 20px 0px;
+    font-size: 14px;
 }
 .gmap-place .form-group textarea {
     width: 100%;
@@ -29,3 +30,9 @@
 .gmap-place .form-group label {
     margin-top: 20px;
 }
+.gmap-place .form-group label i {
+    color: #ec3d62;
+    font-size: 11px;
+}
+
+

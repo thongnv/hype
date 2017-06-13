@@ -36,10 +36,12 @@ export class AppSetting {
     'api/user/flag/bookmark/list?_format=json&type=event&limit=' + PAGE_SIZE;
   public static API_FAVORITE_LIST = API_ENDPOINT +
     'api/user/flag/bookmark/list?_format=json&type=list&limit=' + PAGE_SIZE;
+  public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT +
+    '/api/user/flag/bookmark?_format=json&slug=';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,
     version: 'v2.9'
   };
-  public PAGE_SIZE: number = PAGE_SIZE;
+  public static PAGE_SIZE: number = PAGE_SIZE;
 }

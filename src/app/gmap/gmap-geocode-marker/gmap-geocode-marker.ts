@@ -15,7 +15,7 @@ export class GeocodeMarkerComponent implements OnInit {
     @Input('currentRadius') public currentRadius:any;
     @Output('radiusChange') public radiusChange = new EventEmitter<any>();
     @Output('dragEnd') public dragEnd = new EventEmitter<any>();
-    @Output() public eventsSearch = new EventEmitter();
+    @Output('markerClick') public markerClick = new EventEmitter<any>();
     public markers:any = [];
     public events:any[];
     public MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -27,7 +27,6 @@ export class GeocodeMarkerComponent implements OnInit {
 
     public ngOnInit() {
         this.loadMapRadius();
-        this.eventsSearch.emit(this.events);
     }
 
     public markerRadiusChange(radius) {
@@ -35,8 +34,12 @@ export class GeocodeMarkerComponent implements OnInit {
         this.radiusChange.emit(this.currentRadius);
     }
 
-    public clickedMarker($event) {
+    public clickedMarker(index) {
+       this.markerClick.emit(index);
+    }
 
+    public mapClicked(e){
+        console.log(e);
     }
 
     public markerDragEnd($event) {
@@ -46,6 +49,7 @@ export class GeocodeMarkerComponent implements OnInit {
             this.dragEnd.emit($event);
         }
     }
+
 
     private loadMapRadius() {
 
@@ -72,6 +76,9 @@ export class GeocodeMarkerComponent implements OnInit {
             //
             }
         });
+    }
+    public infoWindowClose($event){
+        console.log($event);
     }
 
 }

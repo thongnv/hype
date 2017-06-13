@@ -8,6 +8,10 @@ import {HomeService} from "../services/home.service";
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
 import * as moment from 'moment/moment';
+import {any} from "codelyzer/util/function";
+import { Ng2ScrollableDirective } from 'ng2-scrollable';
+import { scrollTo } from 'ng2-utils';
+import {LoaderService} from "../shared/loader/loader.service";
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
@@ -15,8 +19,8 @@ const now = new Date();
 @Component({
     selector: 'home',
     providers: [],
-    styleUrls: ['./home.component.css'],
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
     // Set our default values
@@ -36,6 +40,9 @@ export class HomeComponent implements OnInit {
     public priceRange:number[] = [0, 50];
     public categories:any[];
     public selected:any;
+    public tabActive:boolean = false;
+    public isOpen:boolean = false;
+    public id:any='v1';
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -57,7 +64,7 @@ export class HomeComponent implements OnInit {
     date:{year: number, month: number};
 
     // TypeScript public modifiers
-    constructor(private mainService:MainService, private homeService:HomeService) {
+    constructor(private mainService:MainService, private homeService:HomeService,private loaderService:LoaderService) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -68,6 +75,8 @@ export class HomeComponent implements OnInit {
             {name: 'top 100'},
             {name: 'latest'},
         ];
+
+        this.loaderService.show();
 
     }
 
@@ -83,6 +92,7 @@ export class HomeComponent implements OnInit {
         this.selected = event.tid;
         this.params.cate = event.tid;
         this.params.type = 'event';
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -90,7 +100,8 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.showMap = false;
-
+        this.selected = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -98,6 +109,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = filter;
         this.params.filter = filter.name;
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -105,6 +117,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = order;
         this.params.order = order.name;
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -120,21 +133,14 @@ export class HomeComponent implements OnInit {
 
     }
 
-    public markerClick(id:any) {
-        console.log('index: ', id);
-        this.markers.forEach((marker) => {
-            if (marker.parent === id) {
-                marker.isOpen = true;
-                marker.icon = MARKER_ICON_SELECTED;
-            } else {
-                if (marker.isOpen === true) {
-                    marker.isOpen = false;
-                }
-                if (marker.icon === MARKER_ICON_SELECTED) {
-                    marker.icon = MARKER_ICON;
-                }
-            }
-        });
+    public clickedMarker(selector, horizontal) {
+        scrollTo(
+            '#v'+selector,       // scroll to this
+            '#v-scrollable', // scroll within (null if window scrolling)
+            horizontal,     // is it horizontal scrolling
+            0               // distance from top or left
+        );
+
     }
 
     public selectedDate(value:any) {
@@ -142,6 +148,7 @@ export class HomeComponent implements OnInit {
         this.params.w_start = moment(value.start).unix();
         this.params.w_end = moment(value.end).unix();
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -152,6 +159,7 @@ export class HomeComponent implements OnInit {
             this.events = response.data;
             console.log(response);
             this.showMap = true;
+            this.loaderService.hide();
         });
     }
 
@@ -160,8 +168,8 @@ export class HomeComponent implements OnInit {
         alwaysShowCalendars: false,
     };
 
-    public mapClicked($event:MouseEvent) {
-
+    public mapClicked($event:MouseEvent, idElement) {
+        console.log($event, idElement);
     }
 
     public markerRadiusChange(radius) {
@@ -179,6 +187,11 @@ export class HomeComponent implements OnInit {
         this.showMap = false;
         this.params.price = this.priceRange.join(',');
         this.params.type = 'event';
+        this.loaderService.show();
         this.getTrending();
+    }
+
+    public onScroll(){
+        console.log('1');
     }
 }

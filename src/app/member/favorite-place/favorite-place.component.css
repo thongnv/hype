@@ -77,7 +77,7 @@ p.detail-information {
     width: 100%;
     font-size: 13px;
     margin-bottom: 21px;
-    margin-top: 40px;
+    margin-top: 0;
     clear: both;
 }
 .information-profile {

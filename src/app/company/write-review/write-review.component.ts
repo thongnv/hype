@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyDetailComponent } from '../company-detail/company-detail.component';
+import { BaseUser } from '../../app.interface';
 
 @Component({
   selector: 'app-write-review',
@@ -12,6 +13,7 @@ import { CompanyDetailComponent } from '../company-detail/company-detail.compone
 export class WriteReviewComponent implements OnInit {
   @Input() public submitted: boolean;
   @Input() public company: CompanyDetailComponent;
+  @Input() public user: BaseUser;
 
   @Output() public change = new EventEmitter<any>();
 

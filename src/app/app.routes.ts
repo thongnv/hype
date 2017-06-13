@@ -27,7 +27,7 @@ export const ROUTES: Routes = [
   {path: 'curate/new', component: CurateNewComponent},
   {path: 'share-event', component: ShareEventComponent},
   {path: 'event/:slug', component: EventDetailComponent},
-  {path: 'company/:id', component: CompanyDetailComponent},
+  {path: 'company/:slug', component: CompanyDetailComponent},
   {path: 'auth', loadChildren: './auth#AuthModule'},
   {path: 'mode/play', component: ModeComponent},
   {path: 'member/following', component: FollowingComponent},

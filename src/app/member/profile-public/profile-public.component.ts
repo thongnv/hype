@@ -80,16 +80,26 @@ export class ProfilePublicComponent implements OnInit {
     console.log('onClickLike: ', item);
   }
 
-  public onClickDeleteEvent(item: any) {
-    console.log('onClickDeleteEvent', item);
-  }
-
-  public onClickDeleteList(item: any) {
-    console.log('onClickDeleteList', item);
+  public onClickDeleteEventList(item: any) {
+    console.log('onClickDeleteEventList', item);
+    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
+      console.log('onClickDeleteEventList ====> response', response);
+    });
   }
 
   public onClickDeletePlace(item: any) {
     console.log('onClickDeletePlace', item);
+    this.mainService.favoritePlace(item.ids_no).then((response) => {
+      console.log('onClickDeletePlace ====> response', response);
+      if (response.error === 0) {
+        this.userInfo.places.forEach((place, index) => {
+          if (item === place) {
+            delete this.userInfo.places[index];
+            this.setPlace.offset--;
+          }
+        });
+      }
+    });
   }
 
   public onClickDelete(item: any) {
@@ -109,12 +119,7 @@ export class ProfilePublicComponent implements OnInit {
     }
   }
 
-  public onClickVote(item: number): void {
-    console.log('onVoteEvent: ', item);
-  }
-
   public onScrollToBottom(event) {
-    console.log('scroll: ', event);
     let elm = event.srcElement;
     if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
       switch (this.selectedFavoriteType) {
@@ -176,7 +181,7 @@ export class ProfilePublicComponent implements OnInit {
               this.userInfo.places.push(item);
             });
             this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
-          }else {
+          } else {
             this.setPlace.endOfList = true;
           }
         } else {
@@ -213,7 +218,7 @@ export class ProfilePublicComponent implements OnInit {
       this.setEvent.loadingInProgress = true;
       this.mainService.getUserEvent(slugName, page).then((response) => {
         console.log('====> getEvent response: ', response);
-        if (response.total > 0) {
+        if (response.length > 0) {
           response.forEach((item) => {
             this.setEvent.offset++;
             this.userInfo.events.push(item);

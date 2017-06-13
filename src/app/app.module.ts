@@ -96,6 +96,8 @@ import { StarVoteComponent } from './star-vote/star-vote.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { LoaderService } from './shared/loader/loader.service';
 import { ReviewComponent } from './company/company-detail/review.component';
+import { Html2TextPipe } from './shared/html-2-text.pipe';
+import { InstagramImageComponent } from './shared/instagram-image/instagram-image.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -166,7 +168,9 @@ type StoreType = {
     BoostrapAlertComponent,
     NotificationComponent,
     StarVoteComponent,
-    LoaderComponent
+    LoaderComponent,
+    Html2TextPipe,
+    InstagramImageComponent
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,

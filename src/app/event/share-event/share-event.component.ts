@@ -24,7 +24,7 @@ export class ShareEventComponent implements OnInit {
       lng: [''],
     }),
     eventDate: [''],
-    eventPrice: [''],
+    eventPrice: ['', Validators.compose([this.minMax])],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
@@ -38,6 +38,7 @@ export class ShareEventComponent implements OnInit {
   public showMore: boolean = false;
   public showPreview: boolean = false;
   public slides: any[] = [];
+  public addImage: boolean = true;
   public types = [
     { value: '1', display: 'Buy Tix' },
     { value: '2', display: 'More Info' }
@@ -60,17 +61,25 @@ export class ShareEventComponent implements OnInit {
     // TODO
   }
 
+  public minMax(control: FormControl) {
+    console.log(control.value);
+    return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
+      minMax: true
+    };
+  }
   public onRemovePreview(imageUrl) {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
+    if (this.previewUrl.length < 4) {
+      this.addImage = true;
+    }
   }
 
   public readUrl(event) {
     let reader = [];
-    let images = [];
-    if (event.target.files && event.target.files[0]) {
-      for (let i = 0; i < event.target.files.length; i++) {
+    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+      for (let i = 0; i < event.target.files.length && i < 4; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
@@ -79,13 +88,14 @@ export class ShareEventComponent implements OnInit {
             filename: event.target.files[i].name,
             filemime: event.target.files[i].type
           };
-          console.log(i);
           this.previewUrl.push(img);
+          if (this.previewUrl.length >= 4) {
+            this.addImage = false;
+          }
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
     }
-    console.log(images);
   }
 
   public addMention() {
