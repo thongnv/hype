@@ -4,6 +4,7 @@ import { AppState } from '../../app.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import * as moment from 'moment/moment';
 import { BaseUser, Company, Experience, Image, Location } from '../../app.interface';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -20,6 +21,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public openingHours: string[];
   public reviews: Experience[] = [];
   public images: Image[];
+  public slugName: string;
   public company: Company;
   public user: BaseUser;
   public commentPosition = 'out';
@@ -29,15 +31,33 @@ export class CompanyDetailComponent implements Company, OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides = [];
+  public mapReady: boolean = false;
 
-  constructor(private appState: AppState, public companyService: CompanyService) {}
+  constructor(
+    private appState: AppState,
+    public companyService: CompanyService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   public ngOnInit() {
-    this.company = this.companyService.getCompany('123');
-    this.loadData(this.company);
+    this.route.params.subscribe((e) => {
+      this.slugName = e.slug;
+      this.companyService.getCompanyDetail(this.slugName).subscribe(
+        (resp) => {
+          this.company = CompanyService.extractCompanyDetail(resp);
+          this.loadData(this.company);
+          this.initSlide(this.images);
+          this.mapReady = true;
+        },
+        (error) => {
+          console.log(error);
+          this.router.navigate(['PageNotFound']).then();
+        }
+      );
+    });
     let user = this.appState.state.userInfo;
     this.user = {name: 'Tom Cruise', avatar: user.userAvatar};
-    this.initSlide(this.images);
   }
 
   public viewReviews() {

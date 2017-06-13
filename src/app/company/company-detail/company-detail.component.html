@@ -39,19 +39,18 @@
             <div class="company-description">
               {{description}}
             </div>
-            
           </div>
           <!-- company header end -->
           <!-- company info start -->
-          <div class="company-info">
-            <p><span class="info-label">Location</span> <a>{{location.name}}</a></p>
+          <div class="company-info" *ngIf="mapReady">
+            <p><span class="info-label">Location</span> {{location.name}}</p>
             <p><span class="info-label">Website</span><a [href]="website" target="_blank">{{website}}</a></p>
             <p><span class="info-label">Phone No.</span> <a href="tel:{{phone}}">{{phone}}</a></p>
             <p>
               <span class="info-label">Opening Hours</span>
               <span class="info-value" ngbDropdown>
                 <span ngbDropdownToggle>
-                  {{openingHours[0]}}
+                  <span [innerHTML]="openingHours[0]"> </span>
                   <i aria-hidden="true" class="fa fa-angle-down"></i>
                 </span>
                 <span class="dropdown-menu">
@@ -72,8 +71,10 @@
             <h4 class="title-experiences-area">Latest Reviews</h4>
             <a (click)="showReviewModal()" class="post-your-experience">Write a review</a>
           </div>
-          <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review">
-          </company-review>
+          <div *ngIf="reviews">
+            <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review">
+            </company-review>
+          </div>
           <!-- reviews wrap end -->
         </div>
         <!-- wrap xx end -->
@@ -90,16 +91,17 @@
             <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
-          <a (click)="showReviewModal()" class="write-a-lastest-reviews">Write a review</a>
+          <a (click)="showReviewModal()" class="post-your-experience">Write a review</a>
         </div>
         <company-review *ngFor="let review of reviews; let index = index" [review]="review">
         </company-review>
       </div>
 
-      <app-write-review [user]="user" [company]="company" [submitted]="showForm" (change)="updateReview($event)"></app-write-review>
+      <app-write-review [user]="user" [company]="company" [submitted]="showForm"
+                        (change)="updateReview($event)"></app-write-review>
 
     </div>
-    <div class="col-md-6 map-fix">
+    <div class="col-md-6 map-fix" *ngIf="mapReady">
       <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12">
         <sebm-google-map-marker [latitude]="location.lat"
                                 [longitude]="location.lng">
