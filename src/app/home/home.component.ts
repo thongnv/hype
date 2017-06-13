@@ -11,6 +11,7 @@ import * as moment from 'moment/moment';
 import {any} from "codelyzer/util/function";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
+import {LoaderService} from "../shared/loader/loader.service";
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
@@ -63,7 +64,7 @@ export class HomeComponent implements OnInit {
     date:{year: number, month: number};
 
     // TypeScript public modifiers
-    constructor(private mainService:MainService, private homeService:HomeService) {
+    constructor(private mainService:MainService, private homeService:HomeService,private loaderService:LoaderService) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -74,6 +75,8 @@ export class HomeComponent implements OnInit {
             {name: 'top 100'},
             {name: 'latest'},
         ];
+
+        this.loaderService.show();
 
     }
 
@@ -89,6 +92,7 @@ export class HomeComponent implements OnInit {
         this.selected = event.tid;
         this.params.cate = event.tid;
         this.params.type = 'event';
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -97,6 +101,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = this.eventFilter[0];
         this.showMap = false;
         this.selected = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -104,6 +109,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = filter;
         this.params.filter = filter.name;
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -111,6 +117,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = order;
         this.params.order = order.name;
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -141,6 +148,7 @@ export class HomeComponent implements OnInit {
         this.params.w_start = moment(value.start).unix();
         this.params.w_end = moment(value.end).unix();
         this.showMap = false;
+        this.loaderService.show();
         this.getTrending();
     }
 
@@ -151,6 +159,7 @@ export class HomeComponent implements OnInit {
             this.events = response.data;
             console.log(response);
             this.showMap = true;
+            this.loaderService.hide();
         });
     }
 
@@ -178,6 +187,11 @@ export class HomeComponent implements OnInit {
         this.showMap = false;
         this.params.price = this.priceRange.join(',');
         this.params.type = 'event';
+        this.loaderService.show();
         this.getTrending();
+    }
+
+    public onScroll(){
+        console.log('1');
     }
 }

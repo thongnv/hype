@@ -52,7 +52,7 @@
             </div>
             <div class="clear"></div>
             <div id="v-scrollable" class="scrollable section"
-                 ng2-scrollable (elementVisible)="id = $event.id">
+                 ng2-scrollable (elementVisible)="id = $event.id" (scrolledTo)="id=$event">
                 <app-event-item [events]="events" (onClickLike)="onClickLike($event)"></app-event-item>
             </div>
         </div>
