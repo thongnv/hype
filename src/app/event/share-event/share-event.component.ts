@@ -24,7 +24,7 @@ export class ShareEventComponent implements OnInit {
       lng: [''],
     }),
     eventDate: [''],
-    eventPrice: [''],
+    eventPrice: ['', Validators.compose([this.minMax])],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
@@ -61,6 +61,12 @@ export class ShareEventComponent implements OnInit {
     // TODO
   }
 
+  public minMax(control: FormControl) {
+    console.log(control.value);
+    return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
+      minMax: true
+    };
+  }
   public onRemovePreview(imageUrl) {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
