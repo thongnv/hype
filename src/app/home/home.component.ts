@@ -9,6 +9,8 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
 import * as moment from 'moment/moment';
 import {any} from "codelyzer/util/function";
+import { Ng2ScrollableDirective } from 'ng2-scrollable';
+import { scrollTo } from 'ng2-utils';
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
@@ -37,6 +39,9 @@ export class HomeComponent implements OnInit {
     public priceRange:number[] = [0, 50];
     public categories:any[];
     public selected:any;
+    public tabActive:boolean = false;
+    public isOpen:boolean = false;
+    public id:any='v1';
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -121,21 +126,14 @@ export class HomeComponent implements OnInit {
 
     }
 
-    public markerClick(id:any) {
-        console.log('index: ', id);
-        this.markers.forEach((marker) => {
-            if (marker.parent === id) {
-                marker.isOpen = true;
-                marker.icon = MARKER_ICON_SELECTED;
-            } else {
-                if (marker.isOpen === true) {
-                    marker.isOpen = false;
-                }
-                if (marker.icon === MARKER_ICON_SELECTED) {
-                    marker.icon = MARKER_ICON;
-                }
-            }
-        });
+    public clickedMarker(selector, horizontal) {
+        scrollTo(
+            '#v'+selector,       // scroll to this
+            '#v-scrollable', // scroll within (null if window scrolling)
+            horizontal,     // is it horizontal scrolling
+            0               // distance from top or left
+        );
+
     }
 
     public selectedDate(value:any) {
@@ -161,8 +159,8 @@ export class HomeComponent implements OnInit {
         alwaysShowCalendars: false,
     };
 
-    public mapClicked($event:MouseEvent) {
-
+    public mapClicked($event:MouseEvent, idElement) {
+        console.log($event, idElement);
     }
 
     public markerRadiusChange(radius) {

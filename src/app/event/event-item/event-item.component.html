@@ -1,4 +1,4 @@
-<div *ngFor="let item of events" class="wrap-each-items">
+<div *ngFor="let item of events;let i = index" class="wrap-each-items" id="v{{i}}">
     <div *ngIf="item.type=='event'">
         <div class="avatar-profile">
             <a class="avatar-picture"><img [src]="item.field_images[0]" width="140" height="140"></a>
@@ -18,13 +18,13 @@
                           class="free-price-button text-capitalize pull-right"
                           [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
                 </h4>
-                <p class="detail-information" [innerHTML]="item.body"></p>
+                <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
             </div>
             <div class="bottom-content">
                 <h5 class="mentioned">Mentioned by</h5>
                 <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
                     <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
-                        <a class="mentioned-item-wrap" target="_blank"><img [src]="ment" width="28" height="28"></a>
+                        <a class="mentioned-item-wrap" target="_blank"><img [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28" height="28"></a>
                     </li>
                 </ul>
             </div>

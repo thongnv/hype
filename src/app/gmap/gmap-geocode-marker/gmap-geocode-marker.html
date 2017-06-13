@@ -9,15 +9,15 @@
 <!--&gt;-->
     <sebm-google-map-marker
             *ngFor="let m of markers; let i = index"
-            (markerClick)="clickedMarker(m, i)"
+            (markerClick)="clickedMarker(i)"
             [latitude]="m.lat"
             [longitude]="m.lng"
             [markerDraggable]="true"
-            (mapClick)="mapClicked($event)"
+            (mapClick)="mapClicked(m)"
             [iconUrl]="MARKER_ICON"
     >
-        <sebm-google-map-info-window [maxWidth]="264" [isOpen]="m.isOpen" (infoWindowClose)="infoWindowClose($event)" [disableAutoPan]="true">
-           {{m.label}}
-        </sebm-google-map-info-window>
+        <!--<sebm-google-map-info-window [maxWidth]="264" [isOpen]="m.isOpen" (infoWindowClose)="infoWindowClose($event)" [disableAutoPan]="true">-->
+           <!--{{m.label}}-->
+        <!--</sebm-google-map-info-window>-->
     </sebm-google-map-marker>
 <!--</sebm-google-map-circle>-->

@@ -25,13 +25,15 @@
                     </button>
                 </div>
                 <div class="clear"></div>
+                scrolled to: {{id}}
                 <div>
                     <ngb-tabset class="homeFilter">
-                        <ngb-tab class="tabFilter">
+                        <ngb-tab class="tabFilter" [ngClass]="{active: tabActive}">
                             <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
                                                                     aria-hidden="true"></i><span></span></ng-template>
                             <ng-template ngbTabContent>
-                                <nouislider [connect]="true" [min]="0" [max]="300" [step]="10" [(ngModel)]="priceRange" (ngModelChange)="onChangePrice($event)"
+                                <nouislider [connect]="true" [min]="0" [max]="300" [step]="10" [(ngModel)]="priceRange"
+                                            (ngModelChange)="onChangePrice($event)"
                                             style="margin-top: 2em;"></nouislider>
                                 {{priceRange}}
                             </ng-template>
@@ -40,7 +42,8 @@
                             <ng-template ngbTabTitle>When<i class="fa fa-angle-down"
                                                             aria-hidden="true"></i><span></span></ng-template>
                             <ng-template ngbTabContent>
-                                <input style="margin-top: 2em;"  class="form-control" [options]="options" daterangepicker (selected)="selectedDate($event)">
+                                <input style="margin-top: 2em;" class="form-control" [options]="options" daterangepicker
+                                       (selected)="selectedDate($event)">
                             </ng-template>
                         </ngb-tab>
                     </ngb-tabset>
@@ -48,24 +51,26 @@
                 </div>
             </div>
             <div class="clear"></div>
-            <div class="result-wrap" slimScroll width="auto" height="calc(100vh - 265px)" size="7px"
-                 [alwaysVisible]="true"
-                 [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+            <div id="v-scrollable" class="scrollable section"
+                 ng2-scrollable (elementVisible)="id = $event.id">
                 <app-event-item [events]="events" (onClickLike)="onClickLike($event)"></app-event-item>
             </div>
         </div>
 
         <div class="col-lg-5 col-xs-12">
             <sebm-google-map *ngIf="showMap"
-                    [latitude]="lat"
-                    [longitude]="lng"
-                    [zoom]="mapZoom"
-                    [disableDefaultUI]="false"
-                    [zoomControl]="false"
-                    [streetViewControl]="false"
-                    (mapClick)="mapClicked($event)"
+                             [latitude]="lat"
+                             [longitude]="lng"
+                             [zoom]="mapZoom"
+                             [disableDefaultUI]="false"
+                             [zoomControl]="false"
+                             [streetViewControl]="false"
+                             (mapClick)="mapClicked($event,index)"
             >
-                <gmap-geocode-marker [events]="events" [currentRadius]="currentRadius" (radiusChange)="markerRadiusChange($event)" [lat]="lat" [lng]="lng"></gmap-geocode-marker>
+                <gmap-geocode-marker [events]="events" [currentRadius]="currentRadius"
+                                     (radiusChange)="markerRadiusChange($event)" [lat]="lat"
+                                     (markerClick)="clickedMarker($event)"
+                                     [lng]="lng"></gmap-geocode-marker>
             </sebm-google-map>
         </div>
     </div>
