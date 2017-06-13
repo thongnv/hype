@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     public selected:any;
     public tabActive:boolean = false;
     public isOpen:boolean = false;
-    public id:any='v1';
+    public currentHighlightedMarker:number = 1;
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -64,7 +64,7 @@ export class HomeComponent implements OnInit {
     date:{year: number, month: number};
 
     // TypeScript public modifiers
-    constructor(private mainService:MainService, private homeService:HomeService,private loaderService:LoaderService) {
+    constructor(private mainService:MainService, private homeService:HomeService, private loaderService:LoaderService) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -135,7 +135,7 @@ export class HomeComponent implements OnInit {
 
     public clickedMarker(selector, horizontal) {
         scrollTo(
-            '#v'+selector,       // scroll to this
+            '#v' + selector,       // scroll to this
             '#v-scrollable', // scroll within (null if window scrolling)
             horizontal,     // is it horizontal scrolling
             0               // distance from top or left
@@ -157,7 +157,15 @@ export class HomeComponent implements OnInit {
         console.log(params);
         this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
             this.events = response.data;
-            console.log(response);
+            for (var i = 0; i < this.events.length; i++) {
+                this.markers.push({
+                    lat: this.events[i].field_location_place.field_latitude,
+                    lng: this.events[i].field_location_place.field_longitude,
+                    label: this.events[i].title,
+                    opacity: 0.4,
+                    isOpenInfo: false
+                });
+            }
             this.showMap = true;
             this.loaderService.hide();
         });
@@ -191,7 +199,37 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    public onScroll(){
-        console.log('1');
+    public onScroll(event) {
+        let baseHeight = event.target.clientHeight;
+        let realScrollTop = event.target.scrollTop + baseHeight;
+        let currentHeight:number = baseHeight;
+
+        if (event.target.children[0].children.length > 1) {
+            for (let i = 0; i < event.target.children[0].children.length; i++) {
+                let currentClientH = event.target.children[0].children[i].clientHeight;
+                currentHeight += currentClientH;
+                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+                    if (this.currentHighlightedMarker !== i) {
+                        this.currentHighlightedMarker = i;
+                        this.highlightMarker(i);
+                    }
+                }
+            }
+        }
+    }
+
+    private highlightMarker(markerId:number):void {
+        if (this.markers[markerId]) {
+            this.markers.forEach((marker, index) => {
+                if (index === markerId) {
+                    this.markers[index].opacity = 1;
+                    this.markers[index].isOpenInfo = true;
+                } else {
+                    this.markers[index].opacity = 0.4;
+                    this.markers[index].isOpenInfo = false;
+                }
+            });
+        }
+        console.log(this.markers);
     }
 }

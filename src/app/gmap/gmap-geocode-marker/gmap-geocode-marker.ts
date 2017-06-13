@@ -9,13 +9,15 @@ declare let google:any;
 export class GeocodeMarkerComponent implements OnInit {
 
 
-    @Input('events') public inputEvents:any;
+    //@Input('events') public inputEvents:any;
+    @Input('markers') public markers:any;
     @Input('lat') public lat:any;
     @Input('lng') public lng:any;
     @Input('currentRadius') public currentRadius:any;
     @Output('radiusChange') public radiusChange = new EventEmitter<any>();
     @Output('dragEnd') public dragEnd = new EventEmitter<any>();
     @Output('markerClick') public markerClick = new EventEmitter<any>();
+
     public markers:any = [];
     public events:any[];
     public MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -26,7 +28,7 @@ export class GeocodeMarkerComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.loadMapRadius();
+        //this.loadMapRadius();
     }
 
     public markerRadiusChange(radius) {
@@ -35,10 +37,10 @@ export class GeocodeMarkerComponent implements OnInit {
     }
 
     public clickedMarker(index) {
-       this.markerClick.emit(index);
+        this.markerClick.emit(index);
     }
 
-    public mapClicked(e){
+    public mapClicked(e) {
         console.log(e);
     }
 
@@ -51,33 +53,34 @@ export class GeocodeMarkerComponent implements OnInit {
     }
 
 
-    private loadMapRadius() {
+    //private loadMapRadius() {
+    //
+    //    this.mapsAPILoader.load().then(()=> {
+    //        let mapCenter = new google.maps.Marker({
+    //            position: new google.maps.LatLng(this.lat, this.lng),
+    //            draggable: true
+    //        });
+    //        let searchCenter = mapCenter.getPosition();
+    //        for (var i = 0; i < this.inputEvents.length; i++) {
+    //            //    let myMarker = new google.maps.Marker({
+    //            //        position: new google.maps.LatLng(this.inputEvents[i].field_location_place.field_latitude, this.inputEvents[i].field_location_place.field_longitude),
+    //            //        draggable: true
+    //            //    });
+    //            //    let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+    //            //    if (parseInt(geometry) < this.currentRadius) {
+    //            //        this.events.push(this.inputEvents[i]);
+    //            this.markers.push({
+    //                lat: this.inputEvents[i].field_location_place.field_latitude,
+    //                lng: this.inputEvents[i].field_location_place.field_longitude,
+    //                label: this.inputEvents[i].title
+    //            });
+    //            //    }
+    //            //
+    //        }
+    //    });
+    //}
 
-        this.mapsAPILoader.load().then(()=> {
-            let mapCenter = new google.maps.Marker({
-                position: new google.maps.LatLng(this.lat, this.lng),
-                draggable: true
-            });
-            let searchCenter = mapCenter.getPosition();
-            for (var i = 0; i < this.inputEvents.length; i++) {
-            //    let myMarker = new google.maps.Marker({
-            //        position: new google.maps.LatLng(this.inputEvents[i].field_location_place.field_latitude, this.inputEvents[i].field_location_place.field_longitude),
-            //        draggable: true
-            //    });
-            //    let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-            //    if (parseInt(geometry) < this.currentRadius) {
-            //        this.events.push(this.inputEvents[i]);
-                    this.markers.push({
-                        lat: this.inputEvents[i].field_location_place.field_latitude,
-                        lng: this.inputEvents[i].field_location_place.field_longitude,
-                        label: this.inputEvents[i].title
-                    });
-            //    }
-            //
-            }
-        });
-    }
-    public infoWindowClose($event){
+    public infoWindowClose($event) {
         console.log($event);
     }
 
