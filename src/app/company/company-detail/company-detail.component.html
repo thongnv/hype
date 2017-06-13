@@ -58,7 +58,6 @@
               </span>
             </p>
 
-
           </div>
           <!-- company info end -->
         </div>
@@ -93,7 +92,7 @@
         </company-review>
       </div>
 
-      <app-write-review [company]="company" [submitted]="showForm" (change)="updateReview($event)"></app-write-review>
+      <app-write-review [user]="user" [company]="company" [submitted]="showForm" (change)="updateReview($event)"></app-write-review>
 
     </div>
     <div class="col-md-6 map-fix">
