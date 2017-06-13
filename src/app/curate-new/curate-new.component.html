@@ -41,7 +41,7 @@
         </div>
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
-          <label class="control-label " id="list-img-label" for="listImg">
+          <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
             <i class="fa fa-plus"></i>
             &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file'
@@ -70,7 +70,7 @@
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" 
+              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]"
                                    [description]="true"
                                    [image]="true">
               </app-gmap-auto-place>

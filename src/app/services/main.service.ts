@@ -174,18 +174,30 @@ export class MainService {
       });
   }
 
-  public getCategoryArticle(): Promise<any> {
-    let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+  public getCategoryArticle(): Observable<Response> {
+    let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(AppSetting.API_CATEGORIES_ARTICLE, options)
-      .toPromise()
-      .then(
-        (resp) => resp.json()
-      )
-      .catch(this.handleError);
+      .map((res) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error.json()));
+      });
   }
 
+  // public getCurate(): Observable<Response> {
+  //   let headers = this.defaultHeaders;
+  //   let options = new RequestOptions({headers, withCredentials: true});
+  //   let myParams = new URLSearchParams();
+  //   // return this._http.get(AppSetting.API_CATEGORIES_ARTICLE, myParams, options)
+  //   //   .map((res) => {
+  //   //     return res.json();
+  //   //   })
+  //   //   .catch((error: any) => {
+  //   //     return Observable.throw(new Error(error.json()));
+  //   //   });
+  // }
   public postArticle(data) {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
