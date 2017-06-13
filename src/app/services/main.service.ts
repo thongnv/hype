@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
 import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import 'rxjs/add/operator/toPromise';
@@ -186,18 +186,32 @@ export class MainService {
       });
   }
 
-  // public getCurate(): Observable<Response> {
-  //   let headers = this.defaultHeaders;
-  //   let options = new RequestOptions({headers, withCredentials: true});
-  //   let myParams = new URLSearchParams();
-  //   // return this._http.get(AppSetting.API_CATEGORIES_ARTICLE, myParams, options)
-  //   //   .map((res) => {
-  //   //     return res.json();
-  //   //   })
-  //   //   .catch((error: any) => {
-  //   //     return Observable.throw(new Error(error.json()));
-  //   //   });
-  // }
+  public getCurate(filter, cate): Observable<Response> {
+    let headers = this.defaultHeaders;
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    if (filter === 'latest') {
+      myParams.set('filter', 'latest');
+    }
+    if (parseInt(cate, 10)) {
+      myParams.set('cate', cate);
+    }
+
+    let options = new RequestOptions({
+      headers,
+      params: myParams,
+      withCredentials: true
+    });
+
+    return this._http.get(AppSetting.API_ARTICLE, options)
+      .map((res) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error.json()));
+      });
+  }
+
   public postArticle(data) {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
