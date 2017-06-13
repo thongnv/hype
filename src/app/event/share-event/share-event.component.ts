@@ -128,6 +128,7 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
+    event.Date = moment(event.Date).unix();
     this.previewData = event;
     this.initPreview();
   }
