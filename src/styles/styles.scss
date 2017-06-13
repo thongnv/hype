@@ -912,6 +912,56 @@ body, html {
     height: 20px;
     line-height: 20px;
   }
+
+  /*
+  Home css
+  */
+  .homeFilter{
+    float: left;
+    clear: both;
+    margin-top: 1em;
+  }
+  .homeFilter ul.nav-tabs{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .homeFilter li.nav-item a {
+    border: none;
+    background: transparent;
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: right;
+    color: #3b3b3b;
+  }
+
+  .homeFilter .nav-link.active,
+  .homeFilter .nav-link.active:hover,
+  .homeFilter .nav-link.active:focus {
+    border: none;
+  }
+
+  .homeFilter .nav-link.active i:before,
+  .homeFilter .nav-link.active:hover i:before,
+  .homeFilter .nav-link.active:focus i:before {
+    content: "\f106";
+  }
+
+  .homeFilter ul.nav-tabs li.nav-item a.nav-link {
+    text-align: left;
+    padding: 0px;
+  }
+  .homeFilter ul.nav-tabs li.nav-item a.nav-link i {
+    font-size: 16px;
+    position: relative;
+    top: 2px;
+    margin-left: 7px;
+  }
+  .homeFilter .ng2-nouislider{
+    margin-left: 15px;
+  }
+
   /*END notifications bage*/
   @media (max-width: 991px) {
     .navbar-header {
@@ -986,3 +1036,4 @@ body, html {
     }
   }
 }
+

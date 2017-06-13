@@ -16,7 +16,7 @@
             (mapClick)="mapClicked($event)"
             [iconUrl]="MARKER_ICON"
     >
-        <sebm-google-map-info-window [maxWidth]="264" [isOpen]="m.isOpen" [disableAutoPan]="true">
+        <sebm-google-map-info-window [maxWidth]="264" [isOpen]="m.isOpen" (infoWindowClose)="infoWindowClose($event)" [disableAutoPan]="true">
            {{m.label}}
         </sebm-google-map-info-window>
     </sebm-google-map-marker>

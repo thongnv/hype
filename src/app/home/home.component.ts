@@ -8,6 +8,7 @@ import {HomeService} from "../services/home.service";
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
 import * as moment from 'moment/moment';
+import {any} from "codelyzer/util/function";
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
@@ -15,8 +16,8 @@ const now = new Date();
 @Component({
     selector: 'home',
     providers: [],
-    styleUrls: ['./home.component.css'],
-    templateUrl: './home.component.html'
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
     // Set our default values
@@ -90,7 +91,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.showMap = false;
-
+        this.selected = false;
         this.getTrending();
     }
 

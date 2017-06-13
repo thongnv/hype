@@ -73,5 +73,8 @@ export class GeocodeMarkerComponent implements OnInit {
             }
         });
     }
+    public infoWindowClose($event){
+        console.log($event);
+    }
 
 }
