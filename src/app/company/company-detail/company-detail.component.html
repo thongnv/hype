@@ -33,14 +33,18 @@
                 </a>
               </div>
             </div>
+            <p class="open-now-button">
+              Open Now
+            </p>
             <div class="company-description">
               {{description}}
             </div>
+            
           </div>
           <!-- company header end -->
           <!-- company info start -->
           <div class="company-info">
-            <p><span class="info-label">Location</span> {{location.name}}</p>
+            <p><span class="info-label">Location</span> <a>{{location.name}}</a></p>
             <p><span class="info-label">Website</span><a [href]="website" target="_blank">{{website}}</a></p>
             <p><span class="info-label">Phone No.</span> <a href="tel:{{phone}}">{{phone}}</a></p>
             <p>
@@ -86,7 +90,7 @@
             <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
-          <a (click)="showReviewModal()" class="post-your-experience">Write a review</a>
+          <a (click)="showReviewModal()" class="write-a-lastest-reviews">Write a review</a>
         </div>
         <company-review *ngFor="let review of reviews; let index = index" [review]="review">
         </company-review>

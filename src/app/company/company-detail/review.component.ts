@@ -7,7 +7,7 @@ import { CompanyDetailComponent } from './company-detail.component';
 @Component({
   selector: 'company-review',
   template: `
-    <div class="experiences-area border-bottom padding-top-30 padding-bottom-35">
+    <div class="experiences-area border-bottom padding-bottom-35">
       <div class="information-experience">
         <img class="img-circle" [src]="author.avatar" alt="user avatar" width="70"
              height="70">
@@ -48,7 +48,7 @@ import { CompanyDetailComponent } from './company-detail.component';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a (click)="toggleLikeReview()">
-            <img *ngIf="!liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like">
+            <img *ngIf="!liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24" height="23">
             <img *ngIf="liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
           {{likeNumber}} Likes
