@@ -26,7 +26,7 @@
           </small>
         </div>
         <div class="form-group">
-          <label class="control-label">What is your list about? Tell us your story</label>
+          <label class="control-label">Tell us your story</label>
           <app-tinymce formControlName='listDescription'></app-tinymce>
         </div>
         <div class="form-group">
@@ -64,13 +64,14 @@
         <div formArrayName="listPlaces">
           <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">
-              <span># {{i + 1}}</span>
+              <span class="title-number-item"># {{i + 1}}</span>
               <span class="glyphicon glyphicon-remove pull-right"
                     *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" [description]="true"
+              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" 
+                                   [description]="true"
                                    [image]="true">
               </app-gmap-auto-place>
             </div>
