@@ -150,19 +150,24 @@ header ul li.pull-right {
 .carousel-header i  {
     cursor: pointer;
     font-size: 25px;
-    margin: 4% 0 0 4%;
+    margin: 4% 0 0 3%;
     float: left;
     text-transform: capitalize;
 }
 .carousel-header strong {
     font-size: 26px;
     font-weight: bold;
-    line-height: 40px;
+    line-height: 35px;
     text-align: left;
     color: #3b3b3b;
     display: block;
-    padding-left: 9%;
+    padding-left: 8%;
     cursor: pointer;
+    padding-top: 3%;
+}
+.carousel-indicators li {
+    border: none;
+    background-color: #bababa;
 }
 .description {
     margin: 20px 40px;
@@ -203,10 +208,11 @@ header ul li.pull-right {
     padding: 0px 20px;
     font-size: 26px;
     font-weight: bold;
-    line-height: 35px;
+    line-height: 30px;
     text-align: left;
     color: #3b3b3b;
     float: left;
+    width: 80%;
 }
 .place-item-header span.place-detail-btn {
     border: none;

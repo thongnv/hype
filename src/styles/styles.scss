@@ -639,8 +639,16 @@ body, html {
     bottom: 0;
   }
   #curate-carousel .carousel-indicators{
-    display: none;
+    display: inline-block;
     //top: 0;
+  }
+  #curate-carousel .carousel-indicators li {
+    border: none;
+    background-color: #bababa;
+  }
+  #curate-carousel .carousel-indicators li.active {
+    border: none;
+    background-color: #ec3d62;
   }
   #curate-carousel .carousel-content > strong{
     width: 100%;
