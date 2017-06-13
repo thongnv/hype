@@ -967,6 +967,30 @@ body, html {
     margin-left: 15px;
   }
 
+  .scrollable { height: 600px; position: relative;}
+  .scrollable > div {height: 110px}
+  .scrollable > div:nth-child(odd) { background-color: #ccc}
+
+  ul.window {position: fixed; top: 0; left: 0; background: yellow; z-index: 1;}
+  ul.window li {display: block; }
+  .scrollable.section {overflow:auto;}
+
+  .horizontal {
+    height: 100px;
+    width: 100%;
+    max-width: 450px;
+    white-space: nowrap;
+    overflow-y: hidden !important;
+  }
+  .horizontal > div {
+    width: 200px;
+    height: 80px;
+    display: inline-block;
+    text-align: center;
+  }
+
+
+
   /*END notifications bage*/
   @media (max-width: 991px) {
     .navbar-header {
