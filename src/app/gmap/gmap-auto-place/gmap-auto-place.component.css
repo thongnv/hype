@@ -18,6 +18,7 @@
 .gmap-place .form-group small {
     display: block;
     margin: 20px 0px;
+    font-size: 14px;
 }
 .gmap-place .form-group textarea {
     width: 100%;
