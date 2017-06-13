@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TripleSlidePipe implements PipeTransform {
 
   public transform(value: any[], args?: any): any {
-    console.log("cat: ", args);
     let returnValue = [];
     let tmpSlide = [];
     let countSlide = 0;

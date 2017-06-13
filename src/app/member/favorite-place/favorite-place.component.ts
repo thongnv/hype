@@ -10,9 +10,13 @@ export class FavoritePlaceComponent {
   @Input('canDelete') public canDelete: boolean;
 
   @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
+  @Output('onClickVote') public onClickVote = new EventEmitter<any>();
 
   public onDeleteEmit(item: any): void {
     this.onClickDelete.emit(item);
   }
 
+  public onVoteEvent(): void {
+    this.onClickVote.emit();
+  }
 }

@@ -5,11 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CurateListPipe implements PipeTransform {
 
-  transform(items: any[], category_id: string): any {
-    if (!items || !category_id || category_id === 'all') {
+  public transform(items: any[], categoryId: string): any {
+    if (!items || !categoryId || categoryId === 'all') {
       return items;
     }
-    return items.filter((item) => item.info.category_id === category_id );
+    return items.filter((item) => item.info.category_id === categoryId );
   }
 
 }

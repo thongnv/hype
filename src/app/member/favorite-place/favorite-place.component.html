@@ -2,7 +2,7 @@
   <div *ngIf="canDelete" class="close-button text-right icon-times" (click)="onDeleteEmit(item)">&times;</div>
   <div class="avatar-profile">
     <div class="fav-item-image">
-      <img [src]="item.company_image" width="100" height="100">
+      <app-instagram-image *ngIf="item.company_image" [src]="item.company_image" [width]="100" [height]="100"></app-instagram-image>
     </div>
   </div>
   <div class="information-profile">

@@ -13,7 +13,8 @@ export class MainService {
   private defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')});
+    'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')
+  });
 
   public constructor(private _localStorageService: LocalStorageService,
                      private _http: Http,
@@ -57,12 +58,13 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
     console.log('csrfToken: ', csrfToken);
     console.log('options: ', options);
+    this._localStorageService.clearAll();
+    this._appState.set('userInfor', null);
     return new Promise((resolve, reject) => {
       this._http.post(AppSetting.API_LOGOUT, options).subscribe(
         (response) => {
           console.log('API_LOGOUT: ', response);
-          this._localStorageService.clearAll();
-          this._appState.set('userInfor', null);
+
           resolve(response);
         },
         (err) => {
@@ -163,10 +165,10 @@ export class MainService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/article/' + slugName + '?_format=json' , options
+      AppSetting.API_ENDPOINT + 'api/v1/article/' + slugName + '?_format=json', options
     ).map((res) => {
-        return res.json();
-      })
+      return res.json();
+    })
       .catch((error: any) => {
         return Observable.throw(new Error(error.json()));
       });
@@ -212,7 +214,8 @@ export class MainService {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get(AppSetting.API_NOTIFICATION + '&limit=10&page=' + page, options)
+    return this._http.get(AppSetting.API_NOTIFICATION +
+      '&limit=' + AppSetting.PAGE_SIZE + '&page=' + page, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -261,7 +264,46 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
 
     return this._http.get(AppSetting.API_FAVORITE_PLACE +
-      '&limit=10&page=' + page + '&slug=' + (slugName ? slugName : currentSlug), options)
+      '&limit=' + AppSetting.PAGE_SIZE + '&page=' + page +
+      '&slug=' + (slugName ? slugName : currentSlug), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public isLoggedin(): boolean {
+    if (this._localStorageService.get('csrf_token')) {
+      return true;
+    }
+    return false;
+  }
+
+  public removeFavoritedEventList(slug: string): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+
+    return this._http.post(AppSetting.API_UNFAVORITE_EVENT_LIST + slug, JSON.stringify({}), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public favoritePlace(idsNo: string): Promise<any> {
+    let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+
+    return this._http.post(AppSetting.API_FAVORITE_PLACE, JSON.stringify({ids_no: idsNo}), options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
+  public getInstagramImage(src: string): Promise<any> {
+    let headers = new Headers({'Content-Type': 'application/json', 'crossDomain': true});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get('https://www.instagram.com/explore/tags/sciencecentresg/?__a=1', options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

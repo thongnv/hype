@@ -10,21 +10,31 @@
         <button class="btn btn-default" (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</button>
       </div>
-      <div class="tab-wrap">
+      <div class="tab-wrap" slimScroll width="auto" height="calc(100vh - 185px)" size="7px"
+           (scroll)="onScrollToBottom($event)"
+           [alwaysVisible]="true"
+           [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
         <div class="tab-content fade" *ngIf="userInfo.events" [class.in] = "selectedFavoriteType === 'event'">
           <app-favorite-event *ngFor="let fav of userInfo.events"
                               [item]="fav"
                               [canDelete]="canDelete"
-                              (onClickVote)="onClickVote($event)"
-                              (onClickDelete)="onClickDeleteEvent($event)">
+                              (onClickDelete)="onClickDeleteEventList($event)">
           </app-favorite-event>
+          <div class="list-bottom">
+            <div *ngIf="setEvent.loadingInProgress">Loading</div>
+            <div *ngIf="setEvent.endOfList">End Of List</div>
+          </div>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.lists" [class.in] = "selectedFavoriteType === 'list'">
           <app-favorite-list *ngFor="let fav of userInfo.lists"
                              [item]="fav"
                              [canDelete]="canDelete"
-                             (onClickDelete)="onClickDeleteList($event)">
+                             (onClickDelete)="onClickDeleteEventList($event)">
           </app-favorite-list>
+          <div class="list-bottom">
+            <div *ngIf="setList.loadingInProgress">Loading</div>
+            <div *ngIf="setList.endOfList">End Of List</div>
+          </div>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.places" [class.in] = "selectedFavoriteType === 'place'">
           <app-favorite-place *ngFor="let fav of userInfo.places"
@@ -32,6 +42,10 @@
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">
           </app-favorite-place>
+          <div class="list-bottom">
+            <div *ngIf="setPlace.loadingInProgress">Loading</div>
+            <div *ngIf="setPlace.endOfList">End Of List</div>
+          </div>
         </div>
       </div>
     </div>
