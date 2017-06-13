@@ -29,3 +29,9 @@
 .gmap-place .form-group label {
     margin-top: 20px;
 }
+.gmap-place .form-group label i {
+    color: #ec3d62;
+    font-size: 11px;
+}
+
+

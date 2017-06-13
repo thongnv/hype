@@ -70,7 +70,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         likeNumber: 0,
         liked: false
       };
-      this.reviews.push(review);
+      this.reviews.unshift(review);
       this.showForm = false;
     }
   }
