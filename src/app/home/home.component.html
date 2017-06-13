@@ -73,6 +73,7 @@
                 <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                      (markerClick)="clickedMarker($event)"
+                                     (dragEnd)="markerDragEnd($event)"
                                      [lng]="lng"></gmap-geocode-marker>
 
             </sebm-google-map>

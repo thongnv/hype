@@ -12,10 +12,11 @@ import {any} from "codelyzer/util/function";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {LoaderService} from "../shared/loader/loader.service";
+import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
-
+declare let google:any;
 @Component({
     selector: 'home',
     providers: [],
@@ -64,7 +65,10 @@ export class HomeComponent implements OnInit {
     date:{year: number, month: number};
 
     // TypeScript public modifiers
-    constructor(private mainService:MainService, private homeService:HomeService, private loaderService:LoaderService) {
+    constructor(private mainService:MainService,
+                private homeService:HomeService,
+                private loaderService:LoaderService,
+                private mapsAPILoader:MapsAPILoader) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -156,17 +160,7 @@ export class HomeComponent implements OnInit {
         let params = this.params;
         console.log(params);
         this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
-            this.events = response.data;
-            for (var i = 0; i < this.events.length; i++) {
-                this.markers.push({
-                    lat: this.events[i].field_location_place.field_latitude,
-                    lng: this.events[i].field_location_place.field_longitude,
-                    label: this.events[i].title,
-                    opacity: 0.4,
-                    isOpenInfo: false
-                });
-            }
-            this.showMap = true;
+            this.loadMap(response.data);
             this.loaderService.hide();
         });
     }
@@ -182,6 +176,16 @@ export class HomeComponent implements OnInit {
 
     public markerRadiusChange(radius) {
 
+        if (this.currentRadius <= radius) {
+            this.mapZoom--;
+        } else {
+            this.mapZoom++;
+        }
+        this.currentRadius = radius;
+        this.params.radius = radius;
+        this.showMap = false;
+        this.loaderService.show();
+        this.getTrending();
     }
 
     private getTrandingCategories() {
@@ -200,10 +204,13 @@ export class HomeComponent implements OnInit {
     }
 
     public onScroll(event) {
+        let elm = event.srcElement;
         let baseHeight = event.target.clientHeight;
         let realScrollTop = event.target.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
+        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
 
+        }
         if (event.target.children[0].children.length > 1) {
             for (let i = 0; i < event.target.children[0].children.length; i++) {
                 let currentClientH = event.target.children[0].children[i].clientHeight;
@@ -231,5 +238,49 @@ export class HomeComponent implements OnInit {
             });
         }
         console.log(this.markers);
+    }
+
+    public markerDragEnd(event) {
+        console.log(event);
+        this.showMap = false;
+        this.lat = event.coords.lat;
+        this.lng = event.coords.lng;
+        this.params.type = 'event';
+        this.params.lat = event.coords.lat;
+        this.params.lng = event.coords.lng;
+        this.loaderService.show();
+        this.getTrending();
+    }
+
+    private loadMap(events:any) {
+
+        this.mapsAPILoader.load().then(()=> {
+            let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+            });
+            let searchCenter = mapCenter.getPosition();
+            for (var i = 0; i < events.length; i++) {
+                let myMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(events[i].field_location_place.field_latitude, events[i].field_location_place.field_longitude),
+                    draggable: true
+                });
+                console.log(events[i].field_location_place.field_latitude);
+                let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                if (parseInt(geometry) < this.currentRadius) {
+                    this.events.push(events[i]);
+                    this.markers.push({
+                        lat: events[i].field_location_place.field_latitude,
+                        lng: events[i].field_location_place.field_longitude,
+                        label: events[i].title,
+                        opacity: 0.4,
+                        isOpenInfo: false
+                    });
+                }
+
+            }
+            console.log(this.markers);
+            this.showMap = true;
+        });
     }
 }
