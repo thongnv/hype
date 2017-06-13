@@ -2,11 +2,7 @@ import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit } from '@angul
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
-import {PolyMouseEvent} from "angular2-google-maps/core/services/google-maps-types";
-import {LatLngBounds} from "angular2-google-maps/core/services/google-maps-types";
 import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
-import {MapsAPILoader} from "angular2-google-maps/esm/core/services/maps-api-loader/maps-api-loader";
-import {SebmGoogleMap} from "angular2-google-maps/esm/core/directives/google-map";
 
 declare let google:any;
 
@@ -27,8 +23,7 @@ interface marker {
 })
 
 
-export class ModeComponent implements OnInit,AfterViewInit {
-
+export class ModeComponent implements OnInit {
     public markers:any = [];
     public categories:any = [];
     public someValue:number = 5;
@@ -73,14 +68,10 @@ export class ModeComponent implements OnInit,AfterViewInit {
     }
 
     public ngOnInit() {
-        this.getCategories();
+        this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
         // this.renderMaker(5000);
-    }
-
-    ngAfterViewInit() {
-        //this.renderMaker();
     }
 
     onChange(value:number) {
@@ -88,21 +79,15 @@ export class ModeComponent implements OnInit,AfterViewInit {
     }
 
     getDataModes() {
-        this.modeService.getModes(this.params).map(response => response.json())
-            .subscribe(data => this.items = data);
+        // this.modeService.getModes(this.params).map(response => response.json())
+        //     .subscribe(data => this.items = data);data
     }
 
-    getCategories() {
-        if (this.filterFromMode.getRawValue().filterMode == 'all') {
-            this.params.type = 'eat';
-        }
-        else {
-            this.params.type = this.filterFromMode.getRawValue().filterMode;
-        }
-        console.log(this.params);
-        this.modeService.getCategories(this.params).map(resp=>resp.json()).subscribe((resp)=> {
+    getCategories(value) {
+            this.modeService.getCategories(value).map(resp=>resp.json()).subscribe((resp)=> {
             this.categories = resp;
         });
+
     }
 
     getFilter() {
@@ -144,7 +129,9 @@ export class ModeComponent implements OnInit,AfterViewInit {
             });
         }
     }
-
+    changeCategory(){
+        this.getCategories(this.filterFromMode.value.filterMode);
+    }
     private renderMaker() {
 
     }

@@ -37,7 +37,7 @@ export class AppSetting {
   public static API_FAVORITE_LIST = API_ENDPOINT +
     'api/user/flag/bookmark/list?_format=json&type=list&limit=' + PAGE_SIZE;
   public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT +
-    '/api/user/flag/bookmark?_format=json&slug=';
+    'api/user/flag/bookmark?_format=json&slug=';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,

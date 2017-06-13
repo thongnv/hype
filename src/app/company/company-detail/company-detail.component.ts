@@ -41,21 +41,25 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
-    this.route.params.subscribe((e) => {
-      this.slugName = e.slug;
-      this.companyService.getCompanyDetail(this.slugName).subscribe(
-        (resp) => {
-          this.company = CompanyService.extractCompanyDetail(resp);
-          this.loadData(this.company);
-          this.initSlide(this.images);
-          this.mapReady = true;
-        },
-        (error) => {
-          console.log(error);
-          this.router.navigate(['PageNotFound']).then();
-        }
-      );
-    });
+    // this.route.params.subscribe((e) => {
+    //   this.slugName = e.slug;
+    //   this.companyService.getCompanyDetail(this.slugName).subscribe(
+    //     (resp) => {
+    //       this.company = CompanyService.extractCompanyDetail(resp);
+    //       this.loadData(this.company);
+    //       this.initSlide(this.images);
+    //       this.mapReady = true;
+    //     },
+    //     (error) => {
+    //       console.log(error);
+    //       this.router.navigate(['PageNotFound']).then();
+    //     }
+    //   );
+    // });
+    this.company = CompanyService.getMockCompany();
+    this.loadData(this.company);
+    this.initSlide(this.images);
+    this.mapReady = true;
     let user = this.appState.state.userInfo;
     this.user = {name: 'Tom Cruise', avatar: user.userAvatar};
   }

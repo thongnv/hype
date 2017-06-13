@@ -18,7 +18,7 @@
           <app-favorite-event *ngFor="let fav of userInfo.events"
                               [item]="fav"
                               [canDelete]="canDelete"
-                              (onClickDelete)="onClickDeleteEventList($event)">
+                              (onClickDelete)="onClickDeleteEvent($event)">
           </app-favorite-event>
           <div class="list-bottom">
             <div *ngIf="setEvent.loadingInProgress">Loading</div>
@@ -29,7 +29,7 @@
           <app-favorite-list *ngFor="let fav of userInfo.lists"
                              [item]="fav"
                              [canDelete]="canDelete"
-                             (onClickDelete)="onClickDeleteEventList($event)">
+                             (onClickDelete)="onClickDeleteList($event)">
           </app-favorite-list>
           <div class="list-bottom">
             <div *ngIf="setList.loadingInProgress">Loading</div>

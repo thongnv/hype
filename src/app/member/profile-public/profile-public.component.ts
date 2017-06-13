@@ -80,10 +80,39 @@ export class ProfilePublicComponent implements OnInit {
     console.log('onClickLike: ', item);
   }
 
-  public onClickDeleteEventList(item: any) {
+  public onClickDeleteEvent(item: any) {
     console.log('onClickDeleteEventList', item);
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      console.log('onClickDeleteEventList ====> response', response);
+      console.log('onClickDeleteEvent ====> response', response);
+      if (response.status) {
+        this.userInfo.events.forEach((event, index) => {
+          if (item === event) {
+            delete this.userInfo.events[index];
+            this.setEvent.offset--;
+            if (this.setEvent.offset === 0) {
+              this.setEvent.endOfList = true;
+            }
+          }
+        });
+      }
+    });
+  }
+
+  public onClickDeleteList(item: any) {
+    console.log('onClickDeleteList', item);
+    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
+      console.log('onClickDeleteList ====> response', response);
+      if (response.status) {
+        this.userInfo.lists.forEach((list, index) => {
+          if (item === list) {
+            delete this.userInfo.lists[index];
+            this.setList.offset--;
+            if (this.setList.offset === 0) {
+              this.setList.endOfList = true;
+            }
+          }
+        });
+      }
     });
   }
 
@@ -96,27 +125,13 @@ export class ProfilePublicComponent implements OnInit {
           if (item === place) {
             delete this.userInfo.places[index];
             this.setPlace.offset--;
+            if (this.setPlace.offset === 0) {
+              this.setPlace.endOfList = true;
+            }
           }
         });
       }
     });
-  }
-
-  public onClickDelete(item: any) {
-    let selectedId = null;
-    this.favorite.forEach((fav, index) => {
-      if (fav && fav.id === item.id) {
-        selectedId = index;
-        return true;
-      }
-    });
-    if (selectedId != null) {
-      delete this.favorite[selectedId];
-      this.favorite = this.favorite.filter((fav) => fav.id !== selectedId);
-      console.log('deleted ', selectedId);
-    } else {
-      console.log('CAN NOT delete');
-    }
   }
 
   public onScrollToBottom(event) {
@@ -175,7 +190,7 @@ export class ProfilePublicComponent implements OnInit {
       this.mainService.getUserPlace(slugName, page).then((response) => {
         console.log('====> getPlace response: ', response);
         if (response.total > 0) {
-          if (response.total > this.setPlace.offset) {
+          if (this.setPlace.offset < response.total) {
             response.results.forEach((item) => {
               this.setPlace.offset++;
               this.userInfo.places.push(item);
@@ -199,11 +214,15 @@ export class ProfilePublicComponent implements OnInit {
       this.mainService.getUserList(slugName, page).then((response) => {
         console.log('====> getList response: ', response);
         if (response.total > 0) {
-          response.data.forEach((item) => {
-            this.setList.offset++;
-            this.userInfo.lists.push(item);
-          });
-          this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
+          if (this.setList.offset < response.total) {
+            response.data.forEach((item) => {
+              this.setList.offset++;
+              this.userInfo.lists.push(item);
+            });
+            this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
+          }else {
+            this.setList.endOfList = true;
+          }
         } else {
           this.setList.endOfList = true;
         }

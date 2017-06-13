@@ -18,6 +18,7 @@ export class CurateNewComponent implements OnInit {
   public listPlaces: any[] = [];
   public markers: any[] = [];
   public showPreview: boolean = false;
+  public addImage: boolean = true;
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -59,12 +60,15 @@ export class CurateNewComponent implements OnInit {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
+    if (this.previewUrl.length < 4) {
+      this.addImage = true;
+    }
   }
 
   public readUrl(event) {
     let reader = [];
-    if (event.target.files && event.target.files[0]) {
-      for (let i = 0; i < event.target.files.length; i++) {
+    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+      for (let i = 0; i < event.target.files.length && i < 4; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
@@ -74,6 +78,9 @@ export class CurateNewComponent implements OnInit {
             filemime: event.target.files[i].type
           };
           this.previewUrl.push(img);
+          if (this.previewUrl.length >= 4) {
+            this.addImage = false;
+          }
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
@@ -112,9 +119,13 @@ export class CurateNewComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.mainService.getCategoryArticle().then((resp) => {
-      this.categories = resp.data;
-    });
+    this.loaderService.show();
+    this.mainService.getCategoryArticle().subscribe(
+      (response: any) => {
+        this.categories = response.data;
+        this.loaderService.hide();
+      }
+    );
   }
 
   public switchView(status: boolean) {

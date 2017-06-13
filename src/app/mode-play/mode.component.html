@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-6 col-xs-12 left-box">
             <form [formGroup]="filterFromMode" class="filterFromMode">
-                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterMode">
+                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" (change)="changeCategory()" formControlName="filterMode">
                     <label class="btn btn-default">
                         <input type="radio" value="all"> All
                     </label>
@@ -16,15 +16,15 @@
             </form>
             <hr>
             <form [formGroup]="filterCategory" class="filterCategory">
-                <div *ngIf="filterFromMode.value.filterMode !='play' || filterFromMode.value.filterMode =='all'">
+                <div>
                     <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
                         <label class="btn btn-default">
                             <img src="../../assets/img/icons/All.png" alt="All">
                             <span class="clearfix">
-                            <input type="radio" value="all"> All
-                        </span>
+                                <input type="radio" value="all"> All
+                            </span>
                         </label>
-                        <label class="btn btn-default" *ngFor="let term of categories.eat">
+                        <label class="btn btn-default" *ngFor="let term of categories.data">
                             <img src="{{term.url}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.tid}}">{{term.name}}
@@ -157,17 +157,21 @@
         </div>
         <div class="col-lg-6 col-xs-12 gmap-box">
             <div class="box-map" style="margin-top: 20px">
-                <!--<sebm-google-map-->
-                        <!--[latitude]="lat"-->
-                        <!--[longitude]="lng"-->
-                        <!--[zoom]="mapZoom"-->
-                        <!--[disableDefaultUI]="false"-->
-                        <!--[zoomControl]="false"-->
-                        <!--[streetViewControl]="false"-->
-                        <!--(mapClick)="mapClicked($event)"-->
-                <!--&gt;-->
-                    <!--<gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius" (radiusChange)="markerRadiusChange($event)" [lat]="lat" [lng]="lng"></gmap-geocode-marker>-->
-                <!--</sebm-google-map>-->
+                <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="11">
+                    <gmap-cluster
+                            [markers]="markers">
+                    </gmap-cluster>
+                    <sebm-google-map-circle
+                            [latitude]="lat + 0.05"
+                            [longitude]="lng"
+                            [radius]="5000"
+                            [fillColor]="'red'"
+                            [circleDraggable]="true"
+                            [editable]="true"
+                            (radiusChange)="handleRadiusChange()"
+                            (dragEnd)="handleDrag()">
+                    </sebm-google-map-circle>
+                </sebm-google-map>
             </div>
         </div>
     </div>

@@ -7,6 +7,193 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class CompanyService {
 
+  public static getMockCompany(): Company {
+    return {
+      name: 'ABC Restaurant',
+      description: 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain ' +
+      'was born and I will give you a complete account of the system, and expound the actual teachings of the ' +
+      'great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids ' +
+      'pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure ' +
+      'rationally encounter consequences that are extremely painful. Nor again is there anyone who loves ' +
+      'or pursues or desires to obtain pain of itself, because it is pain, but because occasionally ' +
+      'circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial ' +
+      'example, which of us ever undertakes laborious physical exercise, except to obtain some advantage ' +
+      'from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has ' +
+      'no annoying consequences, or one who avoids a pain that produces no resultant pleasure?',
+      rating: 3.9,
+      location: {
+        lat: 1.290270,
+        lng: 103.851959,
+        name: '438 Serangoon Rd, Singapore 218133'
+      },
+      website: 'https://www.abcrestaurant.com',
+      phone: '612345678',
+      openingHours: ['(Friday): 8AM -11PM', '(Monday): 8AM -11PM'],
+      images: [
+        {
+          url: '/assets/img/event/detail/abc.jpg',
+          value: '',
+          filename: '',
+          filemime: '',
+          filesize: 0
+        },
+        {
+          url: '/assets/img/event/detail/abc.jpg',
+          value: '',
+          filename: '',
+          filemime: '',
+          filesize: 0
+        },
+        {
+          url: '/assets/img/event/detail/abc.jpg',
+          value: '',
+          filename: '',
+          filemime: '',
+          filesize: 0
+        },
+        {
+          url: '/assets/img/event/detail/abc.jpg',
+          value: '',
+          filename: '',
+          filemime: '',
+          filesize: 0
+        },
+        {
+          url: '/assets/img/event/detail/abc.jpg',
+          value: '',
+          filename: '',
+          filemime: '',
+          filesize: 0
+        },
+      ],
+      reviews: [
+        {
+          id: 0,
+          rating: 4,
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+          images: [
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+          ],
+          author: {
+            name: 'Derek Ang',
+            avatar: '/assets/img/event/detail/derek.jpg',
+          },
+          likeNumber: 22,
+          date: 1495238400,
+          comments: [],
+          liked: false
+        },
+        {
+          id: 0,
+          rating: 4,
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+          images: [
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+          ],
+          author: {
+            name: 'Derek Ang',
+            avatar: '/assets/img/event/detail/derek.jpg',
+          },
+          likeNumber: 22,
+          date: 1495238400,
+          comments: [],
+          liked: false
+        },
+        {
+          id: 0,
+          rating: 4,
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+          images: [
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+          ],
+          author: {
+            name: 'Derek Ang',
+            avatar: '/assets/img/event/detail/derek.jpg',
+          },
+          likeNumber: 22,
+          date: 1495238400,
+          comments: [],
+          liked: false
+        },
+        {
+          id: 0,
+          rating: 4,
+          text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+          images: [
+            {
+              url: '/assets/img/event/detail/abc.jpg',
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            },
+          ],
+          author: {
+            name: 'Derek Ang',
+            avatar: '/assets/img/event/detail/derek.jpg',
+          },
+          likeNumber: 22,
+          date: 1495238400,
+          comments: [],
+          liked: false
+        },
+      ]
+    };
+  }
+
   public static extractCompanyDetail(data): Company {
     return {
       name: data.name,

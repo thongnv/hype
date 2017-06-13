@@ -1,37 +1,174 @@
-[
-  {
-    "tid": 1,
-    "name": "Chill Out",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 2,
-    "name": "Sweat",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 3,
-    "name": "Appreciate",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 4,
-    "name": "Adrenaline",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 5,
-    "name": "Unique",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 5,
-    "name": "Learn",
-    "url": "../../assets/img/icons/All.png"
-  },
-  {
-    "tid": 5,
-    "name": "Pure For",
-    "url": "../../assets/img/icons/All.png"
-  }
-]
+{
+  "data":[
+    {
+      "tid": 1,
+      "name": "Bakeries-Retail",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 2,
+      "name": "Bakers Retailers",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 3,
+      "name": "Barbecued Foods",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 4,
+      "name": "Bars",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Birds Nest",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 6,
+      "name": "Cafeterias",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 7,
+      "name": "Caterers",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Cocktail Lounges",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Coffee Houses",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Fish & Seafood Retailers",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Gourmet Shops",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Herbs",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Ice Cream Parlours",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Markets",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Meat-Barbecued",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Mini Markets",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Noodles",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Pizza",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Pubs",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Refreshment Stands",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Restaurants",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Rice",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Satay",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Soy Bean Products",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Supermarkets",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Tea Houses",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Tea Retailers",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Titbit Shops",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Vegetarian Food",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Cafe",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Restaurant",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Cafeteria",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Bar",
+      "url": "../../assets/img/icons/Food.png"
+    },
+    {
+      "tid": 5,
+      "name": "Hawker",
+      "url": "../../assets/img/icons/Food.png"
+    }
+  ]
+}
