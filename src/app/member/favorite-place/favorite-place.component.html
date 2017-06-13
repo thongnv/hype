@@ -9,7 +9,7 @@
     <div class="top-content">
       <h4 class="information-title text-ellipsis">{{item.company_name}}</h4>
       <app-star-vote [stars]="item.rate_total" (onVote)="onVoteEvent($event)"></app-star-vote>
-      <p *ngIf="item.Hylo_Activity_Description" class="detail-information" [innerHTML]="item.Hylo_Activity_Description | truncate : 150"></p>
+      <p *ngIf="item.Hylo_Activity_Description" class="detail-information" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 150"></p>
     </div>
   </div>
 </div>
