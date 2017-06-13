@@ -2,6 +2,7 @@
 .clearfix {
   clear: both;
 }
+
 .border-bottom {
   border-bottom: 1px solid #f7f7f7;
 }
@@ -121,20 +122,20 @@ p.avg-rating a {
 
 /*detail event end*/
 
-
-
-
 /*experience area start*/
 .reviews-wrap {
   padding: 20px 40px;
 }
+
 .all-reviews-wrap {
   padding: 20px 40px;
 }
+
 .experience-top {
   margin-top: 20px;
   position: relative;
 }
+
 .experience-top h4.title-experiences-area {
   font-size: 18px;
   font-weight: 500;
@@ -142,6 +143,7 @@ p.avg-rating a {
   text-align: left;
   color: #3b3b3b;
 }
+
 .experience-top h4.title-experiences-reviews-area {
   font-size: 30px;
   font-weight: bold;
@@ -150,6 +152,7 @@ p.avg-rating a {
   color: #3b3b3b;
   margin-left: 20px;
 }
+
 .experience-top a.post-your-experience {
   font-size: 16px;
   line-height: 1.5;
@@ -159,29 +162,36 @@ p.avg-rating a {
   bottom: -22%;
   right: 4%;
 }
+
 .experience-top a.left-arrow {
   position: absolute;
   left: -4%;
   top: 17%;
   cursor: pointer;
 }
+
 .information-experience {
   margin-top: 10px;
 }
+
 .information-experience div {
   display: inline-block;
 }
+
 .experience-avatar {
   margin-right: 10px;
 }
+
 .experience-avatar img {
   width: 45px;
   height: 45px;
 }
+
 .content-info-experience {
   position: relative;
   top: 14px;
 }
+
 .content-info-experience h4 {
   font-size: 16px;
   font-weight: 500;
@@ -189,6 +199,7 @@ p.avg-rating a {
   text-align: left;
   color: #3b3b3b;
 }
+
 .content-info-experience p {
   font-size: 12px;
   font-weight: 300;
@@ -196,42 +207,51 @@ p.avg-rating a {
   text-align: left;
   color: #3b3b3b;
 }
+
 .wrap-list-stars {
-    margin-left: 60px;
+  margin-left: 60px;
 }
+
 .wrap-list-stars .list-stars-review-experience {
   list-style: none;
-  padding-left: 0px;
+  padding-left: 0;
 }
+
 .wrap-list-stars .list-stars-review-experience li {
   display: inline-block;
 }
+
 .detail-info-experience {
   font-size: 14px;
   font-weight: 300;
   line-height: 1.43;
   text-align: left;
   color: #3b3b3b;
-  margin: 30px 0px 20px;
+  margin: 30px 0 20px;
 }
+
 .list-pictures-experience {
-  padding-left: 0px;
+  padding-left: 0;
   list-style: none;
 }
+
 .list-pictures-experience li {
   display: inline-block;
   margin-right: 10px;
 }
+
 .list-pictures-experience li a img {
   width: 70px;
   height: 70px;
-  border-radius: 2px; 
-  border: solid 1px #e8e8e8; 
+  border-radius: 2px;
+  border: solid 1px #e8e8e8;
 }
+
 .like-area img {
   width: 20px;
   height: 20px;
 }
+
 .like-area span {
   display: inline-block;
   position: relative;
@@ -248,6 +268,7 @@ p.avg-rating a {
   padding-left: 40px;
   text-align: center;
 }
+
 .view-all-reviews-button a {
   background: #2a6be1;
   display: block;
@@ -258,12 +279,7 @@ p.avg-rating a {
   padding: 10px 20px;
 }
 
-
-
 /*experience area end*/
-
-
-
 
 /*write your comment start*/
 
@@ -357,27 +373,27 @@ ul.list-stars-on-post {
   color: #ec3d62;
 }
 
-
-.map-fix{
+.map-fix {
   position: fixed;
   height: 100vh;
   top: 0;
   right: 0;
 }
+
 .sebm-google-map-container {
   height: 100vh;
 }
 
-.content{
+.content {
   overflow: hidden;
 }
 
-article{
+article {
   margin: 0 auto;
   position: relative;
 }
 
-.post-your-experience{
+.post-your-experience {
   cursor: pointer;
 }
 
@@ -385,12 +401,15 @@ article{
 .company-wrap .carousel {
   height: 380px;
 }
+
 .company-wrap .company-header {
   padding: 20px 40px 47px;
 }
+
 .company-wrap .company-header div {
   display: inline-block;
 }
+
 .company-wrap .company-header h3 {
   display: inline-block;
   font-size: 30px;
@@ -399,15 +418,18 @@ article{
   text-align: left;
   color: #3b3b3b;
 }
-.company-wrap .rating-start {
-    margin-left: 40px;
-    margin-right: 11px;
-    position: relative;
-    bottom: 5px;
+
+.company-wrap .rating-star {
+  margin-left: 40px;
+  margin-right: 11px;
+  position: relative;
+  bottom: 5px;
 }
-.company-wrap .rating-start i {
-    color: #ec3d62;
+
+.rating-star i {
+  color: #ec3d62;
 }
+
 .google-plus-point {
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
   opacity: 0.95;
@@ -418,6 +440,7 @@ article{
   bottom: 5px;
   left: 10px;
 }
+
 .google-plus-point .rating-number {
   font-size: 20px;
   font-weight: 500;
@@ -427,21 +450,25 @@ article{
   padding-right: 10px;
   border-right: solid 1px #eaeaea;
 }
+
 .google-plus-point .google-plus-dropdown-button {
   margin-left: 10px;
 }
+
 .google-plus-dropdown-button .fa-google-plus {
   background: #de4931;
   color: #fff;
   padding: 5px 4px;
 }
-.google-plus-dropdown-button .fa-angle-down  {
+
+.google-plus-dropdown-button .fa-angle-down {
   color: #3b3b3b;
   font-size: 20px;
   margin-left: 8px;
   position: relative;
   top: 3px;
 }
+
 .company-description {
   font-size: 14px;
   font-weight: 300;
@@ -451,11 +478,11 @@ article{
   margin-top: 25px;
 }
 
-
-.company-info{
-  padding: 25px 40px;
+.company-info {
+  padding: 25px 40px 50px;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
+
 .company-info p,
 .company-info p a {
   font-size: 14px;
@@ -465,51 +492,59 @@ article{
   color: #3b3b3b;
   margin-bottom: 22px;
 }
+
+.company-info p .info-label {
+  margin-right: 30px;
+  font-weight: 500;
+}
+.company-info .info-value{
+  width: calc(100% - 150px);
+  margin-right: 0;
+  cursor: pointer;
+}
 .company-info p span {
   font-family: Roboto;
   font-size: 16px;
-  font-weight: 500;
   line-height: 1.63;
   text-align: left;
   color: #3b3b3b;
   min-width: 110px;
-  display: inline-block;
-  margin-right: 30px;
+  float: left;
 }
-
 
 /*company wrap end*/
 
 /*review wrap start*/
 
-
-
-
 /*review wrap end*/
-
 
 /*responsive*/
 @media (min-width: 1200px) {
 
 }
+
 @media only screen and (min-width: 992px) {
 
 }
+
 @media only screen and (min-width: 769px) {
   article {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
   }
+
   .content {
-    padding: 0px;
-    width: 51.3%;
+    padding: 0;
+    width: 55.3%;
   }
+
   .map-fix {
-    padding: 0px;
+    padding: 0;
     /*width: 51.1%;*/
   }
 
 }
+
 @media only screen and (max-width: 768px) {
 
 }

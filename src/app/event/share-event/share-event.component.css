@@ -18,7 +18,16 @@ header ul li {
     margin-left: 40px;
     font-size: 14px;
     width: 6%;
-    text-align: left;
+    opacity: 0.5;
+    line-height: 40px;
+    text-align: center;
+    color: #3b3b3b;
+    text-transform: capitalize;
+}
+header ul li.active {
+    font-weight: bold;
+    color: #2a6be1;
+    opacity: 1;
 }
 
 /*header end*/
@@ -52,6 +61,13 @@ header ul li {
     font-weight: bold;
     margin-bottom: 15px;
 }
+.input-box .form-group label#list-img-label {
+  font-weight: normal;
+}
+.input-box .form-group label#list-img-label i {
+    color: #ec3d62;
+    font-size: 12px;
+}
 .input-box .field-group {
     margin-left: 10px;
     margin-bottom: 30px;
@@ -78,6 +94,14 @@ header ul li {
 .input-box > .field-group > .form-group > input {
     width: 65%;
     float: left;
+    padding-left: 35px;
+}
+.input-box > .field-group > .form-group > i.fa-link {
+    position: relative;
+    right: 63%;
+    top: 16px;
+    font-size: 17px;
+    color: #c9c9c9;
 }
 .input-box .form-group input {
     width: 100%;
@@ -100,8 +124,14 @@ header ul li {
   text-align: left;
 }
 .form-group button {
-    padding: 10px 20px;
+    padding: 5px 30px;
     border-radius: 20px;
+    background: #03a9f4;
+    border: none;
+    font-size: 13px;
+}
+.form-group button:focus {
+  outline: none;
 }
 .form-group button i {
     color: #fff;
@@ -115,6 +145,7 @@ header ul li {
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
   color: #a29d9d;
   font-size: 14px;
+  border: none;
 }
 .input-box .form-group.location-place {
   margin-bottom: 0px;
@@ -127,8 +158,12 @@ header ul li {
 }
 .option-info a {
     color: #2a6be1;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 16px;
+}
+.option-info a i {
+    color: #2a6be1;
+    font-size: 12px;
 }
 .form-actions {
   margin-left: 10px;
@@ -186,12 +221,36 @@ header ul li {
     padding-top: 50px;
     position: relative;
 }
+.list-preview-wrap .post-experience h4 {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+}
 .list-preview-wrap .post-experience h5 {
     position: absolute;
     top: 1%;
     right: 1%;
     color: #ec3d62;
     font-size: 16px;
+}
+.list-preview-wrap .post-experience img {
+    display: block;
+    margin: 0px 15px 20px 0px;
+}
+.list-preview-wrap .post-experience p.rate-stars-post-experiences {
+  line-height: 70px;
+}
+.list-preview-wrap .post-experience p.add-images-button-post-review a {
+    font-size: 16px;
+    line-height: 20px;
+    text-align: left;
+    color: #ec3d62;
+    text-transform: capitalize;
 }
 .list-preview-wrap .post-experience textarea {
     width: 100%;

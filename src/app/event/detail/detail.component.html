@@ -24,13 +24,15 @@
             </li>
             <li>
               <p>price range</p><span>{{price}} <b>.</b>
-              <a href="{{call2action.link}}" target="_blank"><strong>{{call2action.action}}</strong></a>
+              <a href="{{call2action.link}}" target="_blank">
+                <span class="action">{{call2action.action}}</span>
+              </a>
             </span>
             </li>
             <li>
               <p>Mentioned by</p>
               <ul class="list-mention">
-                <li *ngFor="let mention of mentions">
+                <li class="mention" *ngFor="let mention of mentions">
                   <a [href]="mention.url" target="_blank">
                   <img [src]="mention.iconUrl" alt="mention" width="29" height="28"></a>
                 </li>

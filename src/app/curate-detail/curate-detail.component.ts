@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
 
+@Injectable()
 @Component({
   selector: 'app-curate-detail',
   templateUrl: './curate-detail.component.html',
-  styleUrls: ['./curate-detail.component.css']
+  styleUrls: ['./curate-detail.component.css'],
 })
 export class CurateDetailComponent implements OnInit {
-  public curate: any;
+  public article: any;
   public currentHighlightedMarker: any;
   public markers: any[] = [];
+  public showMap: boolean = false;
   public slugName: string = '';
 
   public NextPhotoInterval: number = 5000;
@@ -25,26 +28,27 @@ export class CurateDetailComponent implements OnInit {
   public constructor(private mainService: MainService,
                      private loaderService: LoaderService,
                      private route: ActivatedRoute,
+                     @Inject(DOCUMENT) private document: Document,
                      private router: Router) {
+  }
+
+  public ngOnInit() {
+    // TODO
+    this.loaderService.show();
     this.route.params.subscribe((e) => {
       this.loaderService.hide();
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(
         (response) => {
-          console.log(response);
+          this.article = response;
+          this.initMap(this.article);
+          console.log(this.article);
         },
         (error) => {
           console.log(error);
-          // this.router.navigate(['PageNotFound']).then();
+          this.router.navigate(['PageNotFound']).then();
         }
       );
-    });
-  }
-
-  public ngOnInit() {
-    this.mainService.getUserPublicProfile().then((resp) => {
-      this.curate = resp.curate;
-      this.initMap();
     });
   }
   public onScroll(event) {
@@ -66,6 +70,10 @@ export class CurateDetailComponent implements OnInit {
     }
   }
   public markerClick(markerId) {
+    console.log(window);
+    let position = this.document.getElementById('place-' + markerId).offsetTop;
+    console.log(this.document.body.scrollTo(0, 1000));
+
     console.log('markerClick', markerId);
   }
   private highlightMarker(markerId: number): void {
@@ -81,30 +89,47 @@ export class CurateDetailComponent implements OnInit {
       });
     }
   }
-  private initMap() {
+  private initMap(article: any) {
     this.currentHighlightedMarker = 0;
     this.slides = [];
     this.markers = [];
-    if (this.curate.info.listPlaces.length) {
+    if (article.field_places.length) {
       let index = 0;
-      for (let place of this.curate.info.listPlaces) {
-        if (place.lat && place.lng) {
+      for (let place of article.field_places) {
+        console.log(place);
+        if (place.field_latitude && place.field_latitude) {
           if (index === 0) {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
+            this.markers.push({
+              lat: Number(place.field_latitude),
+              lng: Number(place.field_longitude),
+              opacity: 1,
+              isOpenInfo: true,
+              icon: 'assets/icon/icon_pointer.png'
+            });
           } else {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
+            this.markers.push({
+              lat: Number(place.field_latitude),
+              lng: Number(place.field_longitude),
+              opacity: 0.4,
+              isOpenInfo: false,
+              icon: 'assets/icon/icon_pointer.png'
+            });
           }
           index++;
         }
       }
-      if (this.curate.images.length) {
-        for (let img of this.curate.images) {
-          if (img) {
-            this.slides.push({image: img, active: false});
-          }
-        }
+      if (article.field_image.length) {
+        this.slides.push({image: article.field_image, active: false});
+        // for (let img of this.article.field_image) {
+        //   if (img) {
+        //     console.log(img);
+        //     this.slides.push({image: img, active: false});
+        //   }
+        // }
 
       }
+      this.showMap = true;
     }
+    console.log(this.markers);
   }
 }

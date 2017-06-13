@@ -107,13 +107,14 @@ h4 {
   margin: 0 5px;
 }
 
-.left-content-information-event > li > span > strong {
-  font-size: 14px;
+.left-content-information-event .action {
+  font-size: 16px;
   color: #ec3d62;
 }
 
 .list-mention {
   list-style: none;
+  padding-left: 34%;
 }
 
 .list-mention > li {
@@ -121,6 +122,10 @@ h4 {
   margin-right: 16px;
 }
 
+.list-mention .mention {
+  color: red;
+  margin: -1px 2px 17px;
+}
 .list-mention > li > a {
   border-radius: 7px;
   border: 1px solid #e6e6e6;
@@ -266,10 +271,6 @@ ul.list-pictures-experience li {
 
 ul.list-pictures-experience li img {
   border-radius: 8px;
-}
-
-.likes-comments-experience-area {
-  padding-top: 40px;
 }
 
 .likes-comments-experience-area div {

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { CompanyDetailComponent } from '../company-detail/company-detail.component';
 
 @Component({
   selector: 'app-write-review',
@@ -9,11 +10,10 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbRatingConfig]
 })
 export class WriteReviewComponent implements OnInit {
-  @Input()
-  public status: boolean;
+  @Input() public submitted: boolean;
+  @Input() public company: CompanyDetailComponent;
 
-  @Output()
-  public change = new EventEmitter<any>();
+  @Output() public change = new EventEmitter<any>();
 
   public previewUrl: string[] = [];
   public currentRate = 0;
@@ -23,7 +23,9 @@ export class WriteReviewComponent implements OnInit {
     images: [''],
   });
 
-  constructor(public fb: FormBuilder, public rateConfig: NgbRatingConfig) {
+  constructor(
+    public fb: FormBuilder,
+    public rateConfig: NgbRatingConfig) {
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
   }
@@ -52,8 +54,8 @@ export class WriteReviewComponent implements OnInit {
   }
 
   public closeForm() {
-    this.status = false;
-    this.change.emit(this.status);
+    this.submitted = false;
+    this.change.emit(this.submitted);
   }
 
   public onSubmit() {

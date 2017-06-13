@@ -9,7 +9,6 @@
   <!--header end-->
 
   <!--form wrap start-->
-
   <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
 
     <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
@@ -81,19 +80,20 @@
             <input formControlName="eventPrice" id="event-price" class="form-control" type="text">
           </div>
           <div class="field-group row">
-            <label>Call to action</label>
+            <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
               <select name="" id="event-type" formControlName="eventType">
                 <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
               </select>
-              <input formControlName="eventLink" id="event-link" class="form-control" type="text">
+              <input placeholder="http://wwww.sistic.com.sg" formControlName="eventLink" id="event-link" class="form-control" type="text">
+              <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
           <div class="form-group">
-            <label>Mentions by</label>
+            <label>Mentioned By</label>
             <div formArrayName="eventMentions">
               <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
-                <input type="text" class="form-control" [formControlName]="i">
+                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text" class="form-control" [formControlName]="i">
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@
               <p>price range</p>
               <span>{{previewData.eventPrice}}<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
-                  <strong>{{previewData.call2action.eventType == '1' ? 'Buy Ticket' : 'More Detail'}}</strong>
+                  <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>
               </span>
             </li>
@@ -165,8 +165,10 @@
         <hr>
 
         <div class="post-experience">
+          <h4 class="experiences-post-review">Experiences (0)</h4>
           <h5 class="bold">Post your experience</h5>
-          <p>
+          <img class="img-circle pull-left" src="/assets/img/event/detail/hklin.jpg" alt="hklin avatar" width="70" height="70">
+          <p class="rate-stars-post-experiences">
             <i fa [name]="'star-o'" [size]=1></i>
             <i fa [name]="'star-o'" [size]=1></i>
             <i fa [name]="'star-o'" [size]=1></i>
@@ -176,7 +178,7 @@
           <p>
             <textarea style="min-width: 90%" placeholder="What's your experience here?"></textarea>
           </p>
-          <p>
+          <p class="add-images-button-post-review">
             <a>+ Add Images</a>
           </p>
         </div>

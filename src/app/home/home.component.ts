@@ -21,8 +21,6 @@ const now = new Date();
 export class HomeComponent implements OnInit {
     // Set our default values
     public localState = {value: ''};
-    public eventType:EventType[] = [];
-    public selectedEventType:EventType;
     public eventFilter:any[] = [];
     public selectedEventFilter:any;
     public eventOrder:any[] = [];
@@ -35,8 +33,9 @@ export class HomeComponent implements OnInit {
     public lat:number = 1.3174364;
     public lng:number = 103.8619751;
     public currentRadius:any = 5000;
-    public priceRange:number[] = [50, 300];
-
+    public priceRange:number[] = [0, 50];
+    public categories:any[];
+    public selected:any;
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -44,7 +43,12 @@ export class HomeComponent implements OnInit {
         'order': 'top 100',
         'cate': '',
         'w_start': '',
-        'w_end': ''
+        'w_end': '',
+        'type': '',
+        'lat': this.lat,
+        'lng': this.lng,
+        'radius': this.currentRadius,
+        'price': ''
     }
     private userProfile:any;
 
@@ -71,35 +75,20 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.getTrending();
+        this.getTrandingCategories();
     }
 
-    public onSelectEventType(id:number):void {
-        this.eventType[id].selected = !this.eventType[id].selected;
-        if (this.eventType[id].selected && this.eventType[id].name.toLowerCase() === 'all') {
-            this.eventType.forEach((event, index) => {
-                this.eventType[index].selected = false;
-            });
-            this.eventType[id].selected = true;
-        } else {
-            this.eventType.forEach((event, index) => {
-                if (this.eventType[index].name.toLowerCase() === 'all') {
-                    this.eventType[index].selected = false;
-                }
-            });
-        }
+    public onSelectEventType(event):void {
+        this.showMap = false;
+        this.selected = event.tid;
+        this.params.cate = event.tid;
+        this.params.type = 'event';
         this.getTrending();
     }
 
     public onClearForm():void {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
-        this.eventType.forEach((event, index) => {
-            if (this.eventType[index].name.toLowerCase() === 'all') {
-                this.eventType[index].selected = true;
-            } else {
-                this.eventType[index].selected = false;
-            }
-        });
         this.showMap = false;
 
         this.getTrending();
@@ -120,8 +109,15 @@ export class HomeComponent implements OnInit {
     }
 
     public onClickLike(item:any) {
-        item.selected = !item.selected;
-        console.log('LIKE: ', item);
+        item.user_bookmark = !item.user_bookmark;
+        console.log(item);
+        let param = {
+            'slug': item.alias
+        };
+        this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
+            console.log(res);
+        });
+
     }
 
     public markerClick(id:any) {
@@ -172,4 +168,17 @@ export class HomeComponent implements OnInit {
 
     }
 
+    private getTrandingCategories() {
+        this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
+            console.log(resp);
+            this.categories = resp.data;
+        });
+    }
+
+    public onChangePrice(value) {
+        this.showMap = false;
+        this.params.price = this.priceRange.join(',');
+        this.params.type = 'event';
+        this.getTrending();
+    }
 }

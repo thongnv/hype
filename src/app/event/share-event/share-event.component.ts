@@ -39,8 +39,8 @@ export class ShareEventComponent implements OnInit {
   public showPreview: boolean = false;
   public slides: any[] = [];
   public types = [
-    { value: '1', display: 'Buy Ticket' },
-    { value: '2', display: 'More info' }
+    { value: '1', display: 'Buy Tix' },
+    { value: '2', display: 'More Info' }
   ];
   constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState,
