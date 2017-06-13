@@ -1,8 +1,8 @@
-import { Component, Inject, Injectable, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
+import { scrollTo } from 'ng2-utils';
 
 @Injectable()
 @Component({
@@ -28,29 +28,41 @@ export class CurateDetailComponent implements OnInit {
   public constructor(private mainService: MainService,
                      private loaderService: LoaderService,
                      private route: ActivatedRoute,
-                     @Inject(DOCUMENT) private document: Document,
                      private router: Router) {
   }
 
   public ngOnInit() {
-    // TODO
     this.loaderService.show();
     this.route.params.subscribe((e) => {
-      this.loaderService.hide();
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(
         (response) => {
           this.article = response;
           this.initMap(this.article);
-          console.log(this.article);
+          this.getCenterMarkers();
+          this.loaderService.hide();
         },
         (error) => {
-          console.log(error);
           this.router.navigate(['PageNotFound']).then();
         }
       );
     });
   }
+
+  public getCenterMarkers() {
+
+    let lat: number = 0;
+    let lng: number = 0;
+
+    this.markers.forEach( (marker) => {
+      lat += marker.lat;
+      lng += marker.lng;
+    });
+
+    this.lat = lat / this.markers.length;
+    this.lng = lng / this.markers.length;
+  }
+
   public onScroll(event) {
     let baseHeight = event.target.clientHeight;
     let realScrollTop = event.target.scrollTop + baseHeight;
@@ -69,12 +81,13 @@ export class CurateDetailComponent implements OnInit {
       }
     }
   }
-  public markerClick(markerId) {
-    console.log(window);
-    let position = this.document.getElementById('place-' + markerId).offsetTop;
-    console.log(this.document.body.scrollTo(0, 1000));
-
-    console.log('markerClick', markerId);
+  public markerClick(markerId, horizontal) {
+    // scrollTo(
+    //   '#place-' + markerId,
+    //   '#place-scrollable',
+    //   horizontal,
+    //   0
+    // );
   }
   private highlightMarker(markerId: number): void {
     if (this.markers[markerId]) {
@@ -96,7 +109,6 @@ export class CurateDetailComponent implements OnInit {
     if (article.field_places.length) {
       let index = 0;
       for (let place of article.field_places) {
-        console.log(place);
         if (place.field_latitude && place.field_latitude) {
           if (index === 0) {
             this.markers.push({
@@ -118,18 +130,15 @@ export class CurateDetailComponent implements OnInit {
           index++;
         }
       }
-      if (article.field_image.length) {
-        this.slides.push({image: article.field_image, active: false});
-        // for (let img of this.article.field_image) {
-        //   if (img) {
-        //     console.log(img);
-        //     this.slides.push({image: img, active: false});
-        //   }
-        // }
+      if (article.field_images.length) {
+        for (let img of article.field_images) {
+          if (img) {
+            this.slides.push({image: img, active: false});
+          }
+        }
 
       }
       this.showMap = true;
     }
-    console.log(this.markers);
   }
 }
