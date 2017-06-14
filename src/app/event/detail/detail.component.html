@@ -17,20 +17,20 @@
         <div class="information-event border-bottom padding-top-30 padding-bottom-35">
           <ul class="left-content-information-event">
             <li>
-              <p>location</p><span>{{location.name}}</span>
+              <span class="info-label">location</span><span class="info-value">{{location.name}}</span>
             </li>
             <li>
-              <p>date / time</p><span>{{date | date:'d MMMM y'}}</span>
+              <span class="info-label">date / time</span><span class="info-value">{{date | date:'d MMMM y'}}</span>
             </li>
             <li>
-              <p>price range</p><span>{{price}} <b>.</b>
+              <span class="info-label">price range</span><span class="info-value">{{price}} <b>.</b>
               <a href="{{call2action.link}}" target="_blank">
-                <span class="action">{{call2action.action}}</span>
+                <span class="action>{{call2action.action}}"></span>
               </a>
             </span>
             </li>
             <li>
-              <p>Mentioned by</p>
+              <span class="info-label">Mentioned by</span>
               <ul class="list-mention">
                 <li class="mention" *ngFor="let mention of mentions">
                   <a [href]="mention.url" target="_blank">

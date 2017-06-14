@@ -84,7 +84,7 @@ h4 {
   margin-bottom: 30px;
 }
 
-.left-content-information-event > li > p {
+.left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
   width: 25%;
@@ -97,7 +97,7 @@ h4 {
   color: #3b3b3b;
 }
 
-.left-content-information-event > li > span {
+.left-content-information-event .info-value {
   font-size: 14px;
   font-weight: 300;
   line-height: 20px;
@@ -132,6 +132,7 @@ h4 {
   color: red;
   margin: 0px 5px 20px;
 }
+
 .list-mention > li > a {
   border-radius: 7px;
   border: 1px solid #e6e6e6;
@@ -150,6 +151,7 @@ h4.title-creator {
   text-align: center;
   color: #3b3b3b;
 }
+
 h4.title-detail-event {
   margin-bottom: 25px;
   font-size: 18px;
@@ -158,13 +160,15 @@ h4.title-detail-event {
   text-align: left;
   color: #3b3b3b;
 }
+
 h4.title-experiences-area {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1;
-    text-align: left;
-    color: #3b3b3b;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
 }
+
 p.content-detail-event {
   font-size: 14px;
   font-weight: 300;
@@ -172,6 +176,7 @@ p.content-detail-event {
   text-align: left;
   color: #3b3b3b;
 }
+
 p.name-creator {
   margin: 10px 0;
   font-family: Roboto;
@@ -231,6 +236,7 @@ a.post-your-experience {
   margin: 12px;
   line-height: 40px;
 }
+
 .content-info-experience h4 {
   text-transform: capitalize;
   font-size: 18px;
@@ -239,13 +245,15 @@ a.post-your-experience {
   text-align: left;
   color: #3b3b3b;
 }
+
 .content-info-experience p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 40px;
-    text-align: left;
-    color: #3b3b3b;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 40px;
+  text-align: left;
+  color: #3b3b3b;
 }
+
 ul.list-stars-review-experience {
   list-style: none;
   float: left;
@@ -258,12 +266,12 @@ ul.list-stars-review-experience li {
 }
 
 p.detail-info-experience {
-    padding: 20px 0;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 30px;
-    text-align: left;
-    color: #3b3b3b;
+  padding: 20px 0;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 30px;
+  text-align: left;
+  color: #3b3b3b;
 }
 
 ul.list-pictures-experience {
@@ -294,6 +302,7 @@ ul.list-pictures-experience li img {
   text-align: left;
   color: #3b3b3b;
 }
+
 .comments-area a {
   font-size: 14px;
   font-weight: 300;
@@ -301,9 +310,11 @@ ul.list-pictures-experience li img {
   text-align: left;
   color: #3b3b3b;
 }
+
 .report-area {
   float: right;
 }
+
 .report-area a {
   font-weight: 300;
   opacity: 0.6;
@@ -360,6 +371,7 @@ ul.list-comments-ago li .avatar-comment-ago {
   text-align: left;
   color: #3b3b3b;
 }
+
 .top-content-comment span {
   font-size: 14px;
   font-weight: 300;
@@ -367,12 +379,14 @@ ul.list-comments-ago li .avatar-comment-ago {
   text-align: left;
   color: #3b3b3b;
 }
+
 .bottom-like-reply-comment {
   font-size: 14px;
   font-weight: 300;
   line-height: 30px;
   text-align: left;
 }
+
 .bottom-like-reply-comment div {
   display: inline-block;
 }
@@ -382,10 +396,12 @@ ul.list-comments-ago li .avatar-comment-ago {
   margin-right: 2%;
   margin-top: 1%;
 }
+
 .top-content-comment a {
   float: left;
   margin-right: 2%;
 }
+
 .likes-area a {
   color: #3b3b3b;
 }
@@ -597,4 +613,5 @@ ul.list-stars-on-post {
 .sebm-google-map-container {
   height: 282px;
 }
+
 /*gmap end*/
