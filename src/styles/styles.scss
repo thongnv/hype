@@ -788,6 +788,9 @@ body, html {
   .map-option input {
     margin-top: 8px;
     border-radius: 5px 5px;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    padding-right: 30px;
   }
   .navbar-default .navbar-nav > li > a {
     color: #fff;
