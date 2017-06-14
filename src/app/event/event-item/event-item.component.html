@@ -1,4 +1,4 @@
-<div *ngFor="let item of events;let i = index" class="wrap-each-items" id="v{{i}}">
+<div *ngFor="let item of events;let i = index" class="wrap-each-items" [class.article]="item.type=='article'" id="v{{i}}">
     <div *ngIf="item.type=='event'">
         <div class="avatar-profile">
             <a class="avatar-picture"><img [src]="item.field_images[0]" width="140" height="140"></a>

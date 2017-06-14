@@ -42,7 +42,7 @@ export class HomeService {
         seq.map(res=>res.json())
             .subscribe(res=> {
             }, err=> {
-                console.log(err);
+
             });
         return seq;
     }

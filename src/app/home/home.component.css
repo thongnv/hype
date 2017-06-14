@@ -14,15 +14,15 @@
     clear: both;
 }
 
-.type-events  {
-    padding: 25px 20px 0px;
+.type-events {
+    padding: 25px 10px 0px;
     border-bottom: 1px solid #eaeaea;
     display: block;
     float: left;
     width: 100%;
 }
 
-.type-events ul  {
+.type-events ul {
     margin-top: 0;
     list-style: none;
     padding-left: 0px;
@@ -39,13 +39,13 @@
     line-height: 14px;
 }
 
-.type-events .type-event-item  {
+.type-events .type-event-item {
     float: left;
     text-align: center;
     opacity: .4;
     cursor: pointer;
     transition: opacity .3s;
-    margin: 0px 16px 10px;
+    margin: 0px 15px 10px;
 }
 
 .type-events .type-event-item img {
@@ -78,7 +78,6 @@
     opacity: .5;
 }
 
-
 .filter-events .btn.active {
     opacity: 1;
     /*border-radius: 3px;*/
@@ -94,17 +93,25 @@
     color: #ec3d62;
     font-size: 12px;
     text-transform: capitalize;
-    margin: 20px;
+    margin: 20px 0;
     cursor: pointer;
+    font-family: Roboto;
+    line-height: 1;
+    text-align: right;
+    color: #ec3d62;
 }
 
 .price-range {
-    margin: 20px;
+    margin: 20px 0;
     text-transform: capitalize;
     color: #3b3b3b;
     clear: both;
     display: block;
     float: left;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 1;
+    text-align: right;
 }
 
 .when-button {
@@ -113,6 +120,11 @@
     display: block;
     float: left;
     margin: 20px;
+    font-family: Roboto;
+    font-size: 16px;
+    line-height: 1;
+    text-align: right;
+    color: #3b3b3b;
 }
 
 .btn-default {
@@ -120,6 +132,11 @@
     height: 30px;
     color: #3b3b3b;
     font-size: 13px;
+    border-radius: 4px;
+    background-color: #f6f6f6;
+    box-shadow: 1px 1px 3px 0 #d8d8d8;
+    border: solid 1px #d8d8d8;
+    outline: none;
 }
 
 #filters {
@@ -128,8 +145,11 @@
 }
 
 .btn-group button.active {
-    background: #2a6be1;
     color: #fff;
+    border-radius: 4px;
+    background-color: #2a6be1;
+    box-shadow: 0 2px 3px 0 rgba(148, 148, 148, 0.5);
+    outline: none;
 }
 
 .list-item {
@@ -208,13 +228,13 @@
     color: #3b3b3b;
 }
 
-
 .wrap-each-items {
     /*border-bottom: 1px solid #eaeaea;*/
     width: 100%;
     height: 180px;
     padding: 20px;
 }
+
 .cover-avatar-picture {
     width: 140px;
     height: 140px;
@@ -224,6 +244,7 @@
     left: 0;
     opacity: 0.6;
 }
+
 .avatar-profile {
     width: 140px;
     height: 140px;
@@ -234,6 +255,7 @@
     border-radius: 4px;
     overflow-x: hidden;
 }
+
 .month {
     position: absolute;
     top: 10px;
@@ -241,6 +263,7 @@
     font-size: 16px;
     color: #fff;
 }
+
 .date-number {
     position: absolute;
     top: 30px;
@@ -249,6 +272,7 @@
     font-weight: bold;
     color: #fff;
 }
+
 .heart {
     position: absolute;
     top: 10px;
@@ -257,7 +281,7 @@
     font-weight: bold;
 }
 
-.information-title{
+.information-title {
     margin-top: 10px;
     font-weight: bold;
     font-size: 18px;
@@ -265,12 +289,15 @@
     line-height: 18px;
     margin-bottom: 14px;
 }
-.information-title .real-title{
+
+.information-title .real-title {
     font-size: 18px;
 }
-.information-title .real-title, .detail-information{
+
+.information-title .real-title, .detail-information {
     width: calc(100% - 65px);
 }
+
 .detail-information {
     font-size: 14px;
     height: 40px;
@@ -278,16 +305,19 @@
     overflow: hidden;
     margin-bottom: 18px;
 }
+
 .information-profile {
     width: calc(100% - 160px);
     float: left;
     position: relative;
 }
-.mentioned-item-wrap img{
+
+.mentioned-item-wrap img {
     width: 28px;
     height: 28px;
 }
-.mentioned  {
+
+.mentioned {
     float: left;
     text-transform: capitalize;
     margin-top: 0;
@@ -296,9 +326,11 @@
     line-height: 40px;
     color: #3b3b3b;
 }
+
 .mentioned-item li:hover {
     border: 1px solid rgba(236, 61, 98, 0.5);
 }
+
 .mentioned-item li {
     list-style: none;
     background: transparent;
@@ -308,6 +340,7 @@
     padding: 5px;
     border-radius: 7px;
 }
+
 .free-price-button {
     height: 14px;
     font-size: 14px;
@@ -316,11 +349,13 @@
     text-align: right;
     color: #5052ea;
 }
+
 .free-price-button.free-price {
     opacity: 0.5;
     color: #3b3b3b;
     font-weight: 500;
 }
+
 .number-price-button {
     position: absolute;
     top: -3%;
@@ -333,7 +368,8 @@
     font-weight: bold;
     font-size: 14px;
 }
-.heart{
+
+.heart {
     cursor: pointer;
 }
 
@@ -358,12 +394,14 @@
     top: 25%;
     left: 20%;
 }
-.list-item .caption .list-item-link{
+
+.list-item .caption .list-item-link {
     font-size: 16px;
     line-height: 1.5;
     text-align: left;
     color: #ffffff;
 }
+
 /*
 ==============
 */

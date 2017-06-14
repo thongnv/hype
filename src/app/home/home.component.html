@@ -3,7 +3,7 @@
         <div class="col-lg-6 col-xs-12 left-box">
             <div class="type-events">
                 <ul>
-                    <li class="type-event-item" [class.active]="all==selected">
+                    <li class="type-event-item" [class.active]="'all'==selected" (click)="onSelectEventType('all')">
                         <img src="../../assets/img/icons/All.png" width="30" height="30">
                         <span class="type-event-name text-capitalize">All</span>
                     </li>

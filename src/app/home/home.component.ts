@@ -42,13 +42,13 @@ export class HomeComponent implements OnInit {
     public currentRadius:any = 5000;
     public priceRange:number[] = [0, 50];
     public categories:any[];
-    public selected:any;
+    public selected:any = 'all';
     public tabActive:boolean = false;
     public isOpen:boolean = false;
     public currentHighlightedMarker:number = 1;
     public alertType:any = '';
     public msgContent:any = '';
-    public  alertType:string;
+    public alertType:string;
     public showAll:boolean = true;
     private params:any = {
         'page': 0,
@@ -59,8 +59,8 @@ export class HomeComponent implements OnInit {
         'w_start': '',
         'w_end': '',
         'type': '',
-        'lat': '',
-        'lng': '',
+        'lat': this.lat,
+        'lng': this.lng,
         'radius': this.currentRadius,
         'price': ''
     }
@@ -101,9 +101,15 @@ export class HomeComponent implements OnInit {
     }
 
     public onSelectEventType(event):void {
+        console.log(event);
+        if (event == 'all') {
+            this.selected = 'all';
+            this.params.cate = '';
+        } else {
+            this.selected = event.tid;
+            this.params.cate = event.tid;
+        }
         this.showMap = false;
-        this.selected = event.tid;
-        this.params.cate = event.tid;
         this.params.type = 'event';
         this.loaderService.show();
         this.getTrending();
@@ -176,9 +182,10 @@ export class HomeComponent implements OnInit {
     }
 
     public selectedDate(value:any) {
+        console.log(value);
         this.params.filter = 'when';
-        this.params.w_start = moment(value.start).unix() * 1000;
-        this.params.w_end = moment(value.end).unix() * 1000;
+        this.params.w_start = moment(value.start).unix();
+        this.params.w_end = moment(value.end).unix();
         this.showMap = false;
         this.loaderService.show();
         this.getTrending();
