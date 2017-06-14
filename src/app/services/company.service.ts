@@ -120,7 +120,7 @@ export class CompanyService {
             avatar: '/assets/img/event/detail/derek.jpg',
           },
           likeNumber: 22,
-          date: 1495238400,
+          date: 1495238400000,
           comments: [],
           liked: false
         },
@@ -142,7 +142,7 @@ export class CompanyService {
             avatar: '/assets/img/event/detail/derek.jpg',
           },
           likeNumber: 22,
-          date: 1495238400,
+          date: 1495238400000,
           comments: [],
           liked: false
         },
@@ -164,7 +164,7 @@ export class CompanyService {
             avatar: '/assets/img/event/detail/derek.jpg',
           },
           likeNumber: 22,
-          date: 1495238400,
+          date: 1495238400000,
           comments: [],
           liked: false
         },
@@ -186,7 +186,7 @@ export class CompanyService {
             avatar: '/assets/img/event/detail/derek.jpg',
           },
           likeNumber: 22,
-          date: 1495238400,
+          date: 1495238400000,
           comments: [],
           liked: false
         },

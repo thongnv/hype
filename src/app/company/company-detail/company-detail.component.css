@@ -1,3 +1,6 @@
+a:hover {
+  text-decoration: none;
+}
 
 .clearfix {
   clear: both;
@@ -17,6 +20,14 @@
 
 .padding-bottom-35 {
   padding-bottom: 35px;
+}
+
+.icon-sm {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  cursor: pointer;
 }
 
 /*title event start*/
@@ -124,7 +135,7 @@ p.avg-rating a {
 
 /*experience area start*/
 .reviews-wrap {
-  padding: 10px 40px 0px;
+  padding: 10px 40px 0;
 }
 
 .all-reviews-wrap {
@@ -162,6 +173,7 @@ p.avg-rating a {
   bottom: -22%;
   right: 4%;
 }
+
 .experience-top a.write-a-lastest-reviews {
   font-size: 16px;
   line-height: 1.5;
@@ -171,6 +183,7 @@ p.avg-rating a {
   bottom: 8%;
   right: 4%;
 }
+
 .experience-top a.left-arrow {
   position: absolute;
   left: -4%;
@@ -181,6 +194,7 @@ p.avg-rating a {
 .information-experience {
   margin-top: 20px;
 }
+
 .information-experience img {
   margin-right: 10px;
 }
@@ -278,7 +292,7 @@ p.avg-rating a {
 }
 
 .view-all-reviews-button {
-  padding-left: 0px;
+  padding-left: 0;
   text-align: center;
 }
 
@@ -338,12 +352,14 @@ ul.list-comments-ago li .avatar-comment-ago {
 .likes-area a {
   color: #3b3b3b;
 }
+
 .likes-area a:hover {
   text-decoration: none;
 }
+
 .likes-area a img {
-    margin-bottom: 9px;
-    margin-right: 6px;
+  margin-bottom: 9px;
+  margin-right: 6px;
 }
 
 .reply-area a {
@@ -441,11 +457,11 @@ article {
 }
 
 .company-wrap .company-header p.open-now-button {
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: left;
-    color: #1fbe90;
-    margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  color: #1fbe90;
+  margin: 0;
 }
 
 .company-wrap .rating-star {
@@ -507,6 +523,13 @@ article {
   margin-top: 25px;
 }
 
+.read-more {
+  cursor: pointer;
+  margin-left: 47%;
+  margin-top: 2%;
+  font-size: 20px;
+}
+
 .company-info {
   padding: 25px 40px 50px;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
@@ -520,30 +543,35 @@ article {
   color: #3b3b3b;
   margin-bottom: 22px;
 }
+
 .company-info p a {
-    display: block;
-    line-height: 1.8;
-    padding-left: 27%;
-    font-size: 14px;
-    font-weight: 300;
-    text-align: left;
-    color: #3b3b3b;
-    margin-bottom: 22px;
+  display: block;
+  line-height: 1.8;
+  padding-left: 27%;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: left;
+  color: #3b3b3b;
+  margin-bottom: 22px;
 }
+
 .company-info p a:hover {
   text-decoration: none;
 }
+
 .company-info p .info-label {
   margin-right: 30px;
   font-weight: 500;
 }
-.company-info .info-value{
+
+.company-info .info-value {
   width: calc(100% - 150px);
   margin-right: 0;
   cursor: pointer;
 }
+
 .company-info p span {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 16px;
   line-height: 1.63;
   text-align: left;

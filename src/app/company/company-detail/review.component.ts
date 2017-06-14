@@ -14,7 +14,7 @@ import { CompanyDetailComponent } from './company-detail.component';
         <div class="content-info-experience">
           <h4>{{author.name}}</h4>
           <p class="info-date-experience">
-            {{date | date:'d MMMM y'}}
+            {{date | amTimeAgo}}
           </p>
         </div>
         <div class="rating-star">
@@ -112,6 +112,7 @@ export class ReviewComponent implements Experience, OnInit {
       (resp) => console.log(resp),
       (error) => {
         console.log(error);
+        this.liked = !this.liked;
       }
     );
   }

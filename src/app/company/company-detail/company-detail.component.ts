@@ -32,6 +32,8 @@ export class CompanyDetailComponent implements Company, OnInit {
   public noTransition: boolean = false;
   public slides = [];
   public mapReady: boolean = false;
+  public descTruncated: boolean = true;
+  public bookmarked: boolean = false;
 
   constructor(
     private appState: AppState,
@@ -62,6 +64,10 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.mapReady = true;
     let user = this.appState.state.userInfo;
     this.user = {name: 'Tom Cruise', avatar: user.userAvatar};
+  }
+
+  public toggleBookmark() {
+    this.bookmarked = !this.bookmarked;
   }
 
   public viewReviews() {
@@ -97,6 +103,14 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.reviews.unshift(review);
       this.showForm = false;
     }
+  }
+
+  public showMore() {
+    this.descTruncated = false;
+  }
+
+  public showLess() {
+    this.descTruncated = true;
   }
 
   private loadData(data) {

@@ -12,6 +12,8 @@
               <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
                      [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
               </slide>
+              <i class="icon-sm" [class.icon-heart]="!bookmarked"
+                 [class.icon-heart-selected]="bookmarked" (click)="toggleBookmark()" aria-hidden="true"></i>
             </carousel>
           </div>
           <!-- carousel end -->
@@ -27,7 +29,7 @@
                 {{rating}}/5
               </div>
               <div class="google-plus-dropdown-button">
-                <a href="#">
+                <a>
                   <i class="fa fa-google-plus" aria-hidden="true"></i>
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </a>
@@ -36,21 +38,30 @@
             <p class="open-now-button">
               Open Now
             </p>
-            <div class="company-description">
-              {{description}}
+            <div class="company-description-wrap">
+              <div *ngIf="descTruncated">
+                <div class="company-description" [innerHTML]="description | truncate:200"></div>
+                <div class="read-more" (click)="showMore()"><i class="fa fa-angle-down" title="Show more"></i></div>
+              </div>
+              <div *ngIf="!descTruncated">
+                <div class="company-description">{{description}}</div>
+                <div class="read-more" (click)="showLess()"><i class="fa fa-angle-up" title="Show less"></i></div>
+              </div>
             </div>
           </div>
           <!-- company header end -->
           <!-- company info start -->
           <div class="company-info" *ngIf="mapReady">
             <p><span class="info-label">Location</span> {{location.name}}</p>
-            <p><span class="info-label">Website</span><a [href]="website" target="_blank">{{website}}</a></p>
-            <p><span class="info-label">Phone No.</span> <a href="tel:{{phone}}">{{phone}}</a></p>
+            <p><span class="info-label">Website</span>
+              <a [href]="website" target="_blank" title="Go to company's website">{{website}}</a>
+            </p>
+            <p><span class="info-label">Phone No.</span> <a href="tel:{{phone}}" title="Call now">{{phone}}</a></p>
             <p>
               <span class="info-label">Opening Hours</span>
               <span class="info-value" ngbDropdown>
                 <span ngbDropdownToggle>
-                  <span [innerHTML]="openingHours[0]"> </span>
+                  <span [innerHTML]="openingHours[0]"></span>
                   <i aria-hidden="true" class="fa fa-angle-down"></i>
                 </span>
                 <span class="dropdown-menu">
