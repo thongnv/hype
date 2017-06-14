@@ -9,8 +9,8 @@
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
       <!--<li class="logo"><a [routerLink]="['./home']"><i fa [name]="'circle-o'" [size]=3></i></a></li>-->
-      <li id="site-name"><a [routerLink]="['./home']">hylo</a></li>
-      <li class="map-option">
+      <li id="site-name nav-item"><a [routerLink]="['./home']">hylo</a></li>
+      <li class="map-option nav-item">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             {{selectedMapOption.name}} <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
           </ul>
         </div>
       </li>
-      <li class="map-option col-md-4">
+      <li class="map-option col-md-4 nav-item">
         <form action="">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search...">
@@ -30,13 +30,13 @@
           </div>
         </form>
       </li>
-      <li class="right add-event-button">
+      <li class="pull-right nav-item add-event-button">
         <div class="add-eventbtn" [routerLink]="['/curate/new']">
           <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
         </div>
       </li>
-      <li class="right notification-area">
-          <app-notification *ngIf="notifications"
+      <li class="pull-right nav-item notification-area" *ngIf="appState.state.userInfo.isLogin">
+          <app-notification
                             [notifications]="notifications"
                             [loadingInProgress]="set.loadingInProgress"
                             [endOfList]="set.endOfList"
@@ -45,19 +45,20 @@
                             (onMarkOneRead)="onMarkOneRead($event)">
           </app-notification>
       </li>
-      <li class="right info-user">
-        <div class="user-option map-option right" ngbDropdown>
+      <li class="pull-right info-user nav-item">
+        <div *ngIf="loginData" class="user-option map-option right" ngbDropdown>
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-            <img class="img-circle" src="/assets/img/event/detail/derek.jpg" alt="derek ava" width="30" height="30">
+            <img class="img-circle" [src]="loginData.current_user.avatar" width="30" height="30">
             <span class="user-name-info">{{this.appState.state.userInfo.firstName}}&nbsp;{{this.appState.state.userInfo.lastName}}</span>
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
             <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
             </li>
-            <li>Action 2</li>
-            <li>Action 3</li>
           </ul>
+        </div>
+        <div *ngIf="!loginData">
+          <span [routerLink]="['/login']" class="btn btn-success btn-sm">Login</span>
         </div>
       </li>
     </ul>

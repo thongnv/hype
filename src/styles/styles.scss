@@ -124,6 +124,11 @@ body, html {
     width: 70px;
     height: 70px;
   }
+  .user-avatar-small{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
   .follow-item{
     float: left;
     text-align: center;
@@ -813,10 +818,6 @@ body, html {
   .map-option button.btn-default:focus {
     outline: none;
   }
-  .hype-nav > li img {
-    margin-top: 15px;
-  }
-
   .hype-nav > li img[alt="icon-down"] {
     margin-top: 0px;
   }

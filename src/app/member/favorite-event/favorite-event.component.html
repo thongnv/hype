@@ -10,7 +10,7 @@
   </div>
   <div class="information-profile">
     <div class="top-content">
-      <h4 class="information-title text-ellipsis">{{item.title}}</h4>
+      <h4 [routerLink]="[item.slug]" class="information-title text-ellipsis">{{item.title}}</h4>
       <app-star-vote [stars]="item.av_vote" (onVote)="onVoteEvent($event)"></app-star-vote>
       <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 150"></p>
     </div>

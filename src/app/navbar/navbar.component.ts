@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
 import { AppSetting } from '../app.setting';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-navbar',
@@ -9,19 +10,20 @@ import { AppSetting } from '../app.setting';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  public loginData: any;
 
   public isIn = false;
   public userInfo: any;
   public mapOptions: any[];
   public notifications: any;
   public selectedMapOption: any;
-  public intervalRequestTime: number = 5000;
   public notificationPage: number = 0;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
 
-  public constructor(public appState: AppState, private mainService: MainService) {
+  public constructor(public appState: AppState, private mainService: MainService,
+                     private localStorageService: LocalStorageService) {
     let notificationPage = this.appState.state.notificationPage;
     if (notificationPage !== undefined) {
       this.notificationPage = notificationPage;
@@ -39,17 +41,20 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.loginData = JSON.parse(<string> this.localStorageService.get('loginData'));
+    console.log('local storage: ', this.loginData);
+    this.appState.set('loginData', this.loginData);
     this.userInfo = this.appState.state.userInfo;
     this.mapOptions = [
       {id: 1, name: 'Singapore'},
       {id: 2, name: 'Neighbourhood'}
     ];
     this.selectedMapOption = this.mapOptions[0];
-    if (this.mainService.isLoggedin() || this.appState.state.userInfo.email !== '') {
+    if (this.mainService.isLoggedin() || this.appState.state.userInfo.isLogin) {
       this.getNotifications();
     }
     setInterval(() => {
-      console.log('this userInfor', this.appState.state.userInfo.email);
+      console.log('this userInfo', this.appState.state.userInfo.isLogin);
     }, AppSetting.INTERVAL_NOTIFIATION);
   }
 
