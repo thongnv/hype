@@ -450,7 +450,7 @@ article {
 }
 
 .company-wrap .company-header {
-  padding: 10px 40px 40px;
+  padding: 30px 40px 40px;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
@@ -465,6 +465,9 @@ article {
   line-height: 1.13;
   text-align: left;
   color: #3b3b3b;
+  max-width: 220px;
+  vertical-align: top;
+  margin-top: 0px;
 }
 
 .company-wrap .company-header p.open-now-button {
