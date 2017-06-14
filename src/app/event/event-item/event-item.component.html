@@ -3,8 +3,8 @@
         <div class="avatar-profile">
             <a class="avatar-picture"><img [src]="item.field_images[0]" width="140" height="140"></a>
             <div class="cover-avatar-picture"></div>
-            <div class="month">{{item.created | date:'MMM'}}</div>
-            <div class="date-number">{{item.created | date:'dd'}}</div>
+            <div class="month">{{item.created| amFromUnix | date:'MMM'}}</div>
+            <div class="date-number">{{item.created| amFromUnix | date:'dd'}}</div>
             <div class="heart" (click)="onLikeEmit(item)">
                 <i class="icon-sm" [class.icon-heart]="!item.user_bookmark"
                    [class.icon-heart-selected]="item.user_bookmark" aria-hidden="true"></i>
