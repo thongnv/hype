@@ -18,31 +18,34 @@ import { AppState } from './app.service';
 
 export class AppComponent implements OnInit {
 
-  public userInfo = {
-    userName: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    contactNumber: '',
-    userAvatar: 'assets/img/avatar/demoavatar.png',
-    followingNumber: 0,
-    followerNumber: 0,
-    receiveEmail: 0,
-    userFollowing: [
-    ],
-    userFollower: [
-    ],
-    showNav: true,
-    acceptNotification: true
-  };
+  public userInfo = {};
 
   constructor(public appState: AppState, private titleService: Title) {
+    this.userInfo = {
+      isLogin: false,
+      userName: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      contactNumber: '',
+      userAvatar: 'assets/img/avatar/demoavatar.png',
+      followingNumber: 0,
+      followerNumber: 0,
+      receiveEmail: 0,
+      userFollowing: [],
+      userFollower: [],
+      showNav: true,
+      acceptNotification: true
+    };
     titleService.setTitle('Hylo');
   }
 
   public ngOnInit(): void {
-    this.demo();
-    console.log('Initial App State', this.appState.state);
+    console.log('Initial App State 1', this.appState.state.userInfo);
+    if (this.appState.state.userInfo === undefined) {
+      this.appState.set('userInfo', this.userInfo);
+    }
+    console.log('Initial App State 2', this.appState.state.userInfo);
   }
 
   public setTitle(newTitle: string) {

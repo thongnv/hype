@@ -17,6 +17,8 @@ import { ProfileEditComponent } from './member/profile-edit/profile-edit.compone
 import { FollowerComponent } from './member/follower/follower.component';
 import { FavoriteComponent } from './member/favorite/favorite.component';
 import { ProfilePublicComponent } from './member/profile-public/profile-public.component';
+import { AuthComponent } from './auth/auth.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -28,7 +30,6 @@ export const ROUTES: Routes = [
   {path: 'share-event', component: ShareEventComponent},
   {path: 'event/:slug', component: EventDetailComponent},
   {path: 'company/:slug', component: CompanyDetailComponent},
-  {path: 'auth', loadChildren: './auth#AuthModule'},
   {path: 'mode/play', component: ModeComponent},
   {path: 'member/following', component: FollowingComponent},
   {path: 'member/setting', component: MemberComponent},
@@ -38,6 +39,8 @@ export const ROUTES: Routes = [
   {path: 'member/follower', component: FollowerComponent},
   {path: 'member/favorite', component: FavoriteComponent},
   {path: 'member/:slug', component: ProfilePublicComponent},
+  {path: 'login', component: AuthComponent},
+  {path: 'logout', component: LogoutComponent},
   {path: '**', component: NoContentComponent},
 
 ];

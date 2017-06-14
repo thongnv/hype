@@ -45,6 +45,16 @@ export class CurateNewComponent implements OnInit {
     this.onAddPlace();
   }
 
+  public ngOnInit() {
+    this.loaderService.show();
+    this.mainService.getCategoryArticle().subscribe(
+      (response: any) => {
+        this.categories = response.data;
+        this.loaderService.hide();
+      }
+    );
+  }
+
   public onAddPlace() {
     const control = <FormArray> this.formData.controls['listPlaces'];
     const placeCtrl = this.initAddress();
@@ -60,15 +70,15 @@ export class CurateNewComponent implements OnInit {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
-    if (this.previewUrl.length < 4) {
+    if (this.previewUrl.length < 5) {
       this.addImage = true;
     }
   }
 
   public readUrl(event) {
     let reader = [];
-    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
-      for (let i = 0; i < event.target.files.length && i < 4; i++) {
+    if (event.target.files && event.target.files[0] && this.previewUrl.length < 5) {
+      for (let i = 0; i < event.target.files.length && i < 5; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
@@ -78,7 +88,7 @@ export class CurateNewComponent implements OnInit {
             filemime: event.target.files[i].type
           };
           this.previewUrl.push(img);
-          if (this.previewUrl.length >= 4) {
+          if (this.previewUrl.length >= 5) {
             this.addImage = false;
           }
         };
@@ -116,16 +126,6 @@ export class CurateNewComponent implements OnInit {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrl;
     this.initMap();
-  }
-
-  public ngOnInit() {
-    this.loaderService.show();
-    this.mainService.getCategoryArticle().subscribe(
-      (response: any) => {
-        this.categories = response.data;
-        this.loaderService.hide();
-      }
-    );
   }
 
   public switchView(status: boolean) {

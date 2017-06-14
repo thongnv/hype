@@ -14,7 +14,7 @@
 }
 
 .form-review h3 {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   line-height: 50px;
   border-radius: 2px;
   background-color: #ec3d62;
@@ -47,7 +47,7 @@
 .form-review button{
   border-radius: 2px;
   background-color: #2a6be1;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 14px;
   line-height: 30px;
   text-align: center;

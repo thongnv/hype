@@ -41,7 +41,8 @@ export class MainService {
           this._localStorageService.set('field_last_name',
             response.json().current_user.field_last_name
           );
-          console.log('_localStorageService: ', this._localStorageService.get('csrf_token'));
+          console.log('_localStorageService ==> csrf_token: ',
+            this._localStorageService.get('csrf_token'));
           resolve(response.json());
         },
         (err) => {
@@ -60,8 +61,6 @@ export class MainService {
       this._http.post(AppSetting.API_LOGOUT, JSON.stringify({}), options).subscribe(
         (response) => {
           console.log('API_LOGOUT: ', response);
-          this._localStorageService.clearAll();
-          this._appState.set('userInfor', null);
           resolve(response);
         },
         (err) => {
