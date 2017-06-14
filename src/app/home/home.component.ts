@@ -234,7 +234,7 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-            this.categories= this.drawCategories.slice(0,7);
+            this.categories = this.drawCategories.slice(0, 7);
             console.log(this.categories);
         }
         console.log(e);
@@ -300,72 +300,59 @@ export class HomeComponent implements OnInit {
     private loadMap() {
         this.resetData();
         this.mapsAPILoader.load().then(()=> {
-            let mapCenter = new google.maps.Marker({
-                position: new google.maps.LatLng(this.lat, this.lng),
-                draggable: true
-            });
-            let searchCenter = mapCenter.getPosition();
-            for (var i = 0; i < this.listItems.length; i++) {
-                if (typeof this.listItems[i].field_location_place.length === "undefined") {
+                let mapCenter = new google.maps.Marker({
+                    position: new google.maps.LatLng(this.lat, this.lng),
+                    draggable: true
+                });
+                let searchCenter = mapCenter.getPosition();
+                for (var i = 0; i < this.listItems.length; i++) {
+                    let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
+                    let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
+
                     let EMarker = new google.maps.Marker({
-                        position: new google.maps.LatLng(this.listItems[i].field_location_place.field_latitude, this.listItems[i].field_location_place.field_longitude),
+                        position: new google.maps.LatLng(latitude, longitude),
                         draggable: true
                     });
                     let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
                     if (parseInt(egeometry) < this.currentRadius) {
                         this.events.push(this.listItems[i]);
                         this.markers.push({
-                            lat: this.listItems[i].field_location_place.field_latitude,
-                            lng: this.listItems[i].field_location_place.field_longitude,
+                            lat: latitude,
+                            lng: longitude,
                             label: this.listItems[i].title,
                             opacity: 0.6,
                             isOpenInfo: false
                         });
                     }
                 }
-                else {
-                    if (this.listItems[i].field_location_place[0].field_latitude) {
-                        let AMarker = new google.maps.Marker({
-                            position: new google.maps.LatLng(this.listItems[i].field_location_place[0].field_latitude, this.listItems[i].field_location_place[0].field_longitude),
-                            draggable: true
-                        });
 
-                        let egeometry = google.maps.geometry.spherical.computeDistanceBetween(AMarker.getPosition(), searchCenter);
-                        if (parseInt(egeometry) < this.currentRadius) {
-                            this.events.push(this.listItems[i]);
-                            this.markers.push({
-                                lat: this.listItems[i].field_location_place[0].field_latitude,
-                                lng: this.listItems[i].field_location_place[0].field_longitude,
-                                label: this.listItems[i].title,
-                                opacity: 0.6,
-                                isOpenInfo: false
-                            });
-                        }
-                    }
-
-                }
-
+                this.loaderService.hide();
+                console.log(this.markers);
+                console.log(this.events);
+                this.showMap = true;
             }
-            this.loaderService.hide();
-            console.log(this.markers);
-            this.showMap = true;
-        });
+        );
     }
 
-    private resetData() {
+    private
+    resetData() {
         this.markers = [];
         this.events = [];
     }
 
-    public showPrice:boolean = false;
-    public showDate:boolean = false;
+    public
+    showPrice:boolean = false;
+    public
+    showDate:boolean = false;
 
-    public showRagePrice() {
+    public
+    showRagePrice() {
         this.showPrice = true;
         this.showDate = false;
     }
 
-    public showWhen() {
+    public
+    showWhen() {
         this.showDate = true;
         this.showPrice = false;
     }
