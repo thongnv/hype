@@ -13,6 +13,7 @@ import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {LoaderService} from "../shared/loader/loader.service";
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
+import { Router } from '@angular/router';
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
 
 const now = new Date();
@@ -45,6 +46,10 @@ export class HomeComponent implements OnInit {
     public tabActive:boolean = false;
     public isOpen:boolean = false;
     public currentHighlightedMarker:number = 1;
+    public alertType:any = '';
+    public msgContent:any = '';
+    public  alertType:string;
+    public showAll:boolean = true;
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -60,6 +65,7 @@ export class HomeComponent implements OnInit {
         'price': ''
     }
     private userProfile:any;
+    public drawCategories:any[];
 
     //date picker
     model:NgbDateStruct;
@@ -69,7 +75,8 @@ export class HomeComponent implements OnInit {
     constructor(private mainService:MainService,
                 private homeService:HomeService,
                 private loaderService:LoaderService,
-                private mapsAPILoader:MapsAPILoader) {
+                private mapsAPILoader:MapsAPILoader,
+                private route:Router) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -88,6 +95,7 @@ export class HomeComponent implements OnInit {
     public ngOnInit() {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
+        this.selected = 'all';
         this.getTrending();
         this.getTrandingCategories();
     }
@@ -144,25 +152,33 @@ export class HomeComponent implements OnInit {
             'slug': item.alias
         };
         this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
-            console.log(res);
+            this.alertType = 'success';
+            this.msgContent = res.message;
+        }, err=> {
+            if (err.status == 403) {
+                this.route.navigate(['auth']);
+            } else {
+                this.alertType = 'error';
+                this.msgContent = 'Sorry, bookmark error please try again';
+            }
         });
 
     }
 
     public clickedMarker(selector, horizontal) {
         scrollTo(
-            '#v' + selector,       // scroll to this
-            '#v-scrollable', // scroll within (null if window scrolling)
-            horizontal,     // is it horizontal scrolling
-            0               // distance from top or left
+            '#v' + selector,
+            '#v-scrollable',
+            horizontal,
+            0
         );
 
     }
 
     public selectedDate(value:any) {
         this.params.filter = 'when';
-        this.params.w_start = moment(value.start).unix()*1000;
-        this.params.w_end = moment(value.end).unix()*1000;
+        this.params.w_start = moment(value.start).unix() * 1000;
+        this.params.w_end = moment(value.end).unix() * 1000;
         this.showMap = false;
         this.loaderService.show();
         this.getTrending();
@@ -201,12 +217,29 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
+
     private getTrandingCategories() {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
-            console.log(resp);
-            this.categories = resp.data;
+            this.drawCategories = resp.data;
+            if (resp.data.length >= 8) {
+                this.categories = resp.data.slice(0, 7);
+            }
+
         });
     }
+
+    public showAllCategory(e) {
+        if (e) {
+            this.showAll = false;
+            this.categories = this.drawCategories;
+        } else {
+            this.showAll = true;
+            this.categories= this.drawCategories.slice(0,7);
+            console.log(this.categories);
+        }
+        console.log(e);
+    }
+
 
     public onChangePrice(value) {
         this.showMap = false;

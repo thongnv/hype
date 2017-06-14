@@ -3,12 +3,17 @@
         <div class="col-lg-6 col-xs-12 left-box">
             <div class="type-events">
                 <ul>
+                    <li class="type-event-item" [class.active]="all==selected">
+                        <img src="../../assets/img/icons/All.png" width="30" height="30">
+                        <span class="type-event-name text-capitalize">All</span>
+                    </li>
                     <li *ngFor="let event of categories, let index = index" (click)="onSelectEventType(event)"
                         [class.active]="event.tid==selected" class="type-event-item">
                         <img [src]="event.icon" width="30" height="30">
                         <span class="type-event-name text-capitalize">{{event.name}}</span>
                     </li>
-                    <li *ngIf="categories?.length >10" class="type-event-more"><b></b><b></b><b></b></li>
+                    <li *ngIf="drawCategories?.length >= 7" class="type-event-more" (click)="showAllCategory(showAll)">
+                        <b></b><b></b><b></b></li>
                 </ul>
             </div>
             <div class="filter-events clearfix">
@@ -26,18 +31,22 @@
                 </div>
                 <div class="clear"></div>
                 <div>
-                    <a (click)="showRagePrice()" class="price-range">price range <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <a (click)="showRagePrice()" class="price-range">price range <i class="fa fa-angle-down"
+                                                                                    aria-hidden="true"></i></a>
                     <a (click)="showWhen()" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                     <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
                     <div class="clearfix"></div>
-                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [(ngModel)]="priceRange"
+                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10"
+                                [(ngModel)]="priceRange"
                                 (ngModelChange)="onChangePrice($event)"
                                 style="margin-top:1em; margin-bottom: 1em;padding-bottom: 20px;margin-left: 15px;">
                     </nouislider>
-                    <input *ngIf="showDate" style="margin-top: 1em; margin-bottom: 1em" class="form-control" [options]="options" daterangepicker
-                    (selected)="selectedDate($event)">
+                    <input *ngIf="showDate" style="margin-top: 1em; margin-bottom: 1em" class="form-control"
+                           [options]="options" daterangepicker
+                           (selected)="selectedDate($event)">
                 </div>
             </div>
+            <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clear"></div>
             <div id="v-scrollable" class="scrollable section"
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)"
