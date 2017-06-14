@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-follower',
@@ -17,8 +18,11 @@ export class FollowerComponent implements OnInit {
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
+  public slugName: any;
+  public sub: any;
 
-  public constructor(private appState: AppState, private mainService: MainService) {
+  public constructor(private appState: AppState, private mainService: MainService,
+                     private route: ActivatedRoute) {
     this.userInfo = this.appState.state.userInfo;
 
     let followingPage = this.appState.state.followingPaging;
@@ -28,6 +32,14 @@ export class FollowerComponent implements OnInit {
     this.appState.set('followingPage', this.followingPage);
     console.log('followingPage', this.followingPage);
   }
+
+  public onFollowScrollDown(data) {
+    let elm = data.srcElement;
+    if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
+      this.loadMore();
+    }
+  }
+
   public loadMore(): void {
     if (!this.set.loadingInProgress) {
       if (this.set.offset > 9999) {    // detect the end of list
@@ -35,29 +47,33 @@ export class FollowerComponent implements OnInit {
       } else {
         this.set.loadingInProgress = true;
         let count = 0;
-        this.mainService.getUserFollow('following', ++this.followingPage).then((response) => {
-          response.forEach((item) => {
-            count++;
-            this.userInfo.userFollowing.push(item);
+        this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
+          .then((response) => {
+            response.forEach((item) => {
+              count++;
+              this.userInfo.userFollowing.push(item);
+            });
+            if (count === 0) {
+              this.set.endOfList = true;
+              this.followingPage--;
+            } else {
+              this.set.offset += count;
+            }
+            this.set.loadingInProgress = false;
           });
-          if (count === 0) {
-            this.set.endOfList = true;
-            this.followingPage--;
-          } else {
-            let max = this.set.offset + count;
-            this.set.offset = max;
-          }
-          this.set.loadingInProgress = false;
-        });
       }
     }
   }
 
   public ngOnInit() {
-    this.userInfo.showNav = false;
-    this.getUserProfile();
-    this.getUserFollow('follower', this.followingPage);
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params['slug'];
+      console.log('USER: ', this.slugName);
+      this.getUserProfile(this.slugName);
+      this.getUserFollow('following', this.slugName, this.followingPage);
+    });
   }
+
   public updateFollow(item: any) {
     console.log('item', item);
     if (item.stateFollow === 'yes') {
@@ -68,16 +84,18 @@ export class FollowerComponent implements OnInit {
     this.alertType = 'success';
     this.msgContent = 'Update following successful';
   }
-  private getUserFollow(followFlag: string, page: number): void {
-    this.mainService.getUserFollow(followFlag, page).then((response) => {
+
+  private getUserFollow(followFlag: string, slugName: string, page: number): void {
+    this.mainService.getUserFollow(followFlag, slugName, page).then((response) => {
       this.userInfo.userFollower = response;
       console.log('response', response);
       this.appState.set('userInfo', this.userInfo);
     });
   }
-  private getUserProfile(): void {
-    this.mainService.getUserProfile().then((response) => {
 
+  private getUserProfile(slugName: string): void {
+    this.userInfo = this.appState.state.userInfo;
+    this.mainService.getUserProfile(slugName).then((response) => {
       this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
       this.userInfo.firstName = response.field_first_name;
       this.userInfo.lastName = response.field_last_name;
@@ -89,6 +107,7 @@ export class FollowerComponent implements OnInit {
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = false;
+      this.userInfo.uid = response.uid;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
     });

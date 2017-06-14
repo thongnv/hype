@@ -26,9 +26,10 @@ export class ProfilePublicComponent implements OnInit {
   public setEvent: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
+  public sub: any;
+  public slugName: any;
+  public userFollow: boolean = false;
 
-  private sub: any;
-  private slugName: any;
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -178,6 +179,8 @@ export class ProfilePublicComponent implements OnInit {
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
+      this.userFollow = response.user_follow;
+      this.userInfo.uid = response.uid;
       console.log('====> userProfile response: ', response);
     });
   }

@@ -52,7 +52,7 @@ export class AuthComponent implements OnInit {
         this.mainService.login(res.authResponse.accessToken).then((respone) => {
           this.localStorageService.set('loginData', JSON.stringify(respone));
           console.log('login-respone: ', respone);
-          this.router.navigate(['./member/profile-edit']);
+          this.router.navigate(['/' + respone.current_user.slug]);
         });
       })
       .catch(this.handleError);

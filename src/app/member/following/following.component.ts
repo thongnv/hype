@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-following',
@@ -16,10 +17,11 @@ export class FollowingComponent implements OnInit {
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
+  public slugName: any;
+  public sub: any;
 
-  constructor(private appState: AppState,
-              private mainService: MainService) {
-    this.userInfo = this.appState.state.userInfo;
+  constructor(private appState: AppState, private mainService: MainService,
+              private route: ActivatedRoute) {
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
       this.followingPage = followingPage;
@@ -29,9 +31,12 @@ export class FollowingComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.userInfo.showNav = false;
-    this.getUserProfile();
-    this.getUserFollow('following', this.followingPage);
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params['slug'];
+      console.log('USER: ', this.slugName);
+      this.getUserProfile(this.slugName);
+      this.getUserFollow('following', this.slugName, this.followingPage);
+    });
   }
 
   public onFollowScrollDown(data) {
@@ -48,20 +53,20 @@ export class FollowingComponent implements OnInit {
       } else {
         this.set.loadingInProgress = true;
         let count = 0;
-        this.mainService.getUserFollow('following', ++this.followingPage).then((response) => {
-          response.forEach((item) => {
-            count++;
-            this.userInfo.userFollowing.push(item);
+        this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
+          .then((response) => {
+            response.forEach((item) => {
+              count++;
+              this.userInfo.userFollowing.push(item);
+            });
+            if (count === 0) {
+              this.set.endOfList = true;
+              this.followingPage--;
+            } else {
+              this.set.offset += count;
+            }
+            this.set.loadingInProgress = false;
           });
-          if (count === 0) {
-            this.set.endOfList = true;
-            this.followingPage--;
-          } else {
-            let max = this.set.offset + count;
-            this.set.offset = max;
-          }
-          this.set.loadingInProgress = false;
-        });
       }
     }
   }
@@ -77,8 +82,8 @@ export class FollowingComponent implements OnInit {
     this.msgContent = 'Update following successful';
   }
 
-  private getUserFollow(followFlag: string, page: number): void {
-    this.mainService.getUserFollow(followFlag, page).then((response) => {
+  private getUserFollow(followFlag: string, slugName: string, page: number): void {
+    this.mainService.getUserFollow(followFlag, slugName, page).then((response) => {
       this.userInfo.userFollowing = response;
       console.log('response', response);
       console.log('this.userInfo.userFollowing', this.userInfo.userFollowing);
@@ -86,8 +91,9 @@ export class FollowingComponent implements OnInit {
     });
   }
 
-  private getUserProfile(): void {
-    this.mainService.getUserProfile().then((response) => {
+  private getUserProfile(slugName: string): void {
+    this.userInfo = this.appState.state.userInfo;
+    this.mainService.getUserProfile(slugName).then((response) => {
       this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
       this.userInfo.firstName = response.field_first_name;
       this.userInfo.lastName = response.field_last_name;
@@ -99,6 +105,7 @@ export class FollowingComponent implements OnInit {
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = false;
+      this.userInfo.uid = response.uid;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
     });

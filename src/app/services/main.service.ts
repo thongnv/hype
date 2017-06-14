@@ -96,11 +96,10 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public getUserFollow(followFlag: string, page: number): Promise<any> {
-    let currentSlug = <string> this._localStorageService.get('slug');
+  public getUserFollow(followFlag: string, slugName: string, page: number): Promise<any> {
     const followUrl = (followFlag === 'following') ?
-      AppSetting.API_USER_FOLLOWING + '&slug=/user/' + currentSlug + '&page = ' + page :
-      AppSetting.API_USER_FOLLOWER + '&slug=/user/' + currentSlug + '&page = ' + page;
+      AppSetting.API_USER_FOLLOWING + '&slug=/user/' + slugName + '&page = ' + page :
+      AppSetting.API_USER_FOLLOWER + '&slug=/user/' + slugName + '&page = ' + page;
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
