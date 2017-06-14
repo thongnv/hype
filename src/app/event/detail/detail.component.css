@@ -50,7 +50,7 @@ h4 {
 /*title event start*/
 
 .title-event {
-  padding: 15px 0px 30px;
+  padding: 15px 0 30px;
 }
 .title-event h3 {
   padding-left: 50px;
@@ -89,7 +89,7 @@ h4 {
   text-transform: capitalize;
   width: 25%;
   margin-right: 40px;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
@@ -130,7 +130,7 @@ h4 {
 
 .list-mention .mention {
   color: red;
-  margin: 0px 5px 20px;
+  margin: 0 5px 20px;
 }
 
 .list-mention > li > a {
@@ -179,7 +179,7 @@ p.content-detail-event {
 
 p.name-creator {
   margin: 10px 0;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 16px;
   line-height: 1;
   text-align: center;
@@ -266,7 +266,7 @@ ul.list-stars-review-experience li {
 }
 
 p.detail-info-experience {
-  padding: 20px 0;
+  padding: 0;
   font-size: 14px;
   font-weight: 300;
   line-height: 30px;
@@ -292,6 +292,9 @@ ul.list-pictures-experience li img {
 }
 .likes-comments-experience-area div {
   display: inline-block;
+}
+.experiences-area {
+  padding: 25px 0;
 }
 
 .likes-area {
