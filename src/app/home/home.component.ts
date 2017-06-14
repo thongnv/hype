@@ -156,7 +156,7 @@ export class HomeComponent implements OnInit {
             this.msgContent = res.message;
         }, err=> {
             if (err.status == 403) {
-                this.route.navigate(['auth']);
+                this.route.navigate(['login']);
             } else {
                 this.alertType = 'error';
                 this.msgContent = 'Sorry, bookmark error please try again';
