@@ -85,6 +85,9 @@
     line-height: 40px;
     color: #3b3b3b;
 }
+ul.mentioned-item {
+    padding-left: 25%;
+}
 .mentioned-item li:hover {
     border: 1px solid rgba(236, 61, 98, 0.5);
 }
@@ -93,6 +96,7 @@
     background: transparent;
     float: left;
     margin-right: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 7px;
@@ -101,7 +105,7 @@
     height: 14px;
     font-size: 14px;
     font-weight: bold;
-    line-height: 1;
+    line-height: 1.5;
     text-align: right;
     color: #5052ea;
 }
