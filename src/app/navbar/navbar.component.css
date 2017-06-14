@@ -1,0 +1,54 @@
+.navbar-nav li#site-name a {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
+    color: #fff;
+    padding-top: 13px;
+}
+.map-option a img.img-circle {
+    margin-top: 0px;
+    margin-right: 8px;
+}
+.map-option a span.user-name-info {
+    font-size: 16px;
+    line-height: 1;
+    text-align: left;
+    color: #fff;
+}
+.map-option .dropdown a  {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 2.8;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #fff;
+}
+.map-option .dropdown a i.fa-angle-down {
+    color: #fff;
+    margin-left: 6px;
+    font-size: 21px;
+}
+.map-option form .input-group .input-group-btn button {
+	z-index: 999;
+}
+.map-option form .input-group input:focus {
+	border: none;
+}
+
+.notification-area  {
+    margin-right: 10px;
+}
+.info-user {
+    margin-right: 40px;
+}
+.add-event-button {
+    margin-right: 10px;
+}
+.add-event-button .add-eventbtn:focus {
+    outline: none;
+}
+
+
+
+
+

@@ -9,11 +9,11 @@
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
       <!--<li class="logo"><a [routerLink]="['./home']"><i fa [name]="'circle-o'" [size]=3></i></a></li>-->
-      <li id="site-name"><a [routerLink]="['./home']">Hylo</a></li>
+      <li id="site-name"><a [routerLink]="['./home']">hylo</a></li>
       <li class="map-option">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-            {{selectedMapOption.name}}<span class="caret"></span>
+            {{selectedMapOption.name}} <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
             <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
@@ -30,12 +30,12 @@
           </div>
         </form>
       </li>
-      <li class="right">
+      <li class="right add-event-button">
         <div class="add-eventbtn" [routerLink]="['/curate/new']">
           <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
         </div>
       </li>
-      <li class="right">
+      <li class="right notification-area">
           <app-notification *ngIf="notifications"
                             [notifications]="notifications"
                             [loadingInProgress]="set.loadingInProgress"
@@ -45,16 +45,18 @@
                             (onMarkOneRead)="onMarkOneRead($event)">
           </app-notification>
       </li>
-      <li class="right">
+      <li class="right info-user">
         <div class="user-option map-option right" ngbDropdown>
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-            <i class="logo" fa [name]="'user-circle-o'" [size]=2></i>
-            {{this.appState.state.userInfo.firstName}}&nbsp;{{this.appState.state.userInfo.lastName}}
+            <img class="img-circle" src="/assets/img/event/detail/derek.jpg" alt="derek ava" width="30" height="30">
+            <span class="user-name-info">{{this.appState.state.userInfo.firstName}}&nbsp;{{this.appState.state.userInfo.lastName}}</span>
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
             <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
             </li>
+            <li>Action 2</li>
+            <li>Action 3</li>
           </ul>
         </div>
       </li>

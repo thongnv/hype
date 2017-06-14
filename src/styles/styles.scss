@@ -702,7 +702,7 @@ body, html {
     left: unset;
     width: 360px;
     top: 95%;
-    right: -50px;
+    right: -33px;
   }
   ul#notifications li:first-child {
     position: relative;
@@ -841,11 +841,15 @@ body, html {
     color: white;
     border: none;
     font-size: small;
+    width: auto;
+    display: block;
+    padding: 11px 2px 7px 7px;
   }
   #count-notif b {
     position: relative;
-    top: -15px;
+    top: -26px;
     color: #9b1935;
+    right: 2px;
   }
   .nav-search {
     margin-top: 12px;
