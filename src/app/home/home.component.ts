@@ -161,8 +161,8 @@ export class HomeComponent implements OnInit {
 
     public selectedDate(value:any) {
         this.params.filter = 'when';
-        this.params.w_start = moment(value.start).unix();
-        this.params.w_end = moment(value.end).unix();
+        this.params.w_start = moment(value.start).unix()*1000;
+        this.params.w_end = moment(value.end).unix()*1000;
         this.showMap = false;
         this.loaderService.show();
         this.getTrending();
