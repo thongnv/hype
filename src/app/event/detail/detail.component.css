@@ -52,10 +52,14 @@ h4 {
 .title-event {
   padding: 15px 0px 30px;
 }
+.title-event h3 {
+  padding-left: 50px;
+  padding-right: 10px;
+}
 
 .title-event a.left-arrow {
   float: left;
-  margin: 6px 25px 0 10px;
+  margin: 7px 20px 0 15px;
 }
 
 /*title event end*/
@@ -99,6 +103,8 @@ h4 {
   line-height: 20px;
   text-align: left;
   color: #3b3b3b;
+  display: block;
+  padding-left: 40%;
 }
 
 .left-content-information-event > li > span > b {
@@ -114,7 +120,7 @@ h4 {
 
 .list-mention {
   list-style: none;
-  padding-left: 34%;
+  padding-left: 39%;
 }
 
 .list-mention > li {
@@ -124,7 +130,7 @@ h4 {
 
 .list-mention .mention {
   color: red;
-  margin: -1px 2px 17px;
+  margin: 0px 5px 20px;
 }
 .list-mention > li > a {
   border-radius: 7px;
@@ -273,6 +279,9 @@ ul.list-pictures-experience li img {
   border-radius: 8px;
 }
 
+.likes-comments-experience-area {
+  padding-top: 20px;
+}
 .likes-comments-experience-area div {
   display: inline-block;
 }
