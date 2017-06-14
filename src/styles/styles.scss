@@ -10,6 +10,7 @@
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   color: #3b3b3b;
+  outline: none;
 }
 nav {
   margin-top: 16px;
@@ -134,6 +135,7 @@ body, html {
     text-align: center;
     width:50%;
     cursor: pointer;
+    outline: none;
   }
   .avatar-wrap, .follow-wrap{
     margin-top: 10px;
@@ -154,6 +156,7 @@ body, html {
   }
   .member-nav > li.active{
     font-weight: 700;
+    color: #ec3d62;
   }
   .member-nav > li{
     display: block;
@@ -162,8 +165,9 @@ body, html {
     height: 30px;
     line-height: 30px;
     text-align: left;
-    padding-left: 30%;
+    padding-left: 34%;
     cursor: pointer;
+    font-size: 16px;
   }
   //following
   .count-follow{
@@ -352,9 +356,9 @@ body, html {
     }
 
     .information-title  {
-      margin-top: 6px;
+      margin: 6px auto 8px auto;
       width: 504px;
-      height: 18px;
+      height: 20px;
       font-family: Roboto;
       font-size: 18px;
       font-weight: bold;
@@ -823,7 +827,7 @@ body, html {
     outline: none;
   }
   .hype-nav > li img[alt="icon-down"] {
-    margin-top: 0px;
+    margin-top: 0;
   }
 
   button.btn > i {

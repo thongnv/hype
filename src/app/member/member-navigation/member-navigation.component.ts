@@ -12,6 +12,7 @@ export class MemberNavigationComponent implements OnInit {
   @Input('data') public data: any;
   @Input('slugName') public slugName: any;
   @Input('userFollow') public userFollow: any;
+  @Input('showFollow') public showFollow: boolean;
   public show: boolean;
 
   public constructor(public appState: AppState, private mainService: MainService) {

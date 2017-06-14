@@ -9,7 +9,7 @@
         <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       </div>
       <div class="btn-group tab-control">
-        <button class="btn btn-default" (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Event</button>
+        <button class="btn btn-default" (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Events</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</button>
       </div>

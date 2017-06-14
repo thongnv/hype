@@ -256,10 +256,23 @@ export class MainService {
     let currentSlug = <string> this._localStorageService.get('slug');
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    if (slugName) {
+      myParams.set('slug', '/user/' + slugName);
+    }else {
+      myParams.set('slug', '/user/' + currentSlug);
+    }
+    if (page) {
+      myParams.set('page', page.toString());
+    }else {
+      myParams.set('page', '0');
+    }
+    myParams.set('type', 'event');
+    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
+    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
-    return this._http.get(AppSetting.API_FAVORITE_EVENT +
-      '&page=' + page + '&slug=/user/' + (slugName ? slugName : currentSlug), options)
+    return this._http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
       .toPromise()
       .then((resp) => resp.json().data)
       .catch(this.handleError);
@@ -268,11 +281,25 @@ export class MainService {
   public getUserList(slugName?: string, page?: number): Promise<any> {
     let currentSlug = <string> this._localStorageService.get('slug');
     let csrfToken = <string> this._localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    myParams.set('type', 'list');
+    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
+    if (page) {
+      myParams.set('page', page.toString());
+    }else {
+      myParams.set('page', '0');
+    }
+    if (slugName) {
+      myParams.set('slug', '/user/' + slugName);
+    }else {
+      myParams.set('slug', '/user/' + currentSlug);
+    }
 
-    return this._http.get(AppSetting.API_FAVORITE_LIST +
-      '&page=' + page + '&slug=/user/' + (slugName ? slugName : currentSlug), options)
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
+
+    return this._http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
@@ -282,26 +309,44 @@ export class MainService {
     let currentSlug = <string> this._localStorageService.get('slug');
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
+    if (page) {
+      myParams.set('page', page.toString());
+    }else {
+      myParams.set('page', '0');
+    }
+    if (slugName) {
+      myParams.set('slug', '/user/' + slugName);
+    }else {
+      myParams.set('slug', '/user/' + currentSlug);
+    }
+    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
-    return this._http.get(AppSetting.API_FAVORITE_PLACE +
-      '&limit=' + AppSetting.PAGE_SIZE + '&page=' + page +
-      '&slug=' + (slugName ? slugName : currentSlug), options)
+    return this._http.get(AppSetting.API_FAVORITE_PLACE, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
   }
 
-  public isLoggedin(): boolean {
+  public isLogin(): boolean {
     return !!this._localStorageService.get('csrf_token');
   }
 
   public removeFavoritedEventList(slug: string): Promise<any> {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    if (slug) {
+      myParams.set('slug', '/user/' + slug);
+    }else {
+      myParams.set('slug', '/user/' + slug);
+    }
+    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
-    return this._http.post(AppSetting.API_UNFAVORITE_EVENT_LIST + slug, JSON.stringify({}), options)
+    return this._http.post(AppSetting.API_UNFAVORITE_EVENT_LIST, JSON.stringify({}), options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

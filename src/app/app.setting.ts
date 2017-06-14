@@ -32,13 +32,9 @@ export class AppSetting {
   public static API_TRENDING = API_ENDPOINT + 'api/v1/trending?_format=json';
   public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';
   public static API_USER_PUBLIC_PROFILE = API_ENDPOINT + 'api/v1/profile/';
-  public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place?_format=json';
-  public static API_FAVORITE_EVENT = API_ENDPOINT +
-    'api/user/flag/bookmark/list?_format=json&type=event&limit=' + PAGE_SIZE;
-  public static API_FAVORITE_LIST = API_ENDPOINT +
-    'api/user/flag/bookmark/list?_format=json&type=list&limit=' + PAGE_SIZE;
-  public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT +
-    'api/user/flag/bookmark?_format=json&slug=';
+  public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
+  public static API_FAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark/list';
+  public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,

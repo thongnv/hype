@@ -50,12 +50,9 @@ export class NavbarComponent implements OnInit {
       {id: 2, name: 'Neighbourhood'}
     ];
     this.selectedMapOption = this.mapOptions[0];
-    if (this.mainService.isLoggedin() || this.appState.state.userInfo.isLogin) {
+    if (this.loginData) {
       this.getNotifications();
     }
-    setInterval(() => {
-      console.log('this userInfo', this.appState.state.userInfo.isLogin);
-    }, AppSetting.INTERVAL_NOTIFIATION);
   }
 
   public getNotifications() {

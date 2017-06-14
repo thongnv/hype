@@ -25,6 +25,7 @@ export class MemberComponent implements OnInit {
               public fb: FormBuilder,
               private appState: AppState,
               private mainService: MainService) {
+    this.userInfo = this.appState.state.userInfo;
     this.userInfo.showNav = true;
   }
 
@@ -61,16 +62,13 @@ export class MemberComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.initUserData();
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       console.log('USER: ', this.slugName);
       this.getUserProfile(this.slugName);
     });
   }
-  private initUserData(): void {
-    this.userInfo = this.appState.state.userInfo;
-  }
+
   private getUserProfile(slugName: string): void {
 
     this.mainService.getUserProfile(slugName).then((response) => {

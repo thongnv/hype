@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
@@ -22,10 +23,13 @@ export class ProfileEditComponent implements OnInit {
   });
   public alertType: string;
   public msgContent: string;
+  public sub: any;
+  public slugName: any;
+
   constructor(public fb: FormBuilder,
               private appState: AppState,
               private countryPickerService: CountryPickerService,
-              private mainService: MainService) {
+              private mainService: MainService, private route: ActivatedRoute) {
     this.countryPickerService.getCountries().subscribe((countries) => {
 
       let defaultCountry = <ICountry> {
@@ -37,11 +41,17 @@ export class ProfileEditComponent implements OnInit {
       this.countries = countries;
       this.countries.unshift(defaultCountry);
     });
+
+    this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = true;
   }
 
   public ngOnInit() {
-    this.initUserData();
-    this.getUserProfile();
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params['slug'];
+      console.log('USER: ', this.slugName);
+      this.getUserProfile(this.slugName);
+    });
   }
 
   public onSubmit(): void {
@@ -77,13 +87,8 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  private initUserData(): void {
-    this.userInfo = this.appState.state.userInfo;
-    this.userInfo.showNav = true;
-  }
-
-  private getUserProfile(): void {
-    this.mainService.getUserProfile().then((response) => {
+  private getUserProfile(slugName: string): void {
+    this.mainService.getUserProfile(slugName).then((response) => {
       this.profileForm.patchValue({
         firstName: response.field_first_name,
         lastName: response.field_last_name,
