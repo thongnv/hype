@@ -77,7 +77,8 @@
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
-            <input formControlName="eventPrice" id="event-price" class="form-control" type="number">$
+            <input formControlName="eventPrice" id="event-price" class="form-control" type="number">
+            <span class="dollar-character">$</span>
             <small *ngIf="eventForm.get('eventPrice').touched && eventForm.get('eventPrice').invalid"
                    class="text-danger">
               Price is number and between 0-300 $
@@ -139,7 +140,7 @@
             </li>
             <li>
               <p>price range</p>
-              <span>{{previewData.eventPrice}}<b>.</b>
+              <span>{{previewData.eventPrice}}$<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
                   <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>
@@ -156,6 +157,21 @@
               </ul>
             </li>
           </ul>
+          <!-- <div class="right-creator-share-event text-center pull-right">
+            <h4 class="title-creator">Created by</h4>
+            <a>
+              <p class="avatar-creator">
+                <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
+                     height="70">
+              </p>
+              <p class="name-creator">
+                {{creator.name}}
+              </p>
+            </a>
+            <p class="avg-rating" *ngIf="rating">
+              {{rating}}/5
+            </p>
+          </div> -->
         </div>
 
         <hr>

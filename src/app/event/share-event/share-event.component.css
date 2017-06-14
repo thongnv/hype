@@ -26,7 +26,7 @@ header ul li {
 }
 header ul li.active {
     font-weight: bold;
-    color: #2a6be1;
+    color: #5052ea;
     opacity: 1;
 }
 
@@ -218,6 +218,10 @@ header ul li.active {
     color: #ec3d62;
     font-size: 16px;
 }
+.information-event {
+    padding-left: 30px;
+    padding-top: 15px;
+}
 .list-preview-wrap .detail-event {
     margin: 10px 30px 10px 40px;
 }
@@ -294,19 +298,23 @@ header ul li.active {
 }
 
 .left-content-information-event > li {
-  margin-bottom: 30px;
+    margin-bottom: 25px;
+    min-height: 25px;
 }
 
 .left-content-information-event > li > p {
-  float: left;
-  text-transform: capitalize;
-  font-weight: bold;
-  width: 25%;
-  margin-right: 40px;
+    float: left;
+    text-transform: capitalize;
+    font-weight: bold;
+    width: 22%;
+    margin-right: 40px;
 }
 
 .left-content-information-event > li > span {
-  font-size: 13px;
+    font-size: 13px;
+    padding-left: 32%;
+    line-height: 1.7;
+    display: block;
 }
 
 .left-content-information-event > li > span > b {
@@ -320,20 +328,37 @@ header ul li.active {
   color: #ec3d62;
 }
 
+#event-price {
+    width: 90%;
+    float: left;
+}
 
+span.dollar-character {
+    display: inline-block;
+    float: left;
+    line-height: 45px;
+    padding-left: 10px;
+    font-size: 15px;
+}
 .list-mention {
   list-style: none;
+  padding-left: 32%;
 }
 
 .list-mention > li {
-  float: left;
-  margin-right: 16px;
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 25px;
 }
 
 .list-mention > li > a {
   border-radius: 7px;
   border: 1px solid #e6e6e6;
-  padding: 5px 4px 8px;
+  padding: 10px 5px;
+}
+.list-mention > li > a > img {
+    width: 28px;
+    height: 28px;
 }
 
 .share-event{
