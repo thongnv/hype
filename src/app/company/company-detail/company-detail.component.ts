@@ -58,7 +58,8 @@ export class CompanyDetailComponent implements Company, OnInit {
     //     }
     //   );
     // });
-    this.company = CompanyService.getMockCompany();
+    // this.company = CompanyService.getMockCompany();
+    this.company = CompanyService.extractCompanyDetail('xxx');
     this.loadData(this.company);
     this.initSlide(this.images);
     this.mapReady = true;
@@ -120,6 +121,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.name = data.name;
     this.description = data.description;
     this.rating = data.rating;
+    this.bookmarked = data.bookmarked;
     this.phone = data.phone;
     this.openingHours = data.openingHours;
     this.location = data.location;

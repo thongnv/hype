@@ -108,4 +108,5 @@ export interface Company {
   openingHours: string[];
   images: Image[];
   reviews: Experience[];
+  bookmarked: boolean;
 }

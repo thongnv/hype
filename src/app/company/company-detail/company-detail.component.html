@@ -22,7 +22,7 @@
             <h3>{{name}}</h3>
             <div class="rating-star">
               <i *ngFor="let i of rating | myArray" fa [name]="'star'" [size]=1></i>
-              <i *ngFor="let i of 5 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
+              <i *ngFor="let i of 4.9 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
             </div>
             <div class="google-plus-point">
               <div class="rating-number">
@@ -40,8 +40,10 @@
             </p>
             <div class="company-description-wrap">
               <div *ngIf="descTruncated">
-                <div class="company-description" [innerHTML]="description | truncate:200"></div>
-                <div class="read-more" (click)="showMore()"><i class="fa fa-angle-down" title="Show more"></i></div>
+                <div class="company-description">{{description | truncate:200}}</div>
+                <div class="read-more" *ngIf="description.length>200" (click)="showMore()">
+                  <i class="fa fa-angle-down" title="Show more"></i>
+                </div>
               </div>
               <div *ngIf="!descTruncated">
                 <div class="company-description">{{description}}</div>
