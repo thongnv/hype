@@ -1,4 +1,5 @@
-.left-box {
+.left-box,
+.right-box {
     padding-left: 0;
     padding-right: 0;
 }
@@ -13,15 +14,20 @@
     clear: both;
 }
 
-.type-events {
-    padding: 21px 0 60px;
+.type-events  {
+    padding: 25px 20px 0px;
     border-bottom: 1px solid #eaeaea;
+    display: block;
+    float: left;
+    width: 100%;
 }
 
-.type-events ul {
+.type-events ul  {
     margin-top: 0;
     list-style: none;
-    padding-left: 30px;
+    padding-left: 0px;
+    display: block;
+    float: left;
 }
 
 .type-events .type-event-item.active {
@@ -33,13 +39,13 @@
     line-height: 14px;
 }
 
-.type-events .type-event-item {
+.type-events .type-event-item  {
     float: left;
     text-align: center;
-    width: 12%;
     opacity: .4;
     cursor: pointer;
     transition: opacity .3s;
+    margin: 0px 20px 20px;
 }
 
 .type-events .type-event-item img {
