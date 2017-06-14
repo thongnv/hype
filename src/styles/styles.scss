@@ -808,8 +808,11 @@ body, html {
     border: none;
     left: -133%;
     top: 2px;
+    box-shadow: none;
   }
-
+  .map-option button.btn-default:focus {
+    outline: none;
+  }
   .hype-nav > li img {
     margin-top: 15px;
   }
