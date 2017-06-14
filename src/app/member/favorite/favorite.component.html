@@ -5,6 +5,9 @@
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <div class="fav-component">
       <h3 class="favorites-title">Favorites</h3>
+      <div class="col-xs-12 alert-box">
+        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
+      </div>
       <div class="btn-group tab-control">
         <button class="btn btn-default" (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Event</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</button>

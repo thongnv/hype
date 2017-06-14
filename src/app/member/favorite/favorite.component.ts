@@ -13,6 +13,8 @@ const PAGE_SIZE = 10;
 })
 
 export class FavoriteComponent implements OnInit {
+  public msgContent: any;
+  public alertType: string;
   public userInfo: any;
   public favorite: any;
   public selectedFavoriteType: any;
@@ -27,7 +29,6 @@ export class FavoriteComponent implements OnInit {
     offset: 0, endOfList: false, loadingInProgress: false
   };
 
-  private slugName: any;
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -38,6 +39,7 @@ export class FavoriteComponent implements OnInit {
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = true;
     this.userInfo.places = [];
     this.userInfo.lists = [];
     this.userInfo.events = [];
@@ -67,15 +69,6 @@ export class FavoriteComponent implements OnInit {
     console.log('selectedFavoriteType: ', this.selectedFavoriteType);
   }
 
-  public onClickLike(item: any): void {
-    this.favorite.forEach((fav, index) => {
-      if (fav.id === item.id) {
-        this.favorite[index] = item;
-      }
-    });
-    console.log('onClickLike: ', item);
-  }
-
   public onClickDeleteEvent(item: any) {
     console.log('onClickDeleteEventList', item);
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
@@ -90,6 +83,11 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
+        this.alertType = 'success';
+        this.msgContent = response.message;
+      } else {
+        this.alertType = 'danger';
+        this.msgContent = response.message;
       }
     });
   }
@@ -108,6 +106,11 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
+        this.alertType = 'success';
+        this.msgContent = response.message;
+      } else {
+        this.alertType = 'danger';
+        this.msgContent = response.message;
       }
     });
   }
@@ -126,6 +129,11 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
+        this.alertType = 'success';
+        this.msgContent = response.message;
+      }else {
+        this.alertType = 'danger';
+        this.msgContent = response.message;
       }
     });
   }
@@ -212,7 +220,7 @@ export class FavoriteComponent implements OnInit {
               this.userInfo.lists.push(item);
             });
             this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
-          }else {
+          } else {
             this.setList.endOfList = true;
           }
         } else {

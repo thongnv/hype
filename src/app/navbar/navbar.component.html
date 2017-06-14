@@ -49,14 +49,12 @@
         <div class="user-option map-option right" ngbDropdown>
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             <i class="logo" fa [name]="'user-circle-o'" [size]=2></i>
-            {{userInfo.userName}}
+            {{this.appState.state.userInfo.firstName}}&nbsp;{{this.appState.state.userInfo.lastName}}
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
             <li [routerLink]="['/member']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
             </li>
-            <li>Action 2</li>
-            <li>Action 3</li>
           </ul>
         </div>
       </li>

@@ -9,6 +9,8 @@ import { MainService } from '../../services/main.service';
 })
 
 export class InterestComponent implements OnInit {
+  public msgContent: string;
+  public alertType: string;
 
   public userInfo: any;
   public interests: any[] = [];
@@ -24,10 +26,12 @@ export class InterestComponent implements OnInit {
     this.mainService.updateUserInterests(null, this.interests).then((resp) => {
       console.log('update: ', resp);
       if (resp.status === null) {
-        console.log('update fail: ');
+        this.alertType = 'danger';
+        this.msgContent = resp.message;
         this.getInterests(this.pageNumber);
       }else {
-        console.log('update success: ');
+        this.alertType = 'success';
+        this.msgContent = resp.message;
       }
     });
   }

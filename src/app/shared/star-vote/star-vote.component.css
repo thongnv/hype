@@ -19,8 +19,8 @@
     object-fit: contain;
 }
 .star-vote-list > li .star{
-    background: url('../../assets/img/icons/small_star.png') no-repeat center center;
+    background: url('../../../assets/img/icons/small_star.png') no-repeat center center;
 }
 .star-vote-list > li .star-selected{
-    background: url('../../assets/img/icons/small_star_selected.png') no-repeat center center;
+    background: url('../../../assets/img/icons/small_star_selected.png') no-repeat center center;
 }

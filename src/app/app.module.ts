@@ -77,7 +77,7 @@ import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-
 import { FollowingComponent } from './member/following/following.component';
 import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
 import { FollowItemComponent } from './member/follow-item/follow-item.component';
-import { BoostrapAlertComponent } from './member/boostrap-alert/boostrap-alert.component';
+import { BoostrapAlertComponent } from './shared/boostrap-alert/boostrap-alert.component';
 import { FavoritePipe } from './shared/favorite.pipe';
 import { FavoriteEventComponent } from './member/favorite-event/favorite-event.component';
 import { InterestComponent } from './member/interest/interest.component';
@@ -92,7 +92,7 @@ import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.c
 import { HomeService } from './services/home.service';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { NotificationComponent } from './navbar/notification/notification.component';
-import { StarVoteComponent } from './star-vote/star-vote.component';
+import { StarVoteComponent } from './shared/star-vote/star-vote.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { LoaderService } from './shared/loader/loader.service';
 import { ReviewComponent } from './company/company-detail/review.component';

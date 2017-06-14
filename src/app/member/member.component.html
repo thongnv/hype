@@ -4,15 +4,15 @@
   </div>
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <section *ngIf="userInfo" class="form-wrap">
-      <h3>Settings</h3>
+      <h3 class="col-xs-12 col-md-12 setting-title">Settings</h3>
       <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit($event)">
-        <div class="form-group">
-        <label for="checkbox">Do you want to receive email notifications from us.
-          <input id="checkbox" type="checkbox" formControlName="receiveEmail">
-        </label>
+        <div class="form-group col-xs-12 col-md-12">
+          <label for="checkbox">Do you want to receive email notifications from us.
+            <input id="checkbox" type="checkbox" formControlName="receiveEmail">
+          </label>
         </div>
-        <div class="form-actions">
+        <div class="form-actions col-xs-12 col-md-12">
           <button class="btn btn-primary setting-btn text-capitalize" type="submit">update</button>
         </div>
       </form>

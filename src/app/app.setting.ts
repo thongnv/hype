@@ -1,5 +1,6 @@
 let _ENV = 'product';
 let PAGE_SIZE = 10;
+let INTERVAL_NOTIFIATION = 1000;
 let API_ENDPOINT = '';
 if (_ENV === 'develop') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
@@ -44,4 +45,5 @@ export class AppSetting {
     version: 'v2.9'
   };
   public static PAGE_SIZE: number = PAGE_SIZE;
+  public static INTERVAL_NOTIFIATION: number = INTERVAL_NOTIFIATION;
 }

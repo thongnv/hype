@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     userName: '',
     firstName: '',
     lastName: '',
+    email: '',
     contactNumber: '',
     userAvatar: 'assets/img/avatar/demoavatar.png',
     followingNumber: 0,

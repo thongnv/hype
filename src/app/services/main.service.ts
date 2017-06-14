@@ -56,15 +56,12 @@ export class MainService {
     let csrfToken = this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    console.log('csrfToken: ', csrfToken);
-    console.log('options: ', options);
-    this._localStorageService.clearAll();
-    this._appState.set('userInfor', null);
     return new Promise((resolve, reject) => {
-      this._http.post(AppSetting.API_LOGOUT, options).subscribe(
+      this._http.post(AppSetting.API_LOGOUT, JSON.stringify({}), options).subscribe(
         (response) => {
           console.log('API_LOGOUT: ', response);
-
+          this._localStorageService.clearAll();
+          this._appState.set('userInfor', null);
           resolve(response);
         },
         (err) => {
@@ -298,10 +295,7 @@ export class MainService {
   }
 
   public isLoggedin(): boolean {
-    if (this._localStorageService.get('csrf_token')) {
-      return true;
-    }
-    return false;
+    return !!this._localStorageService.get('csrf_token');
   }
 
   public removeFavoritedEventList(slug: string): Promise<any> {

@@ -3,8 +3,6 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { type } from 'os';
-import { AppSetting } from '../../app.setting';
 
 const PAGE_SIZE = 10;
 
@@ -42,6 +40,7 @@ export class ProfilePublicComponent implements OnInit {
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
+    this.userInfo.showNav = false;
     this.userInfo.places = [];
     this.userInfo.lists = [];
     this.userInfo.events = [];
