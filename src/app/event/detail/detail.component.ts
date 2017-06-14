@@ -168,5 +168,4 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
   }
-
 }

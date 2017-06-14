@@ -173,7 +173,15 @@ p.avg-rating a {
   bottom: -22%;
   right: 4%;
 }
-
+.experience-top a.view-all-post-your-experience {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ec3d62;
+  position: absolute;
+  bottom: 8%;
+  right: 4%;
+}
 .experience-top a.write-a-lastest-reviews {
   font-size: 16px;
   line-height: 1.5;
@@ -202,7 +210,10 @@ p.avg-rating a {
 .information-experience div {
   display: inline-block;
 }
-
+.information-experience .rating-star {
+  position: relative;
+  bottom: 9px;
+}
 .experience-avatar {
   margin-right: 10px;
 }
@@ -531,17 +542,19 @@ article {
 }
 
 .company-info {
-  padding: 25px 40px 50px;
+  padding: 25px 40px;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
 .company-info p {
   font-size: 14px;
   font-weight: 300;
-  line-height: 1.43;
+  line-height: 1.8;
   text-align: left;
   color: #3b3b3b;
   margin-bottom: 22px;
+  clear: both;
+  min-height: 20px;
 }
 
 .company-info p a {
@@ -553,7 +566,22 @@ article {
   text-align: left;
   color: #3b3b3b;
   margin-bottom: 22px;
+  width: 0px;
 }
+
+.company-info > p > .info-value > .dropdown-toggle > i.fa-angle-down {
+  font-size: 22px;
+  margin-left: 10px;
+} 
+.company-info > p > .info-value > .dropdown-menu {
+  width: 70%;
+}
+.company-info > p > .info-value > .dropdown-menu > a {
+  padding: 10px 10px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
 
 .company-info p a:hover {
   text-decoration: none;

@@ -52,11 +52,18 @@
           <!-- company header end -->
           <!-- company info start -->
           <div class="company-info" *ngIf="mapReady">
-            <p><span class="info-label">Location</span> {{location.name}}</p>
-            <p><span class="info-label">Website</span>
+            <p>
+              <span class="info-label">Location</span> 
+              {{location.name}}
+            </p>
+            <p>
+              <span class="info-label">Website</span>
               <a [href]="website" target="_blank" title="Go to company's website">{{website}}</a>
             </p>
-            <p><span class="info-label">Phone No.</span> <a href="tel:{{phone}}" title="Call now">{{phone}}</a></p>
+            <p>
+              <span class="info-label">Phone No.</span> 
+              <a href="tel:{{phone}}" title="Call now">{{phone}}</a>
+            </p>
             <p>
               <span class="info-label">Opening Hours</span>
               <span class="info-value" ngbDropdown>
@@ -102,7 +109,7 @@
             <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
-          <a (click)="showReviewModal()" class="post-your-experience">Write a review</a>
+          <a (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
         </div>
         <company-review *ngFor="let review of reviews; let index = index" [review]="review">
         </company-review>
