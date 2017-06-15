@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit {
     public currentHighlightedMarker:number = 1;
     public alertType:any = '';
     public msgContent:any = '';
-    public alertType:string;
     public showAll:boolean = true;
     private params:any = {
         'page': 0,
