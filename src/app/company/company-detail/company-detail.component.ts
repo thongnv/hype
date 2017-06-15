@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   animations: [slideInOutAnimation],
 })
 export class CompanyDetailComponent implements Company, OnInit {
+  public id: string;
   public name: string;
   public description: string;
   public rating: number;
@@ -34,6 +35,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public mapReady: boolean = false;
   public descTruncated: boolean = true;
   public bookmarked: boolean = false;
+  public rated: boolean = false;
 
   constructor(
     private appState: AppState,
@@ -43,25 +45,21 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
-    // this.route.params.subscribe((e) => {
-    //   this.slugName = e.slug;
-    //   this.companyService.getCompanyDetail(this.slugName).subscribe(
-    //     (resp) => {
-    //       this.company = CompanyService.extractCompanyDetail(resp);
-    //       this.loadData(this.company);
-    //       this.initSlide(this.images);
-    //       this.mapReady = true;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       this.router.navigate(['PageNotFound']).then();
-    //     }
-    //   );
-    // });
-    this.company = CompanyService.getMockCompany();
-    this.loadData(this.company);
-    this.initSlide(this.images);
-    this.mapReady = true;
+    this.route.params.subscribe((e) => {
+      this.slugName = e.slug;
+      this.companyService.getCompanyDetail(this.slugName).subscribe(
+        (resp) => {
+          this.company = CompanyService.extractCompanyDetail(resp);
+          this.loadData(this.company);
+          this.initSlide(this.images);
+          this.mapReady = true;
+        },
+        (error) => {
+          console.log(error);
+          this.router.navigate(['PageNotFound']).then();
+        }
+      );
+    });
     let user = this.appState.state.userInfo;
     this.user = {name: 'Tom Cruise', avatar: user.userAvatar};
   }
@@ -84,24 +82,33 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.companyStatus = 'default';
   }
 
-  public updateReview(event) {
-    if (event === false) {
+  public postReview(data) {
+    if (data === false) {
       this.showForm = false;
     }
-    if (event.text) {
+    if (data.text) {
       let review: Experience = {
         id: 0,
         author: this.user,
-        rating: event.rating,
-        date: moment().unix(),
-        text: event.text,
-        images: extractImages(event.images),
+        rating: data.rating,
+        date: moment().unix() * 1000,
+        text: data.text,
+        images: data.images,
         comments: [],
         likeNumber: 0,
         liked: false
       };
-      this.reviews.unshift(review);
       this.showForm = false;
+      this.companyService.postReview(this.id, review).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.reviews.unshift(review);
+          this.rated = true;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 
@@ -114,12 +121,15 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   private loadData(data) {
+    this.id = data.id;
     this.images = data.images;
     this.website = data.website;
     this.reviews = data.reviews;
     this.name = data.name;
     this.description = data.description;
     this.rating = data.rating;
+    this.rated = data.rated;
+    this.bookmarked = data.bookmarked;
     this.phone = data.phone;
     this.openingHours = data.openingHours;
     this.location = data.location;
@@ -131,18 +141,4 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
   }
 
-}
-
-function extractImages(data) {
-  let images: Image[] = [];
-  for (let i of data) {
-    images.push({
-      url: i,
-      value: '',
-      filename: '',
-      filemime: '',
-      filesize: 0,
-    });
-  }
-  return images;
 }

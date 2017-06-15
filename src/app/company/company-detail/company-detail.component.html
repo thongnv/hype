@@ -1,5 +1,5 @@
 <article class="container">
-  <div class="">
+  <div  *ngIf="mapReady">
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -22,7 +22,7 @@
             <h3>{{name}}</h3>
             <div class="rating-star">
               <i *ngFor="let i of rating | myArray" fa [name]="'star'" [size]=1></i>
-              <i *ngFor="let i of 5 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
+              <i *ngFor="let i of 4.9 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
             </div>
             <div class="google-plus-point">
               <div class="rating-number">
@@ -40,8 +40,10 @@
             </p>
             <div class="company-description-wrap">
               <div *ngIf="descTruncated">
-                <div class="company-description" [innerHTML]="description | truncate:200"></div>
-                <div class="read-more" (click)="showMore()"><i class="fa fa-angle-down" title="Show more"></i></div>
+                <div class="company-description">{{description | truncate:200}}</div>
+                <div class="read-more" *ngIf="description.length>200" (click)="showMore()">
+                  <i class="fa fa-angle-down" title="Show more"></i>
+                </div>
               </div>
               <div *ngIf="!descTruncated">
                 <div class="company-description">{{description}}</div>
@@ -51,9 +53,9 @@
           </div>
           <!-- company header end -->
           <!-- company info start -->
-          <div class="company-info" *ngIf="mapReady">
+          <div class="company-info">
             <p>
-              <span class="info-label">Location</span> 
+              <span class="info-label">Location</span>
               {{location.name}}
             </p>
             <p>
@@ -61,12 +63,12 @@
               <a [href]="website" target="_blank" title="Go to company's website">{{website}}</a>
             </p>
             <p>
-              <span class="info-label">Phone No.</span> 
+              <span class="info-label">Phone No.</span>
               <a href="tel:{{phone}}" title="Call now">{{phone}}</a>
             </p>
             <p>
               <span class="info-label">Opening Hours</span>
-              <span class="info-value" ngbDropdown>
+              <span class="info-value" ngbDropdown *ngIf="openingHours.length">
                 <span ngbDropdownToggle>
                   <span [innerHTML]="openingHours[0]"></span>
                   <i aria-hidden="true" class="fa fa-angle-down"></i>
@@ -87,7 +89,7 @@
         <div class="reviews-wrap">
           <div class="experience-top">
             <h4 class="title-experiences-area">Latest Reviews</h4>
-            <a (click)="showReviewModal()" class="post-your-experience">Write a review</a>
+            <a *ngIf="!rated" (click)="showReviewModal()" class="post-your-experience">Write a review</a>
           </div>
           <div *ngIf="reviews">
             <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review">
@@ -116,10 +118,10 @@
       </div>
 
       <app-write-review [user]="user" [company]="company" [submitted]="showForm"
-                        (change)="updateReview($event)"></app-write-review>
+                        (change)="postReview($event)"></app-write-review>
 
     </div>
-    <div class="col-md-6 map-fix" *ngIf="mapReady">
+    <div class="col-md-6 map-fix">
       <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12">
         <sebm-google-map-marker [latitude]="location.lat"
                                 [longitude]="location.lng">

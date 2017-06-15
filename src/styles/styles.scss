@@ -44,7 +44,7 @@ body, html {
 }
 .text-ellipsis{
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: clip;
   white-space: nowrap;
 }
 .hype{
@@ -117,7 +117,7 @@ body, html {
   .icon-favorite{
     background: url("../assets/icon/icon-favorite.png") no-repeat center center;
   }
-  .icon-heart-selected{
+  .icon-sm:hover, .icon-heart-selected{
     background: url("../assets/icon/favorite-selected.png") no-repeat center center;
   }
   .icon-heart{
@@ -716,7 +716,7 @@ body, html {
     left: unset;
     width: 360px;
     top: 95%;
-    right: -33px;
+    right: -25px;
   }
   ul#notifications li:first-child {
     position: relative;
@@ -752,7 +752,7 @@ body, html {
     border-bottom: 12px solid #fff;
     position: absolute;
     top: -54%;
-    right: 13%;
+    right: 6%;
   }
   .navbar-nav > li.logo {
     margin-left: 40px;
@@ -768,6 +768,9 @@ body, html {
   li#site-name {
     font-size: xx-large;
     margin-left: 30px;
+  }
+  li#site-name a {
+    margin-top: 4px;
   }
   .hype-header {
     margin-bottom: 0;
@@ -796,14 +799,19 @@ body, html {
   .map-option input {
     margin-top: 8px;
     border-radius: 5px 5px;
-    border-top-right-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-    padding-right: 30px;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    padding-left: 30px;
   }
   .navbar-default .navbar-nav > li > a {
     color: #fff;
     font-size: 30px;
     font-family: ArialRoundedMTBold, sans-serif;
+  }
+  .navbar-default .navbar-nav > li > a:hover,
+  .navbar-default .navbar-nav > li > a:focus {
+    outline: none;
+    color: #fff;
   }
   header .nav > li {
     margin-left: 20px;
@@ -823,7 +831,7 @@ body, html {
     padding: 10px 10px;
     position: relative;
     border: none;
-    left: -133%;
+    left: 130%;
     top: 2px;
     box-shadow: none;
   }

@@ -22,7 +22,7 @@
         </label>
         <div class="list-img-wrap clearfix">
           <div *ngFor="let img of previewUrl" class="preview-wrap">
-            <img [src]="img"/>
+            <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
             <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
           </div>
         </div>

@@ -1,10 +1,15 @@
-.navbar-nav li#site-name a {
+/*.navbar-nav li#site-name a {
     font-size: 30px;
     font-weight: bold;
     text-align: left;
     color: #fff;
     padding-top: 13px;
 }
+.navbar-nav li#site-name a:hover, 
+.navbar-nav li#site-name a:focus {
+    outline: none;
+    color: #fff;
+}*/
 .map-option a img.img-circle {
     margin-top: 10px;
     margin-right: 8px;
@@ -14,7 +19,7 @@
     font-size: 16px;
     text-align: left;
     color: #fff;
-    max-width: 200px;
+    max-width: 80px;
     display: inline-block;
     line-height: 50px;
     float: left;
@@ -27,16 +32,15 @@
     text-align: left;
     color: #fff;
 }
-.map-option .dropdown a i.fa-angle-down {
-    color: #fff;
-    margin-left: 6px;
-    font-size: 21px;
-}
+
 .map-option form .input-group .input-group-btn button {
 	z-index: 999;
 }
 .map-option form .input-group input:focus {
 	border: none;
+}
+.map-option img.icon-down-left-navbar {
+    margin-left: 10px;
 }
 
 .notification-area  {
@@ -47,6 +51,10 @@
 }
 .add-event-button {
     margin-right: 10px;
+}
+.add-event-button .add-eventbtn {
+    margin: 0px 8px;
+    cursor: pointer;
 }
 .add-event-button .add-eventbtn:focus {
     outline: none;
