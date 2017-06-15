@@ -116,7 +116,7 @@ export class EventService {
       return <Experience> res.json();
     })
     .catch((error: any) => {
-      return Observable.throw(new Error(error.json()));
+      return Observable.throw(new Error(error));
     });
   }
 

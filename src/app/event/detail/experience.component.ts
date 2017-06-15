@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
@@ -39,7 +40,7 @@ import { EventService } from '../../services/event.service';
               </a>
               <span class="overlay"></span>
             </span>
-            <img class="list-img" [src]="img.thumb" (click)="OpenImageModel(img.img,thumbImages)"
+            <img class="list-img" [src]="sanitizer.bypassSecurityTrustUrl(img.thumb)" (click)="OpenImageModel(img.img,thumbImages)"
                  alt='Image {{i}}' width="100" height="100"/>
           </div>
         </li>
@@ -130,7 +131,8 @@ export class ExperienceComponent implements Experience, OnInit {
   public commentIndex = 2;
 
   constructor(private eventService: EventService,
-              private event: EventDetailComponent) {
+              private event: EventDetailComponent,
+              public sanitizer: DomSanitizer) {
   }
 
   public ngOnInit() {

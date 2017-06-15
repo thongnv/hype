@@ -112,9 +112,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.experienceForm.reset();
           this.userRated = true;
           this.rating = resp.average_rating;
+        },
+        (error) => {
+          console.log(error);
+          this.experiences.push(experience);
         }
       );
-      this.experiences.push(experience);
     }
   }
 
