@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-profile-edit',
@@ -27,7 +28,7 @@ export class ProfileEditComponent implements OnInit {
       Validators.required,
       Validators.minLength(10),
       Validators.maxLength(30),
-      Validators.pattern(/^[+]*([0-9]*)$/)
+      Validators.pattern(/^[+]*([0-9][-]*){10,30}$/)
     ])],
     country: [''],
   });
@@ -39,7 +40,8 @@ export class ProfileEditComponent implements OnInit {
   constructor(public fb: FormBuilder,
               private appState: AppState,
               private countryPickerService: CountryPickerService,
-              private mainService: MainService, private route: ActivatedRoute) {
+              private mainService: MainService, private route: ActivatedRoute,
+              private _localStorageService: LocalStorageService) {
     this.countryPickerService.getCountries().subscribe((countries) => {
 
       let defaultCountry = <ICountry> {

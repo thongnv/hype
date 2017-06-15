@@ -41,7 +41,8 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.loginData = JSON.parse(<string> this.localStorageService.get('loginData'));
+    this.loginData = this.localStorageService.get('loginData') ?
+      JSON.parse(<string> this.localStorageService.get('loginData')) : null;
     console.log('local storage: ', this.loginData);
     this.appState.set('loginData', this.loginData);
     this.userInfo = this.appState.state.userInfo;
