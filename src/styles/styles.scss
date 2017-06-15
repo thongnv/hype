@@ -44,7 +44,7 @@ body, html {
 }
 .text-ellipsis{
   overflow: hidden;
-  text-overflow: clip;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 .hype{
@@ -863,12 +863,11 @@ body, html {
     height: 18px;
     background-color: white;
     text-align: center;
-    color: white;
     border: none;
-    font-size: small;
-    width: auto;
-    display: block;
-    padding: 11px 2px 7px 7px;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #ec3d62;
   }
   #count-notif b {
     position: relative;

@@ -18,15 +18,16 @@ export class ProfileEditComponent implements OnInit {
   public profileForm = this.fb.group({
     firstName: ['', Validators.compose([
       Validators.required,
-      Validators.maxLength(31)
+      Validators.maxLength(30)
       ])],
     lastName: ['', Validators.compose([
-      Validators.maxLength(31)
+      Validators.maxLength(30)
     ])],
     contactNumber: ['', Validators.compose([
-      Validators.required, Validators.minLength(9),
-      Validators.maxLength(31),
-      Validators.pattern(/(^\+[0-9])?([0-9])/)
+      Validators.required,
+      Validators.minLength(10),
+      Validators.maxLength(30),
+      Validators.pattern(/^[+]*([0-9]*)$/)
     ])],
     country: [''],
   });

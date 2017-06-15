@@ -9,11 +9,9 @@ export class BoostrapAlertComponent implements OnInit {
   @Input('type') public type: string;
   @Input('content') public content: string;
 
-  public classAlert: string = 'alert ';
   public headerContent;
 
   public ngOnInit() {
-    this.classAlert += (this.type !== '') ? 'alert-' + this.type : 'alert-danger';
     switch (this.type.toLowerCase()) {
       case 'success':
         this.headerContent = 'Success';

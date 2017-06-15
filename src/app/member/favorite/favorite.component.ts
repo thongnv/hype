@@ -133,7 +133,7 @@ export class FavoriteComponent implements OnInit {
         });
         this.alertType = 'success';
         this.msgContent = response.message;
-      }else {
+      } else {
         this.alertType = 'danger';
         this.msgContent = response.message;
       }
@@ -243,10 +243,10 @@ export class FavoriteComponent implements OnInit {
       this.setEvent.loadingInProgress = true;
       this.mainService.getUserEvent(slugName, page).then((response) => {
         console.log('====> getEvent response: ', response);
-        if (response.length > 0) {
-          response.forEach((item) => {
-            this.setEvent.offset++;
-            this.userInfo.events.push(item);
+        if (this.setEvent.offset < response.total) {
+          response.data.forEach((item) => {
+              this.setEvent.offset++;
+              this.userInfo.events.push(item);
           });
           this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
         } else {

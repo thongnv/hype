@@ -239,8 +239,8 @@ export class ProfilePublicComponent implements OnInit {
       this.setEvent.loadingInProgress = true;
       this.mainService.getUserEvent(slugName, page).then((response) => {
         console.log('====> getEvent response: ', response);
-        if (response.length > 0) {
-          response.forEach((item) => {
+        if (this.setEvent.offset < response.total) {
+          response.data.forEach((item) => {
             this.setEvent.offset++;
             this.userInfo.events.push(item);
           });

@@ -274,7 +274,7 @@ export class MainService {
 
     return this._http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
       .toPromise()
-      .then((resp) => resp.json().data)
+      .then((resp) => resp.json())
       .catch(this.handleError);
   }
 
