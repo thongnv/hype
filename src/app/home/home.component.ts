@@ -239,7 +239,6 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-
     private getTrandingCategories() {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
@@ -263,7 +262,6 @@ export class HomeComponent implements OnInit {
         console.log(e);
     }
 
-
     public onChangePrice(value) {
         this.showMap = false;
         this.params.price = this.priceRange.join(',');
@@ -280,7 +278,15 @@ export class HomeComponent implements OnInit {
 
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-          this.eventItem.loadMore();
+          console.log('end, params: ', this.params);
+          this.params.page += 1;
+          this.homeService.getEvents(this.params)
+            .map(resp => resp.json())
+            .subscribe(result => {
+              this.listItems = this.listItems.concat(result.data);
+              this.loaderService.hide();
+              this.loadMap();
+            });
         }
 
         if (event.target.children[0].children.length > 1) {
@@ -331,7 +337,7 @@ export class HomeComponent implements OnInit {
                     draggable: true
                 });
                 let searchCenter = mapCenter.getPosition();
-                for (var i = 0; i < this.listItems.length; i++) {
+                for (let i = 0; i < this.listItems.length; i++) {
                     let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
                     let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
 

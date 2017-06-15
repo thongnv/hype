@@ -1,4 +1,4 @@
-<div *ngFor="let item of events | slice:0:currentNumberItems; let i = index"
+<div *ngFor="let item of events; let i = index"
      [ngStyle]="{'transition': 'ease-in 15s'}"
      class="wrap-each-items"
      [class.article]="item.type=='article'"
