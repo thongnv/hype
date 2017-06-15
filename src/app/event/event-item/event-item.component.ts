@@ -14,4 +14,17 @@ export class EventItemComponent {
   public onLikeEmit(item: any) {
     this.onClickLike.emit(item);
   }
+
+  // Properties
+  public itemsPerPage = 5;
+  public currentNumberItems = this.itemsPerPage;
+  public showEndOfList = false;
+
+ // Methods
+  public loadMore() {
+    this.currentNumberItems += this.itemsPerPage;
+    if (this.currentNumberItems >= this.events.length) {
+      this.showEndOfList = true;
+    }
+  }
 }

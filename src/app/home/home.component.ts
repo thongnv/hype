@@ -1,20 +1,30 @@
-import {
-    Component,
-    OnInit
-} from '@angular/core';
-import { MainService } from '../services/main.service';
-import { EventType } from '../app.interface';
-import {HomeService} from "../services/home.service";
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-const MARKER_ICON = '/assets/icon/icon_pointer.png';
+// core
+import {Component, OnInit, ViewChild} from '@angular/core';
+import { Router } from '@angular/router';
+
+// 3rd libs
 import * as moment from 'moment/moment';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {any} from "codelyzer/util/function";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
-import {LoaderService} from "../shared/loader/loader.service";
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
-import { Router } from '@angular/router';
+
+// services
+import { MainService } from '../services/main.service';
+import {HomeService} from "../services/home.service";
+import {LoaderService} from "../shared/loader/loader.service";
+
+// models
+import { EventType } from '../app.interface';
+
+// components
+import {EventItemComponent} from '../event/event-item/event-item.component';
+
+// assets
+const MARKER_ICON = '/assets/icon/icon_pointer.png';
 const MARKER_ICON_SELECTED = '/assets/icon/icon_pointer_selected.png';
+
 
 const now = new Date();
 declare let google:any;
@@ -25,6 +35,9 @@ declare let google:any;
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    @ViewChild(EventItemComponent)
+    private eventItem: EventItemComponent;
+
     // Set our default values
     public localState = {value: ''};
     public eventFilter:any[] = [];
@@ -51,6 +64,7 @@ export class HomeComponent implements OnInit {
     public showDate:boolean = false;
     public msgContent:any = '';
     public showAll:boolean = true;
+
     private params:any = {
         'page': 0,
         'limit': 20,
@@ -64,7 +78,7 @@ export class HomeComponent implements OnInit {
         'lng': this.lng,
         'radius': this.currentRadius,
         'price': ''
-    }
+    };
     private userProfile:any;
     public drawCategories:any[];
 
@@ -263,9 +277,12 @@ export class HomeComponent implements OnInit {
         let baseHeight = event.target.clientHeight;
         let realScrollTop = event.target.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
-        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
 
+        // determine just scrolled to end
+        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
+          this.eventItem.loadMore();
         }
+
         if (event.target.children[0].children.length > 1) {
             for (let i = 0; i < event.target.children[0].children.length; i++) {
                 let currentClientH = event.target.children[0].children[i].clientHeight;
