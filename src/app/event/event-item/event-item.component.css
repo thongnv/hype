@@ -34,7 +34,7 @@
     margin-right: 16px;
     position: relative;
     border-radius: 4px;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .list-item-title {

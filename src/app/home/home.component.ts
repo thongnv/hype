@@ -64,10 +64,10 @@ export class HomeComponent implements OnInit {
     public showDate:boolean = false;
     public msgContent:any = '';
     public showAll:boolean = true;
-
+    private total:any;
     private params:any = {
         'page': 0,
-        'limit': 20,
+        'limit': 10,
         'filter': 'all',
         'order': 'top 100',
         'cate': '',
@@ -214,6 +214,7 @@ export class HomeComponent implements OnInit {
         console.log(params);
         this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
             this.listItems = response.data;
+            this.total = response.total;
             this.loaderService.hide();
             this.loadMap();
         });
@@ -283,13 +284,17 @@ export class HomeComponent implements OnInit {
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
             this.params.page += 1;
-            this.homeService.getEvents(this.params)
-                .map(resp => resp.json())
-                .subscribe(result => {
-                    this.listItems = this.listItems.concat(result.data);
-                    this.loaderService.hide();
-                    this.loadMap();
-                });
+            this.loaderService.show();
+            if (this.listItems.length <= this.total) {
+                this.homeService.getEvents(this.params)
+                    .map(resp => resp.json())
+                    .subscribe(result => {
+                        console.log(result);
+                        this.listItems = this.listItems.concat(result.data);
+                        this.loaderService.hide();
+                        this.loadMap();
+                    });
+            }
         }
 
         if (event.target.children[0].children.length > 1) {
@@ -348,17 +353,17 @@ export class HomeComponent implements OnInit {
                         position: new google.maps.LatLng(latitude, longitude),
                         draggable: true
                     });
-                    let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
-                    if (parseInt(egeometry) < this.currentRadius) {
-                        this.events.push(this.listItems[i]);
-                        this.markers.push({
-                            lat: latitude,
-                            lng: longitude,
-                            label: this.listItems[i].title,
-                            opacity: 0.6,
-                            isOpenInfo: false
-                        });
-                    }
+                    //let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
+                    //if (parseInt(egeometry) < this.currentRadius) {
+                    this.events.push(this.listItems[i]);
+                    this.markers.push({
+                        lat: latitude,
+                        lng: longitude,
+                        label: this.listItems[i].title,
+                        opacity: 0.6,
+                        isOpenInfo: false
+                    });
+                    //}
                 }
 
                 this.loaderService.hide();
