@@ -65,8 +65,18 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public toggleBookmark() {
-    this.bookmarked = !this.bookmarked;
-  }
+    let bookmarked = !this.bookmarked;
+    this.companyService.toggleBookmark(this.id).subscribe(
+      (resp) => {
+        console.log(resp);
+        this.bookmarked = bookmarked;
+      },
+      (error) => {
+        console.log(error);
+        // this.router.navigate(['500'], {skipLocationChange: true}).then();
+      }
+    );
+  };
 
   public viewReviews() {
     this.commentPosition = 'in';

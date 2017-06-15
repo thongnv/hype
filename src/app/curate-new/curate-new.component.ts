@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../shared/loader/loader.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-curate-new',
@@ -41,7 +42,8 @@ export class CurateNewComponent implements OnInit {
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
               private loaderService: LoaderService,
-              private router: Router) {
+              private router: Router,
+              public sanitizer: DomSanitizer) {
     this.onAddPlace();
   }
 
