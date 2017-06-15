@@ -81,14 +81,17 @@ export class CurateDetailComponent implements OnInit {
       }
     }
   }
-  public markerClick(markerId, horizontal) {
-    // scrollTo(
-    //   '#place-' + markerId,
-    //   '#place-scrollable',
-    //   horizontal,
-    //   0
-    // );
+
+  public markerClick(markerId) {
+    this.currentHighlightedMarker = markerId;
+    this.highlightMarker(markerId);
+
+    const element = document.querySelector('#place-' + markerId);
+    element.scrollIntoView({block: 'end',  behavior: 'smooth'});
+
+    // TODO: fix highlight right marker and make scroll smoothly
   }
+
   private highlightMarker(markerId: number): void {
     if (this.markers[markerId]) {
       this.markers.forEach((marker, index) => {
