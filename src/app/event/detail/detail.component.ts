@@ -9,6 +9,7 @@ import { EventService } from '../../services/event.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail',
@@ -58,7 +59,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     public formBuilder: FormBuilder,
     public rateConfig: NgbRatingConfig,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public sanitizer: DomSanitizer
   ) {
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
