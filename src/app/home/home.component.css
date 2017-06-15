@@ -128,15 +128,16 @@
 }
 
 .btn-default {
-    color: #3b3b3b;
-    font-size: 13px;
-    border-radius: 4px;
-    background-color: #f6f6f6;
-    box-shadow: 1px 1px 3px 0 #d8d8d8;
-    border: solid 1px #d8d8d8;
-    outline: none;
     width: 90px;
     height: 32px;
+    background: #f6f6f6;
+    color: #000000;
+    border-radius: 4px;
+    outline: none;
+    line-height: 16px;
+    border: none;
+    z-index: 5;
+    opacity: .5;
 }
 
 #filters {
@@ -150,6 +151,10 @@
     background-color: #2a6be1;
     box-shadow: 0 2px 3px 0 rgba(148, 148, 148, 0.5);
     outline: none;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius:4px !important;
 }
 
 .list-item {

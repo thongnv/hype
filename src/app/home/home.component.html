@@ -17,15 +17,15 @@
                 </ul>
             </div>
             <div class="filter-events clearfix">
-                <div class="btn-group">
+                <div class="btn-group tab-control">
                     <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
-                            class="btn btn-default text-capitalize" [class.active]="filter===selectedEventFilter">
+                            class="btn btn-default tab-control text-capitalize" [class.active]="filter===selectedEventFilter">
                         {{filter.name}}
                     </button>
                 </div>
-                <div class="btn-group" id="filters">
+                <div class="btn-group tab-control" id="filters">
                     <button *ngFor="let order of eventOrder" (click)="onSelectEventOrder(order)" type="button"
-                            class="btn btn-default text-capitalize" [class.active]="order===selectedEventOrder">
+                            class="btn btn-default  text-capitalize" [class.active]="order===selectedEventOrder">
                         {{order.name}}
                     </button>
                 </div>
