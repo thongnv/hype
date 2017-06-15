@@ -30,7 +30,7 @@
           </div>
         </form>
       </li>
-      <li class="pull-right nav-item add-event-button">
+      <li *ngIf="loginData" class="pull-right nav-item add-event-button">
         <div class="add-eventbtn" [routerLink]="['/curate/new']">
           <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
         </div>
@@ -53,12 +53,12 @@
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
-            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting
-            </li>
+            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting</li>
+            <li [routerLink]="['/logout']">Logout</li>
           </ul>
         </div>
         <div *ngIf="!loginData">
-          <span [routerLink]="['/login']" class="btn btn-success btn-sm">Login</span>
+          <span [routerLink]="['/login']" class="btn btn-success btn-login">Login</span>
         </div>
       </li>
     </ul>

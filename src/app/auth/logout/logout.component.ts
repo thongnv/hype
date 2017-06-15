@@ -25,7 +25,7 @@ export class LogoutComponent implements OnInit {
         if (resp.ok) {
           this.localStorageService.clearAll();
           this.appState.set('userInfo', null);
-          this.router.navigate(['/home']);
+          window.location.href = '/';
         }
       }
     );

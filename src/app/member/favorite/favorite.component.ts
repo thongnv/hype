@@ -28,14 +28,16 @@ export class FavoriteComponent implements OnInit {
   public setEvent: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
-
+  public sub: any;
+  public slugName: any;
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
 
   public constructor(private appState: AppState,
                      private mainService: MainService,
-                     private localStorageService: LocalStorageService) {
+                     private route: ActivatedRoute,
+                     private localStorageService: LocalStorageService,) {
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
@@ -159,9 +161,13 @@ export class FavoriteComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.canDelete = !!this.localStorageService.get('slug');
-    this.getUserProfile(null);
     this.getEvent(null, this.eventPageNum);
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params['slug'];
+      console.log('USER: ', this.slugName);
+      this.canDelete = this.localStorageService.get('slug') === this.slugName;
+      this.getUserProfile(this.slugName);
+    });
   }
 
   private getUserProfile(slugName?: string): void {
