@@ -3,6 +3,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// 3rd
+import { Ng2ImgToolsModule } from 'ng2-img-tools';
+
 import {
   NgModule, ApplicationRef
 } from '@angular/core';
@@ -204,6 +207,7 @@ type StoreType = {
     Angular2FontawesomeModule,
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
+    Ng2ImgToolsModule,
     MomentModule,
     TruncateModule,
     TinymceModule.withConfig({}),

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+
+// 3rds
+import { Ng2ImgToolsService } from 'ng2-img-tools';
+
 import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
@@ -47,6 +51,7 @@ export class ShareEventComponent implements OnInit {
               public appState: AppState,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
+              private ng2ImgToolsService: Ng2ImgToolsService,
               private router: Router) {
     this.loaderService.show();
     this.eventService.getCategoryEvent().subscribe(
@@ -82,16 +87,24 @@ export class ShareEventComponent implements OnInit {
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
-          let img = {
-            url: URL.createObjectURL(event.target.files[i]),
-            value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-            filename: event.target.files[i].name,
-            filemime: event.target.files[i].type
-          };
-          this.previewUrl.push(img);
-          if (this.previewUrl.length >= 4) {
-            this.addImage = false;
-          }
+          let imageFile = event.target.files[i];
+
+          // resize image
+          this.ng2ImgToolsService.resizeExactFill([imageFile], 481, 329)
+            .subscribe(resizedImage => {
+              let img = {
+                url: URL.createObjectURL(resizedImage),
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type
+              };
+
+              this.previewUrl.push(img);
+
+              if (this.previewUrl.length >= 4) {
+                this.addImage = false;
+              }
+            });
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }
