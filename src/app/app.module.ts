@@ -101,7 +101,6 @@ import { LoaderComponent } from './shared/loader/loader.component';
 import { LoaderService } from './shared/loader/loader.service';
 import { ReviewComponent } from './company/company-detail/review.component';
 import { Html2TextPipe } from './shared/html-2-text.pipe';
-import { InstagramImageComponent } from './shared/instagram-image/instagram-image.component';
 import { FacebookModule } from 'ngx-facebook';
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
@@ -178,7 +177,6 @@ type StoreType = {
     StarVoteComponent,
     LoaderComponent,
     Html2TextPipe,
-    InstagramImageComponent,
     AuthComponent,
     LogoutComponent
   ],
