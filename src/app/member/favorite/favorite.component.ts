@@ -37,7 +37,7 @@ export class FavoriteComponent implements OnInit {
   public constructor(private appState: AppState,
                      private mainService: MainService,
                      private route: ActivatedRoute,
-                     private localStorageService: LocalStorageService,) {
+                     private localStorageService: LocalStorageService) {
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
@@ -245,8 +245,8 @@ export class FavoriteComponent implements OnInit {
         console.log('====> getEvent response: ', response);
         if (this.setEvent.offset < response.total) {
           response.data.forEach((item) => {
-              this.setEvent.offset++;
-              this.userInfo.events.push(item);
+            this.setEvent.offset++;
+            this.userInfo.events.push(item);
           });
           this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
         } else {
