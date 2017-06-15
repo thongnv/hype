@@ -101,6 +101,21 @@ export class CompanyService {
       });
   }
 
+  public toggleBookmark(placeId: string): Observable<any> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    let data = {ids_no: placeId};
+    return this._http.post(
+      'http://hypeweb.iypuat.com:5656/api/v1/favorite/place',
+      JSON.stringify(data), options
+    ).map((res: Response) => {
+      return <Experience> res.json();
+    })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
   public postReview(placeId: string, review: Experience): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
@@ -117,7 +132,7 @@ export class CompanyService {
         return <Experience> res.json();
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 

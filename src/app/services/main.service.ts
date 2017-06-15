@@ -340,9 +340,9 @@ export class MainService {
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
     if (slug) {
-      myParams.set('slug', '/user/' + slug);
+      myParams.set('slug', slug);
     }else {
-      myParams.set('slug', '/user/' + slug);
+      myParams.set('slug', slug);
     }
     let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
@@ -358,15 +358,6 @@ export class MainService {
     let options = new RequestOptions({headers, withCredentials: true});
 
     return this._http.post(AppSetting.API_FAVORITE_PLACE, JSON.stringify({ids_no: idsNo}), options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(this.handleError);
-  }
-
-  public getInstagramImage(src: string): Promise<any> {
-    let headers = new Headers({'Content-Type': 'application/json', 'crossDomain': true});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get('https://www.instagram.com/explore/tags/sciencecentresg/?__a=1', options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

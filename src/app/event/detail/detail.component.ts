@@ -109,12 +109,15 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       this.eventService.postExperience(eventSlugName, experience).subscribe(
         (resp) => {
           console.log(resp);
+          this.experiences.push(experience);
           this.experienceForm.reset();
           this.userRated = true;
           this.rating = resp.average_rating;
+        },
+        (error) => {
+          console.log(error);
         }
       );
-      this.experiences.push(experience);
     }
   }
 

@@ -3,6 +3,10 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
 import { LoaderService } from '../shared/loader/loader.service';
+import { DomSanitizer } from '@angular/platform-browser';
+
+// 3rds
+import { Ng2ImgToolsService } from 'ng2-img-tools';
 
 @Component({
   selector: 'app-curate-new',
@@ -40,8 +44,10 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
+              public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private router: Router) {
+              private router: Router,
+              private ng2ImgToolsService: Ng2ImgToolsService,) {
     this.onAddPlace();
   }
 
@@ -81,16 +87,24 @@ export class CurateNewComponent implements OnInit {
       for (let i = 0; i < event.target.files.length && i < 5; i++) {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
-          let img = {
-            url: URL.createObjectURL(event.target.files[i]),
-            value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-            filename: event.target.files[i].name,
-            filemime: event.target.files[i].type
-          };
-          this.previewUrl.push(img);
-          if (this.previewUrl.length >= 5) {
-            this.addImage = false;
-          }
+          let imageFile = event.target.files[i];
+
+          // resize image
+          this.ng2ImgToolsService.resizeExactFill([imageFile], 680, 360)
+            .subscribe(resizedImage => {
+              let img = {
+                url: URL.createObjectURL(resizedImage),
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type
+              };
+
+              this.previewUrl.push(img);
+
+              if (this.previewUrl.length >= 5) {
+                this.addImage = false;
+              }
+            });
         };
         reader[i].readAsDataURL(event.target.files[i]);
       }

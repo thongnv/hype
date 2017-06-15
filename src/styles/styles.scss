@@ -47,6 +47,11 @@ body, html {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.text-clip {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
 .hype{
   .btn-login{
     width: 100px;
@@ -799,9 +804,7 @@ body, html {
   }
   .map-option input {
     margin-top: 8px;
-    border-radius: 5px 5px;
-    border-top-left-radius: 5px !important;
-    border-bottom-left-radius: 5px !important;
+    border-radius: 5px !important;
     padding-left: 30px;
   }
   .navbar-default .navbar-nav > li > a {
@@ -832,8 +835,8 @@ body, html {
     padding: 10px 10px;
     position: relative;
     border: none;
-    left: 130%;
-    top: 2px;
+    left: 25px;
+    bottom: 210px;
     box-shadow: none;
   }
   .map-option button.btn-default:focus {
@@ -863,6 +866,7 @@ body, html {
     height: 18px;
     background-color: white;
     text-align: center;
+    color: white;
     border: none;
     font-size: 12px;
     line-height: 18px;
