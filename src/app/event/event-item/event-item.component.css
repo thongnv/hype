@@ -94,13 +94,12 @@
 }
 
 .mentioned-item-wrap img {
-    width: 28px;
-    height: 28px;
+    width: 16px;
+    height: 16px;
 }
 
 .mentioned {
     float: left;
-    text-transform: capitalize;
     margin-top: 0;
     font-size: 14px;
     width: 100px;
@@ -121,7 +120,7 @@ ul.mentioned-item {
     background: transparent;
     float: left;
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
     border: 1px solid #ccc;
     padding: 5px;
     border-radius: 7px;

@@ -128,8 +128,6 @@
 }
 
 .btn-default {
-    width: 80px;
-    height: 30px;
     color: #3b3b3b;
     font-size: 13px;
     border-radius: 4px;
@@ -137,6 +135,8 @@
     box-shadow: 1px 1px 3px 0 #d8d8d8;
     border: solid 1px #d8d8d8;
     outline: none;
+    width: 90px;
+    height: 32px;
 }
 
 #filters {
