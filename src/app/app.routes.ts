@@ -33,6 +33,7 @@ export const ROUTES: Routes = [
   {path: 'mode/play', component: ModeComponent},
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
+  {path: 'member/favorite', component: FavoriteComponent},
   {path: ':slug', component: ProfilePublicComponent},
   {path: ':slug/following', component: FollowingComponent},
   {path: ':slug/follower', component: FollowerComponent},

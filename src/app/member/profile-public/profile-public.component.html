@@ -1,12 +1,12 @@
 <div class="setting-wrap table-wrap">
   <div class="col-lg-3 col-sm-4 col-xs-12 col-left table-cell">
-    <app-member-navigation [data]="userInfo" [slugName]="slugName" [userFollow] = "userFollow"></app-member-navigation>
+    <app-member-navigation *ngIf="userInfo" [data]="userInfo" [slugName]="slugName" [userFollow] = "userFollow" [showFollow]="true"></app-member-navigation>
   </div>
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <div class="fav-component">
       <h3 class="favorites-title">Favorites</h3>
       <div class="btn-group tab-control">
-        <button class="btn btn-default" (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Event</button>
+        <button class="btn btn-default" (click)="onSelectFavoriteType('event')" [class.active]="selectedFavoriteType === 'event'">Events</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</button>
       </div>

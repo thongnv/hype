@@ -49,10 +49,11 @@ export class AuthComponent implements OnInit {
     this.fb.login(loginOptions)
       .then((res: LoginResponse) => {
         console.log('Logged in FB: ', res);
-        this.mainService.login(res.authResponse.accessToken).then((respone) => {
+        this.mainService.login(res.authResponse.accessToken).then((respone: any) => {
           this.localStorageService.set('loginData', JSON.stringify(respone));
           console.log('login-respone: ', respone);
-          this.router.navigate(['/' + respone.current_user.slug]);
+          // this.router.navigate(['']);
+          window.location.href = '/';
         });
       })
       .catch(this.handleError);

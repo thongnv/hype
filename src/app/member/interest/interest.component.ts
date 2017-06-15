@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 
@@ -11,12 +12,15 @@ import { MainService } from '../../services/main.service';
 export class InterestComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
-
   public userInfo: any;
   public interests: any[] = [];
   public pageNumber: number = 0;
+  public sub: any;
+  public slugName: any;
 
-  constructor(private appState: AppState, private mainService: MainService) {
+  constructor(private route: ActivatedRoute,
+              private appState: AppState,
+              private mainService: MainService) {
     this.userInfo = this.appState.state.userInfo;
     this.userInfo.showNav = true;
   }
@@ -28,7 +32,7 @@ export class InterestComponent implements OnInit {
       if (resp.status === null) {
         this.alertType = 'danger';
         this.msgContent = resp.message;
-        this.getInterests(this.pageNumber);
+        this.getInterests(this.slugName, this.pageNumber);
       }else {
         this.alertType = 'success';
         this.msgContent = resp.message;
@@ -36,8 +40,8 @@ export class InterestComponent implements OnInit {
     });
   }
 
-  public getInterests(page: number): void {
-    this.mainService.getUserInterest(null, page).then((response) => {
+  public getInterests(slugName: string, page: number): void {
+    this.mainService.getUserInterest(slugName, page).then((response) => {
       if (response.length > 0) {
         // this.pageNumber++;
         response.forEach((item) => {
@@ -49,12 +53,16 @@ export class InterestComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.getInterests(this.pageNumber);
-    this.getUserProfile();
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params['slug'];
+      console.log('USER: ', this.slugName);
+      this.getUserProfile(this.slugName);
+      this.getInterests(this.slugName, this.pageNumber);
+    });
   }
 
-  private getUserProfile(): void {
-    this.mainService.getUserProfile().then((response) => {
+  private getUserProfile(slugName: string): void {
+    this.mainService.getUserProfile(slugName).then((response) => {
       this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
       this.userInfo.firstName = response.field_first_name;
       this.userInfo.lastName = response.field_last_name;
