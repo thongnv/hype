@@ -47,7 +47,8 @@ export class HomeComponent implements OnInit {
     public isOpen:boolean = false;
     public currentHighlightedMarker:number = 1;
     public alertType:any = '';
-
+    public showPrice:boolean = false;
+    public showDate:boolean = false;
     public msgContent:any = '';
     public showAll:boolean = true;
     private params:any = {
@@ -228,6 +229,7 @@ export class HomeComponent implements OnInit {
     private getTrandingCategories() {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
+            console.log(resp.data);
             if (resp.data.length >= 8) {
                 this.categories = resp.data.slice(0, 7);
             }
@@ -341,25 +343,17 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    private
-    resetData() {
+    private resetData() {
         this.markers = [];
         this.events = [];
     }
 
-    public
-    showPrice:boolean = false;
-    public
-    showDate:boolean = false;
-
-    public
-    showRagePrice() {
+    public showRagePrice() {
         this.showPrice = true;
         this.showDate = false;
     }
 
-    public
-    showWhen() {
+    public showWhen() {
         this.showDate = true;
         this.showPrice = false;
     }
