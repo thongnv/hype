@@ -14,6 +14,7 @@ export class FollowingComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
   public followingPage: number = 0;
+  public userFollow: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
@@ -106,6 +107,7 @@ export class FollowingComponent implements OnInit {
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = false;
       this.userInfo.uid = response.uid;
+      this.userFollow = response.user_follow;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
     });

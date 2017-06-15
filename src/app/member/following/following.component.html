@@ -1,6 +1,6 @@
 <div class="setting-wrap table-wrap">
   <div class="col-lg-3 col-sm-4 col-xs-12 col-left table-cell">
-    <app-member-navigation *ngIf="userInfo" [data]="userInfo" [slugName]="slugName" [showFollow]="true"></app-member-navigation>
+    <app-member-navigation *ngIf="userInfo" [data]="userInfo" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true"></app-member-navigation>
   </div>
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <section *ngIf="userInfo.userFollowing" class="follow-list-wrap">

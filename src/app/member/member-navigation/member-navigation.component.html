@@ -1,12 +1,14 @@
 <div class="user-info-wrap">
   <div *ngIf="show" class="avatar-wrap">
-    <a class="avatar">
+    <div class="avatar">
       <img class="user-avatar pull-left" [src]="data.userAvatar" [alt]="data.userName" width="100">
-      <span class="user-name" *ngIf="data.firstName || data.lastName">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
-    </a>
-    <div *ngIf="showFollow">
-      <a class="follow-btn" *ngIf="userFollow" (click)="onFollow()">Follow</a>
-      <a class="follow-btn" *ngIf="!userFollow" (click)="onUnFollow()">Unfollow</a>
+      <div class="user-name-wrap">
+        <span class="user-name" *ngIf="data.firstName || data.lastName">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
+        <div *ngIf="showFollow" class="follow-btn-wrap">
+          <a class="follow-btn unfollow-btn follow" *ngIf="!userFollow" (click)="onFollow()">Follow</a>
+          <a class="follow-btn unfollow-btn" *ngIf="userFollow" (click)="onUnFollow()">Unfollow</a>
+        </div>
+      </div>
     </div>
   </div>
   <div class="follow-wrap">
@@ -44,11 +46,14 @@
 </div>
 <div *ngIf="!data.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/' + slugName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">@{{slugName}}
+    <li [routerLink]="['/' + slugName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="text-ellipsis">@{{slugName}}
     </li>
-    <li [routerLink]="['/curate']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">List
+    <li [routerLink]="['/curate']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="text-ellipsis">Lists
     </li>
-    <li [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">Activities
+    <li [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="text-ellipsis">Activities
     </li>
   </ul>
 </div>
