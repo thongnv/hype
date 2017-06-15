@@ -90,8 +90,8 @@ export class ShareEventComponent implements OnInit {
           let imageFile = event.target.files[i];
 
           // resize image
-          this.ng2ImgToolsService.resizeExactFill([imageFile], 481, 329)
-            .subscribe(resizedImage => {
+          this.ng2ImgToolsService.resizeExactFill([imageFile], 480, 330)
+            .subscribe((resizedImage) => {
               let img = {
                 url: URL.createObjectURL(resizedImage),
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
