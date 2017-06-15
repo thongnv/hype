@@ -980,6 +980,10 @@ body, html {
     margin-left: 15px;
   }
 
+  .daterangepicker .ranges{
+    float: right !important;
+    clear: both;
+  }
   .scrollable { height: 100vh; position: relative;}
   //.scrollable > div {height: 110px}
   //.scrollable > div:nth-child(odd) { background-color: #ccc}
