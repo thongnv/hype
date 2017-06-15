@@ -129,7 +129,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
-            url: e.target.result,
+            url: URL.createObjectURL(event.target.files[i]),
             value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
             filename: event.target.files[i].name,
             filemime: event.target.files[i].type,

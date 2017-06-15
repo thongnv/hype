@@ -60,7 +60,7 @@
         <!-- detail event start -->
         <div class="detail-event border-bottom clearfix padding-top-30 padding-bottom-35">
           <h4 class="title-detail-event margin-bottom-25">Details</h4>
-          <p class="content-detail-event" [innerHTML]="detail"></p>          
+          <p class="content-detail-event" [innerHTML]="detail"></p>
         </div>
         <!-- detail event end -->
 
@@ -104,7 +104,7 @@
               </label>
               <div class="list-img-wrap">
                 <div *ngFor="let img of previewUrl" class="preview-wrap">
-                  <img [src]="img.url"/>
+                  <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
                   <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
                 </div>
               </div>

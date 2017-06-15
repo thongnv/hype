@@ -39,7 +39,7 @@ import { EventService } from '../../services/event.service';
               </a>
               <span class="overlay"></span>
             </span>
-            <img class="list-img" src="{{img.thumb}}" (click)="OpenImageModel(img.img,thumbImages)"
+            <img class="list-img" [src]="img.thumb" (click)="OpenImageModel(img.img,thumbImages)"
                  alt='Image {{i}}' width="100" height="100"/>
           </div>
         </li>
@@ -201,6 +201,7 @@ export class ExperienceComponent implements Experience, OnInit {
       (resp) => console.log(resp),
       (error) => {
         console.log(error);
+        this.liked = !this.liked;
       }
     );
   }

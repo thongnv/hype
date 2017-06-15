@@ -50,7 +50,7 @@ export class GmapAutoPlaceComponent implements OnInit {
       let reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {
         this.imageUrl = {
-          url: e.target.result,
+          url: URL.createObjectURL(event.target.files[i]),
           value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
           filename: event.target.files[0].name,
           filemime: event.target.files[0].type

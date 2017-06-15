@@ -49,7 +49,7 @@
           </label>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="img.url"/>
+              <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
