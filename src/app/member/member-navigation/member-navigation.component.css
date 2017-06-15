@@ -35,6 +35,7 @@
     text-align: left;
     color: #3b3b3b;
     display: inline-block;
+    cursor: pointer;
 }
 .follow-number-label {
     height: 14px;

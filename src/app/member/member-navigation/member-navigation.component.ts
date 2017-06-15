@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-member-navigation',
@@ -14,12 +15,20 @@ export class MemberNavigationComponent implements OnInit {
   @Input('userFollow') public userFollow: any;
   @Input('showFollow') public showFollow: boolean;
   public show: boolean;
+  private isCurrentUser: boolean = false;
 
-  public constructor(public appState: AppState, private mainService: MainService) {
+  public constructor(public appState: AppState,
+                     private mainService: MainService,
+                     private localStorageService: LocalStorageService) {
     this.show = false;
+
   }
 
   public ngOnInit() {
+    this.isCurrentUser = this.localStorageService.get('slug') === this.slugName;
+    console.log('slugName: ', this.slugName);
+    console.log('slug: ', this.localStorageService.get('slug'));
+    console.log('isCurrentUser: ', this.isCurrentUser);
     this.show = this.data ? true : false;
     console.log('this.data: ', this.data);
   }
@@ -28,7 +37,13 @@ export class MemberNavigationComponent implements OnInit {
     this.mainService.updateUserFollow(this.data.uid).then((resp) => {
       console.log('follow: ', resp);
       this.userFollow = !this.userFollow;
-      this.data.followingNumber++;
+      if (this.isCurrentUser) {
+        this.data.followingNumber++;
+        this.data.followerNumber++;
+      } else {
+        this.data.followerNumber++;
+      }
+
     });
   }
 
@@ -36,7 +51,12 @@ export class MemberNavigationComponent implements OnInit {
     this.mainService.updateUserFollow(this.data.uid).then((resp) => {
       console.log('follow: ', resp);
       this.userFollow = !this.userFollow;
-      this.data.followingNumber--;
+      if (this.isCurrentUser) {
+        this.data.followingNumber--;
+        this.data.followerNumber--;
+      } else {
+        this.data.followerNumber--;
+      }
     });
   }
 
