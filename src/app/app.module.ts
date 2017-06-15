@@ -24,6 +24,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
+import { ServerErrorComponent } from './server-error';
 
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
@@ -123,6 +124,7 @@ type StoreType = {
     AppComponent,
     HomeComponent,
     NoContentComponent,
+    ServerErrorComponent,
     GmapComponent,
     DiscoverComponent,
     CurateComponent,

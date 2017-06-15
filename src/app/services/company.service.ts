@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Company, Experience, Location } from '../app.interface';
+import { Company, Experience, Image, Location } from '../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -66,13 +66,13 @@ export class CompanyService {
       name: data.name,
       description: data.description,
       rating: data.rating,
-      rated: data.rated,
+      rated: Boolean(data.is_rated),
       bookmarked: Boolean(data.is_favorite),
       location: extractLocation(data.location),
       website: data.website,
       phone: data.phone,
       openingHours: extractOpeningHours(data.Operating_Hours),
-      images: getInstagramImages(data.Hylo_Instagram_Link),
+      images: getInstagramImages(data.images),
       reviews: getReviews(data.review)
     };
   }
@@ -157,23 +157,18 @@ function extractLocation(location): Location {
   };
 }
 
-function getInstagramImages(link) {
-  return [
-    {
-      url: '/assets/img/event/detail/abc.jpg',
+function getInstagramImages(data): Image[] {
+  let images = [];
+  for (let item of data) {
+    images.push({
+      url: item.standard_resolution,
       value: '',
       filename: '',
       filemime: '',
       filesize: 0
-    },
-    {
-      url: '/assets/img/event/detail/hklin.jpg',
-      value: '',
-      filename: '',
-      filemime: '',
-      filesize: 0
-    },
-  ];
+    });
+  }
+  return images;
 }
 
 function getReviews(data): Experience[] {
@@ -181,7 +176,7 @@ function getReviews(data): Experience[] {
   let reviews: Experience[] = [];
   for (let r of results) {
     let review: Experience = {
-      id: r.idsno,
+      id: r.id,
       author: {
         name: r.user.name,
         avatar: r.user.avatar
@@ -199,7 +194,7 @@ function getReviews(data): Experience[] {
   return reviews;
 }
 
-function extractImages(data) {
+function extractImages(data): Image[] {
   if (!data) {
     return [];
   }
@@ -207,11 +202,11 @@ function extractImages(data) {
   for (let item of data) {
     images.push(
       {
-        url: item.url,
+        url: item,
         value: '',
         filename: '',
         filemime: '',
-        filesize: '',
+        filesize: 0,
       }
     );
   }

@@ -56,7 +56,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         },
         (error) => {
           console.log(error);
-          this.router.navigate(['PageNotFound']).then();
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
         }
       );
     });

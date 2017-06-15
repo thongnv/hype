@@ -43,7 +43,8 @@ export class CurateDetailComponent implements OnInit {
           this.loaderService.hide();
         },
         (error) => {
-          this.router.navigate(['PageNotFound']).then();
+          console.log(error);
+          this.router.navigate(['404']).then();
         }
       );
     });

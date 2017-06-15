@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
+import { ServerErrorComponent } from './server-error/server-error.component';
 import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { EventDetailComponent } from './event/detail/detail.component';
@@ -23,6 +24,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
 export const ROUTES: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
+  {path: '404', component: NoContentComponent},
+  {path: '500', component: ServerErrorComponent},
   {path: 'discover', component: DiscoverComponent},
   {path: 'curate', component: CurateComponent},
   {path: 'article/:slug', component: CurateDetailComponent},
@@ -42,5 +45,4 @@ export const ROUTES: Routes = [
   {path: ':slug/profile-edit', component: ProfileEditComponent},
   {path: ':slug/favorite', component: FavoriteComponent},
   {path: '**', component: NoContentComponent},
-
 ];
