@@ -59,7 +59,7 @@ export class EventService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
-      'http://hypeweb.iypuat.com:5656/api/v1/event/' + slugName + '?_format=json', options
+      AppSetting.API_ENDPOINT + 'api/v1/event/' + slugName + '?_format=json', options
     )
     .map((res: Response) => {
       return res.json();
@@ -73,7 +73,7 @@ export class EventService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/event?_format=json',
+      AppSetting.API_ENDPOINT + 'api/v1/event?_format=json',
       data,
       options
     )
@@ -108,7 +108,7 @@ export class EventService {
       comment_images: experience.images
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/' + eventSlug,
+      AppSetting.API_ENDPOINT + 'api/v1/comment/' + eventSlug,
       JSON.stringify(data),
       options
     )
@@ -128,7 +128,7 @@ export class EventService {
       message: comment.text,
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/' + eventSlug,
+      AppSetting.API_ENDPOINT + 'api/v1/comment/' + eventSlug,
       JSON.stringify(data),
       options
     )
@@ -148,7 +148,7 @@ export class EventService {
       like: comment.liked
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/like',
+      AppSetting.API_ENDPOINT + 'api/v1/comment/like',
       JSON.stringify(data),
       options
     )
@@ -156,7 +156,7 @@ export class EventService {
       return res.json();
     })
     .catch((error: any) => {
-      return Observable.throw(new Error(error.json()));
+      return Observable.throw(new Error(error));
     });
   }
 }

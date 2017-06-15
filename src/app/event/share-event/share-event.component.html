@@ -208,7 +208,11 @@
 
         <div class="row">
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition" [carouselSlides]="slides">
-            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active" [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
+                   [ngStyle]="{
+                   'background-image': 'url(' + slide.image + ')',
+                   'background-position': 'center, center',
+                    'height': '480px', 'background-size': 'cover'}">
             </slide>
           </carousel>
         </div>

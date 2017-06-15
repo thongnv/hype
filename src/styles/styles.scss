@@ -830,14 +830,19 @@ body, html {
   [role=button]:hover {
     text-decoration: none;
   }
+  .wrap-search-input {
+    position: relative;
+    width: 100%;
+  }
   .map-option button.btn-default {
     background: url('../assets/img/homepage/icon-search.png') no-repeat;
     padding: 10px 10px;
-    position: relative;
+    position: absolute;
     border: none;
-    left: 25px;
-    bottom: 210px;
     box-shadow: none;
+    z-index: 999;
+    top: 18px;
+    left: 6px;
   }
   .map-option button.btn-default:focus {
     outline: none;

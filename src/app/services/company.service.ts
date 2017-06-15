@@ -3,59 +3,7 @@ import { Company, Experience, Image, Location } from '../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-
-let mockData = {
-  is_favorite: 1,
-  ids_no: '46001',
-  name: 'Science Centre Singapore',
-  slug: 'science-centre-singapore',
-  logo: '',
-  description: '',
-  rating: 2.5,
-  rated: false,
-  total_rate: '1',
-  location: [
-    'Address/Fax  15 Science Centre Rd  Science Centre Bldg Singapore 609081',
-    'Postal_Code/609081',
-    'Telephone/ ',
-    'Seq/000',
-    'Location/Jurong East',
-    'Long/103.735258',
-    'Lat/1.333498'
-  ],
-  website: '',
-  phone: '',
-  Operating_Hours: 'Science Centre SingaporeDaily: 10 am - 6 pm Last admission to Science Centre: 5.15 pmThe ' +
-  'Observatory\ufffdlt;br>Every Friday(Closed on Public Holidays): 7.45\ufffdm-\ufffd0 pmKidsSTOPEveryday ' +
-  '(Mon - Sun and Public Holidays)1st Session: 9.30am - 1.30 pm (Last admission: 12.45 pm)2nd ' +
-  'Session: 2pm - 6 pm (Last admission: 5.15pm)',
-  Hylo_Instagram: 'https://www.instagram.com/sciencecentresg/',
-  Hylo_Instagram_Link: 'https://www.instagram.com/explore/tags/sciencecentresg?__a=1',
-  review: {
-    total: '1',
-    results: [
-      {
-        rid: '1',
-        idsno: '46001',
-        created: '1497322682',
-        body: '',
-        rate: 2.5,
-        image: [
-          '/assets/img/event/detail/abc.jpg',
-          '/assets/img/event/detail/abc.jpg'
-        ],
-        number_like: '1',
-        is_like_flag: 1,
-        user: {
-          name: 'cadic',
-          uid: '3',
-          slug: '/user/cadic',
-          avatar: ''
-        }
-      }
-    ]
-  }
-};
+import { AppSetting } from '../app.setting';
 
 @Injectable()
 export class CompanyService {
@@ -91,7 +39,7 @@ export class CompanyService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
-      'http://hypeweb.iypuat.com:5656/api/v1/company/detail?key=' + slugName + '&_format=json', options
+      AppSetting.API_ENDPOINT + 'api/v1/company/detail?key=' + slugName + '&_format=json', options
     )
       .map((res: Response) => {
         return res.json().company;
@@ -106,7 +54,7 @@ export class CompanyService {
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {ids_no: placeId};
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/favorite/place',
+      AppSetting.API_ENDPOINT + 'api/v1/favorite/place',
       JSON.stringify(data), options
     ).map((res: Response) => {
       return <Experience> res.json();
@@ -126,7 +74,7 @@ export class CompanyService {
       images: review.images
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/user/review/place',
+      AppSetting.API_ENDPOINT + 'api/user/review/place',
       JSON.stringify(data), options
     ).map((res: Response) => {
         return <Experience> res.json();
@@ -144,7 +92,7 @@ export class CompanyService {
       like: review.liked
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/like',
+      AppSetting.API_ENDPOINT + 'api/v1/comment/like',
       JSON.stringify(data),
       options
     )

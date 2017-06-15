@@ -584,8 +584,8 @@ ul.list-stars-on-post {
 .carousel-indicators > div {
   display: inline-block;
   float: left;
-  width: 125px;
-  height: 125px;
+  width: 120px;
+  height: 90px;
   border-radius: 0;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -593,11 +593,13 @@ ul.list-stars-on-post {
   text-indent: -999px;
   cursor: pointer;
   border: 1px solid #fff;
+  background-position: center;
+  background-size: cover;
 }
 
 .carousel-indicators > .active {
-  width: 125px;
-  height: 125px;
+  width: 120px;
+  height: 90px;
   border: solid 1px black;
 }
 

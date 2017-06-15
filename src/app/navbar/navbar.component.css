@@ -64,6 +64,11 @@
     line-height: 50px;
 }
 
+.wrap-search-input {
+    position: relative;
+    
+}
+
 
 /*search location start*/
 
@@ -73,7 +78,7 @@
     border-radius: 4px;
     background: #fff;
     width: 110%;
-    visibility: hidden;
+    display: none;
 }
 .display-location-address {
     padding: 0px 20px;
