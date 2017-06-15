@@ -16,6 +16,6 @@
       <input type='file' (change)="readUrl($event)">
     </label>
     <input [hidden]="true" formControlName="image" type='text'>
-    <img *ngIf="imageUrl" [src]="imageUrl.url" width="100%"/>
+    <img *ngIf="imageUrl" [src]="sanitizer.bypassSecurityTrustUrl(imageUrl.url)" width="100%"/>
   </div>
 </div>

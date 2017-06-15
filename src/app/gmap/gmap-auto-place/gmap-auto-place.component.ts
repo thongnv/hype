@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild } from '@angular/core';
 import { MapsAPILoader } from 'angular2-google-maps/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { } from '@types/googlemaps';
 import { FormGroup } from '@angular/forms';
 import { FileReaderEvent } from '../../app.interface';
@@ -19,7 +20,10 @@ export class GmapAutoPlaceComponent implements OnInit {
   public searchElementRef: ElementRef;
   public imageUrl: any;
 
-  public constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {
+  public constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    public sanitizer: DomSanitizer) {
   }
 
   public ngOnInit() {
