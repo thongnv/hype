@@ -37,6 +37,15 @@
     overflow-x: hidden;
 }
 
+.list-item-title {
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: left;
+    color: #ffffff;
+}
+
 .month {
     position: absolute;
     top: 10px;
@@ -183,8 +192,20 @@ ul.mentioned-item {
 }
 
 .list-item .caption .list-item-link {
+    height: 24px;
+    font-family: Roboto;
     font-size: 16px;
     line-height: 1.5;
     text-align: left;
     color: #ffffff;
+}
+
+.list-item .caption .list-item-link {
+    width: 6px;
+    height: 10px;
+    color: #ffffff;
+}
+
+.list-item .caption .list-item-title {
+    cursor: pointer;
 }
