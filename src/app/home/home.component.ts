@@ -36,7 +36,7 @@ declare let google:any;
 })
 export class HomeComponent implements OnInit {
     @ViewChild(EventItemComponent)
-    private eventItem: EventItemComponent;
+    private eventItem:EventItemComponent;
 
     // Set our default values
     public localState = {value: ''};
@@ -161,6 +161,9 @@ export class HomeComponent implements OnInit {
     public onSelectEventOrder(order:any):void {
         this.selectedEventOrder = order;
         this.params.order = order.name;
+        if (order.name == 'top 100') {
+            this.params.limit = 100;
+        }
         this.showMap = false;
         this.loaderService.show();
         this.getTrending();
@@ -278,15 +281,15 @@ export class HomeComponent implements OnInit {
 
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-          console.log('end, params: ', this.params);
-          this.params.page += 1;
-          this.homeService.getEvents(this.params)
-            .map(resp => resp.json())
-            .subscribe(result => {
-              this.listItems = this.listItems.concat(result.data);
-              this.loaderService.hide();
-              this.loadMap();
-            });
+            console.log('end, params: ', this.params);
+            this.params.page += 1;
+            this.homeService.getEvents(this.params)
+                .map(resp => resp.json())
+                .subscribe(result => {
+                    this.listItems = this.listItems.concat(result.data);
+                    this.loaderService.hide();
+                    this.loadMap();
+                });
         }
 
         if (event.target.children[0].children.length > 1) {

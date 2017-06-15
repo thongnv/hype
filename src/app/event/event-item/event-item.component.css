@@ -200,7 +200,7 @@ ul.mentioned-item {
     color: #ffffff;
 }
 
-.list-item .caption .list-item-link {
+.list-item .caption .list-item-link i{
     width: 6px;
     height: 10px;
     color: #ffffff;
