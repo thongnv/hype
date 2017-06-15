@@ -71,7 +71,7 @@ export class FollowerComponent implements OnInit {
       this.slugName = params['slug'];
       console.log('USER: ', this.slugName);
       this.getUserProfile(this.slugName);
-      this.getUserFollow('following', this.slugName, this.followingPage);
+      this.getUserFollow('follower', this.slugName, this.followingPage);
     });
   }
 
