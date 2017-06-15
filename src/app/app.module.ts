@@ -200,7 +200,7 @@ type StoreType = {
     }),
     LocalStorageModule.withConfig({
       prefix: 'hylo-app',
-      storageType: 'sessionStorage'
+      storageType: 'localStorage'
     }),
     Angular2FontawesomeModule,
     NguiDatetimePickerModule,
