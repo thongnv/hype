@@ -322,17 +322,17 @@ export class HomeComponent implements OnInit {
                         position: new google.maps.LatLng(latitude, longitude),
                         draggable: true
                     });
-                    //let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
-                    //if (parseInt(egeometry) < this.currentRadius) {
-                    this.events.push(this.listItems[i]);
-                    this.markers.push({
-                        lat: latitude,
-                        lng: longitude,
-                        label: this.listItems[i].title,
-                        opacity: 0.6,
-                        isOpenInfo: false
-                    });
-                    //}
+                    let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
+                    if (parseInt(egeometry) < this.currentRadius) {
+                        this.events.push(this.listItems[i]);
+                        this.markers.push({
+                            lat: latitude,
+                            lng: longitude,
+                            label: this.listItems[i].title,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
+                    }
                 }
 
                 this.loaderService.hide();
