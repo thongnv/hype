@@ -14,7 +14,7 @@
             <img src="/assets/img/icons/Curated.png" alt="Curated">
             <span>Curated</span>
         </li>
-        <li [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <li *ngIf="loginData" [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
             <img src="/assets/img/icons/Favourites.png" alt="Favourites">
             <span>Favorites</span>
         </li>
@@ -25,7 +25,6 @@
         <router-outlet class="content"></router-outlet>
     </div>
 </main>
-
 <footer>
     <p>Hype Website</p>
 </footer>
