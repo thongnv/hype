@@ -47,7 +47,7 @@ export class CurateNewComponent implements OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router,
-              public sanitizer: DomSanitizer) {
+              private ng2ImgToolsService: Ng2ImgToolsService,) {
     this.onAddPlace();
   }
 
