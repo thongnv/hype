@@ -99,6 +99,7 @@ export interface LoaderState {
 }
 
 export interface Company {
+  id: string;
   name: string;
   description: string;
   rating: number;
@@ -109,4 +110,5 @@ export interface Company {
   images: Image[];
   reviews: Experience[];
   bookmarked: boolean;
+  rated: boolean;
 }

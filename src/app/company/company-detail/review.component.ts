@@ -19,7 +19,7 @@ import { CompanyDetailComponent } from './company-detail.component';
         </div>
         <div class="rating-star">
           <i *ngFor="let i of review.rating | myArray" fa [name]="'star'" [size]=1></i>
-          <i *ngFor="let i of 5 - review.rating | myArray" fa [name]="'star-o'" [size]=1></i>
+          <i *ngFor="let i of 4.9 - review.rating | myArray" fa [name]="'star-o'" [size]=1></i>
         </div>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>

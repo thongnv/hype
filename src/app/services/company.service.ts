@@ -12,6 +12,7 @@ let mockData = {
   logo: '',
   description: '',
   rating: 2.5,
+  rated: false,
   total_rate: '1',
   location: [
     'Address/Fax  15 Science Centre Rd  Science Centre Bldg Singapore 609081',
@@ -39,7 +40,10 @@ let mockData = {
         created: '1497322682',
         body: '',
         rate: 2.5,
-        image: [],
+        image: [
+          '/assets/img/event/detail/abc.jpg',
+          '/assets/img/event/detail/abc.jpg'
+        ],
         number_like: '1',
         is_like_flag: 1,
         user: {
@@ -57,11 +61,12 @@ let mockData = {
 export class CompanyService {
 
   public static extractCompanyDetail(data): Company {
-    data = mockData;
     return {
+      id: data.ids_no,
       name: data.name,
       description: data.description,
       rating: data.rating,
+      rated: data.rated,
       bookmarked: Boolean(data.is_favorite),
       location: extractLocation(data.location),
       website: data.website,
@@ -96,20 +101,19 @@ export class CompanyService {
       });
   }
 
-  public postReview(companySlug: string, review: Experience): Observable<any> {
+  public postReview(placeId: string, review: Experience): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
+      idsno: placeId,
       rate: review.rating,
-      message: review.text,
-      comment_images: review.images
+      body: review.text,
+      images: review.images
     };
     return this._http.post(
-      'http://hypeweb.iypuat.com:5656/api/v1/comment/' + companySlug,
-      JSON.stringify(data),
-      options
-    )
-      .map((res: Response) => {
+      'http://hypeweb.iypuat.com:5656/api/user/review/place',
+      JSON.stringify(data), options
+    ).map((res: Response) => {
         return <Experience> res.json();
       })
       .catch((error: any) => {
@@ -139,7 +143,7 @@ export class CompanyService {
 }
 
 function extractOpeningHours(data) {
-  return ['(Friday) 8AM - 10PM'];
+  return [];
 }
 
 function extractLocation(location): Location {
@@ -163,7 +167,7 @@ function getInstagramImages(link) {
       filesize: 0
     },
     {
-      url: '/assets/img/event/detail/abc.jpg',
+      url: '/assets/img/event/detail/hklin.jpg',
       value: '',
       filename: '',
       filemime: '',
@@ -183,12 +187,12 @@ function getReviews(data): Experience[] {
         avatar: r.user.avatar
       },
       rating: r.rate,
-      date: r.created,
+      date: Number(r.created) * 1000,
       text: r.body,
       images: extractImages(r.image),
       comments: [],
-      likeNumber: 0,
-      liked: false
+      likeNumber: Number(r.number_like),
+      liked: Boolean(data.is_like_flag)
     };
     reviews.push(review);
   }
