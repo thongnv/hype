@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
     public isOpen:boolean = false;
     public currentHighlightedMarker:number = 1;
     public alertType:any = '';
+
     public msgContent:any = '';
     public showAll:boolean = true;
     private params:any = {
