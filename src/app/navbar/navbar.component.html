@@ -13,7 +13,8 @@
       <li class="map-option nav-item">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-            {{selectedMapOption.name}} <i class="fa fa-angle-down" aria-hidden="true"></i>
+            {{selectedMapOption.name}} 
+            <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
             <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
@@ -23,10 +24,13 @@
       <li class="map-option col-md-4 nav-item">
         <form action="">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search...">
+
             <span class="input-group-btn">
               <button class="btn btn-default" type="button"></button>
             </span>
+
+            <input type="text" class="form-control" placeholder="Search...">
+            
           </div>
         </form>
       </li>
@@ -50,7 +54,7 @@
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
             <img class="img-circle" [src]="loginData.current_user.avatar" width="30" height="30">
             <span class="user-name-info text-ellipsis">{{loginData.current_user.field_first_name}}&nbsp;{{loginData.current_user.field_last_name}}</span>
-            <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
+            <img class="icon-down-left-navbar" src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
             <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting</li>
