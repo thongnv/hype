@@ -1,11 +1,14 @@
 .upload-image-label input{
     display: none;
 }
-.upload-image-label{
+.upload-image-label {
     min-width: 60px;
     width: 100%;
     margin: 0;
     cursor: pointer;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: left;
     color: #ec3d62;
 }
 .gmap-place .form-group input:first-child {
