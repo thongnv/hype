@@ -18,17 +18,9 @@ import { EventService } from '../../services/event.service';
             {{date | date:'d MMMM y'}}
           </p>
         </div>
-        <ul class="list-stars-review-experience">
-          <li *ngFor="let i of rating | myArray">
-            <img src="/assets/img/event/detail/small-star-selected.png"
-                 alt="small-star-selected">
-          </li>
-
-          <li *ngFor="let i of 5 - rating | myArray">
-            <img src="/assets/img/event/detail/small-star.png"
-                 alt="small-star">
-          </li>
-        </ul>
+        <div class="list-stars-review-experience">
+          <rating [ngModel]="rating" [readonly]="true" emptyIcon="★"></rating>
+        </div>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
       <ul class="list-pictures-experience">
