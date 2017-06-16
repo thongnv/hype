@@ -11,7 +11,7 @@
   <!--form wrap start-->
   <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
 
-    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
       <div class="input-box row">
         <h3 class="col-md-12 col-xs-12">Share an Event</h3>
         <small class="col-md-12 col-xs-12">An event is an activity tagged to a place </small>
@@ -56,6 +56,9 @@
             <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
                    (change)="readUrl($event)" multiple="multiple">
           </label>
+          <small *ngIf="previewUrl == 0" class="text-danger">
+            Event images is required
+          </small>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
               <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
