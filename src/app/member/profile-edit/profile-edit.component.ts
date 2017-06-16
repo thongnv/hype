@@ -25,7 +25,7 @@ export class ProfileEditComponent implements OnInit {
       Validators.maxLength(30)
     ])],
     contactNumber: ['', Validators.compose([
-      Validators.required,
+      this.requiredField,
       Validators.minLength(10),
       Validators.maxLength(30),
       Validators.pattern(/^[+]?([0-9][-]*){10,30}$/)
@@ -100,7 +100,7 @@ export class ProfileEditComponent implements OnInit {
   }
   public requiredField(control: FormControl) {
     console.log(control.value);
-    return control.value.toString().trim().length ? {requiredField: false} : {
+    return control.value.toString().trim().length ? null : {
       requiredField: true
     };
   }
