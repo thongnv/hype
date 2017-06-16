@@ -85,13 +85,13 @@ export class ProfileEditComponent implements OnInit {
         (resp) => {
           if (resp.status) {
             this.alertType = 'success';
-            this.msgContent = 'Updated user information successful.';
+            this.msgContent = resp.message;
             this.userInfo.firstName = userProfile.field_first_name;
             this.userInfo.lastName = userProfile.field_last_name;
             this.appState.set('userInfo', this.userInfo);
           } else {
             this.alertType = 'danger';
-            this.msgContent = 'Updated user information failed.';
+            this.msgContent = resp.message;
           }
 
         }
