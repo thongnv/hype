@@ -10,6 +10,7 @@ import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { MainService } from '../../services/main.service';
 
 @Component({
   selector: 'app-share-event',
@@ -36,6 +37,7 @@ export class ShareEventComponent implements OnInit {
     eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
+  public user: any;
   public previewData: any;
   public categories: any[];
   public previewUrl: any[] = [];
@@ -52,7 +54,9 @@ export class ShareEventComponent implements OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private ng2ImgToolsService: Ng2ImgToolsService,
+              public mainService: MainService,
               private router: Router) {
+
     this.loaderService.show();
     this.eventService.getCategoryEvent().subscribe(
       (response: any) => {
@@ -60,6 +64,9 @@ export class ShareEventComponent implements OnInit {
         this.loaderService.hide();
       }
     );
+    this.mainService.getUserProfile().then((response) => {
+      this.user = response;
+    });
   }
 
   public ngOnInit() {

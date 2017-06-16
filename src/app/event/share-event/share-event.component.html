@@ -157,21 +157,18 @@
               </ul>
             </li>
           </ul>
-          <!-- <div class="right-creator-share-event text-center pull-right">
+          <div class="right-creator-share-event text-center pull-right">
             <h4 class="title-creator">Created by</h4>
             <a>
               <p class="avatar-creator">
-                <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
+                <img [src]="user.field_image" alt="avatar" class="img-circle" width="70"
                      height="70">
               </p>
               <p class="name-creator">
-                {{creator.name}}
+                {{user.name}}
               </p>
             </a>
-            <p class="avg-rating" *ngIf="rating">
-              {{rating}}/5
-            </p>
-          </div> -->
+          </div>
         </div>
 
         <hr>
@@ -187,7 +184,7 @@
         <div class="post-experience">
           <h4 class="experiences-post-review">Experiences (0)</h4>
           <h5 class="bold">Post your experience</h5>
-          <img class="img-circle pull-left" src="/assets/img/event/detail/hklin.jpg" alt="hklin avatar" width="70" height="70">
+          <img class="img-circle pull-left" [src]="user.field_image" alt="hklin avatar" width="70" height="70">
           <p class="rate-stars-post-experiences">
             <i fa [name]="'star-o'" [size]=1></i>
             <i fa [name]="'star-o'" [size]=1></i>
