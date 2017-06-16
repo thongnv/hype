@@ -100,8 +100,14 @@
         </form>
       </li>
       <li *ngIf="loginData" class="pull-right nav-item add-event-button">
-        <div class="add-eventbtn" [routerLink]="['/curate/new']">
-          <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
+        <div class="user-option map-option pull-right" ngbDropdown>
+          <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+            <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="drop3">
+            <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Create New List</li>
+            <li [routerLink]="['/share-event']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Create New Event</li>
+          </ul>
         </div>
       </li>
       <li class="pull-right nav-item notification-area" *ngIf="loginData">
