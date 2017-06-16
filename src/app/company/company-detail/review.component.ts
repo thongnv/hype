@@ -18,8 +18,7 @@ import { CompanyDetailComponent } from './company-detail.component';
           </p>
         </div>
         <div class="rating-star">
-          <i *ngFor="let i of review.rating | myArray" fa [name]="'star'" [size]=1></i>
-          <i *ngFor="let i of 4.9 - review.rating | myArray" fa [name]="'star-o'" [size]=1></i>
+          <rating [ngModel]="review.rating" [readonly]="true" emptyIcon="★"></rating>
         </div>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
@@ -105,14 +104,16 @@ export class ReviewComponent implements Experience, OnInit {
   }
 
   public toggleLikeReview() {
-    this.liked = !this.liked;
-    this.likeNumber += this.liked ? 1 : -1;
+    let liked = !this.liked;
     let review = this;
     this.companyService.toggleLike(review).subscribe(
-      (resp) => console.log(resp),
+      (resp) => {
+        console.log(resp);
+        this.liked = liked;
+        this.likeNumber += liked ? 1 : -1;
+      },
       (error) => {
         console.log(error);
-        this.liked = !this.liked;
       }
     );
   }

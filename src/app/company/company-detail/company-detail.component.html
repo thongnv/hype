@@ -1,5 +1,5 @@
 <article class="container">
-  <div  *ngIf="mapReady">
+  <div *ngIf="mapReady">
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -21,8 +21,7 @@
           <div class="company-header">
             <h3>{{name}}</h3>
             <div class="rating-star">
-              <i *ngFor="let i of rating | myArray" fa [name]="'star'" [size]=1></i>
-              <i *ngFor="let i of 4.9 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
+              <rating [ngModel]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
             </div>
             <div class="google-plus-point">
               <div class="rating-number">
@@ -35,9 +34,6 @@
                 </a>
               </div>
             </div>
-            <p class="open-now-button">
-              Open Now
-            </p>
             <div class="company-description-wrap">
               <div *ngIf="descTruncated">
                 <div class="company-description">{{description | truncate:200}}</div>

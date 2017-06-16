@@ -29,7 +29,7 @@ import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import { ServerErrorComponent } from './server-error';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper} from 'angular2-google-maps/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import { Ng2ScrollableModule } from 'ng2-scrollable';
 import { TruncateModule } from 'ng2-truncate';
 import { SlimScroll } from 'angular-io-slimscroll';
@@ -104,8 +104,9 @@ import { Html2TextPipe } from './shared/html-2-text.pipe';
 import { FacebookModule } from 'ngx-facebook';
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
-import {Ng2PopupComponent} from "ng2-popup/dist/index";
-import {Ng2PopupModule} from "ng2-popup/dist/index";
+import { Ng2PopupComponent } from 'ng2-popup/dist/index';
+import { Ng2PopupModule } from 'ng2-popup/dist/index';
+import { RatingModule } from 'ng2-rating';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -208,6 +209,7 @@ type StoreType = {
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
     Ng2ImgToolsModule,
+    RatingModule,
     MomentModule,
     TruncateModule,
     TinymceModule.withConfig({}),

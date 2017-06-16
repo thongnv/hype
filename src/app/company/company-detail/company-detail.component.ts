@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
-import { AppState } from '../../app.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import * as moment from 'moment/moment';
 import { BaseUser, Company, Experience, Image, Location } from '../../app.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { MainService } from '../../services/main.service';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -24,7 +24,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public images: Image[];
   public slugName: string;
   public company: Company;
-  public user: BaseUser;
+  public user: BaseUser = {name: '', avatar: ''};
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;
@@ -38,9 +38,8 @@ export class CompanyDetailComponent implements Company, OnInit {
   public rated: boolean = false;
 
   constructor(
-    private appState: AppState,
+    public mainService: MainService,
     public companyService: CompanyService,
-    private router: Router,
     private route: ActivatedRoute,
   ) {}
 
@@ -56,12 +55,13 @@ export class CompanyDetailComponent implements Company, OnInit {
         },
         (error) => {
           console.log(error);
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
         }
       );
     });
-    let user = this.appState.state.userInfo;
-    this.user = {name: 'Tom Cruise', avatar: user.userAvatar};
+    this.mainService.getUserProfile().then((response) => {
+      this.user.name = response.name;
+      this.user.avatar = response.field_image;
+    });
   }
 
   public toggleBookmark() {
@@ -73,7 +73,6 @@ export class CompanyDetailComponent implements Company, OnInit {
       },
       (error) => {
         console.log(error);
-        // this.router.navigate(['500'], {skipLocationChange: true}).then();
       }
     );
   };
@@ -96,7 +95,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     if (data === false) {
       this.showForm = false;
     }
-    if (data.text) {
+    if (!this.rated && data.text) {
       let review: Experience = {
         id: 0,
         author: this.user,
@@ -109,14 +108,15 @@ export class CompanyDetailComponent implements Company, OnInit {
         liked: false
       };
       this.showForm = false;
+      this.rated = true;
       this.companyService.postReview(this.id, review).subscribe(
         (resp) => {
           console.log(resp);
           this.reviews.unshift(review);
-          this.rated = true;
         },
         (error) => {
           console.log(error);
+          this.rated = false;
         }
       );
     }

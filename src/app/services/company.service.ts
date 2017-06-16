@@ -4,6 +4,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AppSetting } from '../app.setting';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CompanyService {
@@ -32,20 +33,27 @@ export class CompanyService {
   });
 
   constructor(private _localStorageService: LocalStorageService,
-              private _http: Http) {
+              private _http: Http,
+              private router: Router) {
   }
 
   public getCompanyDetail(slugName): Observable<Response> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/company/detail?key=' + slugName + '&_format=json', options
+      AppSetting.API_ENDPOINT + 'api/v1/company/detail?_format=json&key=' + slugName, options
     )
       .map((res: Response) => {
         return res.json().company;
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
       });
   }
 

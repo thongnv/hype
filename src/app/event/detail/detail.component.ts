@@ -93,7 +93,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public addExperience(msgInput) {
-    if (msgInput.value.trim()) {
+    if (!this.userRated && msgInput.value.trim()) {
       let experience: Experience = {
         id: 0,
         author: this.user,
@@ -106,16 +106,17 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         images: this.previewUrl
       };
       let eventSlugName = this.slugName;
+      this.userRated = true;
       this.eventService.postExperience(eventSlugName, experience).subscribe(
         (resp) => {
           console.log(resp);
           this.experiences.push(experience);
           this.experienceForm.reset();
-          this.userRated = true;
           this.rating = resp.average_rating;
         },
         (error) => {
           console.log(error);
+          this.userRated = false;
         }
       );
     }

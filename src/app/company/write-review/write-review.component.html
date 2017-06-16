@@ -1,6 +1,8 @@
 <div class="overlay" [class.active]="submitted">
   <div class="form-review popup" *ngIf="company">
-    <h3>How is Your Experience With {{company.name}} <span class="close-button" (click)="closeForm()">×</span></h3>
+    <h3>How is Your Experience With {{company.name}}
+      <span class="close-button" (click)="closeForm()">×</span>
+    </h3>
     <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
       <div class="header-review">
         <img alt="user avatar" class="img-circle" height="70" width="70" [src]="user.avatar">

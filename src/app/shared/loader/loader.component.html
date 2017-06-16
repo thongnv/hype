@@ -1,21 +1,28 @@
-<!--[if gt IE 9]><!-->
 <style>
-@media screen and (min-width:0) {
-    .image-animation img{
-	  position: absolute;
-	  top: 50%;
-	  left: 50%;
-	  transform: translateY(-50%);
-	  width: 150px;
-	}
+@media all and (-ms-high-contrast:none) {
+    .image-animation img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%);
+        width: 150px;
+    }
+    /* IE10 */
+    *::-ms-backdrop,
+    .image-animation img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%);
+        width: 150px;
+    }
+    /* IE11 */
 }
 </style>
-<!--<![endif]-->
-
 <div [class.loader-hidden]="!show">
-  <div class="loader-overlay">
-    <div>
-      <div class="image-animation" *ngIf="show"><img src="../../../assets/icon/animation.gif"></div>
+    <div class="loader-overlay">
+        <div>
+            <div class="image-animation" *ngIf="show"><img src="../../../assets/icon/animation.gif"></div>
+        </div>
     </div>
-  </div>
 </div>
