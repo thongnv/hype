@@ -110,7 +110,7 @@ export class CurateDetailComponent implements OnInit {
     this.currentHighlightedMarker = 0;
     this.slides = [];
     this.markers = [];
-    if (article.field_places.length) {
+    if (article.field_places && article.field_places.length) {
       let index = 0;
       for (let place of article.field_places) {
         if (place.field_latitude && place.field_latitude) {
@@ -134,15 +134,15 @@ export class CurateDetailComponent implements OnInit {
           index++;
         }
       }
-      if (article.field_images.length) {
-        for (let img of article.field_images) {
-          if (img) {
-            this.slides.push({image: img, active: false});
-          }
-        }
-
-      }
       this.showMap = true;
+    }
+    if (article.field_images && article.field_images.length) {
+      for (let img of article.field_images) {
+        if (img) {
+          this.slides.push({image: img, active: false});
+        }
+      }
+
     }
   }
 }
