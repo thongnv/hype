@@ -21,8 +21,7 @@
           <div class="company-header">
             <h3>{{name}}</h3>
             <div class="rating-star">
-              <i *ngFor="let i of rating | myArray" fa [name]="'star'" [size]=1></i>
-              <i *ngFor="let i of 4.9 - rating | myArray" fa [name]="'star-o'" [size]=1></i>
+              <rating [ngModel]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
             </div>
             <div class="google-plus-point">
               <div class="rating-number">
