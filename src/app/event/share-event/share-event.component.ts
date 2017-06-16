@@ -84,8 +84,10 @@ export class ShareEventComponent implements OnInit {
     console.log('evt: ', evt.target.value);
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price is number and between 0-300 $';
-    } else if (evt.target.value.length == 0 || evt.target.valueAsNumber <= 300 || evt.target.valueAsNumber > 0) {
+    } else if (evt.target.value.length == 0) {
       this.eventForm.patchValue({'eventPrice': 0});
+      document.getElementById('eventPriceErr').innerText = '';
+    } if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
       document.getElementById('eventPriceErr').innerText = '';
     }
   }
