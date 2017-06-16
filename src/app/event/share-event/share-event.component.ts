@@ -34,7 +34,7 @@ export class ShareEventComponent implements OnInit {
       eventType: ['1'],
       eventLink: [''],
     }),
-    eventImages: ['', Validators.required],
+    eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
   public user: any;
