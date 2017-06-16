@@ -14,7 +14,7 @@ export class CurateComponent implements OnInit {
   public categories: any[];
   public trending: any[];
   public slides: any[] = [];
-  public selectedCategory: any;
+  public selectedCategory: any = 'all';
   public NextPhotoInterval: number = 3000;
   public noLoopSlides: boolean = false;
   public noPause: boolean = true;
@@ -24,28 +24,48 @@ export class CurateComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.data = {lat: 1.390570, lng: 103.351923};
-    this.getArticles();
+    this.mainService.getCategoryArticle().subscribe(
+      (response: any) => {
+        this.categories = response.data;
+        this.categories.unshift({
+          name: 'All',
+          tid: 'all',
+        });
+      }
+    );
+
+    this.mainService.getCurate('latest', '*').subscribe((response: any) => {
+      this.latestArticles = response.data;
+      this.trending = response.data;
+    });
+
+    this.mainService.getCurate('latest', '*').subscribe((response: any) => {
+      console.log(response);
+      this.featuredArticles = response.data;
+      this.processFeature(this.featuredArticles);
+    });
   }
 
-  public getArticles(): void {
-    this.mainService.getUserPublicProfile().then((resp) => {
-      this.categories = resp.categories;
-      this.categories.unshift({id: 'all', name: 'All'});
-      this.selectedCategory = this.categories[0].id;
-      this.trending = resp.trending_list;
-      this.articles = resp.curate_list;
-      this.articles.forEach((item) => {
-        if (item.info.type === 'popular_pick') {
-          this.featuredArticles.push(item);
-        } else {
-          this.latestArticles.push((item));
-        }
-      });
-    });
+  public processFeature(feature) {
+    let featuredArticles = [];
+    while (feature.length > 0) {
+      featuredArticles.push(feature.splice(0, 3));
+    }
+    this.featuredArticles = featuredArticles;
   }
 
   public onSelectCategory(cat: any) {
     this.selectedCategory = cat;
+
+    this.mainService.getCurate('', cat).subscribe((response: any) => {
+      this.featuredArticles = response.data;
+      this.processFeature(this.featuredArticles);
+    });
+
+    this.mainService.getCurate('', cat).subscribe((response: any) => {
+      console.log(response);
+      this.latestArticles = response.data;
+      this.trending = response.data;
+    });
   }
 }
