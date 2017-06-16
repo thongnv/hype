@@ -372,3 +372,8 @@ span.dollar-character {
 .input-box small.text-danger{
   margin: 10px 0;
 }
+
+.carousel-indicators div{
+  background-position: center center;
+  background-size: cover;
+}
