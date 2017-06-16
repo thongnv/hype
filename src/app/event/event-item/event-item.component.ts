@@ -5,7 +5,6 @@ import {Ng2PopupComponent,Ng2MessagePopupComponent} from "ng2-popup/dist/index";
     selector: 'app-event-item',
     templateUrl: './event-item.component.html',
     styleUrls: ['./event-item.component.css'],
-    directives: [Ng2PopupComponent],
     encapsulation: ViewEncapsulation.None,
 })
 export class EventItemComponent {
@@ -15,7 +14,7 @@ export class EventItemComponent {
 
     @Output('onClickLike') public onClickLike = new EventEmitter<any>();
 
-    @Output('openPopupMention') public openPopupMention = new EventEmitter<any>();
+    @Output('onClickMention') public onClickMention = new EventEmitter<any>();
 
     private message:string;
 

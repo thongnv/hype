@@ -31,6 +31,7 @@
                     <li *ngIf="item.field_event_option.field_mentioned_by?.length >3" (click)="openPopupMention(item)"><a><i fa class="fa-plus"></i></a></li>
                 </ul>
                 <div class="pull-right">
+                    <ng2-popup #popup></ng2-popup>
                     <ul class="list-inline">
                         <li>
                             <span class="count_comment">Comments {{item.comment_count}}</span>

@@ -6,13 +6,6 @@ import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-ma
 
 declare let google:any;
 
-interface marker {
-    lat: number;
-    lng: number;
-    label?: string;
-    draggable: boolean;
-}
-
 @Component({
     moduleId: "hylo-mode",
     selector: 'app-mode',
@@ -30,7 +23,6 @@ export class ModeComponent implements OnInit {
     public someRange3:number[] = [50, 300];
     public filterFromMode:FormGroup;
     public filterCategory:FormGroup;
-    params:{type:string} = {type: 'eat'};
     public items = [];
     public filterData:any = [];
     public currentRate = 3;
@@ -40,6 +32,7 @@ export class ModeComponent implements OnInit {
     public lat:number = 21.030596;
     public lng:number = 105.786215;
     public currentRadius:any = 3000;
+    private params = {mode_type: ''};
 
     public constructor(private formBuilder:FormBuilder,
                        private modeService:ModeService,
@@ -84,7 +77,13 @@ export class ModeComponent implements OnInit {
     }
 
     getCategories(value) {
-            this.modeService.getCategories(value).map(resp=>resp.json()).subscribe((resp)=> {
+        if (value == 'play' || value == 'eat') {
+            this.params.mode_type = 'mode_' + value;
+        }else{
+            this.params.mode_type = '';
+        }
+        let params = this.params;
+        this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categories = resp;
         });
 
@@ -98,7 +97,7 @@ export class ModeComponent implements OnInit {
 
 
     markerDragEnd($event) {
-        if($event.coords) {
+        if ($event.coords) {
             console.log('dragEnd', $event);
             //Update center map
             this.lat = $event.coords.lat;
@@ -117,7 +116,7 @@ export class ModeComponent implements OnInit {
     }
 
     mapClicked($event) {
-        if($event.coords) {
+        if ($event.coords) {
             console.log({
                 latitude: $event.coords.lat,
                 longitude: $event.coords.lng,
@@ -129,9 +128,11 @@ export class ModeComponent implements OnInit {
             });
         }
     }
-    changeCategory(){
+
+    changeCategory() {
         this.getCategories(this.filterFromMode.value.filterMode);
     }
+
     private renderMaker() {
 
     }
