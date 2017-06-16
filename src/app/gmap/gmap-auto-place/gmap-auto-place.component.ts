@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, Vie
 import { MapsAPILoader } from 'angular2-google-maps/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { } from '@types/googlemaps';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FileReaderEvent } from '../../app.interface';
 
 @Component({
@@ -36,7 +36,6 @@ export class GmapAutoPlaceComponent implements OnInit {
         this.ngZone.run(() => {
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
           this.onChangePlace.emit(place);
-          console.log('==>', place);
           this.group.controls.place.patchValue(place.formatted_address);
           this.group.controls.lat.patchValue(place.geometry.location.lat());
           this.group.controls.lng.patchValue(place.geometry.location.lng());

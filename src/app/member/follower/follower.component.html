@@ -4,7 +4,7 @@
   </div>
   <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
     <section *ngIf="userInfo.userFollower" class="follow-list-wrap">
-      <h3 class="col-xs-12 count-follow">{{ userInfo.userFollower.length}} Followers</h3>
+      <h3 class="col-xs-12 count-follow">{{ userInfo.followerNumber}} Followers</h3>
       <div class="col-xs-12">
         <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       </div>

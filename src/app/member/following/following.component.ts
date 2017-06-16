@@ -102,7 +102,7 @@ export class FollowingComponent implements OnInit {
       this.userInfo.email = response.email;
       this.userInfo.country = response.field_country;
       this.userInfo.followingNumber = response.follow.following;
-      this.userInfo.followerNumber = parseInt(response.follow.follower, 2);
+      this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = false;

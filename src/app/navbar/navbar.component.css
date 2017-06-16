@@ -157,12 +157,6 @@
 }
 
 /*search location end*/
-#map-option .dropdown-menu>.active, #map-option .dropdown-menu>.active:hover, #map-option .dropdown-menu>.active:focus {
-    color: #fff;
-    text-decoration: none;
-    outline: 0;
-    background-color: #ec3d62;
-}
 #map-option .dropdown-menu li{
     width: 160px;
     float: left;

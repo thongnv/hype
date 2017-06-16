@@ -802,6 +802,14 @@ body, html {
   .map-option li:hover {
     background: rgba(236, 61, 98, 0.5);
   }
+  .map-option .dropdown-menu li.active,
+  .map-option .dropdown-menu li.active:hover,
+  .map-option .dropdown-menu li.active:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #ec3d62;
+  }
   .map-option input {
     margin-top: 8px;
     border-radius: 5px !important;
@@ -824,7 +832,7 @@ body, html {
     color: #fff;
     font-size: 14px;
     font-family: Roboto-Medium, sans-serif;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 2px;
   }
   [role=button]:hover {
@@ -1107,4 +1115,3 @@ body, html {
     }
   }
 }
-
