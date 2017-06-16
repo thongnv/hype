@@ -294,6 +294,8 @@ export class HomeComponent implements OnInit {
                         this.loaderService.hide();
                         this.loadMap();
                     });
+            }else{
+                this.loaderService.hide();
             }
         }
 
