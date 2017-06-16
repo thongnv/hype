@@ -28,7 +28,7 @@ export class ProfileEditComponent implements OnInit {
       Validators.required,
       Validators.minLength(10),
       Validators.maxLength(30),
-      Validators.pattern(/^[+]*([0-9][-]*){10,30}$/)
+      Validators.pattern(/^[+]?([0-9][-]*){10,30}$/)
     ])],
     country: [''],
   });
