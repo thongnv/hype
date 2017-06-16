@@ -9,14 +9,26 @@
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
       <li id="site-name nav-item"><a [routerLink]="['./home']">hylo</a></li>
-      <li class="map-option nav-item">
+      <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>
-          <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-            {{selectedMapOption.name}} 
+          <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
+             ngbDropdownToggle>
+            {{selectedMapOption.name}}
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
-            <li *ngFor="let option of mapOptions" (click)="onSelectMapOption(option)">{{option.name}}</li>
+            <div slimScroll
+                 width="100%"
+                 height="300px"
+                 size="7px"
+                 [railVisible]="true"
+                 [railOpacity]="0.1"
+                 [railColor]="'#ec3d62'"
+                 [color]="'#ec3d62'">
+              <li *ngFor="let option of mapOptions" [class.active]="option === selectedMapOption"
+                  (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
+              </li>
+            </div>
           </ul>
         </div>
       </li>
@@ -95,40 +107,48 @@
               </ul>
 
             </div>
-            
+
           </div>
         </form>
       </li>
       <li *ngIf="loginData" class="pull-right nav-item add-event-button">
         <div class="user-option map-option pull-right" ngbDropdown>
-          <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+          <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false"
+             ngbDropdownToggle>
             <img src="/assets/img/homepage/icon-add.png" alt="icon-add">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
-            <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Create New List</li>
-            <li [routerLink]="['/share-event']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Create New Event</li>
+            <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              Create New List
+            </li>
+            <li [routerLink]="['/share-event']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              Create New Event
+            </li>
           </ul>
         </div>
       </li>
       <li class="pull-right nav-item notification-area" *ngIf="loginData">
-          <app-notification *ngIf="notifications"
-                            [notifications]="notifications"
-                            [loadingInProgress]="set.loadingInProgress"
-                            [endOfList]="set.endOfList"
-                            (onScrollToBottom)="onScrollToBottom()"
-                            (onMarkAllRead)="onMarkAllRead()"
-                            (onMarkOneRead)="onMarkOneRead($event)">
-          </app-notification>
+        <app-notification *ngIf="notifications"
+                          [notifications]="notifications"
+                          [loadingInProgress]="set.loadingInProgress"
+                          [endOfList]="set.endOfList"
+                          (onScrollToBottom)="onScrollToBottom()"
+                          (onMarkAllRead)="onMarkAllRead()"
+                          (onMarkOneRead)="onMarkOneRead($event)">
+        </app-notification>
       </li>
       <li class="pull-right info-user nav-item">
         <div *ngIf="loginData" class="user-option map-option right" ngbDropdown>
-          <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
+          <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false"
+             ngbDropdownToggle>
             <img class="img-circle" [src]="loginData.current_user.avatar" width="30" height="30">
             <span class="user-name-info text-ellipsis">{{loginData.current_user.field_first_name}}&nbsp;{{loginData.current_user.field_last_name}}</span>
             <img class="icon-down-left-navbar" src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
-            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Setting</li>
+            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">Setting
+            </li>
             <li [routerLink]="['/logout']">Logout</li>
           </ul>
         </div>

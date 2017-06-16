@@ -157,6 +157,50 @@
 }
 
 /*search location end*/
+#map-option .dropdown-menu>.active, #map-option .dropdown-menu>.active:hover, #map-option .dropdown-menu>.active:focus {
+    color: #fff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #ec3d62;
+}
+#map-option .dropdown-menu li{
+    width: 160px;
+    float: left;
+    display: inline-block;
+    clear: right;
+}
+@media only screen and (min-width: 768px){
+    #map-option .dropdown-menu{
+        width: 680px;
+        padding: 5px;
+        overflow: auto;
+    }
+}
+
+@media only screen and (min-width: 992px){
+    #map-option .dropdown-menu{
+        width: 820px;
+        padding: 5px;
+        overflow: auto;
+    }
+}
+@media only screen and (min-width: 1200px){
+    #map-option .dropdown-menu{
+        width: 980px;
+        padding: 5px 0px 5px 5px;
+    }
+
+}
+@media only screen and (max-width: 767px){
+    #map-option .dropdown-menu{
+        width: 340px;
+        padding: 5px;
+    }
+}
+@media only screen and (max-width: 575px){
+
+}
+
 
 
 
