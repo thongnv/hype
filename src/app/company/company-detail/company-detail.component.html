@@ -1,5 +1,5 @@
 <article class="container">
-  <div  *ngIf="mapReady">
+  <div *ngIf="mapReady">
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -35,9 +35,6 @@
                 </a>
               </div>
             </div>
-            <p class="open-now-button">
-              Open Now
-            </p>
             <div class="company-description-wrap">
               <div *ngIf="descTruncated">
                 <div class="company-description">{{description | truncate:200}}</div>
