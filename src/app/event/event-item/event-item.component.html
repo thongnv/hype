@@ -9,10 +9,6 @@
             <div class="cover-avatar-picture"></div>
             <div class="month">{{item.created| amFromUnix | date:'MMM'}}</div>
             <div class="date-number">{{item.created| amFromUnix | date:'dd'}}</div>
-            <div class="heart" (click)="onLikeEmit(item)">
-                <i class="icon-sm" [class.icon-heart]="!item.user_bookmark"
-                   [class.icon-heart-selected]="item.user_bookmark" aria-hidden="true"></i>
-            </div>
         </div>
         <div class="information-profile">
             <div class="top-content">
@@ -28,11 +24,23 @@
             <div class="bottom-content">
                 <h5 class="mentioned">Mentioned by</h5>
                 <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
-                    <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
+                    <li *ngFor="let ment of item.field_event_option.field_mentioned_by | slice:0:3">
                         <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
                                 [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28" height="28"></a>
                     </li>
+                    <li *ngIf="item.field_event_option.field_mentioned_by?.length >3" (click)="openPopupMention(item)"><a><i fa class="fa-plus"></i></a></li>
                 </ul>
+                <div class="pull-right">
+                    <ul class="list-inline">
+                        <li>
+                            <span class="count_comment">Comments {{item.comment_count}}</span>
+                        </li>
+                        <li (click)="onLikeEmit(item)" class="heart-icon">
+                            <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
+                               [class.heart-selected]="item.user_bookmark" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -46,8 +54,9 @@
             <div class="list-item-overlay"></div>
             <div class="caption">
                 <h3 class="list-item-title" [routerLink]="[item.alias]">{{item.title}}</h3>
-                <a class="text-capitalize list-item-link" [routerLink]="[item.alias]">read &nbsp;<i class="fa fa-angle-right"
-                                                                        aria-hidden="true"></i></a>
+                <a class="text-capitalize list-item-link" [routerLink]="[item.alias]">read &nbsp;<i
+                        class="fa fa-angle-right"
+                        aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
