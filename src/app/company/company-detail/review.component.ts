@@ -18,7 +18,7 @@ import { CompanyDetailComponent } from './company-detail.component';
           </p>
         </div>
         <div class="rating-star">
-          <rating [ngModel]="review.rating" emptyIcon="★"></rating>
+          <rating [ngModel]="review.rating" [readonly]="true" emptyIcon="★"></rating>
         </div>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
