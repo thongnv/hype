@@ -80,11 +80,18 @@
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
-            <input formControlName="eventPrice" id="event-price" class="form-control" type="number">
+            <input formControlName="eventPrice" id="event-price"
+                   class="form-control"
+                   min="0"
+                   max="300"
+                   value="0"
+                   type="number"
+                   (change)="onEventPriceChange($event)"
+            >
             <span class="dollar-character">$</span>
-            <small *ngIf="eventForm.get('eventPrice').touched && eventForm.get('eventPrice').invalid"
+            <small id="eventPriceErr"
                    class="text-danger">
-              Price is number and between 0-300 $
+
             </small>
           </div>
           <div class="field-group row">

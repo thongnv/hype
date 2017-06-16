@@ -29,7 +29,7 @@ export class ShareEventComponent implements OnInit {
       lng: [''],
     }),
     eventDate: [''],
-    eventPrice: ['', Validators.compose([this.minMax])],
+    eventPrice: [''],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
@@ -79,6 +79,17 @@ export class ShareEventComponent implements OnInit {
       minMax: true
     };
   }
+
+  public onEventPriceChange(evt) {
+    console.log('evt: ', evt.target.value);
+    if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
+      document.getElementById('eventPriceErr').innerText = 'Price is number and between 0-300 $';
+    } else if (evt.target.value.length == 0 || evt.target.valueAsNumber <= 300 || evt.target.valueAsNumber > 0) {
+      this.eventForm.patchValue({'eventPrice': 0});
+      document.getElementById('eventPriceErr').innerText = '';
+    }
+  }
+
   public onRemovePreview(imageUrl) {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
