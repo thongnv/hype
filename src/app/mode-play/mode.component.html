@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-lg-6 col-xs-12 left-box">
             <form [formGroup]="filterFromMode" class="filterFromMode">
-                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" (change)="changeCategory()" formControlName="filterMode">
+                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" (change)="changeType()"
+                     formControlName="filterMode">
                     <label class="btn btn-default">
                         <input type="radio" value="all"> All
                     </label>
@@ -17,34 +18,18 @@
             <hr>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div>
-                    <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
+                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()" name="radioBasic"
+                         formControlName="filterCategory">
                         <label class="btn btn-default">
                             <img src="../../assets/img/icons/All.png" alt="All">
                             <span class="clearfix">
                                 <input type="radio" value="all"> All
                             </span>
                         </label>
-                        <label class="btn btn-default" *ngFor="let term of categories.data">
+                        <label class="btn btn-default" *ngFor="let term of categories.data | slice:0:6">
                             <img src="{{term.icon}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.tid}}">{{term.name}}
-                        </label>
-                    </div>
-                </div>
-                <div *ngIf="filterFromMode.value.filterMode =='play' || filterFromMode.value.filterMode =='all'">
-                    <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" formControlName="filterCategory">
-                        <label class="btn btn-default" *ngIf="filterFromMode.value.filterMode !='all'">
-                            <img src="../../assets/img/icons/All.png" alt="All">
-                            <span class="clearfix">
-                            <input type="radio" value="all"> All
-                        </span>
-                        </label>
-                        <label class="btn btn-default" *ngFor="let term of categories.play">
-                            <div *ngIf="filterFromMode.value.filterMode=='play'">
-                                <img src="{{term.url}}" alt="{{term.name}}">
-                                <span class="clearfix"></span>
-                                <input type="radio" value="{{term.tid}}">{{term.name}}
-                            </div>
                         </label>
                     </div>
                 </div>
@@ -52,9 +37,11 @@
 
             <ngb-tabset>
                 <ngb-tab class="tabFilter">
-                    <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down" aria-hidden="true"></i><span></span></ng-template>
+                    <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
+                                                            aria-hidden="true"></i><span></span></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="someRange3" style="margin-top: 4em;"></nouislider>
+                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="someRange3"
+                                    style="margin-top: 4em;"></nouislider>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab>
@@ -63,7 +50,8 @@
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
                             <div *ngFor="let item of filterData.eat; let in =index" style="margin-left: 40px">
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="cuisine" name="cuisine--{{item.tid}}" value="{{item.tid}}">{{item.name}}
+                                    <input type="checkbox" [(ngModel)]="cuisine" name="cuisine--{{item.tid}}"
+                                           value="{{item.tid}}">{{item.name}}
                                 </div>
                                 <div class="" *ngIf="item.sub" style="margin-left: 30px;">
                                     <div class="checkbox" *ngFor="let sb of item.sub; let i = index">
@@ -92,7 +80,8 @@
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
                             <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="best" name="best--{{item.tid}}" value="{{item.tid}}">{{item.name}}
+                                    <input type="checkbox" [(ngModel)]="best" name="best--{{item.tid}}"
+                                           value="{{item.tid}}">{{item.name}}
                                 </div>
                             </div>
                         </div>
@@ -104,51 +93,29 @@
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
-            <div class="result-wrap" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+            <div class="list-header">
+                <div class="pull-left">Sort By</div>
+                <div class="pull-right">Clear Filters</div>
+            </div>
+            <div class="clearfix"></div>
+            <div id="v-scrollable" class="scrollable section"
+                 ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
                 <div class="list-event">
-                    <div class="list-header">
-                        <div class="pull-left">Sort By</div>
-                        <div class="pull-right">Clear Filters</div>
-                    </div>
-                    <div class="clearfix"></div>
                     <div class="items" *ngFor="let item of items; let index = 'index'">
                         <div class="list-items">
                             <div class="avatar">
-                                <div class="badge">#{{index}}</div>
-                                <img src="{{item.index}}">
+                                <div class="badge">#{{index +1}}</div>
+                                <img *ngIf="item.images?.length > 0" src="{{item.images[0].thumbnail}}">
                             </div>
                             <div class="item-content">
-                                <h3 class="name">{{item.name}}</h3>
+                                <h3 class="name">{{item.Company_Name}}</h3>
                                 <div class="clearfix"></div>
-                                <ngb-rating [rate]="3" disabled="true"></ngb-rating>
+                                <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
                                 <div class="box-content">
-                                    <p>{{item.email}} | {{item.phone}}</p>
-                                    <p>{{item.address}}</p>
+                                    <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
+                                    <p *ngIf="item.YP_Address?.length > 0"
+                                       [innerHTML]="item.YP_Address[0] | myHtml2Text | truncate : 45"></p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="list-event" slimScroll width="auto" height="calc(100vh - 265px)" size="7px" [alwaysVisible]="true" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
-                <div class="list-header">
-                    <div class="pull-left">Sort By</div>
-                    <div class="pull-right">Clear Filters</div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="items" *ngFor="let item of items; let index = 'index'">
-                    <div class="list-items">
-                        <div class="avatar">
-                            <div class="badge">#{{index}}</div>
-                            <img src="{{item.index}}">
-                        </div>
-                        <div class="item-content">
-                            <h3 class="name">{{item.name}}</h3>
-                            <div class="clearfix"></div>
-                            <ngb-rating [rate]="3" disabled="true"></ngb-rating>
-                            <div class="box-content">
-                                <p>{{item.email}} | {{item.phone}}</p>
-                                <p>{{item.address}}</p>
                             </div>
                         </div>
                     </div>
@@ -157,20 +124,22 @@
         </div>
         <div class="col-lg-6 col-xs-12 gmap-box">
             <div class="box-map" style="margin-top: 20px">
-                <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="11">
-                    <gmap-cluster
-                            [markers]="markers">
-                    </gmap-cluster>
-                    <sebm-google-map-circle
-                            [latitude]="lat + 0.05"
-                            [longitude]="lng"
-                            [radius]="5000"
-                            [fillColor]="'red'"
-                            [circleDraggable]="true"
-                            [editable]="true"
-                            (radiusChange)="handleRadiusChange()"
-                            (dragEnd)="handleDrag()">
-                    </sebm-google-map-circle>
+                <sebm-google-map *ngIf="showMap"
+                                 [latitude]="lat"
+                                 [longitude]="lng"
+                                 [zoom]="mapZoom"
+                                 [styles]="roadmap"
+                                 [disableDefaultUI]="false"
+                                 [zoomControl]="false"
+                                 [streetViewControl]="true"
+                                 (mapClick)="mapClicked($event,index)"
+                >
+                    <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"
+                                         (radiusChange)="markerRadiusChange($event)" [lat]="lat"
+                                         (markerClick)="clickedMarker($event)"
+                                         (dragEnd)="markerDragEnd($event)"
+                                         [lng]="lng"></gmap-geocode-marker>
+
                 </sebm-google-map>
             </div>
         </div>

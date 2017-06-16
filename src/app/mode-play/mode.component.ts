@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
 import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
+import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
+import {LoaderService} from "../shared/loader/loader.service";
 
 declare let google:any;
 
@@ -25,18 +27,41 @@ export class ModeComponent implements OnInit {
     public filterCategory:FormGroup;
     public items = [];
     public filterData:any = [];
+    public currentHighlightedMarker:number = 1;
     public currentRate = 3;
+    public mode:any = {};
     public cuisine = [{}];
     public latlngBounds:any;
-    public mapZoom:number = 10;
-    public lat:number = 21.030596;
-    public lng:number = 105.786215;
+    public mapZoom:number = 15;
+    public lat:number = 1.3089757786697331;
+    public lng:number = 103.8258969783783;
     public currentRadius:any = 3000;
-    private params = {mode_type: ''};
+    private catParam = {mode_type: ''};
+    public showMap:boolean = false;
+    private total:number = 0;
+    private params = {
+        type: 'all',
+        kind: '',
+        price: '',
+        activity: ["education"],
+        cuisine: '',
+        rate: 0,
+        bestfor:'',
+        order_by: 'Company_Name',
+        order_dir: 'ASC',
+        lat: 1.352083,
+        long: 103.819836,
+        radius: 50,
+        page: 0,
+        limit: 20
+    };
 
     public constructor(private formBuilder:FormBuilder,
                        private modeService:ModeService,
-                       private rateConfig:NgbRatingConfig, private wrapper:GoogleMapsAPIWrapper) {
+                       private rateConfig:NgbRatingConfig,
+                       private wrapper:GoogleMapsAPIWrapper,
+                       private mapsAPILoader:MapsAPILoader,
+                       private loaderService:LoaderService,) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -48,16 +73,7 @@ export class ModeComponent implements OnInit {
 
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-
-        this.markers = [
-            {lat: 21.033933, lng: 105.786635},
-            {lat: 21.033492, lng: 105.793051},
-            {lat: 21.038319, lng: 105.821257},
-            {lat: 21.023623485099524, lng: 105.699462890625},
-            {lat: 20.99574010656533, lng: 105.6991195678711},
-            {lat: 20.976186585026024, lng: 105.80657958984375},
-            {lat: 20.937071867747825, lng: 105.6005859375}
-        ];
+        this.loaderService.show();
     }
 
     public ngOnInit() {
@@ -72,17 +88,29 @@ export class ModeComponent implements OnInit {
     }
 
     getDataModes() {
-        // this.modeService.getModes(this.params).map(response => response.json())
-        //     .subscribe(data => this.items = data);data
+        let params = this.params;
+        console.log(params);
+        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+            console.log(resp);
+            this.total = resp.total;
+            this.items = resp.company;
+            this.initMap(resp.company);
+        });
+    }
+
+    changeCategory() {
+        this.loaderService.show();
+        this.params.kind = this.filterCategory.value.filterMode;
+        this.getDataModes();
     }
 
     getCategories(value) {
         if (value == 'play' || value == 'eat') {
-            this.params.mode_type = 'mode_' + value;
-        }else{
-            this.params.mode_type = '';
+            this.catParam.mode_type = 'mode_' + value;
+        } else {
+            this.catParam.mode_type = '';
         }
-        let params = this.params;
+        let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categories = resp;
         });
@@ -111,10 +139,6 @@ export class ModeComponent implements OnInit {
         //this.renderMaker();
     }
 
-    clickedMarker(label:string, index:number) {
-        console.log(`clicked the marker: ${label || index}`)
-    }
-
     mapClicked($event) {
         if ($event.coords) {
             console.log({
@@ -129,11 +153,92 @@ export class ModeComponent implements OnInit {
         }
     }
 
-    changeCategory() {
+    changeType() {
+        this.params.type = this.filterFromMode.value.filterMode;
+        this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
+        this.loaderService.show();
+        this.getDataModes();
+
     }
 
-    private renderMaker() {
+    private initMap(companies:any) {
+        for (let i = 0; i < this.items.length; i++) {
+            if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
+                let lat = this.items[i].YP_Address[6].split("/");
+                let lng = this.items[i].YP_Address[5].split("/");
+                this.markers.push({
+                    lat: parseFloat(lat[1]),
+                    lng: parseFloat(lng[1]),
+                    label: this.items[i].Company_Name,
+                    opacity: 0.6,
+                    isOpenInfo: false
+                });
+            }
+        }
+        if (this.markers.length > 0) {
+            this.showMap = true;
+            this.loaderService.hide();
+        }
+        console.log(this.markers);
+    }
+
+    public clickedMarker(selector, horizontal) {
+        scrollTo(
+            '#v' + selector,
+            '#v-scrollable',
+            horizontal,
+            0
+        );
+
+    }
+
+    public onScroll(event) {
+        let elm = event.srcElement;
+        let baseHeight = event.target.clientHeight;
+        let realScrollTop = event.target.scrollTop + baseHeight;
+        let currentHeight:number = baseHeight;
+
+        // determine just scrolled to end
+        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
+            console.log('end, params: ', this.params);
+            this.params.page += 1;
+            if (this.items.length <= this.total) {
+                this.loaderService.show();
+                this.modeService.getModes(this.params).map(resp=>resp.json()).subscribe((resp)=> {
+                    console.log(resp);
+                    this.items = this.items.concat(resp.data);
+                    this.initMap(this.items.concat(resp.data));
+                });
+            }
+        }
+
+        if (event.target.children[0].children.length > 1) {
+            for (let i = 0; i < event.target.children[0].children.length; i++) {
+                let currentClientH = event.target.children[0].children[i].clientHeight;
+                currentHeight += currentClientH;
+                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+                    if (this.currentHighlightedMarker !== i) {
+                        this.currentHighlightedMarker = i;
+                        this.highlightMarker(i);
+                    }
+                }
+            }
+        }
+    }
+
+    private highlightMarker(markerId:number):void {
+        if (this.markers[markerId]) {
+            this.markers.forEach((marker, index) => {
+                if (index === markerId) {
+                    this.markers[index].opacity = 1;
+                    this.markers[index].isOpenInfo = true;
+                } else {
+                    this.markers[index].opacity = 0.4;
+                    this.markers[index].isOpenInfo = false;
+                }
+            });
+        }
 
     }
 }

@@ -51,34 +51,6 @@ export class GeocodeMarkerComponent implements OnInit {
         }
     }
 
-
-    //private loadMapRadius() {
-    //
-    //    this.mapsAPILoader.load().then(()=> {
-    //        let mapCenter = new google.maps.Marker({
-    //            position: new google.maps.LatLng(this.lat, this.lng),
-    //            draggable: true
-    //        });
-    //        let searchCenter = mapCenter.getPosition();
-    //        for (var i = 0; i < this.inputEvents.length; i++) {
-    //            //    let myMarker = new google.maps.Marker({
-    //            //        position: new google.maps.LatLng(this.inputEvents[i].field_location_place.field_latitude, this.inputEvents[i].field_location_place.field_longitude),
-    //            //        draggable: true
-    //            //    });
-    //            //    let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-    //            //    if (parseInt(geometry) < this.currentRadius) {
-    //            //        this.events.push(this.inputEvents[i]);
-    //            this.markers.push({
-    //                lat: this.inputEvents[i].field_location_place.field_latitude,
-    //                lng: this.inputEvents[i].field_location_place.field_longitude,
-    //                label: this.inputEvents[i].title
-    //            });
-    //            //    }
-    //            //
-    //        }
-    //    });
-    //}
-
     public infoWindowClose($event) {
         console.log($event);
     }

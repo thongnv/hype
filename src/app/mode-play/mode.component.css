@@ -24,6 +24,7 @@
     padding: 20px;
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
+
 .filterFromMode .btn-block label {
     height: 38px;
     padding-top: 10px;
@@ -31,6 +32,7 @@
     width: 33%;
     font-weight: 500;
 }
+
 .filterFromMode .btn-block label.active {
     border-radius: 4px;
     background: #2a6be1;
@@ -42,7 +44,8 @@
 .filterCategory {
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
-.filterCategory .btn-filter-block label  {
+
+.filterCategory .btn-filter-block label {
     background: transparent;
     border: none;
     box-shadow: none;
@@ -50,10 +53,12 @@
     width: 14%;
     text-align: center;
 }
+
 .filterCategory .btn-filter-block label img {
     width: 30px;
     height: 30px;
 }
+
 .filterCategory .btn-filter-block label span {
     font-size: 12px;
     font-weight: 500;
@@ -61,12 +66,14 @@
     text-align: center;
     color: #3b3b3b;
 }
+
 .left-box .actionFilter {
     padding-bottom: 20px;
     margin-top: 30px;
     text-align: right;
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
+
 .left-box .actionFilter label {
     background: transparent;
     border: none;
@@ -120,7 +127,8 @@
     height: 130px;
     line-height: 1.2em;
 }
-.list-items .avatar .badge{
+
+.list-items .avatar .badge {
     position: absolute;
     z-index: 9;
     border-radius: 50%;
@@ -136,6 +144,7 @@
     text-align: center;
     color: #ffffff;
 }
+
 .items {
     padding: 10px;
     border-bottom: 1px solid #d1dadf;
@@ -148,7 +157,8 @@
     margin-top: 10px;
     margin-left: 15px;
 }
-.item-content .box-content{
+
+.item-content .box-content {
     margin-top: 10px;
     font-size: 14px;
     font-weight: 300;
@@ -156,32 +166,38 @@
     text-align: left;
     color: #3b3b3b;
 }
+
 .item-content span:nth-child(2n) {
     color: #ec3d62;
     font-size: 20px;
 }
-.justify-content-start .text-center{
+
+.justify-content-start .text-center {
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
 .name {
     display: inline-block;
     font-weight: bold;
     margin-top: 0px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .badge {
     opacity: 1;
 }
+
 .tab-pane > div > div > span {
     text-align: center;
 }
+
 .tab-pane > div > div {
     display: inline-block;
     vertical-align: top;
-    text-align: left;  
+    text-align: left;
 }
+
 .tab-pane .star {
     font-size: 3.5rem;
     color: #b0c4de;
@@ -190,56 +206,67 @@
 .tab-pane .filled {
     color: #1e90ff;
 }
-.tab-pane .d-inline-flex{
+
+.tab-pane .d-inline-flex {
     outline: none;
 }
-.item-content .d-inline-flex span{
-    cursor: default;
+
+.item-content .d-inline-flex span {
+    cursor: default !important;
+    pointer-events: none;
 }
+
 ul.nav-tabs li.nav-item {
     width: 140px;
     clear: both;
     display: inline-block;
 }
+
 ul.nav-tabs li.nav-item:first-child {
 }
+
 ul.nav-tabs li.nav-item a.nav-link {
     text-align: left;
     padding: 0px;
 }
+
 ul.nav-tabs li.nav-item a.nav-link i {
     font-size: 25px;
     position: relative;
     top: 2px;
     margin-left: 7px;
 }
+
 ul.nav-tabs {
     margin: 20px;
 }
+
 nouislider.ng2-nouislider {
     width: 50%;
     margin: 40px auto 20px;
 }
+
 .list-event {
     padding: 20px;
 }
+
 .list-event .list-header {
     margin-bottom: 20px;
 }
+
 .list-event .list-header .pull-left {
     font-size: 12px;
     line-height: 1;
     text-align: left;
     color: #3b3b3b;
 }
+
 .list-event .list-header .pull-right {
     font-size: 12px;
     line-height: 1;
     text-align: right;
     color: #ec3d62;
 }
-
-
 
 .sebm-google-map-container {
     height: 600px !important;

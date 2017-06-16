@@ -14,7 +14,7 @@ export class ModeService {
     }
 
     public getCategories(params:any) {
-        let seq = this.api.get(AppSetting.API_ENDPOINT_MODE, params).share();
+        let seq = this.api.get(AppSetting.API_ENDPOINT_CAT_MODE, params).share();
         seq
             .map(res => res.json())
             .subscribe(res => {
@@ -26,7 +26,7 @@ export class ModeService {
 
     public getModes(params:any) {
 
-        let seq = this.api.get('http://hylo.dev/assets/mock-data/events.json').share();
+        let seq = this.api.get(AppSetting.API_ENDPOINT_MODE, params).share();
         seq
             .map(res => res.json())
             .subscribe(res => {
