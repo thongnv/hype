@@ -22,7 +22,7 @@
           <input formControlName="listName" id="list-name" class="form-control" type="text"
                  placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
           <small *ngIf="formData.get('listName').touched && formData.get('listName').hasError('required')" class="text-danger">
-            List Name is require
+            List Name is required
           </small>
         </div>
         <div class="form-group">
@@ -36,7 +36,7 @@
             <option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>
           </select>
           <small *ngIf="formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
-            List Category is require
+            List Category is required
           </small>
         </div>
         <div class="form-group list-img-box">
@@ -47,6 +47,9 @@
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file'
                    imageUpload (change)="readUrl($event)"  multiple="multiple">
           </label>
+          <small *ngIf="previewUrl == 0" class="text-danger">
+            List images is required
+          </small>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
               <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />

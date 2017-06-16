@@ -201,10 +201,10 @@ export class CurateNewComponent implements OnInit {
   private initAddress() {
     return this.formBuilder.group({
       place: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       lat: [''],
       lng: [''],
-      image: ['']
+      image: ['', Validators.required]
     });
   }
 
