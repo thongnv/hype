@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
@@ -18,7 +18,7 @@ export class ProfileEditComponent implements OnInit {
   public countries: any[];
   public profileForm = this.fb.group({
     firstName: ['', Validators.compose([
-      Validators.required,
+      this.requiredField,
       Validators.maxLength(30)
       ])],
     lastName: ['', Validators.compose([
@@ -98,7 +98,12 @@ export class ProfileEditComponent implements OnInit {
       );
     }
   }
-
+  public requiredField(control: FormControl) {
+    console.log(control.value);
+    return control.value.toString().trim().length ? {requiredField: false} : {
+      requiredField: true
+    };
+  }
   private getUserProfile(slugName: string): void {
     this.mainService.getUserProfile(slugName).then((response) => {
       this.profileForm.patchValue({

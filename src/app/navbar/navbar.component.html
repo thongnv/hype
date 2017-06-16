@@ -16,7 +16,7 @@
             {{selectedMapOption.name}}
             <img src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
-          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1">
+          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1" id="map-option-dropdown">
             <div slimScroll
                  width="100%"
                  height="300px"
@@ -38,7 +38,7 @@
 
             <button class="btn btn-default" type="button"></button>
 
-            <input type="text" class="form-control" placeholder="Search...">
+            <input type="text" class="form-control" placeholder="Search for any places and activities...">
 
             <div class="search-location-search-area" id="">
 
