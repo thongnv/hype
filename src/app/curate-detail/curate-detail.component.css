@@ -61,7 +61,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: keep-all;
-    padding: 0px 20px;
+    padding: 3px 20px 0px;
     font-size: 26px;
     font-weight: bold;
     line-height: 35px;

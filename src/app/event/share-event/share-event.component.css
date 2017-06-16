@@ -192,6 +192,17 @@ header ul li.active {
 
 /*preview start*/
 
+.list-preview-wrap .left-content {
+    border-right: 1px solid #eaeaea;
+}
+.list-preview-wrap .left-content hr {
+    width: 97%;
+    margin-left: 20px;
+}
+.list-preview-wrap .right-content{
+    padding-left: 30px;
+    padding-right: 0px;
+}
 .list-preview-wrap .event-title {
     margin: 24px;
     font-weight: bold;
@@ -200,13 +211,15 @@ header ul li.active {
     float: left;
     margin-top: 12px;
 }
-.list-preview-wrap .event-title span {
-    font-size: 28px;
-    text-align: left;
+.list-preview-wrap .event-title span  {
     text-transform: capitalize;
-    font-weight: bold;
     display: block;
     padding-left: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1.13;
+    text-align: left;
+    color: #3b3b3b;
 }
 
 .list-preview-wrap .information-event .col-md-3 p {
@@ -311,10 +324,13 @@ header ul li.active {
 }
 
 .left-content-information-event > li > span {
-    font-size: 13px;
     padding-left: 32%;
-    line-height: 1.2;
     display: block;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.43;
+    text-align: left;
+    color: #3b3b3b;
 }
 
 .left-content-information-event > li > span > b {

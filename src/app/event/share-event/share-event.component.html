@@ -124,7 +124,7 @@
   <!--list preview wrap start-->
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-7 left-content">
         <div class="event-title">
           <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
@@ -204,7 +204,7 @@
         </div>
       </div>
 
-      <div class="col-md-5">
+      <div class="col-md-5 right-content">
 
         <div class="row">
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition" [carouselSlides]="slides">
@@ -225,9 +225,7 @@
             </sebm-google-map-marker>
           </sebm-google-map>
         </div>
-
       </div>
-
     </div>
   </div>
   <!--list preview wrap end-->
