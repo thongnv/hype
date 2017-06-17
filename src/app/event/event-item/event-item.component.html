@@ -17,9 +17,13 @@
                 <h4 class="information-title" [routerLink]="[item.alias]"><p class="pull-left text-ellipsis real-title"
                                                                              *ngIf="item.title">
                     {{item.title}}</p>
-                    <span *ngIf="item.field_event_option.field_price"
+                    <span *ngIf="item.field_event_option.field_price !='0'"
                           class="free-price-button text-capitalize pull-right"
                           [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
+
+                    <span *ngIf="item.field_event_option.field_price =='0'"
+                          class="free-price-button text-capitalize pull-right"
+                          [class.free-price]="item.field_event_option.field_price == '0'">Free</span>
                 </h4>
                 <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
             </div>
