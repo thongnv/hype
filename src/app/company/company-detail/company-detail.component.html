@@ -88,7 +88,7 @@
             <a *ngIf="!rated" (click)="showReviewModal()" class="post-your-experience">Write a review</a>
           </div>
           <div *ngIf="reviews">
-            <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review">
+            <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review" (onClickLike)="onLikeReview($event)">
             </company-review>
           </div>
           <!-- reviews wrap end -->
@@ -109,7 +109,7 @@
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
           <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
         </div>
-        <company-review *ngFor="let review of reviews; let index = index" [review]="review">
+        <company-review *ngFor="let review of reviews; let index = index" [review]="review" (onClickLike)="onLikeReview($event)">
         </company-review>
       </div>
 

@@ -130,6 +130,19 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.descTruncated = true;
   }
 
+  public onLikeReview(item: Experience): void {
+    this.companyService.toggleLike(item).subscribe(
+      (resp) => {
+        console.log(resp);
+        item.liked = resp;
+        item.likeNumber += resp ? 1 : -1;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   private loadData(data) {
     this.id = data.id;
     this.images = data.images;
