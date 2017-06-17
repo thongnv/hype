@@ -31,7 +31,7 @@
                                 [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28" height="28"></a>
                     </li>
                     <ng-template #popContent>
-                        <a class="mentioned_title"><i fa class="fa-close"></i></a>
+                        <!--<a class="mentioned_title" (click)="p.close()"><i fa class="fa-close"></i></a>-->
                         <ul class="list-inline">
                             <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
                                 <a class="mentioned-item-wrap" href="{{ment}}" target="_blank">

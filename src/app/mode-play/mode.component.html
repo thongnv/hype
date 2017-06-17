@@ -15,7 +15,6 @@
                     </label>
                 </div>
             </form>
-            <hr>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div>
                     <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()" name="radioBasic"
@@ -30,6 +29,9 @@
                             <img src="{{term.icon}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.tid}}">{{term.name}}
+                        </label>
+                        <label *ngIf="categories.data?.length > 6" class="btn btn-default more">
+                            <i fa class="fa-plus"></i>
                         </label>
                     </div>
                 </div>
@@ -48,15 +50,19 @@
                     <ng-template ngbTabTitle>Cuisine <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
                     <ng-template ngbTabContent>
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
-                            <div *ngFor="let item of filterData.eat; let in =index" style="margin-left: 40px">
-                                {{filterData.eat[in].sub}}
+                            <div *ngFor="let item of filterData.eat; let in =index; trackBy:trackByIndex"
+                                 style="margin-left: 40px">
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="filterData.eat[in].name" name="cuisine--{{item.name}}"
-                                           value="{{item.name}}">{{item.name}}
+                                    <input type="checkbox"
+                                           (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
+                                           [ngModel]="cuisine && cuisine[item.name]">{{item.name}}
                                 </div>
                                 <div class="" *ngIf="item.sub" style="margin-left: 30px;">
-                                    <div class="checkbox" *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
-                                        <!--<input type="checkbox" [(ngModel)]="filterData.eat[in][sub][i].name" value="{{sb.name}}">{{sb.name}}-->
+                                    <div class="checkbox"
+                                         *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
+                                        <input type="checkbox"
+                                               (change)="cuisine && cuisine[sb.name]=$event.target.checked ? true : undefined"
+                                               [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
                                     </div>
                                 </div>
                             </div>
@@ -81,8 +87,9 @@
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
                             <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="best[in]" name="best--{{item.name}}"
-                                           value="{{item.name}}">{{item.name}}
+                                    <input type="checkbox"
+                                           (change)="best && best[item.name]=$event.target.checked ? true : undefined"
+                                           [ngModel]="best && best[item.name]">{{item.name}}
                                 </div>
                             </div>
                         </div>
@@ -94,10 +101,10 @@
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
-            <div class="list-header">
-                <div class="pull-left">Sort By</div>
-                <div class="pull-right">Clear Filters</div>
-            </div>
+            <!--<div class="list-header">-->
+            <!--<div class="pull-left">Sort By</div>-->
+            <!--<div class="pull-right">Clear Filters</div>-->
+            <!--</div>-->
             <div class="clearfix"></div>
             <div id="v-scrollable" class="scrollable section"
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
@@ -120,6 +127,10 @@
                             </div>
                         </div>
                     </div>
+                    <div class="list-bottom">
+                        <div *ngIf="items?.length ==0">End Of List</div>
+                    </div>
+
                 </div>
             </div>
         </div>

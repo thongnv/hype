@@ -30,8 +30,8 @@ export class ModeComponent implements OnInit {
     public currentHighlightedMarker:number = 1;
     public currentRate = 0;
     public mode:any = {};
-    public cuisine:any[] = ['name'];
-    public best:any[] = [0];
+    public cuisine:any[] = [{}];
+    public best:any[] = [{}];
     public latlngBounds:any;
     public mapZoom:number = 15;
     public lat:number = 1.3089757786697331;
@@ -93,9 +93,17 @@ export class ModeComponent implements OnInit {
         console.log(params);
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
             console.log(resp);
+            if (parseInt(resp.total) > 0) {
+                this.showMap = true;
+            }
+            this.loaderService.hide();
             this.total = resp.total;
             this.items = resp.company;
             this.initMap(resp.company);
+        }, err=> {
+            this.items = [];
+            this.markers = [];
+            this.loaderService.hide();
         });
     }
 
@@ -177,11 +185,7 @@ export class ModeComponent implements OnInit {
                 });
             }
         }
-        if (this.markers.length > 0) {
-            this.showMap = true;
-        }
-        this.loaderService.hide();
-        console.log(this.markers);
+
     }
 
     public clickedMarker(selector, horizontal) {
@@ -245,19 +249,45 @@ export class ModeComponent implements OnInit {
     }
 
     filterSubmit() {
-        console.log(this.cuisine);
+        let cuisine = new Array();
+        let best = new Array();
+        Object.keys(this.cuisine).map(function (k) {
+            if (k !== '0') {
+                cuisine.push(k);
+            }
+        });
+        Object.keys(this.cuisine).map(function (k) {
+            if (k !== '0') {
+                best.push(k);
+            }
+        });
+        console.log(cuisine);
         this.params.price = this.priceRange.join(',');
-        this.params.cuisine = this.cuisine.join(',');
-        this.params.bestfor = this.best.join(',');
+        this.params.cuisine = cuisine.join(',');
+        this.params.bestfor = best.join(',');
         this.params.rate = this.currentRate;
-        console.log(this.params);
+        this.loaderService.show();
+        this.getDataModes();
     }
 
     public filterCancel() {
+        this.currentRate = 0;
+        this.priceRange = [0, 50]
+        this.cuisine = [];
+        this.best = [];
+        this.filterFromMode.value.filterMode = 'all';
+        this.filterCategory.value.filterCategory = 'all';
+        this.params.price = '';
+        this.params.rate = 0;
+        this.params.cuisine = '';
+        this.params.bestfor = '';
+        this.loaderService.show();
+        this.getDataModes();
+
 
     }
 
-    trackByIndex(index: number, obj: any): any {
+    trackByIndex(index:number, obj:any):any {
         return index;
     }
 }
