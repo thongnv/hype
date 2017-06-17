@@ -233,3 +233,13 @@ ul.mentioned-item {
 .bottom-content .pull-right .list-inline {
     margin-top: 5px;
 }
+
+.popover-content {
+    position: relative;
+}
+
+.mentioned_title {
+    position: absolute;
+    right: 10px;
+    top: -25px;
+}

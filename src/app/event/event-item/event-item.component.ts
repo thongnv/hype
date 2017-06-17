@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output,ViewChild,ViewEncapsulation } from '@angular/core';
-import {Ng2PopupComponent,Ng2MessagePopupComponent} from "ng2-popup/dist/index";
 
 @Component({
     selector: 'app-event-item',
@@ -9,12 +8,9 @@ import {Ng2PopupComponent,Ng2MessagePopupComponent} from "ng2-popup/dist/index";
 })
 export class EventItemComponent {
 
-    @ViewChild(Ng2PopupComponent) popup:Ng2PopupComponent;
     @Input('events') public events:any;
 
     @Output('onClickLike') public onClickLike = new EventEmitter<any>();
-
-    @Output('onClickMention') public onClickMention = new EventEmitter<any>();
 
     private message:string;
 
@@ -35,20 +31,4 @@ export class EventItemComponent {
         }
     }
 
-    public openPopupMention(e) {
-        this.popup.open(Ng2MessagePopupComponent, {
-            classNames: 'popup_mention',
-            title: "Demo",
-            message: "This is message given using popup.open()",
-            buttons: {
-                OK: () => {
-                    this.message = "Ok button is pressed";
-                },
-                CANCEL: () => {
-                    this.message = "Cancel button is pressed";
-                    this.popup.close();
-                }
-            }
-        });
-    }
 }

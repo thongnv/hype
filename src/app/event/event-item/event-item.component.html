@@ -1,4 +1,5 @@
 <!--<ng2-popup #popup></ng2-popup>-->
+
 <div *ngFor="let item of events; let i = index"
      [ngStyle]="{'transition': 'ease-in 15s'}"
      class="wrap-each-items"
@@ -29,7 +30,22 @@
                         <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
                                 [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28" height="28"></a>
                     </li>
-                    <li style="border: none" *ngIf="item.field_event_option.field_mentioned_by?.length >3" (click)="openPopupMention(item)"><a><i fa class="fa-plus"></i></a></li>
+                    <ng-template #popContent>
+                        <a class="mentioned_title"><i fa class="fa-close"></i></a>
+                        <ul class="list-inline">
+                            <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
+                                <a class="mentioned-item-wrap" href="{{ment}}" target="_blank">
+                                    <img [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28"
+                                         height="28">
+                                </a>
+                            </li>
+                        </ul>
+                    </ng-template>
+                    <li style="border: none" *ngIf="item.field_event_option.field_mentioned_by?.length >3">
+                        <a placement="left" [ngbPopover]="popContent" popoverTitle="Mentioned">
+                            <i fa class="fa-plus"></i>
+                        </a>
+                    </li>
                 </ul>
                 <div class="pull-right">
                     <ul class="list-inline">
