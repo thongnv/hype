@@ -1,5 +1,5 @@
-<article class="container">
-  <div *ngIf="mapReady">
+<article class="container" *ngIf="ready">
+  <div>
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -34,7 +34,7 @@
                 </a>
               </div>
             </div>
-            <div class="company-description-wrap">
+            <div class="company-description-wrap" *ngIf="description">
               <div *ngIf="descTruncated">
                 <div class="company-description">{{description | truncate:200}}</div>
                 <div class="read-more" *ngIf="description.length>200" (click)="showMore()">
@@ -107,7 +107,7 @@
             <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
-          <a (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
+          <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
         </div>
         <company-review *ngFor="let review of reviews; let index = index" [review]="review">
         </company-review>

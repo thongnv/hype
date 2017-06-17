@@ -23,7 +23,6 @@ export class CompanyDetailComponent implements Company, OnInit {
   public reviews: Experience[] = [];
   public images: Image[];
   public slugName: string;
-  public company: Company;
   public user: BaseUser = {name: '', avatar: ''};
   public commentPosition = 'out';
   public companyStatus = 'default';
@@ -32,10 +31,11 @@ export class CompanyDetailComponent implements Company, OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides = [];
-  public mapReady: boolean = false;
+  public ready: boolean = false;
   public descTruncated: boolean = true;
   public bookmarked: boolean = false;
   public rated: boolean = false;
+  public company: Company;
 
   constructor(
     public mainService: MainService,
@@ -51,7 +51,7 @@ export class CompanyDetailComponent implements Company, OnInit {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
           this.initSlide(this.images);
-          this.mapReady = true;
+          this.ready = true;
         },
         (error) => {
           console.log(error);
