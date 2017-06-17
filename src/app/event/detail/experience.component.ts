@@ -164,13 +164,13 @@ export class ExperienceComponent implements Experience, OnInit {
         liked: false,
         replies: []
       };
+      msgInput.value = '';
       let eventSlugName = this.event.slugName;
       this.eventService.postComment(eventSlugName, comment).subscribe(
         (resp) => {
           console.log(resp);
           this.comments.push(comment);
           this.commentIndex += 1;
-          msgInput.value = '';
         },
         (error) => {
           console.log(error);

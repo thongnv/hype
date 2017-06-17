@@ -41,7 +41,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public previewUrl: Image[] = [];
   public userRating: number = 0;
   public userRated: boolean = false;
-  public mapReady: boolean = false;
+  public ready: boolean = false;
   public slugName = '';
 
   public experienceForm: FormGroup = this.formBuilder.group({
@@ -59,7 +59,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     public formBuilder: FormBuilder,
     public rateConfig: NgbRatingConfig,
     private route: ActivatedRoute,
-    private router: Router,
     public sanitizer: DomSanitizer
   ) {
     this.route.params.subscribe((e) => {
@@ -69,7 +68,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
           this.initSlide(this.images);
-          this.mapReady = true;
+          this.ready = true;
         },
         (error) => {
           console.log(error);

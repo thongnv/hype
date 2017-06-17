@@ -132,7 +132,7 @@
 
       <div class="map-location-area" style="display: block;">
         <h4 class="title-map-location margin-bottom-25">Location</h4>
-        <sebm-google-map *ngIf="mapReady" [latitude]="location.lat" [longitude]="location.lng" [zoom]="13">
+        <sebm-google-map *ngIf="ready" [latitude]="location.lat" [longitude]="location.lng" [zoom]="13">
           <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng">
           </sebm-google-map-marker>
         </sebm-google-map>
