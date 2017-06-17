@@ -49,6 +49,7 @@ export class ShareEventComponent implements OnInit {
     { value: '1', display: 'Buy Tix' },
     { value: '2', display: 'More Info' }
   ];
+  public submitted: boolean = false;
   constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState,
               public sanitizer: DomSanitizer,
@@ -84,10 +85,11 @@ export class ShareEventComponent implements OnInit {
     console.log('evt: ', evt.target.value);
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price is number and between 0-300 $';
-    } else if (evt.target.value.length == 0) {
-      this.eventForm.patchValue({'eventPrice': 0});
+    } else if (evt.target.value.length === 0) {
+      this.eventForm.patchValue({eventPrice: 0});
       document.getElementById('eventPriceErr').innerText = '';
-    } if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
+    }
+    if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
       document.getElementById('eventPriceErr').innerText = '';
     }
   }
@@ -150,12 +152,16 @@ export class ShareEventComponent implements OnInit {
     event.created = moment(event.eventDate).unix();
     let data = this.mapEvent(event);
     this.loaderService.show();
-    this.eventService.postEvent(data).subscribe((response: any) => {
-      if (response.status) {
-        this.loaderService.hide();
-        this.router.navigate([response.data.slug]);
-      }
-    });
+    if (!this.submitted) {
+      this.submitted = true;
+      this.eventService.postEvent(data).subscribe((response: any) => {
+        if (response.status) {
+          this.loaderService.hide();
+          this.submitted = false;
+          this.router.navigate([response.data.slug]);
+        }
+      });
+    }
   }
 
   public onPreview() {
