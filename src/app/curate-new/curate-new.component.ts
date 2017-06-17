@@ -23,6 +23,7 @@ export class CurateNewComponent implements OnInit {
   public markers: any[] = [];
   public showPreview: boolean = false;
   public addImage: boolean = true;
+  public submitted: boolean = false;
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -47,7 +48,7 @@ export class CurateNewComponent implements OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router,
-              private ng2ImgToolsService: Ng2ImgToolsService,) {
+              private ng2ImgToolsService: Ng2ImgToolsService) {
     this.onAddPlace();
   }
 
@@ -91,7 +92,7 @@ export class CurateNewComponent implements OnInit {
 
           // resize image
           this.ng2ImgToolsService.resizeExactFill([imageFile], 680, 360)
-            .subscribe(resizedImage => {
+            .subscribe((resizedImage) => {
               let img = {
                 url: URL.createObjectURL(resizedImage),
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
@@ -128,12 +129,16 @@ export class CurateNewComponent implements OnInit {
     article.listImages = this.previewUrl;
     let  data = this.mapArticle(article);
     this.loaderService.show();
-    this.mainService.postArticle(data).then((response) => {
-      if (response.status) {
-        this.loaderService.hide();
-        this.router.navigate([response.data.slug]);
-      }
-    });
+    if (!this.submitted) {
+      this.submitted = false;
+      this.mainService.postArticle(data).then((response) => {
+        if (response.status) {
+          this.loaderService.hide();
+          this.submitted = true;
+          this.router.navigate([response.data.slug]);
+        }
+      });
+    }
   }
 
   public onPreview() {
