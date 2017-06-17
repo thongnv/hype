@@ -38,6 +38,7 @@ export class AppSetting {
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
   public static API_FAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark/list';
   public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark';
+  public static API_SEARCH = API_ENDPOINT + 'api/v1/suggestion/';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,

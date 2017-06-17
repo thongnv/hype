@@ -369,6 +369,14 @@ export class MainService {
       .catch(this.handleError);
   }
 
+  public search(): Promise<any> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers});
+    return this._http.get(AppSetting.API_FAVORITE_PLACE, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);

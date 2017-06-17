@@ -107,6 +107,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { Ng2PopupComponent } from 'ng2-popup/dist/index';
 import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
+import { SearchComponent } from './navbar/search/search.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -182,6 +183,7 @@ type StoreType = {
     Html2TextPipe,
     AuthComponent,
     LogoutComponent,
+    SearchComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
