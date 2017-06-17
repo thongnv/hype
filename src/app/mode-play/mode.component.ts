@@ -210,15 +210,8 @@ export class ModeComponent implements OnInit {
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
             this.params.page += 1;
-            if (this.items.length <= this.total) {
-                //this.loaderService.show();
-                //this.modeService.getModes(this.params).map(resp=>resp.json()).subscribe((resp)=> {
-                //    console.log(this.items);
-                //    this.items = this.items.concat(resp.data);
-                //    this.initMap(this.items.concat(resp.data));
-                //    console.log(this.items.concat(resp.data));
-                //});
-            }
+            this.loaderService.show();
+            this.getDataModes();
         }
 
         if (event.target.children[0].children.length > 1) {
