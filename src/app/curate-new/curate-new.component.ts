@@ -113,31 +113,35 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onSubmit() {
-    let article = this.formData.value;
-    this.listPlaces = [];
-    let address = article.listPlaces;
-    for (let add of address) {
-      this.listPlaces.push({
-        field_place_comment: add.description,
-        field_latitude: add.lat,
-        field_longitude: add.lng,
-        field_place_address: add.place,
-        field_place_images: [add.image],
-      });
-    }
-    article.listPlaces = this.listPlaces;
-    article.listImages = this.previewUrl;
-    let  data = this.mapArticle(article);
-    this.loaderService.show();
-    if (!this.submitted) {
-      this.submitted = false;
-      this.mainService.postArticle(data).then((response) => {
-        if (response.status) {
-          this.loaderService.hide();
-          this.submitted = true;
-          this.router.navigate([response.data.slug]);
-        }
-      });
+    if (this.formData.valid) {
+      let article = this.formData.value;
+      this.listPlaces = [];
+      let address = article.listPlaces;
+      for (let add of address) {
+        this.listPlaces.push({
+          field_place_comment: add.description,
+          field_latitude: add.lat,
+          field_longitude: add.lng,
+          field_place_address: add.place,
+          field_place_images: [add.image],
+        });
+      }
+      article.listPlaces = this.listPlaces;
+      article.listImages = this.previewUrl;
+      let  data = this.mapArticle(article);
+      this.loaderService.show();
+      if (!this.submitted) {
+        this.submitted = false;
+        this.mainService.postArticle(data).then((response) => {
+          if (response.status) {
+            this.loaderService.hide();
+            this.submitted = true;
+            this.router.navigate([response.data.slug]);
+          }
+        });
+      }
+    } else {
+      this.formData.markAsTouched();
     }
   }
 
@@ -219,7 +223,7 @@ export class CurateNewComponent implements OnInit {
     this.slides = [];
     this.markers = [];
     this.showPreview = true;
-    if (this.previewData.listPlaces.length) {
+    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
       let index = 0;
       for (let place of this.previewData.listPlaces) {
         if (place.lat && place.lng) {

@@ -2,9 +2,12 @@
   <!--header start-->
   <header>
     <ul>
-      <li class="internal-link" (click)="switchView(false)" [class.active]="!showPreview">List Info</li>
-      <li class="internal-link" (click)="switchView(true)" [class.active]="showPreview">Preview</li>
-      <li class="pull-right" *ngIf="showPreview"><a class="btn btn-success" (click)="onSubmit()">Publish this</a></li>
+      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">List Info</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
+      <li class="pull-right"
+          *ngIf="showPreview && formData && formData.valid || previewUrl.length == 0">
+        <a class="btn btn-success" (click)="onSubmit()">Publish this</a>
+      </li>
     </ul>
   </header>
   <!--header end-->
@@ -58,7 +61,9 @@
           </div>
         </div>
         <div class="form-actions clearfix">
-          <button type="submit" [disabled]="formData.invalid" class="btn btn-primary">Create</button>
+          <button type="submit"
+                  [disabled]="formData.invalid || previewUrl.length == 0"
+                  class="btn btn-primary">Create</button>
           <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
         </div>
       </div>
@@ -104,7 +109,12 @@
           <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides"
                                  [noTransition]="noTransition">
             <app-slide-carousel *ngFor="let slide of slides; let index=index">
-              <div [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}"></div>
+              <div [ngStyle]="{
+              'background-image': 'url(' + slide.image + ')',
+              'background-position': 'center',
+               'height': '400px', 'background-size': 'cover'}">
+
+              </div>
             </app-slide-carousel>
           </app-boostrap-carousel>
         </div>
@@ -119,7 +129,7 @@
             <span class="pull-right place-detail-btn">details</span>
           </div>
           <div class="place-item-img">
-            <img [src]="plc.image.url" [alt]="plc.place" width="100%">
+            <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
           </div>
           <p class="place-item-description">{{plc.description}}</p>
         </div>
