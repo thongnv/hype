@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
+import { LoaderService } from '../shared/loader/loader.service';
 
 @Component({
   selector: 'app-curate',
@@ -20,10 +21,12 @@ export class CurateComponent implements OnInit {
   public noPause: boolean = true;
   public noTransition: boolean = false;
 
-  public constructor(private mainService: MainService) {
+  public constructor(private mainService: MainService,
+                     private loaderService: LoaderService) {
   }
 
   public ngOnInit() {
+    this.loaderService.show();
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
@@ -40,9 +43,9 @@ export class CurateComponent implements OnInit {
     });
 
     this.mainService.getCurate('latest', '*').subscribe((response: any) => {
-      console.log(response);
       this.featuredArticles = response.data;
       this.processFeature(this.featuredArticles);
+      this.loaderService.hide();
     });
   }
 
@@ -55,17 +58,17 @@ export class CurateComponent implements OnInit {
   }
 
   public onSelectCategory(cat: any) {
+    this.loaderService.show();
     this.selectedCategory = cat;
-
     this.mainService.getCurate('', cat).subscribe((response: any) => {
       this.featuredArticles = response.data;
       this.processFeature(this.featuredArticles);
     });
 
     this.mainService.getCurate('', cat).subscribe((response: any) => {
-      console.log(response);
       this.latestArticles = response.data;
       this.trending = response.data;
+      this.loaderService.hide();
     });
   }
 }
