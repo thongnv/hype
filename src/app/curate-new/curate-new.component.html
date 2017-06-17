@@ -5,7 +5,7 @@
       <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">List Info</li>
       <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
       <li class="pull-right"
-          *ngIf="showPreview && formData && formData.valid || previewUrl.length == 0">
+          *ngIf="showPreview && formData && formData.valid && previewUrl.length > 0">
         <a class="btn btn-success" (click)="onSubmit()">Publish this</a>
       </li>
     </ul>
