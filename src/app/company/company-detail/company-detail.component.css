@@ -573,7 +573,7 @@ article {
   text-align: left;
   color: #3b3b3b;
   margin-bottom: 22px;
-  width: 0px;
+  max-width: 100%;
 }
 
 .company-info > p > .info-value > .dropdown-toggle > i.fa-angle-down {
