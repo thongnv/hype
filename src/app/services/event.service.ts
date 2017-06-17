@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { Router } from '@angular/router';
 
 import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
@@ -52,7 +53,7 @@ export class EventService {
   'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')});
 
   constructor(private _localStorageService: LocalStorageService,
-              private _http: Http) {
+              private _http: Http, private router: Router) {
   }
 
   public getEventDetail(slugName): Observable<Response> {
@@ -64,9 +65,15 @@ export class EventService {
     .map((res: Response) => {
       return res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error.json()));
-    });
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
+      });
   }
 
   public postEvent(data): Observable<Response> {
@@ -80,8 +87,14 @@ export class EventService {
     .map((res: Response) => {
       return res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error.json()));
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
     });
   }
 
@@ -94,8 +107,14 @@ export class EventService {
     .map((res: Response) => {
       return res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error.json()));
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
     });
   }
 
@@ -115,8 +134,14 @@ export class EventService {
     .map((res: Response) => {
       return <Experience> res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error));
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
     });
   }
 
@@ -135,8 +160,14 @@ export class EventService {
     .map((res: Response) => {
       return res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error));
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
     });
   }
 
@@ -145,7 +176,7 @@ export class EventService {
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
       cid: comment.id,
-      like: comment.liked
+      like: !comment.liked
     };
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/like',
@@ -155,8 +186,14 @@ export class EventService {
     .map((res: Response) => {
       return res.json();
     })
-    .catch((error: any) => {
-      return Observable.throw(new Error(error));
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
     });
   }
 }

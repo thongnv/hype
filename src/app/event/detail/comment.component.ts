@@ -62,13 +62,15 @@ export class CommentComponent implements HyloComment, OnInit {
   }
 
   public toggleLike() {
-    this.liked = !this.liked;
+    let liked = !this.liked;
     let comment = this;
     this.eventService.toggleLike(comment).subscribe(
-      (resp) => console.log(resp),
+      (resp) => {
+        console.log(resp);
+        this.liked = liked;
+      },
       (error) => {
         console.log(error);
-        this.liked = !this.liked;
       }
     );
   }

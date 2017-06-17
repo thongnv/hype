@@ -104,13 +104,12 @@ export class ReviewComponent implements Experience, OnInit {
   }
 
   public toggleLikeReview() {
-    let liked = !this.liked;
     let review = this;
     this.companyService.toggleLike(review).subscribe(
       (resp) => {
         console.log(resp);
-        this.liked = liked;
-        this.likeNumber += liked ? 1 : -1;
+        this.liked = resp;
+        this.likeNumber += resp ? 1 : -1;
       },
       (error) => {
         console.log(error);

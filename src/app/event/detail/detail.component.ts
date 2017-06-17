@@ -73,7 +73,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         },
         (error) => {
           console.log(error);
-          this.router.navigate(['404']).then();
         }
       );
     });

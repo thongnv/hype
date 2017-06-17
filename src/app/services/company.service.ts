@@ -37,7 +37,7 @@ export class CompanyService {
               private router: Router) {
   }
 
-  public getCompanyDetail(slugName): Observable<Response> {
+  public getCompanyDetail(slugName): Observable<Company> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
@@ -68,8 +68,14 @@ export class CompanyService {
       return <Experience> res.json();
     })
       .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
         return Observable.throw(new Error(error));
-      });
+    });
   }
 
   public postReview(placeId: string, review: Experience): Observable<any> {
@@ -88,28 +94,38 @@ export class CompanyService {
         return <Experience> res.json();
       })
       .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
         return Observable.throw(new Error(error));
-      });
+    });
   }
 
-  public toggleLike(review: Experience): Observable<Response> {
+  public toggleLike(review: Experience): Observable<boolean> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
-      cid: review.id,
-      like: review.liked
+      id: review.id
     };
     return this._http.post(
-      AppSetting.API_ENDPOINT + 'api/v1/comment/like',
-      JSON.stringify(data),
-      options
+      AppSetting.API_ENDPOINT + 'api/v1/company/review/like',
+      JSON.stringify(data), options
     )
       .map((res: Response) => {
-        return res.json();
+        return Boolean(res.json().is_liked);
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
-      });
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
+    });
   }
 }
 
@@ -147,7 +163,7 @@ function getReviews(data): Experience[] {
   let reviews: Experience[] = [];
   for (let r of results) {
     let review: Experience = {
-      id: r.id,
+      id: r.rid,
       author: {
         name: r.user.name,
         avatar: r.user.avatar
@@ -158,7 +174,7 @@ function getReviews(data): Experience[] {
       images: extractImages(r.image),
       comments: [],
       likeNumber: Number(r.number_like),
-      liked: Boolean(data.is_like_flag)
+      liked: Boolean(r.is_like_flag)
     };
     reviews.push(review);
   }
