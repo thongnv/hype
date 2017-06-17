@@ -31,6 +31,7 @@ export class AppSetting {
   public static API_ENDPOINT_LIKE = API_ENDPOINT + 'api/user/flag/bookmark?_format=json';
   public static API_ENDPOINT_CAT_MODE = API_ENDPOINT + 'api/v1/category/mode?_format=json';
   public static API_ENDPOINT_MODE = API_ENDPOINT +'api/v1/place/search';
+  public static API_ENDPOINT_TOP = API_ENDPOINT +'api/v1/top?_format=json';
 
   public static API_TRENDING = API_ENDPOINT + 'api/v1/trending?_format=json';
   public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';

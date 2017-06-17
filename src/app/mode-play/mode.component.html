@@ -116,7 +116,7 @@
                                 <img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">
                             </div>
                             <div class="item-content">
-                                <h3 class="name">{{item.Company_Name}}</h3>
+                                <h3 class="name" [routerLink]="['/company',item.Company_Slug]">{{item.Company_Name}}</h3>
                                 <div class="clearfix"></div>
                                 <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
                                 <div class="box-content">

@@ -212,12 +212,34 @@ export class HomeComponent implements OnInit {
     private getTrending() {
         let params = this.params;
         console.log(params);
-        this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
-            this.listItems = response.data;
-            this.total = response.total;
-            this.loaderService.hide();
-            this.loadMap();
-        });
+        if (this.selectedEventOrder.name == 'top 100') {
+            this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
+                this.listItems = resp.data;
+                this.total = resp.total;
+                this.loaderService.hide();
+                this.loadMap();
+
+            }, err=> {
+                this.listItems = [];
+                this.events = [];
+                this.markers = [];
+                this.showMap = true;
+                this.loaderService.hide();
+            })
+        } else {
+            this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
+                this.listItems = response.data;
+                this.total = response.total;
+                this.loaderService.hide();
+                this.loadMap();
+            }, err=> {
+                this.listItems = [];
+                this.events = [];
+                this.markers = [];
+                this.loaderService.hide();
+                this.showMap = true;
+            });
+        }
     }
 
     public options:any = {
@@ -294,7 +316,7 @@ export class HomeComponent implements OnInit {
                         this.loaderService.hide();
                         this.loadMap();
                     });
-            }else{
+            } else {
                 this.loaderService.hide();
             }
         }
@@ -390,7 +412,8 @@ export class HomeComponent implements OnInit {
         this.showDate = true;
         this.showPrice = false;
     }
-    public openPopupMention(){
+
+    public openPopupMention() {
 
     }
 }

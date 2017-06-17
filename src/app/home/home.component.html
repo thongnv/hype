@@ -16,7 +16,7 @@
                         <b></b><b></b><b></b></li>
                 </ul>
             </div>
-            <div class="filter-events clearfix">
+            <div class="filter-events clearfix" [class.top-100]="selectedEventOrder.name == 'top 100'">
                 <div class="btn-group tab-control">
                     <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
                             class="btn btn-default tab-control text-capitalize" [class.active]="filter===selectedEventFilter">
@@ -30,7 +30,7 @@
                     </button>
                 </div>
                 <div class="clear"></div>
-                <div>
+                <div *ngIf="selectedEventOrder.name!='top 100'">
                     <a (click)="showRagePrice()" class="price-range">price range <i class="fa fa-angle-down"
                                                                                     aria-hidden="true"></i></a>
                     <a (click)="showWhen()" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>

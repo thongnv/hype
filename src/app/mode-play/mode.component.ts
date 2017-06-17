@@ -172,17 +172,19 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        for (let i = 0; i < this.items.length; i++) {
-            if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
-                let lat = this.items[i].YP_Address[6].split("/");
-                let lng = this.items[i].YP_Address[5].split("/");
-                this.markers.push({
-                    lat: parseFloat(lat[1]),
-                    lng: parseFloat(lng[1]),
-                    label: this.items[i].Company_Name,
-                    opacity: 0.6,
-                    isOpenInfo: false
-                });
+        if (this.items) {
+            for (let i = 0; i < this.items.length; i++) {
+                if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
+                    let lat = this.items[i].YP_Address[6].split("/");
+                    let lng = this.items[i].YP_Address[5].split("/");
+                    this.markers.push({
+                        lat: parseFloat(lat[1]),
+                        lng: parseFloat(lng[1]),
+                        label: this.items[i].Company_Name,
+                        opacity: 0.6,
+                        isOpenInfo: false
+                    });
+                }
             }
         }
 

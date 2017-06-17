@@ -26,6 +26,16 @@ export class HomeService {
         return seq;
     }
 
+    getTop100(params:any){
+        let seq = this.api.get(AppSetting.API_ENDPOINT_TOP, params).share();
+        seq.map(res=>res.json())
+            .subscribe(res=> {
+            }, err=> {
+                console.log('err', err);
+            });
+        return seq;
+    }
+
     getCategories(type:any) {
         let seq = this.api.get(AppSetting.API_CATEGORIES_EVENT).share();
         seq.map(res=>res.json())
