@@ -1,15 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment/moment';
 
-import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
 import { AppState } from '../../app.service';
-import { EventService } from '../../services/event.service';
-import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { EventService } from '../../services/event.service';
+import { LoaderService } from '../../shared/loader/loader.service';
+
+import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
 
 @Component({
   selector: 'app-detail',
@@ -26,7 +27,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public detail: string = '';
   public category: string = '';
   public date: number = 0;
-  public price: string = '';
+  public price: number = 0;
   public call2action: Call2Action = {action: '', link: ''};
   public mentions: Icon[] = [];
   public images: Image[] = [];
@@ -41,7 +42,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public previewUrl: Image[] = [];
   public userRating: number = 0;
   public userRated: boolean = false;
-  public mapReady: boolean = false;
+  public ready: boolean = false;
   public slugName = '';
 
   public experienceForm: FormGroup = this.formBuilder.group({
@@ -52,24 +53,24 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  constructor(
-    public appState: AppState,
-    public mainService: MainService,
-    public eventService: EventService,
-    public formBuilder: FormBuilder,
-    public rateConfig: NgbRatingConfig,
-    private route: ActivatedRoute,
-    private router: Router,
-    public sanitizer: DomSanitizer
-  ) {
+  constructor(public appState: AppState,
+              public mainService: MainService,
+              public eventService: EventService,
+              public formBuilder: FormBuilder,
+              public rateConfig: NgbRatingConfig,
+              private route: ActivatedRoute,
+              public sanitizer: DomSanitizer,
+              private loaderService: LoaderService) {
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
+      this.loaderService.show();
       this.eventService.getEventDetail(this.slugName).subscribe(
         (resp) => {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
           this.initSlide(this.images);
-          this.mapReady = true;
+          this.ready = true;
+          this.loaderService.hide();
         },
         (error) => {
           console.log(error);
@@ -106,12 +107,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       };
       let eventSlugName = this.slugName;
       this.userRated = true;
+      this.loaderService.show();
       this.eventService.postExperience(eventSlugName, experience).subscribe(
         (resp) => {
           console.log(resp);
           this.experiences.push(experience);
           this.experienceForm.reset();
           this.rating = resp.average_rating;
+          this.loaderService.hide();
         },
         (error) => {
           console.log(error);

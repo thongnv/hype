@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
-import { CompanyService } from '../../services/company.service';
 import { CompanyDetailComponent } from './company-detail.component';
 
 @Component({
@@ -46,11 +45,11 @@ import { CompanyDetailComponent } from './company-detail.component';
 
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
-          <a (click)="toggleLikeReview()">
-            <img *ngIf="!liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24" height="23">
-            <img *ngIf="liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24" height="23">
+          <a (click)="toggleLikeReview(review)">
+            <img *ngIf="!review.liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24" height="23">
+            <img *ngIf="review.liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
-          {{likeNumber}} Likes
+          {{review.likeNumber}} Likes
         </div>
       </div>
 
@@ -61,6 +60,8 @@ import { CompanyDetailComponent } from './company-detail.component';
 export class ReviewComponent implements Experience, OnInit {
   @Input() public index: number;
   @Input() public review: Experience;
+
+  @Output() public onClickLike = new EventEmitter<any>();
 
   public openModalWindow: boolean = false;
   public imagePointer: number;
@@ -76,9 +77,7 @@ export class ReviewComponent implements Experience, OnInit {
   public likeNumber: number;
   public liked: boolean;
 
-  constructor(private companyService: CompanyService,
-              private company: CompanyDetailComponent) {
-  }
+  constructor(private company: CompanyDetailComponent) {}
 
   public ngOnInit() {
     this.currentUser = this.company.user;
@@ -103,18 +102,8 @@ export class ReviewComponent implements Experience, OnInit {
     }
   }
 
-  public toggleLikeReview() {
-    let review = this;
-    this.companyService.toggleLike(review).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.liked = resp;
-        this.likeNumber += resp ? 1 : -1;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  public toggleLikeReview(review: Experience) {
+    this.onClickLike.emit(review);
   }
 
   public OpenImageModel(imageSrc, images) {

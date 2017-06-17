@@ -41,11 +41,7 @@ export class FollowItemComponent implements OnInit {
   }
 
   public ngOnInit() {
-    if (this.flag === 'following') {
-      this.stateFollow = 'no';
-    } else {
-      this.stateFollow = (this.item.flag) ? 'no' : 'yes';
-    }
+    this.stateFollow = (this.item.flag) ? 'no' : 'yes';
   }
 
 }
