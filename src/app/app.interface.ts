@@ -23,7 +23,7 @@ export interface HyloEvent {
   detail: string;
   category: string;
   date: number;
-  price: string;
+  price: number;
   call2action: Call2Action;
   mentions: Icon[];
   images: Image[];
