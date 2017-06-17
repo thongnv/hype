@@ -40,7 +40,7 @@
                     <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
                                                             aria-hidden="true"></i><span></span></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="someRange3"
+                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="priceRange"
                                     style="margin-top: 4em;"></nouislider>
                     </ng-template>
                 </ngb-tab>
@@ -49,13 +49,14 @@
                     <ng-template ngbTabContent>
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
                             <div *ngFor="let item of filterData.eat; let in =index" style="margin-left: 40px">
+                                {{filterData.eat[in].sub}}
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="cuisine" name="cuisine--{{item.tid}}"
-                                           value="{{item.tid}}">{{item.name}}
+                                    <input type="checkbox" [(ngModel)]="filterData.eat[in].name" name="cuisine--{{item.name}}"
+                                           value="{{item.name}}">{{item.name}}
                                 </div>
                                 <div class="" *ngIf="item.sub" style="margin-left: 30px;">
-                                    <div class="checkbox" *ngFor="let sb of item.sub; let i = index">
-                                        <input type="checkbox" [(ngModel)]="cuisine" value="{{sb.tid}}">{{sb.name}}
+                                    <div class="checkbox" *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
+                                        <!--<input type="checkbox" [(ngModel)]="filterData.eat[in][sub][i].name" value="{{sb.name}}">{{sb.name}}-->
                                     </div>
                                 </div>
                             </div>
@@ -80,8 +81,8 @@
                         <div *ngIf="filterFromMode.value.filterMode !='play'">
                             <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
                                 <div class="checkbox">
-                                    <input type="checkbox" [(ngModel)]="best" name="best--{{item.tid}}"
-                                           value="{{item.tid}}">{{item.name}}
+                                    <input type="checkbox" [(ngModel)]="best[in]" name="best--{{item.name}}"
+                                           value="{{item.name}}">{{item.name}}
                                 </div>
                             </div>
                         </div>
@@ -105,7 +106,7 @@
                         <div class="list-items">
                             <div class="avatar">
                                 <div class="badge">#{{index +1}}</div>
-                                <img *ngIf="item.images?.length > 0" src="{{item.images[0].thumbnail}}">
+                                <img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">
                             </div>
                             <div class="item-content">
                                 <h3 class="name">{{item.Company_Name}}</h3>

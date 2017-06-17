@@ -22,15 +22,16 @@ export class ModeComponent implements OnInit {
     public markers:any = [];
     public categories:any = [];
     public someValue:number = 5;
-    public someRange3:number[] = [50, 300];
+    public priceRange:number[] = [0, 300];
     public filterFromMode:FormGroup;
     public filterCategory:FormGroup;
     public items = [];
     public filterData:any = [];
     public currentHighlightedMarker:number = 1;
-    public currentRate = 3;
+    public currentRate = 0;
     public mode:any = {};
-    public cuisine = [{}];
+    public cuisine:any[] = ['name'];
+    public best:any[] = [0];
     public latlngBounds:any;
     public mapZoom:number = 15;
     public lat:number = 1.3089757786697331;
@@ -46,7 +47,7 @@ export class ModeComponent implements OnInit {
         activity: ["education"],
         cuisine: '',
         rate: 0,
-        bestfor:'',
+        bestfor: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
         lat: 1.352083,
@@ -61,7 +62,7 @@ export class ModeComponent implements OnInit {
                        private rateConfig:NgbRatingConfig,
                        private wrapper:GoogleMapsAPIWrapper,
                        private mapsAPILoader:MapsAPILoader,
-                       private loaderService:LoaderService,) {
+                       private loaderService:LoaderService) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -178,18 +179,18 @@ export class ModeComponent implements OnInit {
         }
         if (this.markers.length > 0) {
             this.showMap = true;
-            this.loaderService.hide();
         }
+        this.loaderService.hide();
         console.log(this.markers);
     }
 
     public clickedMarker(selector, horizontal) {
-        scrollTo(
-            '#v' + selector,
-            '#v-scrollable',
-            horizontal,
-            0
-        );
+        //scrollTo(
+        //    '#v' + selector,
+        //    '#v-scrollable',
+        //    horizontal,
+        //    0
+        //);
 
     }
 
@@ -204,12 +205,13 @@ export class ModeComponent implements OnInit {
             console.log('end, params: ', this.params);
             this.params.page += 1;
             if (this.items.length <= this.total) {
-                this.loaderService.show();
-                this.modeService.getModes(this.params).map(resp=>resp.json()).subscribe((resp)=> {
-                    console.log(resp);
-                    this.items = this.items.concat(resp.data);
-                    this.initMap(this.items.concat(resp.data));
-                });
+                //this.loaderService.show();
+                //this.modeService.getModes(this.params).map(resp=>resp.json()).subscribe((resp)=> {
+                //    console.log(this.items);
+                //    this.items = this.items.concat(resp.data);
+                //    this.initMap(this.items.concat(resp.data));
+                //    console.log(this.items.concat(resp.data));
+                //});
             }
         }
 
@@ -240,5 +242,22 @@ export class ModeComponent implements OnInit {
             });
         }
 
+    }
+
+    filterSubmit() {
+        console.log(this.cuisine);
+        this.params.price = this.priceRange.join(',');
+        this.params.cuisine = this.cuisine.join(',');
+        this.params.bestfor = this.best.join(',');
+        this.params.rate = this.currentRate;
+        console.log(this.params);
+    }
+
+    public filterCancel() {
+
+    }
+
+    trackByIndex(index: number, obj: any): any {
+        return index;
     }
 }

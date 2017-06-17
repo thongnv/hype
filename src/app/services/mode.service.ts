@@ -38,7 +38,7 @@ export class ModeService {
     }
 
     public getFilterMode() {
-        let seq = this.api.get('http://hylo.dev/assets/mock-data/cuisine.json').share();
+        let seq = this.api.get('http://hylo.dev:8000/assets/mock-data/cuisine.json').share();
         seq
             .map(res => res.json())
             .subscribe(res => {
