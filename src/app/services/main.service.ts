@@ -369,10 +369,10 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public search(): Promise<any> {
+  public search(keyword: string): Promise<any> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers});
-    return this._http.get(AppSetting.API_FAVORITE_PLACE, options)
+    return this._http.get(AppSetting.API_SEARCH + keyword, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);

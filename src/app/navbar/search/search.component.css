@@ -5,44 +5,44 @@
     margin-top: 1px;
     border-radius: 4px;
     background: #fff;
-    width: 110%;
-    display: none;
+    width: 100%;
 }
 .display-location-address {
-    padding: 0px 20px;
-    line-height: 3.5;
+    padding: 0 10px;
+    line-height: 50px;
     border: 1px solid #cacaca;
-    border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0 0;
     background: #fff;
+    height: 51px;
+    position: relative;
 }
 .display-location-address i {
     font-size: 18px;
     color: #3b3b3b;
+    width: 20px;
+    height: 48px;
+    float: left;
+    line-height: 50px;
 }
 .keyword-search-input {
     font-weight: bold;
     color: #3b3b3b;
     text-transform: capitalize;
     font-size: 14px;
-    margin: 0px 5px;
+    margin: 0;
 }
 .location-address {
     color: #ec3d62;
     font-weight: bold;
     text-transform: capitalize;
     font-size: 15px;
-    margin: 0px 15px;
+    margin: 0 15px;
+    float: right;
+    width: 120px;
 }
 .search-location-search-area ul {
-    padding-left: 0px;
+    padding-left: 0;
     list-style: none;
-}
-.search-location-search-area ul li a span {
-    display: inline-block;
-}
-.search-location-search-area ul li a span.location-address-content-each {
-    max-width: 300px;
-    vertical-align: middle;
 }
 .list-location-address li:first-child {
     background: #e0e0e0;
@@ -76,8 +76,8 @@
     text-decoration: none;
 }
 .list-location-address li a img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 #list-events-location-address li:last-child {
     border-bottom: 1px solid #cacaca;
@@ -85,3 +85,44 @@
 }
 
 /*search location end*/
+.result-info .keyword-search-input, .result-info .text-ellipsis{
+    width: 400px;
+    display: block;
+    margin-right: 0;
+    margin-left: 0;
+}
+.result-info{
+    width: calc(100% - 35px);
+    float: right;
+    padding-left: 10px;
+    height: 35px;
+    line-height: 18px;
+    margin-right: -5px;
+}
+.item-link{
+    display: block;
+}
+.keyword-copy{
+    float: left;
+    height: 48px;
+    padding-left: 10px;
+    font-weight: bold;
+    width: calc(100% - 170px);
+}
+.input-keyword{
+    width: 320px;
+}
+.wrap-search-input{
+    width: 420px;
+}
+.display-location-address .close{
+    position: absolute;
+    top: -2px;
+    right: 0;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 1.5em;
+}
