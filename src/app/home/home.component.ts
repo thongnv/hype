@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
     private params:any = {
         'page': 0,
         'limit': 10,
+        'start': 0,
         'filter': 'all',
         'order': 'top 100',
         'cate': '',
@@ -212,12 +213,36 @@ export class HomeComponent implements OnInit {
     private getTrending() {
         let params = this.params;
         console.log(params);
-        this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
-            this.listItems = response.data;
-            this.total = response.total;
-            this.loaderService.hide();
-            this.loadMap();
-        });
+        if (this.selectedEventOrder.name == 'top 100') {
+            this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
+                this.listItems = resp.data;
+                this.total = resp.total;
+                this.loaderService.hide();
+                this.loadMap();
+                this.showMap = true;
+
+            }, err=> {
+                this.listItems = [];
+                this.events = [];
+                this.markers = [];
+                this.showMap = true;
+                this.loaderService.hide();
+            })
+        } else {
+            this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
+                this.listItems = response.data;
+                this.total = response.total;
+                this.loaderService.hide();
+                this.loadMap();
+                this.showMap = true;
+            }, err=> {
+                this.listItems = [];
+                this.events = [];
+                this.markers = [];
+                this.loaderService.hide();
+                this.showMap = true;
+            });
+        }
     }
 
     public options:any = {
@@ -283,20 +308,19 @@ export class HomeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
-            this.params.page += 1;
             this.loaderService.show();
-            if (this.listItems.length <= this.total) {
-                this.homeService.getEvents(this.params)
-                    .map(resp => resp.json())
-                    .subscribe(result => {
-                        console.log(result);
-                        this.listItems = this.listItems.concat(result.data);
-                        this.loaderService.hide();
-                        this.loadMap();
-                    });
-            }else{
-                this.loaderService.hide();
+            if (this.selectedEventOrder.name == 'top 100') {
+                if (this.total <= 20) {
+                    this.params.start += 20;
+                    this.getTrending();
+                }
+
+            } else {
+                this.params.page += 1;
+                this.getTrending();
             }
+
+
         }
 
         if (event.target.children[0].children.length > 1) {
@@ -348,29 +372,29 @@ export class HomeComponent implements OnInit {
                 });
                 let searchCenter = mapCenter.getPosition();
                 for (let i = 0; i < this.listItems.length; i++) {
-                    let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
-                    let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
+                    if (typeof this.listItems[i].field_location_place.length != 0 ||
+                        typeof this.listItems[i].field_location_place.field_latitude != 'undefined') {
+                        let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
+                        let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
 
-                    let EMarker = new google.maps.Marker({
-                        position: new google.maps.LatLng(latitude, longitude),
-                        draggable: true
-                    });
-                    //let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
-                    //if (parseInt(egeometry) < this.currentRadius) {
-                    this.events.push(this.listItems[i]);
-                    this.markers.push({
-                        lat: latitude,
-                        lng: longitude,
-                        label: this.listItems[i].title,
-                        opacity: 0.6,
-                        isOpenInfo: false
-                    });
-                    //}
+                        let EMarker = new google.maps.Marker({
+                            position: new google.maps.LatLng(latitude, longitude),
+                            draggable: true
+                        });
+                        //let egeometry = google.maps.geometry.spherical.computeDistanceBetween(EMarker.getPosition(), searchCenter);
+                        //if (parseInt(egeometry) < this.currentRadius) {
+                        this.events.push(this.listItems[i]);
+                        this.markers.push({
+                            lat: latitude,
+                            lng: longitude,
+                            label: this.listItems[i].title,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
+                        //}
+                    }
                 }
-
                 this.loaderService.hide();
-                console.log(this.markers);
-                console.log(this.events);
                 this.showMap = true;
             }
         );
@@ -390,7 +414,8 @@ export class HomeComponent implements OnInit {
         this.showDate = true;
         this.showPrice = false;
     }
-    public openPopupMention(){
+
+    public openPopupMention() {
 
     }
 }

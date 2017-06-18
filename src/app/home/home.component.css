@@ -87,7 +87,9 @@
     padding: 30px 25px 0;
     border-bottom: 1px solid #eaeaea;
 }
-
+.filter-events.top-100{
+    padding-bottom: 30px;
+}
 .clear-filters-button {
     float: right;
     color: #ec3d62;

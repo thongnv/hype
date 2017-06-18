@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output,ViewChild,ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input,Output,ViewChild,ViewEncapsulation} from '@angular/core';
+
 
 @Component({
     selector: 'app-event-item',
@@ -13,7 +14,6 @@ export class EventItemComponent {
     @Output('onClickLike') public onClickLike = new EventEmitter<any>();
 
     private message:string;
-
     public onLikeEmit(item:any) {
         this.onClickLike.emit(item);
     }

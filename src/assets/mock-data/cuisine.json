@@ -1,83 +1,65 @@
 {
   "eat": [
     {
-      "tid": 1,
       "name": "China",
       "sub": [
         {
-          "tid": 2,
           "name": "Hotpot"
         },
         {
-          "tid": 3,
           "name": "Dim Sun"
         }
       ]
     },
     {
-      "tid": 4,
       "name": "Japanese",
       "sub": [
         {
-          "tid": 5,
           "name": "Sushi"
         },
         {
-          "tid": 6,
           "name": "Ramen"
         },
         {
-          "tid": 7,
           "name": "Tempura"
         },
         {
-          "tid": 8,
           "name": "Katsudon"
         },
         {
-          "tid": 9,
           "name": "Yakiniku"
         },
         {
-          "tid": 9,
           "name": "Shabu"
         }
       ]
     },
     {
-      "tid": 10,
       "name": "Korea"
     },
     {
-      "tid": 11,
       "name": "India"
     }
   ],
   "play": [
     {
-      "tid": 12,
       "name": "Outdoor activities"
     }
   ],
   "best": [
     {
-      "tid": 13,
       "name": "After Work"
     },
     {
-      "tid": 14,
       "name": "Fine Dining"
     },
     {
-      "tid": 15,
       "name": "Fresh"
     },
     {
-      "tid": 16,
       "name": "Dessert"
     },
     {
-      "tid": 16,
       "name": "Just Chill"
     }
   ]

@@ -9,8 +9,11 @@ import {AppSetting} from "../app.setting";
 
 export class ModeService {
 
+    private LOCAL_HOST:any='';
+
     public constructor(private api:BaseApiService) {
         console.log('category service');
+        this.LOCAL_HOST = window.location.origin;
     }
 
     public getCategories(params:any) {
@@ -38,7 +41,7 @@ export class ModeService {
     }
 
     public getFilterMode() {
-        let seq = this.api.get('http://hylo.dev:8000/assets/mock-data/cuisine.json').share();
+        let seq = this.api.get(this.LOCAL_HOST + '/assets/mock-data/cuisine.json').share();
         seq
             .map(res => res.json())
             .subscribe(res => {
