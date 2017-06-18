@@ -626,13 +626,13 @@ body, html {
   //END CURATE
   //CURATE LIST
 
-  #curate-carousel .carousel-control .glyphicon{
+  .carousel-control .glyphicon{
     display: none;
   }
-  #curate-carousel .carousel-control:hover{
+  .carousel-control:hover{
     opacity: .9;
   }
-  #curate-carousel .carousel-control{
+  .carousel-control{
     width: 44px;
     height: 44px;
     top: calc(50% - 22px);
@@ -643,17 +643,17 @@ body, html {
     opacity: .3;
     cursor: pointer;
   }
-  #curate-carousel .carousel-control.left{
+  .carousel-control.left{
     background: transparent url('../assets/icon/L.png') no-repeat center center ;
   }
-  #curate-carousel .carousel-control.right{
+  .carousel-control.right{
     background: transparent url('../assets/icon/R.png') no-repeat center center ;
   }
-  #curate-carousel .carousel-inner img{
+  .carousel-inner img{
     width: 100%;
     height: 275px;
   }
-  #curate-carousel .carousel-inner .slide-group{
+  .carousel-inner .slide-group{
     width: 33.3%;
     float: left;
     display: inline-block;
@@ -677,16 +677,15 @@ body, html {
     right: 0;
     bottom: 0;
   }
-  #curate-carousel .carousel-indicators{
+  .carousel-indicators{
     display: inline-block;
     //top: 0;
   }
-  #curate-carousel .carousel-indicators li {
+  .carousel-indicators li {
     border: none;
     background-color: #bababa;
   }
-  #curate-carousel .carousel-indicators li.active {
-    border: none;
+  .carousel-indicators li.active {
     background-color: #ec3d62;
   }
   #curate-carousel .carousel-content > strong{

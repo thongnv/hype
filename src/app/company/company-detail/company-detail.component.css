@@ -471,7 +471,7 @@ article {
   color: #3b3b3b;
   max-width: 220px;
   vertical-align: top;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .company-wrap .company-header p.open-now-button {
@@ -483,10 +483,9 @@ article {
 }
 
 .company-wrap .rating-star {
-  margin-left: 40px;
+  margin-left: 10px;
   margin-right: 11px;
   position: relative;
-  bottom: 5px;
 }
 
 .rating-star i {
@@ -500,7 +499,6 @@ article {
   border: solid 1px #e6e6e6;
   padding: 6px 10px;
   position: relative;
-  bottom: 5px;
   left: 10px;
 }
 

@@ -65,6 +65,9 @@ export class WriteReviewComponent implements OnInit {
 
   public closeForm() {
     this.submitted = false;
+    this.currentRate = 0;
+    this.previewUrl = [];
+    this.reviewForm.reset();
     this.change.emit(this.submitted);
   }
 

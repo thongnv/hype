@@ -7,14 +7,14 @@
         <div class="company-wrap">
           <!-- carousel start -->
           <div class="carousel">
-            <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                      [noThumbnail]="true" [carouselSlides]="slides">
-              <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
-                     [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
-              </slide>
+            <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true" [noTransition]="noTransition">
+              <app-slide-carousel *ngFor="let slide of slides; let index=index"
+                                  [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+              </app-slide-carousel>
               <i class="icon-sm" [class.icon-heart]="!bookmarked"
-                 [class.icon-heart-selected]="bookmarked" (click)="toggleBookmark()" aria-hidden="true"></i>
-            </carousel>
+                 [class.icon-heart-selected]="bookmarked" (click)="toggleBookmark()" aria-hidden="true">
+              </i>
+            </app-boostrap-carousel>
           </div>
           <!-- carousel end -->
           <!-- company header start -->
@@ -88,7 +88,8 @@
             <a *ngIf="!rated" (click)="showReviewModal()" class="post-your-experience">Write a review</a>
           </div>
           <div *ngIf="reviews">
-            <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review" (onClickLike)="onLikeReview($event)">
+            <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review"
+                            (onClickLike)="onLikeReview($event)">
             </company-review>
           </div>
           <!-- reviews wrap end -->
@@ -109,7 +110,8 @@
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
           <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
         </div>
-        <company-review *ngFor="let review of reviews; let index = index" [review]="review" (onClickLike)="onLikeReview($event)">
+        <company-review *ngFor="let review of reviews; let index = index" [review]="review"
+                        (onClickLike)="onLikeReview($event)">
         </company-review>
       </div>
 

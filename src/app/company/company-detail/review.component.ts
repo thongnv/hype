@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { CompanyDetailComponent } from './company-detail.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'company-review',
@@ -30,7 +31,8 @@ import { CompanyDetailComponent } from './company-detail.component';
               </a>
               <span class="overlay"></span>
             </span>
-            <img class="list-img" [src]="img.thumb" (click)="OpenImageModel(img.img,thumbImages)"
+            <img class="list-img" [src]="sanitizer.bypassSecurityTrustUrl(img.thumb)"
+                 (click)="OpenImageModel(img.img,thumbImages)"
                  alt='Image {{i}}' width="100" height="100"/>
           </div>
         </li>
@@ -46,8 +48,10 @@ import { CompanyDetailComponent } from './company-detail.component';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a (click)="toggleLikeReview(review)">
-            <img *ngIf="!review.liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24" height="23">
-            <img *ngIf="review.liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24" height="23">
+            <img *ngIf="!review.liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24"
+                 height="23">
+            <img *ngIf="review.liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24"
+                 height="23">
           </a>
           {{review.likeNumber}} Likes
         </div>
@@ -77,7 +81,8 @@ export class ReviewComponent implements Experience, OnInit {
   public likeNumber: number;
   public liked: boolean;
 
-  constructor(private company: CompanyDetailComponent) {}
+  constructor(private company: CompanyDetailComponent, public sanitizer: DomSanitizer) {
+  }
 
   public ngOnInit() {
     this.currentUser = this.company.user;
