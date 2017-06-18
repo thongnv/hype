@@ -591,22 +591,21 @@ ul.list-stars-on-post {
   height: 90px;
   border-radius: 0;
   background-size: 100% 100%;
-  background-repeat: no-repeat;
   margin-right: 6px;
   text-indent: -999px;
   cursor: pointer;
   border: 1px solid #fff;
-  background-position: center;
+  background: no-repeat center;
   background-size: cover;
 }
 .carousel-indicators > div:last-child {
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .carousel-indicators > .active {
   width: 120px;
   height: 90px;
-  border: solid 1px black;
+  border: solid 1px  #ec3d62;
 }
 
 .carousel-control.right {
