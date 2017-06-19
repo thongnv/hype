@@ -9,7 +9,7 @@ import {AppSetting} from "../app.setting";
 
 export class ModeService {
 
-    private LOCAL_HOST:any='';
+    private LOCAL_HOST:any = '';
 
     public constructor(private api:BaseApiService) {
         console.log('category service');
@@ -47,6 +47,18 @@ export class ModeService {
             .subscribe(res => {
 
             }, err => {
+                console.log(err);
+            });
+
+        return seq;
+    }
+
+    public favoritePlace(params:any) {
+
+        let seq = this.api.post(AppSetting.API_FAVORITE_PLACE, params).share();
+        seq.map(res=>res.json())
+            .subscribe(res=> {
+            }, err=> {
                 console.log(err);
             });
 
