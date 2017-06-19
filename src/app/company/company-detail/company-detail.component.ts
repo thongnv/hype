@@ -168,6 +168,9 @@ export class CompanyDetailComponent implements Company, OnInit {
     for (let image of images) {
       this.slides.push({image: image.url});
     }
+    if (!this.slides.length) {
+      this.slides.push({image: 'assets/img/company/detail/default-company.jpg'});
+    }
   }
 
 }
