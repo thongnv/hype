@@ -394,3 +394,7 @@ span.dollar-character {
   background-position: center center;
   background-size: cover;
 }
+
+.recaptcha{
+  margin-left: 25px;
+}

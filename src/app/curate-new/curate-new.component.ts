@@ -24,6 +24,7 @@ export class CurateNewComponent implements OnInit {
   public showPreview: boolean = false;
   public addImage: boolean = true;
   public submitted: boolean = false;
+  public validCaptcha: boolean = false;
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -149,6 +150,12 @@ export class CurateNewComponent implements OnInit {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrl;
     this.initMap();
+  }
+
+  public checkCaptcha(captcha) {
+    if (captcha) {
+      this.validCaptcha = true;
+    }
   }
 
   public switchView(status: boolean) {

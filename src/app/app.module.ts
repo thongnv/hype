@@ -47,6 +47,7 @@ import { TinymceModule } from 'angular2-tinymce';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { ImageUploadModule } from 'ng2-imageupload';
+import { ReCaptchaModule } from 'angular2-recaptcha';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -107,6 +108,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { Ng2PopupComponent } from 'ng2-popup/dist/index';
 import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
+import { LocationPlaceComponent } from './event/location-place/location-place.component';
 import { SearchComponent } from './navbar/search/search.component';
 
 // Application wide providers
@@ -184,6 +186,7 @@ type StoreType = {
     AuthComponent,
     LogoutComponent,
     SearchComponent,
+    LocationPlaceComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -213,6 +216,7 @@ type StoreType = {
     Ng2ImgToolsModule,
     RatingModule,
     MomentModule,
+    ReCaptchaModule,
     TruncateModule,
     TinymceModule.withConfig({}),
     ReactiveFormsModule,

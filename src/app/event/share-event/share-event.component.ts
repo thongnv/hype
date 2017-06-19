@@ -49,6 +49,8 @@ export class ShareEventComponent implements OnInit {
     { value: '1', display: 'Buy Tix' },
     { value: '2', display: 'More Info' }
   ];
+  public validCaptcha = false;
+
   public submitted: boolean = false;
   constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState,
@@ -100,6 +102,12 @@ export class ShareEventComponent implements OnInit {
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
     if (this.previewUrl.length < 4) {
       this.addImage = true;
+    }
+  }
+
+  public checkCaptcha(captcha) {
+    if (captcha) {
+      this.validCaptcha = true;
     }
   }
 
