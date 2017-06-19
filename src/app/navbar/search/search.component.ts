@@ -42,4 +42,7 @@ export class SearchComponent implements OnInit {
   public onCloseSuggestion() {
     this.hideSearchResult = true;
   }
+  public onOpenSuggestion() {
+    this.hideSearchResult = false;
+  }
 }

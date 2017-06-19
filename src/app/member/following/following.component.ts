@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-following',
@@ -15,6 +16,7 @@ export class FollowingComponent implements OnInit {
   public alertType: string;
   public followingPage: number = 0;
   public userFollow: boolean = false;
+  public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
@@ -22,7 +24,7 @@ export class FollowingComponent implements OnInit {
   public sub: any;
 
   constructor(private appState: AppState, private mainService: MainService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private localStorageService: LocalStorageService) {
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
       this.followingPage = followingPage;
@@ -32,8 +34,10 @@ export class FollowingComponent implements OnInit {
   }
 
   public ngOnInit() {
+    let userSlug = this.localStorageService.get('slug');
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
+      this.isCurrentUser = this.slugName === userSlug;
       console.log('USER: ', this.slugName);
       this.getUserProfile(this.slugName);
       this.getUserFollow('following', this.slugName, this.followingPage);
@@ -75,9 +79,13 @@ export class FollowingComponent implements OnInit {
   public updateFollow(item: any) {
     console.log('item', item);
     if (item.stateFollow === 'yes') {
-      this.userInfo.followingNumber--;
+      if (this.isCurrentUser) {
+        this.userInfo.followingNumber--;
+      }
     } else {
-      this.userInfo.followingNumber++;
+      if (this.isCurrentUser) {
+        this.userInfo.followingNumber++;
+      }
     }
     this.alertType = 'success';
     this.msgContent = 'Update following successful';

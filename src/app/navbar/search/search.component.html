@@ -2,7 +2,9 @@
   <div class="input-group wrap-search-input">
     <button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>
     <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
-           placeholder="Search for any places and activities..."  (keyup)="onSubmit($event, keyword.value)" (click)="hideSearchResult=false">
+           placeholder="Search for any places and activities..."
+           (keyup)="onSubmit($event, keyword.value)"
+           (click)="onOpenSuggestion()">
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="display-location-address">
         <i class="icon icon-suggestion-marker"></i>
@@ -15,7 +17,7 @@
           <a>Lists</a>
         </li>
         <li *ngFor="let item of result.article;trackBy:item?.id">
-          <a [routerLink]="[item.alias]" class="item-link">
+          <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
             <div class="result-info">
               <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
@@ -29,7 +31,7 @@
           <a>Events</a>
         </li>
         <li *ngFor="let item of result.event;trackBy:item?.id">
-          <a [routerLink]="[item.alias]" class="item-link">
+          <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
             <div class="result-info">
               <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
