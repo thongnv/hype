@@ -10,6 +10,7 @@ import { MainService } from '../../services/main.service';
 export class SearchComponent implements OnInit {
   public searchForm: FormGroup;
   public hideSearchResult: boolean = true;
+  public hideNoResult: boolean = false;
   public result: any = {};
   public searchToken: string = '';
 
@@ -33,15 +34,22 @@ export class SearchComponent implements OnInit {
       this.mainservice.search(this.searchToken).then((resp) => {
         console.log('searchForm ==> resp: ', resp);
         this.result = resp;
+        if (resp.event.length + resp.article.length === 0) {
+          this.hideNoResult = false;
+        } else {
+          this.hideNoResult = true;
+        }
       });
     } else {
       this.result = {};
+      this.hideNoResult = false;
     }
   }
 
   public onCloseSuggestion() {
     this.hideSearchResult = true;
   }
+
   public onOpenSuggestion() {
     this.hideSearchResult = false;
   }

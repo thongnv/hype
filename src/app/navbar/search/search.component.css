@@ -6,11 +6,12 @@
     border-radius: 4px;
     background: #fff;
     width: 100%;
+    border: 1px solid #cacaca;
 }
 .display-location-address {
     padding: 0 10px;
     line-height: 50px;
-    border: 1px solid #cacaca;
+    border-bottom: 1px solid #cacaca;
     border-radius: 4px 4px 0 0;
     background: #fff;
     height: 51px;
@@ -59,12 +60,13 @@
     text-transform: uppercase;
     margin-left: 20px;
 }
+.list-location-address li:not(:last-child) {
+    border-bottom: 1px solid #cacaca;
+}
 .list-location-address li {
     padding: 10px;
     background: #fff;
-    border-left: 1px solid #cacaca;
-    border-right: 1px solid #cacaca;
-    border-top: 1px solid #cacaca;
+    width: 420px;
 }
 .list-location-address li:hover {
     background: #fff;
@@ -86,7 +88,7 @@
 
 /*search location end*/
 .result-info .keyword-search-input, .result-info .text-ellipsis{
-    width: 400px;
+    width: 100%;
     display: block;
     margin-right: 0;
     margin-left: 0;
