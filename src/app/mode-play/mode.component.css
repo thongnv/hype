@@ -26,19 +26,22 @@
 }
 
 .filterFromMode .btn-block {
-    height: 38px;
+    height: 40px;
     border-radius: 4px;
-    /*background-color: #f6f6f6;*/
-    /*box-shadow: 1px 1px 3px 0 #d8d8d8;*/
-    /*border: solid 1px #d8d8d8;*/
+    border: 1px solid #d8d8d8;
+    box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
-
+.filterFromMode .btn-group .btn+.btn {
+    margin-left: 0px;
+}
 .filterFromMode .btn-block label {
     height: 38px;
     padding-top: 10px;
     border: none;
-    width: 33%;
+    width: calc(100%/3);
     font-weight: 500;
+    background: #f6f6f6;
+    box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
 
 .filterFromMode .btn-block label.active {
@@ -46,6 +49,15 @@
     background: #2a6be1;
     color: #fff;
     text-shadow: none;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #2a6be1;
+    box-shadow: 0 2px 3px 0 rgba(148, 148, 148, 0.5);
+    outline: none;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
 }
 
 /*filterFromMode end*/
