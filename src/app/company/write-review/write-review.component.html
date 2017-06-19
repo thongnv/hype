@@ -3,6 +3,12 @@
     <h3>How is Your Experience With {{company.name}}
       <span class="close-button" (click)="closeForm()">×</span>
     </h3>
+
+    <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="390px" size="7px"
+         [railVisible]="true"
+         [railOpacity]="0.1"
+         [railColor]="'#ec3d62'"
+         [color]="'#ec3d62'">
     <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
       <div class="header-review">
         <img alt="user avatar" class="img-circle" height="70" width="70" [src]="user.avatar">
@@ -31,5 +37,6 @@
       </div>
       <button class="btn_submit" type="submit">Submit My Review</button>
     </form>
+    </div>
   </div>
 </div>

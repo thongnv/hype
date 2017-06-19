@@ -87,6 +87,11 @@
     padding: 30px 25px 0;
     border-bottom: 1px solid #eaeaea;
 }
+.filter-events .btn-group.tab-control {
+    border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    background: #f6f6f6;
+}
 .filter-events.top-100{
     padding-bottom: 30px;
 }
@@ -349,7 +354,7 @@
     float: left;
     margin-right: 10px;
     border: 1px solid #ccc;
-    padding: 5px;
+    padding: 3px 5px;
     border-radius: 7px;
 }
 

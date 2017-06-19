@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   providers: [NgbRatingConfig]
 })
 export class WriteReviewComponent implements OnInit {
+  @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();
   @Input() public submitted: boolean;
   @Input() public company: CompanyDetailComponent;
   @Input() public user: BaseUser;
@@ -73,11 +74,20 @@ export class WriteReviewComponent implements OnInit {
 
   public onSubmit() {
     this.review = this.reviewForm.value;
-    this.review.images = this.previewUrl;
-    this.review.rating = this.currentRate;
-    this.change.emit(this.review);
-    this.reviewForm.reset();
-    this.previewUrl = [];
-    this.currentRate = 0;
+    if (this.review.text) {
+      this.review.images = this.previewUrl;
+      this.review.rating = this.currentRate;
+      this.change.emit(this.review);
+      this.reviewForm.reset();
+      this.previewUrl = [];
+      this.currentRate = 0;
+    }
+  }
+
+  public onScrollDown(event) {
+    let elm = event.srcElement;
+    if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
+      this.onScrollToBottom.emit(null);
+    }
   }
 }
