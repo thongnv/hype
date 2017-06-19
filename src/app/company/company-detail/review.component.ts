@@ -41,7 +41,7 @@ import { DomSanitizer } from '@angular/platform-browser';
         <ImageModal
           [modalImages]="thumbImages"
           [imagePointer]="imagePointer"
-          (cancelcompany)="cancelImageModel()">
+          (cancelEvent)="cancelImageModel()">
         </ImageModal>
       </div>
 

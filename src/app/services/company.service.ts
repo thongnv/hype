@@ -78,7 +78,7 @@ export class CompanyService {
     });
   }
 
-  public postReview(placeId: string, review: Experience): Observable<number> {
+  public postReview(placeId: string, review: Experience): Observable<Experience> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
@@ -91,7 +91,12 @@ export class CompanyService {
       AppSetting.API_ENDPOINT + 'api/user/review/place',
       JSON.stringify(data), options
     )
-      .map((res: Response) => Number(res.json().rid))
+      .map((res: Response) => {
+        let respData = res.json().comment.results[0];
+        review.id = respData.rid;
+        review.images = extractImages(respData.image);
+        return review;
+      })
       .catch((error: any) => {
         if (error.status === 404) {
           this.router.navigate(['404'], {skipLocationChange: true}).then();
