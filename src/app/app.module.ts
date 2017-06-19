@@ -108,7 +108,6 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { Ng2PopupComponent } from 'ng2-popup/dist/index';
 import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
-import { LocationPlaceComponent } from './event/location-place/location-place.component';
 import { SearchComponent } from './navbar/search/search.component';
 
 // Application wide providers
@@ -186,7 +185,6 @@ type StoreType = {
     AuthComponent,
     LogoutComponent,
     SearchComponent,
-    LocationPlaceComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
