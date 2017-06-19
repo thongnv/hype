@@ -42,7 +42,7 @@
                     <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
                                                             aria-hidden="true"></i><span></span></ng-template>
                     <ng-template ngbTabContent>
-                        <nouislider [min]="0" [max]="1000" [step]="10" [(ngModel)]="priceRange"
+                        <nouislider [connect]="true" [min]="0" [max]="1000" [step]="10" [(ngModel)]="priceRange"
                                     style="margin-top: 4em;"></nouislider>
                     </ng-template>
                 </ngb-tab>
@@ -72,7 +72,7 @@
                 <ngb-tab>
                     <ng-template ngbTabTitle>Ratings <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
                     <ng-template ngbTabContent>
-                        <div *ngIf="filterFromMode.value.filterMode !='play'">
+                        <div *ngIf="filterFromMode.value.filterMode !='play'" class="text-center">
                             <ngb-rating [(rate)]="currentRate">
                                 <ng-template let-fill="fill">
                                     <span class="star" [class.filled]="fill === 100">&#9733;</span>
@@ -105,6 +105,7 @@
             <!--<div class="pull-left">Sort By</div>-->
             <!--<div class="pull-right">Clear Filters</div>-->
             <!--</div>-->
+            <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clearfix"></div>
             <div id="v-scrollable" class="scrollable section mode"
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">

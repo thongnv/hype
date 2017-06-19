@@ -42,6 +42,8 @@ export class ModeComponent implements OnInit {
     public showMap:boolean = false;
     private total:number = 0;
     public showAll:boolean = true;
+    public alertType:any = '';
+    public msgContent:any = '';
     private params = {
         type: 'all',
         kind: '',
@@ -307,9 +309,13 @@ export class ModeComponent implements OnInit {
         }
         this.loaderService.show();
         this.modeService.favoritePlace(params).map(res=>res.json()).subscribe(res=> {
-            console.log(res);
+            this.alertType = 'success';
+            this.msgContent = res.message;
+
             this.loaderService.hide();
         }, err=> {
+            this.alertType = 'error';
+            this.msgContent = 'Sorry, favorite error please try again';
             this.loaderService.hide();
             console.log(err);
         });

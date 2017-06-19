@@ -176,13 +176,16 @@ export class HomeComponent implements OnInit {
         let param = {
             'slug': item.alias
         };
+        this.loaderService.show();
         this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
+            this.loaderService.hide();
             this.alertType = 'success';
             this.msgContent = res.message;
         }, err=> {
             if (err.status == 403) {
                 this.route.navigate(['login']);
             } else {
+                this.loaderService.hide();
                 this.alertType = 'error';
                 this.msgContent = 'Sorry, bookmark error please try again';
             }
