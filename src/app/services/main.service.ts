@@ -19,6 +19,7 @@ export class MainService {
   public constructor(private _localStorageService: LocalStorageService,
                      private _http: Http, private route: Router) {
   }
+
   public login(fbToken: string) {
     return new Promise((resolve, reject) => {
 
@@ -369,19 +370,21 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public search(): Promise<any> {
+  public search(keyword: string): Promise<any> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers});
-    return this._http.get(AppSetting.API_FAVORITE_PLACE, options)
+    return this._http.get(AppSetting.API_SEARCH + keyword, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
   }
+
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);
   }
-  private checkLogin(): void{
+
+  private checkLogin(): void {
     if (!this._localStorageService.get('loginData')) {
       this.route.navigate(['/login']);
     }

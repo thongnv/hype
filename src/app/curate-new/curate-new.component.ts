@@ -131,11 +131,11 @@ export class CurateNewComponent implements OnInit {
       let  data = this.mapArticle(article);
       this.loaderService.show();
       if (!this.submitted) {
-        this.submitted = false;
+        this.submitted = true;
         this.mainService.postArticle(data).then((response) => {
           if (response.status) {
             this.loaderService.hide();
-            this.submitted = true;
+            this.submitted = false;
             this.router.navigate([response.data.slug]);
           }
         });

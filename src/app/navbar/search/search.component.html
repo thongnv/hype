@@ -1,44 +1,43 @@
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" (keyup)="onSubmit()">
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
   <div class="input-group wrap-search-input">
-
     <button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>
-
-    <input formControlName="keyword" class="form-control"
-           placeholder="Search for any places and activities...">
-    <div class="search-location-search-area" id="">
-
+    <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
+           placeholder="Search for any places and activities..."  (keyup)="onSubmit($event, keyword.value)" (click)="hideSearchResult=false">
+    <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="display-location-address">
-        <i class="fa fa-map-marker" aria-hidden="true"></i>
-        <span class="keyword-search-input">toa payoh</span>nn
+        <i class="icon icon-suggestion-marker"></i>
+        <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
         <span class="location-address">location address</span>
+        <span class="fa fa-times fa-2x close" (click)="onCloseSuggestion()"></span>
       </div>
-
-      <ul class="list-location-address">
+      <ul *ngIf="result.article?.length" class="list-location-address">
         <li class="title-search-location-address">
           <a>Lists</a>
         </li>
-        <li>
-          <a>
-            <img class="icon-location-address" src="/assets/img/homepage/address.jpg" alt="address">
-            <span class="keyword-search-input">toa payoh</span>
-            <span class="location-address-content-each text-clip">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
+        <li *ngFor="let item of result.article;trackBy:item?.id">
+          <a [routerLink]="[item.alias]" class="item-link">
+            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+            <div class="result-info">
+              <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+              <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+            </div>
           </a>
         </li>
       </ul>
-
-      <ul class="list-location-address" id="list-events-location-address">
+      <ul *ngIf="result.event?.length" class="list-location-address" id="list-events-location-address">
         <li class="title-search-location-address">
           <a>Events</a>
         </li>
-        <li>
-          <a>
-            <img class="icon-location-address" src="/assets/img/homepage/address.jpg" alt="address">
-            <span class="keyword-search-input">toa payoh</span>
-            <span class="location-address-content-each text-clip">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span>
+        <li *ngFor="let item of result.event;trackBy:item?.id">
+          <a [routerLink]="[item.alias]" class="item-link">
+            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+            <div class="result-info">
+              <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+              <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+            </div>
           </a>
         </li>
       </ul>
-
     </div>
   </div>
 </form>
