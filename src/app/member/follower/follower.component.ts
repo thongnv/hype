@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-follower',
@@ -16,14 +17,17 @@ export class FollowerComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
   public userFollow: boolean = false;
+  public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
   public slugName: any;
   public sub: any;
 
-  public constructor(private appState: AppState, private mainService: MainService,
-                     private route: ActivatedRoute) {
+  public constructor(private appState: AppState,
+                     private mainService: MainService,
+                     private route: ActivatedRoute,
+                     private localStorageService: LocalStorageService) {
     this.userInfo = this.appState.state.userInfo;
 
     let followingPage = this.appState.state.followingPaging;
@@ -67,8 +71,11 @@ export class FollowerComponent implements OnInit {
   }
 
   public ngOnInit() {
+    let userSlug = this.localStorageService.get('slug');
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
+      this.slugName = params['slug'];
+      this.isCurrentUser = this.slugName === userSlug;
       console.log('USER: ', this.slugName);
       this.getUserProfile(this.slugName);
       this.getUserFollow('follower', this.slugName, this.followingPage);
@@ -78,9 +85,13 @@ export class FollowerComponent implements OnInit {
   public updateFollow(item: any) {
     console.log('item', item);
     if (item.stateFollow === 'yes') {
-      this.userInfo.followingNumber--;
+      if (this.isCurrentUser) {
+        this.userInfo.followingNumber--;
+      }
     } else {
-      this.userInfo.followingNumber++;
+      if (this.isCurrentUser) {
+        this.userInfo.followingNumber++;
+      }
     }
     this.alertType = 'success';
     this.msgContent = 'Update following successful';
