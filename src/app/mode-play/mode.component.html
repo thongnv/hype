@@ -106,7 +106,7 @@
             <!--<div class="pull-right">Clear Filters</div>-->
             <!--</div>-->
             <div class="clearfix"></div>
-            <div id="v-scrollable" class="scrollable section"
+            <div id="v-scrollable" class="scrollable section mode"
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
                 <div class="list-event">
                     <div class="items" *ngFor="let item of items; let index = 'index'">
@@ -114,6 +114,10 @@
                             <div class="avatar">
                                 <div class="badge">#{{index +1}}</div>
                                 <img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">
+                                <div (click)="onLikeEmit(item)" class="heart-icon">
+                                    <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
+                                       [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>
+                                </div>
                             </div>
                             <div class="item-content">
                                 <h3 class="name" [routerLink]="['/company',item.Company_Slug]">{{item.Company_Name}}</h3>

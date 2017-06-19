@@ -25,6 +25,14 @@
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
 
+.filterFromMode .btn-block {
+    height: 38px;
+    border-radius: 4px;
+    background-color: #f6f6f6;
+    box-shadow: 1px 1px 3px 0 #d8d8d8;
+    border: solid 1px #d8d8d8;
+}
+
 .filterFromMode .btn-block label {
     height: 38px;
     padding-top: 10px;
@@ -54,6 +62,7 @@
     background: transparent;
     border-bottom: 1px solid #ec3d62;
     border-radius: 0px;
+    margin-bottom: 1px;
 }
 
 .filterCategory .btn-filter-block label {
@@ -64,6 +73,7 @@
     width: 13%;
     text-align: center;
     outline: none;
+    margin-bottom: 5px;
 }
 
 .filterCategory .btn-filter-block label.more {
@@ -289,4 +299,20 @@ nouislider.ng2-nouislider {
 
 .sebm-google-map-container {
     height: 600px !important;
+}
+
+.mode .heart-icon {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.mode .heart-icon i {
+    color: #ffffff;
+    background: none;
+    font-size: 24px;
+}
+.mode .heart-icon i.heart-selected{
+    color: #ec3d62;
 }

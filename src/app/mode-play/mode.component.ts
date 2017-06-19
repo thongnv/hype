@@ -298,4 +298,20 @@ export class ModeComponent implements OnInit {
             this.showAll = true;
         }
     }
+
+    onLikeEmit(item:any) {
+        console.log(item);
+        item.is_favorite = !item.is_favorite;
+        let params = {
+            ids_no: item.Ids_No
+        }
+        this.loaderService.show();
+        this.modeService.favoritePlace(params).map(res=>res.json()).subscribe(res=> {
+            console.log(res);
+            this.loaderService.hide();
+        }, err=> {
+            this.loaderService.hide();
+            console.log(err);
+        });
+    }
 }
