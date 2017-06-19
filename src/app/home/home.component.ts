@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
     public showAll:boolean = true;
     private total:any;
     public showCircle:boolean = false;
+    private loadMore:boolean = false;
     private params:any = {
         'page': 0,
         'limit': 10,
@@ -230,8 +231,12 @@ export class HomeComponent implements OnInit {
         let params = this.params;
         if (this.selectedEventOrder.name == 'top 100') {
             this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
-                this.listItems = resp.data;
                 this.total = resp.total;
+                if (this.loadMore) {
+                    this.listItems = this.listItems.concat(resp.data);
+                } else {
+                    this.listItems = resp.data;
+                }
                 this.loaderService.hide();
                 this.passerTop100();
                 this.showMap = true;
@@ -245,7 +250,11 @@ export class HomeComponent implements OnInit {
             })
         } else {
             this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
-                this.listItems = response.data;
+                if (this.loadMore) {
+                    this.listItems = this.listItems.concat(response.data);
+                } else {
+                    this.listItems = response.data;
+                }
                 this.total = response.total;
                 this.loaderService.hide();
                 this.passerTrending();
@@ -326,13 +335,17 @@ export class HomeComponent implements OnInit {
             this.loaderService.show();
             if (this.selectedEventOrder.name == 'top 100') {
                 if (this.total <= 20) {
+                    this.loadMore = true;
                     this.params.start += 20;
                     this.getTrending();
                 }
 
             } else {
-                this.params.page += 1;
-                this.getTrending();
+                this.loadMore = true;
+                if (this.total > this.listItems.length) {
+                    this.params.page += 1;
+                    this.getTrending();
+                }
             }
 
 
