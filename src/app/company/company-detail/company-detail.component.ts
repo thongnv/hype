@@ -1,4 +1,4 @@
-kimport { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import * as moment from 'moment/moment';
