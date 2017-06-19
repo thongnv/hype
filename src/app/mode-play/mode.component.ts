@@ -5,6 +5,8 @@ import {ModeService} from "../services/mode.service";
 import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import {LoaderService} from "../shared/loader/loader.service";
+import { Ng2ScrollableDirective } from 'ng2-scrollable';
+import { scrollTo } from 'ng2-utils';
 
 declare let google:any;
 
@@ -196,12 +198,12 @@ export class ModeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
-        //scrollTo(
-        //    '#v' + selector,
-        //    '#v-scrollable',
-        //    horizontal,
-        //    0
-        //);
+        scrollTo(
+            '#v' + selector,
+            '#v-scrollable',
+            horizontal,
+            0
+        );
 
     }
 
@@ -214,6 +216,7 @@ export class ModeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
+            this.markers =[];
             this.params.page += 1;
             this.loaderService.show();
             this.getDataModes();
