@@ -21,6 +21,7 @@ declare let google:any;
 export class ModeComponent implements OnInit {
     public markers:any = [];
     public categories:any = [];
+    public categoriesDraw:any[];
     public someValue:number = 5;
     public priceRange:number[] = [0, 300];
     public filterFromMode:FormGroup;
@@ -40,6 +41,7 @@ export class ModeComponent implements OnInit {
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
     private total:number = 0;
+    public showAll:boolean = true;
     private params = {
         type: 'all',
         kind: '',
@@ -121,7 +123,8 @@ export class ModeComponent implements OnInit {
         }
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
-            this.categories = resp;
+            this.categoriesDraw = resp.data;
+            this.categories = resp.data.slice(0, 6);
         });
 
     }
@@ -284,5 +287,15 @@ export class ModeComponent implements OnInit {
 
     trackByIndex(index:number, obj:any):any {
         return index;
+    }
+
+    showAllKind(e) {
+        if (e) {
+            this.categories = this.categoriesDraw;
+            this.showAll = false;
+        } else {
+            this.categories = this.categories.slice(0, 6);
+            this.showAll = true;
+        }
     }
 }

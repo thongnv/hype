@@ -25,13 +25,13 @@
                                 <input type="radio" value="all"> All
                             </span>
                         </label>
-                        <label class="btn btn-default" *ngFor="let term of categories.data | slice:0:6">
+                        <label  class="btn btn-default" *ngFor="let term of categories">
                             <img src="{{term.icon}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.tid}}">{{term.name}}
                         </label>
-                        <label *ngIf="categories.data?.length > 6" class="btn btn-default more">
-                            <i fa class="fa-plus"></i>
+                        <label *ngIf="categoriesDraw?.length > 6"  class="btn btn-default more" (click)="showAllKind(showAll)">
+                            <i fa [class.fa-minus]="!showAll" class="fa-plus"></i>
                         </label>
                     </div>
                 </div>
