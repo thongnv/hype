@@ -372,8 +372,8 @@ export class HomeComponent implements OnInit {
                 });
                 let searchCenter = mapCenter.getPosition();
                 for (let i = 0; i < this.listItems.length; i++) {
-                    if (typeof this.listItems[i].field_location_place.length != 0 ||
-                        typeof this.listItems[i].field_location_place.field_latitude != 'undefined') {
+                    if (this.listItems[i].field_location_place.length != 0 ||
+                        this.listItems[i].field_location_place.field_latitude != null) {
                         let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
                         let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
 
