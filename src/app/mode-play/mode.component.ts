@@ -44,6 +44,7 @@ export class ModeComponent implements OnInit {
     public showMap:boolean = false;
     private total:number = 0;
     public showAll:boolean = true;
+    public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
     private params = {
@@ -216,7 +217,7 @@ export class ModeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
-            this.markers =[];
+            this.markers = [];
             this.params.page += 1;
             this.loaderService.show();
             this.getDataModes();
@@ -322,5 +323,63 @@ export class ModeComponent implements OnInit {
             this.loaderService.hide();
             console.log(err);
         });
+    }
+
+    showAllType(e) {
+        if (e) {
+            this.showTab = false;
+        } else {
+            this.showTab = true;
+        }
+    }
+
+    public showPrice:boolean = false;
+
+    showRagePrice(e) {
+        if (e) {
+            this.showPrice = false;
+        } else {
+            this.showPrice = true;
+        }
+    }
+
+    public showCuisine:boolean = false;
+
+    showCuisine(e) {
+        if (e) {
+            this.showCuisine = false;
+        } else {
+            this.showCuisine = true;
+        }
+    }
+
+    public showRate:boolean = false;
+
+    showRate(e) {
+        if (e) {
+            this.showCuisine = false;
+        } else {
+            this.showCuisine = true;
+        }
+    }
+
+    public showBest:boolean = false;
+
+    showRate(e) {
+        if (e) {
+            this.showBest = false;
+        } else {
+            this.showBest = true;
+        }
+    }
+
+    public showType:boolean = false;
+
+    showType(e) {
+        if (e) {
+            this.showType = false;
+        } else {
+            this.showType = true;
+        }
     }
 }

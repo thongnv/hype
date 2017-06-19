@@ -25,77 +25,111 @@
                                 <input type="radio" value="all"> All
                             </span>
                         </label>
-                        <label  class="btn btn-default" *ngFor="let term of categories">
+                        <label class="btn btn-default" *ngFor="let term of categories">
                             <img src="{{term.icon}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.tid}}">{{term.name}}
                         </label>
-                        <label *ngIf="categoriesDraw?.length > 6"  class="btn btn-default more" (click)="showAllKind(showAll)">
+                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
+                               (click)="showAllKind(showAll)">
                             <i fa [class.fa-minus]="!showAll" class="fa-plus"></i>
                         </label>
                     </div>
                 </div>
             </form>
+            <div style="position: relative">
+                <ul class="list-inline itemSort" [class.showTab]="!showTab">
+                    <li>
+                        <a (click)="showRagePrice(showPrice)" class="price-range">Price Range <i
+                                [class.fa-angle-up]="showPrice" class="fa fa-angle-down"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="showCuisine(showCuisine)" class="when-button">Cuisine <i
+                                [class.fa-angle-up]="showCuisine" class="fa fa-angle-down"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="showRate(showRate)" class="when-button">Ratings <i [class.fa-angle-up]="showRate"
+                                                                                       class="fa fa-angle-down"
+                                                                                       aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="showBest(showBest)" class="when-button">Best For <i [class.fa-angle-up]="showBest"
+                                                                                        class="fa fa-angle-down"
+                                                                                        aria-hidden="true"></i></a>
+                    </li>
+                    <li class="type" *ngIf="!showTab">
+                        <a (click)="showType(showType)" class="when-button">Type <i [class.fa-angle-up]="showType"
+                                                                                    class="fa fa-angle-down"
+                                                                                    aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+                <span class="showMoreType" (click)="showAllType(showTab)">
+                            <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
+                        </span>
+                <div class="find-content">
 
-            <ngb-tabset>
-                <ngb-tab class="tabFilter">
-                    <ng-template ngbTabTitle>Price Range <i class="fa fa-angle-down"
-                                                            aria-hidden="true"></i><span></span></ng-template>
-                    <ng-template ngbTabContent>
-                        <nouislider [connect]="true" [min]="0" [max]="1000" [step]="10" [(ngModel)]="priceRange"
-                                    style="margin-top: 4em;"></nouislider>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Cuisine <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
-                    <ng-template ngbTabContent>
-                        <div *ngIf="filterFromMode.value.filterMode !='play'">
-                            <div *ngFor="let item of filterData.eat; let in =index; trackBy:trackByIndex"
-                                 style="margin-left: 40px">
-                                <div class="checkbox">
+                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="1000" [step]="10"
+                                [(ngModel)]="priceRange"
+                                style="margin-top: 4em;"></nouislider>
+
+                    <div *ngIf="showCuisine && filterFromMode.value.filterMode !='play'">
+                        <div *ngFor="let item of filterData.eat; let in =index; trackBy:trackByIndex"
+                             style="margin-left: 40px">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="cuisine && cuisine[item.name]">{{item.name}}
+                            </div>
+                            <div class="" *ngIf="item.sub" style="margin-left: 30px;">
+                                <div class="checkbox"
+                                     *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
                                     <input type="checkbox"
-                                           (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
-                                           [ngModel]="cuisine && cuisine[item.name]">{{item.name}}
-                                </div>
-                                <div class="" *ngIf="item.sub" style="margin-left: 30px;">
-                                    <div class="checkbox"
-                                         *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
-                                        <input type="checkbox"
-                                               (change)="cuisine && cuisine[sb.name]=$event.target.checked ? true : undefined"
-                                               [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
-                                    </div>
+                                           (change)="cuisine && cuisine[sb.name]=$event.target.checked ? true : undefined"
+                                           [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
                                 </div>
                             </div>
                         </div>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Ratings <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
-                    <ng-template ngbTabContent>
-                        <div *ngIf="filterFromMode.value.filterMode !='play'" class="text-center">
-                            <ngb-rating [(rate)]="currentRate">
-                                <ng-template let-fill="fill">
-                                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
-                                </ng-template>
-                            </ngb-rating>
-                        </div>
-                    </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Best For <i class="fa fa-angle-down" aria-hidden="true"></i></ng-template>
-                    <ng-template ngbTabContent>
-                        <div *ngIf="filterFromMode.value.filterMode !='play'">
-                            <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
-                                <div class="checkbox">
+                    </div>
+
+                    <div *ngIf="showRate && filterFromMode.value.filterMode !='play'" class="text-center">
+                        <ngb-rating [(rate)]="currentRate">
+                            <ng-template let-fill="fill">
+                                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div *ngIf="showBest && filterFromMode.value.filterMode !='play'">
+                        <div *ngFor="let item of filterData.eat; let in =index; trackBy:trackByIndex"
+                             style="margin-left: 40px">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="cuisine && cuisine[item.name]">{{item.name}}
+                            </div>
+                            <div class="" *ngIf="item.sub" style="margin-left: 30px;">
+                                <div class="checkbox"
+                                     *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
                                     <input type="checkbox"
-                                           (change)="best && best[item.name]=$event.target.checked ? true : undefined"
-                                           [ngModel]="best && best[item.name]">{{item.name}}
+                                           (change)="cuisine && cuisine[sb.name]=$event.target.checked ? true : undefined"
+                                           [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
                                 </div>
                             </div>
                         </div>
-                    </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
+                    </div>
+                    <div *ngIf="showType && filterFromMode.value.filterMode !='play'">
+                        <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="best && best[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="best && best[item.name]">{{item.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div class="actionFilter">
                 <label class="btn btn-default" (click)="filterCancel()">Cancel</label>
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
@@ -110,7 +144,8 @@
             <div id="v-scrollable" class="scrollable section mode"
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
                 <div class="list-event">
-                    <div class="items" *ngFor="let item of items; let index = 'index'" [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
+                    <div class="items" *ngFor="let item of items; let index = 'index'"
+                         [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
                         <div class="list-items">
                             <div class="avatar">
                                 <div class="badge">#{{index +1}}</div>
@@ -121,7 +156,8 @@
                                 </div>
                             </div>
                             <div class="item-content">
-                                <h3 class="name" [routerLink]="['/company',item.Company_Slug]">{{item.Company_Name}}</h3>
+                                <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
+                                    {{item.Company_Name}}</h3>
                                 <div class="clearfix"></div>
                                 <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
                                 <div class="box-content">

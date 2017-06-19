@@ -31,14 +31,16 @@
     border: 1px solid #d8d8d8;
     box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
-.filterFromMode .btn-group .btn+.btn {
+
+.filterFromMode .btn-group .btn + .btn {
     margin-left: 0px;
 }
+
 .filterFromMode .btn-block label {
     height: 38px;
     padding-top: 10px;
     border: none;
-    width: calc(100%/3);
+    width: calc(100% / 3);
     font-weight: 500;
     background: #f6f6f6;
     box-shadow: 1px 1px 3px 0 #d8d8d8;
@@ -114,7 +116,10 @@
     padding-bottom: 20px;
     margin-top: 30px;
     text-align: right;
+    float: left;
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+    width: 100%;
+    clear: both;
 }
 
 .left-box .actionFilter label {
@@ -131,27 +136,15 @@
     color: #ec3d62;
 }
 
-.justify-content-start li.nav-item a {
+ul.itemSort li a {
     border: none;
     background: transparent;
     font-family: Roboto;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1;
     text-align: right;
     color: #3b3b3b;
-}
-
-.justify-content-start.nav-tabs .nav-link.active,
-.justify-content-start.nav-tabs .nav-link.active:hover,
-.justify-content-start.nav-tabs .nav-link.active:focus {
-    border: none;
-}
-
-.justify-content-start.nav-tabs .nav-link.active i:before,
-.justify-content-start.nav-tabs .nav-link.active:hover i:before,
-.justify-content-start.nav-tabs .nav-link.active:focus i:before {
-    content: "\f106";
 }
 
 .avatar, .avatar img {
@@ -327,16 +320,51 @@ nouislider.ng2-nouislider {
     background: none;
     font-size: 24px;
 }
-.mode .heart-icon i.heart-selected{
+
+.mode .heart-icon i.heart-selected {
     color: #ec3d62;
 }
 
 /*.left-box, .right-box {*/
-    /*padding-left: 0;*/
-    /*padding-right: 0;*/
+/*padding-left: 0;*/
+/*padding-right: 0;*/
 /*}*/
 .fixed-right {
     position: fixed;
     right: 0px;
     width: 48%;
+}
+
+.showMoreType {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    color: #ec3d62;
+}
+
+.itemSort {
+    border: none;
+    padding: 20px 15px;
+}
+
+.itemSort li.type {
+    width: 80px;
+}
+
+.itemSort li {
+    width: 130px;
+}
+
+.showTab li {
+    width: 110px;
+}
+
+.itemSort li a:hover {
+    text-decoration: none;
+}
+
+.find-content {
+    float: left;
+    clear: both;
+    width: 100%;
 }
