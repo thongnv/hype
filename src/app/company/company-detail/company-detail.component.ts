@@ -116,7 +116,8 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.loaderService.show();
       this.companyService.postReview(this.id, review).subscribe(
         (resp) => {
-          console.log(resp);
+          console.log('review id:', resp);
+          review.id = resp;
           this.reviews.unshift(review);
           this.loaderService.hide();
         },
