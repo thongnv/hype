@@ -154,6 +154,8 @@ export class CurateNewComponent implements OnInit {
   public switchView(status: boolean) {
     this.showPreview = status;
     if (status) {
+      this.previewData = this.formData.value;
+      this.previewData.images = this.previewUrl;
       this.initMap();
     }
   }
@@ -235,14 +237,14 @@ export class CurateNewComponent implements OnInit {
           index++;
         }
       }
-      if (this.previewData.images.length) {
-        for (let img of this.previewData.images) {
-          if (img) {
-            this.slides.push({image: img.url, active: false});
-          }
+    }
+    if (this.previewData.images.length) {
+      for (let img of this.previewData.images) {
+        if (img) {
+          this.slides.push({image: img.url, active: false});
         }
-
       }
+
     }
   }
 }
