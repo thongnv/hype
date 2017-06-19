@@ -63,7 +63,7 @@
         <li *ngFor="let art of trending">
           <a [title]="art.title" [routerLink]="[art.alias]">
             <img [src]="art.field_images[0]" [alt]="art.title" width="60" height="60">
-            <p class="title-trending">{{art.body | myHtml2Text | truncate : 48}}</p>
+            <p class="title-trending">{{art.title | myHtml2Text | truncate : 48}}</p>
           </a>
         </li>
       </ul>
