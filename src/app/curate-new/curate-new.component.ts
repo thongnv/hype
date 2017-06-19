@@ -131,7 +131,6 @@ export class CurateNewComponent implements OnInit {
       let  data = this.mapArticle(article);
       this.loaderService.show();
       if (!this.submitted) {
-        this.submitted = true;
         this.mainService.postArticle(data).then((response) => {
           if (response.status) {
             this.loaderService.hide();
@@ -139,6 +138,7 @@ export class CurateNewComponent implements OnInit {
             this.router.navigate([response.data.slug]);
           }
         });
+        this.submitted = true;
       }
     } else {
       this.formData.markAsTouched();
@@ -154,6 +154,8 @@ export class CurateNewComponent implements OnInit {
   public switchView(status: boolean) {
     this.showPreview = status;
     if (status) {
+      this.previewData = this.formData.value;
+      this.previewData.images = this.previewUrl;
       this.initMap();
     }
   }
@@ -235,14 +237,14 @@ export class CurateNewComponent implements OnInit {
           index++;
         }
       }
-      if (this.previewData.images.length) {
-        for (let img of this.previewData.images) {
-          if (img) {
-            this.slides.push({image: img.url, active: false});
-          }
+    }
+    if (this.previewData.images.length) {
+      for (let img of this.previewData.images) {
+        if (img) {
+          this.slides.push({image: img.url, active: false});
         }
-
       }
+
     }
   }
 }
