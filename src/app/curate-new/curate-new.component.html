@@ -124,14 +124,17 @@
       <ng-container *ngIf="previewData.listPlaces">
         <div  *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap"
              [id]="'place-'+index">
-          <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong
-              class="place-name">{{plc.place}}</strong>
-            <span class="pull-right place-detail-btn">details</span>
-          </div>
-          <div class="place-item-img">
-            <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
-          </div>
-          <p class="place-item-description">{{plc.description}}</p>
+          <ng-container *ngIf="plc?.place">
+            <div class="place-item-header">
+              <strong class="pull-left place-index">#{{index+1}}</strong><strong
+                class="place-name">{{plc.place}}</strong>
+              <span class="pull-right place-detail-btn">details</span>
+            </div>
+            <div class="place-item-img">
+              <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
+            </div>
+            <p class="place-item-description">{{plc.description}}</p>
+          </ng-container>
         </div>
       </ng-container>
     </div>

@@ -131,7 +131,6 @@ export class CurateNewComponent implements OnInit {
       let  data = this.mapArticle(article);
       this.loaderService.show();
       if (!this.submitted) {
-        this.submitted = true;
         this.mainService.postArticle(data).then((response) => {
           if (response.status) {
             this.loaderService.hide();
@@ -139,6 +138,7 @@ export class CurateNewComponent implements OnInit {
             this.router.navigate([response.data.slug]);
           }
         });
+        this.submitted = true;
       }
     } else {
       this.formData.markAsTouched();
