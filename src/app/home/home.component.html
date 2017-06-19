@@ -68,7 +68,7 @@
                              [streetViewControl]="true"
                              (mapClick)="mapClicked($event,index)"
             >
-                <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"
+                <gmap-geocode-marker [showCircle]="showCircle" [markers]="markers" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                      (markerClick)="clickedMarker($event)"
                                      (dragEnd)="markerDragEnd($event)"

@@ -17,6 +17,7 @@ export class GeocodeMarkerComponent implements OnInit {
     @Output('radiusChange') public radiusChange = new EventEmitter<any>();
     @Output('dragEnd') public dragEnd = new EventEmitter<any>();
     @Output('markerClick') public markerClick = new EventEmitter<any>();
+    @Input('showCircle') public showCircle:any;
     
     public events:any[];
     public MARKER_ICON = '/assets/icon/icon_pointer.png';
