@@ -1,5 +1,5 @@
-<article class="container" *ngIf="ready">
-  <div>
+<article>
+  <div *ngIf="mapReady" class="row">
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -7,6 +7,11 @@
         <div class="company-wrap">
           <!-- carousel start -->
           <div class="carousel">
+            <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                      [noThumbnail]="true" [carouselSlides]="slides">
+              <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
+                     [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+              </slide>
             <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true" [noTransition]="noTransition">
               <app-slide-carousel *ngFor="let slide of slides; let index=index"
                                   [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">

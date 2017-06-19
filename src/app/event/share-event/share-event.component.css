@@ -90,6 +90,7 @@ header ul li.active {
     float: left;
     margin-right: 15px;
     padding: 0px 20px;
+    width: 25%;
 }
 .input-box > .field-group > .form-group > input {
     width: 65%;
