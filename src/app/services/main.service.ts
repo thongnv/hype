@@ -19,6 +19,7 @@ export class MainService {
   public constructor(private _localStorageService: LocalStorageService,
                      private _http: Http, private route: Router) {
   }
+
   public login(fbToken: string) {
     return new Promise((resolve, reject) => {
 
@@ -377,11 +378,13 @@ export class MainService {
       .then((resp) => resp.json())
       .catch(this.handleError);
   }
+
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);
   }
-  private checkLogin(): void{
+
+  private checkLogin(): void {
     if (!this._localStorageService.get('loginData')) {
       this.route.navigate(['/login']);
     }
