@@ -305,8 +305,8 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            if (resp.data.length >= 8) {
-                this.categories = resp.data.slice(0, 7);
+            if (resp.data.length >= 7) {
+                this.categories = resp.data.slice(0, 6);
             }
 
         });
