@@ -447,3 +447,20 @@ nouislider.ng2-nouislider {
     margin-left: 15px;
     color: #3b3b3b;
 }
+
+.item-content .review {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+    margin-left: 40px;
+
+}
+
+.noUi-horizontal .noUi-tooltip {
+    bottom: -130%;
+    border-radius: 50%;
+    font-size: 12px;
+}

@@ -27,7 +27,7 @@ export class ModeComponent implements OnInit {
     public categories:any = [];
     public categoriesDraw:any[];
     public someValue:number = 5;
-    public priceRange:number[] = [0, 300];
+    public priceRange:number[] = [0, 50];
     public filterFromMode:FormGroup;
     public filterCategory:FormGroup;
     public items = [];
@@ -118,7 +118,8 @@ export class ModeComponent implements OnInit {
 
     changeCategory() {
         this.loaderService.show();
-        this.params.kind = this.filterCategory.value.filterMode;
+        console.log(this.filterCategory.value.filterCategory);
+        this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
     }
 
@@ -224,7 +225,6 @@ export class ModeComponent implements OnInit {
     }
 
     private getDistance(p1, p2) {
-        console.log(p2.lat());
         var R = 6378137; // Earth’s mean radius in meter
         var dLat = this.rad(p2.lat() - p1.lat());
         var dLong = this.rad(p2.lng() - p1.lng());

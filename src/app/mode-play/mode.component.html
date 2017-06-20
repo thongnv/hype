@@ -28,7 +28,7 @@
                         <label class="btn btn-default" *ngFor="let term of categories">
                             <img src="{{term.icon}}" alt="{{term.name}}">
                             <span class="clearfix"> </span>
-                            <input type="radio" value="{{term.tid}}">{{term.name}}
+                            <input type="radio" value="{{term.name}}">{{term.name}}
                         </label>
                         <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
                                (click)="showAllKind(showAll)">
@@ -75,9 +75,11 @@
 
                 <div class="find-content">
 
-                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="1000" [step]="10"
+                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
                                 [(ngModel)]="priceRange"
-                                style="margin-top: 4em;"></nouislider>
+                                style="margin-top: 2em;">
+                    </nouislider>
+                    <div class="price"></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
                              style="margin-left: 40px">
@@ -112,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="showType">
+                    <div *ngIf="showType && !showTab">
                         <div *ngFor="let item of filterData.type; let in =index" style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
@@ -123,14 +125,14 @@
                     </div>
                 </div>
             </div>
-            <div class="actionFilter">
+            <div class="actionFilter" *ngIf="showPrice || showCuisine || showRate || showBest ||showType">
                 <label class="btn btn-default" (click)="filterCancel()">Cancel</label>
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
             <div class="list-header">
                 <div class="pull-left">Sort By</div>
-                <div class="pull-right">Clear Filters</div>
+                <div class="pull-right" (click)="filterSubmit()">Clear Filters</div>
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clearfix"></div>
@@ -155,6 +157,7 @@
                                 {{item.Company_Name}}</h3><span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
                             <div class="clearfix"></div>
                             <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
+                            <span class="review">{{item.rating.total}} Reviews</span>
                             <div class="box-content">
                                 <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
                                 <p *ngIf="item.YP_Address?.length > 0"
