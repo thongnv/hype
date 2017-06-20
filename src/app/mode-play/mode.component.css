@@ -358,7 +358,9 @@ nouislider.ng2-nouislider {
     right: 0;
     top: 20px;*/
     color: #ec3d62;
-    margin-left: 33px;
+    position: absolute;
+    top: 24px;
+    right: 30px;
 }
 
 .itemSort {
