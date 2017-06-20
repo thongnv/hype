@@ -1,66 +1,228 @@
 {
-  "eat": [
-    {
-      "name": "China",
-      "sub": [
-        {
-          "name": "Hotpot"
-        },
-        {
-          "name": "Dim Sun"
-        }
-      ]
-    },
-    {
-      "name": "Japanese",
-      "sub": [
-        {
-          "name": "Sushi"
-        },
-        {
-          "name": "Ramen"
-        },
-        {
-          "name": "Tempura"
-        },
-        {
-          "name": "Katsudon"
-        },
-        {
-          "name": "Yakiniku"
-        },
-        {
-          "name": "Shabu"
-        }
-      ]
-    },
-    {
-      "name": "Korea"
-    },
-    {
-      "name": "India"
-    }
-  ],
-  "play": [
-    {
-      "name": "Outdoor activities"
-    }
-  ],
-  "best": [
-    {
-      "name": "After Work"
-    },
-    {
-      "name": "Fine Dining"
-    },
-    {
-      "name": "Fresh"
-    },
-    {
-      "name": "Dessert"
-    },
-    {
-      "name": "Just Chill"
-    }
-  ]
+  "eat": {
+    "cuisine": [
+      {
+        "name": "China",
+        "sub": [
+          {
+            "name": "Hotpot"
+          },
+          {
+            "name": "Dim Sun"
+          }
+        ]
+      },
+      {
+        "name": "Japanese",
+        "sub": [
+          {
+            "name": "Sushi"
+          },
+          {
+            "name": "Ramen"
+          },
+          {
+            "name": "Tempura"
+          },
+          {
+            "name": "Katsudon"
+          },
+          {
+            "name": "Yakiniku"
+          },
+          {
+            "name": "Shabu"
+          }
+        ]
+      },
+      {
+        "name": "Korea"
+      },
+      {
+        "name": "India"
+      },
+      {
+        "name": "French"
+      },
+      {
+        "name": "Italian"
+      },
+      {
+        "name": "Spanish",
+        "sub": [
+          {
+            "name": "Tapas"
+          }
+        ]
+      },
+      {
+        "name": "Western"
+      },
+      {
+        "name": "Vegetarian",
+        "sub": [
+          {
+            "name": "Barbeque"
+          }
+        ]
+      },
+      {
+        "name": "Seafood"
+      },
+      {
+        "name": "Halal"
+      }
+    ],
+    "best": [
+      {
+        "name": "After Work"
+      },
+      {
+        "name": "Cheap and good"
+      },
+      {
+        "name": "Michelin starred"
+      },
+      {
+        "name": "Brunch"
+      },
+      {
+        "name": "Desserts"
+      },
+      {
+        "name": "Fresh (Newly opened)"
+      },
+      {
+        "name": "Healthy"
+      },
+      {
+        "name": "Casual and easy"
+      },
+      {
+        "name": "Romantic dinners"
+      },
+      {
+        "name": "Dine with a view"
+      },
+      {
+        "name": "Just chill"
+      },
+      {
+        "name": "Meat lovers"
+      },
+      {
+        "name": "Buffet"
+      },
+      {
+        "name": "Trending"
+      },
+      {
+        "name": "Instagram-worthy"
+      }
+    ],
+    "type": [
+      {
+        "name": "Restaurant"
+      },
+      {
+        "name": "Cafe"
+      },
+      {
+        "name": "Bar"
+      },
+      {
+        "name": "Hawker"
+      }
+    ]
+  },
+  "play": {
+    "cuisine": [
+      {
+        "name": "Outdoor activities"
+      },
+      {
+        "name": "Laser tag"
+      },
+      {
+        "name": "Escape rooms"
+      },
+      {
+        "name": "Water sports"
+      },
+      {
+        "name": "Extreme",
+        "sub": [
+          {
+            "name": "Reverse bungee"
+          }
+        ]
+      },
+      {
+        "name": "Tours"
+      },
+      {
+        "name": "Gym"
+      },
+      {
+        "name": "Sports"
+      },
+      {
+        "name": "Beauty"
+      },
+      {
+        "name": "Nature and parks",
+        "sub": [
+          {
+            "name": "Hiking trails"
+          }
+        ]
+      },
+      {
+        "name": "Museums & Art"
+      },
+      {
+        "name": "Cyber Cafe"
+      },
+      {
+        "name": "Pool & Billiards"
+      },
+      {
+        "name": "Nightlife"
+      }
+    ],
+    "best": [
+      {
+        "name": "Families"
+      },
+      {
+        "name": "Couples"
+      },
+      {
+        "name": "Large groups"
+      }
+    ],
+    "type": [
+      {
+        "name": "Chill out"
+      },
+      {
+        "name": "Sweat"
+      },
+      {
+        "name": "Appreciate"
+      },
+      {
+        "name": "Adrenaline"
+      },
+      {
+        "name": "Unique"
+      },
+      {
+        "name": "Learn"
+      },
+      {
+        "name": "Just Fun"
+      }
+    ]
+  }
 }

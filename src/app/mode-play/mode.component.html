@@ -140,7 +140,8 @@
                         <div class="list-items">
                             <div class="avatar">
                                 <div class="badge">#{{index +1}}</div>
-                                <img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">
+                                <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
+                                <img *ngIf="item.images && item.images?.length > 0" src="assets/img/company/default_140x140.jpg">
                                 <div (click)="onLikeEmit(item)" class="heart-icon">
                                     <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
                                        [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>
