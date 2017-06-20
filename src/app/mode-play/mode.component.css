@@ -409,3 +409,7 @@ nouislider.ng2-nouislider {
     clear: both;
     width: 100%;
 }
+
+#v-scrollable {
+    padding-left: 10px;
+}
