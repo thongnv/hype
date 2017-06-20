@@ -81,7 +81,7 @@
                     <div class="price"></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
-                             style="margin-left: 40px">
+                             style="margin-left: 40px" class="filter-item">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
@@ -105,7 +105,7 @@
                         </ngb-rating>
                     </div>
                     <div *ngIf="showBest" class="best-for">
-                        <div *ngFor="let item of filterData.best; let in =index" class="finter-item" style="margin-left: 40px">
+                        <div *ngFor="let item of filterData.best; let in =index" class="filter-item" style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="best && best[item.name]=$event.target.checked ? true : undefined"
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div *ngIf="showType && !showTab">
-                        <div *ngFor="let item of filterData.type; let in =index" style="margin-left: 40px">
+                        <div *ngFor="let item of filterData.type; let in =index" class="filter-item" style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="best && best[item.name]=$event.target.checked ? true : undefined"

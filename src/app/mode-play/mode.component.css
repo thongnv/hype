@@ -466,3 +466,7 @@ nouislider.ng2-nouislider {
     border-radius: 50%;
     font-size: 12px;
 }
+
+.filter-item {
+    width: 25%;
+}
