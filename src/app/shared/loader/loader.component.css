@@ -24,7 +24,7 @@
 .image-animation img{
   position: absolute;
   top: 50%;
-  left: 46%;
+  left: 50%;
   transform: translateY(-50%);
-  width: 150px;
+  width: 80px;
 }
