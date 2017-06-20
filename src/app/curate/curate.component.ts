@@ -37,7 +37,7 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('latest', '*').subscribe(
+    this.mainService.getCurate('latest', '*', 0, 9).subscribe(
       (response: any) => {
         this.latestArticles = response.data;
       }
@@ -49,7 +49,7 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('feature', '*').subscribe(
+    this.mainService.getCurate('feature', '*', 0, 6).subscribe(
       (response: any) => {
         this.featuredArticles = response.data;
         this.processFeature(this.featuredArticles);
@@ -70,7 +70,7 @@ export class CurateComponent implements OnInit {
     this.loaderService.show();
     this.selectedCategory = cat;
 
-    this.mainService.getCurate('latest', cat).subscribe(
+    this.mainService.getCurate('latest', cat, 0, 9).subscribe(
       (response: any) => {
         this.latestArticles = response.data;
       }
@@ -82,7 +82,7 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('feature', cat).subscribe(
+    this.mainService.getCurate('feature', cat, 0, 9).subscribe(
       (response: any) => {
         this.featuredArticles = response.data;
         this.processFeature(this.featuredArticles);

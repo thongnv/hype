@@ -185,11 +185,17 @@ export class MainService {
       });
   }
 
-  public getCurate(filter, cate): Observable<Response> {
+  public getCurate(filter, cate, page, limit): Observable<Response> {
     let headers = this.defaultHeaders;
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
     myParams.set('filter', filter);
+    if (limit) {
+      myParams.set('limit', limit);
+    }
+    if (page) {
+      myParams.set('page', page);
+    }
     if (parseInt(cate, 10)) {
       myParams.set('cate', cate);
     }
