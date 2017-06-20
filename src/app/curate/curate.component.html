@@ -1,6 +1,6 @@
 <section>
-  <div class="table-wrap">
-    <div class="col-lg-9 col-xs-12 left-box table-cell">
+  <div class="">
+    <div class="col-lg-9 col-xs-12 left-box table-cell" (scroll)="onScrollDown($event)">
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
@@ -49,6 +49,11 @@
                 {{art.body | myHtml2Text | truncate : 60}}
               </p>
             </div>
+          </div>
+          <div *ngIf="loading" class="loading">
+            <div class="circle1"></div>
+            <div class="circle2"></div>
+            <div class="circle3"></div>
           </div>
         </div>
       </div>

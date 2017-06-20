@@ -20,9 +20,25 @@ export class CurateComponent implements OnInit {
   public noLoopSlides: boolean = false;
   public noPause: boolean = true;
   public noTransition: boolean = false;
+  public currentPage: number = 0;
+  public endList: boolean = false;
+  public loading: boolean = false;
 
   public constructor(private mainService: MainService,
                      private loaderService: LoaderService) {
+    window.onscroll = () => {
+      let windowHeight = 'innerHeight' in window ? window.innerHeight
+        : document.documentElement.offsetHeight;
+      let body = document.body;
+      let html = document.documentElement;
+      let docHeight = Math.max(body.scrollHeight,
+        body.offsetHeight, html.clientHeight,
+        html.scrollHeight, html.offsetHeight);
+      let windowBottom = windowHeight + window.pageYOffset;
+      if (windowBottom >= docHeight) {
+        this.loadMore();
+      }
+    };
   }
 
   public ngOnInit() {
@@ -40,6 +56,7 @@ export class CurateComponent implements OnInit {
     this.mainService.getCurate('latest', '*', 0, 9).subscribe(
       (response: any) => {
         this.latestArticles = response.data;
+        this.currentPage = 1;
       }
     );
 
@@ -49,7 +66,7 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('feature', '*', 0, 6).subscribe(
+    this.mainService.getCurate('feature', '*', 0, 9).subscribe(
       (response: any) => {
         this.featuredArticles = response.data;
         this.processFeature(this.featuredArticles);
@@ -69,10 +86,14 @@ export class CurateComponent implements OnInit {
   public onSelectCategory(cat: any) {
     this.loaderService.show();
     this.selectedCategory = cat;
+    this.currentPage = 0;
+    this.loading = false;
+    this.endList = false;
 
     this.mainService.getCurate('latest', cat, 0, 9).subscribe(
       (response: any) => {
         this.latestArticles = response.data;
+        this.currentPage = this.currentPage + 1;
       }
     );
 
@@ -89,5 +110,22 @@ export class CurateComponent implements OnInit {
         this.loaderService.hide();
       }
     );
+  }
+
+  public loadMore() {
+    if (!this.endList && !this.loading) {
+      this.loading = true;
+      this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
+        (response: any) => {
+          this.latestArticles = this.latestArticles.concat(response.data);
+          console.log(response.data);
+          if (this.currentPage * 9 > response.total) {
+            this.endList = true;
+          }
+          this.currentPage = this.currentPage + 1;
+          this.loading = false;
+        }
+      );
+    }
   }
 }
