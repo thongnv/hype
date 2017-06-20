@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     private eventItem:EventItemComponent;
 
     // Set our default values
-    public gMapStyles: any;
+    public gMapStyles:any;
     public localState = {value: ''};
     public eventFilter:any[] = [];
     public selectedEventFilter:any;
@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
     private loadMore:boolean = false;
     private params:any = {
         'page': 0,
-        'limit': 10,
+        'limit': 20,
         'start': 0,
         'tid': '',
         'date': '',
@@ -394,7 +394,7 @@ export class HomeComponent implements OnInit {
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
         this.params.lat = event.coords.lat;
-        this.params.lng = event.coords.lng;
+        this.params.long = event.coords.lng;
         this.loaderService.show();
         this.getTrending();
     }
@@ -402,38 +402,21 @@ export class HomeComponent implements OnInit {
     private passerTrending() {
         this.resetData();
         this.mapsAPILoader.load().then(()=> {
-                let mapCenter = new google.maps.Marker({
-                    position: new google.maps.LatLng(this.lat, this.lng),
-                    draggable: true
-                });
-                let searchCenter = mapCenter.getPosition();
 
                 for (let i = 0; i < this.listItems.length; i++) {
                     if (this.listItems[i].field_location_place.length != 0 ||
                         this.listItems[i].field_location_place.field_latitude != null) {
                         let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
-                        let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
-                        if (this.listItems[i].field_location_place ||
-                            this.listItems[i].field_location_place.field_latitude != 'undefined') {
-                            let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
-                            let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
+                        let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude
+                        this.events.push(this.listItems[i]);
+                        this.markers.push({
+                            lat: latitude,
+                            lng: longitude,
+                            label: this.listItems[i].title,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
 
-                            let GMarker = new google.maps.Marker({
-                                position: new google.maps.LatLng(latitude, longitude),
-                                draggable: true
-                            });
-                            let geometry = google.maps.geometry.spherical.computeDistanceBetween(GMarker.getPosition(), searchCenter);
-                            if (parseInt(geometry) < this.currentRadius) {
-                                this.events.push(this.listItems[i]);
-                                this.markers.push({
-                                    lat: latitude,
-                                    lng: longitude,
-                                    label: this.listItems[i].title,
-                                    opacity: 0.6,
-                                    isOpenInfo: false
-                                });
-                            }
-                        }
                     }
                 }
                 this.loaderService.hide();
@@ -445,18 +428,9 @@ export class HomeComponent implements OnInit {
     private passerTop100() {
         this.resetData();
         this.mapsAPILoader.load().then(()=> {
-
                 for (let i = 0; i < this.listItems.length; i++) {
-
                     let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
                     let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
-
-                    //let GMarker = new google.maps.Marker({
-                    //    position: new google.maps.LatLng(latitude, longitude),
-                    //    draggable: true
-                    //});
-                    //let geometry = google.maps.geometry.spherical.computeDistanceBetween(GMarker.getPosition(), searchCenter);
-                    //if (parseInt(geometry) < this.currentRadius) {
                     this.events.push(this.listItems[i]);
                     this.markers.push({
                         lat: latitude,
