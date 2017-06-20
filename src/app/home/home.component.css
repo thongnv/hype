@@ -84,13 +84,14 @@
 }
 
 .filter-events {
-    padding: 30px 25px 0;
+    padding: 30px 35px 0px 25px;
     border-bottom: 1px solid #eaeaea;
 }
 .filter-events .btn-group.tab-control {
     border: 1px solid #d8d8d8;
     border-radius: 4px;
     background: #f6f6f6;
+    height: 28px;
 }
 .filter-events.top-100{
     padding-bottom: 30px;
@@ -135,8 +136,9 @@
 
 .btn-default {
     width: 90px;
-    height: 32px;
+    height: 28px;
     background: #f6f6f6;
+    font-size: 14px;
     color: #000000;
     border-radius: 4px;
     outline: none;
@@ -151,8 +153,13 @@
     float: right;
 }
 
-.btn-group button.active {
+button.btn.btn-default.active {
+    font-size: 14px;
+    height: 32px;
     color: #fff;
+    position: relative;
+    bottom: 3px;
+    z-index: 999;
     border-radius: 4px;
     background-color: #2a6be1;
     box-shadow: 0 2px 3px 0 rgba(148, 148, 148, 0.5);
@@ -162,7 +169,6 @@
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
 }
-
 .list-item {
     width: 100%;
     overflow: hidden;
