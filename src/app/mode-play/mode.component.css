@@ -469,4 +469,24 @@ nouislider.ng2-nouislider {
 
 .filter-item {
     width: 25%;
+    float: left;
+}
+
+.price-desc {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+    display: table;
+}
+.price-desc span{
+    display: table-cell;
+}
+.price-desc span:nth-child(1){
+    padding-left: 15px;
+}
+.price-desc span:nth-child(2){
+    padding-left: 60px;
+}
+.price-desc span:nth-child(3){
+    padding-right: 20px;
 }

@@ -78,7 +78,7 @@
                                 [(ngModel)]="priceRange"
                                 style="margin-top: 2em;">
                     </nouislider>
-                    <div class="price"></div>
+                    <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span class="text-center">$150</span><span class="pull-right">$300</span></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
                              style="margin-left: 40px" class="filter-item">
