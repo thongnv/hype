@@ -141,8 +141,19 @@ export class ModeComponent implements OnInit {
         this.modeService.getFilterMode().map(resp=>resp.json()).subscribe((resp)=> {
             if (this.filterFromMode.value.filterMode == 'play') {
                 this.filterData = resp.play;
-            } else {
+            } else if (this.filterFromMode.value.filterMode == 'eat') {
                 this.filterData = resp.eat;
+            }
+            else {
+                let filterAll = resp.eat;
+                let cuisine = resp.play.cuisine;
+                let best = resp.play.best;
+                let type = resp.play.type;
+
+                filterAll.cuisine = filterAll.cuisine.concat(cuisine);
+                filterAll.best = filterAll.best.concat(best);
+                filterAll.type = filterAll.type.concat(type);
+                this.filterData = filterAll;
             }
         });
     }
@@ -410,6 +421,7 @@ export class ModeComponent implements OnInit {
         this.showRate = false;
         this.showBest = false;
     }
+
     public onScrollDown(event) {
         let elm = event.srcElement;
         if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
