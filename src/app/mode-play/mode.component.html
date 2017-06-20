@@ -41,18 +41,18 @@
                 <ul class="list-inline itemSort" [class.showTab]="!showTab">
                     <li>
                         <a (click)="showRagePriceFind(showPrice)" class="price-range">Price Range <i
-                                [ngClass]="{'fa-angle-up':showPrice}" class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showPrice,'fa-angle-down':!showPrice}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
-                                [ngClass]="{'fa-angle-up':showCuisine}" class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a (click)="showRateFind(showRate)" class="when-button">Ratings <i
-                                [ngClass]="{'fa-angle-up':showRate}"
-                                class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showRate,'fa-angle-down':!showRate}"
+                                class="fa"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
@@ -62,9 +62,8 @@
                                 aria-hidden="true"></i></a>
                     </li>
                     <li class="type" *ngIf="!showTab">
-                        <a (click)="showTypeFind(showType)" class="when-button">Type <i [class.fa-angle-up]="showType"
-                                                                                        class="fa fa-angle-down"
-                                                                                        aria-hidden="true"></i></a>
+                        <a (click)="showTypeFind(showType)" class="when-button">Type
+                            <i  [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa" aria-hidden="true"></i></a>
                     </li>
                     
                     <span class="showMoreType" (click)="showAllType(showTab)">

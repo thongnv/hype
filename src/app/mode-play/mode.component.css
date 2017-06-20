@@ -380,6 +380,7 @@ nouislider.ng2-nouislider {
     position: absolute;
     top: 15px;
     right: 25px;
+    opacity: 0.6;
 }
 
 .itemSort {
