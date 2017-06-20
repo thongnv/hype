@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit {
         console.log(event);
         if (event == 'all') {
             this.selected = 'all';
-            this.params.cate = '';
+            this.params.tid = '';
         } else {
             this.selected = event.tid;
             this.params.tid = event.tid;
