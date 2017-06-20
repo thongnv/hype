@@ -70,9 +70,9 @@
                     <span class="showMoreType" (click)="showAllType(showTab)">
                         <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
                     </span>
-                    
+
                 </ul>
-                
+
                 <div class="find-content">
 
                     <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="1000" [step]="10"
@@ -128,25 +128,23 @@
                 <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
             </div>
             <div class="clearfix"></div>
-            <!--<div class="list-header">-->
-            <!--<div class="pull-left">Sort By</div>-->
-            <!--<div class="pull-right">Clear Filters</div>-->
-            <!--</div>-->
+            <div class="list-header">
+                <div class="pull-left">Sort By</div>
+                <div class="pull-right">Clear Filters</div>
+            </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clearfix"></div>
-            
-            <div class="list-event" slimScroll (scroll)="onScrollDown($event)" width="auto" height="290px" size="7px"
-                [railVisible]="true"
-                [railOpacity]="0.1"
-                [railColor]="'#ec3d62'"
-                [color]="'#ec3d62'">
+
+            <div id="v-scrollable" class="scrollable section"
+                 ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
                 <div class="items" *ngFor="let item of items; let index = 'index'"
                      [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
                     <div class="list-items">
                         <div class="avatar">
                             <div class="badge">#{{index +1}}</div>
-                                <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
-                                <img *ngIf="item.images && item.images?.length > 0" src="assets/img/company/default_140x140.jpg">
+                            <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
+                            <img *ngIf="item.images && item.images?.length > 0"
+                                 src="assets/img/company/default_140x140.jpg">
                             <div (click)="onLikeEmit(item)" class="heart-icon">
                                 <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
                                    [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>

@@ -38,10 +38,10 @@ export class ModeComponent implements OnInit {
     public cuisine:any[] = [{}];
     public best:any[] = [{}];
     public latlngBounds:any;
-    public mapZoom:number = 15;
+    public mapZoom:number = 12;
     public lat:number = 1.3089757786697331;
     public lng:number = 103.8258969783783;
-    public currentRadius:any = 3000;
+    public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
     private total:number = 0;
@@ -61,7 +61,7 @@ export class ModeComponent implements OnInit {
         order_dir: 'ASC',
         lat: 1.352083,
         long: 103.819836,
-        radius: 50,
+        radius: (this.currentRadius / 1000),
         page: 0,
         limit: 20
     };
