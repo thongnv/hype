@@ -207,7 +207,7 @@ export class ModeComponent implements OnInit {
                         let curentPosition = new google.maps.LatLng(this.lat, this.lng);
                         let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
                         let distance = this.getDistance(curentPosition, disTancePosition);
-                        companies[i].distance = parseFloat((distance / 1000)).toFixed(1);
+                        companies[i].distance = (distance / 1000).toFixed(1);
                         this.items.push(companies[i]);
                         this.markers.push({
                             lat: parseFloat(lat[1]),
