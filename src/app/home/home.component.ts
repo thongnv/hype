@@ -404,8 +404,8 @@ export class HomeComponent implements OnInit {
                         this.listItems[i].field_location_place.field_latitude != null) {
                         let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
                         let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
-                        if (typeof this.listItems[i].field_location_place.length != 0 ||
-                            typeof this.listItems[i].field_location_place.field_latitude != 'undefined') {
+                        if (this.listItems[i].field_location_place ||
+                            this.listItems[i].field_location_place.field_latitude != 'undefined') {
                             let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
                             let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
 
