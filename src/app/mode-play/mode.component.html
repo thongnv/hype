@@ -66,10 +66,13 @@
                                                                                         class="fa fa-angle-down"
                                                                                         aria-hidden="true"></i></a>
                     </li>
+                    
+                    <span class="showMoreType" (click)="showAllType(showTab)">
+                        <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
+                    </span>
+                    
                 </ul>
-                <span class="showMoreType" (click)="showAllType(showTab)">
-                            <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
-                        </span>
+                
                 <div class="find-content">
 
                     <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="1000" [step]="10"
@@ -119,7 +122,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="actionFilter">
                 <label class="btn btn-default" (click)="filterCancel()">Cancel</label>
@@ -132,43 +134,45 @@
             <!--</div>-->
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clearfix"></div>
-            <div id="v-scrollable" class="scrollable section mode"
-                 ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
-                <div class="list-event">
-                    <div class="items" *ngFor="let item of items; let index = 'index'"
-                         [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
-                        <div class="list-items">
-                            <div class="avatar">
-                                <div class="badge">#{{index +1}}</div>
+            
+            <div class="list-event" slimScroll (scroll)="onScrollDown($event)" width="auto" height="290px" size="7px"
+                [railVisible]="true"
+                [railOpacity]="0.1"
+                [railColor]="'#ec3d62'"
+                [color]="'#ec3d62'">
+                <div class="items" *ngFor="let item of items; let index = 'index'"
+                     [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
+                    <div class="list-items">
+                        <div class="avatar">
+                            <div class="badge">#{{index +1}}</div>
                                 <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
                                 <img *ngIf="item.images && item.images?.length > 0" src="assets/img/company/default_140x140.jpg">
-                                <div (click)="onLikeEmit(item)" class="heart-icon">
-                                    <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
-                                       [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>
-                                </div>
+                            <div (click)="onLikeEmit(item)" class="heart-icon">
+                                <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
+                                   [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>
                             </div>
-                            <div class="item-content">
-                                <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
-                                    {{item.Company_Name}}</h3>
-                                <div class="clearfix"></div>
-                                <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
-                                <div class="box-content">
-                                    <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
-                                    <p *ngIf="item.YP_Address?.length > 0"
-                                       [innerHTML]="item.YP_Address[0] | myHtml2Text | truncate : 45"></p>
-                                </div>
+                        </div>
+                        <div class="item-content">
+                            <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
+                                {{item.Company_Name}}</h3>
+                            <div class="clearfix"></div>
+                            <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
+                            <div class="box-content">
+                                <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
+                                <p *ngIf="item.YP_Address?.length > 0"
+                                   [innerHTML]="item.YP_Address[0] | myHtml2Text | truncate : 45"></p>
                             </div>
                         </div>
                     </div>
-                    <div class="list-bottom">
-                        <div *ngIf="items?.length ==0">End Of List</div>
-                    </div>
-
+                </div>
+                <div class="list-bottom">
+                    <div *ngIf="items?.length ==0">End Of List</div>
                 </div>
             </div>
+
         </div>
         <div class="col-lg-6 col-xs-12 gmap-box">
-            <div class="box-map" style="margin-top: 20px">
+            <div class="box-map">
                 <sebm-google-map *ngIf="showMap"
                                  [latitude]="lat"
                                  [longitude]="lng"

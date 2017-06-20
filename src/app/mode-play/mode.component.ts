@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation,NgZone} from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit, EventEmitter, Output} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
@@ -21,6 +21,8 @@ declare let google:any;
 
 
 export class ModeComponent implements OnInit {
+    @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();
+
     public markers:any = [];
     public categories:any = [];
     public categoriesDraw:any[];
@@ -407,5 +409,11 @@ export class ModeComponent implements OnInit {
         this.showCuisine = false;
         this.showRate = false;
         this.showBest = false;
+    }
+    public onScrollDown(event) {
+        let elm = event.srcElement;
+        if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
+            this.onScrollToBottom.emit(null);
+        }
     }
 }

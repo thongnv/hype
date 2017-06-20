@@ -45,7 +45,9 @@
     background: #f6f6f6;
     box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
-
+.filterFromMode .btn-block label:hover {
+    box-shadow: none;
+}
 .filterFromMode .btn-block label.active {
     border-radius: 4px;
     background: #2a6be1;
@@ -111,7 +113,13 @@
     text-align: center;
     color: #3b3b3b;
 }
-
+.left-box {
+    padding-right: 0px;
+}
+.gmap-box {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .left-box .actionFilter {
     padding-bottom: 20px;
     margin-top: 30px;
@@ -140,22 +148,31 @@ ul.itemSort li a {
     border: none;
     background: transparent;
     font-family: Roboto;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1;
     text-align: right;
     color: #3b3b3b;
 }
-
+ul.itemSort li a i {
+    font-size: 23px;
+    position: relative;
+    top: 3px;
+    left: 3px;
+}
 .avatar, .avatar img {
-    width: 120px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
     float: left;
     margin-top: 5px;
     position: relative;
     border-radius: 4px;
 }
-
+.avatar .heart-icon {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
 .list-items {
     display: block;
     background: white;
@@ -198,7 +215,7 @@ ul.itemSort li a {
     margin-top: 10px;
     font-size: 14px;
     font-weight: 300;
-    line-height: 1.43;
+    line-height: 1.13;
     text-align: left;
     color: #3b3b3b;
 }
@@ -336,9 +353,9 @@ nouislider.ng2-nouislider {
 }
 
 .showMoreType {
-    position: absolute;
+    /*position: absolute;
     right: 0;
-    top: 20px;
+    top: 20px;*/
     color: #ec3d62;
 }
 
@@ -353,10 +370,11 @@ nouislider.ng2-nouislider {
 
 .itemSort li {
     width: 130px;
+    text-align: center;
 }
 
 .showTab li {
-    width: 110px;
+    width: 120px;
 }
 
 .itemSort li a:hover {
