@@ -88,6 +88,7 @@ export class CurateComponent implements OnInit {
     this.selectedCategory = cat;
     this.currentPage = 0;
     this.loading = false;
+    this.endList = false;
 
     this.mainService.getCurate('latest', cat, 0, 9).subscribe(
       (response: any) => {
