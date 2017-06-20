@@ -6,6 +6,7 @@
            (keyup)="onSubmit($event, keyword.value)"
            (click)="onOpenSuggestion()">
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+      <div class="arrow-up"></div>
       <div class="display-location-address">
         <i class="icon icon-suggestion-marker"></i>
         <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>

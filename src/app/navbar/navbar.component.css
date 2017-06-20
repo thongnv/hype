@@ -11,7 +11,7 @@
     color: #fff;
 }*/
 .map-option .img-circle {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-right: 8px;
     float: left;
 }
@@ -21,13 +21,13 @@
     color: #fff;
     max-width: 200px;
     display: inline-block;
-    line-height: 50px;
+    line-height: 60px;
     float: left;
 }
 .map-option .dropdown a  {
     font-size: 18px;
     font-weight: 500;
-    line-height: 2.8;
+    line-height: 60px;
     letter-spacing: 1px;
     text-align: left;
     color: #fff;
@@ -52,15 +52,11 @@
     margin-right: 10px;
 }
 .add-event-button .add-eventbtn {
-    margin: 0px 8px;
+    margin: 0 8px;
     cursor: pointer;
 }
 .add-event-button .add-eventbtn:focus {
     outline: none;
-}
-.nav-item{
-    height: 50px;
-    line-height: 50px;
 }
 
 #map-option .dropdown-menu li{
@@ -68,6 +64,17 @@
     float: left;
     display: inline-block;
     clear: right;
+}
+#logo{
+    background: transparent url("../../assets/img/hylo-final-logo-126x50.png") no-repeat center center;
+}
+
+@media only screen and (min-width: 575px){
+    #map-option .dropdown-menu{
+        width: 500px;
+        padding: 5px;
+        overflow: auto;
+    }
 }
 @media only screen and (min-width: 768px){
     #map-option .dropdown-menu{
@@ -88,6 +95,12 @@
     #map-option .dropdown-menu{
         width: 980px;
         padding: 5px 0px 5px 5px;
+    }
+    #logo{
+        width: 126px;
+        height: 50px;
+        margin-top: 5px;
+        margin-left: 10px;
     }
 
 }

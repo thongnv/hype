@@ -1,88 +1,28 @@
 @import "~nouislider/distribute/nouislider.min.css";
+
 a.active {
-  background-color: gray;
+    background-color: gray;
 }
+
 .row {
-  width: 100%;
+    width: 100%;
 }
-
-.hype .sidebar{
-  position: fixed;
-  top: 50px;
-  bottom: 0;
-  left: 0;
-  width: 75px;
-  background-color: #f7f7f7;
-  box-shadow: 0 2px 4px 0 rgba(171, 171, 171, 0.5);
-  color: #000;
-  font-weight: 600;
-}
-.hype .main{
-  position: absolute;
-  top: 50px;
-  left: 75px;
-  right: 0;
-  bottom: 0;
-  background: #fff;
-}
-.hype .list-tap{
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-.hype .list-tap li, .hype .list-tap li img{
-  transition: all .3s;
-}
-.hype .list-tap li img {
-  width: 30px;
-  height: 30px;
-  -moz-transform: scale(1);
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-.hype .list-tap li span {
-    color: #3b3b3b;
-    font-size: 12px;
-    text-align: center;
-    line-height: 14px;
-}
-.hype .list-tap > li{
-  cursor: pointer;
-  padding: 10px 0;
-  color: #000000;
-  opacity: .4;
-  border: none;
-  outline: none;
-}
-.hype .list-tap > li.active, .hype .list-tap > li.active:hover{
-  opacity: 1;
-}
-.hype .list-tap > li:hover{
-  opacity: .7;
-}
-.hype .list-tap > li.active img, .hype .list-tap > li:hover img{
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-
 .noUi-horizontal .noUi-handle {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .noUi-horizontal {
-  height: 5px;
+    height: 5px;
 }
 
 .noUi-horizontal .noUi-handle {
-  width: 28px;
-  height: 28px;
-  left: -17px;
-  top: -12px;
-  outline: none;
+    width: 28px;
+    height: 28px;
+    left: -17px;
+    top: -12px;
+    outline: none;
 }
 
 .noUi-handle:before {
-  left: 10px;
+    left: 10px;
 }

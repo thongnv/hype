@@ -8,7 +8,7 @@
   </div>
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
-      <li id="site-name nav-item"><a [routerLink]="['./home']">hylo</a></li>
+      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo"></a></li>
       <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
@@ -25,6 +25,7 @@
                  [railOpacity]="0.1"
                  [railColor]="'#ec3d62'"
                  [color]="'#ec3d62'">
+
               <li *ngFor="let option of mapOptions" [class.active]="option === selectedMapOption"
                   (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
               </li>

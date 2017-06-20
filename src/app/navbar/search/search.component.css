@@ -1,12 +1,17 @@
 /*search location start*/
 
+.search-location-search-area .arrow-up{
+    top: -12px;
+    left: 15px;
+}
 .search-location-search-area {
     float: left;
-    margin-top: 1px;
+    margin-top: 13px;
     border-radius: 4px;
     background: #fff;
     width: 100%;
     border: 1px solid #cacaca;
+    position: relative;
 }
 .display-location-address {
     padding: 0 10px;
@@ -80,10 +85,6 @@
 .list-location-address li a img {
     width: 35px;
     height: 35px;
-}
-#list-events-location-address li:last-child {
-    border-bottom: 1px solid #cacaca;
-    margin-bottom: 8px;
 }
 
 /*search location end*/

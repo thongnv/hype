@@ -40,6 +40,7 @@ export class CurateComponent implements OnInit {
     this.mainService.getCurate('latest', '*').subscribe((response: any) => {
       this.latestArticles = response.data;
       this.trending = response.data;
+      console.log('getCurate: ', response);
     });
 
     this.mainService.getCurate('latest', '*').subscribe((response: any) => {

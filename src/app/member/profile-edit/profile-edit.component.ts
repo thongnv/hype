@@ -26,9 +26,9 @@ export class ProfileEditComponent implements OnInit {
     ])],
     contactNumber: ['', Validators.compose([
       this.requiredField,
-      Validators.minLength(10),
+      Validators.minLength(8),
       Validators.maxLength(30),
-      Validators.pattern(/^[+]?([0-9][-]*){10,30}$/)
+      Validators.pattern(/^[+]?([0-9][-]*){8,30}$/)
     ])],
     country: [''],
   });
