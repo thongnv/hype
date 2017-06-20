@@ -273,11 +273,11 @@ ul.itemSort li a i {
 
 .find-content .star {
     font-size: 3.5rem;
-    color: #ec3d62;
+    color: #cccccc;
 }
 
 .find-content .filled {
-    color: #1e90ff;
+    color: #ec3d62;
 }
 
 .find-content .d-inline-flex {

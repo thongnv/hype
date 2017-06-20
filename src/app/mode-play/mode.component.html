@@ -105,8 +105,8 @@
                             </ng-template>
                         </ngb-rating>
                     </div>
-                    <div *ngIf="showBest">
-                        <div *ngFor="let item of filterData.best; let in =index" style="margin-left: 40px">
+                    <div *ngIf="showBest" class="best-for">
+                        <div *ngFor="let item of filterData.best; let in =index" class="finter-item" style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="best && best[item.name]=$event.target.checked ? true : undefined"
