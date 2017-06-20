@@ -1,15 +1,3 @@
-/*.navbar-nav li#site-name a {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: left;
-    color: #fff;
-    padding-top: 13px;
-}
-.navbar-nav li#site-name a:hover, 
-.navbar-nav li#site-name a:focus {
-    outline: none;
-    color: #fff;
-}*/
 .map-option .img-circle {
     margin-top: 15px;
     margin-right: 8px;
@@ -24,7 +12,7 @@
     line-height: 60px;
     float: left;
 }
-.map-option .dropdown a  {
+.map-option .dropdown a {
     font-size: 18px;
     font-weight: 500;
     line-height: 60px;
@@ -33,16 +21,15 @@
     color: #fff;
 }
 .map-option form .input-group .input-group-btn button {
-	z-index: 999;
+    z-index: 999;
 }
 .map-option form .input-group input:focus {
-	border: none;
+    border: none;
 }
 .map-option img.icon-down-left-navbar {
     margin-left: 10px;
 }
-
-.notification-area  {
+.notification-area {
     margin-right: 10px;
 }
 .info-user {
@@ -58,65 +45,92 @@
 .add-event-button .add-eventbtn:focus {
     outline: none;
 }
-
-#map-option .dropdown-menu li{
+#map-option .dropdown-menu li {
     width: 160px;
     float: left;
     display: inline-block;
     clear: right;
 }
-#logo{
+#logo {
     background: transparent url("../../assets/img/hylo-final-logo-126x50.png") no-repeat center center;
+    width: 126px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 10px;
 }
-
-@media only screen and (min-width: 575px){
-    #map-option .dropdown-menu{
+/*responsive*/
+@media only screen and (min-width: 575px) {
+    #map-option .dropdown-menu {
         width: 500px;
         padding: 5px;
         overflow: auto;
     }
 }
-@media only screen and (min-width: 768px){
-    #map-option .dropdown-menu{
+@media only screen and (min-width: 768px) {
+    #map-option .dropdown-menu {
         width: 680px;
         padding: 5px;
         overflow: auto;
     }
 }
-
-@media only screen and (min-width: 992px){
-    #map-option .dropdown-menu{
+@media only screen and (min-width: 992px) {
+    #map-option .dropdown-menu {
         width: 820px;
         padding: 5px;
         overflow: auto;
     }
 }
-@media only screen and (min-width: 1200px){
-    #map-option .dropdown-menu{
+@media only screen and (min-width: 1200px) {
+    #map-option .dropdown-menu {
         width: 980px;
-        padding: 5px 0px 5px 5px;
+        padding: 5px 0 5px 5px;
     }
-    #logo{
-        width: 126px;
-        height: 50px;
-        margin-top: 5px;
-        margin-left: 10px;
-    }
-
 }
-@media only screen and (max-width: 767px){
-    #map-option .dropdown-menu{
+@media only screen and (max-width: 575px) {
+}
+@media only screen and (max-width: 767px) {
+    #map-option .dropdown-menu {
         width: 340px;
         padding: 5px;
     }
 }
-@media only screen and (max-width: 575px){
-
+@media (max-width: 991px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+    .navbar-nav {
+        float: none !important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav > li {
+        float: none;
+    }
+    .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in {
+        display: block !important;
+    }
+    .collapsing {
+        overflow: hidden !important;
+    }
 }
-
-
-
-
 
 
 

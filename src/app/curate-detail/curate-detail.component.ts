@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
 import { scrollTo } from 'ng2-utils';
+import { AppSetting } from '../app.setting';
 
 @Injectable()
 @Component({
@@ -12,6 +13,7 @@ import { scrollTo } from 'ng2-utils';
 })
 export class CurateDetailComponent implements OnInit {
   public article: any;
+  public gMapStyles: any;
   public currentHighlightedMarker: any;
   public markers: any[] = [];
   public showMap: boolean = false;
@@ -32,6 +34,7 @@ export class CurateDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.gMapStyles = AppSetting.GMAP_STYLE
     this.loaderService.show();
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;

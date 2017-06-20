@@ -233,7 +233,7 @@
         <div class="event-location">
           <p>Location</p>
           <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
-            [zoom]="13">
+            [zoom]="13" [styles]="gMapStyles">
             <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng">
             </sebm-google-map-marker>
           </sebm-google-map>

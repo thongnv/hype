@@ -124,7 +124,7 @@
 
     </div>
     <div class="col-md-6 map-fix">
-      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12">
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12" [styles]="gMapStyles">
         <sebm-google-map-marker [latitude]="location.lat"
                                 [longitude]="location.lng">
         </sebm-google-map-marker>

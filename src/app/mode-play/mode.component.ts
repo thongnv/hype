@@ -7,6 +7,7 @@ import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/
 import {LoaderService} from "../shared/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
+import { AppSetting } from '../app.setting';
 
 declare let google:any;
 
@@ -49,6 +50,7 @@ export class ModeComponent implements OnInit {
     public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
+    public gMapStyles: any;
     private params = {
         type: 'all',
         kind: '',
@@ -87,10 +89,11 @@ export class ModeComponent implements OnInit {
     }
 
     public ngOnInit() {
-        this.getCategories(this.filterFromMode.value.filterMode);
-        this.getDataModes();
-        this.getFilter();
-        // this.renderMaker(5000);
+      this.gMapStyles = AppSetting.GMAP_STYLE;
+      this.getCategories(this.filterFromMode.value.filterMode);
+      this.getDataModes();
+      this.getFilter();
+      // this.renderMaker(5000);
     }
 
     onChange(value:number) {

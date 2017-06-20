@@ -47,26 +47,22 @@ export class FollowerComponent implements OnInit {
 
   public loadMore(): void {
     if (!this.set.loadingInProgress) {
-      if (this.set.offset > 9999) {    // detect the end of list
-        this.set.endOfList = true;
-      } else {
-        this.set.loadingInProgress = true;
-        let count = 0;
-        this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
-          .then((response) => {
-            response.forEach((item) => {
-              count++;
-              this.userInfo.userFollowing.push(item);
-            });
-            if (count === 0) {
-              this.set.endOfList = true;
-              this.followingPage--;
-            } else {
-              this.set.offset += count;
-            }
-            this.set.loadingInProgress = false;
+      this.set.loadingInProgress = true;
+      let count = 0;
+      this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
+        .then((response) => {
+          response.forEach((item) => {
+            count++;
+            this.userInfo.userFollowing.push(item);
           });
-      }
+          if (count === 0) {
+            this.set.endOfList = true;
+            this.followingPage--;
+          } else {
+            this.set.offset += count;
+          }
+          this.set.loadingInProgress = false;
+        });
     }
   }
 

@@ -11,6 +11,7 @@ import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 
 import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-detail',
@@ -44,6 +45,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public userRated: boolean = false;
   public ready: boolean = false;
   public slugName = '';
+  public gMapStyles: any;
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -85,6 +87,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public ngOnInit() {
+    this.gMapStyles = AppSetting.GMAP_STYLE;
     this.initRating();
   }
 

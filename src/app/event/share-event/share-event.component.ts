@@ -11,6 +11,7 @@ import {AppState} from '../../app.service';
 import {EventService} from '../../services/event.service';
 import {LoaderService} from '../../shared/loader/loader.service';
 import {MainService} from '../../services/main.service';
+import { AppSetting } from '../../app.setting';
 
 import {HyperSearchComponent} from '../../hyper-search/hyper-search.component';
 
@@ -51,6 +52,7 @@ export class ShareEventComponent implements OnInit {
     {value: '1', display: 'Buy Tix'},
     {value: '2', display: 'More Info'}
   ];
+  public gMapStyles: any;
   public validCaptcha = false;
 
   public submitted: boolean = false;
@@ -79,6 +81,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.gMapStyles = AppSetting.GMAP_STYLE;
     // TODO
   }
 

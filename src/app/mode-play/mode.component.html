@@ -175,10 +175,10 @@
                                  [latitude]="lat"
                                  [longitude]="lng"
                                  [zoom]="mapZoom"
-                                 [styles]="roadmap"
                                  [disableDefaultUI]="false"
                                  [zoomControl]="false"
                                  [streetViewControl]="true"
+                                 [styles]="gMapStyles"
                                  (mapClick)="mapClicked($event,index)"
                 >
                     <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"

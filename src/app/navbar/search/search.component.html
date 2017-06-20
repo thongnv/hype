@@ -2,7 +2,7 @@
   <div class="input-group wrap-search-input">
     <button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>
     <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
-           placeholder="Search for any places and activities..."
+           placeholder="Search..."
            (keyup)="onSubmit($event, keyword.value)"
            (click)="onOpenSuggestion()">
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">

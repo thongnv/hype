@@ -62,11 +62,11 @@
                              [latitude]="lat"
                              [longitude]="lng"
                              [zoom]="mapZoom"
-                             [styles]="roadmap"
                              [disableDefaultUI]="false"
                              [zoomControl]="false"
                              [streetViewControl]="true"
                              (mapClick)="mapClicked($event,index)"
+                             [styles] = "gMapStyles"
             >
                 <gmap-geocode-marker [showCircle]="showCircle" [markers]="markers" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"

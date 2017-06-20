@@ -8,7 +8,7 @@
   </div>
   <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
     <ul class="nav navbar-nav hype-nav">
-      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo"></a></li>
+      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo" class="sprite sprite-icon sprite-hylo-final-logo-126x50"></a></li>
       <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
@@ -71,10 +71,21 @@
             <img class="icon-down-left-navbar" src="/assets/img/homepage/icon-down.png" alt="icon-down">
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop3">
-            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">Setting
+            <li [routerLink]="['/' + loginData.current_user.slug + '/profile-edit']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
             </li>
-            <li [routerLink]="['/logout']">Logout</li>
+            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="text-ellipsis">Settings
+            </li>
+            <li [routerLink]="['/' + loginData.current_user.slug + '/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="text-ellipsis">Interests
+            </li>
+            <li [routerLink]="['/' + loginData.current_user.slug + '/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="text-ellipsis">Favorites
+            </li>
+            <li [routerLink]="['/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+                class="text-ellipsis">Logout
+            </li>
           </ul>
         </div>
         <div *ngIf="!loginData">

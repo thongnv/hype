@@ -9,6 +9,7 @@ import { GmapService } from '../services/gmap.service';
 export class GmapComponent implements OnInit {
 
   @Input('params') public params: any;
+  @Input('styles') public styles: any;
   @Input('markers') public markers: any;
 
   public lat: number;
