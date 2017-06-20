@@ -334,52 +334,70 @@ export class ModeComponent implements OnInit {
     }
 
     public showPrice:boolean = false;
+    public showCuisine:boolean = false;
+    public showRate:boolean = false;
+    public showBest:boolean = false;
+    public showType:boolean = false;
 
-    showRagePrice(e) {
+    showRagePriceFind(e) {
         if (e) {
             this.showPrice = false;
         } else {
             this.showPrice = true;
         }
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showBest=false;
+        this.showType=false;
     }
 
-    public showCuisine:boolean = false;
-
-    showCuisine(e) {
+    showCuisineFind(e) {
         if (e) {
             this.showCuisine = false;
         } else {
             this.showCuisine = true;
         }
+        this.showPrice=false;
+        this.showRate=false;
+        this.showBest=false;
+        this.showType=false;
     }
-
-    public showRate:boolean = false;
-
-    showRate(e) {
+    showRateFind(e) {
         if (e) {
-            this.showCuisine = false;
+            this.showRate = false;
         } else {
-            this.showCuisine = true;
+            this.showRate = true;
         }
+
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showBest=false;
+        this.showType=false;
     }
 
-    public showBest:boolean = false;
 
-    showRate(e) {
+    showBestFind(e) {
         if (e) {
             this.showBest = false;
         } else {
             this.showBest = true;
         }
+
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showType=false;
+
     }
-
-    public showType:boolean = false;
-
-    showType(e) {
+    showTypeFind(e) {
         if (e) {
             this.showType = false;
         } else {
             this.showType = true;
         }
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showBest=false;
     }
 }
