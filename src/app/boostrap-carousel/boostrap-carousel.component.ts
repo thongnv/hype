@@ -12,6 +12,7 @@ export class BoostrapCarouselComponent {
   @Input() public noWrap: boolean;
   @Input() public noPause: boolean;
   @Input() public noTransition: boolean;
+  @Input() public indicators: boolean = true;
   @Input() public id: any;
 
   @Input()
