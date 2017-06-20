@@ -91,12 +91,12 @@
     text-align: center;
     outline: none;
     margin-bottom: 5px;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .filterCategory .btn-filter-block label.more {
     width: 20px;
-    margin-left: 35px;
+    margin-left: 15px;
     margin-top: 15px;
     color: #ec3d62;
 }
@@ -128,6 +128,7 @@
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
     width: 100%;
     clear: both;
+    padding-right: 20px;
 }
 
 .left-box .actionFilter label {
@@ -357,6 +358,7 @@ nouislider.ng2-nouislider {
     right: 0;
     top: 20px;*/
     color: #ec3d62;
+    margin-left: 33px;
 }
 
 .itemSort {
