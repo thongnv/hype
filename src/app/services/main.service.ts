@@ -189,9 +189,7 @@ export class MainService {
     let headers = this.defaultHeaders;
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
-    if (filter === 'latest') {
-      myParams.set('filter', 'latest');
-    }
+    myParams.set('filter', filter);
     if (parseInt(cate, 10)) {
       myParams.set('cate', cate);
     }

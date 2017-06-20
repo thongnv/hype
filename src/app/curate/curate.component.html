@@ -14,7 +14,7 @@
       <div class="primary-content">
         <div *ngIf="featuredArticles" class="row wrap-post-content">
           <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'"
-                                 [noPause]="noPause"
+                                 [noPause]="noPause" [indicators]="false"
                                  [noTransition]="noTransition" class="col-xs-12 col-lg-12">
             <app-slide-carousel *ngFor="let slideGroup of featuredArticles">
 

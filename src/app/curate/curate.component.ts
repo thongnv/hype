@@ -37,11 +37,11 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('latest', '*').subscribe((response: any) => {
-      this.latestArticles = response.data;
-      this.trending = response.data;
-      console.log('getCurate: ', response);
-    });
+    this.mainService.getCurate('latest', '*').subscribe(
+      (response: any) => {
+        this.latestArticles = response.data;
+      }
+    );
 
     this.mainService.getCurateTrending('all').subscribe(
       (response) => {
@@ -49,11 +49,13 @@ export class CurateComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('latest', '*').subscribe((response: any) => {
-      this.featuredArticles = response.data;
-      this.processFeature(this.featuredArticles);
-      this.loaderService.hide();
-    });
+    this.mainService.getCurate('feature', '*').subscribe(
+      (response: any) => {
+        this.featuredArticles = response.data;
+        this.processFeature(this.featuredArticles);
+        this.loaderService.hide();
+      }
+    );
   }
 
   public processFeature(feature) {
@@ -67,15 +69,25 @@ export class CurateComponent implements OnInit {
   public onSelectCategory(cat: any) {
     this.loaderService.show();
     this.selectedCategory = cat;
-    this.mainService.getCurate('', cat).subscribe((response: any) => {
-      this.featuredArticles = response.data;
-      this.processFeature(this.featuredArticles);
-    });
 
-    this.mainService.getCurate('', cat).subscribe((response: any) => {
-      this.latestArticles = response.data;
-      this.trending = response.data;
-      this.loaderService.hide();
-    });
+    this.mainService.getCurate('latest', cat).subscribe(
+      (response: any) => {
+        this.latestArticles = response.data;
+      }
+    );
+
+    this.mainService.getCurateTrending(cat).subscribe(
+      (response) => {
+        this.trending = response.data;
+      }
+    );
+
+    this.mainService.getCurate('feature', cat).subscribe(
+      (response: any) => {
+        this.featuredArticles = response.data;
+        this.processFeature(this.featuredArticles);
+        this.loaderService.hide();
+      }
+    );
   }
 }

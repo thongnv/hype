@@ -1,5 +1,5 @@
 <div (mouseenter)="pause()" (mouseleave)="play()" class="carousel slide" [id]="id">
-  <ol class="carousel-indicators" [hidden]="slides.length <= 1">
+  <ol class="carousel-indicators" *ngIf="slides.length > 1 && indicators">
     <li *ngFor="let slidez of slides" [class.active]="slidez.active === true" (click)="select(slidez)"></li>
   </ol>
   <div class="carousel-inner">
