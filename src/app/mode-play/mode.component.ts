@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,NgZone} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
@@ -96,22 +96,23 @@ export class ModeComponent implements OnInit {
     }
 
     getDataModes() {
-        let params = this.params;
-        console.log(params);
-        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-            console.log(resp);
-            if (parseInt(resp.total) > 0) {
-                this.showMap = true;
-            }
-            this.loaderService.hide();
-            this.total = resp.total;
-            this.items = resp.company;
-            this.initMap(resp.company);
-        }, err=> {
-            this.items = [];
-            this.markers = [];
-            this.loaderService.hide();
-        });
+        //let params = this.params;
+        //console.log(params);
+        //this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+        //    console.log(resp);
+        //    if (parseInt(resp.total) > 0) {
+        //        this.showMap = true;
+        //    }
+        //    this.loaderService.hide();
+        //    this.total = resp.total;
+        //    this.items = resp.company;
+        //    this.initMap(resp.company);
+        //}, err=> {
+        //    this.items = [];
+        //    this.markers = [];
+        //    this.loaderService.hide();
+        //});
+        this.loaderService.hide();
     }
 
     changeCategory() {
@@ -136,7 +137,11 @@ export class ModeComponent implements OnInit {
 
     getFilter() {
         this.modeService.getFilterMode().map(resp=>resp.json()).subscribe((resp)=> {
-            this.filterData = resp;
+            if (this.filterFromMode.value.filterMode == 'play') {
+                this.filterData = resp.play;
+            } else {
+                this.filterData = resp.eat;
+            }
         });
     }
 
@@ -176,6 +181,7 @@ export class ModeComponent implements OnInit {
         this.getCategories(this.filterFromMode.value.filterMode);
         this.loaderService.show();
         this.getDataModes();
+        this.getFilter();
 
     }
 
@@ -345,10 +351,10 @@ export class ModeComponent implements OnInit {
         } else {
             this.showPrice = true;
         }
-        this.showCuisine=false;
-        this.showRate=false;
-        this.showBest=false;
-        this.showType=false;
+        this.showCuisine = false;
+        this.showRate = false;
+        this.showBest = false;
+        this.showType = false;
     }
 
     showCuisineFind(e) {
@@ -357,11 +363,12 @@ export class ModeComponent implements OnInit {
         } else {
             this.showCuisine = true;
         }
-        this.showPrice=false;
-        this.showRate=false;
-        this.showBest=false;
-        this.showType=false;
+        this.showPrice = false;
+        this.showRate = false;
+        this.showBest = false;
+        this.showType = false;
     }
+
     showRateFind(e) {
         if (e) {
             this.showRate = false;
@@ -369,10 +376,10 @@ export class ModeComponent implements OnInit {
             this.showRate = true;
         }
 
-        this.showPrice=false;
-        this.showCuisine=false;
-        this.showBest=false;
-        this.showType=false;
+        this.showPrice = false;
+        this.showCuisine = false;
+        this.showBest = false;
+        this.showType = false;
     }
 
 
@@ -383,21 +390,22 @@ export class ModeComponent implements OnInit {
             this.showBest = true;
         }
 
-        this.showPrice=false;
-        this.showCuisine=false;
-        this.showRate=false;
-        this.showType=false;
+        this.showPrice = false;
+        this.showCuisine = false;
+        this.showRate = false;
+        this.showType = false;
 
     }
+
     showTypeFind(e) {
         if (e) {
             this.showType = false;
         } else {
             this.showType = true;
         }
-        this.showPrice=false;
-        this.showCuisine=false;
-        this.showRate=false;
-        this.showBest=false;
+        this.showPrice = false;
+        this.showCuisine = false;
+        this.showRate = false;
+        this.showBest = false;
     }
 }
