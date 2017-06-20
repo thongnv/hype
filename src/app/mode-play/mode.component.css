@@ -436,3 +436,14 @@ nouislider.ng2-nouislider {
     text-align: right;
     color: #ec3d62;
 }
+
+.item-content .distance {
+    opacity: 0.6;
+    font-family: Roboto;
+    font-size: 12px !important;
+    font-weight: 300;
+    line-height: 1;
+    text-align: left;
+    margin-left: 15px;
+    color: #3b3b3b;
+}

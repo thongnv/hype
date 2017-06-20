@@ -107,7 +107,6 @@ export class ModeComponent implements OnInit {
             }
             this.loaderService.hide();
             this.total = resp.total;
-            this.items = resp.company;
             this.initMap(resp.company);
         }, err=> {
             this.items = [];
@@ -199,22 +198,46 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        if (this.items) {
-            for (let i = 0; i < this.items.length; i++) {
-                if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
-                    let lat = this.items[i].YP_Address[6].split("/");
-                    let lng = this.items[i].YP_Address[5].split("/");
-                    this.markers.push({
-                        lat: parseFloat(lat[1]),
-                        lng: parseFloat(lng[1]),
-                        label: this.items[i].Company_Name,
-                        opacity: 0.6,
-                        isOpenInfo: false
-                    });
+        if (companies) {
+            this.mapsAPILoader.load().then(() => {
+                for (let i = 0; i < companies.length; i++) {
+                    if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
+                        let lat = companies[i].YP_Address[6].split("/");
+                        let lng = companies[i].YP_Address[5].split("/");
+                        let curentPosition = new google.maps.LatLng(this.lat, this.lng);
+                        let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
+                        let distance = this.getDistance(curentPosition, disTancePosition);
+                        companies[i].distance = parseFloat((distance / 1000)).toFixed(1);
+                        this.items.push(companies[i]);
+                        this.markers.push({
+                            lat: parseFloat(lat[1]),
+                            lng: parseFloat(lng[1]),
+                            label: companies[i].Company_Name,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
+                    }
                 }
-            }
+            });
         }
+        console.log(this.items);
+    }
 
+    private getDistance(p1, p2) {
+        console.log(p2.lat());
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = this.rad(p2.lat() - p1.lat());
+        var dLong = this.rad(p2.lng() - p1.lng());
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat())) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+    }
+
+    private rad(x) {
+        return x * Math.PI / 180;
     }
 
     public clickedMarker(selector, horizontal) {
