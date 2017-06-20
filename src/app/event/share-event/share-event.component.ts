@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
@@ -11,6 +11,8 @@ import {AppState} from '../../app.service';
 import {EventService} from '../../services/event.service';
 import {LoaderService} from '../../shared/loader/loader.service';
 import {MainService} from '../../services/main.service';
+
+import {HyperSearchComponent} from '../../hyper-search/hyper-search.component';
 
 @Component({
   selector: 'app-share-event',
@@ -52,6 +54,9 @@ export class ShareEventComponent implements OnInit {
   public validCaptcha = false;
 
   public submitted: boolean = false;
+
+  @ViewChild(HyperSearchComponent)
+  private hyperSearchComponent: HyperSearchComponent;
 
   constructor(public fb: FormBuilder, private eventService: EventService,
               public appState: AppState,
@@ -95,6 +100,24 @@ export class ShareEventComponent implements OnInit {
     if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
       document.getElementById('eventPriceErr').innerText = '';
     }
+  }
+
+  public onChangePlace(data) {
+    // get lat long from place id
+    let geocoder = new google.maps.Geocoder;
+    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+      if (status.toString() === 'OK') {
+        // set lat long for eventPlace
+        this.eventForm.controls.eventPlace.patchValue({
+          place: data.structured_formatting.main_text,
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        });
+      }
+
+      // hide result
+      this.hyperSearchComponent.hideSearchResult = true;
+    });
   }
 
   public onRemovePreview(imageUrl) {

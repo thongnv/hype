@@ -36,7 +36,7 @@
 
         <div class="form-group location-place col-md-12 col-xs-12">
           <label>Location / Place</label>
-          <app-gmap-auto-place [group]="eventForm.controls.eventPlace" [description]="false" [image]="false"></app-gmap-auto-place>
+          <app-hyper-search (onChangePlace)="onChangePlace($event)"></app-hyper-search>
         </div>
         <div class="form-group list-categories col-md-12 col-xs-12">
           <label for="event-category">Category</label>
