@@ -3,19 +3,19 @@
 <aside class="sidebar">
     <ul class="navbar-collapse list-tap">
         <li [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <img [src]="'/assets/img/icons/Trending.png'" alt="Trending">
+            <i class="sprite-icon sprite sprite-Trending30x30"></i>
             <span>Trending Event</span>
         </li>
         <li [routerLink]="['./mode/play']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <img src="/assets/img/icons/Discover.png" alt="Discover">
+            <i class="sprite-icon sprite sprite-Discover30x30"></i>
             <span>Discover Places</span>
         </li>
         <li [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <img src="/assets/img/icons/Curated.png" alt="Curated">
+            <i class="sprite-icon sprite sprite-Curated30x30"></i>
             <span>Curated</span>
         </li>
         <li *ngIf="loginData" [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <img src="/assets/img/icons/Favourites.png" alt="Favourites">
+            <i class="sprite-icon sprite sprite-Favourites30x30"></i>
             <span>Favorites</span>
         </li>
     </ul>

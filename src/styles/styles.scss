@@ -6,6 +6,7 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap-theme.min.css';
 @import '../../node_modules/ng-bootstrap-to-bootstrap-3/dist/ng-bootstrap-to-bootstrap-3.min.css';
 @import 'font-awesome/css/font-awesome.min.css';
+@import './stylesheet.css';
 *{
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -59,7 +60,9 @@ body, html {
   text-overflow: clip;
   white-space: nowrap;
 }
-
+.sprite-icon{
+  margin: auto;
+}
 .hype{
   //header
   .nav-item{

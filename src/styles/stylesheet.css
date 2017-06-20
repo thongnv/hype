@@ -1,0 +1,136 @@
+.sprite {
+    background: transparent url('../assets/img/spritesheet.png') no-repeat;
+    display: block;
+}
+
+.sprite-Adrenaline30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 0;
+}
+
+.sprite-All30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -30px 0;
+}
+
+.sprite-Appreciate30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -60px 0;
+}
+
+.sprite-Bar30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -90px 0;
+}
+
+.sprite-Buffet30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -30px;
+}
+
+.sprite-Cafe30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -30px -30px;
+}
+
+.sprite-Chill-Out30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -60px -30px;
+}
+
+.sprite-Concert30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -90px -30px;
+}
+
+.sprite-Curated30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -60px;
+}
+
+.sprite-Discover30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -30px -60px;
+}
+
+.sprite-Family30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -60px -60px;
+}
+
+.sprite-Favourites30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -90px -60px;
+}
+
+.sprite-Food30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -90px;
+}
+
+.sprite-Hotels30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -30px -90px;
+}
+
+.sprite-Learn30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -60px -90px;
+}
+
+.sprite-Promo30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -90px -90px;
+}
+
+.sprite-Pure-Fun30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -120px 0;
+}
+
+.sprite-Restaurant30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -120px -30px;
+}
+
+.sprite-Sports30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -120px -60px;
+}
+
+.sprite-Sweat30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -120px -90px;
+}
+
+.sprite-Trending30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -120px;
+}
+
+.sprite-Unique30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: -30px -120px;
+}
