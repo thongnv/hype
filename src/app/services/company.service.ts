@@ -78,7 +78,7 @@ export class CompanyService {
     });
   }
 
-  public postReview(placeId: string, review: Experience): Observable<any> {
+  public postReview(placeId: string, review: Experience): Observable<Experience> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {
@@ -90,8 +90,12 @@ export class CompanyService {
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/user/review/place',
       JSON.stringify(data), options
-    ).map((res: Response) => {
-        return <Experience> res.json();
+    )
+      .map((res: Response) => {
+        let respData = res.json().comment.results[0];
+        review.id = respData.rid;
+        review.images = extractImages(respData.image);
+        return review;
       })
       .catch((error: any) => {
         if (error.status === 404) {
@@ -101,7 +105,7 @@ export class CompanyService {
           this.router.navigate(['500'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public toggleLike(review: Experience): Observable<boolean> {

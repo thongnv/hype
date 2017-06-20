@@ -119,9 +119,15 @@
           </div>
         </div>
       </div>
-
+      <div class="recaptcha">
+        <re-captcha (captchaResponse)="checkCaptcha($event)" site_key="6LexpiUTAAAAABQlThPYAyDxBJoTP_QFzwdE4L9p">
+        </re-captcha>
+      </div>
       <div class="form-actions col-xs-12 col-md-12">
-        <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0" class="btn btn-primary">Share</button>
+        <button type="submit"
+                [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
+          Share
+        </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
     </form>

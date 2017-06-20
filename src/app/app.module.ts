@@ -47,6 +47,7 @@ import { TinymceModule } from 'angular2-tinymce';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { ImageUploadModule } from 'ng2-imageupload';
+import { ReCaptchaModule } from 'angular2-recaptcha';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -213,6 +214,7 @@ type StoreType = {
     Ng2ImgToolsModule,
     RatingModule,
     MomentModule,
+    ReCaptchaModule,
     TruncateModule,
     TinymceModule.withConfig({}),
     ReactiveFormsModule,

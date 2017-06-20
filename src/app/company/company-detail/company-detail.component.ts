@@ -5,6 +5,7 @@ import * as moment from 'moment/moment';
 import { BaseUser, Company, Experience, Image, Location } from '../../app.interface';
 import { ActivatedRoute } from '@angular/router';
 import { MainService } from '../../services/main.service';
+import { LoaderService } from '../../shared/loader/loader.service';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -41,17 +42,20 @@ export class CompanyDetailComponent implements Company, OnInit {
     public mainService: MainService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
+    private loaderService: LoaderService
   ) {}
 
   public ngOnInit() {
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
+      this.loaderService.show();
       this.companyService.getCompanyDetail(this.slugName).subscribe(
         (resp) => {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
           this.initSlide(this.images);
           this.ready = true;
+          this.loaderService.hide();
         },
         (error) => {
           console.log(error);
@@ -109,10 +113,12 @@ export class CompanyDetailComponent implements Company, OnInit {
       };
       this.showForm = false;
       this.rated = true;
+      this.loaderService.show();
       this.companyService.postReview(this.id, review).subscribe(
-        (resp) => {
-          console.log(resp);
-          this.reviews.unshift(review);
+        (resp: Experience) => {
+          console.log('review:', resp);
+          this.reviews.unshift(resp);
+          this.loaderService.hide();
         },
         (error) => {
           console.log(error);
@@ -161,6 +167,9 @@ export class CompanyDetailComponent implements Company, OnInit {
   private initSlide(images) {
     for (let image of images) {
       this.slides.push({image: image.url});
+    }
+    if (!this.slides.length) {
+      this.slides.push({image: 'assets/img/company/detail/default-company.jpg'});
     }
   }
 

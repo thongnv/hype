@@ -32,7 +32,6 @@
     text-align: left;
     color: #fff;
 }
-
 .map-option form .input-group .input-group-btn button {
 	z-index: 999;
 }
@@ -63,12 +62,6 @@
     height: 50px;
     line-height: 50px;
 }
-
-.wrap-search-input {
-    position: relative;
-    
-}
-
 
 #map-option .dropdown-menu li{
     width: 160px;

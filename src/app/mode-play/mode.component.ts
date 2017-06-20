@@ -5,6 +5,8 @@ import {ModeService} from "../services/mode.service";
 import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import {LoaderService} from "../shared/loader/loader.service";
+import { Ng2ScrollableDirective } from 'ng2-scrollable';
+import { scrollTo } from 'ng2-utils';
 
 declare let google:any;
 
@@ -21,6 +23,7 @@ declare let google:any;
 export class ModeComponent implements OnInit {
     public markers:any = [];
     public categories:any = [];
+    public categoriesDraw:any[];
     public someValue:number = 5;
     public priceRange:number[] = [0, 300];
     public filterFromMode:FormGroup;
@@ -40,6 +43,10 @@ export class ModeComponent implements OnInit {
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
     private total:number = 0;
+    public showAll:boolean = true;
+    public showTab:boolean = true;
+    public alertType:any = '';
+    public msgContent:any = '';
     private params = {
         type: 'all',
         kind: '',
@@ -121,7 +128,8 @@ export class ModeComponent implements OnInit {
         }
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
-            this.categories = resp;
+            this.categoriesDraw = resp.data;
+            this.categories = resp.data.slice(0, 6);
         });
 
     }
@@ -191,12 +199,12 @@ export class ModeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
-        //scrollTo(
-        //    '#v' + selector,
-        //    '#v-scrollable',
-        //    horizontal,
-        //    0
-        //);
+        scrollTo(
+            '#v' + selector,
+            '#v-scrollable',
+            horizontal,
+            0
+        );
 
     }
 
@@ -209,6 +217,7 @@ export class ModeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
+            this.markers = [];
             this.params.page += 1;
             this.loaderService.show();
             this.getDataModes();
@@ -284,5 +293,111 @@ export class ModeComponent implements OnInit {
 
     trackByIndex(index:number, obj:any):any {
         return index;
+    }
+
+    showAllKind(e) {
+        if (e) {
+            this.categories = this.categoriesDraw;
+            this.showAll = false;
+        } else {
+            this.categories = this.categories.slice(0, 6);
+            this.showAll = true;
+        }
+    }
+
+    onLikeEmit(item:any) {
+        console.log(item);
+        item.is_favorite = !item.is_favorite;
+        let params = {
+            ids_no: item.Ids_No
+        }
+        this.loaderService.show();
+        this.modeService.favoritePlace(params).map(res=>res.json()).subscribe(res=> {
+            this.alertType = 'success';
+            this.msgContent = res.message;
+
+            this.loaderService.hide();
+        }, err=> {
+            this.alertType = 'error';
+            this.msgContent = 'Sorry, favorite error please try again';
+            this.loaderService.hide();
+            console.log(err);
+        });
+    }
+
+    showAllType(e) {
+        if (e) {
+            this.showTab = false;
+        } else {
+            this.showTab = true;
+        }
+    }
+
+    public showPrice:boolean = false;
+    public showCuisine:boolean = false;
+    public showRate:boolean = false;
+    public showBest:boolean = false;
+    public showType:boolean = false;
+
+    showRagePriceFind(e) {
+        if (e) {
+            this.showPrice = false;
+        } else {
+            this.showPrice = true;
+        }
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showBest=false;
+        this.showType=false;
+    }
+
+    showCuisineFind(e) {
+        if (e) {
+            this.showCuisine = false;
+        } else {
+            this.showCuisine = true;
+        }
+        this.showPrice=false;
+        this.showRate=false;
+        this.showBest=false;
+        this.showType=false;
+    }
+    showRateFind(e) {
+        if (e) {
+            this.showRate = false;
+        } else {
+            this.showRate = true;
+        }
+
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showBest=false;
+        this.showType=false;
+    }
+
+
+    showBestFind(e) {
+        if (e) {
+            this.showBest = false;
+        } else {
+            this.showBest = true;
+        }
+
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showType=false;
+
+    }
+    showTypeFind(e) {
+        if (e) {
+            this.showType = false;
+        } else {
+            this.showType = true;
+        }
+        this.showPrice=false;
+        this.showCuisine=false;
+        this.showRate=false;
+        this.showBest=false;
     }
 }

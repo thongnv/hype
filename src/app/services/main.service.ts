@@ -19,6 +19,7 @@ export class MainService {
   public constructor(private _localStorageService: LocalStorageService,
                      private _http: Http, private route: Router) {
   }
+
   public login(fbToken: string) {
     return new Promise((resolve, reject) => {
 
@@ -212,8 +213,10 @@ export class MainService {
 
   public postArticle(data) {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    let options = new RequestOptions({headers, params: myParams, withCredentials: true});
     return this._http.post(AppSetting.API_ARTICLE,
       data,
       options)
@@ -369,19 +372,21 @@ export class MainService {
       .catch(this.handleError);
   }
 
-  public search(): Promise<any> {
+  public search(keyword: string): Promise<any> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers});
-    return this._http.get(AppSetting.API_FAVORITE_PLACE, options)
+    return this._http.get(AppSetting.API_SEARCH + keyword, options)
       .toPromise()
       .then((resp) => resp.json())
       .catch(this.handleError);
   }
+
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);
   }
-  private checkLogin(): void{
+
+  private checkLogin(): void {
     if (!this._localStorageService.get('loginData')) {
       this.route.navigate(['/login']);
     }
