@@ -16,13 +16,19 @@ ul.list-category {
 ul.list-category li {
     float: left;
     margin-right: 40px;
-    font-size: 13px;
-}
-ul.list-category li a {
+    opacity: 0.5;
+    font-size: 14px;
+    line-height: 1;
+    text-align: left;
     color: #3b3b3b;
 }
-ul.list-category li.active a {
+ul.list-category li.active {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.43;
+    text-align: left;
     color: #2a6be1;
+    opacity: 1;
 }
 .wrap-post-content {
     display: block;
