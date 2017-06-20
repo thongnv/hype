@@ -166,7 +166,13 @@ export class HomeComponent implements OnInit {
             this.params.weeken = 0;
             this.params.date = '';
         }
-        this.showCircle = true;
+
+        if (this.selectedEventOrder.name == 'top 100') {
+            this.showCircle = false;
+        } else {
+            this.showCircle = true;
+        }
+
         this.showMap = false;
         this.loaderService.show();
         this.getTrending();
