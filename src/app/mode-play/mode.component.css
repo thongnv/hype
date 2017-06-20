@@ -445,7 +445,8 @@ nouislider.ng2-nouislider {
     line-height: 1;
     text-align: left;
     margin-left: 15px;
-    color: #3b3b3b;
+    color: #3b3b3b !important;
+    text-transform: uppercase;
 }
 
 .item-content .review {
