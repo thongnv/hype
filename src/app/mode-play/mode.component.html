@@ -41,24 +41,24 @@
                 <ul class="list-inline itemSort" [class.showTab]="!showTab">
                     <li>
                         <a (click)="showRagePriceFind(showPrice)" class="price-range">Price Range <i
-                                [class.fa-angle-up]="showPrice" class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showPrice}" class="fa fa-angle-down"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
-                                [class.fa-angle-up]="showCuisine" class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showCuisine}" class="fa fa-angle-down"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a (click)="showRateFind(showRate)" class="when-button">Ratings <i
-                                [class.fa-angle-up]="showRate"
+                                [ngClass]="{'fa-angle-up':showRate}"
                                 class="fa fa-angle-down"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a (click)="showBestFind(showBest)" class="when-button">Best For <i
-                                [class.fa-angle-up]="showBest"
-                                class="fa fa-angle-down"
+                                [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
+                                class="fa"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li class="type" *ngIf="!showTab">

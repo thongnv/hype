@@ -13,10 +13,20 @@
     left: -17px;
     top: -12px;
     outline: none;
+    background: #ec3d62;
+}
+
+.noUi-handle {
+    box-shadow: none;
 }
 
 .noUi-handle:before {
     left: 10px;
+    background: #ec3d62;
+}
+
+.noUi-handle:after, .noUi-connect {
+    background: #ec3d62;
 }
 
 /*filterFromMode start*/
@@ -45,9 +55,11 @@
     background: #f6f6f6;
     box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
+
 .filterFromMode .btn-block label:hover {
     box-shadow: none;
 }
+
 .filterFromMode .btn-block label.active {
     border-radius: 4px;
     background: #2a6be1;
@@ -113,13 +125,16 @@
     text-align: center;
     color: #3b3b3b;
 }
+
 .left-box {
     padding-right: 0px;
 }
+
 .gmap-box {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .left-box .actionFilter {
     padding-bottom: 20px;
     margin-top: 30px;
@@ -155,12 +170,14 @@ ul.itemSort li a {
     text-align: right;
     color: #3b3b3b;
 }
+
 ul.itemSort li a i {
     font-size: 23px;
     position: relative;
     top: 3px;
     left: 3px;
 }
+
 .avatar, .avatar img {
     width: 100px;
     height: 100px;
@@ -169,11 +186,13 @@ ul.itemSort li a i {
     position: relative;
     border-radius: 4px;
 }
+
 .avatar .heart-icon {
     position: absolute;
     top: 15px;
     right: 10px;
 }
+
 .list-items {
     display: block;
     background: white;
