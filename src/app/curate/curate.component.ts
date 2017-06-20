@@ -43,6 +43,12 @@ export class CurateComponent implements OnInit {
       console.log('getCurate: ', response);
     });
 
+    this.mainService.getCurateTrending('all').subscribe(
+      (response) => {
+        this.trending = response.data;
+      }
+    );
+
     this.mainService.getCurate('latest', '*').subscribe((response: any) => {
       this.featuredArticles = response.data;
       this.processFeature(this.featuredArticles);

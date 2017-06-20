@@ -211,6 +211,24 @@ export class MainService {
       });
   }
 
+  public getCurateTrending(tid) {
+    let headers = this.defaultHeaders;
+    let myParams = new URLSearchParams();
+    myParams.set('_format', 'json');
+    let options = new RequestOptions({
+      headers,
+      params: myParams,
+      withCredentials: true
+    });
+
+    return this._http.get(AppSetting.API_CURATE_TRENDING, options)
+      .map((res) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error.json()));
+      });
+  }
   public postArticle(data) {
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let myParams = new URLSearchParams();
