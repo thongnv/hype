@@ -1,10 +1,17 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
   <div class="input-group wrap-search-input">
-    <button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>
-    <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
-           placeholder="Search..."
+    <!--<button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>-->
+    <input #keyword formControlName="keyword"
+           class="form-control"
+           minlength="3"
+           id="searchBox"
+           placeholder="Search for any places and activities..."
+           autocorrect="off"
+           autocapitalize="off"
+           spellcheck="off" type="text"
            (keyup)="onSubmit($event, keyword.value)"
            (click)="onOpenSuggestion()">
+
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
       <div class="display-location-address">
@@ -47,6 +54,26 @@
             </a>
           </li>
         </ul>
+
+        <ul *ngIf="gmapResults?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Results from google</a>
+          </li>
+          <li *ngFor="let item of gmapResults; let index = index">
+            <div
+              (click)="onGmapItemClick(item)"
+              class="item-content"
+            >{{index}} - {{item.structured_formatting.main_text}}</div>
+            <!--<a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">-->
+              <!--&lt;!&ndash;<img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">&ndash;&gt;-->
+              <!--<div class="result-info">-->
+                <!--<span class="keyword-search-input text-ellipsis">{{item.description}}</span>-->
+                <!--<small class="location-address-content-each text-ellipsis">{{item.id}}</small>-->
+              <!--</div>-->
+            <!--</a>-->
+          </li>
+        </ul>
+
       </div>
     </div>
   </div>

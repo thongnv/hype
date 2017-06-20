@@ -1,0 +1,467 @@
+.sprite {
+    background-image: url('../assets/img/spritesheet.png');
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.sprite-Adrenaline30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 0;
+}
+
+.sprite-All30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -30px;
+}
+
+.sprite-Appreciate30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -60px;
+}
+
+.sprite-Bar30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -90px;
+}
+
+.sprite-Buffet30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -120px;
+}
+
+.sprite-Cafe30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -150px;
+}
+
+.sprite-Chill-Out30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -180px;
+}
+
+.sprite-Concert30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -210px;
+}
+
+.sprite-Curated30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -240px;
+}
+
+.sprite-Discover30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -270px;
+}
+
+.sprite-Family30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -300px;
+}
+
+.sprite-Favourites30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -330px;
+}
+
+.sprite-Food30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -360px;
+}
+
+.sprite-Hotels30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -390px;
+}
+
+.sprite-Learn30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -420px;
+}
+
+.sprite-Promo30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -450px;
+}
+
+.sprite-Pure-Fun30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -480px;
+}
+
+.sprite-Restaurant30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -510px;
+}
+
+.sprite-Sports30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -540px;
+}
+
+.sprite-Sweat30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -570px;
+}
+
+.sprite-Trending30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -600px;
+}
+
+.sprite-Unique30x30 {
+    width: 30px;
+    height: 30px;
+    background-position: 0 -630px;
+}
+
+.sprite-autocomplete-icon-area {
+    width: 32px;
+    height: 46px;
+    background-position: 0 -660px;
+}
+
+.sprite-favorite {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -706px;
+}
+
+.sprite-favorite-selected {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -738px;
+}
+
+.sprite-favorite-selected_2x {
+    width: 68px;
+    height: 64px;
+    background-position: 0 -770px;
+}
+
+.sprite-favorite-selected_3x {
+    width: 102px;
+    height: 96px;
+    background-position: 0 -834px;
+}
+
+.sprite-favorite_2x {
+    width: 68px;
+    height: 64px;
+    background-position: 0 -930px;
+}
+
+.sprite-favorite_3x {
+    width: 102px;
+    height: 96px;
+    background-position: 0 -994px;
+}
+
+.sprite-hylo-final-logo-126x50 {
+    width: 126px;
+    height: 50px;
+    background-position: 0 -1090px;
+}
+
+.sprite-hylo-final-logo-200x79 {
+    width: 200px;
+    height: 79px;
+    background-position: 0 -1140px;
+}
+
+.sprite-hylo-final-logo-85x34 {
+    width: 85px;
+    height: 34px;
+    background-position: 0 -1219px;
+}
+
+.sprite-icon-add {
+    width: 20px;
+    height: 20px;
+    background-position: 0 -1253px;
+}
+
+.sprite-icon-add_2x {
+    width: 40px;
+    height: 40px;
+    background-position: 0 -1273px;
+}
+
+.sprite-icon-add_3x {
+    width: 60px;
+    height: 60px;
+    background-position: 0 -1313px;
+}
+
+.sprite-icon-comment {
+    width: 17px;
+    height: 16px;
+    background-position: 0 -1373px;
+}
+
+.sprite-icon-comment_2x {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -1389px;
+}
+
+.sprite-icon-comment_3x {
+    width: 51px;
+    height: 48px;
+    background-position: 0 -1421px;
+}
+
+.sprite-icon-commented {
+    width: 17px;
+    height: 16px;
+    background-position: 0 -1469px;
+}
+
+.sprite-icon-commented_2x {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -1485px;
+}
+
+.sprite-icon-commented_3x {
+    width: 51px;
+    height: 48px;
+    background-position: 0 -1517px;
+}
+
+.sprite-icon-down {
+    width: 15px;
+    height: 11px;
+    background-position: 0 -1565px;
+}
+
+.sprite-icon-down_2x {
+    width: 30px;
+    height: 22px;
+    background-position: 0 -1576px;
+}
+
+.sprite-icon-down_3x {
+    width: 45px;
+    height: 33px;
+    background-position: 0 -1598px;
+}
+
+.sprite-icon-left {
+    width: 10px;
+    height: 17px;
+    background-position: 0 -1631px;
+}
+
+.sprite-icon-left_2x {
+    width: 20px;
+    height: 34px;
+    background-position: 0 -1648px;
+}
+
+.sprite-icon-left_3x {
+    width: 30px;
+    height: 51px;
+    background-position: 0 -1682px;
+}
+
+.sprite-icon-like {
+    width: 17px;
+    height: 16px;
+    background-position: 0 -1733px;
+}
+
+.sprite-icon-like_2x {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -1749px;
+}
+
+.sprite-icon-like_3x {
+    width: 51px;
+    height: 48px;
+    background-position: 0 -1781px;
+}
+
+.sprite-icon-liked {
+    width: 17px;
+    height: 16px;
+    background-position: 0 -1829px;
+}
+
+.sprite-icon-liked-border_3x {
+    width: 51px;
+    height: 48px;
+    background-position: 0 -1845px;
+}
+
+.sprite-icon-liked_2x {
+    width: 34px;
+    height: 32px;
+    background-position: 0 -1893px;
+}
+
+.sprite-icon-pointer {
+    width: 24px;
+    height: 42px;
+    background-position: 0 -1925px;
+}
+
+.sprite-icon-pointer-selected {
+    width: 24px;
+    height: 42px;
+    background-position: 0 -1967px;
+}
+
+.sprite-icon-pointer-selected_2x {
+    width: 48px;
+    height: 84px;
+    background-position: 0 -2009px;
+}
+
+.sprite-icon-pointer-selected_3x {
+    width: 72px;
+    height: 126px;
+    background-position: 0 -2093px;
+}
+
+.sprite-icon-pointer_2x {
+    width: 48px;
+    height: 84px;
+    background-position: 0 -2219px;
+}
+
+.sprite-icon-pointer_3x {
+    width: 72px;
+    height: 126px;
+    background-position: 0 -2303px;
+}
+
+.sprite-icon-report {
+    width: 18px;
+    height: 18px;
+    background-position: 0 -2429px;
+}
+
+.sprite-icon-report_2x {
+    width: 36px;
+    height: 36px;
+    background-position: 0 -2447px;
+}
+
+.sprite-icon-report_3x {
+    width: 54px;
+    height: 54px;
+    background-position: 0 -2483px;
+}
+
+.sprite-icon-search {
+    width: 20px;
+    height: 19px;
+    background-position: 0 -2537px;
+}
+
+.sprite-icon-search_2x {
+    width: 40px;
+    height: 38px;
+    background-position: 0 -2556px;
+}
+
+.sprite-icon-search_3x {
+    width: 60px;
+    height: 57px;
+    background-position: 0 -2594px;
+}
+
+.sprite-l {
+    width: 44px;
+    height: 44px;
+    background-position: 0 -2651px;
+}
+
+.sprite-l_2x {
+    width: 88px;
+    height: 88px;
+    background-position: 0 -2695px;
+}
+
+.sprite-l_3x {
+    width: 132px;
+    height: 132px;
+    background-position: 0 -2783px;
+}
+
+.sprite-r {
+    width: 44px;
+    height: 44px;
+    background-position: 0 -2915px;
+}
+
+.sprite-r_2x {
+    width: 88px;
+    height: 88px;
+    background-position: 0 -2959px;
+}
+
+.sprite-r_3x {
+    width: 132px;
+    height: 132px;
+    background-position: 0 -3047px;
+}
+
+.sprite-small-star {
+    width: 19px;
+    height: 18px;
+    background-position: 0 -3179px;
+}
+
+.sprite-small-star-selected {
+    width: 19px;
+    height: 18px;
+    background-position: 0 -3197px;
+}
+
+.sprite-small-star-selected_2x {
+    width: 38px;
+    height: 36px;
+    background-position: 0 -3215px;
+}
+
+.sprite-small-star-selected_3x {
+    width: 57px;
+    height: 54px;
+    background-position: 0 -3251px;
+}
+
+.sprite-small-star_2x {
+    width: 38px;
+    height: 36px;
+    background-position: 0 -3305px;
+}
+
+.sprite-small-star_3x {
+    width: 57px;
+    height: 54px;
+    background-position: 0 -3341px;
+}

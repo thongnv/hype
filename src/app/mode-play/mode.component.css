@@ -300,7 +300,7 @@ ul.nav-tabs li.nav-item:first-child {
 
 ul.nav-tabs li.nav-item a.nav-link {
     text-align: left;
-    padding: 0px;
+    padding: 0;
 }
 
 ul.nav-tabs li.nav-item a.nav-link i {

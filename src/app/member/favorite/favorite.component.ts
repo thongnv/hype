@@ -3,8 +3,7 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
-
-const PAGE_SIZE = 10;
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-favorite',
@@ -201,7 +200,7 @@ export class FavoriteComponent implements OnInit {
               this.setPlace.offset++;
               this.userInfo.places.push(item);
             });
-            this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
+            this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
           } else {
             this.setPlace.endOfList = true;
           }
@@ -225,7 +224,7 @@ export class FavoriteComponent implements OnInit {
               this.setList.offset++;
               this.userInfo.lists.push(item);
             });
-            this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
+            this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
           } else {
             this.setList.endOfList = true;
           }
@@ -248,7 +247,7 @@ export class FavoriteComponent implements OnInit {
             this.setEvent.offset++;
             this.userInfo.events.push(item);
           });
-          this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
+          this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);
         } else {
           this.setEvent.endOfList = true;
         }

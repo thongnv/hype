@@ -20,6 +20,7 @@ import { EventType } from '../app.interface';
 
 // components
 import {EventItemComponent} from '../event/event-item/event-item.component';
+import { AppSetting } from '../app.setting';
 
 // assets
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
     private eventItem:EventItemComponent;
 
     // Set our default values
+    public gMapStyles: any;
     public localState = {value: ''};
     public eventFilter:any[] = [];
     public selectedEventFilter:any;
@@ -110,6 +112,7 @@ export class HomeComponent implements OnInit {
     }
 
     public ngOnInit() {
+        this.gMapStyles = AppSetting.GMAP_STYLE;
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.selected = 'all';

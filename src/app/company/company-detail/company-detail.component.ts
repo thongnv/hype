@@ -6,6 +6,7 @@ import { BaseUser, Company, Experience, Image, Location } from '../../app.interf
 import { ActivatedRoute } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { AppSetting } from '../../app.setting';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -37,6 +38,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public bookmarked: boolean = false;
   public rated: boolean = false;
   public company: Company;
+  public gMapStyles: any;
 
   constructor(
     public mainService: MainService,
@@ -46,6 +48,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
+    this.gMapStyles = AppSetting.GMAP_STYLE;
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
