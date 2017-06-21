@@ -495,3 +495,7 @@ nouislider.ng2-nouislider {
 .price-desc span:nth-child(3){
     padding-right: 20px;
 }
+.form-control-static{
+    border: none;
+    background: transparent;
+}

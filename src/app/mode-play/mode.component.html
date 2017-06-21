@@ -45,7 +45,10 @@
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'" (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+                                aria-hidden="true"></i></a>
+                        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)" class="when-button">Activities <i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
@@ -63,7 +66,8 @@
                     </li>
                     <li class="type" *ngIf="!showTab">
                         <a (click)="showTypeFind(showType)" class="when-button">Type
-                            <i  [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa" aria-hidden="true"></i></a>
+                            <i [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa"
+                               aria-hidden="true"></i></a>
                     </li>
                     
                     <span class="showMoreType" (click)="showAllType(showTab)">
@@ -78,7 +82,8 @@
                                 [(ngModel)]="priceRange"
                                 style="margin-top: 2em;" [tooltips]="[true,true]">
                     </nouislider>
-                    <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span class="text-center">$150</span><span class="pull-right">$300</span></div>
+                    <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span
+                            class="text-center">$150</span><span class="pull-right">$300</span></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
                              style="margin-left: 43px" class="filter-item col-md-3">
@@ -105,7 +110,8 @@
                         </ngb-rating>
                     </div>
                     <div *ngIf="showBest" class="best-for">
-                        <div *ngFor="let item of filterData.best; let in =index" class="filter-item" style="margin-left: 40px">
+                        <div *ngFor="let item of filterData.best; let in =index" class="filter-item"
+                             style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="best && best[item.name]=$event.target.checked ? true : undefined"
@@ -114,7 +120,8 @@
                         </div>
                     </div>
                     <div *ngIf="showType && !showTab">
-                        <div *ngFor="let item of filterData.type; let in =index" class="filter-item" style="margin-left: 40px">
+                        <div *ngFor="let item of filterData.type; let in =index" class="filter-item"
+                             style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="best && best[item.name]=$event.target.checked ? true : undefined"
@@ -130,7 +137,11 @@
             </div>
             <div class="clearfix"></div>
             <div class="list-header">
-                <div class="pull-left">Sort By</div>
+                <div class="pull-left">
+                    <select  class="form-control-static" [ngModel]="sortPlace" (change)="changeSort()">
+                        <option *ngFor="let or of sortBy" [ngValue]="or.name">{{or.name}}</option>
+                    </select>
+                </div>
                 <div class="pull-right" (click)="filterSubmit()">Clear Filters</div>
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>

@@ -8,6 +8,7 @@ import {LoaderService} from "../shared/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
+import {OrderByPipe} from "../shared/orderBy.pipe";
 
 declare let google:any;
 
@@ -17,7 +18,8 @@ declare let google:any;
     templateUrl: './mode.component.html',
     styleUrls: ['./mode.component.css'],
     encapsulation: ViewEncapsulation.None,
-    providers: [NgbRatingConfig]
+    providers: [NgbRatingConfig],
+    pipes: [OrderByPipe]
 })
 
 
@@ -38,7 +40,6 @@ export class ModeComponent implements OnInit {
     public mode:any = {};
     public cuisine:any[] = [{}];
     public best:any[] = [{}];
-    public latlngBounds:any;
     public mapZoom:number = 12;
     public lat:number = 1.3089757786697331;
     public lng:number = 103.8258969783783;
@@ -50,7 +51,8 @@ export class ModeComponent implements OnInit {
     public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
-    public gMapStyles: any;
+    public gMapStyles:any;
+    public sortPlace:any;
     private params = {
         type: 'all',
         kind: '',
@@ -68,10 +70,11 @@ export class ModeComponent implements OnInit {
         limit: 20
     };
 
+    public sortBy:any;
+
     public constructor(private formBuilder:FormBuilder,
                        private modeService:ModeService,
                        private rateConfig:NgbRatingConfig,
-                       private wrapper:GoogleMapsAPIWrapper,
                        private mapsAPILoader:MapsAPILoader,
                        private loaderService:LoaderService) {
 
@@ -83,17 +86,26 @@ export class ModeComponent implements OnInit {
             filterCategory: 'all'
         });
 
+        this.sortBy = [
+            {"name": 'Sort By'},
+            {"name": "Ratings"},
+            {"name": "Number of reviews"},
+            {"name": "Popularity (Pageviews)"},
+            {"name": "Number of favorites"},
+            {"name": "Distance (KM)"}
+        ]
+
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
         this.loaderService.show();
     }
 
     public ngOnInit() {
-      this.gMapStyles = AppSetting.GMAP_STYLE;
-      this.getCategories(this.filterFromMode.value.filterMode);
-      this.getDataModes();
-      this.getFilter();
-      // this.renderMaker(5000);
+        this.gMapStyles = AppSetting.GMAP_STYLE;
+        this.getCategories(this.filterFromMode.value.filterMode);
+        this.getDataModes();
+        this.getFilter();
+        // this.renderMaker(5000);
     }
 
     onChange(value:number) {
@@ -149,11 +161,11 @@ export class ModeComponent implements OnInit {
             }
             else {
                 let filterAll = resp.eat;
-                let cuisine = resp.play.cuisine;
+                //let cuisine = resp.play.cuisine;
                 let best = resp.play.best;
                 let type = resp.play.type;
 
-                filterAll.cuisine = filterAll.cuisine.concat(cuisine);
+                //filterAll.cuisine = filterAll.cuisine.concat(cuisine);
                 filterAll.best = filterAll.best.concat(best);
                 filterAll.type = filterAll.type.concat(type);
                 this.filterData = filterAll;
@@ -202,6 +214,8 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
+        this.items=[];
+        this.markers=[];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
@@ -454,4 +468,20 @@ export class ModeComponent implements OnInit {
             this.onScrollToBottom.emit(null);
         }
     }
+
+    public changeSort() {
+        if (this.sortPlace == 'Ratings') {
+            this.items.sort((a:any, b:any) => {
+                if (a < b) {
+                    return -1;
+                } else if (a > b) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            return this.items;
+        }
+    }
+
 }
