@@ -208,6 +208,7 @@ export class HomeComponent implements OnInit {
             this.msgContent = res.message;
         }, err=> {
             if (err.status == 403) {
+                this.loaderService.hide();
                 this.route.navigate(['login']);
             } else {
                 this.loaderService.hide();
