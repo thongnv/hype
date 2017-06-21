@@ -4,17 +4,17 @@
     width: calc(100% - 100px);
     padding-left: 10px;
 }
-.follow-btn-wrap{
+.follow-btn-wrap {
     height: 20px;
     text-align: left;
 }
-.unfollow-btn.follow{
+.unfollow-btn.follow {
     color: #ec3d62;
 }
-.unfollow-btn:hover{
+.unfollow-btn:hover {
     text-shadow: 0 0 0.5px;
 }
-.unfollow-btn{
+.unfollow-btn {
     width: 48px;
     height: 24px;
     font-family: Roboto;
@@ -57,19 +57,62 @@
     color: #3b3b3b;
 }
 .member-nav > li {
-    width: 100%;
+    text-align: left;
     height: 56px;
     line-height: 56px;
     box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
-    padding-right: 15%;
+    padding-left: 30%;
 }
-.avatar-wrap, .follow-wrap{
+.member-nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.member-nav > li.active {
+    font-weight: 700;
+    color: #ec3d62;
+}
+.avatar-wrap, .follow-wrap {
     margin-bottom: 20px;
 }
-.user-info-wrap{
+.user-info-wrap {
     overflow: hidden;
     box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 .user-avatar {
     margin-left: 15px;
+}
+.follow-item {
+    float: left;
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+    outline: none;
+}
+.avatar-wrap, .follow-wrap {
+    margin-top: 10px;
+    padding: 0 5px;
+    text-align: center;
+}
+.follow-wrap {
+    float: left;
+}
+@media screen and (min-width: 1200px) {
+}
+@media screen and (min-width: 992px) {
+}
+@media screen and (min-width: 768px) {
+}
+@media screen and (min-width: 544px) {
+}
+@media screen and (max-width: 543px) {
+}
+@media screen and (max-width: 991px) {
+    .member-nav > li {
+        text-align: center;
+        padding-left: 0;
+    }
+    .follow-wrap {
+        float: left;
+    }
 }

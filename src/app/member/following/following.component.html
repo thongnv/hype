@@ -1,8 +1,10 @@
 <div class="setting-wrap table-wrap">
-  <div class="col-lg-3 col-sm-4 col-xs-12 col-left table-cell">
-    <app-member-navigation *ngIf="userInfo" [data]="userInfo" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true"></app-member-navigation>
+  <div class="col-xs-12 col-lg-3 col-left table-cell">
+    <app-member-navigation *ngIf="userInfo" [data]="userInfo" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true">
+      Loading...
+    </app-member-navigation>
   </div>
-  <div class="col-lg-9 col-sm-8 col-xs-12 col-right table-cell">
+  <div class="col-xs-12 col-lg-9 col-right table-cell">
     <section *ngIf="userInfo.userFollowing" class="follow-list-wrap">
       <h3 class="col-xs-12 count-follow">{{userInfo.followingNumber}} Following</h3>
       <div class="col-xs-12">
@@ -19,7 +21,7 @@
            [color]="'#ec3d62'">
           <app-follow-item [item]="following" [flag]="'following'" *ngFor="let following of userInfo.userFollowing"
                            (onUpdate)="updateFollow($event)"
-                           class="col-lg-3 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
+                           class="col-xs-6 col-lg-3 interest-item-wrap">
           </app-follow-item>
         <div class="list-bottom">
           <div *ngIf="set.loadingInProgress">Loading</div>
