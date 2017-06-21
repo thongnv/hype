@@ -468,45 +468,45 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        this.items.sort((a:any, b:any) => {
-            if (this.sortPlace == 'ratings') {
-                if (a.rating.average < b.rating.average) {
-                    return -1;
-                } else if (a.rating.average > b.rating.average) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'reviews') {
-                if (a.rating.total < b.rating.total) {
-                    return -1;
-                } else if (a.rating.total > b.rating.total) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'favorites') {
-                if (a.is_favorite < b.is_favorite) {
-                    return -1;
-                } else if (a.is_favorite > b.is_favorite) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'distance') {
-                if (a.distance < b.distance) {
-                    return -1;
-                } else if (a.distance > b.distance) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            return this.items;
-        });
+        //this.items.sort((a:any, b:any) => {
+        //    if (this.sortPlace == 'ratings') {
+        //        if (parseFloat(a.rating.average)< parseFloat(b.rating.average)) {
+        //            return -1;
+        //        } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
+        //            return 1;
+        //        } else {
+        //            return 0;
+        //        }
+        //    }
+        //    if (this.sortPlace == 'reviews') {
+        //        if (parseInt(a.rating.total) < parseInt(b.rating.total)) {
+        //            return -1;
+        //        } else if (parseInt(a.rating.total) > parseInt(b.rating.total)) {
+        //            return 1;
+        //        } else {
+        //            return 0;
+        //        }
+        //    }
+        //    if (this.sortPlace == 'favorites') {
+        //        if (parseInt(a.is_favorite) < parseInt(b.is_favorite)) {
+        //            return -1;
+        //        } else if (parseInt(a.is_favorite) > parseInt(b.is_favorite)) {
+        //            return 1;
+        //        } else {
+        //            return 0;
+        //        }
+        //    }
+        //    if (this.sortPlace == 'distance') {
+        //        if (parseFloat(a.distance) < parseFloat(b.distance)) {
+        //            return -1;
+        //        } else if (parseFloat(a.distance) > parseFloat(b.distance)) {
+        //            return 1;
+        //        } else {
+        //            return 0;
+        //        }
+        //    }
+        //    return this.items;
+        //});
     }
 
 }
