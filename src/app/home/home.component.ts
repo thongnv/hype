@@ -318,7 +318,7 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-            this.categories = this.drawCategories.slice(0, 7);
+            this.categories = this.drawCategories.slice(0, 6);
             console.log(this.categories);
         }
         console.log(e);
