@@ -261,3 +261,44 @@ ul.mentioned-item {
 .popover-content ul.list-inline li {
     margin-bottom: 15px;
 }
+
+@media only screen and (max-width: 544px) {
+    .avatar-profile{
+        width: 100px;
+    }
+    .information-profile{
+        width:calc(100% - 120px);
+    }
+
+    .detail-information {
+        width: calc(100% - 10px);
+    }
+    .mentioned{
+        float: none;
+    }
+    ul.mentioned-item {
+        padding-left: 0;
+    }
+    ul.mentioned-item {
+       height: auto;
+
+    }
+    .mentioned{
+        line-height: normal;
+    }
+    .bottom-content .pull-right{
+        float: left!important;
+    }
+    .wrap-each-items{
+        height: auto;
+        
+    }
+}
+@media only screen and (min-width: 544px) and (max-width: 767px) {
+    .avatar-profile{
+        width: 100px;
+    }
+    .information-profile{
+        width:calc(100% - 120px);
+    }
+}

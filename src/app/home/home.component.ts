@@ -69,6 +69,8 @@ export class HomeComponent implements OnInit {
     private total:any;
     public showCircle:boolean = false;
     private loadMore:boolean = false;
+    public screenWidth:number = 0;
+    public screenHeight:number = 0;
     private params:any = {
         'page': 0,
         'limit': 20,
@@ -118,10 +120,46 @@ export class HomeComponent implements OnInit {
         this.selected = 'all';
         this.getTrending();
         this.getTrandingCategories();
+
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        this.screenWidth = width;
+        this.screenHeight = height;
+    }
+
+    public onResize(event):void{
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        this.screenWidth = width;
+        this.screenHeight = height;
+
+        let number = Math.floor(this.screenWidth/70) - 1;
+        if(this.screenWidth <992){
+            this.categories = this.drawCategories.slice(0, number-1);
+        }else{
+            if(this.screenWidth <1025) {
+                this.categories = this.drawCategories.slice(0, 4);
+            }else{
+                this.categories = this.drawCategories.slice(0, 6);
+            }
+        }
     }
 
     public onSelectEventType(event):void {
         console.log(event);
+
         if (event == 'all') {
             this.selected = 'all';
             this.params.tid = '';
@@ -306,8 +344,18 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            if (resp.data.length >= 7) {
-                this.categories = resp.data.slice(0, 6);
+            let number = Math.floor(this.screenWidth/70) - 1;
+            if(this.screenWidth <992){
+                 if (resp.data.length >= number) {
+                    this.categories = resp.data.slice(0,number -1);
+                }
+            }else{
+                if(this.screenWidth <1025) {
+                    this.categories = resp.data.slice(0,4);
+                }else{
+                    this.categories = resp.data.slice(0,6);
+                }
+
             }
 
         });
@@ -319,8 +367,18 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-            this.categories = this.drawCategories.slice(0, 6);
-            console.log(this.categories);
+            if(this.screenWidth <992) {
+                let number = Math.floor(this.screenWidth / 70) - 1;
+                if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
+            }else{
+
+                if(this.screenWidth <1025) {
+                    this.categories = this.drawCategories.slice(0, 4);
+                }else{
+                    this.categories = this.drawCategories.slice(0, 6);
+                }
+            }
+                console.log(this.categories);
         }
         console.log(e);
     }
