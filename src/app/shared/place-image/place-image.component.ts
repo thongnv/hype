@@ -12,7 +12,7 @@ export class PlaceImageComponent implements OnInit {
   @Input('width') public width: string;
   @Input('height') public height: string;
 
-  public url: string;
+  public url: string = 'assets/img/company/default_140x140.jpg';
 
   constructor(
     public companyService: CompanyService
