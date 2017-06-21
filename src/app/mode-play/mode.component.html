@@ -96,7 +96,7 @@
                                 <div class="checkbox"
                                      *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
                                     <input type="checkbox"
-                                           (change)="cuisine && cuisine[sb.name]=$event.target.checked ? true : undefined"
+                                           (change)="cuisine[item.name]=$event.target.checked ? true : undefined"
                                            [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
                                 </div>
                             </div>

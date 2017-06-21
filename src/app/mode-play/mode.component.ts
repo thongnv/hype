@@ -50,7 +50,8 @@ export class ModeComponent implements OnInit {
     public alertType:any = '';
     public msgContent:any = '';
     public gMapStyles:any;
-    public sortPlace:string='all';
+    public sortPlace:string = 'all';
+    private loadMore:boolean = false;
     private params = {
         type: 'all',
         kind: '',
@@ -114,13 +115,18 @@ export class ModeComponent implements OnInit {
         let params = this.params;
         console.log(params);
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-            console.log(resp);
+
+            this.total = resp.total;
             if (parseInt(resp.total) > 0) {
                 this.showMap = true;
             }
+            if (this.loadMore) {
+                this.initMap(this.items.concat(resp.company));
+            } else {
+                this.initMap(resp.company);
+            }
             this.loaderService.hide();
-            this.total = resp.total;
-            this.initMap(resp.company);
+
         }, err=> {
             this.items = [];
             this.markers = [];
@@ -205,6 +211,8 @@ export class ModeComponent implements OnInit {
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
+        this.markers = [];
+        this.items = [];
         this.loaderService.show();
         this.getDataModes();
         this.getFilter();
@@ -212,8 +220,6 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        this.items = [];
-        this.markers = [];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
@@ -274,7 +280,7 @@ export class ModeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
-            this.markers = [];
+            this.loadMore = true;
             this.params.page += 1;
             this.loaderService.show();
             this.getDataModes();
@@ -470,7 +476,7 @@ export class ModeComponent implements OnInit {
     public changeSort() {
         this.items.sort((a:any, b:any) => {
             if (this.sortPlace == 'ratings') {
-                if (parseFloat(a.rating.average)< parseFloat(b.rating.average)) {
+                if (parseFloat(a.rating.average) < parseFloat(b.rating.average)) {
                     return -1;
                 } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
                     return 1;
