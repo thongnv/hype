@@ -465,6 +465,7 @@ nouislider.ng2-nouislider {
     bottom: -130%;
     border-radius: 50%;
     font-size: 12px;
+    width: 30px;
 }
 
 .filter-item {
@@ -477,6 +478,7 @@ nouislider.ng2-nouislider {
     width: 100%;
     margin-bottom: 15px;
     display: table;
+    margin-top: 30px;
 }
 .price-desc span{
     display: table-cell;
