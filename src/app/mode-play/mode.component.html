@@ -158,7 +158,7 @@
                             <app-place-image [name]="item.name" [width]="100" [height]="100">
                             </app-place-image>
                             <div (click)="onLikeEmit(item)" class="heart-icon">
-                                <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
+                                <i fa class="fa-heart-o" [class.icon-not-selected]="!item.is_favorite"
                                    [class.heart-selected]="item.is_favorite" aria-hidden="true"></i>
                             </div>
                         </div>
