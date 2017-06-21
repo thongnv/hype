@@ -3,7 +3,6 @@ import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-fa
 import { AppSetting } from '../app.setting';
 import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
-import { AppState } from '../app.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
