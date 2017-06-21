@@ -72,7 +72,7 @@
 
                 </ul>
 
-                <div class="find-content">
+                <div class="find-content row">
 
                     <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
                                 [(ngModel)]="priceRange"
@@ -81,7 +81,7 @@
                     <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span class="text-center">$150</span><span class="pull-right">$300</span></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
-                             style="margin-left: 40px" class="filter-item">
+                             style="margin-left: 43px" class="filter-item col-md-3">
                             <div class="checkbox">
                                 <input type="checkbox"
                                        (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
