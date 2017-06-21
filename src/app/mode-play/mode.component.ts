@@ -8,7 +8,6 @@ import {LoaderService} from "../shared/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
-import {OrderByPipe} from "../shared/orderBy.pipe";
 
 declare let google:any;
 
@@ -19,7 +18,6 @@ declare let google:any;
     styleUrls: ['./mode.component.css'],
     encapsulation: ViewEncapsulation.None,
     providers: [NgbRatingConfig],
-    pipes: [OrderByPipe]
 })
 
 
