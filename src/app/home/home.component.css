@@ -429,6 +429,15 @@ button.btn.btn-default.active {
     color: #ffffff;
 }
 
+.noUi-handle:before {
+    left: 10px;
+    background: #ec3d62;
+}
+
+.noUi-handle:after, .noUi-connect {
+    background: #ec3d62;
+}
+
 .noUi-horizontal .noUi-tooltip {
     bottom: -130%;
     border-radius: 50%;
