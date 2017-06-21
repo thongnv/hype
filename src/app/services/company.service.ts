@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Company, Experience, Image, Location } from '../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Http, Headers, RequestOptions, Response, Jsonp } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AppSetting } from '../app.setting';
 import { Router } from '@angular/router';
@@ -20,8 +20,9 @@ export class CompanyService {
       location: extractLocation(data.location),
       website: data.website,
       phone: data.phone,
-      openingHours: extractOpeningHours(data.Operating_Hours),
-      images: getInstagramImages(data.images),
+      openingHours: [],
+      images: [],
+      instagramUrl: data.Hylo_Instagram,
       reviews: getReviews(data.review)
     };
   }
@@ -34,7 +35,8 @@ export class CompanyService {
 
   constructor(private _localStorageService: LocalStorageService,
               private _http: Http,
-              private router: Router) {
+              private router: Router,
+              private _jsonp: Jsonp) {
   }
 
   public getCompanyDetail(slugName): Observable<Company> {
@@ -57,6 +59,49 @@ export class CompanyService {
       });
   }
 
+  public getInstagramUserId(username) {
+    return this._jsonp.get(
+      'https://api.instagram.com/v1/users/search' +
+      '?q=' + username +
+      '&access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
+      '&callback=JSONP_CALLBACK')
+      .map((res) => {
+        let data = res.json().data;
+        for (let item of data) {
+          if (item.username === username) {
+            return item.id;
+          }
+        }
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getInstagramImages(userId: string): Observable<any> {
+    return this._jsonp.get(
+      'https://api.instagram.com/v1/users/' + userId + '/media/recent/' +
+      '?access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
+      '&callback=JSONP_CALLBACK')
+        .map((res) => {
+          let data = res.json().data;
+          let images = [];
+          for (let item of data) {
+            images.push({
+              url: item.images.standard_resolution.url,
+              value: '',
+              filename: '',
+              filemime: '',
+              filesize: 0
+            });
+          }
+          return images;
+        })
+        .catch((error: any) => {
+          return Observable.throw(new Error(error));
+        });
+    }
+
   public toggleBookmark(placeId: string): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
@@ -75,7 +120,7 @@ export class CompanyService {
           this.router.navigate(['500'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public postReview(placeId: string, review: Experience): Observable<Experience> {
@@ -129,12 +174,8 @@ export class CompanyService {
           this.router.navigate(['500'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
-}
-
-function extractOpeningHours(data) {
-  return [];
 }
 
 function extractLocation(location): Location {
@@ -146,20 +187,6 @@ function extractLocation(location): Location {
     lat: Number(lat.replace('Lat/', '')),
     lng: Number(lng.replace('Long/', ''))
   };
-}
-
-function getInstagramImages(data): Image[] {
-  let images = [];
-  for (let item of data) {
-    images.push({
-      url: item.standard_resolution,
-      value: '',
-      filename: '',
-      filemime: '',
-      filesize: 0
-    });
-  }
-  return images;
 }
 
 function getReviews(data): Experience[] {

@@ -94,6 +94,18 @@ export interface Image {
   filesize: number;
 }
 
+export interface InstagramImage {
+  url: {
+    thumbnail: string;
+    low_resolution: string;
+    standard_resolution: string;
+  };
+  value: string;
+  filename: string;
+  filemime: string;
+  filesize: number;
+}
+
 export interface LoaderState {
   show: boolean;
 }
@@ -108,6 +120,7 @@ export interface Company {
   phone: string;
   openingHours: string[];
   images: Image[];
+  instagramUrl: string;
   reviews: Experience[];
   bookmarked: boolean;
   rated: boolean;

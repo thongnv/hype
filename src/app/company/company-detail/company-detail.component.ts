@@ -24,6 +24,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public openingHours: string[];
   public reviews: Experience[] = [];
   public images: Image[];
+  public instagramUrl = '';
   public slugName: string;
   public user: BaseUser = {name: '', avatar: ''};
   public commentPosition = 'out';
@@ -33,11 +34,12 @@ export class CompanyDetailComponent implements Company, OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides = [];
-  public ready: boolean = false;
   public descTruncated: boolean = true;
   public bookmarked: boolean = false;
   public rated: boolean = false;
   public company: Company;
+  public ready: boolean = false;
+  public imageReady: boolean = false;
   public gMapStyles: any;
 
   constructor(
@@ -48,7 +50,6 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
-    this.gMapStyles = AppSetting.GMAP_STYLE;
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
@@ -56,11 +57,30 @@ export class CompanyDetailComponent implements Company, OnInit {
         (resp) => {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
-          this.initSlide(this.images);
+          // TODO: use this.instagramUrl instead
+          let instagramUsername = 'billnguyen254';
+          this.companyService.getInstagramUserId(instagramUsername).subscribe(
+            (userId) => {
+              this.companyService.getInstagramImages(userId).subscribe(
+                (images) => {
+                  this.images = images;
+                  this.initSlide(this.images);
+                  this.imageReady = true;
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
           this.ready = true;
           this.loaderService.hide();
         },
         (error) => {
+          this.loaderService.hide();
           console.log(error);
         }
       );
@@ -69,6 +89,7 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.user.name = response.name;
       this.user.avatar = response.field_image;
     });
+    this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
   public toggleBookmark() {
@@ -154,7 +175,6 @@ export class CompanyDetailComponent implements Company, OnInit {
 
   private loadData(data) {
     this.id = data.id;
-    this.images = data.images;
     this.website = data.website;
     this.reviews = data.reviews;
     this.name = data.name;
@@ -165,6 +185,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.phone = data.phone;
     this.openingHours = data.openingHours;
     this.location = data.location;
+    this.instagramUrl = data.instagramUrl;
   }
 
   private initSlide(images) {
