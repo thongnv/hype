@@ -61,9 +61,9 @@ export class ModeComponent implements OnInit {
         bestfor: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
-        lat: 1.352083,
-        long: 103.819836,
-        radius: (this.currentRadius / 1000),
+        //lat: 1.352083,
+        //long: 103.819836,
+        //radius: (this.currentRadius / 1000),
         page: 0,
         limit: 20
     };
@@ -468,45 +468,45 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        //this.items.sort((a:any, b:any) => {
-        //    if (this.sortPlace == 'ratings') {
-        //        if (parseFloat(a.rating.average)< parseFloat(b.rating.average)) {
-        //            return -1;
-        //        } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
-        //            return 1;
-        //        } else {
-        //            return 0;
-        //        }
-        //    }
-        //    if (this.sortPlace == 'reviews') {
-        //        if (parseInt(a.rating.total) < parseInt(b.rating.total)) {
-        //            return -1;
-        //        } else if (parseInt(a.rating.total) > parseInt(b.rating.total)) {
-        //            return 1;
-        //        } else {
-        //            return 0;
-        //        }
-        //    }
-        //    if (this.sortPlace == 'favorites') {
-        //        if (parseInt(a.is_favorite) < parseInt(b.is_favorite)) {
-        //            return -1;
-        //        } else if (parseInt(a.is_favorite) > parseInt(b.is_favorite)) {
-        //            return 1;
-        //        } else {
-        //            return 0;
-        //        }
-        //    }
-        //    if (this.sortPlace == 'distance') {
-        //        if (parseFloat(a.distance) < parseFloat(b.distance)) {
-        //            return -1;
-        //        } else if (parseFloat(a.distance) > parseFloat(b.distance)) {
-        //            return 1;
-        //        } else {
-        //            return 0;
-        //        }
-        //    }
-        //    return this.items;
-        //});
+        this.items.sort((a:any, b:any) => {
+            if (this.sortPlace == 'ratings') {
+                if (parseFloat(a.rating.average)< parseFloat(b.rating.average)) {
+                    return -1;
+                } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            if (this.sortPlace == 'reviews') {
+                if (parseInt(a.rating.total) < parseInt(b.rating.total)) {
+                    return -1;
+                } else if (parseInt(a.rating.total) > parseInt(b.rating.total)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            if (this.sortPlace == 'favorites') {
+                if (parseInt(a.is_favorite) < parseInt(b.is_favorite)) {
+                    return -1;
+                } else if (parseInt(a.is_favorite) > parseInt(b.is_favorite)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            if (this.sortPlace == 'distance') {
+                if (parseFloat(a.distance) < parseFloat(b.distance)) {
+                    return -1;
+                } else if (parseFloat(a.distance) > parseFloat(b.distance)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            //return this.items;
+        });
     }
 
 }
