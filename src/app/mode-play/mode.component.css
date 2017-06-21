@@ -74,6 +74,9 @@
     border-bottom-right-radius: 4px !important;
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
+    height: 43px;
+    position: relative;
+    bottom: 3px;
 }
 
 /*filterFromMode end*/
