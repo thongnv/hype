@@ -1,5 +1,5 @@
 <section>
-  <div class="row">
+  <div class="row" *ngIf="ready">
     <div class="col-lg-6 col-xs-12 left-box">
 
       <!-- title event start -->
@@ -136,7 +136,7 @@
 
       <div class="map-location-area" style="display: block;">
         <h4 class="title-map-location margin-bottom-25">Location</h4>
-        <sebm-google-map *ngIf="ready" [latitude]="location.lat" [longitude]="location.lng" [zoom]="13" [styles]="gMapStyles">
+        <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13" [styles]="gMapStyles">
           <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng">
           </sebm-google-map-marker>
         </sebm-google-map>
