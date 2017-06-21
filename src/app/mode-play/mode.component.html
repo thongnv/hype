@@ -158,9 +158,9 @@
                             <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
                             <span class="review">{{item.rating.total}} Reviews</span>
                             <div class="box-content">
-                                <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
-                                <p *ngIf="item.YP_Address?.length > 0"
-                                   [innerHTML]="item.YP_Address[0] | myHtml2Text | truncate : 50"></p>
+                                <!--<p>{{item.Email_Address}} | {{item.Tel_No}}</p>-->
+                                <p *ngIf="item.Company_Profile"
+                                   [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>
                             </div>
                         </div>
                     </div>
