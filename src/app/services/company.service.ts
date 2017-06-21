@@ -59,20 +59,13 @@ export class CompanyService {
       });
   }
 
-  public getInstagramUserId(username) {
+  public getInstagramProfile(username) {
     return this._jsonp.get(
       'https://api.instagram.com/v1/users/search' +
       '?q=' + username +
       '&access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
       '&callback=JSONP_CALLBACK')
-      .map((res) => {
-        let data = res.json().data;
-        for (let item of data) {
-          if (item.username === username) {
-            return item.id;
-          }
-        }
-      })
+      .map((res) => res.json())
       .catch((error: any) => {
         return Observable.throw(new Error(error));
       });
@@ -83,20 +76,7 @@ export class CompanyService {
       'https://api.instagram.com/v1/users/' + userId + '/media/recent/' +
       '?access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
       '&callback=JSONP_CALLBACK')
-        .map((res) => {
-          let data = res.json().data;
-          let images = [];
-          for (let item of data) {
-            images.push({
-              url: item.images.standard_resolution.url,
-              value: '',
-              filename: '',
-              filemime: '',
-              filesize: 0
-            });
-          }
-          return images;
-        })
+        .map((res: Response) => res.json())
         .catch((error: any) => {
           return Observable.throw(new Error(error));
         });

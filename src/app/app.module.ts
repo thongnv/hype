@@ -110,6 +110,7 @@ import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
+import { PlaceImageComponent } from './shared/place-image/place-image.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -187,6 +188,7 @@ type StoreType = {
     LogoutComponent,
     SearchComponent,
     HyperSearchComponent,
+    PlaceImageComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,

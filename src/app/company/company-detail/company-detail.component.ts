@@ -59,10 +59,21 @@ export class CompanyDetailComponent implements Company, OnInit {
           this.loadData(this.company);
           // TODO: use this.instagramUrl instead
           let instagramUsername = 'billnguyen254';
-          this.companyService.getInstagramUserId(instagramUsername).subscribe(
-            (userId) => {
+          this.companyService.getInstagramProfile(instagramUsername).subscribe(
+            (profile) => {
+              let userId = profile.data[0].id;
               this.companyService.getInstagramImages(userId).subscribe(
-                (images) => {
+                (res) => {
+                  let images = [];
+                  for (let item of res.data) {
+                    images.push({
+                      url: item.images.standard_resolution.url,
+                      value: '',
+                      filename: '',
+                      filemime: '',
+                      filesize: 0
+                    });
+                  }
                   this.images = images;
                   this.initSlide(this.images);
                   this.imageReady = true;
