@@ -118,29 +118,28 @@ export class EventService {
     });
   }
 
-  public postExperience(eventSlug: string, experience: Experience): Observable<any> {
+  public postExperience(eventSlug: string, data): Observable<Experience> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    let data = {
-      rate: experience.rating,
-      message: experience.text,
-      comment_images: experience.images
-    };
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/' + eventSlug,
-      JSON.stringify(data),
-      options
+      JSON.stringify(data), options
     )
     .map((res: Response) => {
-      return <Experience> res.json();
+      let resData = res.json().data;
+      return {
+        id: resData.cid,
+        author: {avatar: resData.author_avatar, name: resData.author_name},
+        text: resData.comment_body,
+        likeNumber: 0,
+        liked: false,
+        comments: [],
+        rating: resData.rating,
+        date: resData.created * 1000,
+        images: extractImages(resData.comment_images)
+      };
     })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
     });
   }

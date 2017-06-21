@@ -1,19 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
-import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 // 3rds
-import {Ng2ImgToolsService} from 'ng2-img-tools';
+import { Ng2ImgToolsService } from 'ng2-img-tools';
 
 import * as moment from 'moment/moment';
-import {AppState} from '../../app.service';
-import {EventService} from '../../services/event.service';
-import {LoaderService} from '../../shared/loader/loader.service';
-import {MainService} from '../../services/main.service';
+import { AppState } from '../../app.service';
+import { EventService } from '../../services/event.service';
+import { LoaderService } from '../../shared/loader/loader.service';
+import { MainService } from '../../services/main.service';
 import { AppSetting } from '../../app.setting';
 
-import {HyperSearchComponent} from '../../hyper-search/hyper-search.component';
+import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
 
 @Component({
   selector: 'app-share-event',
@@ -149,10 +149,9 @@ export class ShareEventComponent implements OnInit {
           let image = new Image();
           image.src = e.target.result;
 
-          this.resizeImage(image, 480, 330, resizedImage => {
+          this.resizeImage(image, 480, 330, (resizedImage) => {
                     console.log('resize ok');
                     let img = {
-                      //url: URL.createObjectURL(resizedImage),
                       url: resizedImage,
                       value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                       filename: event.target.files[i].name,
@@ -169,51 +168,6 @@ export class ShareEventComponent implements OnInit {
 
         reader[i].readAsDataURL(event.target.files[i]);
       }
-    }
-  }
-
-  // helper functions
-  private resizeImage(img, maxWidth, maxHeight, callback) {
-    return img.onload = () => {
-      // get image dimension
-      let width = img.width;
-      let height = img.height;
-
-      // set width and height to the max values
-      if (width > height) {
-        if (width > maxWidth) {
-          height *= maxWidth / width;
-          width = maxWidth;
-        }
-      } else {
-        if (height > maxHeight) {
-          width *= maxHeight / height;
-          height = maxHeight;
-        }
-      }
-
-      // create canvas object
-      let canvas = document.createElement("canvas");
-
-      // set canvas to the new calculated dimension values
-      canvas.width = maxWidth;
-      canvas.height = maxHeight;
-
-      // create canvas context 2d and align image to center
-      let startX = maxWidth / 2 - width / 2;
-      let startY = maxHeight / 2 - height / 2;
-      let ctx = canvas.getContext("2d", {'alpha': false});
-
-
-      // draw image to canvas
-      ctx.drawImage(img, startX, startY, width, height);
-
-      // convert canvas to image
-      let dataUrl = canvas.toDataURL('image/jpeg');
-
-      // run callback with result
-      callback(dataUrl);
-
     }
   }
 
@@ -251,7 +205,7 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.Date = moment(event.Date).unix();
+    event.Date = moment(event.eventDate).unix();
     this.previewData = event;
     this.initPreview();
   }
@@ -284,6 +238,50 @@ export class ShareEventComponent implements OnInit {
         field_price: event.eventPrice,
         field_mentioned_by: event.eventMentions
       }]
+    };
+  }
+
+  // helper functions
+  private resizeImage(img, maxWidth, maxHeight, callback) {
+    return img.onload = () => {
+      // get image dimension
+      let width = img.width;
+      let height = img.height;
+
+      // set width and height to the max values
+      if (width > height) {
+        if (width > maxWidth) {
+          height *= maxWidth / width;
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width *= maxHeight / height;
+          height = maxHeight;
+        }
+      }
+
+      // create canvas object
+      let canvas = document.createElement('canvas');
+
+      // set canvas to the new calculated dimension values
+      canvas.width = maxWidth;
+      canvas.height = maxHeight;
+
+      // create canvas context 2d and align image to center
+      let startX = maxWidth / 2 - width / 2;
+      let startY = maxHeight / 2 - height / 2;
+      let ctx = canvas.getContext('2d', {alpha: false});
+
+      // draw image to canvas
+      ctx.drawImage(img, startX, startY, width, height);
+
+      // convert canvas to image
+      let dataUrl = canvas.toDataURL('image/jpeg');
+
+      // run callback with result
+      callback(dataUrl);
+
     };
   }
 }

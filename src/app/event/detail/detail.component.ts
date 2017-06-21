@@ -75,6 +75,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.loaderService.hide();
         },
         (error) => {
+          this.loaderService.hide();
           console.log(error);
         }
       );
@@ -97,31 +98,24 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   public addExperience(msgInput) {
     if (!this.userRated && msgInput.value.trim()) {
-      let experience: Experience = {
-        id: 0,
-        author: this.user,
-        text: msgInput.value,
-        likeNumber: 0,
-        liked: false,
-        comments: [],
-        rating: this.userRating,
-        date: moment().unix() * 1000,
-        images: this.previewUrl
-      };
-      let eventSlugName = this.slugName;
-      this.userRated = true;
       this.loaderService.show();
-      this.eventService.postExperience(eventSlugName, experience).subscribe(
-        (resp) => {
-          console.log(resp);
-          this.experiences.push(experience);
+      this.userRated = true;
+      let slugName = this.slugName;
+      let data = {
+        rate: this.userRating,
+        message: msgInput.value,
+        comment_images: this.previewUrl
+      };
+      this.eventService.postExperience(slugName, data).subscribe(
+        (resp: Experience) => {
+          this.experiences.push(resp);
           this.experienceForm.reset();
-          this.rating = resp.average_rating;
           this.loaderService.hide();
         },
         (error) => {
           console.log(error);
           this.userRated = false;
+          this.loaderService.hide();
         }
       );
     }

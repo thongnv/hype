@@ -1164,6 +1164,7 @@ body, html {
     }
     .main {
       left: 0;
+      bottom: 60px;
     }
     .form-wrap {
       padding: 0;
@@ -1175,7 +1176,6 @@ body, html {
       top: calc(100vh - 50px);
       bottom: 0;
       width: 100%;
-      background: red;
       z-index: 9999;
     }
     .sidebar .list-tap > li {
