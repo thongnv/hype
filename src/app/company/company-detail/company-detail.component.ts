@@ -33,7 +33,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
-  public slides = [];
+  public slides = [{image: 'assets/img/company/detail/default-company.jpg'}];
   public descTruncated: boolean = true;
   public bookmarked: boolean = false;
   public rated: boolean = false;
@@ -200,11 +200,9 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   private initSlide(images) {
+    this.slides = [];
     for (let image of images) {
       this.slides.push({image: image.url});
-    }
-    if (!this.slides.length) {
-      this.slides.push({image: 'assets/img/company/detail/default-company.jpg'});
     }
   }
 

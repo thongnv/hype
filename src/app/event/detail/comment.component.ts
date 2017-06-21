@@ -8,14 +8,14 @@ import { EventService } from '../../services/event.service';
   template: `
     <div class="avatar-comment-ago">
       <a>
-        <img class="img-circle" [src]="user.avatar" alt="user avatar" width="50"
+        <img class="img-circle" [src]="author.avatar" alt="user avatar" width="50"
              height="50">
       </a>
     </div>
 
     <div class="content-comment-ago">
       <div class="top-content-comment">
-        <a><b>{{user.name}}</b></a>
+        <a><b>{{author.name}}</b></a>
         <span [innerHTML]="text"></span>
       </div>
       <div class="bottom-like-reply-comment">
@@ -43,9 +43,10 @@ export class CommentComponent implements HyloComment, OnInit {
   public pid: number;
   public likeNumber: number;
   public replies: HyloComment[];
-  public user: BaseUser;
+  public author: BaseUser;
   public text: string;
   public liked: boolean;
+  public clickedLike = false;
 
   constructor(private eventService: EventService) {
     // TODO
@@ -56,22 +57,27 @@ export class CommentComponent implements HyloComment, OnInit {
     this.pid = this.comment.pid;
     this.likeNumber = this.comment.likeNumber;
     this.replies = this.comment.replies;
-    this.user = this.comment.user;
+    this.author = this.comment.author;
     this.text = this.comment.text;
     this.liked = this.comment.liked;
   }
 
   public toggleLike() {
-    let liked = !this.liked;
-    let comment = this;
-    this.eventService.toggleLike(comment).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.liked = liked;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (!this.clickedLike) {
+      let liked = !this.liked;
+      let comment = this;
+      this.eventService.toggleLike(comment).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.liked = liked;
+          this.clickedLike = false;
+        },
+        (error) => {
+          console.log(error);
+          this.clickedLike = false;
+        }
+      );
+    }
+
   }
 }
