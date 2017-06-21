@@ -215,6 +215,7 @@ ul.itemSort li a i {
     right: 0px;
 }
 .avatar .heart-icon i {
+    color: #fff;
     transform: scale(0.5);
 }
 
@@ -371,7 +372,7 @@ nouislider.ng2-nouislider {
     height: 600px !important;
 }
 
-.list-items .heart-icon {
+/*.list-items .heart-icon {
     position: absolute;
     right: 10px;
     top: 15px;
@@ -386,7 +387,7 @@ nouislider.ng2-nouislider {
 
 .list-items .heart-icon i.heart-selected {
     color: #ec3d62;
-}
+}*/
 
 /*.left-box, .right-box {*/
 /*padding-left: 0;*/
