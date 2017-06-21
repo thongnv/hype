@@ -429,10 +429,18 @@ button.btn.btn-default.active {
     color: #ffffff;
 }
 
+.noUi-horizontal .noUi-tooltip {
+    bottom: -130%;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 30px;
+}
+
 .price-desc {
     float: left;
     width: 100%;
     margin-bottom: 15px;
+    margin-top: 15px;
     display: table;
 }
 
@@ -452,11 +460,6 @@ button.btn.btn-default.active {
     padding-right: 0px;
 }
 
-.noUi-horizontal .noUi-tooltip {
-    bottom: -130%;
-    border-radius: 50%;
-    font-size: 12px;
-}
 
 /*
 ==============

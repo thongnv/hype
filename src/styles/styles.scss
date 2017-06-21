@@ -241,7 +241,7 @@ body, html {
     background: url("../assets/img/icons/suggestion_marker.png") no-repeat center center;
   }
   //  Profile Setting
-  .user-avatar, .user-avatar-small{
+  .user-avatar, .user-avatar-small {
     border-radius: 50%;
     overflow: hidden;
   }
@@ -1060,6 +1060,12 @@ body, html {
     margin-left: 15px;
   }
 
+  .filter-events .noUi-horizontal .noUi-tooltip {
+    bottom: -130%;
+    border-radius: 50%;
+    font-size: 12px;
+    width: 30px;
+  }
   .daterangepicker .ranges {
     float: right !important;
     clear: both;
@@ -1099,7 +1105,7 @@ body, html {
     text-align: center;
   }
   /*END notifications bage*/
-  .form-wrap{
+  .form-wrap {
     padding: 15px;
     min-height: 1px;
     display: block;
@@ -1107,7 +1113,6 @@ body, html {
     overflow: hidden;
   }
   //END Notifications
-
 
   //responsive
 
@@ -1154,13 +1159,13 @@ body, html {
     }
   }
   @media only screen and (max-width: 991px) {
-    .table-wrap{
+    .table-wrap {
       display: block;
     }
-    .main{
+    .main {
       left: 0;
     }
-    .form-wrap{
+    .form-wrap {
       padding: 0;
     }
     .sidebar {
@@ -1173,7 +1178,7 @@ body, html {
       background: red;
       z-index: 9999;
     }
-    .sidebar .list-tap > li{
+    .sidebar .list-tap > li {
       padding: 0;
     }
   }
