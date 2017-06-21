@@ -1060,6 +1060,15 @@ body, html {
     margin-left: 15px;
   }
 
+  .homeFilter .noUi-handle:before {
+    left: 10px;
+    background: #ec3d62;
+  }
+
+  .homeFilter .noUi-handle:after, .noUi-connect {
+    background: #ec3d62;
+  }
+
   .filter-events .noUi-horizontal .noUi-tooltip {
     bottom: -130%;
     border-radius: 50%;
