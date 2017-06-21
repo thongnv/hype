@@ -52,7 +52,7 @@ export class ModeComponent implements OnInit {
     public alertType:any = '';
     public msgContent:any = '';
     public gMapStyles:any;
-    public sortPlace:any;
+    public sortPlace:string='all';
     private params = {
         type: 'all',
         kind: '',
@@ -87,12 +87,12 @@ export class ModeComponent implements OnInit {
         });
 
         this.sortBy = [
-            {"name": 'Sort By'},
-            {"name": "Ratings"},
-            {"name": "Number of reviews"},
-            {"name": "Popularity (Pageviews)"},
-            {"name": "Number of favorites"},
-            {"name": "Distance (KM)"}
+            {"id": "all", "name": 'Sort By',"selected":true},
+            {"id": "ratings", "name": "Ratings"},
+            {"id": "reviews", "name": "Number of reviews"},
+            {"id": "view", "name": "Popularity (Pageviews)"},
+            {"id": "favorites", "name": "Number of favorites"},
+            {"id": "distance", "name": "Distance (KM)"}
         ]
 
         this.rateConfig.max = 5;
@@ -214,8 +214,8 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        this.items=[];
-        this.markers=[];
+        this.items = [];
+        this.markers = [];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
@@ -470,18 +470,45 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        if (this.sortPlace == 'Ratings') {
-            this.items.sort((a:any, b:any) => {
-                if (a < b) {
+        this.items.sort((a:any, b:any) => {
+            if (this.sortPlace == 'ratings') {
+                if (a.rating.average < b.rating.average) {
                     return -1;
-                } else if (a > b) {
+                } else if (a.rating.average > b.rating.average) {
                     return 1;
                 } else {
                     return 0;
                 }
-            });
+            }
+            if (this.sortPlace == 'reviews') {
+                if (a.rating.total < b.rating.total) {
+                    return -1;
+                } else if (a.rating.total > b.rating.total) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            if (this.sortPlace == 'favorites') {
+                if (a.is_favorite < b.is_favorite) {
+                    return -1;
+                } else if (a.is_favorite > b.is_favorite) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            if (this.sortPlace == 'distance') {
+                if (a.distance < b.distance) {
+                    return -1;
+                } else if (a.distance > b.distance) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
             return this.items;
-        }
+        });
     }
 
 }

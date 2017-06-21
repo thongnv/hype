@@ -138,8 +138,8 @@
             <div class="clearfix"></div>
             <div class="list-header">
                 <div class="pull-left">
-                    <select  class="form-control-static" [ngModel]="sortPlace" (change)="changeSort()">
-                        <option *ngFor="let or of sortBy" [ngValue]="or.name">{{or.name}}</option>
+                    <select  class="form-control-static" [(ngModel)]="sortPlace" (change)="changeSort()">
+                        <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
                     </select>
                 </div>
                 <div class="pull-right" (click)="filterSubmit()">Clear Filters</div>
