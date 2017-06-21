@@ -116,6 +116,8 @@ export class ShareEventComponent implements OnInit {
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng()
         });
+
+        console.log('updated eventPlace: ', this.eventForm);
       }
 
       // hide result
