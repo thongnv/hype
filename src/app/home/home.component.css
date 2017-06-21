@@ -87,15 +87,18 @@
     padding: 30px 35px 0px 25px;
     border-bottom: 1px solid #eaeaea;
 }
+
 .filter-events .btn-group.tab-control {
     border: 1px solid #d8d8d8;
     border-radius: 4px;
     background: #f6f6f6;
     height: 28px;
 }
-.filter-events.top-100{
+
+.filter-events.top-100 {
     padding-bottom: 30px;
 }
+
 .clear-filters-button {
     float: right;
     color: #ec3d62;
@@ -169,6 +172,7 @@ button.btn.btn-default.active {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
 }
+
 .list-item {
     width: 100%;
     overflow: hidden;
@@ -423,6 +427,35 @@ button.btn.btn-default.active {
     line-height: 1.5;
     text-align: left;
     color: #ffffff;
+}
+
+.price-desc {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+    display: table;
+}
+
+.price-desc span {
+    display: table-cell;
+}
+
+.price-desc span:nth-child(1) {
+    padding-left: 5px;
+}
+
+.price-desc span:nth-child(2) {
+    padding-left: 60px;
+}
+
+.price-desc span:nth-child(3) {
+    padding-right: 0px;
+}
+
+.noUi-horizontal .noUi-tooltip {
+    bottom: -130%;
+    border-radius: 50%;
+    font-size: 12px;
 }
 
 /*

@@ -76,7 +76,7 @@
 
                     <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
                                 [(ngModel)]="priceRange"
-                                style="margin-top: 2em;">
+                                style="margin-top: 2em;" [tooltips]="[true,true]">
                     </nouislider>
                     <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span class="text-center">$150</span><span class="pull-right">$300</span></div>
                     <div *ngIf="showCuisine">
