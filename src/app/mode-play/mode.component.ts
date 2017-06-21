@@ -87,7 +87,7 @@ export class ModeComponent implements OnInit {
         });
 
         this.sortBy = [
-            {"id": "all", "name": 'Sort By',"selected":true},
+            {"id": "all", "name": 'Sort By'},
             {"id": "ratings", "name": "Ratings"},
             {"id": "reviews", "name": "Number of reviews"},
             {"id": "view", "name": "Popularity (Pageviews)"},

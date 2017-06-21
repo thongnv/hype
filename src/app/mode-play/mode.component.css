@@ -290,6 +290,7 @@ ul.itemSort li a i {
 .item-content .d-inline-flex span {
     cursor: default !important;
     pointer-events: none;
+    color: #cccccc;
 }
 
 ul.nav-tabs li.nav-item {
