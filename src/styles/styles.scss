@@ -1175,23 +1175,6 @@ body, html {
 
   }
 
-  @media only screen and (max-width: 575px) {
-
-  }
-  @media only screen and (max-width: 767px) {
-    .setting-wrap > div {
-      height: auto;
-    }
-    .sebm-google-map-container, .list-box {
-      height: 100vh;
-    }
-    .left-box {
-      height: auto;
-    }
-    .form-wrap, .form-wrap form > div {
-      padding: 0;
-    }
-  }
   @media only screen and (max-width: 991px) {
     .table-wrap {
       display: block;
@@ -1218,6 +1201,39 @@ body, html {
     .follow-list-wrap {
       padding: 0;
     }
+    .fav-component .favorites-title, .setting-title{
+      display: none;
+    }
+    .fav-component .tab-control{
+      margin: 10px auto;
+      display: block;
+      width: 302px;
+      height: 34px;
+    }
   }
+  @media only screen and (max-width: 767px) {
+    .sebm-google-map-container, .list-box {
+      height: 100vh;
+    }
 
+  }
+  @media only screen and (max-width: 320px) {
+    .sidebar {
+      height: 60px;
+      top: calc(100vh - 60px);
+      z-index: 9999;
+    }
+    .setting-wrap > div,.left-box {
+      height: auto;
+    }
+    .setting-wrap > div {
+      padding: 0;
+    }
+    .member-nav > li {
+      padding: 0;
+    }
+    .form-wrap{
+      margin-top: 15px;
+    }
+  }
 }
