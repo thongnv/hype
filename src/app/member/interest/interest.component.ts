@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-interest',
@@ -19,14 +20,17 @@ export class InterestComponent implements OnInit {
   public slugName: any;
 
   constructor(private route: ActivatedRoute,
+              private loaderService: LoaderService,
               private appState: AppState,
               private mainService: MainService) {
+    this.loaderService.show();
     this.userInfo = this.appState.state.userInfo;
     this.userInfo.showNav = true;
   }
 
   public onSubmit() {
     console.log('sending update: ', this.interests);
+    this.loaderService.show();
     this.mainService.updateUserInterests(null, this.interests).then((resp) => {
       console.log('update: ', resp);
       if (resp.status === null) {
@@ -37,6 +41,7 @@ export class InterestComponent implements OnInit {
         this.alertType = 'success';
         this.msgContent = resp.message;
       }
+      this.loaderService.hide();
     });
   }
 
@@ -76,6 +81,7 @@ export class InterestComponent implements OnInit {
       this.userInfo.showNav = true;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
+      this.loaderService.hide();
     });
   }
 }

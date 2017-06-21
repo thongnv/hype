@@ -14,6 +14,7 @@ export class LogoutComponent implements OnInit {
   public constructor(private mainService: MainService,
                      private localStorageService: LocalStorageService,
                      private appState: AppState, private loaderService: LoaderService) {
+    this.loaderService.show();
   }
 
   public logout(): void {
@@ -21,16 +22,14 @@ export class LogoutComponent implements OnInit {
       (resp) => {
         console.log(resp);
         if (resp.ok) {
-          this.localStorageService.clearAll();
-          this.appState.set('userInfo', null);
           window.location.href = '/';
         }
+        this.loaderService.hide();
       }
     );
   }
 
   public ngOnInit() {
-    this.loaderService.show();
     this.logout();
   }
 

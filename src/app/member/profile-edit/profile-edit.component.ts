@@ -5,6 +5,7 @@ import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -39,9 +40,11 @@ export class ProfileEditComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private appState: AppState,
+              private loaderService: LoaderService,
               private countryPickerService: CountryPickerService,
-              private mainService: MainService, private route: ActivatedRoute,
-              private _localStorageService: LocalStorageService) {
+              private mainService: MainService,
+              private route: ActivatedRoute) {
+    this.loaderService.show();
     this.countryPickerService.getCountries().subscribe((countries) => {
 
       let defaultCountry = <ICountry> {
@@ -63,6 +66,7 @@ export class ProfileEditComponent implements OnInit {
       this.slugName = params['slug'];
       console.log('USER: ', this.slugName);
       this.getUserProfile(this.slugName);
+
     });
   }
 
@@ -81,6 +85,7 @@ export class ProfileEditComponent implements OnInit {
         }
       };
       console.log('sending data: ', userProfile);
+      this.loaderService.show();
       this.mainService.setUserProfile(userProfile).then(
         (resp) => {
           if (resp.status) {
@@ -93,7 +98,7 @@ export class ProfileEditComponent implements OnInit {
             this.alertType = 'danger';
             this.msgContent = resp.message;
           }
-
+          this.loaderService.hide();
         }
       );
     }
@@ -125,6 +130,7 @@ export class ProfileEditComponent implements OnInit {
       this.userInfo.showNav = true;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
+      this.loaderService.hide();
     });
   }
 }

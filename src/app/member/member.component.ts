@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
+import { LoaderService } from '../shared/loader/loader.service';
 
 @Component({
   selector: 'app-member',
@@ -23,8 +24,10 @@ export class MemberComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
+              public loaderService: LoaderService,
               private appState: AppState,
               private mainService: MainService) {
+    this.loaderService.show();
     this.userInfo = this.appState.state.userInfo;
     this.userInfo.showNav = true;
   }
@@ -88,6 +91,7 @@ export class MemberComponent implements OnInit {
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = true;
       console.log('====> userProfile response: ', response);
+      this.loaderService.hide();
     });
   }
 

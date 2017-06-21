@@ -3,6 +3,7 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-following',
@@ -23,8 +24,12 @@ export class FollowingComponent implements OnInit {
   public slugName: any;
   public sub: any;
 
-  constructor(private appState: AppState, private mainService: MainService,
-              private route: ActivatedRoute, private localStorageService: LocalStorageService) {
+  constructor(private appState: AppState,
+              private loaderService: LoaderService,
+              private mainService: MainService,
+              private route: ActivatedRoute,
+              private localStorageService: LocalStorageService) {
+    this.loaderService.show();
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
       this.followingPage = followingPage;
@@ -114,6 +119,7 @@ export class FollowingComponent implements OnInit {
       this.userFollow = response.user_follow;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
+      this.loaderService.hide();
     });
   }
 }

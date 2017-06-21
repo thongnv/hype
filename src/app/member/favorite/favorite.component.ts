@@ -4,6 +4,7 @@ import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-favorite',
@@ -34,9 +35,11 @@ export class FavoriteComponent implements OnInit {
   private placePageNum: number = 0;
 
   public constructor(private appState: AppState,
+                     private loaderService: LoaderService,
                      private mainService: MainService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
+    this.loaderService.show();
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
@@ -185,6 +188,7 @@ export class FavoriteComponent implements OnInit {
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       console.log('====> userProfile response: ', response);
+      this.loaderService.hide();
     });
   }
 

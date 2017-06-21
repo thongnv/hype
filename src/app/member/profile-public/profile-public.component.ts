@@ -3,6 +3,7 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 const PAGE_SIZE = 10;
 
@@ -35,9 +36,11 @@ export class ProfilePublicComponent implements OnInit {
   private placePageNum: number = 0;
 
   public constructor(private appState: AppState,
+                     private loaderService: LoaderService,
                      private mainService: MainService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
+    this.loaderService.show();
     this.selectedFavoriteType = 'event';
 
     this.userInfo = this.appState.state.userInfo;
@@ -182,6 +185,7 @@ export class ProfilePublicComponent implements OnInit {
       this.userFollow = response.user_follow;
       this.userInfo.uid = response.uid;
       console.log('====> userProfile response: ', response);
+      this.loaderService.hide();
     });
   }
 

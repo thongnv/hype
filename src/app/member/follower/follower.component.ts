@@ -3,6 +3,7 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
   selector: 'app-follower',
@@ -25,9 +26,11 @@ export class FollowerComponent implements OnInit {
   public sub: any;
 
   public constructor(private appState: AppState,
+                     private loaderService: LoaderService,
                      private mainService: MainService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
+    this.loaderService.show();
     this.userInfo = this.appState.state.userInfo;
 
     let followingPage = this.appState.state.followingPaging;
@@ -119,6 +122,7 @@ export class FollowerComponent implements OnInit {
       this.userFollow = response.user_follow;
       this.appState.set('userInfo', this.userInfo);
       console.log('response: ', response);
+      this.loaderService.hide();
     });
   }
 }

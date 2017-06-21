@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Router } from '@angular/router';
+import { AppState } from '../app.service';
 
 @Injectable()
 export class MainService {
@@ -17,7 +18,9 @@ export class MainService {
   });
 
   public constructor(private _localStorageService: LocalStorageService,
-                     private _http: Http, private route: Router) {
+                     private _http: Http,
+                     private _appState: AppState,
+                     private route: Router) {
   }
 
   public login(fbToken: string) {
@@ -56,6 +59,8 @@ export class MainService {
     let csrfToken = this._localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
+    this._localStorageService.clearAll();
+    this._appState.set('userInfo', null);
     return new Promise((resolve, reject) => {
       this._http.post(AppSetting.API_LOGOUT, JSON.stringify({}), options).subscribe(
         (response) => {
