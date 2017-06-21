@@ -318,6 +318,7 @@ export class ModeComponent implements OnInit {
     filterSubmit() {
         let cuisine = new Array();
         let best = new Array();
+        let type = new Array();
         Object.keys(this.cuisine).map(function (k) {
             if (k !== '0') {
                 cuisine.push(k);
@@ -328,11 +329,19 @@ export class ModeComponent implements OnInit {
                 best.push(k);
             }
         });
-        console.log(cuisine);
-        this.params.price = this.priceRange.join(',');
-        this.params.cuisine = cuisine.join(',');
-        this.params.bestfor = best.join(',');
-        this.params.rate = this.currentRate;
+
+        if (this.showPrice) {
+            this.params.price = this.priceRange.join(',');
+        }
+        if (this.showCuisine) {
+            this.params.cuisine = cuisine.join(',');
+        }
+        if (this.showBest) {
+            this.params.bestfor = best.join(',');
+        }
+        if (this.showRate) {
+            this.params.rate = this.currentRate;
+        }
         this.loaderService.show();
         this.getDataModes();
     }

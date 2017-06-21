@@ -1,19 +1,19 @@
 <div class="setting-wrap table-wrap">
-  <div class="col-xs-12 col-lg-3 col-left table-cell">
+  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation  *ngIf="userInfo" [data]="userInfo" [slugName]="slugName"></app-member-navigation>
   </div>
-  <div class="col-xs-12 col-lg-9 col-right table-cell">
+  <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-right table-cell">
     <section *ngIf="userInfo" class="form-wrap">
-      <h3 class="col-xs-12 col-md-12 setting-title">Settings</h3>
+      <h3 class="col-xs-12 col-lg-12 setting-title">Settings</h3>
       <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit($event)">
-        <div class="form-group col-xs-12 col-md-12">
+        <div class="form-group col-xs-12 col-lg-12">
           <label for="checkbox">
             <input id="checkbox" type="checkbox" formControlName="receiveEmail">
             Do you want to receive email notifications from us.
           </label>
         </div>
-        <div class="form-actions col-xs-12 col-md-12">
+        <div class="form-actions col-xs-12 col-lg-12">
           <button class="btn btn-primary setting-btn text-capitalize" type="submit">update</button>
         </div>
       </form>

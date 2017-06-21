@@ -1,6 +1,6 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
   <div class="input-group wrap-search-input">
-    <button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>
+    <button [disabled]="searchForm.invalid" class="btn sprite sprite-icon-search search-icon" type="submit"></button>
     <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
            placeholder="Search..."
            (keyup)="onSubmit($event, keyword.value)"
@@ -8,10 +8,10 @@
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
       <div class="display-location-address">
-        <i class="icon icon-suggestion-marker"></i>
+        <i class="sprite sprite-autocomplete-icon-area"></i>
         <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
         <span class="location-address">location address</span>
-        <span class="fa fa-times fa-2x close" (click)="onCloseSuggestion()"></span>
+        <span class="sprite sprite-icon-add close" (click)="onCloseSuggestion()"></span>
       </div>
       <div class="suggestion-wrap"  slimScroll width="auto" height="290px" size="7px"
            [railVisible]="true"
