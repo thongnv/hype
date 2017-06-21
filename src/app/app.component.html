@@ -2,19 +2,19 @@
 <app-navbar></app-navbar>
 <aside class="sidebar">
     <ul class="navbar-collapse list-tap">
-        <li [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-12" [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
             <i class="sprite-icon sprite sprite-Trending30x30"></i>
             <span>Trending Event</span>
         </li>
-        <li [routerLink]="['./mode/play']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-12" [routerLink]="['./mode/play']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
             <i class="sprite-icon sprite sprite-Discover30x30"></i>
             <span>Discover Places</span>
         </li>
-        <li [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
             <i class="sprite-icon sprite sprite-Curated30x30"></i>
             <span>Curated</span>
         </li>
-        <li *ngIf="loginData" [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
+        <li class="col-xs-3 col-sm-3 col-md-3 col-lg-12" *ngIf="loginData" [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
             <i class="sprite-icon sprite sprite-Favourites30x30"></i>
             <span>Favorites</span>
         </li>

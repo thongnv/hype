@@ -241,55 +241,20 @@ body, html {
     background: url("../assets/img/icons/suggestion_marker.png") no-repeat center center;
   }
   //  Profile Setting
-  .user-avatar {
+  .user-avatar, .user-avatar-small{
     border-radius: 50%;
+    overflow: hidden;
+  }
+  .user-avatar {
     width: 70px;
     height: 70px;
   }
   .user-avatar-small {
-    border-radius: 50%;
     width: 40px;
     height: 40px;
   }
-  .follow-item {
-    float: left;
-    text-align: center;
-    width: 50%;
-    cursor: pointer;
-    outline: none;
-  }
-  .avatar-wrap, .follow-wrap {
-    margin-top: 10px;
-    padding: 0 5px;
-    text-align: center;
-  }
-  .follow-wrap {
-    width: 100%;
-    float: left;
-  }
-
   label {
     font-weight: 300;
-  }
-  .member-nav {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-  .member-nav > li.active {
-    font-weight: 700;
-    color: #ec3d62;
-  }
-  .member-nav > li {
-    display: block;
-    width: 100%;
-    float: left;
-    height: 30px;
-    line-height: 30px;
-    text-align: left;
-    padding-left: 34%;
-    cursor: pointer;
-    font-size: 16px;
   }
   //following
   .count-follow {
@@ -1147,10 +1112,6 @@ body, html {
   //responsive
 
   @media only screen and (min-width: 768px) {
-    .setting-wrap > div {
-      min-height: calc(100vh - 60px);
-      padding: 0;
-    }
     .new-list {
       .sebm-google-map-container, .list-box {
         height: calc(100vh - 160px);
@@ -1165,7 +1126,10 @@ body, html {
   }
 
   @media only screen and (min-width: 992px) {
-
+    .setting-wrap > div {
+      min-height: calc(100vh - 60px);
+      padding: 0;
+    }
   }
 
   @media only screen and (min-width: 1200px) {
@@ -1189,6 +1153,29 @@ body, html {
       padding: 0;
     }
   }
-
+  @media only screen and (max-width: 991px) {
+    .table-wrap{
+      display: block;
+    }
+    .main{
+      left: 0;
+    }
+    .form-wrap{
+      padding: 0;
+    }
+    .sidebar {
+      height: 50px;
+      left: 0;
+      right: 0;
+      top: calc(100vh - 50px);
+      bottom: 0;
+      width: 100%;
+      background: red;
+      z-index: 9999;
+    }
+    .sidebar .list-tap > li{
+      padding: 0;
+    }
+  }
 
 }

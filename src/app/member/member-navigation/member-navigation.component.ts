@@ -25,6 +25,7 @@ export class MemberNavigationComponent implements OnInit {
   }
 
   public ngOnInit() {
+    console.log('uer==========> ', this.data);
     this.isCurrentUser = this.localStorageService.get('slug') === this.slugName;
     console.log('slugName: ', this.slugName);
     console.log('slug: ', this.localStorageService.get('slug'));
