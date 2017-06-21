@@ -71,7 +71,6 @@
 .list-location-address li {
   padding: 10px;
   background: #fff;
-  width: 420px;
 }
 .list-location-address li:hover {
   background: #fff;
@@ -96,9 +95,7 @@
 }
 .result-info{
   width: calc(100% - 35px);
-  float: right;
   padding-left: 10px;
-  height: 35px;
   line-height: 18px;
   margin-right: -5px;
 }
@@ -115,8 +112,12 @@
 .input-keyword{
   width: 320px;
 }
-.wrap-search-input{
-  width: 420px;
+.wrap-search-input input{
+  height: 48px;
+  border-radius: 4px;
+  background-color: #e8e8e8;
+  box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
+  box-shadow: inset 1px 1px 3px 0 var(--greyitwosh-50-);
 }
 .display-location-address .close{
   position: absolute;

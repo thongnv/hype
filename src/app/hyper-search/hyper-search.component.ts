@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, NgZone, Input, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { } from '@types/googlemaps';
@@ -15,7 +15,8 @@ export class HyperSearchComponent implements OnInit {
   @Input('group') public group: FormGroup;
   @Input('description') public description: boolean;
   @Input('image') public image: boolean;
-  @Output('onChangePlace') public onChangePlace = new EventEmitter<any>();
+  @Output('onMapsChangePlace') public onMapsChangePlace = new EventEmitter<any>();
+  @Output('onHyloChangePlace') public onHyloChangePlace = new EventEmitter<any>();
   @ViewChild('keyword')
   public searchElementRef: ElementRef;
   public searchForm: FormGroup;
@@ -27,7 +28,6 @@ export class HyperSearchComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private mainservice: MainService,
-              private ngZone: NgZone,
               private mapsAPILoader: MapsAPILoader) {
   }
 
@@ -41,15 +41,13 @@ export class HyperSearchComponent implements OnInit {
     this.hideSearchResult = false;
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
-
-    console.log('searchToken: ', this.searchToken);
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
-      this.mainservice.search(this.searchToken).then((resp) => {
+      this.mainservice.searchCompany(this.searchToken).then((resp) => {
         console.log('searchForm ==> resp: ', resp);
         this.result = resp;
 
-        if (resp.event.length + resp.article.length === 0) {
+        if (resp.company.length === 0) {
           this.hideNoResult = false;
         } else {
           this.hideNoResult = true;
@@ -60,9 +58,10 @@ export class HyperSearchComponent implements OnInit {
       this.mapsAPILoader.load().then(() => {
         let inputText = this.searchElementRef.nativeElement.value;
         let autocompleteService = new google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({input: inputText}, (result, status) =>this.gmapResults = result);
+        autocompleteService.getPlacePredictions(
+          {input: inputText},
+          (result, status) => this.gmapResults = result);
       });
-
 
     } else {
       this.result = {};
@@ -70,8 +69,10 @@ export class HyperSearchComponent implements OnInit {
     }
   }
 
-  public onCloseSuggestion() {
+  public onCloseSuggestion(data) {
     this.hideSearchResult = true;
+    this.searchElementRef.nativeElement.value = data.Title;
+    this.onHyloChangePlace.emit(data);
   }
 
   public onOpenSuggestion() {
@@ -81,7 +82,7 @@ export class HyperSearchComponent implements OnInit {
   // events
   public onGmapItemClick(data) {
     this.searchElementRef.nativeElement.value = data.structured_formatting.main_text;
-    this.onChangePlace.emit(data);
+    this.onMapsChangePlace.emit(data);
   }
 
 }

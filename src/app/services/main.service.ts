@@ -408,6 +408,15 @@ export class MainService {
       .catch(this.handleError);
   }
 
+  public searchCompany(keyword: string): Promise<any> {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers});
+    return this._http.get(AppSetting.API_COMPANY_SEARCH + keyword, options)
+      .toPromise()
+      .then((resp) => resp.json())
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);

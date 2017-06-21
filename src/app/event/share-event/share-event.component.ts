@@ -105,7 +105,7 @@ export class ShareEventComponent implements OnInit {
     }
   }
 
-  public onChangePlace(data) {
+  public onMapsChangePlace(data) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder;
     geocoder.geocode({placeId: data.place_id}, (results, status) => {
@@ -116,13 +116,20 @@ export class ShareEventComponent implements OnInit {
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng()
         });
-
-        console.log('updated eventPlace: ', this.eventForm);
       }
 
       // hide result
       this.hyperSearchComponent.hideSearchResult = true;
     });
+  }
+
+  public onHyloChangePlace(data) {
+    this.eventForm.controls.eventPlace.patchValue({
+      place: data.Title,
+      lat: Number(data.Lat),
+      lng: Number(data.Long),
+    });
+    this.hyperSearchComponent.hideSearchResult = true;
   }
 
   public onRemovePreview(imageUrl) {
@@ -174,10 +181,6 @@ export class ShareEventComponent implements OnInit {
   public addMention() {
     const mentions = this.eventForm.get('eventMentions') as FormArray;
     mentions.push(new FormControl());
-  }
-
-  public setTime(event) {
-    console.log(moment(event).unix());
   }
 
   public switchView() {

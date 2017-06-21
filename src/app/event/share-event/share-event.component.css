@@ -148,9 +148,7 @@ header ul li.active {
   font-size: 14px;
   border: none;
 }
-.input-box .form-group.location-place {
-  margin-bottom: 0px;
-}
+
 .option-info {
   margin-left: 10px;
 }
@@ -398,3 +396,4 @@ span.dollar-character {
 .recaptcha{
   margin-left: 25px;
 }
+
