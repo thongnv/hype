@@ -64,7 +64,6 @@ export class ModeComponent implements OnInit {
         bestfor: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
-        type: '',
         page: 0,
         limit: 20
     };
