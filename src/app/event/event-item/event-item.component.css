@@ -293,6 +293,36 @@ ul.mentioned-item {
         height: auto;
 
     }
+    .list-item .caption{
+        width: auto;
+        top: 1em;
+        left: 1em;
+      font-size: 24px;
+
+    }
+    .list-item{
+      height: 230px;
+    }
+    .list-item img{
+      height: 230px;
+    }
+    .wrap-each-items.article{
+        height: 250px;
+    }
+  .list-item-title{
+    font-size: 24px;
+  }
+}
+@media only screen and (min-width: 320px) and (max-width: 374px) {
+  .list-item{
+    height: 210px;
+  }
+  .list-item img{
+    height: 210px;
+  }
+  .wrap-each-items.article{
+    height: 230px;
+  }
 }
 @media only screen and (min-width: 544px) and (max-width: 767px) {
     .avatar-profile{
@@ -301,4 +331,9 @@ ul.mentioned-item {
     .information-profile{
         width:calc(100% - 120px);
     }
+  .list-item .caption{
+    width: auto;
+    top: 2em;
+    left: 2em;
+  }
 }
