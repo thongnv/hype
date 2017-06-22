@@ -5,6 +5,7 @@ deploy:
     - git remote -v
     - git checkout staging
     - git pull
+    - npm i
     - npm run build:prod
   only:
   - staging
