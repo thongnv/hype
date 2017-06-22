@@ -331,17 +331,20 @@ export class ModeComponent implements OnInit {
                 }
             }
         }
-        console.log(cuisine);
-        Object.keys(this.best).map(function (k) {
-            if (k !== '0') {
-                best.push(k);
-            }
-        });
-        Object.keys(this.type).map(function (k) {
-            if (k !== '0') {
-                type.push(k);
-            }
-        });
+        if(this.best){
+            Object.keys(this.best).map(function (k) {
+                if (k !== '0') {
+                    best.push(k);
+                }
+            });
+        }
+        if(this.best) {
+            Object.keys(this.type).map(function (k) {
+                if (k !== '0') {
+                    type.push(k);
+                }
+            });
+        }
 
 
         if (this.showPrice) {
@@ -356,8 +359,8 @@ export class ModeComponent implements OnInit {
         if (this.showRate) {
             this.params.rate = this.currentRate;
         }
-        //this.loaderService.show();
-        //this.getDataModes();
+        this.loaderService.show();
+        this.getDataModes();
     }
 
     public filterCancel() {
