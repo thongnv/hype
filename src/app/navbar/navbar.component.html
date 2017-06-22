@@ -4,11 +4,47 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
     </button>
+    <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">Hylo</a>
+    <div class="hidden-md hidden-lg hidden-xl" style="overflow: hidden">
+      <ul class="nav navbar-nav hype-nav">
+        <li *ngIf="loginData" class="pull-right nav-item add-event-button">
+          <div class="user-option map-option pull-right" ngbDropdown>
+            <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false"
+               ngbDropdownToggle>
+              <i class="glyphicon glyphicon-plus text-white glyphicon-2x"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="drop3">
+              <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                Create New List
+              </li>
+              <li [routerLink]="['/share-event']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                Create New Event
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li *ngIf="loginData" class="pull-right nav-item notification-area">
+          <app-notification *ngIf="notifications"
+                            [notifications]="notifications"
+                            [loadingInProgress]="set.loadingInProgress"
+                            [endOfList]="set.endOfList"
+                            (onScrollToBottom)="onScrollToBottom()"
+                            (onMarkAllRead)="onMarkAllRead()"
+                            (onMarkOneRead)="onMarkOneRead($event)">
+          </app-notification>
+        </li>
+        <li class="pull-right map-option nav-item">
+          <i class="glyphicon glyphicon-search text-white glyphicon-2x"></i>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="row navbar-collapse collapse" [ngClass]="{ 'in': isIn }">
+  <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
-      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo" class="sprite sprite-hylo-final-logo-125x50"></a></li>
+      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo"
+                                     class="sprite sprite-hylo-final-logo-125x50"></a></li>
       <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
@@ -34,16 +70,16 @@
         </div>
       </li>
       <li class="sprite sprite-line nav-indicator"></li>
-      <li class="map-option col-md-4 nav-item">
+      <li class="map-option nav-item">
         <app-search></app-search>
       </li>
       <li *ngIf="loginData" class="pull-right nav-item add-event-button">
         <div class="user-option map-option pull-right" ngbDropdown>
-          <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false"
+          <a class="dropdown-toggle" id="drop4" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
             <i class="sprite sprite-icon-add"></i>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="drop3">
+          <ul class="dropdown-menu" aria-labelledby="drop4">
             <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
               Create New List
             </li>
@@ -71,17 +107,20 @@
             <span class="user-name-info text-ellipsis">{{loginData.current_user.field_first_name}}&nbsp;{{loginData.current_user.field_last_name}}</span>
             <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
-          <ul class="dropdown-menu" aria-labelledby="drop3">
+          <ul class="dropdown-menu" aria-labelledby="drop2">
             <li [routerLink]="['/' + loginData.current_user.slug + '/profile-edit']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Settings
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            <li [routerLink]="['/' + loginData.current_user.slug + '/interest']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Interests
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            <li [routerLink]="['/' + loginData.current_user.slug + '/favorite']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Favorites
             </li>
             <li [routerLink]="['/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"

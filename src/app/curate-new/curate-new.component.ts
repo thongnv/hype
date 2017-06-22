@@ -5,9 +5,6 @@ import { Router } from '@angular/router';
 import { LoaderService } from '../shared/loader/loader.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
-// 3rds
-import { Ng2ImgToolsService } from 'ng2-img-tools';
-
 @Component({
   selector: 'app-curate-new',
   templateUrl: './curate-new.component.html',
@@ -48,8 +45,7 @@ export class CurateNewComponent implements OnInit {
               private mainService: MainService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private router: Router,
-              private ng2ImgToolsService: Ng2ImgToolsService) {
+              private router: Router) {
     this.onAddPlace();
   }
 
@@ -92,10 +88,8 @@ export class CurateNewComponent implements OnInit {
           let image = new Image();
           image.src = e.target.result;
 
-          this.resizeImage(image, 680, 360, resizedImage => {
-            console.log('resize ok');
+          this.resizeImage(image, 680, 360, (resizedImage) => {
             let img = {
-              //url: URL.createObjectURL(resizedImage),
               url: resizedImage,
               value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
               filename: event.target.files[i].name,
@@ -124,7 +118,8 @@ export class CurateNewComponent implements OnInit {
           field_place_comment: add.description,
           field_latitude: add.lat,
           field_longitude: add.lng,
-          field_place_address: add.place,
+          field_slug: add.slug,
+          field_place_address: add.keyword,
           field_place_images: [add.image],
         });
       }
@@ -140,7 +135,6 @@ export class CurateNewComponent implements OnInit {
             this.router.navigate([response.data.slug]);
           }
         });
-        this.submitted = true;
       }
     } else {
       this.formData.markAsTouched();
@@ -197,10 +191,34 @@ export class CurateNewComponent implements OnInit {
     };
   }
 
-  public markerClick(markerId) {
-    console.log('markerClick', markerId);
-    // console.log('scroll to: ', document.getElementById('place-' + markerId).offsetTop);
-    // window.scrollTo(0, document.getElementById('place-' + markerId).offsetTop);
+  public onMapsChangePlace(data, i) {
+    // get lat long from place id
+    let geocoder = new google.maps.Geocoder;
+    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+      if (status.toString() === 'OK') {
+        // set lat long for eventPlace
+        let placeControl = this.formData.get('listPlaces') as FormArray;
+        let place = placeControl.at(i);
+        place.patchValue({
+          keyword: data.structured_formatting.main_text,
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+          slug: '',
+        });
+      }
+    });
+  }
+
+  public onHyloChangePlace(data, i) {
+    // let control = this.formData.get('listPlaces').controls[i] as FormGroup;
+    let placeControl = this.formData.get('listPlaces') as FormArray;
+    let place = placeControl.at(i);
+    place.patchValue({
+      keyword: data.Title,
+      lat: Number(data.Lat),
+      lng: Number(data.Long),
+      slug: data.Slug,
+    });
   }
 
   private highlightMarker(markerId: number): void {
@@ -219,10 +237,11 @@ export class CurateNewComponent implements OnInit {
 
   private initAddress() {
     return this.formBuilder.group({
-      place: ['', Validators.required],
+      keyword: ['', Validators.required],
       description: ['', Validators.required],
       lat: [''],
       lng: [''],
+      slug: [''],
       image: ['', Validators.required]
     });
   }
@@ -277,7 +296,7 @@ export class CurateNewComponent implements OnInit {
       }
 
       // create canvas object
-      let canvas = document.createElement("canvas");
+      let canvas = document.createElement('canvas');
 
       // set canvas to the new calculated dimension values
       canvas.width = maxWidth;
@@ -286,8 +305,7 @@ export class CurateNewComponent implements OnInit {
       // create canvas context 2d and align image to center
       let startX = maxWidth / 2 - width / 2;
       let startY = maxHeight / 2 - height / 2;
-      let ctx = canvas.getContext("2d", {'alpha': false});
-
+      let ctx = canvas.getContext('2d', {alpha: false});
 
       // draw image to canvas
       ctx.drawImage(img, startX, startY, width, height);
@@ -298,6 +316,6 @@ export class CurateNewComponent implements OnInit {
       // run callback with result
       callback(dataUrl);
 
-    }
+    };
   }
 }

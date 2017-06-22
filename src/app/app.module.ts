@@ -3,9 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-// 3rd
-import { Ng2ImgToolsModule } from 'ng2-img-tools';
-
 import {
   NgModule, ApplicationRef
 } from '@angular/core';
@@ -105,7 +102,6 @@ import { Html2TextPipe } from './shared/html-2-text.pipe';
 import { FacebookModule } from 'ngx-facebook';
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
-import { Ng2PopupComponent } from 'ng2-popup/dist/index';
 import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
@@ -216,14 +212,12 @@ type StoreType = {
     Angular2FontawesomeModule,
     NguiDatetimePickerModule,
     Ng2ScrollableModule,
-    Ng2ImgToolsModule,
     RatingModule,
     MomentModule,
     ReCaptchaModule,
     TruncateModule,
     TinymceModule.withConfig({}),
     ReactiveFormsModule,
-    ImageUploadModule,
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),

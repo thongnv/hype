@@ -96,6 +96,9 @@
 .follow-wrap {
     float: left;
 }
+.follow-item.active *{
+    color: #ec3d62;
+}
 @media screen and (min-width: 1200px) {
 }
 @media screen and (min-width: 992px) {

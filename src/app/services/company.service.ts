@@ -63,7 +63,7 @@ export class CompanyService {
     return this._jsonp.get(
       'https://api.instagram.com/v1/users/search' +
       '?q=' + username +
-      '&access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
+      '&access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
       '&callback=JSONP_CALLBACK')
       .map((res) => res.json())
       .catch((error: any) => {
@@ -74,7 +74,7 @@ export class CompanyService {
   public getInstagramImages(userId: string): Observable<any> {
     return this._jsonp.get(
       'https://api.instagram.com/v1/users/' + userId + '/media/recent/' +
-      '?access_token=1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1' +
+      '?access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
       '&callback=JSONP_CALLBACK')
         .map((res: Response) => res.json())
         .catch((error: any) => {

@@ -95,16 +95,9 @@ export interface Image {
   filesize: number;
 }
 
-export interface InstagramImage {
-  url: {
-    thumbnail: string;
-    low_resolution: string;
-    standard_resolution: string;
-  };
-  value: string;
-  filename: string;
-  filemime: string;
-  filesize: number;
+export interface InstagramImage extends Image {
+  thumbnail: string;
+  low_resolution: string;
 }
 
 export interface LoaderState {

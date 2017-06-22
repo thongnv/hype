@@ -42,6 +42,7 @@ export class AppSetting {
   public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark';
   public static API_SEARCH = API_ENDPOINT + 'api/v1/suggestion/';
   public static API_COMPANY_SEARCH = API_ENDPOINT + 'api/v1/company/suggestion/';
+  public static INSTAGRAM_ACCESS_TOKEN = '1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,
