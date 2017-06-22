@@ -1205,10 +1205,22 @@ body, html {
       display: none;
     }
     .fav-component .tab-control{
-      margin: 10px auto;
+      margin: 0 auto 10px auto;
       display: block;
       width: 302px;
       height: 34px;
+    }
+    .count-follow{
+      display: none;
+    }
+    .interest-item-wrap{
+      padding: 0 10px;
+    }
+    .col-right, .setting-wrap {
+      border-left: none;
+    }
+    .setting-wrap > div:first-child{
+      margin-bottom: 10px;
     }
   }
   @media only screen and (max-width: 767px) {
@@ -1231,9 +1243,6 @@ body, html {
     }
     .member-nav > li {
       padding: 0;
-    }
-    .form-wrap{
-      margin-top: 15px;
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="avatar">
       <img class="user-avatar pull-left" [src]="data.userAvatar" [alt]="data.userName" width="100">
       <div class="user-name-wrap">
-        <span class="user-name" *ngIf="data.firstName || data.lastName" [routerLink]="['/'+slugName]">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
+        <span class="user-name text-ellipsis" *ngIf="data.firstName || data.lastName" [routerLink]="['/'+slugName]">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
         <div *ngIf="showFollow" class="follow-btn-wrap">
           <a class="follow-btn unfollow-btn follow" *ngIf="!userFollow" (click)="onFollow()">Follow</a>
           <a class="follow-btn unfollow-btn" *ngIf="userFollow" (click)="onUnFollow()">Unfollow</a>
@@ -47,10 +47,10 @@
 <div *ngIf="!data.showNav">
   <ul class="member-nav">
     <li [routerLink]="['/' + slugName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-4 col-sm-4 col-md-12 col-lg-12 text-ellipsis">@{{slugName}}
+        class="col-xs-5 col-sm-5 col-md-12 col-lg-12 text-ellipsis">@{{slugName}}
     </li>
     <li [routerLink]="['/curate']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-4 col-sm-4 col-md-12 col-lg-12 text-ellipsis">Lists
+        class="col-xs-3 col-sm-3 col-md-12 col-lg-12 text-ellipsis">Lists
     </li>
     <li [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-4 col-sm-4 col-md-12 col-lg-12 text-ellipsis">Activities
