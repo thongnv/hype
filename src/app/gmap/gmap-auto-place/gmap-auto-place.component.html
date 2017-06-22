@@ -43,7 +43,7 @@
         </ul>
         <ul *ngIf="result.event?.length" class="list-location-address">
           <li class="title-search-location-address">
-            <a>Lists</a>
+            <a>Event</a>
           </li>
           <li *ngFor="let item of result.event;trackBy:item?.id">
             <a class="item-link" (click)="onCloseSuggestion(item)">
