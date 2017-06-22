@@ -45,10 +45,12 @@
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'" (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
+                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
-                        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)" class="when-button">Activities <i
+                        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
+                           class="when-button">Activities <i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
@@ -85,22 +87,23 @@
                     <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span
                             class="text-center">$150</span><span class="pull-right">$300</span></div>
                     <div *ngIf="showCuisine">
-                        <div *ngFor="let item of filterData.cuisine; let in =index; trackBy:trackByIndex"
+                        <div *ngFor="let item of filterData.cuisine; let in =index"
                              style="margin-left: 43px" class="filter-item col-md-3">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="cuisine && cuisine[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="cuisine && cuisine[item.name]">{{item.name}}
+                                       (change)="selectCheckBox(cuisine && cuisine[item.name]=$event.target.checked ? true : undefined,item)"
+                                       [ngModel]="cuisine[item.name]">{{item.name}}
                             </div>
                             <div class="" *ngIf="item.sub" style="margin-left: 30px;">
                                 <div class="checkbox"
-                                     *ngFor="let sb of item.sub; let i = index;trackBy:trackByIndex;">
+                                     *ngFor="let sb of item.sub; let i = index">
                                     <input type="checkbox"
                                            (change)="cuisine[item.name]=$event.target.checked ? true : undefined"
-                                           [ngModel]="cuisine && cuisine[sb.name]">{{sb.name}}
+                                           [ngModel]="cuisine[item.name[sb.name]]" [checked]="sb.checked">{{sb.name}}
                                 </div>
                             </div>
                         </div>
+                        {{cuisine}}
                     </div>
                     <div *ngIf="showRate" class="text-center">
                         <ngb-rating [(rate)]="currentRate">
@@ -124,8 +127,8 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="best && best[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="best && best[item.name]">{{item.name}}
+                                       (change)="type && type[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="type && type[item.name]">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -138,7 +141,7 @@
             <div class="clearfix"></div>
             <div class="list-header">
                 <div class="pull-left">
-                    <select  class="form-control-static" [(ngModel)]="sortPlace" (change)="changeSort()">
+                    <select class="form-control-static" [(ngModel)]="sortPlace" (change)="changeSort()">
                         <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
                     </select>
                 </div>
