@@ -21,7 +21,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   @ViewChild('msgInput') public msgInput: ElementRef;
 
-  public creator: BaseUser = {name: '', avatar: ''};
+  public creator: BaseUser = {name: '', avatar: '', slug: ''};
   public name: string = '';
   public location: Location = {name: '', lat: 0, lng: 0};
   public detail: string = '';
@@ -33,7 +33,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public images: Image[] = [];
   public rating: number = 0;
   public experiences: Experience[] = [];
-  public user: BaseUser = {name: '', avatar: ''};
+  public user: BaseUser = {name: '', avatar: '', slug: ''};
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
