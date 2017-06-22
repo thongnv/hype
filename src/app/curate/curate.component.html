@@ -22,7 +22,7 @@
                 <img [src]="art.field_images[0]" style="margin:auto;">
                 <div class="carousel-caption">
                   <div class="carousel-content">
-                    <strong class="post-title-content text-ellipsis">{{art.title}}</strong>
+                    <strong [routerLink]="[art.alias]"  class="post-title-content text-ellipsis">{{art.title}}</strong>
                     <strong class="post-author">
                       <span class="auth-name">By: {{art.user_post.name}}</span>
                       <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>

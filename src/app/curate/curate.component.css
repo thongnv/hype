@@ -84,6 +84,9 @@ span.time-posts {
     float: left;
     min-height: 410px;
 }
+.post-title-content{
+  cursor: pointer;
+}
 
 .post-news .image-post-news img{
     width: 100%;
