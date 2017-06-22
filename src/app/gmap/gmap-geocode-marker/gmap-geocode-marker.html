@@ -3,7 +3,7 @@
                         [fillColor]="'red'"
                         [circleDraggable]="true"
                         [editable]="true"
-                        [clickable]="true"
+                        [clickable]="false"
                         (radiusChange)="markerRadiusChange($event)"
                         (dragEnd)="markerDragEnd($event)"
 >
@@ -13,8 +13,6 @@
         (markerClick)="clickedMarker(i)"
         [latitude]="m.lat"
         [longitude]="m.lng"
-        [markerDraggable]="false"
-        (mapClick)="mapClicked(m)"
         [iconUrl]="MARKER_ICON"
         [opacity]="m.opacity"
         [openInfoWindow]="m.isOpenInfo"

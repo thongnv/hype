@@ -241,6 +241,7 @@ export class CurateNewComponent implements OnInit {
       description: ['', Validators.required],
       lat: [''],
       lng: [''],
+      slug: [''],
       image: ['', Validators.required]
     });
   }
