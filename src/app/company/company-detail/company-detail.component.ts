@@ -26,7 +26,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public images: Image[];
   public instagramUrl = '';
   public slugName: string;
-  public user: BaseUser = {name: '', avatar: ''};
+  public user: BaseUser = {name: '', avatar: '', slug: ''};
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;

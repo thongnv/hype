@@ -23,7 +23,8 @@ export class EventService {
     return {
       creator: {
         name: data.user_post.name,
-        avatar: data.user_post.user_picture
+        avatar: data.user_post.user_picture,
+        slug: data.user_post.slug.replace('/user/', '')
       },
       images: extractImages(data.field_image),
       detail: data.body,
@@ -249,6 +250,7 @@ function extractComments(data): HyloComment[] {
         author: {
           name: item.author_name,
           avatar: item.author_avatar,
+          slug: ''
         },
         text: item.comment_body,
         likeNumber: Number(item.like_comment),
