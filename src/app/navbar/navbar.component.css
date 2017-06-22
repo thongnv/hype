@@ -6,7 +6,7 @@
 .user-option .user-name-info {
     font-size: 16px;
     text-align: left;
-    color: #fff;
+    color: #ffffff;
     max-width: 200px;
     display: inline-block;
     line-height: 60px;
@@ -18,7 +18,7 @@
     line-height: 60px;
     letter-spacing: 1px;
     text-align: left;
-    color: #fff;
+    color: #ffffff;
 }
 .map-option form .input-group .input-group-btn button {
     z-index: 999;
@@ -58,37 +58,31 @@
     margin-top: 5px;
     margin-left: 10px;
 }
-.nav-indicator + .map-option.nav-item{
+.nav-indicator + .map-option.nav-item {
     margin-left: 0;
 }
-.nav-indicator{
+.nav-indicator {
     margin: 16px 10px;
 }
-.add-event-button .sprite-icon-add{
+.add-event-button .sprite-icon-add {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+header .navbar-brand{
+    margin-top: 5px;
+}
+.navbar-default .navbar-brand{
+    color: #ffffff;
+}
+.glyphicon-2x{
+    font-size: 1.5em;
+}
 /*responsive*/
 @media only screen and (min-width: 575px) {
-    #map-option .dropdown-menu {
-        width: 500px;
-        padding: 5px;
-        overflow: auto;
-    }
 }
 @media only screen and (min-width: 768px) {
-    #map-option .dropdown-menu {
-        width: 680px;
-        padding: 5px;
-        overflow: auto;
-    }
 }
 @media only screen and (min-width: 992px) {
-    #map-option .dropdown-menu {
-        width: 820px;
-        padding: 5px;
-        overflow: auto;
-    }
 }
 @media only screen and (min-width: 1200px) {
     #map-option .dropdown-menu {
@@ -105,6 +99,7 @@
     }
 }
 @media (max-width: 991px) {
+
     .navbar-header {
         float: none;
     }
@@ -120,7 +115,7 @@
     }
     .navbar-nav {
         float: none !important;
-        margin: 7.5px -15px;
+        margin: 0;
     }
     .navbar-nav > li {
         float: none;
@@ -140,11 +135,18 @@
     .collapsing {
         overflow: hidden !important;
     }
-    .nav-indicator{
+    .nav-indicator {
         margin: 16px 0;
     }
-    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    .navbar-default .navbar-toggle, .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
         background-color: transparent;
+        border-color: transparent;
+        float: left;
+    }
+    .navbar-default .navbar-toggle .icon-bar {
+        background: #ffffff;
+        height: 3px;
+        width: 30px;
     }
 }
 

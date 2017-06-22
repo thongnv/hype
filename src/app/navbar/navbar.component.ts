@@ -35,8 +35,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public toggleState() {
-    let bool = this.isIn;
-    this.isIn = bool === false;
+    this.isIn = !this.isIn;
   }
 
   public ngOnInit() {
