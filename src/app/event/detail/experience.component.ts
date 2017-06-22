@@ -155,21 +155,16 @@ export class ExperienceComponent implements Experience, OnInit {
 
   public addComment(msgInput) {
     if (msgInput.value.trim()) {
-      let comment: HyloComment = {
-        id: 0,
+      let eventSlugName = this.event.slugName;
+      let data = {
         pid: this.id,
-        user: this.event.user,
-        text: msgInput.value,
-        likeNumber: 0,
-        liked: false,
-        replies: []
+        message: msgInput.value,
       };
       msgInput.value = '';
-      let eventSlugName = this.event.slugName;
-      this.eventService.postComment(eventSlugName, comment).subscribe(
-        (resp) => {
+      this.eventService.postComment(eventSlugName, data).subscribe(
+        (resp: HyloComment) => {
           console.log(resp);
-          this.comments.push(comment);
+          this.comments.push(resp);
           this.commentIndex += 1;
         },
         (error) => {

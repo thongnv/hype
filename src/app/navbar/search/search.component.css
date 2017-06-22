@@ -25,10 +25,12 @@
 .display-location-address i {
     font-size: 18px;
     color: #3b3b3b;
-    width: 20px;
-    height: 48px;
+    width: 32px;
+    height: 46px;
     float: left;
     line-height: 50px;
+    transform: scale(0.5);
+
 }
 .keyword-search-input {
     font-weight: bold;
@@ -42,9 +44,9 @@
     font-weight: bold;
     text-transform: capitalize;
     font-size: 15px;
-    margin: 0 15px;
+    margin: 0 10px;
     float: right;
-    width: 120px;
+    width: 130px;
 }
 .search-location-search-area ul {
     padding-left: 0;
@@ -118,14 +120,34 @@
 .wrap-search-input{
     width: 420px;
 }
+.display-location-address .close:hover{
+    opacity: 1;
+}
 .display-location-address .close{
     position: absolute;
-    top: -2px;
+    top: 0;
     right: 0;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     text-align: center;
     line-height: 25px;
     font-size: 1.5em;
+    transform: rotate(45deg);
+    opacity: .4;
+}
+.wrap-search-input .search-icon {
+    padding: 10px 10px;
+    position: absolute;
+    border: none;
+    box-shadow: none;
+    z-index: 999;
+    top: 22px;
+    left: 295px;
+}
+.wrap-search-input .search-icon:focus {
+    outline: none;
+}
+.search-icon{
+
 }

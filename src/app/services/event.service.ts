@@ -144,28 +144,27 @@ export class EventService {
     });
   }
 
-  public postComment(eventSlug: string, comment: HyloComment): Observable<Response> {
+  public postComment(eventSlug: string, data): Observable<HyloComment> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    let data = {
-      pid: comment.pid,
-      message: comment.text,
-    };
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/' + eventSlug,
       JSON.stringify(data),
       options
     )
     .map((res: Response) => {
-      return res.json();
+      let d = res.json().data;
+      return {
+        id: d.cid,
+        pid: d.pid,
+        author: {name: d.author_name, avatar: d.author_avatar},
+        text: d.comment_body,
+        likeNumber: 0,
+        liked: false,
+        replies: []
+      };
     })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
     });
   }
@@ -179,21 +178,12 @@ export class EventService {
     };
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/like',
-      JSON.stringify(data),
-      options
+      JSON.stringify(data), options
     )
-    .map((res: Response) => {
-      return res.json();
-    })
+      .map((res: Response) => res.json())
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 }
 
@@ -259,7 +249,7 @@ function extractComments(data): HyloComment[] {
       {
         id: item.cid,
         pid: item.pid,
-        user: {
+        author: {
           name: item.author_name,
           avatar: item.author_avatar,
         },

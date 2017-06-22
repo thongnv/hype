@@ -26,8 +26,9 @@
 .map-option form .input-group input:focus {
     border: none;
 }
-.map-option img.icon-down-left-navbar {
+.map-option .icon-down-left-navbar {
     margin-left: 10px;
+    display: inline-block;
 }
 .notification-area {
     margin-right: 10px;
@@ -62,6 +63,10 @@
 }
 .nav-indicator{
     margin: 16px 10px;
+}
+.add-event-button .sprite-icon-add{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 /*responsive*/
 @media only screen and (min-width: 575px) {
@@ -134,6 +139,9 @@
     }
     .collapsing {
         overflow: hidden !important;
+    }
+    .nav-indicator{
+        margin: 16px 0;
     }
 }
 

@@ -446,10 +446,9 @@ button.btn.btn-default.active {
 }
 
 .price-desc {
-    float: left;
-    width: 100%;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    float: none;
+    width: 66%;
+    margin: 35px auto 20px;
     display: table;
 }
 

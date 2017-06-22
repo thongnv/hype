@@ -63,7 +63,7 @@ export interface Experience {
 export interface HyloComment {
   id: number;
   pid: number;
-  user: BaseUser;
+  author: BaseUser;
   text: string;
   likeNumber: number;
   replies: HyloComment[];

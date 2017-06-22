@@ -1124,6 +1124,31 @@ body, html {
   //END Notifications
 
   //responsive
+  @media only screen and (max-width: 544px) {
+    .home-page .avatar-profile{
+      width: 100px!important;
+    }
+    .home-page .information-profile{
+      width:calc(100% - 120px)!important;
+    }
+  }
+  @media only screen and (min-width: 545px) and (max-width: 767px) {
+    .home-page .avatar-profile{
+      width: 100px!important;
+    }
+    .home-page .information-profile{
+      width:calc(100% - 120px)!important;
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+  }
+  @media only screen and (min-width: 1200px) {
+
+  }
 
   @media only screen and (min-width: 768px) {
     .new-list {
@@ -1150,23 +1175,6 @@ body, html {
 
   }
 
-  @media only screen and (max-width: 575px) {
-
-  }
-  @media only screen and (max-width: 767px) {
-    .setting-wrap > div {
-      height: auto;
-    }
-    .sebm-google-map-container, .list-box {
-      height: 100vh;
-    }
-    .left-box {
-      height: auto;
-    }
-    .form-wrap, .form-wrap form > div {
-      padding: 0;
-    }
-  }
   @media only screen and (max-width: 991px) {
     .table-wrap {
       display: block;
@@ -1190,6 +1198,51 @@ body, html {
     .sidebar .list-tap > li {
       padding: 0;
     }
+    .follow-list-wrap {
+      padding: 0;
+    }
+    .fav-component .favorites-title, .setting-title{
+      display: none;
+    }
+    .fav-component .tab-control{
+      margin: 0 auto 10px auto;
+      display: block;
+      width: 302px;
+      height: 34px;
+    }
+    .count-follow{
+      display: none;
+    }
+    .interest-item-wrap{
+      padding: 0 10px;
+    }
+    .col-right, .setting-wrap {
+      border-left: none;
+    }
+    .setting-wrap > div:first-child{
+      margin-bottom: 10px;
+    }
   }
+  @media only screen and (max-width: 767px) {
+    .sebm-google-map-container, .list-box {
+      height: 100vh;
+    }
 
+  }
+  @media only screen and (max-width: 320px) {
+    .sidebar {
+      height: 60px;
+      top: calc(100vh - 60px);
+      z-index: 9999;
+    }
+    .setting-wrap > div,.left-box {
+      height: auto;
+    }
+    .setting-wrap > div {
+      padding: 0;
+    }
+    .member-nav > li {
+      padding: 0;
+    }
+  }
 }

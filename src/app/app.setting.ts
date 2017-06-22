@@ -47,6 +47,12 @@ export class AppSetting {
     xfbml: true,
     version: 'v2.9'
   };
+
+  public static MobileSize ={
+      mobile_p:545,
+      mobile_l:768,
+      tab_mii:992
+  }
   public static PAGE_SIZE: number = PAGE_SIZE;
   public static FOLLOW_PAGE_SIZE: number = FOLLOW_PAGE_SIZE;
   public static INTERVAL_NOTIFIATION: number = INTERVAL_NOTIFIATION;
