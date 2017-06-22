@@ -140,7 +140,7 @@
         </div>
       </ng-container>
     </div>
-    <div class="col-xs-12 map-box">
+    <div class="col-xs-12 map-box hidden-xs hidden-sm">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
         <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
                            [hasLabel]="true">
