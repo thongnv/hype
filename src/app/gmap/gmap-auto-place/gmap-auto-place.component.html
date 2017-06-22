@@ -1,11 +1,70 @@
 <div [formGroup]="group" class="gmap-place col-xs-12">
   <div class="form-group">
-    <input formControlName="place" placeholder="Search & tag an activty or place" autocorrect="off"
+    <input #keyword formControlName="keyword"
+           class="form-control"
+           minlength="3"
+           id="searchBox"
+           placeholder="Search & tag an activity or place"
+           autocorrect="off"
            autocapitalize="off"
-           spellcheck="off" type="text" class="form-control" #search>
+           spellcheck="off" type="text"
+           (keyup)="onSubmit($event, keyword.value)"
+           (click)="onOpenSuggestion()">
     <input hidden type="text" formControlName="lat">
     <input hidden type="text" formControlName="lng">
-    <small *ngIf="group.get('place').hasError('required') && group.get('place').touched" class="text-danger">This field is required</small>
+    <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">This field is required</small>
+    <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+      <div class="arrow-up"></div>
+      <div class="display-location-address">
+        <i class="icon icon-suggestion-marker"></i>
+        <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
+        <span class="location-address">location address</span>
+      </div>
+      <div class="suggestion-wrap"  slimScroll width="auto" height="290px" size="7px"
+           [railVisible]="true"
+           [railOpacity]="0.1"
+           [railColor]="'#ec3d62'"
+           [color]="'#ec3d62'">
+        <ul *ngIf="result.article?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Lists</a>
+          </li>
+          <li *ngFor="let item of result.article;trackBy:item?.id">
+            <a class="item-link" (click)="onCloseSuggestion(item)">
+              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+              <div class="result-info">
+                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <ul *ngIf="result.event?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Lists</a>
+          </li>
+          <li *ngFor="let item of result.event;trackBy:item?.id">
+            <a class="item-link" (click)="onCloseSuggestion(item)">
+              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+              <div class="result-info">
+                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <ul *ngIf="gmapResults?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Results from google</a>
+          </li>
+          <li *ngFor="let item of gmapResults; let index = index">
+            <a (click)="onGmapItemClick(item)" class="item-content">
+              <div class="result-info map">{{item.description}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div *ngIf="description" class="form-group">
     <textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"
