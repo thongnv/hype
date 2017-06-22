@@ -18,8 +18,7 @@
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
           <label class="control-label" for="list-name">List Name</label>
-          <input formControlName="listName" id="list-name" class="form-control" type="text"
-                 placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
+          <input formControlName="listName" id="list-name" class="form-control" type="text" placeholder="E.g Top Ten Things To Do In Punggol This Weekend">
           <small *ngIf="formData.get('listName').touched && formData.get('listName').hasError('required')" class="text-danger">
             List Name is required
           </small>
@@ -41,10 +40,8 @@
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
-            <i class="fa fa-plus"></i>
-            &nbsp;Add images
-            <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file'
-                   imageUpload (change)="readUrl($event)"  multiple="multiple">
+            <i class="fa fa-plus"></i> &nbsp;Add images
+            <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' imageUpload (change)="readUrl($event)" multiple="multiple">
           </label>
           <small *ngIf="previewUrl == 0" class="text-danger">
             List images is required
@@ -60,12 +57,7 @@
           <re-captcha (captchaResponse)="checkCaptcha($event)" site_key="6LexpiUTAAAAABQlThPYAyDxBJoTP_QFzwdE4L9p">
           </re-captcha>
         </div>
-        <div class="form-actions clearfix">
-          <button type="submit"
-                  [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha"
-                  class="btn btn-primary">Create</button>
-          <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
-        </div>
+
       </div>
 
       <div class="image-box col-xs-12 col-md-6">
@@ -73,16 +65,11 @@
           <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">
               <span class="title-number-item"># {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right"
-                    *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">
-              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]"
-                                   (onMapsChangePlace)="onMapsChangePlace($event, i)"
-                                   (onHyloChangePlace)="onHyloChangePlace($event, i)"
-                                   [description]="true"
-                                   [image]="true">
+              <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" (onMapsChangePlace)="onMapsChangePlace($event, i)" (onHyloChangePlace)="onHyloChangePlace($event, i)" [description]="true" [image]="true">
               </app-gmap-auto-place>
             </div>
           </div>
@@ -93,6 +80,12 @@
           </button>
         </div>
       </div>
+
+      <div class="form-actions clearfix">
+        <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
+        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+      </div>
+
     </form>
 
   </div>
@@ -100,16 +93,14 @@
 
   <!--list preview wrap start-->
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
-    <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll"
-         style="height: calc(100vh - 150px); overflow: auto; margin-right: -35px;">
+    <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll" style="height: calc(100vh - 150px); overflow: auto; margin-right: -35px;">
       <div class="carousel-box" id="curate-carousel">
         <div class="carousel-header">
           <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
           <strong>{{previewData.listName}}</strong>
         </div>
         <div *ngIf="slides" class="carousel">
-          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides"
-                                 [noTransition]="noTransition">
+          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition">
             <app-slide-carousel *ngFor="let slide of slides; let index=index">
               <div [ngStyle]="{
               'background-image': 'url(' + slide.image + ')',
@@ -124,12 +115,11 @@
         </div>
       </div>
       <ng-container *ngIf="previewData.listPlaces">
-        <div  *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap"
-             [id]="'place-'+index">
-          <ng-container *ngIf="plc?.place">
+        <div *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
+          <ng-container *ngIf="plc?.keyword">
             <div class="place-item-header">
-              <strong class="pull-left place-index">#{{index+1}}</strong><strong
-                class="place-name">{{plc.place}}</strong>
+              <strong class="pull-left place-index">#{{index+1}}</strong>
+              <strong class="place-name">{{plc.place}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
             <div class="place-item-img">
@@ -140,10 +130,9 @@
         </div>
       </ng-container>
     </div>
-    <div class="col-xs-12 map-box">
+    <div class="col-xs-12 map-box hidden-xs hidden-sm">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
-        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
-                           [hasLabel]="true">
+        <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index" [hasLabel]="true">
         </app-custom-marker>
       </sebm-google-map>
     </div>
