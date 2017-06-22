@@ -79,6 +79,8 @@
             </div>
             <div class="panel-body" [formGroupName]="i">
               <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]"
+                                   (onMapsChangePlace)="onMapsChangePlace($event, i)"
+                                   (onHyloChangePlace)="onHyloChangePlace($event, i)"
                                    [description]="true"
                                    [image]="true">
               </app-gmap-auto-place>
@@ -141,7 +143,7 @@
     <div class="col-xs-12 map-box">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
         <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index"
-                           (onClick)="markerClick($event)" [hasLabel]="true">
+                           [hasLabel]="true">
         </app-custom-marker>
       </sebm-google-map>
     </div>
