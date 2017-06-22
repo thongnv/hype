@@ -114,24 +114,24 @@ export class ModeComponent implements OnInit {
     getDataModes() {
         let params = this.params;
         console.log(params);
-        //this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-        //
-        //    this.total = resp.total;
-        //    if (parseInt(resp.total) > 0) {
-        //        this.showMap = true;
-        //    }
-        //    if (this.loadMore) {
-        //        this.initMap(this.items.concat(resp.company));
-        //    } else {
-        //        this.initMap(resp.company);
-        //    }
-        //    this.loaderService.hide();
-        //
-        //}, err=> {
-        //    this.items = [];
-        //    this.markers = [];
-        //    this.loaderService.hide();
-        //});
+        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+
+            this.total = resp.total;
+            if (parseInt(resp.total) > 0) {
+                this.showMap = true;
+            }
+            if (this.loadMore) {
+                this.initMap(this.items.concat(resp.company));
+            } else {
+                this.initMap(resp.company);
+            }
+            this.loaderService.hide();
+
+        }, err=> {
+            this.items = [];
+            this.markers = [];
+            this.loaderService.hide();
+        });
         this.loaderService.hide();
     }
 

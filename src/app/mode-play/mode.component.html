@@ -93,15 +93,13 @@
                              style="margin-left: 43px" class="filter-item col-md-3">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="selectCheckBox(cuisine && cuisine[item.name]=$event.target.checked ? true : undefined,item)"
-                                       [ngModel]="cuisine[item.name]">{{item.name}}
+                                       (change)="selectCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
                             </div>
                             <div class="" *ngIf="item.sub" style="margin-left: 30px;">
                                 <div class="checkbox"
                                      *ngFor="let sb of item.sub; let i = index">
                                     <input type="checkbox"
-                                           (change)="cuisine[item.name]=$event.target.checked ? true : undefined"
-                                           [ngModel]="cuisine[item.name[sb.name]]" [checked]="sb.checked">{{sb.name}}
+                                           (change)="selectCheckBox($event.target.checked,item,sb)" [checked]="sb.checked">{{sb.name}}
                                 </div>
                             </div>
                         </div>
