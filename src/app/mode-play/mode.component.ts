@@ -132,7 +132,7 @@ export class ModeComponent implements OnInit {
             this.markers = [];
             this.loaderService.hide();
         });
-        this.loaderService.hide();
+        //this.loaderService.hide();
     }
 
     changeCategory() {
@@ -325,20 +325,22 @@ export class ModeComponent implements OnInit {
         console.log(this.cuisine);
         if (this.cuisine) {
             cuisine.push(this.cuisine.name);
-            for (let i = 0; i < this.cuisine.sub.length; i++) {
-                if (this.cuisine.sub[i].checked) {
-                    cuisine.push(this.cuisine.sub[i].name);
+            if (this.cuisine.sub) {
+                for (let i = 0; i < this.cuisine.sub.length; i++) {
+                    if (this.cuisine.sub[i].checked) {
+                        cuisine.push(this.cuisine.sub[i].name);
+                    }
                 }
             }
         }
-        if(this.best){
+        if (this.best) {
             Object.keys(this.best).map(function (k) {
                 if (k !== '0') {
                     best.push(k);
                 }
             });
         }
-        if(this.best) {
+        if (this.best) {
             Object.keys(this.type).map(function (k) {
                 if (k !== '0') {
                     type.push(k);
@@ -556,6 +558,7 @@ export class ModeComponent implements OnInit {
             this.cuisine = [];
             parent.checked = true;
             if (sub) {
+                console.log(1);
                 for (let i = 0; i < parent.sub.length; i++) {
                     if (parent.sub[i].name == sub.name) {
                         parent.sub[i].checked = true;
@@ -563,23 +566,38 @@ export class ModeComponent implements OnInit {
                 }
                 this.cuisine = parent;
             } else {
-                for (let i = 0; i < parent.sub.length; i++) {
-                    parent.sub[i].checked = true;
+                console.log(2);
+                if (parent.sub) {
+                    for (let i = 0; i < parent.sub.length; i++) {
+                        parent.sub[i].checked = true;
+                    }
+                } else {
+                    parent.checked = true;
                 }
                 this.cuisine = parent;
             }
         } else {
             this.cuisine = [];
             if (sub) {
-                for (let i = 0; i < parent.sub.length; i++) {
-                    if (parent.sub[i].name == sub.name) {
-                        parent.sub[i].checked = false;
+                console.log(3);
+                if (parent.sub) {
+                    for (let i = 0; i < parent.sub.length; i++) {
+                        if (parent.sub[i].name == sub.name) {
+                            parent.sub[i].checked = false;
+                        }
                     }
+                } else {
+                    parent.checked = false;
                 }
 
             } else {
-                for (let i = 0; i < parent.sub.length; i++) {
-                    parent.sub[i].checked = false;
+                console.log(4);
+                if (parent.sub) {
+                    for (let i = 0; i < parent.sub.length; i++) {
+                        parent.sub[i].checked = false;
+                    }
+                } else {
+                    parent.checked = false;
                 }
                 this.cuisine = parent;
             }
