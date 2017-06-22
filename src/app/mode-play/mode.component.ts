@@ -37,9 +37,9 @@ export class ModeComponent implements OnInit {
     public currentHighlightedMarker:number = 1;
     public currentRate = 0;
     public mode:any = {};
-    public cuisine:any[] = [{}];
-    public best:any[] = [{}];
-    public type:any[] = [{}];
+    public cuisine:any;
+    public best:any;
+    public type:any;
     public mapZoom:number = 12;
     public lat:number = 1.3089757786697331;
     public lng:number = 103.8258969783783;
@@ -114,25 +114,25 @@ export class ModeComponent implements OnInit {
     getDataModes() {
         let params = this.params;
         console.log(params);
-        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-
-            this.total = resp.total;
-            if (parseInt(resp.total) > 0) {
-                this.showMap = true;
-            }
-            if (this.loadMore) {
-                this.initMap(this.items.concat(resp.company));
-            } else {
-                this.initMap(resp.company);
-            }
-            this.loaderService.hide();
-
-        }, err=> {
-            this.items = [];
-            this.markers = [];
-            this.loaderService.hide();
-        });
-        //this.loaderService.hide();
+        //this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+        //
+        //    this.total = resp.total;
+        //    if (parseInt(resp.total) > 0) {
+        //        this.showMap = true;
+        //    }
+        //    if (this.loadMore) {
+        //        this.initMap(this.items.concat(resp.company));
+        //    } else {
+        //        this.initMap(resp.company);
+        //    }
+        //    this.loaderService.hide();
+        //
+        //}, err=> {
+        //    this.items = [];
+        //    this.markers = [];
+        //    this.loaderService.hide();
+        //});
+        this.loaderService.hide();
     }
 
     changeCategory() {
@@ -219,8 +219,8 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        this.items =[];
-        this.markers=[];
+        this.items = [];
+        this.markers = [];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
@@ -323,16 +323,26 @@ export class ModeComponent implements OnInit {
         let best = new Array();
         let type = new Array();
         console.log(this.cuisine);
-        Object.keys(this.cuisine).map(function (k) {
-            if (k !== '0') {
-                cuisine.push(k);
+        if (this.cuisine) {
+            cuisine.push(this.cuisine.name);
+            for (let i = 0; i < this.cuisine.sub.length; i++) {
+                if (this.cuisine.sub[i].checked) {
+                    cuisine.push(this.cuisine.sub[i].name);
+                }
             }
-        });
-        Object.keys(this.cuisine).map(function (k) {
+        }
+        console.log(cuisine);
+        Object.keys(this.best).map(function (k) {
             if (k !== '0') {
                 best.push(k);
             }
         });
+        Object.keys(this.type).map(function (k) {
+            if (k !== '0') {
+                type.push(k);
+            }
+        });
+
 
         if (this.showPrice) {
             this.params.price = this.priceRange.join(',');
@@ -346,8 +356,8 @@ export class ModeComponent implements OnInit {
         if (this.showRate) {
             this.params.rate = this.currentRate;
         }
-        this.loaderService.show();
-        this.getDataModes();
+        //this.loaderService.show();
+        //this.getDataModes();
     }
 
     public filterCancel() {
@@ -538,21 +548,40 @@ export class ModeComponent implements OnInit {
         this.items = [];
     }
 
-    selectCheckBox(event, item) {
-        console.log(event);
+    selectCheckBox(event, parent, sub) {
         if (event) {
-            if (item.sub) {
-                for (let i = 0; i < item.sub.length; i++) {
-                    item.sub[i].checked = !item.sub[i].checked;
+            this.cuisine = [];
+            parent.checked = true;
+            if (sub) {
+                for (let i = 0; i < parent.sub.length; i++) {
+                    if (parent.sub[i].name == sub.name) {
+                        parent.sub[i].checked = true;
+                    }
                 }
+                this.cuisine = parent;
+            } else {
+                for (let i = 0; i < parent.sub.length; i++) {
+                    parent.sub[i].checked = true;
+                }
+                this.cuisine = parent;
             }
         } else {
-            if (item.sub) {
-                for (let i = 0; i < item.sub.length; i++) {
-                    item.sub[i].checked = false;
+            this.cuisine = [];
+            if (sub) {
+                for (let i = 0; i < parent.sub.length; i++) {
+                    if (parent.sub[i].name == sub.name) {
+                        parent.sub[i].checked = false;
+                    }
                 }
+
+            } else {
+                for (let i = 0; i < parent.sub.length; i++) {
+                    parent.sub[i].checked = false;
+                }
+                this.cuisine = parent;
             }
         }
     }
+
 
 }
