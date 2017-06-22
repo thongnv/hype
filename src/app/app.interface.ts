@@ -14,6 +14,7 @@ export interface User extends BaseUser {
 export interface BaseUser {
   avatar: string;
   name: string;
+  slug: string;
 }
 
 export interface HyloEvent {
