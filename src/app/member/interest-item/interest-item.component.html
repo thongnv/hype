@@ -1,0 +1,4 @@
+<div (click)="onSelect(item)" [class.selected]="item.bookmark" class="interest-item">
+  <span class="interest-name">{{item.name | truncate : 30}}</span>
+  <img [src]="item.field_image" class="interest-item-img">
+</div>

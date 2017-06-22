@@ -1,0 +1,14 @@
+<div class="wrap-each-items smaller" *ngIf="item">
+  <div *ngIf="canDelete" class="close-button text-right icon-times" (click)="onDeleteEmit(item)">&times;</div>
+  <div class="avatar-profile smaller">
+    <div class="fav-item-image fav-item-image-small">
+      <img [src]="item.field_image" width="80" height="80">
+    </div>
+  </div>
+  <div class="information-profile" *ngIf="item">
+    <div class="top-content">
+      <h4 [routerLink]="[item.slug]" class="information-title text-ellipsis">{{item.title}}</h4>
+      <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 150"></p>
+    </div>
+  </div>
+</div>

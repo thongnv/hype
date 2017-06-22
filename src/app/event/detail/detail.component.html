@@ -1,0 +1,146 @@
+<section>
+  <div class="row" *ngIf="ready">
+    <div class="col-lg-6 col-xs-12 left-box">
+
+      <!-- title event start -->
+      <div class="title-event border-bottom">
+        <a class="left-arrow">
+          <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
+        </a>
+        <h3>{{name}}</h3>
+      </div>
+      <!-- title event end -->
+
+      <!-- wrap primary content event start -->
+      <div class="wrap-primary-content-event border-bottom">
+        <!-- information event start -->
+        <div class="information-event border-bottom padding-top-30 padding-bottom-35">
+          <ul class="left-content-information-event">
+            <li>
+              <span class="info-label">location</span><span class="info-value">{{location.name}}</span>
+            </li>
+            <li>
+              <span class="info-label">date / time</span><span class="info-value">{{date | date:'d MMMM y'}}</span>
+            </li>
+            <li>
+              <span class="info-label">price range</span>
+              <span class="info-value">
+                <span *ngIf="price!=0">${{price}}</span>
+                <span *ngIf="price==0">Free</span>
+                <b>.</b>
+              <a href="{{call2action.link}}" target="_blank">
+                <span class="action">{{call2action.action}}</span>
+              </a>
+            </span>
+            </li>
+            <li>
+              <span class="info-label">Mentioned by</span>
+              <ul class="list-mention">
+                <li class="mention" *ngFor="let mention of mentions">
+                  <a [href]="mention.url" target="_blank">
+                  <img [src]="mention.iconUrl" alt="mention"></a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="right-creator-information-event text-center pull-right">
+            <h4 class="title-creator">Created by</h4>
+            <a [href]="creator.slug" target="_blank">
+              <p class="avatar-creator">
+                <img [src]="creator.avatar" alt="avatar" class="img-circle" width="70"
+                     height="70">
+              </p>
+              <p class="name-creator">
+                {{creator.name}}
+              </p>
+            </a>
+            <p class="avg-rating" *ngIf="rating">
+              {{rating}}/5
+            </p>
+          </div>
+        </div>
+        <!-- information event end -->
+
+        <!-- detail event start -->
+        <div class="detail-event border-bottom clearfix padding-top-30 padding-bottom-35">
+          <h4 class="title-detail-event margin-bottom-25">Details</h4>
+          <p class="content-detail-event" [innerHTML]="detail"></p>
+        </div>
+        <!-- detail event end -->
+
+        <!-- experiences area start -->
+        <div class="experience-top">
+          <h4 class="title-experiences-area margin-bottom-25">Experiences ({{experiences.length}})</h4>
+          <a class="post-your-experience" *ngIf="!userRated" (click)="onClickFocusMsgInput()">
+            Post your experience
+          </a>
+        </div>
+        <event-experience
+          *ngFor="let experience of experiences; let index=index"
+          [experience]="experience">
+        </event-experience>
+        <!-- experiences area end -->
+
+        <!-- post your experience start -->
+        <div class="post-your-experience border-bottom padding-top-30 padding-bottom-35" *ngIf="!userRated">
+          <img [src]="user.avatar" alt="user avatar" class="img-circle" width="70" height="70">
+          <form class="form-horizontal" [formGroup]="experienceForm">
+            <div class="list-stars-on-post">
+              <ngb-rating [(rate)]="userRating">
+                <ng-template let-fill="fill">
+                  <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                </ng-template>
+              </ngb-rating>
+            </div>
+
+            <div class="content-your-post clearfix">
+              <textarea #msgInput
+                        (keydown.enter)="addExperience(msgInput);false"
+                        cols="30" rows="10" placeholder="What's your experience here?"
+              ></textarea>
+            </div>
+
+            <div class="add-image-area">
+              <label class="control-label " id="list-img-label" for="listImg">
+                + Add images
+                <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file'
+                       (change)="readUrl($event)" multiple="multiple">
+              </label>
+              <div class="list-img-wrap">
+                <div *ngFor="let img of previewUrl" class="preview-wrap">
+                  <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
+                  <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- post your experience end -->
+
+      </div>
+    </div>
+
+    <div class="col-lg-5 col-xs-12 gmap-box margin-bottom-25">
+
+      <carousel
+        [interval]="NextPhotoInterval"
+        [noWrap]="noLoopSlides"
+        [noTransition]="noTransition"
+        [noThumbnail]="noThumbnail"
+        [carouselSlides]="slides">
+        <slide *ngFor="let slide of slides; let index=index"
+               [active]="slide.active">
+          <img [src]="slide.image" style="margin:auto;">
+        </slide>
+      </carousel>
+
+      <div class="map-location-area" style="display: block;">
+        <h4 class="title-map-location margin-bottom-25">Location</h4>
+        <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13" [styles]="gMapStyles">
+          <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng">
+          </sebm-google-map-marker>
+        </sebm-google-map>
+      </div>
+    </div>
+  </div>
+</section>

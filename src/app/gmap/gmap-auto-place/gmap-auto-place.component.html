@@ -1,0 +1,87 @@
+<div [formGroup]="group" class="gmap-place col-xs-12">
+  <div class="form-group">
+    <input #keyword formControlName="keyword"
+           class="form-control"
+           minlength="3"
+           id="searchBox"
+           placeholder="Search & tag an activity or place"
+           autocorrect="off"
+           autocomplete="off"
+           autocapitalize="off"
+           spellcheck="off" type="text"
+           (keyup)="onSubmit($event, keyword.value)"
+           (click)="onOpenSuggestion()">
+    <input hidden type="text" formControlName="lat">
+    <input hidden type="text" formControlName="lng">
+    <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">This field is required</small>
+    <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+      <div class="arrow-up"></div>
+      <div class="display-location-address">
+        <i class="icon icon-suggestion-marker"></i>
+        <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
+        <span class="location-address">location address</span>
+      </div>
+      <div class="suggestion-wrap"  slimScroll width="auto" height="290px" size="7px"
+           [railVisible]="true"
+           [railOpacity]="0.1"
+           [railColor]="'#ec3d62'"
+           [color]="'#ec3d62'">
+        <ul *ngIf="result.article?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Lists</a>
+          </li>
+          <li *ngFor="let item of result.article;trackBy:item?.id">
+            <a class="item-link" (click)="onCloseSuggestion(item)">
+              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+              <div class="result-info">
+                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <ul *ngIf="result.event?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Lists</a>
+          </li>
+          <li *ngFor="let item of result.event;trackBy:item?.id">
+            <a class="item-link" (click)="onCloseSuggestion(item)">
+              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+              <div class="result-info">
+                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <ul *ngIf="gmapResults?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Results from google</a>
+          </li>
+          <li *ngFor="let item of gmapResults; let index = index">
+            <a (click)="onGmapItemClick(item)" class="item-content">
+              <div class="result-info map">{{item.description}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="description" class="form-group">
+    <textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"
+              placeholder="Write your comments"></textarea>
+    <small *ngIf="group.get('description').hasError('required') && group.get('description').touched" class="text-danger">
+      This field is required
+    </small>
+  </div>
+  <div class="form-group" *ngIf="image">
+    <label class="upload-image-label"> <i class="fa fa-plus"></i>&nbsp;Add Images
+      <input type='file' (change)="readUrl($event)">
+    </label>
+    <input [hidden]="true" formControlName="image" type='text'>
+    <small *ngIf="group.get('image').hasError('required')" class="text-danger">
+      Field image is required
+    </small>
+    <img *ngIf="imageUrl" [src]="sanitizer.bypassSecurityTrustUrl(imageUrl.url)" width="100%"/>
+  </div>
+</div>

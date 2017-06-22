@@ -1,0 +1,42 @@
+<div class="overlay" [class.active]="submitted">
+  <div class="form-review popup" *ngIf="company">
+    <h3>How is Your Experience With {{company.name}}
+      <span class="close-button" (click)="closeForm()">×</span>
+    </h3>
+
+    <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="390px" size="7px"
+         [railVisible]="true"
+         [railOpacity]="0.1"
+         [railColor]="'#ec3d62'"
+         [color]="'#ec3d62'">
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+      <div class="header-review">
+        <img alt="user avatar" class="img-circle" height="70" width="70" [src]="user.avatar">
+        <ngb-rating [(rate)]="currentRate">
+          <ng-template let-fill="fill">
+            <span class="star" [class.filled]="fill === 100">&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+      </div>
+      <div class="form-group">
+        <textarea formControlName="text" rows="4" cols="60" placeholder="What's your experience here">
+        </textarea>
+      </div>
+      <div class="form-group list-img-box">
+        <label class="control-label " id="list-img-label" for="listImg">
+          <i class="fa fa-plus"></i>&nbsp;Add images
+          <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file'
+                 (change)="readUrl($event)" multiple="multiple">
+        </label>
+        <div class="list-img-wrap clearfix">
+          <div *ngFor="let img of previewUrl" class="preview-wrap">
+            <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
+            <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+          </div>
+        </div>
+      </div>
+      <button class="btn_submit" type="submit">Submit My Review</button>
+    </form>
+    </div>
+  </div>
+</div>

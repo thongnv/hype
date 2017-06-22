@@ -1,0 +1,214 @@
+<section>
+    <div class="row">
+        <div class="col-lg-6 col-xs-12 left-box">
+            <form [formGroup]="filterFromMode" class="filterFromMode">
+                <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" (change)="changeType()"
+                     formControlName="filterMode">
+                    <label class="btn btn-default">
+                        <input type="radio" value="all"> All
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" value="eat"> Eat
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" value="play"> Play
+                    </label>
+                </div>
+            </form>
+            <form [formGroup]="filterCategory" class="filterCategory">
+                <div>
+                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()" name="radioBasic"
+                         formControlName="filterCategory">
+                        <label class="btn btn-default">
+                            <img src="../../assets/img/icons/All.png" alt="All">
+                            <span class="clearfix">
+                                <input type="radio" value="all"> All
+                            </span>
+                        </label>
+                        <label class="btn btn-default" *ngFor="let term of categories">
+                            <img src="{{term.icon}}" alt="{{term.name}}">
+                            <span class="clearfix"> </span>
+                            <input type="radio" value="{{term.name}}">{{term.name}}
+                        </label>
+                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more" (click)="showAllKind(showAll)">
+                            <b></b><b></b><b></b>
+                        </label>
+                    </div>
+                </div>
+            </form>
+            <div style="position: relative">
+                <ul class="list-inline itemSort" [class.showTab]="!showTab">
+                    <li>
+                        <a (click)="showRagePriceFind(showPrice)" class="price-range">Price Range <i
+                                [ngClass]="{'fa-angle-up':showPrice,'fa-angle-down':!showPrice}" class="fa "
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
+                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+                                aria-hidden="true"></i></a>
+                        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
+                           class="when-button">Activities <i
+                                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="showRateFind(showRate)" class="when-button">Ratings <i
+                                [ngClass]="{'fa-angle-up':showRate,'fa-angle-down':!showRate}"
+                                class="fa"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a (click)="showBestFind(showBest)" class="when-button">Best For <i
+                                [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
+                                class="fa"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li class="type" *ngIf="!showTab">
+                        <a (click)="showTypeFind(showType)" class="when-button">Type
+                            <i [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa"
+                               aria-hidden="true"></i></a>
+                    </li>
+
+                    <!-- <span class="showMoreType" (click)="showAllType(showTab)">
+                        <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
+                    </span> -->
+                    <!-- <li class="showMoreType" (click)="showAllType(showTab)">
+                        <b></b><b></b><b></b>
+                    </li> -->
+                    
+                    <li class="showMoreType" (click)="showAllType(showTab)">
+                        <i class="sprite-icon sprite sprite-icon-add"></i>
+                    </li>
+
+                </ul>
+
+                <div class="find-content">
+
+                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
+                                [(ngModel)]="priceRange"
+                                style="margin-top: 2em;" [tooltips]="[true,true]">
+                    </nouislider>
+                    <div *ngIf="showPrice" class="price-desc"><span class="pull-left">$0</span><span
+                            class="text-center">$150</span><span class="pull-right">$300</span></div>
+                    <div *ngIf="showCuisine">
+                        <div *ngFor="let item of filterData.cuisine; let in =index"
+                             style="margin-left: 43px" class="filter-item col-md-3">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="selectCheckBox(cuisine && cuisine[item.name]=$event.target.checked ? true : undefined,item)"
+                                       [ngModel]="cuisine[item.name]">{{item.name}}
+                            </div>
+                            <div class="" *ngIf="item.sub" style="margin-left: 30px;">
+                                <div class="checkbox"
+                                     *ngFor="let sb of item.sub; let i = index">
+                                    <input type="checkbox"
+                                           (change)="cuisine[item.name]=$event.target.checked ? true : undefined"
+                                           [ngModel]="cuisine[item.name[sb.name]]" [checked]="sb.checked">{{sb.name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="showRate" class="text-center">
+                        <ngb-rating [(rate)]="currentRate">
+                            <ng-template let-fill="fill">
+                                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                            </ng-template>
+                        </ngb-rating>
+                    </div>
+                    <div *ngIf="showBest" class="best-for">
+                        <div *ngFor="let item of filterData.best; let in =index" class="filter-item"
+                             style="margin-left: 40px">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="best && best[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="best && best[item.name]">{{item.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="showType && !showTab">
+                        <div *ngFor="let item of filterData.type; let in =index" class="filter-item"
+                             style="margin-left: 40px">
+                            <div class="checkbox">
+                                <input type="checkbox"
+                                       (change)="type && type[item.name]=$event.target.checked ? true : undefined"
+                                       [ngModel]="type && type[item.name]">{{item.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actionFilter" *ngIf="showPrice || showCuisine || showRate || showBest ||showType">
+                <label class="btn btn-default" (click)="filterCancel()">Cancel</label>
+                <label class="btn btn-default apply" (click)="filterSubmit()">Apply</label>
+            </div>
+            <div class="clearfix"></div>
+            <div class="list-header">
+                <div class="pull-left">
+                    <select class="form-control-static" [(ngModel)]="sortPlace" (change)="changeSort()">
+                        <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
+                    </select>
+                </div>
+                <div class="pull-right" (click)="filterSubmit()">Clear Filters</div>
+            </div>
+            <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
+            <div class="clearfix"></div>
+
+            <div id="v-scrollable" class="scrollable section"
+                 ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)">
+                <div class="items" *ngFor="let item of items; let index = 'index'"
+                     [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
+                    <div class="list-items">
+                        <div class="avatar">
+                            <div class="badge">#{{index +1}}</div>
+                            <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
+                            <app-place-image [name]="item.name" [width]="100" [height]="100">
+                            </app-place-image>
+                            <div (click)="onLikeEmit(item)" class="heart-icon">
+                               <i class="sprite-icon sprite sprite-favorite"></i>
+                            </div>
+                        </div>
+                        <div class="item-content">
+                            <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
+                                {{item.Company_Name}}</h3><span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
+                            <div class="clearfix"></div>
+                            <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
+                            <span class="review">{{item.rating.total}} Reviews</span>
+                            <div class="box-content">
+                                <!--<p>{{item.Email_Address}} | {{item.Tel_No}}</p>-->
+                                <p *ngIf="item.Company_Profile"
+                                   [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-bottom">
+                    <div *ngIf="items?.length ==0">End Of List</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 col-xs-12 gmap-box">
+            <div class="box-map">
+                <sebm-google-map *ngIf="showMap"
+                                 [latitude]="lat"
+                                 [longitude]="lng"
+                                 [zoom]="mapZoom"
+                                 [disableDefaultUI]="false"
+                                 [zoomControl]="false"
+                                 [streetViewControl]="true"
+                                 [styles]="gMapStyles"
+                                 (mapClick)="mapClicked($event,index)"
+                >
+                    <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"
+                                         (radiusChange)="markerRadiusChange($event)" [lat]="lat"
+                                         (markerClick)="clickedMarker($event)"
+                                         (dragEnd)="markerDragEnd($event)"
+                                         [lng]="lng"></gmap-geocode-marker>
+
+                </sebm-google-map>
+            </div>
+        </div>
+    </div>
+</section>

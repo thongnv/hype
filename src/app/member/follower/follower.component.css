@@ -1,0 +1,12 @@
+.infinite-list{
+    height: calc(100vh - 145px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%;
+}
+.list-bottom{
+    display: block;
+    width: 100%;
+    text-align: center;
+    clear: both;
+}

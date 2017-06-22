@@ -1,0 +1,40 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"project": {
+		"name": "hype"
+	},
+	"apps": [
+		{
+			"root": "src",
+			"outDir": "dist",
+			"assets": [
+				"assets",
+				"favicon.ico"
+			],
+			"index": "index.html",
+			"main": "index.ts",
+			"polyfills": "polyfills.ts",
+			"test": "test.ts",
+			"tsconfig": "tsconfig.app.json",
+			"testTsconfig": "tsconfig.spec.json",
+			"prefix": "app",
+			"styles": [
+				"styles.css",
+				"../node_modules/font-awesome/css/font-awesome.css"
+			],
+			"scripts": [],
+			"environmentSource": "environment.ts",
+			"environments": {
+				"dev": "environment.ts",
+				"prod": "environment.ts"
+			}
+		}
+	],
+	"addons": [
+		"../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+	],
+	"defaults": {
+		"styleExt": "css",
+		"component": {}
+	}
+}

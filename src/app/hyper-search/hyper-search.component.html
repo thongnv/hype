@@ -1,0 +1,56 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
+  <div class="input-group wrap-search-input">
+    <!--<button [disabled]="searchForm.invalid" class="btn btn-default" type="submit"></button>-->
+    <input #keyword formControlName="keyword"
+           class="form-control"
+           minlength="3"
+           id="searchBox"
+           placeholder="Type to tag a location / place"
+           autocorrect="off"
+           autocomplete="off"
+           autocapitalize="off"
+           spellcheck="off" type="text"
+           (keyup)="onSubmit($event, keyword.value)"
+           (click)="onOpenSuggestion()">
+
+    <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+      <div class="arrow-up"></div>
+      <div class="display-location-address">
+        <i class="icon icon-suggestion-marker"></i>
+        <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
+        <span class="location-address">location address</span>
+      </div>
+      <div class="suggestion-wrap"  slimScroll width="auto" height="290px" size="7px"
+           [railVisible]="true"
+           [railOpacity]="0.1"
+           [railColor]="'#ec3d62'"
+           [color]="'#ec3d62'">
+        <ul *ngIf="result.company?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Lists</a>
+          </li>
+          <li *ngFor="let item of result.company;trackBy:item?.id">
+            <a class="item-link" (click)="onCloseSuggestion(item)">
+              <div class="result-info">
+                <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
+                <small class="location-address-content-each text-ellipsis">{{item.Address}}</small>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <ul *ngIf="gmapResults?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Results from google</a>
+          </li>
+          <li *ngFor="let item of gmapResults; let index = index">
+            <a (click)="onGmapItemClick(item)" class="item-content">
+              <div class="result-info">{{item.description}}</div>
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</form>

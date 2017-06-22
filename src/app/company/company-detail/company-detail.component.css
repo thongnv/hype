@@ -1,0 +1,652 @@
+a:hover {
+  text-decoration: none;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.margin-bottom-25 {
+  margin-bottom: 25px;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.padding-bottom-35 {
+  padding-bottom: 35px;
+}
+
+.icon-sm {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/*title event start*/
+
+.title-event {
+  padding: 36px 0;
+}
+
+.title-event a.left-arrow {
+  float: left;
+  margin: 6px 25px 0 10px;
+}
+
+/*title event end*/
+
+.wrap-primary-content-event {
+  padding: 0 20px 30px 40px;
+}
+
+/*information event start*/
+.information-event {
+  float: left;
+  width: 100%;
+}
+
+.left-content-information-event {
+  list-style: none;
+  float: left;
+  width: 70%;
+}
+
+.left-content-information-event > li {
+  margin-bottom: 30px;
+}
+
+.left-content-information-event > li > p {
+  float: left;
+  text-transform: capitalize;
+  font-weight: bold;
+  width: 25%;
+  margin-right: 40px;
+}
+
+.left-content-information-event > li > span {
+  font-size: 13px;
+}
+
+.left-content-information-event > li > span > b {
+  position: relative;
+  top: -3px;
+  margin: 0 5px;
+}
+
+.left-content-information-event > li > span > strong {
+  font-size: 14px;
+  color: #ec3d62;
+}
+
+.list-mention {
+  list-style: none;
+}
+
+.list-mention > li {
+  float: left;
+  margin-right: 16px;
+}
+
+.list-mention > li > a {
+  border-radius: 7px;
+  border: 1px solid #e6e6e6;
+  padding: 5px 4px 8px;
+}
+
+.right-creator-information-event {
+  float: left;
+}
+
+h4.title-creator {
+  margin-bottom: 11px;
+}
+
+p.name-creator {
+  margin: 10px 0;
+}
+
+p.name-creator a {
+  color: #3b3b3b;
+}
+
+p.avg-rating a {
+  color: #3b3b3b;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+/*information event end*/
+
+/*detail event start*/
+
+.content-detail-event {
+  font-size: 13px;
+}
+
+/*detail event end*/
+
+/*experience area start*/
+.reviews-wrap {
+  padding: 10px 40px 0;
+}
+
+.all-reviews-wrap {
+  padding: 20px 40px;
+}
+
+.experience-top {
+  margin-top: 20px;
+  position: relative;
+}
+
+.experience-top h4.title-experiences-area {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+
+.experience-top h4.title-experiences-reviews-area {
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.13;
+  text-align: left;
+  color: #3b3b3b;
+  margin-left: 20px;
+}
+
+.experience-top a.post-your-experience {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ec3d62;
+  position: absolute;
+  bottom: -22%;
+  right: 4%;
+}
+
+.experience-top a.view-all-post-your-experience {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ec3d62;
+  position: absolute;
+  bottom: 8%;
+  right: 4%;
+}
+
+.experience-top a.write-a-lastest-reviews {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ec3d62;
+  position: absolute;
+  bottom: 8%;
+  right: 4%;
+}
+
+.experience-top a.left-arrow {
+  position: absolute;
+  left: -4%;
+  top: 17%;
+  cursor: pointer;
+}
+
+.information-experience {
+  margin-top: 20px;
+}
+
+.information-experience img {
+  margin-right: 10px;
+}
+
+.information-experience div {
+  display: inline-block;
+}
+
+.information-experience .rating-star {
+  position: relative;
+  bottom: 9px;
+}
+
+.experience-avatar {
+  margin-right: 10px;
+}
+
+.experience-avatar img {
+  width: 45px;
+  height: 45px;
+}
+
+.content-info-experience {
+  position: relative;
+  top: 14px;
+  margin-right: 60px;
+}
+
+.content-info-experience h4 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+
+.content-info-experience p {
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #3b3b3b;
+}
+
+.wrap-list-stars {
+  margin-left: 60px;
+}
+
+.wrap-list-stars .list-stars-review-experience {
+  list-style: none;
+  padding-left: 0;
+}
+
+.wrap-list-stars .list-stars-review-experience li {
+  display: inline-block;
+}
+
+.detail-info-experience {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin: 30px 0 20px;
+}
+
+.list-pictures-experience {
+  padding-left: 0;
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.list-pictures-experience li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.list-pictures-experience li img {
+  width: 70px;
+  height: 70px;
+  border-radius: 2px;
+  border: solid 1px #e8e8e8;
+}
+
+.like-area img {
+  width: 20px;
+  height: 20px;
+}
+
+.like-area span {
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  color: #5052ea;
+}
+
+.view-all-reviews-button {
+  padding-left: 0;
+  text-align: center;
+}
+
+.view-all-reviews-button a {
+  background: #2a6be1;
+  display: block;
+  font-size: 14px;
+  line-height: 1.3;
+  text-align: center;
+  color: #ffffff;
+  padding: 10px 20px;
+}
+
+/*experience area end*/
+
+/*write your comment start*/
+
+.write-comment-area img {
+  float: left;
+  display: block;
+}
+
+.write-comment-area textarea {
+  width: 80%;
+  height: 60px;
+  margin-top: 0;
+  margin-left: 20px;
+  border-radius: 6px;
+  background: #e8e8e8;
+  padding: 10px;
+}
+
+ul.list-comments-ago {
+  list-style: none;
+}
+
+ul.list-comments-ago li {
+  margin-left: 70px;
+  margin-top: 20px;
+  clear: both;
+}
+
+ul.list-comments-ago li .avatar-comment-ago {
+  float: left;
+  margin-right: 15px;
+  clear: both;
+}
+
+.content-comment-ago {
+  line-height: 25px;
+}
+
+.top-content-comment a b {
+  color: #3b3b3b;
+}
+
+.likes-area a {
+  color: #3b3b3b;
+}
+
+.likes-area a:hover {
+  text-decoration: none;
+}
+
+.likes-area a img {
+  margin-bottom: 9px;
+  margin-right: 6px;
+}
+
+.reply-area a {
+  color: #3b3b3b;
+}
+
+.view-more-comments {
+  margin-top: 30px;
+}
+
+a.button-view-more-comments {
+  color: #ec3d62;
+}
+
+span.count-comments {
+  float: right;
+  margin-right: 30px;
+}
+
+/*write your comment end*/
+
+#likes-comments-experience-second {
+  padding-top: 10px;
+}
+
+/*post your experience start*/
+.post-your-experience img {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+
+ul.list-stars-on-post {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.content-your-post textarea {
+  width: 100%;
+  height: 140px;
+  margin: 30px 0;
+  background: #e8e8e8;
+  padding: 15px;
+}
+
+.add-image-area a {
+  color: #ec3d62;
+}
+
+.map-fix {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+}
+
+.sebm-google-map-container {
+  height: 100vh;
+}
+
+.content {
+  overflow: hidden;
+}
+
+article {
+  margin: 0 auto;
+  position: relative;
+}
+
+.post-your-experience {
+  cursor: pointer;
+}
+
+/*company wrap start*/
+.company-wrap .carousel {
+  height: 100%;
+}
+
+.company-wrap .company-header {
+  padding: 30px 40px 40px;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+}
+
+.company-wrap .company-header div {
+  display: inline-block;
+}
+
+.company-wrap .company-header h3 {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1.13;
+  text-align: left;
+  color: #3b3b3b;
+  max-width: 220px;
+  vertical-align: top;
+  margin-top: 0;
+}
+
+.company-wrap .company-header p.open-now-button {
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+  color: #1fbe90;
+  margin: 0;
+}
+
+.company-wrap .rating-star {
+  margin-left: 10px;
+  margin-right: 11px;
+  position: relative;
+}
+
+.rating-star i {
+  color: #ec3d62;
+}
+
+.google-plus-point {
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+  opacity: 0.95;
+  border-radius: 2px;
+  border: solid 1px #e6e6e6;
+  padding: 6px 10px;
+  position: relative;
+  left: 10px;
+}
+
+.google-plus-point .rating-number {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  color: #3b3b3b;
+  padding-right: 10px;
+  border-right: solid 1px #eaeaea;
+}
+
+.google-plus-point .google-plus-dropdown-button {
+  margin-left: 10px;
+}
+
+.google-plus-dropdown-button .fa-google-plus {
+  background: #de4931;
+  color: #fff;
+  padding: 5px 4px;
+}
+
+.google-plus-dropdown-button .fa-angle-down {
+  color: #3b3b3b;
+  font-size: 20px;
+  margin-left: 8px;
+  position: relative;
+  top: 3px;
+}
+
+.company-description {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin-top: 25px;
+}
+
+.read-more {
+  cursor: pointer;
+  margin-left: 47%;
+  margin-top: 2%;
+  font-size: 20px;
+}
+
+.company-info {
+  padding: 25px 40px;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+}
+
+.company-info p {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.8;
+  text-align: left;
+  color: #3b3b3b;
+  margin-bottom: 22px;
+  clear: both;
+  min-height: 20px;
+}
+
+.company-info p a {
+  display: block;
+  line-height: 1.8;
+  padding-left: 27%;
+  font-size: 14px;
+  font-weight: 300;
+  text-align: left;
+  color: #3b3b3b;
+  margin-bottom: 22px;
+  max-width: 100%;
+}
+
+.company-info > p > .info-value > .dropdown-toggle > i.fa-angle-down {
+  font-size: 22px;
+  margin-left: 10px;
+}
+
+.company-info > p > .info-value > .dropdown-menu {
+  width: 70%;
+}
+
+.company-info > p > .info-value > .dropdown-menu > a {
+  padding: 10px 10px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.company-info p a:hover {
+  text-decoration: none;
+}
+
+.company-info p .info-label {
+  margin-right: 30px;
+  font-weight: 500;
+}
+
+.company-info .info-value {
+  width: calc(100% - 150px);
+  margin-right: 0;
+  cursor: pointer;
+}
+
+.company-info p span {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.63;
+  text-align: left;
+  color: #3b3b3b;
+  min-width: 110px;
+  float: left;
+}
+
+/*company wrap end*/
+
+/*review wrap start*/
+
+/*review wrap end*/
+
+/*responsive*/
+@media (min-width: 1200px) {
+
+}
+
+@media only screen and (min-width: 992px) {
+
+}
+
+@media only screen and (min-width: 769px) {
+  article {
+    margin: 0;
+    padding: 0;
+  }
+
+  .content {
+    padding: 0;
+    width: 51.3%;
+  }
+
+  .map-fix {
+    padding: 0;
+    /*width: 51.1%;*/
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+}

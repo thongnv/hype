@@ -1,0 +1,19 @@
+.infinite-list{
+    height: calc(100vh - 145px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    width:100%;
+}
+.list-bottom{
+    display: block;
+    width: 100%;
+    text-align: center;
+    clear: both;
+    height: 30px;
+    line-height: 30px;
+}
+@media screen and (min-width: 1200px){}
+@media screen and (min-width: 992px){}
+@media screen and (min-width: 768px){}
+@media screen and (min-width: 544px){}
+@media screen and (max-width: 543px){}

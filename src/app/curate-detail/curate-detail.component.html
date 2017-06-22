@@ -1,0 +1,42 @@
+<section>
+  <div class="list-preview-wrap setting-wrap table-wrap" *ngIf="article">
+    <div class="col-xs-12 col-sm-12 col-md-6 list-box table-cell">
+      <div style="padding: 0px;" (scroll)="onScroll($event)"
+           id="hScroll" slimScroll width="calc(100%)"
+           height="calc(100vh - 60px)" size="7px"
+           [alwaysVisible]="true" [railVisible]="true"
+           [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+        <div class="carousel-box" id="curate-carousel">
+          <div class="carousel-header">
+            <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
+            <strong>{{article.title}}</strong>
+          </div>
+          <div *ngIf="slides" class="carousel">
+            <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="noPause" [noTransition]="noTransition">
+              <app-slide-carousel *ngFor="let slide of slides; let index=index"
+                [ngStyle]="{'background-image': 'url(' + slide.image + ')', 'height': '400px', 'background-size': 'cover'}">
+              </app-slide-carousel>
+            </app-boostrap-carousel>
+          </div>
+          <div class="description text-justify" [innerHtml]="article.body">
+          </div>
+        </div>
+        <div *ngFor="let plc of article.field_places; let index=index" class="place-item-wrap" [id]="'place-'+index">
+          <div class="place-item-header"><strong class="pull-left place-index">#{{index+1}}</strong><strong class="place-name">{{plc.field_place_address}}</strong><span class="pull-right place-detail-btn">details</span></div>
+          <div class="place-item-img">
+            <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
+          </div>
+          <p class="place-item-description">{{plc.field_place_comment}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 map-box table-cell" *ngIf="showMap">
+      <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
+        <app-custom-marker *ngFor="let marker of markers; let index=index"
+                           [marker]="marker" [index]="index"
+                           (onClick)="markerClick(index)">
+        </app-custom-marker>
+      </sebm-google-map>
+    </div>
+  </div>
+</section>

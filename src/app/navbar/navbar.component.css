@@ -1,0 +1,160 @@
+.map-option .img-circle {
+    margin-top: 15px;
+    margin-right: 8px;
+    float: left;
+}
+.user-option .user-name-info {
+    font-size: 16px;
+    text-align: left;
+    color: #ffffff;
+    max-width: 200px;
+    display: inline-block;
+    line-height: 60px;
+    float: left;
+}
+.map-option .dropdown a {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 60px;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #ffffff;
+}
+.map-option form .input-group .input-group-btn button {
+    z-index: 999;
+}
+.map-option form .input-group input:focus {
+    border: none;
+}
+.map-option .icon-down-left-navbar {
+    margin-left: 10px;
+    display: inline-block;
+}
+.notification-area {
+    margin-right: 10px;
+}
+.info-user {
+    margin-right: 40px;
+}
+.add-event-button {
+    margin-right: 10px;
+}
+.add-event-button .add-eventbtn {
+    margin: 0 8px;
+    cursor: pointer;
+}
+.add-event-button .add-eventbtn:focus {
+    outline: none;
+}
+#map-option .dropdown-menu li {
+    width: 160px;
+    float: left;
+    display: inline-block;
+    clear: right;
+}
+#logo {
+    width: 126px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.nav-indicator + .map-option.nav-item {
+    margin-left: 0;
+}
+.nav-indicator {
+    margin: 16px 10px;
+}
+.add-event-button .sprite-icon-add {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.navbar-default .navbar-brand{
+    color: #ffffff;
+}
+.glyphicon-2x{
+    font-size: 1.5em;
+}
+/*responsive*/
+@media only screen and (min-width: 575px) {
+}
+@media only screen and (min-width: 768px) {
+}
+@media only screen and (min-width: 992px) {
+}
+@media only screen and (min-width: 1200px) {
+    #map-option .dropdown-menu {
+        width: 980px;
+        padding: 5px 0 5px 5px;
+    }
+}
+@media only screen and (max-width: 575px) {
+}
+@media only screen and (max-width: 767px) {
+    #map-option .dropdown-menu {
+        width: 340px;
+        padding: 5px;
+    }
+}
+@media (max-width: 991px) {
+    header .navbar-brand{
+        margin-top: 5px;
+    }
+    .navbar-header {
+        float: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+    .navbar-nav {
+        float: none !important;
+        margin: 0;
+    }
+    .navbar-nav > li {
+        float: none;
+    }
+    .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-text {
+        float: none;
+        margin: 15px 0;
+    }
+    /* since 3.1.0 */
+    .navbar-collapse.collapse.in {
+        display: block !important;
+    }
+    .collapsing {
+        overflow: hidden !important;
+    }
+    .nav-indicator {
+        margin: 16px 0;
+    }
+    .navbar-default .navbar-toggle, .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+        background-color: transparent;
+        border-color: transparent;
+        float: left;
+    }
+    .navbar-default .navbar-toggle .icon-bar {
+        background: #ffffff;
+        height: 3px;
+        width: 30px;
+    }
+}
+
+
+
+
+
+
+
+
+
+

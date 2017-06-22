@@ -1,0 +1,21 @@
+.login-container{
+    padding-top: 15%;
+}
+.login-container .btn .fb-icon{
+    color: white;
+    font-size: 1.5em;
+}
+.login-container .btn{
+    width: 100%;
+}
+.title-login{
+    width: 400px;
+    color: black;
+    margin-bottom: 40px;
+}
+@media only screen and (max-width: 480px) {
+    .login-container *{
+        font-size: 12px;
+    }
+
+}

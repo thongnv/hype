@@ -1,0 +1,30 @@
+.notif-bag {
+    position: relative;
+}
+i#notif {
+    margin-top: 15px;
+    color: #9b1935;
+    background: transparent;
+}
+#count-notif{
+    position: absolute;
+    top: -12px;
+    right: -3px;
+    border-radius: 3px;
+    min-width: 18px;
+    height: 18px;
+    background-color: white;
+    text-align: center;
+    border: none;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #ec3d62;
+    z-index: 100;
+}
+#count-notif b {
+    position: relative;
+    top: -26px;
+    color: #9b1935;
+    right: 2px;
+}

@@ -1,0 +1,15 @@
+<sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="11" [styles] = "gMapStyles">
+  <gmap-cluster
+    [markers]="markers">
+  </gmap-cluster>
+  <sebm-google-map-circle
+    [latitude]="lat + 0.05"
+    [longitude]="lng"
+    [radius]="5000"
+    [fillColor]="'red'"
+    [circleDraggable]="true"
+    [editable]="true"
+    (radiusChange)="handleRadiusChange()"
+    (dragEnd)="handleDrag()">
+  </sebm-google-map-circle>
+</sebm-google-map>

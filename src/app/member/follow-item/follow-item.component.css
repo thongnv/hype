@@ -1,0 +1,56 @@
+.follow-name{
+    width: 100%;
+    height: 20px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+    text-align: left;
+    color: #3b3b3b;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.user-avatar{
+    float: left;
+}
+.follow-block-wrap{
+
+}
+.follow-block{
+    width: 100%;
+    height: 70px;
+    border-radius: 2px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 3px 0 rgba(230, 230, 230, 0.5);
+    border: solid 0.7px #e8e8e8;
+    padding: 9px 10px;
+    margin-bottom: 30px;
+}
+.follow-action{
+    float: left;
+    padding-left: 10px;
+    height: 50px;
+    width: calc(100% - 50px);
+}
+.user-avatar{
+    width: 50px;
+    height: 50px;
+}
+.unfollow-btn.follow{
+    color: #ec3d62;
+}
+.unfollow-btn:hover{
+    text-shadow: 0 0 0.5px;
+}
+.unfollow-btn{
+    width: 48px;
+    height: 12px;
+    opacity: 0.5;
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+    cursor: pointer;
+}

@@ -1,0 +1,250 @@
+<article class="row new-list">
+  <!--header start-->
+  <header>
+    <ul>
+      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">Event Info</li>
+      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
+    </ul>
+  </header>
+  <!--header end-->
+
+  <!--form wrap start-->
+  <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
+
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+      <div class="input-box row">
+        <h3 class="col-md-12 col-xs-12">Share an Event</h3>
+        <small class="col-md-12 col-xs-12">An event is an activity tagged to a place </small>
+        <div class="form-group col-md-12 col-xs-12">
+          <label for="event-name">Name</label>
+          <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control" type="text">
+          <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
+               class="text-danger">
+            Name event is required
+          </small>
+        </div>
+        <div class="form-group col-md-12 col-xs-12">
+          <label>Details</label>
+          <div class="row">
+            <app-tinymce formControlName='eventDetail'></app-tinymce>
+            <small *ngIf="eventForm.get('eventDetail').touched && eventForm.get('eventDetail').hasError('required')"
+                   class="text-danger">
+              Event detail is required
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group location-place col-md-12 col-xs-12">
+          <label>Location / Place</label>
+          <app-hyper-search
+            (onMapsChangePlace)="onMapsChangePlace($event)"
+            (onHyloChangePlace)="onHyloChangePlace($event)">
+
+          </app-hyper-search>
+        </div>
+        <div class="form-group list-categories col-md-12 col-xs-12">
+          <label for="event-category">Category</label>
+          <select name="" id="event-category" formControlName="eventCategory">
+            <option value="" selected="selected">Select a category</option>
+            <option *ngFor="let cat of categories, let i = index"  [value]="cat.tid">{{cat.name}}</option>
+          </select>
+          <small *ngIf="eventForm.get('eventCategory').touched && eventForm.get('eventCategory').hasError('required')"
+                 class="text-danger">
+            Event category is required
+          </small>
+        </div>
+        <div class="form-group list-img-box col-md-12 col-xs-12">
+          <label class="control-label">Images</label>
+          <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
+            <i class="fa fa-plus"></i>&nbsp;Add images
+            <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
+                   (change)="readUrl($event)" multiple="multiple">
+          </label>
+          <small *ngIf="previewUrl == 0" class="text-danger">
+            Event images is required
+          </small>
+          <div class="list-img-wrap">
+            <div *ngFor="let img of previewUrl" class="preview-wrap">
+              <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
+              <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="option-info col-xs-12 col-md-12">
+        <a (click)="showMore = !showMore">
+          <i class="fa" [class.fa-plus]="!showMore" [class.fa-minus]="showMore"  aria-hidden="true"></i> Optional info
+        </a>
+      </div>
+      <div *ngIf="showMore" class="row">
+        <div class="input-box col-xs-12 col-md-6">
+          <div class="form-group">
+            <label for="event-date">Date & Time</label>
+            <input id="event-date" required formControlName="eventDate" ngui-datetime-picker  />
+          </div>
+          <div class="form-group">
+            <label for="event-price">Price</label>
+            <input formControlName="eventPrice" id="event-price"
+                   class="form-control"
+                   min="0"
+                   max="300"
+                   value="0"
+                   type="number"
+                   (change)="onEventPriceChange($event)"
+            >
+            <span class="dollar-character">$</span>
+            <small id="eventPriceErr"
+                   class="text-danger">
+
+            </small>
+          </div>
+          <div class="field-group row">
+            <label>Call to Action</label>
+            <div class="form-group" formGroupName="call2action">
+              <select name="" id="event-type" formControlName="eventType">
+                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+              </select>
+              <input placeholder="http://wwww.sistic.com.sg" formControlName="eventLink" id="event-link" class="form-control" type="text">
+              <i class="fa fa-link" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mentioned By</label>
+            <div formArrayName="eventMentions">
+              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
+                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text" class="form-control" [formControlName]="i">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-success" (click)="addMention()">
+              <i class="fa fa-plus"></i>&nbsp;Add Mention
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="recaptcha">
+        <re-captcha (captchaResponse)="checkCaptcha($event)" site_key="6LexpiUTAAAAABQlThPYAyDxBJoTP_QFzwdE4L9p">
+        </re-captcha>
+      </div>
+      <div class="form-actions col-xs-12 col-md-12">
+        <button type="submit"
+                [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
+          Share
+        </button>
+        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+      </div>
+    </form>
+  </div>
+  <!--form wrap end-->
+
+  <!--list preview wrap start-->
+  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
+    <div class="row">
+      <div class="col-md-7 left-content">
+        <div class="event-title">
+          <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
+             ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
+          <span class="One-Direction-Concer" [innerHTML]="previewData.eventName"></span>
+        </div>
+
+        <hr>
+
+        <div class="row information-event">
+          <ul class="left-content-information-event">
+            <li>
+              <p>location</p><span>{{previewData.eventPlace.place}}</span>
+            </li>
+            <li>
+              <p>date / time</p><span>{{previewData.Date*1000 | date:'d MMMM y'}}</span>
+            </li>
+            <li>
+              <p>price range</p>
+              <span>{{previewData.eventPrice}}$<b>.</b>
+                <a href="{{previewData.call2action.eventLink}}">
+                  <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
+                </a>
+              </span>
+            </li>
+            <li>
+              <p>Mentioned by</p>
+              <ul class="list-mention">
+                <li *ngFor="let mention of previewData.eventMentions">
+                  <a [href]="mention" target="_blank">
+                    <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="right-creator-share-event text-center pull-right">
+            <h4 class="title-creator">Created by</h4>
+            <a>
+              <p class="avatar-creator">
+                <img [src]="user.field_image" alt="avatar" class="img-circle" width="70"
+                     height="70">
+              </p>
+              <p class="name-creator">
+                {{user.name}}
+              </p>
+            </a>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="detail-event">
+          <h5 class="bold">Details</h5>
+          <p [innerHTML]="previewData.eventDetail">
+          </p>
+        </div>
+
+        <hr>
+
+        <div class="post-experience">
+          <h4 class="experiences-post-review">Experiences (0)</h4>
+          <h5 class="bold">Post your experience</h5>
+          <img class="img-circle pull-left" [src]="user.field_image" alt="hklin avatar" width="70" height="70">
+          <p class="rate-stars-post-experiences">
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+            <i fa [name]="'star-o'" [size]=1></i>
+          </p>
+          <p>
+            <textarea style="min-width: 90%" placeholder="What's your experience here?"></textarea>
+          </p>
+          <p class="add-images-button-post-review">
+            <a>+ Add Images</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-5 right-content">
+
+        <div class="row">
+          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition" [carouselSlides]="slides">
+            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
+                   [ngStyle]="{
+                   'background-image': 'url(' + slide.image + ')',
+                   'background-position': 'center, center',
+                    'height': '480px', 'background-size': 'cover'}">
+            </slide>
+          </carousel>
+        </div>
+
+        <div class="event-location">
+          <p>Location</p>
+          <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
+            [zoom]="13" [styles]="gMapStyles">
+            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng">
+            </sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--list preview wrap end-->
+
+</article>

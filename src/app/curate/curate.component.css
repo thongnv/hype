@@ -1,0 +1,242 @@
+/*left box start*/
+.left-box {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: 1px solid #eaeaea;
+    border-left: 1px solid #eaeaea;
+}
+.top-content {
+    padding: 30px 40px;
+    border-bottom: 1px solid #eaeaea;
+}
+ul.list-category {
+    list-style: none;
+    padding-left: 0;
+}
+ul.list-category li {
+    float: left;
+    margin-right: 40px;
+    opacity: 0.5;
+    font-size: 14px;
+    line-height: 1;
+    text-align: left;
+    color: #3b3b3b;
+}
+ul.list-category li.active {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: left;
+    color: #2a6be1;
+    opacity: 1;
+}
+.wrap-post-content {
+    display: block;
+}
+.primary-content .row{
+    margin-left: 0;
+}
+.primary-content {
+    padding: 25px 40px;
+}
+.primary-content > h4 {
+    font-weight: bold;
+    margin: 40px 0 20px 0;
+    clear: both;
+}
+p.author {
+    float: left;
+    margin-right: 20px;
+    position: absolute;
+    bottom: 1%;
+    left: 4%;
+    color: #fff;
+    font-size: 12px;
+}
+p.author a {
+    color: #fff;
+}
+.post-content  {
+    width: 33%;
+    float: left;
+    height: 260px;
+    position: relative;
+}
+.post-content .post-content-img{
+    width: 100%;
+    height: 260px;
+}
+.post-content h4 {
+    color: #fff;
+    position: absolute;
+    bottom: 11%;
+    left: 3%;
+    text-transform: capitalize;
+}
+span.time-posts {
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+    color: #fff;
+    font-size: 12px;
+}
+.post-news {
+    float: left;
+    min-height: 390px;
+}
+
+.post-news .image-post-news img{
+    width: 100%;
+    border-radius: 2px;
+}
+
+.content-post-news {
+    clear: both;
+}
+.post-news .new-info{
+    padding: 10px;
+}
+/*left box end*/
+/*right box start*/
+.right-box > h3  {
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 30px;
+}
+ul.list-items {
+    list-style: none;
+    padding-left: 0;
+}
+ul.list-items li:not(:last-child) {
+    border-bottom: 1px solid #eaeaea;
+}
+ul.list-items li {
+    margin: 20px 0;
+}
+ul.list-items li a {
+    color: #3b3b3b;
+    font-size: 13px;
+}
+ul.list-items li p {
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1.5;
+    font-size: 16px;
+    text-align: left;
+    width: calc(100% - 70px);
+    color: #3b3b3b;
+    height: 48px;
+    overflow-y: hidden;
+    margin-top: 6px;
+}
+ul.list-items li a img {
+    margin-right: 10px;
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
+}
+.list-category li.active{
+    color: #2a6be1;
+}
+.list-category li{
+    cursor: pointer;
+    text-transform: capitalize;
+    font-size: 14px;
+    color: #3b3b3b;
+}
+
+/*right box end*/
+/*responsive*/
+@media (min-width: 1200px) {
+
+}
+@media only screen and (min-width: 992px) {
+    .post-content-img{
+        height: 256px;
+    }
+    .right-box{
+        padding-left: 30px;
+        padding-right: 0;
+    }
+}
+@media only screen and (min-width: 769px) {
+}
+@media only screen and (max-width: 768px) {
+    .left-box{
+        height: auto;
+        border-right: none;
+    }
+}
+.loading {
+  width: 100%;
+  text-align: center;
+  margin: 250px auto 0;
+  clear: both;
+}
+
+.circle1 {
+  background-color: #ec3d62;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bounce 1.5s linear infinite;
+  animation-bounce: 1.5s linear infinite;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.circle2 {
+  background-color: #ec3d62;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bounce 1.5s linear infinite;
+  animation-bounce: 1.5s linear infinite;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-delay: .2s;
+  animation-delay: .2s;
+}
+
+.circle3 {
+  background-color: #ec3d62;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bounce 1.5s linear infinite;
+  animation-bounce: 1.5s linear infinite;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-delay: .4s;
+  animation-delay: .4s;
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+  }
+}
+@keyframes bounce {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+}
