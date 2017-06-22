@@ -3,9 +3,6 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
-// 3rds
-import { Ng2ImgToolsService } from 'ng2-img-tools';
-
 import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
@@ -64,7 +61,6 @@ export class ShareEventComponent implements OnInit {
               public appState: AppState,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private ng2ImgToolsService: Ng2ImgToolsService,
               public mainService: MainService,
               private router: Router) {
 
