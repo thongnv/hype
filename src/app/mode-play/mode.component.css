@@ -230,10 +230,10 @@ ul.itemSort li a i {
 .list-items .avatar .badge {
     position: absolute;
     z-index: 9;
-    border-radius: 50%;
+    border-radius: 10px;
     top: -8px;
     left: -12px;
-    width: 34px;
+    /*width: 34px;*/
     height: 34px;
     background-color: #5052ea;
     padding-top: 10px;
