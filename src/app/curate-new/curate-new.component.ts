@@ -197,7 +197,9 @@ export class CurateNewComponent implements OnInit {
     geocoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
-        this.formData.get('listPlaces').controls[i].patchValue({
+        let placeControl = this.formData.get('listPlaces') as FormArray;
+        let place = placeControl.at(i);
+        place.patchValue({
           keyword: data.structured_formatting.main_text,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng(),
@@ -208,7 +210,10 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onHyloChangePlace(data, i) {
-    this.formData.get('listPlaces').controls[i].patchValue({
+    // let control = this.formData.get('listPlaces').controls[i] as FormGroup;
+    let placeControl = this.formData.get('listPlaces') as FormArray;
+    let place = placeControl.at(i);
+    place.patchValue({
       keyword: data.Title,
       lat: Number(data.Lat),
       lng: Number(data.Long),
