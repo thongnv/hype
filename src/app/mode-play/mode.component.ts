@@ -136,6 +136,7 @@ export class ModeComponent implements OnInit {
     }
 
     changeCategory() {
+        this.clearParams();
         this.loaderService.show();
         this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
@@ -207,13 +208,10 @@ export class ModeComponent implements OnInit {
     }
 
     changeType() {
+        this.clearParams();
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
-        this.markers = [];
-        this.items = [];
-        this.cuisine = [];
-        this.params.cuisine = '';
         this.loaderService.show();
         this.getDataModes();
         this.getFilter();
@@ -351,18 +349,9 @@ export class ModeComponent implements OnInit {
     }
 
     public filterCancel() {
-        this.currentRate = 0;
-        this.priceRange = [0, 50]
-        this.cuisine = [];
-        this.best = [];
-        this.type = [];
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
-        this.params.price = '';
-        this.params.rate = 0;
-        this.params.cuisine = '';
-        this.params.bestfor = '';
-        this.params.type = '';
+        this.clearParams();
         this.loaderService.show();
         this.getDataModes();
 
@@ -541,6 +530,10 @@ export class ModeComponent implements OnInit {
         this.params.price = '';
         this.params.bestfor = '';
         this.params.type = '';
+        this.params.limit = 20;
+        this.params.page = 0;
+        this.markers = [];
+        this.items = [];
     }
 
     selectCheckBox(event, item) {
