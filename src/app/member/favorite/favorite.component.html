@@ -13,7 +13,7 @@
         <button class="btn btn-default" (click)="onSelectFavoriteType('list')" [class.active]="selectedFavoriteType === 'list'">Lists</button>
         <button class="btn btn-default" (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</button>
       </div>
-      <div class="tab-wrap" slimScroll width="auto" height="calc(100vh - 200px)" size="7px"
+      <div class="tab-wrap" slimScroll width="100%" height="calc(100vh - 200px)" size="7px"
            (scroll)="onScrollToBottom($event)"
            [alwaysVisible]="true"
            [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">

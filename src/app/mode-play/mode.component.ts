@@ -6,6 +6,7 @@ import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-ma
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import {LoaderService} from "../shared/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
+import { Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
 
@@ -38,6 +39,7 @@ export class ModeComponent implements OnInit {
     public mode:any = {};
     public cuisine:any[] = [{}];
     public best:any[] = [{}];
+    public type:any[] = [{}];
     public mapZoom:number = 12;
     public lat:number = 1.3089757786697331;
     public lng:number = 103.8258969783783;
@@ -62,9 +64,6 @@ export class ModeComponent implements OnInit {
         bestfor: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
-        //lat: 1.352083,
-        //long: 103.819836,
-        //radius: (this.currentRadius / 1000),
         page: 0,
         limit: 20
     };
@@ -75,7 +74,8 @@ export class ModeComponent implements OnInit {
                        private modeService:ModeService,
                        private rateConfig:NgbRatingConfig,
                        private mapsAPILoader:MapsAPILoader,
-                       private loaderService:LoaderService) {
+                       private loaderService:LoaderService,
+                       private route:Router) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -136,8 +136,8 @@ export class ModeComponent implements OnInit {
     }
 
     changeCategory() {
+        this.clearParams();
         this.loaderService.show();
-        console.log(this.filterCategory.value.filterCategory);
         this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
     }
@@ -208,11 +208,10 @@ export class ModeComponent implements OnInit {
     }
 
     changeType() {
+        this.clearParams();
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
-        this.markers = [];
-        this.items = [];
         this.loaderService.show();
         this.getDataModes();
         this.getFilter();
@@ -220,6 +219,8 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
+        this.items =[];
+        this.markers=[];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
@@ -280,10 +281,12 @@ export class ModeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
-            this.loadMore = true;
-            this.params.page += 1;
-            this.loaderService.show();
-            this.getDataModes();
+            if (this.total > this.items.length) {
+                this.loadMore = true;
+                this.params.page += 1;
+                this.loaderService.show();
+                this.getDataModes();
+            }
         }
 
         if (event.target.children[0].children.length > 1) {
@@ -319,6 +322,7 @@ export class ModeComponent implements OnInit {
         let cuisine = new Array();
         let best = new Array();
         let type = new Array();
+        console.log(this.cuisine);
         Object.keys(this.cuisine).map(function (k) {
             if (k !== '0') {
                 cuisine.push(k);
@@ -347,16 +351,9 @@ export class ModeComponent implements OnInit {
     }
 
     public filterCancel() {
-        this.currentRate = 0;
-        this.priceRange = [0, 50]
-        this.cuisine = [];
-        this.best = [];
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
-        this.params.price = '';
-        this.params.rate = 0;
-        this.params.cuisine = '';
-        this.params.bestfor = '';
+        this.clearParams();
         this.loaderService.show();
         this.getDataModes();
 
@@ -390,9 +387,10 @@ export class ModeComponent implements OnInit {
 
             this.loaderService.hide();
         }, err=> {
-            this.alertType = 'error';
-            this.msgContent = 'Sorry, favorite error please try again';
             this.loaderService.hide();
+            if (err.status == 401 || err.status == 403) {
+                this.route.navigate(['login']);
+            }
             console.log(err);
         });
     }
@@ -522,6 +520,39 @@ export class ModeComponent implements OnInit {
             }
             //return this.items;
         });
+    }
+
+    private clearParams() {
+        this.cuisine = [];
+        this.type = [];
+        this.best = [];
+        this.currentRate = 0;
+        this.priceRange = [0, 50];
+        this.params.cuisine = '';
+        this.params.price = '';
+        this.params.bestfor = '';
+        this.params.type = '';
+        this.params.limit = 20;
+        this.params.page = 0;
+        this.markers = [];
+        this.items = [];
+    }
+
+    selectCheckBox(event, item) {
+        console.log(event);
+        if (event) {
+            if (item.sub) {
+                for (let i = 0; i < item.sub.length; i++) {
+                    item.sub[i].checked = !item.sub[i].checked;
+                }
+            }
+        } else {
+            if (item.sub) {
+                for (let i = 0; i < item.sub.length; i++) {
+                    item.sub[i].checked = false;
+                }
+            }
+        }
     }
 
 }

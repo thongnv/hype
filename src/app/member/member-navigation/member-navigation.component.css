@@ -73,9 +73,6 @@
     font-weight: 700;
     color: #ec3d62;
 }
-.avatar-wrap, .follow-wrap {
-    margin-bottom: 20px;
-}
 .user-info-wrap {
     overflow: hidden;
     box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
@@ -92,6 +89,7 @@
 }
 .avatar-wrap, .follow-wrap {
     margin-top: 10px;
+    margin-bottom: 20px;
     padding: 0 5px;
     text-align: center;
 }
@@ -106,14 +104,46 @@
 }
 @media screen and (min-width: 544px) {
 }
-@media screen and (max-width: 543px) {
-}
 @media screen and (max-width: 991px) {
     .member-nav > li {
         text-align: center;
         padding-left: 0;
+        height: 40px;
+        line-height: 40px;
     }
     .follow-wrap {
         float: left;
+    }
+    .user-avatar{
+        margin-left: 0;
+        width: 60px;
+        height: 60px;
+    }
+    .user-name{
+        font-size: 16px;
+        line-height: 30px;
+        height: 30px;
+    }
+    .user-name-wrap{
+        width: calc(100% - 60px);
+        height: 60px;
+        line-height: 18px;
+    }
+    .avatar-wrap, .follow-wrap {
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+        height: 80px;
+    }
+    .follow-wrap{
+        padding: 10px 5px;
+    }
+}
+@media screen and (max-width: 543px) {
+    .follow-item {
+        padding-top: 10px;
+    }
+    .follow-number-label{
+        font-size: 12px;
     }
 }

@@ -143,6 +143,9 @@
     .nav-indicator{
         margin: 16px 0;
     }
+    .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+        background-color: transparent;
+    }
 }
 
 

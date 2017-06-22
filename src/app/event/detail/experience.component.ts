@@ -53,11 +53,9 @@ import { EventService } from '../../services/event.service';
           </a>
           {{likeNumber}} Likes
         </div>
-        <div class="comments-area">
+        <div class="comments-area" (click)="onClickFocusMsgInput()">
           <a>
             <img src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
-          </a>
-          <a>
             {{comments.length}} Comments
           </a>
         </div>
@@ -120,6 +118,7 @@ export class ExperienceComponent implements Experience, OnInit {
   public comments: HyloComment[];
   public likeNumber: number;
   public liked: boolean;
+  public clickedLike = false;
   public commentIndex = 2;
 
   constructor(private eventService: EventService,
@@ -153,6 +152,10 @@ export class ExperienceComponent implements Experience, OnInit {
     }
   }
 
+  public onClickFocusMsgInput() {
+    this.commentInput.nativeElement.focus();
+  }
+
   public addComment(msgInput) {
     if (msgInput.value.trim()) {
       let eventSlugName = this.event.slugName;
@@ -183,18 +186,21 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public toggleLikeExperience() {
-    let liked = !this.liked;
-    let experience = this;
-    this.eventService.toggleLike(experience).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.liked = liked;
-        this.likeNumber += liked ? 1 : -1;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if (!this.clickedLike) {
+      this.clickedLike = true;
+      this.eventService.toggleLike(this.id, !this.liked).subscribe(
+        (resp) => {
+          console.log(resp);
+          this.liked = !this.liked;
+          this.likeNumber += this.liked ? 1 : -1;
+          this.clickedLike = false;
+        },
+        (error) => {
+          this.clickedLike = false;
+          console.log(error);
+        }
+      );
+    }
   }
 
   public OpenImageModel(imageSrc, images) {
