@@ -68,9 +68,6 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
-header .navbar-brand{
-    margin-top: 5px;
-}
 .navbar-default .navbar-brand{
     color: #ffffff;
 }
@@ -99,7 +96,9 @@ header .navbar-brand{
     }
 }
 @media (max-width: 991px) {
-
+    header .navbar-brand{
+        margin-top: 5px;
+    }
     .navbar-header {
         float: none;
     }

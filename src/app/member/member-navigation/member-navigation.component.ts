@@ -14,6 +14,7 @@ export class MemberNavigationComponent implements OnInit {
   @Input('slugName') public slugName: any;
   @Input('userFollow') public userFollow: any;
   @Input('showFollow') public showFollow: boolean;
+  @Input('currentComponent') public currentComponent: string = '';
   public show: boolean;
   private isCurrentUser: boolean = false;
 
