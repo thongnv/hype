@@ -219,6 +219,8 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
+        this.items =[];
+        this.markers=[];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
                 for (let i = 0; i < companies.length; i++) {
