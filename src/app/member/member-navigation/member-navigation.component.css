@@ -150,3 +150,12 @@
         font-size: 12px;
     }
 }
+
+@media screen and (max-width: 768px) and (min-width: 320px){
+  .hype .count-follow{
+    display: none;
+  }
+  .member-nav>li{
+    box-shadow: 0 1px 0px 0 rgba(205, 205, 205, 0.5);
+  }
+}
