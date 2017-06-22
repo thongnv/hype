@@ -574,7 +574,7 @@ ul.list-stars-on-post {
 
 .carousel-indicators {
   position: relative;
-  top: 10px;
+  top: 1em;
   width: 100%;
   overflow: hidden;
   left: 0;
@@ -587,11 +587,11 @@ ul.list-stars-on-post {
 .carousel-indicators > div {
   display: inline-block;
   float: left;
-  width: 120px;
+  width: 23.5%;
   height: 90px;
   border-radius: 0;
   background-size: 100% 100%;
-  margin-right: 16px;
+  margin-right: 2%;
   text-indent: -999px;
   cursor: pointer;
   border: 1px solid #fff;
@@ -603,8 +603,6 @@ ul.list-stars-on-post {
 }
 
 .carousel-indicators > .active {
-  width: 120px;
-  height: 90px;
   border: solid 1px  #ec3d62;
 }
 

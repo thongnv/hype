@@ -169,13 +169,10 @@ export class EventService {
     });
   }
 
-  public toggleLike(comment: HyloComment | Experience): Observable<Response> {
+  public toggleLike(cid, like): Observable<Response> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    let data = {
-      cid: comment.id,
-      like: !comment.liked
-    };
+    let data = {cid, like};
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/like',
       JSON.stringify(data), options
