@@ -14,7 +14,7 @@
   height: 100vh;
   top:0;
   left: 0;
-  opacity: 0.8;
+  opacity: 0.6;
   background: #000;
   z-index: 500000;
 }
@@ -27,4 +27,14 @@
   left: 46%;
   transform: translateY(-50%);
   width: 160px;
+}
+@media only screen and (max-width: 768px) and (min-width: 320px)  {
+
+  .image-animation img{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translateY(-50%);
+    width: 80px;
+  }
 }
