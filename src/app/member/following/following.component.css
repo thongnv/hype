@@ -12,6 +12,19 @@
     height: 30px;
     line-height: 30px;
 }
+
+@media screen and (max-width: 768px) and (min-width: 320px){
+  .count-follow{
+    display: none;
+  }
+  .col-left.table-cell{
+    padding: 0;
+  }
+  .col-right.table-cell{
+    padding: 0;
+  }
+}
+
 @media screen and (min-width: 1200px){}
 @media screen and (min-width: 992px){}
 @media screen and (min-width: 768px){}

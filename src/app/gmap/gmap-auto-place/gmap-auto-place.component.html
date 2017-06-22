@@ -13,6 +13,7 @@
            (click)="onOpenSuggestion()">
     <input hidden type="text" formControlName="lat">
     <input hidden type="text" formControlName="lng">
+    <input hidden type="text" formControlName="slug">
     <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">This field is required</small>
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
@@ -42,7 +43,7 @@
         </ul>
         <ul *ngIf="result.event?.length" class="list-location-address">
           <li class="title-search-location-address">
-            <a>Lists</a>
+            <a>Event</a>
           </li>
           <li *ngFor="let item of result.event;trackBy:item?.id">
             <a class="item-link" (click)="onCloseSuggestion(item)">
