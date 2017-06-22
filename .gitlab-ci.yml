@@ -1,0 +1,9 @@
+deploy:
+  script:
+    - whoami
+    - cd /var/www/angular.hylo
+    - git pull
+    - npm run build:prod
+  only:
+  - staging
+
