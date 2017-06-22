@@ -118,8 +118,8 @@
         <div *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
           <ng-container *ngIf="plc?.keyword">
             <div class="place-item-header">
-              <strong class="pull-left place-index">#{{index+1}}</strong><strong class="place-name">{{plc.place}}</strong>
-                class="place-name">{{plc.place}}</strong>
+              <strong class="pull-left place-index">#{{index+1}}</strong>
+              <strong class="place-name">{{plc.place}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
             <div class="place-item-img">
