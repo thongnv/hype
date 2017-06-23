@@ -7,7 +7,7 @@ let API_ENDPOINT = '';
 if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 } else {
-  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/api/v1';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 }
 
 console.log('current API: ', API_ENDPOINT);
