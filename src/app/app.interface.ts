@@ -18,6 +18,7 @@ export interface BaseUser {
 }
 
 export interface HyloEvent {
+  id: number;
   creator: BaseUser;
   name: string;
   location: Location;

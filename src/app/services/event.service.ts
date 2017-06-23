@@ -21,6 +21,7 @@ export class EventService {
 
   public static extractEventDetail(data): HyloEvent {
     return {
+      id: data.nid,
       creator: {
         name: data.user_post.name,
         avatar: data.user_post.user_picture,
@@ -141,6 +142,9 @@ export class EventService {
       };
     })
       .catch((error: any) => {
+        if (error.status === 403) {
+          this.router.navigate(['login'], {skipLocationChange: true}).then();
+        }
         return Observable.throw(new Error(error));
     });
   }
@@ -166,14 +170,17 @@ export class EventService {
       };
     })
       .catch((error: any) => {
+        if (error.status === 403) {
+          this.router.navigate(['login'], {skipLocationChange: true}).then();
+        }
         return Observable.throw(new Error(error));
     });
   }
 
-  public toggleLike(cid, like): Observable<Response> {
+  public toggleLike(nid, cid, like): Observable<Response> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    let data = {cid, like};
+    let data = {nid, cid, like};
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/v1/comment/like',
       JSON.stringify(data), options

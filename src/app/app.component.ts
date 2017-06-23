@@ -4,7 +4,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { Title } from '@angular/platform-browser';
 import { AppState } from './app.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
@@ -22,7 +21,10 @@ export class AppComponent implements OnInit {
   public userInfo = {};
   public loginData = {};
 
-  constructor(public appState: AppState, private titleService: Title, private localStorageService: LocalStorageService) {
+  constructor(
+    public appState: AppState,
+    private localStorageService: LocalStorageService
+  ) {
     this.userInfo = {
       isLogin: false,
       userName: '',
@@ -39,7 +41,6 @@ export class AppComponent implements OnInit {
       showNav: true,
       acceptNotification: true
     };
-    titleService.setTitle('Hylo');
   }
 
   public ngOnInit(): void {
@@ -51,11 +52,4 @@ export class AppComponent implements OnInit {
     console.log('Initial App State 2', this.appState.state.userInfo);
   }
 
-  public setTitle(newTitle: string) {
-    this.titleService.setTitle(newTitle);
-  }
-
-  public demo(): void {
-    this.appState.set('userInfo', this.userInfo);
-  }
 }
