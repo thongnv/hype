@@ -1,15 +1,13 @@
 <div *ngIf="notifications" class="user-option map-option right" ngbDropdown>
-  <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
-     ngbDropdownToggle>
+  <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"(click)="notifyClick()">
     <i id="notif" fa [name]="'bell-o'" [size]=2></i>
     <span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>
   </a>
 
-  <ul class="dropdown-menu" id="notifications">
+  <ul class="notify-content"[class.on-mobile]="onNotify" id="notifications">
     <li>
       <span class="notify-left">Notifications</span>
       <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>
-      <div class="arrow-up"></div>
     </li>
     <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="290px" size="7px"
          [railVisible]="true"
