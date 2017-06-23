@@ -37,7 +37,7 @@ export class ModeComponent implements OnInit {
     public currentHighlightedMarker:number = 1;
     public currentRate = 0;
     public mode:any = {};
-    public cuisine:any;
+    private cuisine:any;
     public best:any;
     public type:any;
     public mapZoom:number = 12;
@@ -132,7 +132,7 @@ export class ModeComponent implements OnInit {
             this.markers = [];
             this.loaderService.hide();
         });
-        //this.loaderService.hide();
+        this.loaderService.hide();
     }
 
     changeCategory() {
@@ -322,17 +322,19 @@ export class ModeComponent implements OnInit {
         let cuisine = new Array();
         let best = new Array();
         let type = new Array();
-        console.log(this.cuisine);
         if (this.cuisine) {
-            cuisine.push(this.cuisine.name);
-            if (this.cuisine.sub) {
-                for (let i = 0; i < this.cuisine.sub.length; i++) {
-                    if (this.cuisine.sub[i].checked) {
-                        cuisine.push(this.cuisine.sub[i].name);
+            for(let j = 0 ;j < this.cuisine.length; j ++) {
+                cuisine.push(this.cuisine[j].name);
+                if (this.cuisine[j].sub) {
+                    for (let i = 0; i < this.cuisine[j].sub.length; i++) {
+                        if (this.cuisine[j].sub[i].checked) {
+                            cuisine.push(this.cuisine[j].sub[i].name);
+                        }
                     }
                 }
             }
         }
+        console.log(cuisine);
         if (this.best) {
             Object.keys(this.best).map(function (k) {
                 if (k !== '0') {
@@ -361,6 +363,7 @@ export class ModeComponent implements OnInit {
         if (this.showRate) {
             this.params.rate = this.currentRate;
         }
+
         this.loaderService.show();
         this.getDataModes();
     }
@@ -552,19 +555,18 @@ export class ModeComponent implements OnInit {
         this.markers = [];
         this.items = [];
     }
-
+    private cuisineDraw = [];
     selectCheckBox(event, parent, sub) {
         if (event) {
-            this.cuisine = [];
-            parent.checked = true;
             if (sub) {
+                parent.checked = true;
                 console.log(1);
                 for (let i = 0; i < parent.sub.length; i++) {
                     if (parent.sub[i].name == sub.name) {
                         parent.sub[i].checked = true;
                     }
                 }
-                this.cuisine = parent;
+                this.cuisineDraw.push(parent);
             } else {
                 console.log(2);
                 if (parent.sub) {
@@ -574,10 +576,9 @@ export class ModeComponent implements OnInit {
                 } else {
                     parent.checked = true;
                 }
-                this.cuisine = parent;
+                this.cuisineDraw.push(parent);
             }
         } else {
-            this.cuisine = [];
             if (sub) {
                 console.log(3);
                 if (parent.sub) {
@@ -589,6 +590,9 @@ export class ModeComponent implements OnInit {
                 } else {
                     parent.checked = false;
                 }
+                this.cuisineDraw = this.cuisineDraw.filter(function(el) {
+                    return el.name !== parent.name;
+                });
 
             } else {
                 console.log(4);
@@ -599,9 +603,13 @@ export class ModeComponent implements OnInit {
                 } else {
                     parent.checked = false;
                 }
-                this.cuisine = parent;
+                this.cuisineDraw = this.cuisineDraw.filter(function(el) {
+                    return el.name !== parent.name;
+                });
             }
         }
+        this.cuisine = this.cuisineDraw;
+
     }
 
 
