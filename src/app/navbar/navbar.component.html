@@ -40,11 +40,10 @@
       <ul class="nav navbar-nav hype-nav">
         <li *ngIf="loginData" class="pull-right nav-item add-event-button">
           <div class="user-option map-option pull-right" ngbDropdown>
-            <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false"
-               ngbDropdownToggle>
+            <a class="dropdown-toggle" id="drop3" role="button" aria-haspopup="true" aria-expanded="false" (click)="mobile_createState()">
               <i class="glyphicon glyphicon-plus text-white glyphicon-2x"></i>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="drop3">
+            <ul class="create-content-mobile"[class.on-mobile]="oncreate" aria-labelledby="drop3">
               <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 Create New List
               </li>
@@ -73,6 +72,9 @@
 
   <div class="search-mobile"[class.on-mobile]="onsearch">
     <app-search></app-search>
+  </div>
+  <div class="notify-mobile">
+
   </div>
   <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
