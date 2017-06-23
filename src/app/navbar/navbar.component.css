@@ -191,7 +191,12 @@
   }
   .search-mobile.on-mobile{
     display: block;
+    height: 50px;
   }
+    input.form-control.input-keyword {
+        height: 50px;
+        width: 100%;
+    }
 }
 
 
