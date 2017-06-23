@@ -1,12 +1,13 @@
 deploy:
   script:
     - whoami
-    - cd /var/www/angular.hylo
+    - cd /var/www/angular.hylo.staging
     - git remote -v
     - git checkout staging
     - git pull
     - npm i
     - npm run build:prod
+    - yes | cp -R dist/ /var/www/angular.hylo
   only:
   - staging
 
