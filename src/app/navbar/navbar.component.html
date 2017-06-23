@@ -64,11 +64,15 @@
                             (onMarkOneRead)="onMarkOneRead($event)">
           </app-notification>
         </li>
-        <li class="pull-right map-option nav-item">
+        <li class="pull-right map-option nav-item"(click)="mobile_searchState()">
           <i class="glyphicon glyphicon-search text-white glyphicon-2x"></i>
         </li>
       </ul>
     </div>
+  </div>
+
+  <div class="search-mobile"[class.on-mobile]="onsearch">
+    <app-search></app-search>
   </div>
   <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
@@ -100,8 +104,7 @@
 
         </div>
       </li>
-      <li class="sprite sprite-line nav-indicator"></li>
-      <li class="map-option nav-item">
+      <li class="sprite sprite-line nav-indicator">
         <app-search></app-search>
       </li>
       <li *ngIf="loginData" class="pull-right nav-item add-event-button">

@@ -555,3 +555,6 @@ nouislider.ng2-nouislider {
     border: none;
     background: transparent;
 }
+.form-control-static::-ms-expand {
+    display: none;
+}

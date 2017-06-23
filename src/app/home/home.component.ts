@@ -71,6 +71,7 @@ export class HomeComponent implements OnInit {
     private loadMore:boolean = false;
     public screenWidth:number = 0;
     public screenHeight:number = 0;
+    public circleDraggable:boolean = true;
     private params:any = {
         'page': 0,
         'limit': 20,
@@ -133,7 +134,7 @@ export class HomeComponent implements OnInit {
         this.screenHeight = height;
     }
 
-    public onResize(event):void{
+    public onResize(event):void {
         let width = window.innerWidth
             || document.documentElement.clientWidth
             || document.body.clientWidth;
@@ -145,13 +146,13 @@ export class HomeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
-        let number = Math.floor(this.screenWidth/70) - 1;
-        if(this.screenWidth <992){
-            this.categories = this.drawCategories.slice(0, number-1);
-        }else{
-            if(this.screenWidth <1025) {
+        let number = Math.floor(this.screenWidth / 70) - 1;
+        if (this.screenWidth < 992) {
+            this.categories = this.drawCategories.slice(0, number - 1);
+        } else {
+            if (this.screenWidth < 1025) {
                 this.categories = this.drawCategories.slice(0, 4);
-            }else{
+            } else {
                 this.categories = this.drawCategories.slice(0, 6);
             }
         }
@@ -173,7 +174,7 @@ export class HomeComponent implements OnInit {
     }
 
     public onClearForm():void {
-        this.selectedEventOrder = this.eventOrder[0];
+        //this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.showMap = false;
         this.selected = false;
@@ -186,6 +187,7 @@ export class HomeComponent implements OnInit {
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
+        this.params.price = [0, 50]
         this.getTrending();
     }
 
@@ -344,16 +346,16 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            let number = Math.floor(this.screenWidth/70) - 1;
-            if(this.screenWidth <992){
-                 if (resp.data.length >= number) {
-                    this.categories = resp.data.slice(0,number -1);
+            let number = Math.floor(this.screenWidth / 70) - 1;
+            if (this.screenWidth < 992) {
+                if (resp.data.length >= number) {
+                    this.categories = resp.data.slice(0, number - 1);
                 }
-            }else{
-                if(this.screenWidth <1025) {
-                    this.categories = resp.data.slice(0,4);
-                }else{
-                    this.categories = resp.data.slice(0,6);
+            } else {
+                if (this.screenWidth < 1025) {
+                    this.categories = resp.data.slice(0, 4);
+                } else {
+                    this.categories = resp.data.slice(0, 6);
                 }
 
             }
@@ -367,18 +369,18 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-            if(this.screenWidth <992) {
+            if (this.screenWidth < 992) {
                 let number = Math.floor(this.screenWidth / 70) - 1;
                 if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
-            }else{
+            } else {
 
-                if(this.screenWidth <1025) {
+                if (this.screenWidth < 1025) {
                     this.categories = this.drawCategories.slice(0, 4);
-                }else{
+                } else {
                     this.categories = this.drawCategories.slice(0, 6);
                 }
             }
-                console.log(this.categories);
+            console.log(this.categories);
         }
         console.log(e);
     }

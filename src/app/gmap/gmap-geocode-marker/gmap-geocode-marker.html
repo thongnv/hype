@@ -1,7 +1,7 @@
 <sebm-google-map-circle *ngIf="showCircle" [latitude]="lat" [longitude]="lng"
                         [radius]="currentRadius"
                         [fillColor]="'red'"
-                        [circleDraggable]="false"
+                        [circleDraggable]="circleDraggable"
                         [editable]="true"
                         [clickable]="false"
                         (radiusChange)="markerRadiusChange($event)"
