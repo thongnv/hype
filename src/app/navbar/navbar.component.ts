@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   };
 
   public constructor(public appState: AppState, private mainService: MainService,
-                     private localStorageService: LocalStorageService) {
+                     private localStorageService: LocalStorageService,private router:Router) {
     let notificationPage = this.appState.state.notificationPage;
     if (notificationPage !== undefined) {
       this.notificationPage = notificationPage;
@@ -32,6 +32,7 @@ export class NavbarComponent implements OnInit {
 
   public onSelectMapOption(option: any): void {
     this.selectedMapOption = option;
+    this.router.navigate(['/discover/'+option.name]);
   }
 
   public toggleState() {

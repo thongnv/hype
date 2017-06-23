@@ -6,7 +6,7 @@ import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-ma
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import {LoaderService} from "../shared/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
 
@@ -75,7 +75,8 @@ export class ModeComponent implements OnInit {
                        private rateConfig:NgbRatingConfig,
                        private mapsAPILoader:MapsAPILoader,
                        private loaderService:LoaderService,
-                       private route:Router) {
+                       private route:ActivatedRoute,
+                       private router:Router,) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -84,7 +85,7 @@ export class ModeComponent implements OnInit {
         this.filterCategory = this.formBuilder.group({
             filterCategory: 'all'
         });
-
+        //console.log(this.is)
         this.sortBy = [
             {"id": "all", "name": 'Sort By'},
             {"id": "ratings", "name": "Ratings"},
@@ -93,7 +94,6 @@ export class ModeComponent implements OnInit {
             {"id": "favorites", "name": "Number of favorites"},
             {"id": "distance", "name": "Distance (KM)"}
         ]
-
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
         this.loaderService.show();
@@ -105,6 +105,43 @@ export class ModeComponent implements OnInit {
         this.getDataModes();
         this.getFilter();
         // this.renderMaker(5000);
+        this.route.params.subscribe((param) => {
+            if (param.location) {
+                this.mapsAPILoader.load().then(() => {
+                    let geocoder = new google.maps.Geocoder();
+                    if (geocoder) {
+                        geocoder.geocode({'address': param.location}, (response, status)=> {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                                    this.lat = response[0].geometry.location.lat();
+                                    this.lng = response[0].geometry.location.lng()
+                                }
+                            } else {
+
+                                if (navigator.geolocation) {
+                                    navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+                                }
+                            }
+                        });
+                    }
+                });
+
+            } else {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+                }
+
+            }
+        });
+    }
+
+    setPosition(position) {
+        if (position.coords) {
+            this.lat = position.coords.lat;
+            this.lng = position.coords.lng;
+            console.log(this.lat);
+        }
+
     }
 
     onChange(value:number) {
@@ -332,7 +369,7 @@ export class ModeComponent implements OnInit {
         let best = new Array();
         let type = new Array();
         if (this.cuisine) {
-            for(let j = 0 ;j < this.cuisine.length; j ++) {
+            for (let j = 0; j < this.cuisine.length; j++) {
                 cuisine.push(this.cuisine[j].name);
                 if (this.cuisine[j].sub) {
                     for (let i = 0; i < this.cuisine[j].sub.length; i++) {
@@ -564,7 +601,9 @@ export class ModeComponent implements OnInit {
         this.markers = [];
         this.items = [];
     }
+
     private cuisineDraw = [];
+
     selectCheckBox(event, parent, sub) {
         if (event) {
             if (sub) {
@@ -599,7 +638,7 @@ export class ModeComponent implements OnInit {
                 } else {
                     parent.checked = false;
                 }
-                this.cuisineDraw = this.cuisineDraw.filter(function(el) {
+                this.cuisineDraw = this.cuisineDraw.filter(function (el) {
                     return el.name !== parent.name;
                 });
 
@@ -612,7 +651,7 @@ export class ModeComponent implements OnInit {
                 } else {
                     parent.checked = false;
                 }
-                this.cuisineDraw = this.cuisineDraw.filter(function(el) {
+                this.cuisineDraw = this.cuisineDraw.filter(function (el) {
                     return el.name !== parent.name;
                 });
             }
