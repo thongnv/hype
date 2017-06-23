@@ -120,6 +120,7 @@ export class CurateComponent implements OnInit {
   public loadMore() {
     if (!this.endList && !this.loading) {
       this.smallLoader.show();
+      this.loading = true;
       this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
         (response: any) => {
           this.latestArticles = this.latestArticles.concat(response.data);
@@ -129,6 +130,7 @@ export class CurateComponent implements OnInit {
           this.currentPage = this.currentPage + 1;
           this.loading = true;
           this.smallLoader.hide();
+          this.loading = false;
         }
       );
     }

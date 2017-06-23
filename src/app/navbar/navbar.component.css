@@ -169,6 +169,9 @@
     padding-left: 13%;
     border-bottom: 1px solid #e0e0e0;
   }
+  .user-info-mobile img {
+    margin-right: 3%;
+  }
   .user-info-mobile span.user-name-info {
     font-weight: bold;
     font-size: 1em;
@@ -177,8 +180,8 @@
     padding-left: 0;
   }
   ul.user-menu-mobile li {
-    text-align: center;
-    padding: 13px 0px;
+    text-align: left;
+    padding: 13px 0px 13px 70px;
     border-bottom: 1px solid #e0e0e0;
     text-transform: capitalize;
     color: #000;
