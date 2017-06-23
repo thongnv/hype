@@ -186,7 +186,20 @@
     left: 0;
     width: 100%;
     height: 100%;
+    list-style: none;
+    padding-left: 0;
+    padding-top: 40%;
   }
+    .create-content-mobile.on-mobile li {
+        text-align: center;
+        margin: 0px 20%;
+        border: 1px solid #ec3d62;
+        border-radius: 15px;
+        text-transform: capitalize;
+    }
+    .create-content-mobile.on-mobile li:first-child {
+        margin-bottom: 5%; 
+    }
   .user-info-mobile span.user-name-info {
     font-weight: bold;
     font-size: 1em;
