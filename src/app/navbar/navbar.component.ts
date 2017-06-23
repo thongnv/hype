@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
   public loginData: any;
 
   public isIn = false;
+  public onMobile = false;
   public userInfo: any;
   public mapOptions: any[];
   public notifications: any;
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
 
   public toggleState() {
     this.isIn = !this.isIn;
+    this.onMobile = !this.onMobile;
   }
 
   public ngOnInit() {

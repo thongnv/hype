@@ -97,6 +97,7 @@ import { NotificationComponent } from './navbar/notification/notification.compon
 import { StarVoteComponent } from './shared/star-vote/star-vote.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { LoaderService } from './shared/loader/loader.service';
+import { SmallLoaderService } from './shared/small-loader/small-loader.service';
 import { ReviewComponent } from './company/company-detail/review.component';
 import { Html2TextPipe } from './shared/html-2-text.pipe';
 import { FacebookModule } from 'ngx-facebook';
@@ -107,6 +108,7 @@ import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { PlaceImageComponent } from './shared/place-image/place-image.component';
+import { SmallLoaderComponent } from './shared/small-loader/small-loader.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -185,6 +187,7 @@ type StoreType = {
     SearchComponent,
     HyperSearchComponent,
     PlaceImageComponent,
+    SmallLoaderComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -231,6 +234,7 @@ type StoreType = {
     Title,
     GmapService,
     LoaderService,
+    SmallLoaderService,
     GoogleMapsAPIWrapper,
     EventService,
     CompanyService,
