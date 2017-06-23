@@ -153,8 +153,9 @@
 @media screen and (max-width: 768px) and (min-width: 320px){
   .mobile-left-sidebar{
     position: fixed;
-    background: #fff;
+    background: #f5f5f5;
     width: 50%;
+    height: 100vh;
   }
   .navbar-toggle.on-mobile{
     margin-left: 50%;
@@ -162,11 +163,25 @@
   .extra-menu.on-mobile{
     display: none;
   }
-  .user-info-mobile{
-    min-height: 50px;
-    margin-bottom: 8px;
-    margin-top: 8px;
-    margin-left: 20px;
+  .user-info-mobile {
+    min-height: 60px;
+    padding-top: 7%;
+    padding-left: 13%;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .user-info-mobile span.user-name-info {
+    font-weight: bold;
+    font-size: 1em;
+  }
+  ul.user-menu-mobile {
+    padding-left: 0;
+  }
+  ul.user-menu-mobile li {
+    text-align: center;
+    padding: 13px 0px;
+    border-bottom: 1px solid #e0e0e0;
+    text-transform: capitalize;
+    color: #000;
   }
 }
 
