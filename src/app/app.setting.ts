@@ -1,13 +1,16 @@
-let _ENV = 'product';
+let _ENV = process.env.NODE_ENV || process.env.ENV || 'product';
 let PAGE_SIZE = 10;
 let FOLLOW_PAGE_SIZE = 60;
 let INTERVAL_NOTIFIATION = 1000;
 let API_ENDPOINT = '';
-if (_ENV === 'develop') {
+
+if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
 } else {
-  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/api/v1';
 }
+
+console.log('current API: ', API_ENDPOINT);
 
 const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
