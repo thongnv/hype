@@ -75,6 +75,7 @@
     font-size: 1.5em;
 }
 /*responsive*/
+
 @media only screen and (min-width: 575px) {
 }
 @media only screen and (min-width: 768px) {
@@ -149,6 +150,25 @@
     }
 }
 
+@media screen and (max-width: 768px) and (min-width: 320px){
+  .mobile-left-sidebar{
+    position: fixed;
+    background: #fff;
+    width: 50%;
+  }
+  .navbar-toggle.on-mobile{
+    margin-left: 50%;
+  }
+  .extra-menu.on-mobile{
+    display: none;
+  }
+  .user-info-mobile{
+    min-height: 50px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    margin-left: 20px;
+  }
+}
 
 
 
