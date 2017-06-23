@@ -41,8 +41,8 @@ export class ModeComponent implements OnInit {
     public best:any;
     public type:any;
     public mapZoom:number = 12;
-    public lat:number = 1.3089757786697331;
-    public lng:number = 103.8258969783783;
+    public lat:number;
+    public lng:number;
     public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
@@ -51,6 +51,7 @@ export class ModeComponent implements OnInit {
     public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
+    public showCircle:boolean=true;
     public gMapStyles:any;
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
@@ -64,6 +65,9 @@ export class ModeComponent implements OnInit {
         bestfor: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
+        lat: this.lat,
+        long: this.lng,
+        radius: (this.currentRadius / 1000),
         page: 0,
         limit: 20
     };
@@ -231,7 +235,6 @@ export class ModeComponent implements OnInit {
     markerRadiusChange(event) {
         console.log("Radius Change", event);
         let radius = parseInt(event);
-        //this.renderMaker();
     }
 
     mapClicked($event) {
