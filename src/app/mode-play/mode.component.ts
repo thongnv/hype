@@ -136,7 +136,11 @@ export class ModeComponent implements OnInit {
     }
 
     changeCategory() {
-        this.clearParams();
+        this.params.limit = 20;
+        this.params.page = 0;
+        this.markers = [];
+        this.items = [];
+
         this.loaderService.show();
         this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
@@ -208,7 +212,12 @@ export class ModeComponent implements OnInit {
     }
 
     changeType() {
-        this.clearParams();
+
+        this.params.limit = 20;
+        this.params.page = 0;
+        this.markers = [];
+        this.items = [];
+
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
