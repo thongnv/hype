@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   public isIn = false;
   public onMobile = false;
+  public oncreate = false;
   public onsearch = false;
   public userInfo: any;
   public mapOptions: any[];
@@ -44,7 +45,10 @@ export class NavbarComponent implements OnInit {
   public mobile_searchState(){
     this.onsearch = !this.onsearch;
   }
+  public mobile_createState(){
+    this.oncreate = !this.oncreate;
 
+  }
   public ngOnInit() {
     let nbList = ['Alexandra', 'Aljunied', 'Amoy Street', 'Ang Mo Kio', 'Balestier', 'Bartley',
       'Bayfront', 'Beach Road', 'Beauty World', 'Bedok', 'Bedok Reservoir', 'Bencoolen', 'Bishan',
