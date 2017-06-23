@@ -41,8 +41,8 @@ export class ModeComponent implements OnInit {
     public best:any;
     public type:any;
     public mapZoom:number = 12;
-    public lat:number;
-    public lng:number;
+    public lat:number = 1.3089757786697331;
+    public lng:number = 103.8258969783783;
     public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
