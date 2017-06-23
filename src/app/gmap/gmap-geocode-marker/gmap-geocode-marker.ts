@@ -18,7 +18,8 @@ export class GeocodeMarkerComponent implements OnInit {
     @Output('dragEnd') public dragEnd = new EventEmitter<any>();
     @Output('markerClick') public markerClick = new EventEmitter<any>();
     @Input('showCircle') public showCircle:any;
-    
+    @Input('circleDraggable') public circleDraggable:any;
+
     public events:any[];
     public MARKER_ICON = '/assets/icon/icon_pointer.png';
 

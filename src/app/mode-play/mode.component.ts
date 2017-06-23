@@ -55,6 +55,7 @@ export class ModeComponent implements OnInit {
     public gMapStyles:any;
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
+    public circleDraggable:boolean=false;
     private params = {
         type: 'all',
         kind: '',
@@ -80,7 +81,7 @@ export class ModeComponent implements OnInit {
                        private mapsAPILoader:MapsAPILoader,
                        private loaderService:LoaderService,
                        private route:ActivatedRoute,
-                       private router:Router,) {
+                       private router:Router) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -97,7 +98,7 @@ export class ModeComponent implements OnInit {
             {"id": "view", "name": "Popularity (Pageviews)"},
             {"id": "favorites", "name": "Number of favorites"},
             {"id": "distance", "name": "Distance (KM)"}
-        ]
+        ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
         this.loaderService.show();
@@ -114,7 +115,7 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location}, (response, status)=> {
+                        geocoder.geocode({'address': param.location,'region':'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
@@ -233,24 +234,12 @@ export class ModeComponent implements OnInit {
     }
 
     markerRadiusChange(event) {
-        console.log("Radius Change", event);
         let radius = parseInt(event);
+        this.currentRadius = radius;
+        this.params.radius = (radius/1000);
+        this.loaderService.show();
+        this.getDataModes();
     }
-
-    mapClicked($event) {
-        if ($event.coords) {
-            console.log({
-                latitude: $event.coords.lat,
-                longitude: $event.coords.lng,
-            });
-            this.markers.push({
-                lat: $event.coords.lat,
-                lng: $event.coords.lng,
-                draggable: false
-            });
-        }
-    }
-
     changeType() {
 
         this.params.limit = 20;
@@ -456,7 +445,7 @@ export class ModeComponent implements OnInit {
         }, err=> {
             this.loaderService.hide();
             if (err.status == 401 || err.status == 403) {
-                this.route.navigate(['login']);
+                this.router.navigate(['login']);
             }
             console.log(err);
         });

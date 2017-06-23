@@ -70,7 +70,7 @@
                              (mapClick)="mapClicked($event,index)"
                              [styles] = "gMapStyles"
             >
-                <gmap-geocode-marker [showCircle]="showCircle" [markers]="markers" [currentRadius]="currentRadius"
+                <gmap-geocode-marker [showCircle]="showCircle"[circleDraggable]="circleDraggable" [markers]="markers" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                      (markerClick)="clickedMarker($event)"
                                      (dragEnd)="markerDragEnd($event)"
