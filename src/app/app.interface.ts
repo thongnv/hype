@@ -104,6 +104,10 @@ export interface LoaderState {
   show: boolean;
 }
 
+export interface SmallLoaderState {
+  loading: boolean;
+}
+
 export interface Company {
   id: string;
   name: string;
