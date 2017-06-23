@@ -11,6 +11,7 @@ import { LoaderService } from '../../shared/loader/loader.service';
 
 import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-detail',
@@ -21,6 +22,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   @ViewChild('msgInput') public msgInput: ElementRef;
 
+  public id: number;
   public creator: BaseUser = {name: '', avatar: '', slug: ''};
   public name: string = '';
   public location: Location = {name: '', lat: 0, lng: 0};
@@ -55,6 +57,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   });
 
   constructor(public appState: AppState,
+              private _localStorageService: LocalStorageService,
               public mainService: MainService,
               public eventService: EventService,
               public formBuilder: FormBuilder,
@@ -79,11 +82,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         }
       );
     });
-
-    this.mainService.getUserProfile().then((response) => {
-      this.user.name = response.name;
-      this.user.avatar = response.field_image;
-    });
+    let loggedIn = this._localStorageService.get('loginData');
+    if (loggedIn) {
+      this.mainService.getUserProfile().then((response) => {
+        this.user.name = response.name;
+        this.user.avatar = response.field_image;
+      });
+    }
   }
 
   public ngOnInit() {
@@ -147,6 +152,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   private loadData(event) {
+    this.id = event.id;
     this.creator = event.creator;
     this.name = event.name;
     this.location = event.location;

@@ -40,7 +40,9 @@ export class CompanyService {
   }
 
   public getCompanyDetail(slugName): Observable<Company> {
-    let headers = this.defaultHeaders;
+    let headers =  new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'});
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
       AppSetting.API_ENDPOINT + 'api/v1/company/detail?_format=json&key=' + slugName, options
@@ -103,24 +105,15 @@ export class CompanyService {
       });
   }
 
-  public postReview(placeId: string, review: Experience): Observable<Experience> {
+  public postReview(data): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    let data = {
-      idsno: placeId,
-      rate: review.rating,
-      body: review.text,
-      images: review.images
-    };
     return this._http.post(
       AppSetting.API_ENDPOINT + 'api/user/review/place',
       JSON.stringify(data), options
     )
       .map((res: Response) => {
-        let respData = res.json().comment.results[0];
-        review.id = respData.rid;
-        review.images = extractImages(respData.image);
-        return review;
+        return res.json().comment.results[0];
       })
       .catch((error: any) => {
         if (error.status === 404) {

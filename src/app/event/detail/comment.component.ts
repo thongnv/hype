@@ -65,7 +65,7 @@ export class CommentComponent implements HyloComment, OnInit {
   public toggleLike() {
     if (!this.clickedLike) {
       this.clickedLike = true;
-      this.eventService.toggleLike(this.id, !this.liked).subscribe(
+      this.eventService.toggleLike(this.pid, this.id, !this.liked).subscribe(
         (resp) => {
           console.log(resp);
           this.liked = !this.liked;
