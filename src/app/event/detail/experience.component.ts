@@ -188,7 +188,7 @@ export class ExperienceComponent implements Experience, OnInit {
   public toggleLikeExperience() {
     if (!this.clickedLike) {
       this.clickedLike = true;
-      this.eventService.toggleLike(this.id, !this.liked).subscribe(
+      this.eventService.toggleLike(this.event.id, this.id, !this.liked).subscribe(
         (resp) => {
           console.log(resp);
           this.liked = !this.liked;

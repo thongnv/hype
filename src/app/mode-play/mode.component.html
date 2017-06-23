@@ -198,7 +198,7 @@
                                  [streetViewControl]="true"
                                  [styles]="gMapStyles"
                 >
-                    <gmap-geocode-marker [markers]="markers" [currentRadius]="currentRadius"
+                    <gmap-geocode-marker [markers]="markers"[showCircle]="showCircle" [currentRadius]="currentRadius"
                                          (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                          (markerClick)="clickedMarker($event)"
                                          (dragEnd)="markerDragEnd($event)"

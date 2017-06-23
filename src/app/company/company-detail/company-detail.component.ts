@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
-import * as moment from 'moment/moment';
 import { BaseUser, Company, Experience, Image, Location } from '../../app.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { AppSetting } from '../../app.setting';
+import { LocalStorageService } from 'angular-2-local-storage';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -41,12 +41,15 @@ export class CompanyDetailComponent implements Company, OnInit {
   public ready: boolean = false;
   public imageReady: boolean = false;
   public gMapStyles: any;
+  public loggedIn = Boolean(this._localStorageService.get('loginData'));
 
   constructor(
+    private _localStorageService: LocalStorageService,
     public mainService: MainService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private router: Router
   ) {}
 
   public ngOnInit() {
@@ -96,10 +99,12 @@ export class CompanyDetailComponent implements Company, OnInit {
         }
       );
     });
-    this.mainService.getUserProfile().then((response) => {
-      this.user.name = response.name;
-      this.user.avatar = response.field_image;
-    });
+    if (this.loggedIn) {
+      this.mainService.getUserProfile().then((response) => {
+        this.user.name = response.name;
+        this.user.avatar = response.field_image;
+      });
+    }
     this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
@@ -122,7 +127,11 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public showReviewModal() {
-    this.showForm = true;
+    if (this.loggedIn) {
+      this.showForm = true;
+    } else {
+      this.router.navigate(['login'], {skipLocationChange: true}).then();
+    }
   }
 
   public goBack() {
@@ -135,22 +144,30 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.showForm = false;
     }
     if (!this.rated && data.text) {
-      let review: Experience = {
-        id: 0,
-        author: this.user,
-        rating: data.rating,
-        date: moment().unix() * 1000,
-        text: data.text,
-        images: data.images,
-        comments: [],
-        likeNumber: 0,
-        liked: false
-      };
       this.showForm = false;
       this.rated = true;
       this.loaderService.show();
-      this.companyService.postReview(this.id, review).subscribe(
-        (resp: Experience) => {
+      let postData = {
+        idsno: this.id,
+        company_name: this.name,
+        slug: this.slugName,
+        rate: data.rating,
+        body: data.text,
+        images: data.images
+      };
+      this.companyService.postReview(postData).subscribe(
+        (resp) => {
+          let review: Experience = {
+            id: resp.rid,
+            author: this.user,
+            rating: resp.rate,
+            date: Number(resp.created) * 1000,
+            text: resp.body,
+            images: extractImages(resp.image),
+            comments: [],
+            likeNumber: 0,
+            liked: false
+          };
           console.log('review:', resp);
           this.reviews.unshift(resp);
           this.loaderService.hide();
@@ -158,6 +175,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         (error) => {
           console.log(error);
           this.rated = false;
+          this.loaderService.hide();
         }
       );
     }
@@ -206,4 +224,23 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
   }
 
+}
+
+function extractImages(data): Image[] {
+  if (!data) {
+    return [];
+  }
+  let images = [];
+  for (let item of data) {
+    images.push(
+      {
+        url: item,
+        value: '',
+        filename: '',
+        filemime: '',
+        filesize: 0,
+      }
+    );
+  }
+  return images;
 }

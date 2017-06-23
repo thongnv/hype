@@ -18,6 +18,7 @@ export interface BaseUser {
 }
 
 export interface HyloEvent {
+  id: number;
   creator: BaseUser;
   name: string;
   location: Location;
@@ -102,6 +103,10 @@ export interface InstagramImage extends Image {
 
 export interface LoaderState {
   show: boolean;
+}
+
+export interface SmallLoaderState {
+  loading: boolean;
 }
 
 export interface Company {

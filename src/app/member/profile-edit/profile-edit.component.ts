@@ -104,7 +104,11 @@ export class ProfileEditComponent implements OnInit {
     }
   }
   public requiredField(control: FormControl) {
-    console.log(control.value);
+    if (control.value == null) {
+      return {
+        requiredField: false
+      };
+    }
     return control.value.toString().trim().length ? null : {
       requiredField: true
     };

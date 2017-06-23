@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
+import { SmallLoaderService } from '../shared/small-loader/small-loader.service';
 
 @Component({
   selector: 'app-curate',
@@ -25,7 +26,14 @@ export class CurateComponent implements OnInit {
   public loading: boolean = false;
 
   public constructor(private mainService: MainService,
+                     private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService) {
+
+  }
+
+  public ngOnInit() {
+    this.loaderService.show();
+
     window.onscroll = () => {
       let windowHeight = 'innerHeight' in window ? window.innerHeight
         : document.documentElement.offsetHeight;
@@ -39,10 +47,7 @@ export class CurateComponent implements OnInit {
         this.loadMore();
       }
     };
-  }
 
-  public ngOnInit() {
-    this.loaderService.show();
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
@@ -114,15 +119,17 @@ export class CurateComponent implements OnInit {
 
   public loadMore() {
     if (!this.endList && !this.loading) {
+      this.smallLoader.show();
       this.loading = true;
       this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
         (response: any) => {
           this.latestArticles = this.latestArticles.concat(response.data);
-          console.log(response.data);
           if (this.currentPage * 9 > response.total) {
             this.endList = true;
           }
           this.currentPage = this.currentPage + 1;
+          this.loading = true;
+          this.smallLoader.hide();
           this.loading = false;
         }
       );

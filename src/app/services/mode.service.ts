@@ -12,7 +12,6 @@ export class ModeService {
     private LOCAL_HOST:any = '';
 
     public constructor(private api:BaseApiService) {
-        console.log('category service');
         this.LOCAL_HOST = window.location.origin;
     }
 
