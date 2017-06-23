@@ -21,6 +21,7 @@ import { EventType } from '../app.interface';
 // components
 import {EventItemComponent} from '../event/event-item/event-item.component';
 import { AppSetting } from '../app.setting';
+import {of} from "rxjs/observable/of";
 
 // assets
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -301,13 +302,13 @@ export class HomeComponent implements OnInit {
         } else {
             this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
                 if (this.loadMore) {
-                    this.listItems = this.listItems.concat(response.data);
+                    this.events = this.events.concat(response.data);
                 } else {
-                    this.listItems = response.data;
+                    this.events = response.data;
                 }
                 this.total = response.total;
                 this.loaderService.hide();
-                this.passerTrending();
+                this.passerTrending(response.geo);
                 this.showMap = true;
             }, err=> {
                 this.listItems = [];
@@ -412,7 +413,7 @@ export class HomeComponent implements OnInit {
 
             } else {
                 this.loadMore = true;
-                if (this.total > this.listItems.length) {
+                if (this.total > this.events.length) {
                     this.params.page += 1;
                     this.getTrending();
                 }
@@ -460,31 +461,38 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    private passerTrending() {
+    private passerTrending(geo:any) {
         this.resetData();
         this.mapsAPILoader.load().then(()=> {
 
-                for (let i = 0; i < this.listItems.length; i++) {
-                    if (this.listItems[i].field_location_place.length != 0 ||
-                        this.listItems[i].field_location_place.field_latitude != null) {
-                        let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
-                        let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude
-                        this.events.push(this.listItems[i]);
+            let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+            });
+            let searchCenter = mapCenter.getPosition();
+            for (let i = 0; i < geo.length; i++) {
+                for (let item of geo[i]) {
+                    let latlng = item.split(',');
+                    let myMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(latlng[0], latlng[1]),
+                        draggable: true
+                    });
+                    let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                    if (parseInt(geometry) < this.currentRadius) {
                         this.markers.push({
-                            lat: latitude,
-                            lng: longitude,
-                            label: this.listItems[i].title,
+                            lat: parseFloat(latlng[0]),
+                            lng: parseFloat(latlng[1]),
                             opacity: 0.6,
                             isOpenInfo: false
                         });
-
                     }
                 }
-                this.loaderService.hide();
-                this.showMap = true;
             }
-        );
+            this.showMap = true;
+            console.log(this.markers);
+        });
     }
+
 
     private passerTop100() {
         this.resetData();
@@ -511,7 +519,6 @@ export class HomeComponent implements OnInit {
 
     private resetData() {
         this.markers = [];
-        this.events = [];
     }
 
     public showRagePrice() {
