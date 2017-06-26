@@ -54,8 +54,8 @@
                  ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)"
             >
                 <app-event-item
-                        [events]="events" (onClickLike)="onClickLike($event)"></app-event-item>
-
+                        [events]="events" (onClickLike)="onClickLike($event)" [loadMore]="loadMore"></app-event-item>
+                <app-small-loader></app-small-loader>
             </div>
         </div>
 

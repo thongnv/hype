@@ -62,7 +62,8 @@
     margin-left: 0;
 }
 .nav-indicator {
-    margin: 16px 10px;
+    margin: 13px 10px;
+    padding-left: 30px;
 }
 .add-event-button .sprite-icon-add {
     margin-top: 20px;
@@ -75,6 +76,9 @@
     font-size: 1.5em;
 }
 .search-mobile{
+  display: none;
+}
+.login-mobile{
   display: none;
 }
 /*responsive*/
@@ -123,6 +127,7 @@
     .navbar-nav > li {
         float: none;
     }
+
     .navbar-nav > li > a {
         padding-top: 10px;
         padding-bottom: 10px;
@@ -157,6 +162,15 @@
 }
 
 @media screen and (max-width: 768px) and (min-width: 320px){
+  .login-mobile{
+    display: block;
+    float: right;
+    padding-top: 13px;
+    margin-right: 40px;
+  }
+  .mobile-search-icon{
+    padding-top: 5px;
+  }
   .mobile-left-sidebar{
     position: fixed;
     background: #f5f5f5;
@@ -198,7 +212,7 @@
         text-transform: capitalize;
     }
     .create-content-mobile.on-mobile li:first-child {
-        margin-bottom: 5%; 
+        margin-bottom: 5%;
     }
   .user-info-mobile span.user-name-info {
     font-weight: bold;

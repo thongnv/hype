@@ -1,10 +1,10 @@
 <div *ngIf="notifications" class="user-option map-option right" ngbDropdown>
-  <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"(click)="notifyClick()">
+  <a id="drop3" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"(click)="notifyClick($event)">
     <i id="notif" fa [name]="'bell-o'" [size]=2></i>
     <span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>
   </a>
 
-  <ul class="notify-content"[class.on-mobile]="onNotify" id="notifications">
+  <ul class="notify-content" [class.on-mobile]="onNotify" id="notifications">
     <li>
       <span class="notify-left">Notifications</span>
       <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>

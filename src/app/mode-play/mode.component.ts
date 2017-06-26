@@ -9,6 +9,7 @@ import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
+import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
 
 declare let google:any;
 
@@ -51,11 +52,13 @@ export class ModeComponent implements OnInit {
     public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
-    public showCircle:boolean=true;
+    public showCircle:boolean = true;
     public gMapStyles:any;
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
-    public circleDraggable:boolean=false;
+    public circleDraggable:boolean = false;
+    public screenWidth:number = 0;
+    public screenHeight:number = 0;
     private params = {
         type: 'all',
         kind: '',
@@ -80,6 +83,7 @@ export class ModeComponent implements OnInit {
                        private rateConfig:NgbRatingConfig,
                        private mapsAPILoader:MapsAPILoader,
                        private loaderService:LoaderService,
+                       private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
                        private router:Router) {
 
@@ -95,13 +99,13 @@ export class ModeComponent implements OnInit {
             {"id": "all", "name": 'Sort By'},
             {"id": "ratings", "name": "Ratings"},
             {"id": "reviews", "name": "Number of reviews"},
-            {"id": "view", "name": "Popularity (Pageviews)"},
+            {"id": "views", "name": "Popularity (Pageviews)"},
             {"id": "favorites", "name": "Number of favorites"},
             {"id": "distance", "name": "Distance (KM)"}
         ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-        this.loaderService.show();
+        //this.loaderService.show();
     }
 
     public ngOnInit() {
@@ -109,13 +113,25 @@ export class ModeComponent implements OnInit {
         this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
+        this.loaderService.show();
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        this.screenWidth = width;
+        this.screenHeight = height;
+
         // this.renderMaker(5000);
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location,'region':'sg'}, (response, status)=> {
+                        geocoder.geocode({'address': param.location, 'region': 'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
@@ -140,6 +156,30 @@ export class ModeComponent implements OnInit {
         });
     }
 
+    public onResize(event):void {
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        this.screenWidth = width;
+        this.screenHeight = height;
+
+        let number = Math.floor(this.screenWidth / 55) - 1;
+        if (this.screenWidth < 992) {
+            this.categories = this.categoriesDraw.slice(0, number - 1);
+        } else {
+            if (this.screenWidth < 1025) {
+                this.categories = this.categoriesDraw.slice(0, 4);
+            } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
+            }
+        }
+    }
+
     setPosition(position) {
         if (position.coords) {
             this.lat = position.coords.lat;
@@ -155,7 +195,7 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
-        console.log(params);
+
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
@@ -168,13 +208,14 @@ export class ModeComponent implements OnInit {
                 this.initMap(resp.company);
             }
             this.loaderService.hide();
+            this.smallLoader.hide();
 
         }, err=> {
             this.items = [];
             this.markers = [];
             this.loaderService.hide();
+            this.smallLoader.hide();
         });
-        this.loaderService.hide();
     }
 
     changeCategory() {
@@ -183,7 +224,7 @@ export class ModeComponent implements OnInit {
         this.markers = [];
         this.items = [];
 
-        this.loaderService.show();
+        this.smallLoader.show();
         this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
     }
@@ -197,7 +238,16 @@ export class ModeComponent implements OnInit {
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
-            this.categories = resp.data.slice(0, 6);
+            let number = Math.floor(this.screenWidth / 55) - 1;
+            if (this.screenWidth < 992) {
+                this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
+                if (this.screenWidth < 1025) {
+                    this.categories = this.categoriesDraw.slice(0, 4);
+                } else {
+                    this.categories = this.categoriesDraw.slice(0, 6);
+                }
+            }
         });
 
     }
@@ -236,10 +286,11 @@ export class ModeComponent implements OnInit {
     markerRadiusChange(event) {
         let radius = parseInt(event);
         this.currentRadius = radius;
-        this.params.radius = (radius/1000);
+        this.params.radius = (radius / 1000);
         this.loaderService.show();
         this.getDataModes();
     }
+
     changeType() {
 
         this.params.limit = 20;
@@ -250,7 +301,7 @@ export class ModeComponent implements OnInit {
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
         this.getFilter();
 
@@ -265,10 +316,10 @@ export class ModeComponent implements OnInit {
                     if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
                         let lat = companies[i].YP_Address[6].split("/");
                         let lng = companies[i].YP_Address[5].split("/");
-                        let curentPosition = new google.maps.LatLng(this.lat, this.lng);
-                        let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
-                        let distance = this.getDistance(curentPosition, disTancePosition);
-                        companies[i].distance = (distance / 1000).toFixed(1);
+                        //let curentPosition = new google.maps.LatLng(this.lat, this.lng);
+                        //let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
+                        let distance = companies[i]._dict_;
+                        companies[i].distance = (distance).toFixed(1);
                         this.items.push(companies[i]);
                         this.markers.push({
                             lat: parseFloat(lat[1]),
@@ -322,7 +373,7 @@ export class ModeComponent implements OnInit {
             if (this.total > this.items.length) {
                 this.loadMore = true;
                 this.params.page += 1;
-                this.loaderService.show();
+                this.smallLoader.show();
                 this.getDataModes();
             }
         }
@@ -410,7 +461,7 @@ export class ModeComponent implements OnInit {
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
         this.clearParams();
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
 
 
@@ -425,7 +476,16 @@ export class ModeComponent implements OnInit {
             this.categories = this.categoriesDraw;
             this.showAll = false;
         } else {
-            this.categories = this.categories.slice(0, 6);
+            let number = Math.floor(this.screenWidth / 55) - 1;
+            if (this.screenWidth < 992) {
+                this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
+                if (this.screenWidth < 1025) {
+                    this.categories = this.categoriesDraw.slice(0, 4);
+                } else {
+                    this.categories = this.categoriesDraw.slice(0, 6);
+                }
+            }
             this.showAll = true;
         }
     }
@@ -537,45 +597,39 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        this.items.sort((a:any, b:any) => {
-            if (this.sortPlace == 'ratings') {
-                if (parseFloat(a.rating.average) < parseFloat(b.rating.average)) {
-                    return -1;
-                } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'reviews') {
-                if (parseInt(a.rating.total) < parseInt(b.rating.total)) {
-                    return -1;
-                } else if (parseInt(a.rating.total) > parseInt(b.rating.total)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'favorites') {
-                if (parseInt(a.is_favorite) < parseInt(b.is_favorite)) {
-                    return -1;
-                } else if (parseInt(a.is_favorite) > parseInt(b.is_favorite)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'distance') {
-                if (parseFloat(a.distance) < parseFloat(b.distance)) {
-                    return -1;
-                } else if (parseFloat(a.distance) > parseFloat(b.distance)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            //return this.items;
-        });
+        if (this.sortPlace == 'ratings') {
+            this.params.order_by = "ratings";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'reviews') {
+            this.params.order_by = "reviews";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'favorites') {
+            this.params.order_by = "favorites";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'views') {
+            this.params.order_by = "views";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'distance') {
+            this.params.order_by = "distance";
+            this.params.order_dir = 'DESC';
+        } else {
+            this.params.order_by = "Company_Name";
+            this.params.order_dir = 'DESC';
+        }
+        this.smallLoader.show();
+        this.getDataModes();
+
+    }
+
+    public clearSort() {
+        this.params.order_by = "Company_Name";
+        this.params.order_dir = 'DESC';
+        this.smallLoader.show();
+        this.getDataModes();
     }
 
     private clearParams() {

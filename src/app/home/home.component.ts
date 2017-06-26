@@ -22,6 +22,7 @@ import { EventType } from '../app.interface';
 import {EventItemComponent} from '../event/event-item/event-item.component';
 import { AppSetting } from '../app.setting';
 import {of} from "rxjs/observable/of";
+import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
 
 // assets
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -98,6 +99,7 @@ export class HomeComponent implements OnInit {
     constructor(private mainService:MainService,
                 private homeService:HomeService,
                 private loaderService:LoaderService,
+                private smallLoader:SmallLoaderService,
                 private mapsAPILoader:MapsAPILoader,
                 private route:Router) {
         this.eventFilter = [
@@ -147,7 +149,7 @@ export class HomeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
-        let number = Math.floor(this.screenWidth / 70) - 1;
+        let number = Math.floor(this.screenWidth / 55) - 1;
         if (this.screenWidth < 992) {
             this.categories = this.drawCategories.slice(0, number - 1);
         } else {
@@ -170,7 +172,7 @@ export class HomeComponent implements OnInit {
             this.params.tid = event.tid;
         }
         this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -181,7 +183,7 @@ export class HomeComponent implements OnInit {
         this.selected = false;
         this.showDate = false;
         this.showPrice = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.params.limit = 10;
         this.params.tid = '';
         this.params.date = '';
@@ -218,7 +220,7 @@ export class HomeComponent implements OnInit {
         }
 
         this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -232,7 +234,7 @@ export class HomeComponent implements OnInit {
             this.params.latest = 1;
         }
         this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -242,7 +244,7 @@ export class HomeComponent implements OnInit {
         let param = {
             'slug': item.alias
         };
-        this.loaderService.show();
+        this.smallLoader.show();
         this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
             this.loaderService.hide();
             this.alertType = 'success';
@@ -252,7 +254,7 @@ export class HomeComponent implements OnInit {
                 this.loaderService.hide();
                 this.route.navigate(['login']);
             } else {
-                this.loaderService.hide();
+                this.smallLoader.hide();
                 this.alertType = 'error';
                 this.msgContent = 'Sorry, bookmark error please try again';
             }
@@ -288,16 +290,20 @@ export class HomeComponent implements OnInit {
                 } else {
                     this.listItems = resp.data;
                 }
-                this.loaderService.hide();
                 this.passerTop100();
                 this.showMap = true;
+                this.loadMore = false;
+                this.loaderService.hide();
+                this.smallLoader.hide();
 
             }, err=> {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
                 this.showMap = true;
+                this.loadMore = false;
                 this.loaderService.hide();
+                this.smallLoader.hide();
             })
         } else {
             this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
@@ -307,15 +313,19 @@ export class HomeComponent implements OnInit {
                     this.events = response.data;
                 }
                 this.total = response.total;
-                this.loaderService.hide();
                 this.passerTrending(response.geo);
+                this.loadMore = false;
                 this.showMap = true;
+                this.loaderService.hide();
+                this.smallLoader.hide();
             }, err=> {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
-                this.loaderService.hide();
+                this.loadMore = false;
                 this.showMap = true;
+                this.loaderService.hide();
+                this.smallLoader.hide();
             });
         }
     }
@@ -347,7 +357,7 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            let number = Math.floor(this.screenWidth / 70) - 1;
+            let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth < 992) {
                 if (resp.data.length >= number) {
                     this.categories = resp.data.slice(0, number - 1);
@@ -371,7 +381,7 @@ export class HomeComponent implements OnInit {
         } else {
             this.showAll = true;
             if (this.screenWidth < 992) {
-                let number = Math.floor(this.screenWidth / 70) - 1;
+                let number = Math.floor(this.screenWidth / 55) - 1;
                 if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
             } else {
 
@@ -390,7 +400,7 @@ export class HomeComponent implements OnInit {
         this.showMap = false;
         this.params.price = this.priceRange.join(',');
         this.params.type = 'event';
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -402,18 +412,21 @@ export class HomeComponent implements OnInit {
 
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-            console.log('end, params: ', this.params);
-            this.loaderService.show();
             if (this.selectedEventOrder.name == 'top 100') {
-                if (this.total <= 20) {
+                console.log(this.params.start += 20);
+                if (this.total >= this.listItems.length) {
+                    if (this.params.start >= 80) {
+                        return false;
+                    }
+                    this.smallLoader.show();
                     this.loadMore = true;
                     this.params.start += 20;
                     this.getTrending();
                 }
-
             } else {
                 this.loadMore = true;
                 if (this.total > this.events.length) {
+                    this.smallLoader.show();
                     this.params.page += 1;
                     this.getTrending();
                 }

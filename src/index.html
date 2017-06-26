@@ -1,45 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= htmlWebpackPlugin.options.title %></title>
-  <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
-  <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-  <% if (webpackConfig.htmlElements.headTags) { %>
-  <!-- Configured Head Tags  -->
-  <%= webpackConfig.htmlElements.headTags %>
-  <% } %>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
+    <% if (webpackConfig.htmlElements.headTags) { %>
+    <!-- Configured Head Tags  -->
+    <%= webpackConfig.htmlElements.headTags %>
+    <% } %>
 
-  <!-- base url -->
-  <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
-  <link rel="stylesheet" href="assets/css/image-modal.css">
-  <!--<link rel="stylesheet" href="/styles/busy.css">-->
+    <!-- base url -->
+    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+    <link rel="stylesheet" href="assets/css/image-modal.css">
+    <link rel="stylesheet" href="assets/css/preload.css">
 </head>
 
 <body class="hype">
 <div class="container-fluid">
-  <app>
-    Loading...
-  </app>
+    <aside class="sidebar">
+        <ul class="navbar-collapse list-tap">
+            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sprite-icon sprite sprite-Trending30x30"></i>
+                <span>Trending Event</span>
+            </li>
+            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sprite-icon sprite sprite-Discover30x30"></i>
+                <span>Discover Places</span>
+            </li>
+            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sprite-icon sprite sprite-Curated30x30"></i>
+                <span>Curated</span>
+            </li>
+            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="loginData"
+                [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i class="sprite-icon sprite sprite-Favourites30x30"></i>
+                <span>Favorites</span>
+            </li>
+        </ul>
+    </aside>
+    <app></app>
+    <footer>
+        <p>Hype Website</p>
+    </footer>
 </div>
-  <!-- Google Analytics: change UA-71073175-1 to be your site's ID -->
-  <!--<script>-->
-    <!--(function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=r;A[l]=A[l]||function(){-->
-    <!--(A[l].q=A[l].q||[]).push(arguments)},A[l].l=1*new Date();a=n.createElement(g),-->
-    <!--r=n.getElementsByTagName(g)[0];a.async=1;a.src=u;r.parentNode.insertBefore(a,r)-->
-    <!--})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');-->
+<!-- Google Analytics: change UA-71073175-1 to be your site's ID -->
+<!--<script>-->
+<!--(function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=r;A[l]=A[l]||function(){-->
+<!--(A[l].q=A[l].q||[]).push(arguments)},A[l].l=1*new Date();a=n.createElement(g),-->
+<!--r=n.getElementsByTagName(g)[0];a.async=1;a.src=u;r.parentNode.insertBefore(a,r)-->
+<!--})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');-->
 
-    <!--ga('create', 'UA-71073175-1', 'auto');-->
-    <!--ga('send', 'pageview');-->
-  <!--</script>-->
+<!--ga('create', 'UA-71073175-1', 'auto');-->
+<!--ga('send', 'pageview');-->
+<!--</script>-->
 
-  <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
-  <!-- Webpack Dev Server reload -->
-  <script src="/webpack-dev-server.js"></script>
-  <% } %>
+<% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+<!-- Webpack Dev Server reload -->
+<script src="/webpack-dev-server.js"></script>
+<% } %>
 
 
 </body>

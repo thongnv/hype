@@ -75,9 +75,11 @@ body, html {
 .sprite-icon {
   margin: auto;
 }
-.text-white{
+
+.text-white {
   color: #ffffff;
 }
+
 .hype {
   //header
   .nav-item {
@@ -1133,15 +1135,53 @@ body, html {
   //END Notifications
 
   //responsive
+  @media  only screen and(max-width: 374px) {
+    .sidebar {
+      height: 70px!important;
+      top: calc(100vh - 70px)!important;
+    }
+    strong.place-name{
+      width: 76%;
+    }
+  }
   @media only screen and (max-width: 544px) {
   }
   @media only screen and (min-width: 545px) and (max-width: 767px) {
-   }
+  }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
 
   }
-  @media only screen and (min-width: 992px) and (max-width: 1199px) {
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .fav-component .wrap-each-items {
+      width: 100%;
+    }
+    .fav-component .tab-content {
+      margin: 0;
+    }
+    .fav-component .information-profile {
+      width: calc(100% - 90px);
+    }
+    .fav-component .information-title {
+      width: 100%;
+    }
+    .fav-component .detail-information {
+      display: none;
+    }
+    .fav-component .favorites-title {
+      display: none;
+    }
+    .fav-component .avatar-profile {
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+    }
+    .fav-component .tab-control {
+      margin-top: 10px;
+    }
 
+  }
+  .slimScrollBar, .slimScrollRail {
+    background: transparent !important;
   }
   @media only screen and (min-width: 1200px) {
 
@@ -1161,6 +1201,11 @@ body, html {
     }
   }
 
+  //Landscape IPAD
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
+  }
+
   @media only screen and (min-width: 992px) {
     .setting-wrap > div {
       min-height: calc(100vh - 60px);
@@ -1173,6 +1218,22 @@ body, html {
   }
 
   @media only screen and (max-width: 575px) {
+    .map-box, .list-box {
+      float: left;
+      width: 100%;
+    }
+
+    #curate-carousel .description{
+        font-size: 14px;
+        margin: 10px 0;
+    }
+
+    .place-name{
+        width: auto;
+    }
+    .place-item-description{
+        margin: 10px 0!important;
+    }
 
   }
   @media only screen and (max-width: 767px) {
@@ -1187,6 +1248,9 @@ body, html {
     }
     .form-wrap, .form-wrap form > div {
       padding: 0;
+    }
+    .carousel-inner .slide-group {
+      width: 100%;
     }
   }
   @media only screen and (max-width: 991px) {
