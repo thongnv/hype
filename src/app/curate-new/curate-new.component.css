@@ -290,7 +290,7 @@ header ul li.pull-right {
   }
   .new-list .form-wrap{
     padding: 5px 10px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
   }
 
   .new-list .input-box{ border-right: 0}
@@ -344,5 +344,23 @@ header ul li.pull-right {
   }
 }
 @media only screen and (min-width: 545px) and (max-width: 767px) {
+  .new-list .form-wrap{
+    padding: 0;
+    margin-bottom: 80px;
+  }
+  .new-list .form-wrap{
+    padding: 0;
+    margin-bottom: 80px;
+  }
+}
 
+@media only screen and (min-width: 992px) {
+  .input-box .form-group {
+    margin-left: 5px;
+  }
+
+  .new-list .form-wrap{
+    padding: 5px 10px;
+    margin-bottom: 80px;
+  }
 }
