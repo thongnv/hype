@@ -1141,8 +1141,18 @@ body, html {
 
   }
   @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .btn-update-interest{
+      width: 100% !important;
+      margin-bottom: 50px;
+    }
+    .no-padding-mobile{
+      padding: 0 !important;
+    }
     .setting-title{
       display: none;
+    }
+    .table-cell{
+      margin-bottom: 15px;
     }
     .fav-component .wrap-each-items{
       width: 100%;
