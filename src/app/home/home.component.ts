@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
-        let number = Math.floor(this.screenWidth / 70) - 1;
+        let number = Math.floor(this.screenWidth / 55) - 1;
         if (this.screenWidth < 992) {
             this.categories = this.drawCategories.slice(0, number - 1);
         } else {
@@ -351,7 +351,7 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            let number = Math.floor(this.screenWidth / 70) - 1;
+            let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth < 992) {
                 if (resp.data.length >= number) {
                     this.categories = resp.data.slice(0, number - 1);
@@ -375,7 +375,7 @@ export class HomeComponent implements OnInit {
         } else {
             this.showAll = true;
             if (this.screenWidth < 992) {
-                let number = Math.floor(this.screenWidth / 70) - 1;
+                let number = Math.floor(this.screenWidth / 55) - 1;
                 if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
             } else {
 

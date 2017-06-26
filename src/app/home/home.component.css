@@ -454,7 +454,7 @@ button.btn.btn-default.active {
 }
 
 .price-desc span {
-    display: table-cell;
+  display: table-cell;
   width: 33%;
 }
 
