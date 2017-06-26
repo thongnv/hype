@@ -1167,6 +1167,7 @@ body, html {
     .fav-component .tab-control{
       margin-top: 10px;
     }
+
   }
   .slimScrollBar,.slimScrollRail {
     background: transparent !important;
@@ -1215,6 +1216,9 @@ body, html {
     }
     .form-wrap, .form-wrap form > div {
       padding: 0;
+    }
+    .carousel-inner .slide-group {
+      width: 100%;
     }
   }
   @media only screen and (max-width: 991px) {
