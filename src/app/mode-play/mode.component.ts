@@ -9,6 +9,7 @@ import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
+import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
 
 declare let google:any;
 
@@ -82,6 +83,7 @@ export class ModeComponent implements OnInit {
                        private rateConfig:NgbRatingConfig,
                        private mapsAPILoader:MapsAPILoader,
                        private loaderService:LoaderService,
+                       private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
                        private router:Router) {
 
@@ -103,7 +105,7 @@ export class ModeComponent implements OnInit {
         ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-        this.loaderService.show();
+        //this.loaderService.show();
     }
 
     public ngOnInit() {
@@ -111,7 +113,7 @@ export class ModeComponent implements OnInit {
         this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
-
+        this.loaderService.show();
         let width = window.innerWidth
             || document.documentElement.clientWidth
             || document.body.clientWidth;
@@ -193,7 +195,7 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
-        console.log(params);
+
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
@@ -206,13 +208,14 @@ export class ModeComponent implements OnInit {
                 this.initMap(resp.company);
             }
             this.loaderService.hide();
+            this.smallLoader.hide();
 
         }, err=> {
             this.items = [];
             this.markers = [];
             this.loaderService.hide();
+            this.smallLoader.hide();
         });
-        this.loaderService.hide();
     }
 
     changeCategory() {
@@ -221,7 +224,7 @@ export class ModeComponent implements OnInit {
         this.markers = [];
         this.items = [];
 
-        this.loaderService.show();
+        this.smallLoader.show();
         this.params.kind = this.filterCategory.value.filterCategory;
         this.getDataModes();
     }
@@ -298,7 +301,7 @@ export class ModeComponent implements OnInit {
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
         this.getFilter();
 
@@ -313,10 +316,10 @@ export class ModeComponent implements OnInit {
                     if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
                         let lat = companies[i].YP_Address[6].split("/");
                         let lng = companies[i].YP_Address[5].split("/");
-                        let curentPosition = new google.maps.LatLng(this.lat, this.lng);
-                        let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
-                        let distance = this.getDistance(curentPosition, disTancePosition);
-                        companies[i].distance = (distance / 1000).toFixed(1);
+                        //let curentPosition = new google.maps.LatLng(this.lat, this.lng);
+                        //let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
+                        let distance = companies[i]._dict_;
+                        companies[i].distance = (distance).toFixed(1);
                         this.items.push(companies[i]);
                         this.markers.push({
                             lat: parseFloat(lat[1]),
@@ -370,7 +373,7 @@ export class ModeComponent implements OnInit {
             if (this.total > this.items.length) {
                 this.loadMore = true;
                 this.params.page += 1;
-                this.loaderService.show();
+                this.smallLoader.show();
                 this.getDataModes();
             }
         }
@@ -458,7 +461,7 @@ export class ModeComponent implements OnInit {
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
         this.clearParams();
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
 
 
@@ -617,7 +620,7 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
 
     }
@@ -625,7 +628,7 @@ export class ModeComponent implements OnInit {
     public clearSort() {
         this.params.order_by = "Company_Name";
         this.params.order_dir = 'DESC';
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getDataModes();
     }
 
