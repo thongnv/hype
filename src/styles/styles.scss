@@ -75,9 +75,11 @@ body, html {
 .sprite-icon {
   margin: auto;
 }
-.text-white{
+
+.text-white {
   color: #ffffff;
 }
+
 .hype {
   //header
   .nav-item {
@@ -1145,43 +1147,43 @@ body, html {
   @media only screen and (max-width: 544px) {
   }
   @media only screen and (min-width: 545px) and (max-width: 767px) {
-   }
+  }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
 
   }
   @media only screen and (min-width: 320px) and (max-width: 768px) {
-    .fav-component .wrap-each-items{
+    .fav-component .wrap-each-items {
       width: 100%;
     }
-    .fav-component .tab-content{
-      margin:0;
+    .fav-component .tab-content {
+      margin: 0;
     }
-    .fav-component .information-profile{
+    .fav-component .information-profile {
       width: calc(100% - 90px);
     }
-    .fav-component .information-title{
+    .fav-component .information-title {
       width: 100%;
     }
-    .fav-component .detail-information{
-     display: none;
-    }
-    .fav-component .favorites-title{
+    .fav-component .detail-information {
       display: none;
     }
-    .fav-component .avatar-profile{
+    .fav-component .favorites-title {
+      display: none;
+    }
+    .fav-component .avatar-profile {
       width: 80px;
       height: 80px;
       margin-right: 10px;
     }
-    .fav-component .tab-control{
+    .fav-component .tab-control {
       margin-top: 10px;
     }
 
   }
-  .slimScrollBar,.slimScrollRail {
+  .slimScrollBar, .slimScrollRail {
     background: transparent !important;
   }
-    @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: 1200px) {
 
   }
 
@@ -1197,6 +1199,11 @@ body, html {
     .star-icons:before {
       color: #ec3d62;
     }
+  }
+
+  //Landscape IPAD
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+
   }
 
   @media only screen and (min-width: 992px) {

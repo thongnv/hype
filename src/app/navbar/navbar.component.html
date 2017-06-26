@@ -61,10 +61,14 @@
                             [endOfList]="set.endOfList"
                             (onScrollToBottom)="onScrollToBottom()"
                             (onMarkAllRead)="onMarkAllRead()"
-                            (onMarkOneRead)="onMarkOneRead($event)">
+                            (onMarkOneRead)="onMarkOneRead($event)"
+                            (onClickNotify)="onClickNotify($event)">
           </app-notification>
         </li>
-        <li class="pull-right map-option nav-item"(click)="mobile_searchState()">
+        <li class="pull-right login-mobile" *ngIf="!loginData">
+          <span [routerLink]="['/login']" class="btn btn-success btn-login">Login</span>
+        </li>
+        <li class="mobile-search-icon pull-right map-option nav-item"(click)="mobile_searchState()">
           <i class="glyphicon glyphicon-search text-white glyphicon-2x"></i>
         </li>
       </ul>
