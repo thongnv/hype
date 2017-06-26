@@ -1140,10 +1140,38 @@ body, html {
   @media only screen and (min-width: 768px) and (max-width: 991px) {
 
   }
-  @media only screen and (min-width: 992px) and (max-width: 1199px) {
-
+  @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .fav-component .wrap-each-items{
+      width: 100%;
+    }
+    .fav-component .tab-content{
+      margin:0;
+    }
+    .fav-component .information-profile{
+      width: calc(100% - 90px);
+    }
+    .fav-component .information-title{
+      width: 100%;
+    }
+    .fav-component .detail-information{
+     display: none;
+    }
+    .fav-component .favorites-title{
+      display: none;
+    }
+    .fav-component .avatar-profile{
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+    }
+    .fav-component .tab-control{
+      margin-top: 10px;
+    }
   }
-  @media only screen and (min-width: 1200px) {
+  .slimScrollBar,.slimScrollRail {
+    background: transparent !important;
+  }
+    @media only screen and (min-width: 1200px) {
 
   }
 

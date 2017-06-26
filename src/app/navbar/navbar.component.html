@@ -56,6 +56,7 @@
         <li *ngIf="loginData" class="pull-right nav-item notification-area">
           <app-notification *ngIf="notifications"
                             [notifications]="notifications"
+                            [onNotify]="onNotify"
                             [loadingInProgress]="set.loadingInProgress"
                             [endOfList]="set.endOfList"
                             (onScrollToBottom)="onScrollToBottom()"

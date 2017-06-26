@@ -163,4 +163,7 @@
         top: 17px;
         left: 91%;
     }
+  .wrap-search-input{
+    width: 100%;
+  }
 }

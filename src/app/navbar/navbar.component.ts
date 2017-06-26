@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   public loginData: any;
-
+  public onNotify:boolean=false;
   public isIn = false;
   public onMobile = false;
   public oncreate = false;
@@ -41,12 +42,18 @@ export class NavbarComponent implements OnInit {
   public toggleState() {
     this.isIn = !this.isIn;
     this.onMobile = !this.onMobile;
+    this.oncreate = false;
+    this.onsearch = false;
   }
   public mobile_searchState(){
     this.onsearch = !this.onsearch;
+    this.oncreate = false;
+    this.onNotify = false;
   }
   public mobile_createState(){
     this.oncreate = !this.oncreate;
+    this.onsearch = false;
+    this.onNotify = false;
 
   }
   public ngOnInit() {

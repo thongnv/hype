@@ -4,7 +4,7 @@
     <span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>
   </a>
 
-  <ul class="notify-content"[class.on-mobile]="onNotify" id="notifications">
+  <ul class="notify-content" [class.on-mobile]="onNotify" id="notifications">
     <li>
       <span class="notify-left">Notifications</span>
       <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>
