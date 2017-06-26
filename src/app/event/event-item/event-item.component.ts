@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input,Output,ViewChild,ViewEncapsulation} from
 export class EventItemComponent {
 
     @Input('events') public events:any;
-
+    @Input('loadMore') public loadMore:any;
     @Output('onClickLike') public onClickLike = new EventEmitter<any>();
 
     private message:string;
