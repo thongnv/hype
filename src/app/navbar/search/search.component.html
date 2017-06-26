@@ -1,53 +1,46 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
-  <div class="input-group wrap-search-input">
-    <button [disabled]="searchForm.invalid" class="btn sprite sprite-icon-search search-icon" type="submit"></button>
-    <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3"
-           placeholder="Search..."
-           (keyup)="onSubmit($event, keyword.value)"
-           (click)="onOpenSuggestion()">
-    <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
-      <div class="arrow-up"></div>
-      <div class="display-location-address">
-        <i class="sprite sprite-autocomplete-icon-area"></i>
-        <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
-        <span class="location-address">location address</span>
-        <span class="sprite sprite-icon-add close" (click)="onCloseSuggestion()"></span>
-      </div>
-      <div class="suggestion-wrap"  slimScroll width="auto" height="290px" size="7px"
-           [railVisible]="true"
-           [railOpacity]="0.1"
-           [railColor]="'#ec3d62'"
-           [color]="'#ec3d62'">
-        <div [class.hide]="hideNoResult" class="no-result text-info text-center">No result found.</div>
-        <ul *ngIf="result.article?.length" class="list-location-address">
-          <li class="title-search-location-address">
-            <a>Lists</a>
-          </li>
-          <li *ngFor="let item of result.article;trackBy:item?.id">
-            <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
-              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
-              <div class="result-info">
-                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
-                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <ul *ngIf="result.event?.length" class="list-location-address" id="list-events-location-address">
-          <li class="title-search-location-address">
-            <a>Events</a>
-          </li>
-          <li *ngFor="let item of result.event;trackBy:item?.id">
-            <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
-              <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
-              <div class="result-info">
-                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
-                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
+    <div class="input-group wrap-search-input">
+        <button [disabled]="searchForm.invalid" class="btn sprite sprite-icon-search search-icon" type="submit"></button>
+        <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3" placeholder="Search..." (keyup)="onSubmit($event, keyword.value)" (click)="onOpenSuggestion()">
+        <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+            <div class="arrow-up"></div>
+            <div class="display-location-address">
+                <i class="sprite sprite-autocomplete-icon-area"></i>
+                <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
+                <span class="location-address">location address</span>
+                <span class="sprite sprite-icon-add close" (click)="onCloseSuggestion()"></span>
+            </div>
+            <div class="suggestion-wrap" slimScroll width="auto" height="290px" size="7px" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+                <div [class.hide]="hideNoResult" class="no-result text-info text-center">No result found.</div>
+                <ul *ngIf="result.article?.length" class="list-location-address">
+                    <li class="title-search-location-address">
+                        <a>Lists</a>
+                    </li>
+                    <li *ngFor="let item of result.article;trackBy:item?.id">
+                        <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
+                            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+                            <div class="result-info">
+                                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul *ngIf="result.event?.length" class="list-location-address" id="list-events-location-address">
+                    <li class="title-search-location-address">
+                        <a>Events</a>
+                    </li>
+                    <li *ngFor="let item of result.event;trackBy:item?.id">
+                        <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
+                            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+                            <div class="result-info">
+                                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-  </div>
 </form>
