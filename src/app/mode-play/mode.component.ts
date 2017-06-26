@@ -56,6 +56,8 @@ export class ModeComponent implements OnInit {
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
     public circleDraggable:boolean=false;
+    public screenWidth:number = 0;
+    public screenHeight:number = 0;
     private params = {
         type: 'all',
         kind: '',
@@ -109,6 +111,18 @@ export class ModeComponent implements OnInit {
         this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
+
+      let width = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth;
+
+      let height = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight;
+
+      this.screenWidth = width;
+      this.screenHeight = height;
+
         // this.renderMaker(5000);
         this.route.params.subscribe((param) => {
             if (param.location) {
@@ -139,6 +153,30 @@ export class ModeComponent implements OnInit {
             }
         });
     }
+
+  public onResize(event):void {
+    let width = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+
+    let height = window.innerHeight
+      || document.documentElement.clientHeight
+      || document.body.clientHeight;
+
+    this.screenWidth = width;
+    this.screenHeight = height;
+
+    let number = Math.floor(this.screenWidth / 55) - 1;
+    if (this.screenWidth < 992) {
+      this.categories = this.categoriesDraw.slice(0, number - 1);
+    } else {
+      if (this.screenWidth < 1025) {
+        this.categories = this.categoriesDraw.slice(0, 4);
+      } else {
+        this.categories = this.categoriesDraw.slice(0, 6);
+      }
+    }
+  }
 
     setPosition(position) {
         if (position.coords) {
@@ -197,7 +235,16 @@ export class ModeComponent implements OnInit {
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
-            this.categories = resp.data.slice(0, 6);
+            let number = Math.floor(this.screenWidth / 55) - 1;
+            if (this.screenWidth < 992) {
+              this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
+              if (this.screenWidth < 1025) {
+                this.categories = this.categoriesDraw.slice(0, 4);
+              } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
+              }
+            }
         });
 
     }
@@ -425,7 +472,16 @@ export class ModeComponent implements OnInit {
             this.categories = this.categoriesDraw;
             this.showAll = false;
         } else {
-            this.categories = this.categories.slice(0, 6);
+            let number = Math.floor(this.screenWidth / 55) - 1;
+            if (this.screenWidth < 992) {
+              this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
+              if (this.screenWidth < 1025) {
+                this.categories = this.categoriesDraw.slice(0, 4);
+              } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
+              }
+            }
             this.showAll = true;
         }
     }

@@ -147,7 +147,7 @@ export class HomeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
-        let number = Math.floor(this.screenWidth / 70) - 1;
+        let number = Math.floor(this.screenWidth / 55) - 1;
         if (this.screenWidth < 992) {
             this.categories = this.drawCategories.slice(0, number - 1);
         } else {
@@ -291,12 +291,14 @@ export class HomeComponent implements OnInit {
                 this.loaderService.hide();
                 this.passerTop100();
                 this.showMap = true;
+                this.loadMore = false;
 
             }, err=> {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
                 this.showMap = true;
+                this.loadMore = false;
                 this.loaderService.hide();
             })
         } else {
@@ -309,12 +311,14 @@ export class HomeComponent implements OnInit {
                 this.total = response.total;
                 this.loaderService.hide();
                 this.passerTrending(response.geo);
+                this.loadMore = false;
                 this.showMap = true;
             }, err=> {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
                 this.loaderService.hide();
+                this.loadMore = false;
                 this.showMap = true;
             });
         }
@@ -347,7 +351,7 @@ export class HomeComponent implements OnInit {
         this.homeService.getCategories('event').map(resp=>resp.json()).subscribe(resp=> {
             this.drawCategories = resp.data;
             console.log(resp.data);
-            let number = Math.floor(this.screenWidth / 70) - 1;
+            let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth < 992) {
                 if (resp.data.length >= number) {
                     this.categories = resp.data.slice(0, number - 1);
@@ -371,7 +375,7 @@ export class HomeComponent implements OnInit {
         } else {
             this.showAll = true;
             if (this.screenWidth < 992) {
-                let number = Math.floor(this.screenWidth / 70) - 1;
+                let number = Math.floor(this.screenWidth / 55) - 1;
                 if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
             } else {
 
@@ -402,19 +406,19 @@ export class HomeComponent implements OnInit {
 
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-            console.log('end, params: ', this.params);
             if (this.selectedEventOrder.name == 'top 100') {
-                if (this.total <= 20) {
-                    this.loaderService.show();
+                console.log(this.params.start += 20);
+                if (this.total >= this.listItems.length) {
+                    if (this.params.start >= 80) {
+                        return false;
+                    }
                     this.loadMore = true;
                     this.params.start += 20;
                     this.getTrending();
                 }
-
             } else {
                 this.loadMore = true;
                 if (this.total > this.events.length) {
-                    this.loaderService.show();
                     this.params.page += 1;
                     this.getTrending();
                 }
