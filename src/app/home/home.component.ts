@@ -403,9 +403,9 @@ export class HomeComponent implements OnInit {
         // determine just scrolled to end
         if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
             console.log('end, params: ', this.params);
-            this.loaderService.show();
             if (this.selectedEventOrder.name == 'top 100') {
                 if (this.total <= 20) {
+                    this.loaderService.show();
                     this.loadMore = true;
                     this.params.start += 20;
                     this.getTrending();
@@ -414,6 +414,7 @@ export class HomeComponent implements OnInit {
             } else {
                 this.loadMore = true;
                 if (this.total > this.events.length) {
+                    this.loaderService.show();
                     this.params.page += 1;
                     this.getTrending();
                 }
