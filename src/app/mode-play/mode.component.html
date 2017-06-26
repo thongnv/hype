@@ -148,7 +148,7 @@
                         <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
                     </select>
                 </div>
-                <div class="table-cell text-right" (click)="filterSubmit()">Clear Filters</div>
+                <div class="table-cell text-right" (click)="clearSort()">Clear Filters</div>
                 <div class="clearfix"></div>
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>

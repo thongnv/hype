@@ -51,11 +51,11 @@ export class ModeComponent implements OnInit {
     public showTab:boolean = true;
     public alertType:any = '';
     public msgContent:any = '';
-    public showCircle:boolean=true;
+    public showCircle:boolean = true;
     public gMapStyles:any;
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
-    public circleDraggable:boolean=false;
+    public circleDraggable:boolean = false;
     public screenWidth:number = 0;
     public screenHeight:number = 0;
     private params = {
@@ -97,7 +97,7 @@ export class ModeComponent implements OnInit {
             {"id": "all", "name": 'Sort By'},
             {"id": "ratings", "name": "Ratings"},
             {"id": "reviews", "name": "Number of reviews"},
-            {"id": "view", "name": "Popularity (Pageviews)"},
+            {"id": "views", "name": "Popularity (Pageviews)"},
             {"id": "favorites", "name": "Number of favorites"},
             {"id": "distance", "name": "Distance (KM)"}
         ];
@@ -112,16 +112,16 @@ export class ModeComponent implements OnInit {
         this.getDataModes();
         this.getFilter();
 
-      let width = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth;
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
 
-      let height = window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight;
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
 
-      this.screenWidth = width;
-      this.screenHeight = height;
+        this.screenWidth = width;
+        this.screenHeight = height;
 
         // this.renderMaker(5000);
         this.route.params.subscribe((param) => {
@@ -129,7 +129,7 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location,'region':'sg'}, (response, status)=> {
+                        geocoder.geocode({'address': param.location, 'region': 'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
@@ -154,29 +154,29 @@ export class ModeComponent implements OnInit {
         });
     }
 
-  public onResize(event):void {
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
+    public onResize(event):void {
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
 
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
 
-    this.screenWidth = width;
-    this.screenHeight = height;
+        this.screenWidth = width;
+        this.screenHeight = height;
 
-    let number = Math.floor(this.screenWidth / 55) - 1;
-    if (this.screenWidth < 992) {
-      this.categories = this.categoriesDraw.slice(0, number - 1);
-    } else {
-      if (this.screenWidth < 1025) {
-        this.categories = this.categoriesDraw.slice(0, 4);
-      } else {
-        this.categories = this.categoriesDraw.slice(0, 6);
-      }
+        let number = Math.floor(this.screenWidth / 55) - 1;
+        if (this.screenWidth < 992) {
+            this.categories = this.categoriesDraw.slice(0, number - 1);
+        } else {
+            if (this.screenWidth < 1025) {
+                this.categories = this.categoriesDraw.slice(0, 4);
+            } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
+            }
+        }
     }
-  }
 
     setPosition(position) {
         if (position.coords) {
@@ -237,13 +237,13 @@ export class ModeComponent implements OnInit {
             this.categoriesDraw = resp.data;
             let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth < 992) {
-              this.categories = this.categoriesDraw.slice(0, number - 1);
+                this.categories = this.categoriesDraw.slice(0, number - 1);
             } else {
-              if (this.screenWidth < 1025) {
-                this.categories = this.categoriesDraw.slice(0, 4);
-              } else {
-                this.categories = this.categoriesDraw.slice(0, 6);
-              }
+                if (this.screenWidth < 1025) {
+                    this.categories = this.categoriesDraw.slice(0, 4);
+                } else {
+                    this.categories = this.categoriesDraw.slice(0, 6);
+                }
             }
         });
 
@@ -283,10 +283,11 @@ export class ModeComponent implements OnInit {
     markerRadiusChange(event) {
         let radius = parseInt(event);
         this.currentRadius = radius;
-        this.params.radius = (radius/1000);
+        this.params.radius = (radius / 1000);
         this.loaderService.show();
         this.getDataModes();
     }
+
     changeType() {
 
         this.params.limit = 20;
@@ -474,13 +475,13 @@ export class ModeComponent implements OnInit {
         } else {
             let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth < 992) {
-              this.categories = this.categoriesDraw.slice(0, number - 1);
+                this.categories = this.categoriesDraw.slice(0, number - 1);
             } else {
-              if (this.screenWidth < 1025) {
-                this.categories = this.categoriesDraw.slice(0, 4);
-              } else {
-                this.categories = this.categoriesDraw.slice(0, 6);
-              }
+                if (this.screenWidth < 1025) {
+                    this.categories = this.categoriesDraw.slice(0, 4);
+                } else {
+                    this.categories = this.categoriesDraw.slice(0, 6);
+                }
             }
             this.showAll = true;
         }
@@ -593,45 +594,39 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        this.items.sort((a:any, b:any) => {
-            if (this.sortPlace == 'ratings') {
-                if (parseFloat(a.rating.average) < parseFloat(b.rating.average)) {
-                    return -1;
-                } else if (parseFloat(a.rating.average) > parseFloat(b.rating.average)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'reviews') {
-                if (parseInt(a.rating.total) < parseInt(b.rating.total)) {
-                    return -1;
-                } else if (parseInt(a.rating.total) > parseInt(b.rating.total)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'favorites') {
-                if (parseInt(a.is_favorite) < parseInt(b.is_favorite)) {
-                    return -1;
-                } else if (parseInt(a.is_favorite) > parseInt(b.is_favorite)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            if (this.sortPlace == 'distance') {
-                if (parseFloat(a.distance) < parseFloat(b.distance)) {
-                    return -1;
-                } else if (parseFloat(a.distance) > parseFloat(b.distance)) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-            //return this.items;
-        });
+        if (this.sortPlace == 'ratings') {
+            this.params.order_by = "ratings";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'reviews') {
+            this.params.order_by = "reviews";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'favorites') {
+            this.params.order_by = "favorites";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'views') {
+            this.params.order_by = "views";
+            this.params.order_dir = 'DESC';
+        }
+        if (this.sortPlace == 'distance') {
+            this.params.order_by = "distance";
+            this.params.order_dir = 'DESC';
+        } else {
+            this.params.order_by = "Company_Name";
+            this.params.order_dir = 'DESC';
+        }
+        this.loaderService.show();
+        this.getDataModes();
+
+    }
+
+    public clearSort() {
+        this.params.order_by = "Company_Name";
+        this.params.order_dir = 'DESC';
+        this.loaderService.show();
+        this.getDataModes();
     }
 
     private clearParams() {
