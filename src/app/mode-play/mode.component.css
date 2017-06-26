@@ -611,4 +611,6 @@ select.form-control-static::-ms-expand {
   .list-items{
     height: auto;
   }
+
+  .item-content .review{ margin-left: 0px; display: block; padding-top: 10px;}
 }

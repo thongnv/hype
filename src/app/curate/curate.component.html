@@ -8,6 +8,7 @@
               [class.active]="cat.tid===selectedCategory">{{cat.name}}
           </li>
         </ul>
+        <div class="clearfix"></div>
       </div>
       <!--top content end-->
       <!--primary content start-->
@@ -33,7 +34,7 @@
             </app-slide-carousel>
           </app-boostrap-carousel>
         </div>
-        <h4>What's news</h4>
+        <h4 class="head">What's news</h4>
         <div *ngIf="latestArticles" class="row wrap-post-news">
           <div *ngFor="let art of latestArticles" class="col-xs-12 col-lg-4 post-news">
             <div class="image-post-news">
