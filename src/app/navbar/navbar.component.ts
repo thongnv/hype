@@ -45,6 +45,12 @@ export class NavbarComponent implements OnInit {
     this.oncreate = false;
     this.onsearch = false;
   }
+  public onClickNotify(event){
+    this.isIn = false;
+    this.onMobile = false;
+    this.oncreate = false;
+    this.onsearch = false;
+  }
   public mobile_searchState(){
     this.onsearch = !this.onsearch;
     this.oncreate = false;
