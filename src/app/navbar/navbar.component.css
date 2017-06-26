@@ -62,7 +62,8 @@
     margin-left: 0;
 }
 .nav-indicator {
-    margin: 16px 10px;
+    margin: 13px 10px;
+    padding-left: 30px;
 }
 .add-event-button .sprite-icon-add {
     margin-top: 20px;
@@ -123,6 +124,7 @@
     .navbar-nav > li {
         float: none;
     }
+    
     .navbar-nav > li > a {
         padding-top: 10px;
         padding-bottom: 10px;
