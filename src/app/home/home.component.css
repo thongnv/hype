@@ -454,8 +454,8 @@ button.btn.btn-default.active {
 }
 
 .price-desc span {
-  display: table-cell;
-  width: 33%;
+    display: table-cell;
+    width: 33%;
 }
 
 .price-desc span:nth-child(1) {
@@ -463,74 +463,92 @@ button.btn.btn-default.active {
 }
 
 .price-desc span:nth-child(2) {
-   text-align: center;
+    text-align: center;
 }
 
 .price-desc span:nth-child(3) {
     text-align: right;
 }
 
-
 /*
 ==============
 */
 
-
 @media only screen and (max-width: 544px) {
-  .type-events{
-    padding: 5px 10px 0;
-  }
-  .btn-default{
-    width: auto;
-  }
+    .type-events {
+        padding: 5px 10px 0;
+    }
 
-  .filter-events.top-100{
-    padding: 15px;
-  }
-  .filter-events{
-    padding: 15px 10px;
-  }
+    .btn-default {
+        width: auto;
+    }
 
-  .btn{
-    padding: 5px 10px;
-  }
+    .filter-events.top-100 {
+        padding: 15px;
+    }
+
+    .filter-events {
+        padding: 15px 10px;
+    }
+
+    .btn {
+        padding: 5px 10px;
+    }
 }
+
 @media only screen and (min-width: 320px) and (max-width: 374px) {
-  .btn{
-    padding: 5px 5px;
-    font-size: 12px;
-  }
-  button.btn.btn-default.active{
-    font-size: 12px;
-  }
-}
-@media only screen and (min-width: 375px) and (max-width: 543px) {
-  .btn{
-    padding: 5px 8px;
-    font-size: 13px;
-  }
-  button.btn.btn-default.active{
-    font-size: 13px;
-  }
-}
-@media only screen and (min-width: 545px) and (max-width: 767px) {
-  .type-events{
-    padding: 5px 10px 0;
-  }
-  .btn-default{
-    width: auto;
-  }
+    .btn {
+        padding: 5px 5px;
+        font-size: 12px;
+    }
 
-  .filter-events.top-100{
-    padding: 15px;
-  }
+    button.btn.btn-default.active {
+        font-size: 12px;
+    }
 }
+
+@media only screen and (min-width: 375px) and (max-width: 543px) {
+    .btn {
+        padding: 5px 8px;
+        font-size: 13px;
+    }
+
+    button.btn.btn-default.active {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (min-width: 545px) and (max-width: 767px) {
+    .type-events {
+        padding: 5px 10px 0;
+    }
+
+    .btn-default {
+        width: auto;
+    }
+
+    .filter-events.top-100 {
+        padding: 15px;
+    }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 
 }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px)and (orientation: landscape) {
+    .fixed-right {
+        width: 45%;
+    }
+    .left-box{
+        width: 50%;
+    }
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
 
 }
+
 @media only screen and (min-width: 1200px) {
 
 }
