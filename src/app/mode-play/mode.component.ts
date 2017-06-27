@@ -167,13 +167,21 @@ export class ModeComponent implements OnInit {
         this.screenHeight = height;
 
         let number = Math.floor(this.screenWidth / 55) - 1;
-        if (this.screenWidth < 992) {
+        if (this.screenWidth < 768) {
+          if(this.categoriesDraw.length > number) {
             this.categories = this.categoriesDraw.slice(0, number - 1);
+          }else{
+            this.categories = this.categoriesDraw;
+          }
         } else {
-            if (this.screenWidth < 1025) {
-                this.categories = this.categoriesDraw.slice(0, 4);
-            } else {
+            if(this.categoriesDraw.length > number){
+              this.categories = this.categoriesDraw.slice(0, 6);
+            }else{
+              if(this.screenWidth <=1024){
                 this.categories = this.categoriesDraw.slice(0, 6);
+              }else{
+                this.categories = this.categoriesDraw;
+              }
             }
         }
     }
@@ -236,14 +244,14 @@ export class ModeComponent implements OnInit {
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
             let number = Math.floor(this.screenWidth / 55) - 1;
-            if (this.screenWidth < 992) {
-                this.categories = this.categoriesDraw.slice(0, number - 1);
-            } else {
-                if (this.screenWidth < 1025) {
-                    this.categories = this.categoriesDraw.slice(0, 4);
-                } else {
-                    this.categories = this.categoriesDraw.slice(0, 6);
-                }
+            if(this.categoriesDraw.length > number){
+              this.categories = this.categoriesDraw.slice(0, 6);
+            }else{
+              if(this.screenWidth <=1024){
+                this.categories = this.categoriesDraw.slice(0, 6);
+              }else{
+                this.categories = this.categoriesDraw;
+              }
             }
         });
 
@@ -479,13 +487,21 @@ export class ModeComponent implements OnInit {
             this.showAll = false;
         } else {
             let number = Math.floor(this.screenWidth / 55) - 1;
-            if (this.screenWidth < 992) {
+            if (this.screenWidth <= 768) {
+              if(this.categoriesDraw.length > number) {
                 this.categories = this.categoriesDraw.slice(0, number - 1);
+              }else{
+                this.categories = this.categoriesDraw;
+              }
             } else {
-                if (this.screenWidth < 1025) {
-                    this.categories = this.categoriesDraw.slice(0, 4);
-                } else {
+                if(this.categoriesDraw.length > number){
+                  this.categories = this.categoriesDraw.slice(0, 6);
+                }else{
+                  if(this.screenWidth <=1024){
                     this.categories = this.categoriesDraw.slice(0, 6);
+                  }else{
+                    this.categories = this.categoriesDraw;
+                  }
                 }
             }
             this.showAll = true;
