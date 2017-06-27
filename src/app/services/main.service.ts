@@ -354,9 +354,9 @@ export class MainService {
       myParams.set('page', '0');
     }
     if (slugName) {
-      myParams.set('slug', '/user/' + slugName);
+      myParams.set('slug', slugName);
     } else {
-      myParams.set('slug', '/user/' + currentSlug);
+      myParams.set('slug', currentSlug);
     }
     let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
