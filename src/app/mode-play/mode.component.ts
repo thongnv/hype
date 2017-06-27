@@ -62,7 +62,7 @@ export class ModeComponent implements OnInit {
         type: 'all',
         kind: '',
         price: '',
-        //activity: '',
+        activity: '',
         cuisine: '',
         rate: 0,
         bestfor: '',

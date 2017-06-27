@@ -17,7 +17,8 @@
             </form>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div>
-                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()" (window:resize)="onResize($event)" name="radioBasic"
+                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
+                         (window:resize)="onResize($event)" name="radioBasic"
                          formControlName="filterCategory">
                         <label class="btn btn-default">
                             <img src="../../assets/img/icons/All.png" alt="All">
@@ -30,7 +31,8 @@
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.name}}">{{term.name}}
                         </label>
-                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more" (click)="showAllKind(showAll)">
+                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
+                               (click)="showAllKind(showAll)">
                             <b></b><b></b><b></b>
                         </label>
                     </div>
@@ -91,7 +93,7 @@
                                 style="margin-top: 2em;" [tooltips]="[true,true]">
                     </nouislider>
                     <div *ngIf="showPrice" class="price-desc"><span>$0</span><span
-                            >$150</span><span>$300</span></div>
+                    >$150</span><span>$300</span></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index"
                              style="margin-left: 43px" class="filter-item col-md-3">
@@ -103,7 +105,8 @@
                                 <div class="checkbox"
                                      *ngFor="let sb of item.sub; let i = index">
                                     <input type="checkbox"
-                                           (change)="selectCheckBox($event.target.checked,item,sb)" [checked]="sb.checked">{{sb.name}}
+                                           (change)="selectCheckBox($event.target.checked,item,sb)"
+                                           [checked]="sb.checked">{{sb.name}}
                                 </div>
                             </div>
                         </div>
@@ -163,14 +166,22 @@
                             <app-place-image [name]="item.name" [width]="100" [height]="100">
                             </app-place-image>
                             <div (click)="onLikeEmit(item)" class="heart-icon">
-                               <i class="sprite-icon sprite sprite-favorite"></i>
+                                <i class="sprite-icon sprite sprite-favorite"></i>
                             </div>
                         </div>
                         <div class="item-content">
                             <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
                                 {{item.Company_Name}}</h3><span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
                             <div class="clearfix"></div>
-                            <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
+                            <ngb-rating [rate]="item.rating.average" disabled="true">
+                                <ng-template let-fill="fill">
+                                    <span *ngIf="fill === 100" class="star full">&#9733;</span>
+                                    <span *ngIf="fill === 0" class="star">&#9733;</span>
+                                      <span *ngIf="fill < 100 && fill > 0" class="star">
+                                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                      </span>
+                                </ng-template>
+                            </ngb-rating>
                             <span class="review">{{item.rating.total}} Reviews</span>
                             <div class="box-content">
                                 <!--<p>{{item.Email_Address}} | {{item.Tel_No}}</p>-->
@@ -199,7 +210,8 @@
                                  [streetViewControl]="true"
                                  [styles]="gMapStyles"
                 >
-                    <gmap-geocode-marker [markers]="markers"[showCircle]="showCircle"[circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
+                    <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
+                                         [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
                                          (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                          (markerClick)="clickedMarker($event)"
                                          (dragEnd)="markerDragEnd($event)"
