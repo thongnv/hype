@@ -79,13 +79,16 @@ body, html {
 .text-white {
   color: #ffffff;
 }
-
+.pointer{
+  cursor: pointer;
+}
 .hype {
   //header
   .nav-item {
     height: 60px;
     line-height: 60px;
   }
+
   .sidebar {
     position: fixed;
     top: 60px;

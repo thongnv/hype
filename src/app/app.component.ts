@@ -7,6 +7,8 @@ import {
 import { AppState } from './app.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
+import {SeoService} from './services/seo.service';
+
 @Component({
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
@@ -23,8 +25,13 @@ export class AppComponent implements OnInit {
 
   constructor(
     public appState: AppState,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private seoService: SeoService,
   ) {
+    // set meta data for seo
+    this.seoService.setSEOMetaTags(
+      'Hylo - The paradise of food', 'Hylo corp', 'hylo, food, hylo food, promote events', 'Description');
+
     this.userInfo = {
       isLogin: false,
       userName: '',
