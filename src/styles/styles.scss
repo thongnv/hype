@@ -1146,6 +1146,9 @@ body, html {
     }
   }
   @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .fav-component .tab-control .btn{
+      width: 95px;
+    }
     .setting-title{
       display: none;
     }
@@ -1161,12 +1164,15 @@ body, html {
     }
     .fav-component .wrap-each-items {
       width: 100%;
+      margin-top: 10px;
+      height: 100px;
+      padding: 0;
     }
     .fav-component .tab-content {
       margin: 0;
     }
     .fav-component .information-profile {
-      width: calc(100% - 90px);
+      width: calc(100% - 100px);
     }
     .fav-component .information-title {
       width: 100%;
@@ -1181,17 +1187,16 @@ body, html {
       width: 80px;
       height: 80px;
       margin-right: 10px;
+      margin-top: 5px;
     }
     .fav-component .tab-control {
-      margin-top: 10px;
+      margin: 0px auto 15px auto;
+      display: table;
     }
 
   }
   .slimScrollBar, .slimScrollRail {
     background: transparent !important;
-  }
-  @media only screen and (min-width: 1200px) {
-
   }
 
   @media only screen and (min-width: 768px) {
@@ -1218,10 +1223,6 @@ body, html {
       min-height: calc(100vh - 60px);
       padding: 0;
     }
-  }
-
-  @media only screen and (min-width: 1200px) {
-
   }
 
   @media only screen and (max-width: 575px) {
