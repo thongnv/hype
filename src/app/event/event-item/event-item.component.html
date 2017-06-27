@@ -45,11 +45,9 @@
                             </li>
                         </ul>
                     </ng-template>
-                    <li style="border: none" *ngIf="item.field_event_option.field_mentioned_by?.length >3">
-                        <a placement="left" [ngbPopover]="popContent" popoverTitle="Mentioned">
-                            <i fa class="fa-plus"></i>
-                        </a>
-                    </li>
+                    <button *ngIf="item.field_event_option.field_mentioned_by?.length >3" type="button" placement="left" style="background: transparent;outline: none" class="btn btn-secondary" [ngbPopover]="popContent" triggers="click:blur" #p="ngbPopover" (click)="p.open()" popoverTitle="Mentioned by">
+                        <i fa class="fa-plus"></i>
+                    </button>
                 </ul>
                 <div class="pull-right">
                     <ul class="list-inline">

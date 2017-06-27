@@ -521,6 +521,7 @@ export class HomeComponent implements OnInit {
                         this.markers.push({
                             lat: parseFloat(latlng[0]),
                             lng: parseFloat(latlng[1]),
+                            label:'',
                             opacity: 0.6,
                             isOpenInfo: false
                         });
@@ -572,6 +573,10 @@ export class HomeComponent implements OnInit {
 
     public openPopupMention() {
 
+    }
+
+    close(event:MouseEvent){
+        console.log(event,'asdad');
     }
 
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,
+    HostListener,NgZone,AfterViewInit,
+    EventEmitter, Output,Inject} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
@@ -10,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
 import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
+import { DOCUMENT } from "@angular/platform-browser";
 
 declare let google:any;
 
@@ -85,7 +88,8 @@ export class ModeComponent implements OnInit {
                        private loaderService:LoaderService,
                        private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
-                       private router:Router) {
+                       private router:Router,
+                       @Inject(DOCUMENT) private document: Document) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -129,11 +133,14 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location, 'region': 'sg'}, (response, status)=> {
+                        geocoder.geocode({'address': param.location +' Singapore', 'region': 'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
-                                    this.lng = response[0].geometry.location.lng()
+                                    this.lng = response[0].geometry.location.lng();
+                                    this.params.lat = this.lat;
+                                    this.params.long = this.lng;
+                                    this.getDataModes();
                                 }
                             } else {
 
@@ -188,9 +195,11 @@ export class ModeComponent implements OnInit {
 
     setPosition(position) {
         if (position.coords) {
-            this.lat = position.coords.lat;
-            this.lng = position.coords.lng;
-            console.log(this.lat);
+            this.lat = position.coords.latitude;
+            this.lng = position.coords.longitude;
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.getDataModes();
         }
 
     }
@@ -377,7 +386,26 @@ export class ModeComponent implements OnInit {
 
     }
 
+    public navIsFixed: boolean = false;
+    @HostListener("window:scroll", [])
+    onWindowScroll() {
+        let number = this.document.body.scrollTop;
+        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+            if (this.total > this.items.length) {
+                this.loadMore = true;
+                this.params.page += 1;
+                this.getDataModes();
+            }
+        }
+        //if (number > 380) {
+        //    this.navIsFixed = true;
+        //} else if (this.navIsFixed && number < 10) {
+        //    this.navIsFixed = false;
+        //}
+    }
+
     public onScroll(event) {
+        console.log('sss');
         let elm = event.srcElement;
         let baseHeight = event.target.clientHeight;
         let realScrollTop = event.target.scrollTop + baseHeight;
@@ -466,7 +494,7 @@ export class ModeComponent implements OnInit {
             this.params.rate = this.currentRate;
         }
         if (this.type) {
-            this.params.types = type.join(',');
+            this.params.kind = type.join(',');
         }
         this.smallLoader.show();
         this.getDataModes();
@@ -670,6 +698,17 @@ export class ModeComponent implements OnInit {
             }
         }
 
+        if (this.type) {
+            for (let i = 0; i < this.type.length; i++) {
+                this.type[i].checked = false;
+                if (this.type[i].sub) {
+                    for (let j = 0; j < this.type[i].sub.length; j++) {
+                        this.type[i].sub[j].checked = false;
+                    }
+                }
+            }
+        }
+
         this.cuisine = [];
         this.best = [];
         this.type = [];
@@ -693,8 +732,8 @@ export class ModeComponent implements OnInit {
 
     selectCheckBox(event, parent, sub) {
         if (event) {
+            parent.checked = true;
             if (sub) {
-                parent.checked = true;
                 console.log(1);
                 for (let i = 0; i < parent.sub.length; i++) {
                     if (parent.sub[i].name == sub.name) {
@@ -762,7 +801,7 @@ export class ModeComponent implements OnInit {
     }
 
     bestChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.best.push(item);
@@ -773,7 +812,7 @@ export class ModeComponent implements OnInit {
     }
 
     typeChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.type.push(item);
