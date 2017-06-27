@@ -357,7 +357,7 @@ body, html {
     }
     .favorites-title {
       margin: 30px 0 20px 30px;
-      //width: 640px;
+      width: 640px;
       height: 34px;
       font-family: Roboto;
       font-size: 30px;
@@ -677,11 +677,10 @@ body, html {
   .place-name {
     overflow: hidden;
     text-overflow: ellipsis;
-    word-break: keep-all;
-    width: 470px;
+    display: inline-block;
     margin: 0;
     padding: 0;
-
+    width: 80%;
   }
   .carousel-header {
     margin: 10px 0;
@@ -1135,8 +1134,16 @@ body, html {
   //END Notifications
 
   //responsive
-  @media only screen and (max-width: 544px) {
+  @media  only screen and(max-width: 374px) {
+    .sidebar {
+      height: 70px!important;
+      top: calc(100vh - 70px)!important;
+    }
+    .place-name{
+      width: 76%;
+    }
   }
+
   @media only screen and (min-width: 545px) and (max-width: 767px) {
   }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -1209,6 +1216,20 @@ body, html {
   }
 
   @media only screen and (max-width: 575px) {
+    .map-box, .list-box {
+      float: left;
+      width: 100%;
+    }
+
+    #curate-carousel .description{
+        font-size: 14px;
+        margin: 10px 0;
+    }
+
+
+    .place-item-description{
+        margin: 10px 0!important;
+    }
 
   }
   @media only screen and (max-width: 767px) {

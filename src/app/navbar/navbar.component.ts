@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
+import {NotificationComponent} from "./notification/notification.component";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -11,7 +12,6 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   public loginData: any;
-  public onNotify:boolean=false;
   public isIn = false;
   public onMobile = false;
   public oncreate = false;
@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
+  @ViewChild(NotificationComponent) NotificationComponent:NotificationComponent
 
   public constructor(public appState: AppState, private mainService: MainService,
                      private localStorageService: LocalStorageService,private router:Router) {
@@ -44,6 +45,7 @@ export class NavbarComponent implements OnInit {
     this.onMobile = !this.onMobile;
     this.oncreate = false;
     this.onsearch = false;
+    this.NotificationComponent.onNotify = false;
   }
   public onClickNotify(event){
     this.isIn = false;
@@ -54,12 +56,12 @@ export class NavbarComponent implements OnInit {
   public mobile_searchState(){
     this.onsearch = !this.onsearch;
     this.oncreate = false;
-    this.onNotify = false;
+    this.NotificationComponent.onNotify = false;
   }
   public mobile_createState(){
     this.oncreate = !this.oncreate;
     this.onsearch = false;
-    this.onNotify = false;
+    this.NotificationComponent.onNotify = false;
 
   }
   public ngOnInit() {
