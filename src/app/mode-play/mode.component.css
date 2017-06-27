@@ -549,6 +549,23 @@ select.form-control-static::-ms-expand {
     color: #ec3d62;
 }
 
+.list-items .d-inline-flex .star {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    color: #d3d3d3;
+}
+.list-items .d-inline-flex .full {
+    color: #ec3d62;
+}
+.list-items .d-inline-flex .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #ec3d62;
+    font-size: 18px;
+}
+
 @media only screen and (max-width: 767px) {
     .itemSort li {
         width: auto;
