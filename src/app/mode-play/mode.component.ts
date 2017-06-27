@@ -133,7 +133,10 @@ export class ModeComponent implements OnInit {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
-                                    this.lng = response[0].geometry.location.lng()
+                                    this.lng = response[0].geometry.location.lng();
+                                    this.params.lat = this.lat;
+                                    this.params.long = this.lng;
+                                    this.getDataModes();
                                 }
                             } else {
 
@@ -190,6 +193,9 @@ export class ModeComponent implements OnInit {
         if (position.coords) {
             this.lat = position.coords.latitude;
             this.lng = position.coords.longitude;
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.getDataModes();
         }
 
     }
