@@ -180,9 +180,8 @@ export class ModeComponent implements OnInit {
 
     setPosition(position) {
         if (position.coords) {
-            this.lat = position.coords.lat;
-            this.lng = position.coords.lng;
-            console.log(this.lat);
+            this.lat = position.coords.latitude;
+            this.lng = position.coords.longitude;
         }
 
     }
@@ -677,8 +676,8 @@ export class ModeComponent implements OnInit {
 
     selectCheckBox(event, parent, sub) {
         if (event) {
+            parent.checked = true;
             if (sub) {
-                parent.checked = true;
                 console.log(1);
                 for (let i = 0; i < parent.sub.length; i++) {
                     if (parent.sub[i].name == sub.name) {
@@ -746,7 +745,7 @@ export class ModeComponent implements OnInit {
     }
 
     bestChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.best.push(item);
@@ -757,7 +756,7 @@ export class ModeComponent implements OnInit {
     }
 
     typeChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.type.push(item);

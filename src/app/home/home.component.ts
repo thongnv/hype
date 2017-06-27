@@ -548,4 +548,8 @@ export class HomeComponent implements OnInit {
 
     }
 
+    close(event:MouseEvent){
+        console.log(event,'asdad');
+    }
+
 }
