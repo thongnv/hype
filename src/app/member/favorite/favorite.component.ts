@@ -54,29 +54,26 @@ export class FavoriteComponent implements OnInit {
     switch (this.selectedFavoriteType) {
       case 'event':
         if (!this.setEvent.offset) {
-          this.getEvent(null, this.eventPageNum);
+          this.getEvent(this.slugName, this.eventPageNum);
         }
         break;
       case 'list':
         if (!this.setList.offset) {
-          this.getList(null, this.listPageNum);
+          this.getList(this.slugName, this.listPageNum);
         }
         break;
       case 'place':
         if (!this.setPlace.offset) {
-          this.getPlace(null, this.placePageNum);
+          this.getPlace(this.slugName, this.placePageNum);
         }
         break;
       default:
         break;
     }
-    console.log('selectedFavoriteType: ', this.selectedFavoriteType);
   }
 
   public onClickDeleteEvent(item: any) {
-    console.log('onClickDeleteEventList', item);
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      console.log('onClickDeleteEvent ====> response', response);
       if (response.status) {
         this.userInfo.events.forEach((event, index) => {
           if (item === event) {
@@ -97,9 +94,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   public onClickDeleteList(item: any) {
-    console.log('onClickDeleteList', item);
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      console.log('onClickDeleteList ====> response', response);
       if (response.status) {
         this.userInfo.lists.forEach((list, index) => {
           if (item === list) {
@@ -120,9 +115,7 @@ export class FavoriteComponent implements OnInit {
   }
 
   public onClickDeletePlace(item: any) {
-    console.log('onClickDeletePlace', item);
     this.mainService.favoritePlace(item.ids_no).then((response) => {
-      console.log('onClickDeletePlace ====> response', response);
       if (response.error === 0) {
         this.userInfo.places.forEach((place, index) => {
           if (item === place) {
@@ -147,13 +140,13 @@ export class FavoriteComponent implements OnInit {
     if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
       switch (this.selectedFavoriteType) {
         case 'event':
-          this.getEvent(null, this.eventPageNum);
+          this.getEvent(this.slugName, this.eventPageNum);
           break;
         case 'list':
-          this.getList(null, this.listPageNum);
+          this.getList(this.slugName, this.listPageNum);
           break;
         case 'place':
-          this.getPlace(null, this.placePageNum);
+          this.getPlace(this.slugName, this.placePageNum);
           break;
         default:
           break;
@@ -163,10 +156,9 @@ export class FavoriteComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.getEvent(null, this.eventPageNum);
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      console.log('USER: ', this.slugName);
+      this.getEvent(this.slugName, this.eventPageNum);
       this.canDelete = this.localStorageService.get('slug') === this.slugName;
       this.getUserProfile(this.slugName);
     });
@@ -187,7 +179,6 @@ export class FavoriteComponent implements OnInit {
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
-      console.log('====> userProfile response: ', response);
       this.loaderService.hide();
     });
   }
@@ -197,7 +188,6 @@ export class FavoriteComponent implements OnInit {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
       this.mainService.getUserPlace(slugName, page).then((response) => {
-        console.log('====> getPlace response: ', response);
         if (response.total > 0) {
           if (this.setPlace.offset < response.total) {
             response.results.forEach((item) => {
@@ -221,7 +211,6 @@ export class FavoriteComponent implements OnInit {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
       this.mainService.getUserList(slugName, page).then((response) => {
-        console.log('====> getList response: ', response);
         if (response.total > 0) {
           if (this.setList.offset < response.total) {
             response.data.forEach((item) => {
@@ -245,7 +234,6 @@ export class FavoriteComponent implements OnInit {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
       this.mainService.getUserEvent(slugName, page).then((response) => {
-        console.log('====> getEvent response: ', response);
         if (this.setEvent.offset < response.total) {
           response.data.forEach((item) => {
             this.setEvent.offset++;

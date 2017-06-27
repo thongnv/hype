@@ -150,14 +150,24 @@ export class HomeComponent implements OnInit {
         this.screenHeight = height;
 
         let number = Math.floor(this.screenWidth / 55) - 1;
-        if (this.screenWidth < 992) {
+        if (this.screenWidth <= 768) {
+          if(this.drawCategories.length > number) {
             this.categories = this.drawCategories.slice(0, number - 1);
+          }else{
+            this.categories = this.drawCategories;
+          }
         } else {
-            if (this.screenWidth < 1025) {
-                this.categories = this.drawCategories.slice(0, 4);
-            } else {
-                this.categories = this.drawCategories.slice(0, 6);
-            }
+                if(this.drawCategories.length > number){
+                    this.categories = this.drawCategories.slice(0, 6);
+                }else{
+                    if(this.screenWidth <=1024){
+                      this.categories = this.drawCategories.slice(0, 6);
+                    }else{
+                      this.categories = this.drawCategories;
+                    }
+                }
+
+
         }
     }
 
@@ -358,15 +368,21 @@ export class HomeComponent implements OnInit {
             this.drawCategories = resp.data;
             console.log(resp.data);
             let number = Math.floor(this.screenWidth / 55) - 1;
-            if (this.screenWidth < 992) {
+            if (this.screenWidth <= 768) {
                 if (resp.data.length >= number) {
                     this.categories = resp.data.slice(0, number - 1);
+                }else{
+                  this.categories = resp.data;
                 }
             } else {
-                if (this.screenWidth < 1025) {
-                    this.categories = resp.data.slice(0, 4);
-                } else {
-                    this.categories = resp.data.slice(0, 6);
+                if(this.drawCategories.length > number){
+                  this.categories = this.drawCategories.slice(0, 6);
+                }else{
+                  if(this.screenWidth <=1024){
+                    this.categories = this.drawCategories.slice(0, 6);
+                  }else{
+                    this.categories = this.drawCategories;
+                  }
                 }
 
             }
@@ -380,16 +396,26 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-            if (this.screenWidth < 992) {
-                let number = Math.floor(this.screenWidth / 55) - 1;
-                if (this.screenWidth < 992) this.categories = this.drawCategories.slice(0, number - 1);
+          let number = Math.floor(this.screenWidth / 55) - 1;
+            if (this.screenWidth <= 768) {
+              if(this.drawCategories.length > number) {
+                this.categories = this.drawCategories.slice(0, number - 1);
+              }else{
+                this.categories = this.drawCategories;
+              }
             } else {
 
-                if (this.screenWidth < 1025) {
-                    this.categories = this.drawCategories.slice(0, 4);
-                } else {
+              if(this.drawCategories.length > number){
+                this.categories = this.drawCategories.slice(0, 6);
+              }else{
+                if(this.screenWidth <=1024){
                     this.categories = this.drawCategories.slice(0, 6);
+                }else{
+                    this.categories = this.drawCategories;
                 }
+
+              }
+
             }
             console.log(this.categories);
         }

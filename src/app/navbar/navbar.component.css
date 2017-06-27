@@ -81,6 +81,9 @@
 .login-mobile{
   display: none;
 }
+.mobile-left-sidebar{
+  display: none;
+}
 /*responsive*/
 
 @media only screen and (min-width: 575px) {
@@ -171,16 +174,19 @@
   .mobile-search-icon{
     padding-top: 5px;
   }
+  .show>.mobile-left-sidebar{
+    display: block;
+  }
   .mobile-left-sidebar{
     position: fixed;
     background: #f5f5f5;
     width: 50%;
     height: 100vh;
   }
-  .navbar-toggle.on-mobile{
+  .show>.navbar-toggle{
     margin-left: 50%;
   }
-  .extra-menu.on-mobile{
+  .show>.extra-menu{
     display: none;
   }
   .user-info-mobile {
