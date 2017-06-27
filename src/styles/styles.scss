@@ -79,6 +79,9 @@ body, html {
 .text-white {
   color: #ffffff;
 }
+.map-right{
+  padding-right: 0px;
+}
 .pointer{
   cursor: pointer;
 }
@@ -1291,6 +1294,21 @@ body, html {
     }
     .follow-list-wrap {
       padding: 0;
+    }
+  }
+
+  @media only screen and (min-width: 1023px) and (max-width: 1200px) {
+    .col-xs-12 {
+      width: 49%;
+    }
+    .map-right{padding-right: 0;}
+
+     .list-items .item-content {
+      width: 70%;
+    }
+
+    .showMoreType {
+      position: relative;
     }
   }
 
