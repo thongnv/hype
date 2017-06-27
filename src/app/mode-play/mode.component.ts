@@ -471,7 +471,7 @@ export class ModeComponent implements OnInit {
             this.params.rate = this.currentRate;
         }
         if (this.type) {
-            this.params.types = type.join(',');
+            this.params.kind = type.join(',');
         }
         this.smallLoader.show();
         this.getDataModes();
@@ -670,6 +670,17 @@ export class ModeComponent implements OnInit {
                 if (this.best[i].sub) {
                     for (let j = 0; j < this.best[i].sub.length; j++) {
                         this.best[i].sub[j].checked = false;
+                    }
+                }
+            }
+        }
+
+        if (this.type) {
+            for (let i = 0; i < this.type.length; i++) {
+                this.type[i].checked = false;
+                if (this.type[i].sub) {
+                    for (let j = 0; j < this.type[i].sub.length; j++) {
+                        this.type[i].sub[j].checked = false;
                     }
                 }
             }
