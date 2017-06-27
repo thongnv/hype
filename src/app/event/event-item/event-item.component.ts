@@ -22,5 +22,4 @@ export class EventItemComponent {
     public currentNumberItems = this.itemsPerPage;
     public showEndOfList = false;
 
-
 }

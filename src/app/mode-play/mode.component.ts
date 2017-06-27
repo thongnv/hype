@@ -129,11 +129,14 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location, 'region': 'sg'}, (response, status)=> {
+                        geocoder.geocode({'address': param.location +' Singapore', 'region': 'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
-                                    this.lng = response[0].geometry.location.lng()
+                                    this.lng = response[0].geometry.location.lng();
+                                    this.params.lat = this.lat;
+                                    this.params.long = this.lng;
+                                    this.getDataModes();
                                 }
                             } else {
 
@@ -188,9 +191,11 @@ export class ModeComponent implements OnInit {
 
     setPosition(position) {
         if (position.coords) {
-            this.lat = position.coords.lat;
-            this.lng = position.coords.lng;
-            console.log(this.lat);
+            this.lat = position.coords.latitude;
+            this.lng = position.coords.longitude;
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.getDataModes();
         }
 
     }
@@ -693,8 +698,8 @@ export class ModeComponent implements OnInit {
 
     selectCheckBox(event, parent, sub) {
         if (event) {
+            parent.checked = true;
             if (sub) {
-                parent.checked = true;
                 console.log(1);
                 for (let i = 0; i < parent.sub.length; i++) {
                     if (parent.sub[i].name == sub.name) {
@@ -762,7 +767,7 @@ export class ModeComponent implements OnInit {
     }
 
     bestChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.best.push(item);
@@ -773,7 +778,7 @@ export class ModeComponent implements OnInit {
     }
 
     typeChangeCheckBox(event, item) {
-        item.checked != item.checked;
+        //item.checked != item.checked;
         if (event) {
             item.checked = true;
             this.type.push(item);
