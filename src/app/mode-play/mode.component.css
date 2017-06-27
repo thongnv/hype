@@ -29,7 +29,6 @@
     background: #ec3d62;
 }
 
-
 /*filterFromMode start*/
 
 .filterFromMode {
@@ -80,7 +79,6 @@
     position: relative;
     bottom: 3px;
 }
-
 
 /*filterFromMode end*/
 
@@ -331,7 +329,8 @@ ul.nav-tabs li.nav-item {
     display: inline-block;
 }
 
-ul.nav-tabs li.nav-item:first-child {}
+ul.nav-tabs li.nav-item:first-child {
+}
 
 ul.nav-tabs li.nav-item a.nav-link {
     text-align: left;
@@ -380,64 +379,26 @@ nouislider.ng2-nouislider {
     height: 600px !important;
 }
 
-
-/*.list-items .heart-icon {
-    position: absolute;
-    right: 10px;
-    top: 15px;
-    cursor: pointer;
-}
-
-.list-items .heart-icon i {
-    color: #ffffff;
-    background: none;
-    font-size: 24px;
-}
-
-.list-items .heart-icon i.heart-selected {
-    color: #ec3d62;
-}*/
-
-
-/*.left-box, .right-box {*/
-
-
-/*padding-left: 0;*/
-
-
-/*padding-right: 0;*/
-
-
-/*}*/
-
 .fixed-right {
     position: fixed;
     right: 0px;
-    width: 48%;
+    width: 49%;
+    padding-left: 0px;
 }
 
 .icon-heart {
     background: transparent;
 }
 
-
 .showMoreType {
     width: 0px !important;
     position: absolute;
     top: 15px;
 }
+
 .showMoreType i {
     transform: scale(0.8);
 }
-/*.showMoreType b {
-    float: left;
-    color: #ec3d62;
-}
-
-.showMoreType b:before {
-    content: ' \25CF';
-    font-size: 13px;
-}*/
 
 .itemSort {
     border: none;
@@ -483,8 +444,9 @@ nouislider.ng2-nouislider {
     width: 100%;
 }
 
-.list-header-table .table-cell{
+.list-header-table .table-cell {
     width: 50%;
+    vertical-align: middle;
 }
 
 .list-header .pull-left {
@@ -537,6 +499,10 @@ nouislider.ng2-nouislider {
     float: left;
 }
 
+.item-content h3.name {
+    cursor: pointer;
+}
+
 .price-desc {
     float: none;
     width: 69%;
@@ -556,61 +522,105 @@ nouislider.ng2-nouislider {
 
 .price-desc span:nth-child(2) {
     text-align: center;
-  width: 33%;
+    width: 33%;
 }
 
 .price-desc span:nth-child(3) {
-   text-align: right;
-  width: 33%;
+    text-align: right;
+    width: 33%;
 }
 
 .form-control-static {
     border: none;
     background: transparent;
+    font-size: 12px;
+    font-family: Roboto;
 }
+
 select.form-control-static::-ms-expand {
     display: none;
 }
 
+.list-header .text-right span {
+    font-family: Roboto;
+    font-size: 12px;
+    line-height: 1;
+    text-align: right;
+    color: #ec3d62;
+}
+
+.list-items .d-inline-flex .star {
+    position: relative;
+    display: inline-block;
+    font-size: 18px;
+    color: #d3d3d3;
+}
+.list-items .d-inline-flex .full {
+    color: #ec3d62;
+}
+.list-items .d-inline-flex .half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: #ec3d62;
+    font-size: 18px;
+}
 
 @media only screen and (max-width: 767px) {
-  .itemSort li {
-    width: auto;
-    text-align: left;
-  }
+    .itemSort li {
+        width: auto;
+        text-align: left;
+    }
 
-  .showMoreType{
-    position: relative;
-    top: 5px;
-  }
+    .showMoreType {
+        position: relative;
+        top: 5px;
+    }
 
-  .list-header {
-    padding: 0 12px;
-  }
+    .list-header {
+        padding: 0 12px;
+    }
 
-  .list-items{display: table; width: 100%}
-  .list-items .avatar{display: table-cell; float: none;}
-  .list-items .item-content{display: table-cell; float: none; padding-left: 20px;}
+    .list-items {
+        display: table;
+        width: 100%
+    }
 
-  .item-content .distance {
-    margin-left: 0;
-    display: block;
-    padding-bottom: 10px;
-  }
+    .list-items .avatar {
+        display: table-cell;
+        float: none;
+    }
+
+    .list-items .item-content {
+        display: table-cell;
+        float: none;
+        padding-left: 20px;
+    }
+
+    .item-content .distance {
+        margin-left: 0;
+        display: block;
+        padding-bottom: 10px;
+    }
 
 }
+
 @media only screen and (min-width: 544px) and (max-width: 767px) {
 
-  .list-items{
-    height: auto;
-  }
+    .list-items {
+        height: auto;
+    }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 543px) {
 
-  .list-items{
-    height: auto;
-  }
+    .list-items {
+        height: auto;
+    }
 
-  .item-content .review{ margin-left: 0px; display: block; padding-top: 10px;}
+    .item-content .review {
+        margin-left: 0px;
+        display: block;
+        padding-top: 10px;
+    }
 }

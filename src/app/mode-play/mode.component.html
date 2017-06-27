@@ -17,7 +17,8 @@
             </form>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div>
-                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()" (window:resize)="onResize($event)" name="radioBasic"
+                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
+                         (window:resize)="onResize($event)" name="radioBasic"
                          formControlName="filterCategory">
                         <label class="btn btn-default">
                             <img src="../../assets/img/icons/All.png" alt="All">
@@ -30,7 +31,8 @@
                             <span class="clearfix"> </span>
                             <input type="radio" value="{{term.name}}">{{term.name}}
                         </label>
-                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more" (click)="showAllKind(showAll)">
+                        <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
+                               (click)="showAllKind(showAll)">
                             <b></b><b></b><b></b>
                         </label>
                     </div>
@@ -45,11 +47,11 @@
                     </li>
                     <li>
                         <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
-                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                         <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
-                           class="when-button">Activities <i
+                           class="when-button">Activities ({{totalCuisine}})<i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
@@ -60,13 +62,13 @@
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a (click)="showBestFind(showBest)" class="when-button">Best For <i
+                        <a (click)="showBestFind(showBest)" class="when-button">Best For ({{best?.length}})<i
                                 [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
                                 class="fa"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li class="type" *ngIf="!showTab">
-                        <a (click)="showTypeFind(showType)" class="when-button">Type
+                        <a (click)="showTypeFind(showType)" class="when-button">Type ({{type?.length}})
                             <i [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa"
                                aria-hidden="true"></i></a>
                     </li>
@@ -91,7 +93,7 @@
                                 style="margin-top: 2em;" [tooltips]="[true,true]">
                     </nouislider>
                     <div *ngIf="showPrice" class="price-desc"><span>$0</span><span
-                            >$150</span><span>$300</span></div>
+                    >$150</span><span>$300</span></div>
                     <div *ngIf="showCuisine">
                         <div *ngFor="let item of filterData.cuisine; let in =index"
                              style="margin-left: 43px" class="filter-item col-md-3">
@@ -103,7 +105,8 @@
                                 <div class="checkbox"
                                      *ngFor="let sb of item.sub; let i = index">
                                     <input type="checkbox"
-                                           (change)="selectCheckBox($event.target.checked,item,sb)" [checked]="sb.checked">{{sb.name}}
+                                           (change)="selectCheckBox($event.target.checked,item,sb)"
+                                           [checked]="sb.checked">{{sb.name}}
                                 </div>
                             </div>
                         </div>
@@ -120,8 +123,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="best && best[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="best && best[item.name]">{{item.name}}
+                                       (change)="bestChangeCheckBox($event.target.checked,item)">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -130,8 +132,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="type && type[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="type && type[item.name]">{{item.name}}
+                                       (change)="typeChangeCheckBox($event.target.checked,item)">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -148,7 +149,7 @@
                         <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
                     </select>
                 </div>
-                <div class="table-cell text-right" (click)="clearSort()">Clear Filters</div>
+                <div class="table-cell text-right"><span (click)="clearAllFilter()">Clear Filters</span></div>
                 <div class="clearfix"></div>
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
@@ -165,14 +166,22 @@
                             <app-place-image [name]="item.name" [width]="100" [height]="100">
                             </app-place-image>
                             <div (click)="onLikeEmit(item)" class="heart-icon">
-                               <i class="sprite-icon sprite sprite-favorite"></i>
+                                <i class="sprite-icon sprite sprite-favorite"></i>
                             </div>
                         </div>
                         <div class="item-content">
-                            <h3 class="name" [routerLink]="['/company',item.Company_Slug]">
+                            <h3 class="name pointer" [routerLink]="['/company',item.Company_Slug]">
                                 {{item.Company_Name}}</h3><span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
                             <div class="clearfix"></div>
-                            <ngb-rating [rate]="item.rating.average" disabled="true"></ngb-rating>
+                            <ngb-rating [rate]="item.rating.average" disabled="true">
+                                <ng-template let-fill="fill">
+                                    <span *ngIf="fill === 100" class="star full">&#9733;</span>
+                                    <span *ngIf="fill === 0" class="star">&#9733;</span>
+                                      <span *ngIf="fill < 100 && fill > 0" class="star">
+                                        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                                      </span>
+                                </ng-template>
+                            </ngb-rating>
                             <span class="review">{{item.rating.total}} Reviews</span>
                             <div class="box-content">
                                 <!--<p>{{item.Email_Address}} | {{item.Tel_No}}</p>-->
@@ -201,7 +210,8 @@
                                  [streetViewControl]="true"
                                  [styles]="gMapStyles"
                 >
-                    <gmap-geocode-marker [markers]="markers"[showCircle]="showCircle"[circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
+                    <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
+                                         [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
                                          (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                          (markerClick)="clickedMarker($event)"
                                          (dragEnd)="markerDragEnd($event)"
