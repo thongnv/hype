@@ -29,7 +29,6 @@ export class ModeComponent implements OnInit {
     public markers:any = [];
     public categories:any = [];
     public categoriesDraw:any[];
-    public someValue:number = 5;
     public priceRange:number[] = [0, 50];
     public filterFromMode:FormGroup;
     public filterCategory:FormGroup;
@@ -37,10 +36,9 @@ export class ModeComponent implements OnInit {
     public filterData:any = [];
     public currentHighlightedMarker:number = 1;
     public currentRate = 0;
-    public mode:any = {};
     private cuisine:any;
-    public best:any;
-    public type:any;
+    public best:any = [];
+    public type:any = [];
     public mapZoom:number = 12;
     public lat:number = 1.3089757786697331;
     public lng:number = 103.8258969783783;
@@ -59,6 +57,7 @@ export class ModeComponent implements OnInit {
     public circleDraggable:boolean = false;
     public screenWidth:number = 0;
     public screenHeight:number = 0;
+    public totalCuisine:number = 0;
     private params = {
         type: 'all',
         kind: '',
@@ -67,6 +66,7 @@ export class ModeComponent implements OnInit {
         cuisine: '',
         rate: 0,
         bestfor: '',
+        types: '',
         order_by: 'Company_Name',
         order_dir: 'ASC',
         lat: this.lat,
@@ -105,7 +105,6 @@ export class ModeComponent implements OnInit {
         ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-        //this.loaderService.show();
     }
 
     public ngOnInit() {
@@ -113,7 +112,6 @@ export class ModeComponent implements OnInit {
         this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
-        this.loaderService.show();
         let width = window.innerWidth
             || document.documentElement.clientWidth
             || document.body.clientWidth;
@@ -189,12 +187,11 @@ export class ModeComponent implements OnInit {
 
     }
 
-    onChange(value:number) {
-        this.someValue = this.someValue + value;
-    }
 
     getDataModes() {
         let params = this.params;
+        this.loaderService.show();
+        this.smallLoader.show();
 
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
@@ -287,7 +284,6 @@ export class ModeComponent implements OnInit {
         let radius = parseInt(event);
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
-        this.loaderService.show();
         this.getDataModes();
     }
 
@@ -301,7 +297,6 @@ export class ModeComponent implements OnInit {
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
         this.getCategories(this.filterFromMode.value.filterMode);
-        this.smallLoader.show();
         this.getDataModes();
         this.getFilter();
 
@@ -312,27 +307,40 @@ export class ModeComponent implements OnInit {
         this.markers = [];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
+
+                let mapCenter = new google.maps.Marker({
+                    position: new google.maps.LatLng(this.lat, this.lng),
+                    draggable: true
+                });
+                let searchCenter = mapCenter.getPosition();
+
                 for (let i = 0; i < companies.length; i++) {
                     if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
+
                         let lat = companies[i].YP_Address[6].split("/");
                         let lng = companies[i].YP_Address[5].split("/");
-                        //let curentPosition = new google.maps.LatLng(this.lat, this.lng);
-                        //let disTancePosition = new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1]));
+
+                        let myMarker = new google.maps.Marker({
+                            position: new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1])),
+                            draggable: true
+                        });
                         let distance = companies[i]._dict_;
                         companies[i].distance = (distance).toFixed(1);
-                        this.items.push(companies[i]);
-                        this.markers.push({
-                            lat: parseFloat(lat[1]),
-                            lng: parseFloat(lng[1]),
-                            label: companies[i].Company_Name,
-                            opacity: 0.6,
-                            isOpenInfo: false
-                        });
+                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                        if (parseInt(geometry) < this.currentRadius) {
+                            this.items.push(companies[i]);
+                            this.markers.push({
+                                lat: parseFloat(lat[1]),
+                                lng: parseFloat(lng[1]),
+                                label: companies[i].Company_Name,
+                                opacity: 0.6,
+                                isOpenInfo: false
+                            });
+                        }
                     }
                 }
             });
         }
-        console.log(this.items);
     }
 
     private getDistance(p1, p2) {
@@ -373,7 +381,6 @@ export class ModeComponent implements OnInit {
             if (this.total > this.items.length) {
                 this.loadMore = true;
                 this.params.page += 1;
-                this.smallLoader.show();
                 this.getDataModes();
             }
         }
@@ -423,28 +430,25 @@ export class ModeComponent implements OnInit {
                 }
             }
         }
-        console.log(cuisine);
         if (this.best) {
-            Object.keys(this.best).map(function (k) {
-                if (k !== '0') {
-                    best.push(k);
-                }
-            });
+            for (let b in this.best) {
+                best.push(b);
+            }
         }
-        if (this.best) {
-            Object.keys(this.type).map(function (k) {
-                if (k !== '0') {
-                    type.push(k);
-                }
-            });
+        if (this.type) {
+            for (let t in this.type) {
+                type.push(t);
+            }
         }
-
-
         if (this.showPrice) {
             this.params.price = this.priceRange.join(',');
         }
         if (this.showCuisine) {
-            this.params.cuisine = cuisine.join(',');
+            if (this.filterFromMode.value.filterMode == 'play') {
+                this.params.activity = cuisine.join(',');
+            } else {
+                this.params.cuisine = cuisine.join(',');
+            }
         }
         if (this.showBest) {
             this.params.bestfor = best.join(',');
@@ -452,8 +456,10 @@ export class ModeComponent implements OnInit {
         if (this.showRate) {
             this.params.rate = this.currentRate;
         }
-
-        this.loaderService.show();
+        if (this.type) {
+            this.params.types = type.join(',');
+        }
+        this.smallLoader.show();
         this.getDataModes();
     }
 
@@ -461,14 +467,9 @@ export class ModeComponent implements OnInit {
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
         this.clearParams();
-        this.smallLoader.show();
         this.getDataModes();
 
 
-    }
-
-    trackByIndex(index:number, obj:any):any {
-        return index;
     }
 
     showAllKind(e) {
@@ -491,19 +492,18 @@ export class ModeComponent implements OnInit {
     }
 
     onLikeEmit(item:any) {
-        console.log(item);
         item.is_favorite = !item.is_favorite;
         let params = {
             ids_no: item.Ids_No
         }
-        this.loaderService.show();
+        this.smallLoader.show();
         this.modeService.favoritePlace(params).map(res=>res.json()).subscribe(res=> {
             this.alertType = 'success';
             this.msgContent = res.message;
 
-            this.loaderService.hide();
+            this.smallLoader.hide();
         }, err=> {
-            this.loaderService.hide();
+            this.smallLoader.hide();
             if (err.status == 401 || err.status == 403) {
                 this.router.navigate(['login']);
             }
@@ -620,15 +620,14 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
-        this.smallLoader.show();
         this.getDataModes();
 
     }
 
-    public clearSort() {
-        this.params.order_by = "Company_Name";
-        this.params.order_dir = 'DESC';
-        this.smallLoader.show();
+    public clearAllFilter() {
+        this.clearParams();
+        this.params.radius = 5;
+        this.sortPlace = 'all';
         this.getDataModes();
     }
 
@@ -644,6 +643,8 @@ export class ModeComponent implements OnInit {
         this.params.type = '';
         this.params.limit = 20;
         this.params.page = 0;
+        this.params.order_by = "Company_Name";
+        this.params.order_dir = 'DESC';
         this.markers = [];
         this.items = [];
     }
@@ -702,9 +703,37 @@ export class ModeComponent implements OnInit {
                 });
             }
         }
+        let totalCuisine = [];
         this.cuisine = this.cuisineDraw;
+        if (this.cuisine) {
+            for (let j = 0; j < this.cuisine.length; j++) {
+                totalCuisine.push(this.cuisine[j].name);
+                if (this.cuisine[j].sub) {
+                    for (let i = 0; i < this.cuisine[j].sub.length; i++) {
+                        if (this.cuisine[j].sub[i].checked) {
+                            totalCuisine.push(this.cuisine[j].sub[i].name);
+                        }
+                    }
+                }
+            }
+        }
+        this.totalCuisine = totalCuisine.length;
 
     }
 
+    bestChangeCheckBox(event, item) {
+        if (event) {
+            this.best.push(item.name);
+        } else {
+            this.best.splice(this.best.length - 1, 1);
+        }
+    }
 
+    typeChangeCheckBox(event, item) {
+        if (event) {
+            this.type.push(item.name);
+        } else {
+            this.type.splice(this.type.length - 1, 1);
+        }
+    }
 }
