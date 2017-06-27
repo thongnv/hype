@@ -110,6 +110,9 @@ import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { PlaceImageComponent } from './shared/place-image/place-image.component';
 import { SmallLoaderComponent } from './shared/small-loader/small-loader.component';
 
+// services
+import {SeoService} from './services/seo.service';
+
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -241,7 +244,8 @@ type StoreType = {
     EventService,
     BaseApiService,
     ModeService,
-    HomeService
+    HomeService,
+    SeoService,
   ]
 })
 export class AppModule {

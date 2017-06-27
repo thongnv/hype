@@ -45,11 +45,11 @@
                     </li>
                     <li>
                         <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
-                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine <i
+                           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                         <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
-                           class="when-button">Activities <i
+                           class="when-button">Activities ({{totalCuisine}})<i
                                 [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
                                 aria-hidden="true"></i></a>
                     </li>
@@ -60,13 +60,13 @@
                                 aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a (click)="showBestFind(showBest)" class="when-button">Best For <i
+                        <a (click)="showBestFind(showBest)" class="when-button">Best For ({{best?.length}})<i
                                 [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
                                 class="fa"
                                 aria-hidden="true"></i></a>
                     </li>
                     <li class="type" *ngIf="!showTab">
-                        <a (click)="showTypeFind(showType)" class="when-button">Type
+                        <a (click)="showTypeFind(showType)" class="when-button">Type ({{type?.length}})
                             <i [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa"
                                aria-hidden="true"></i></a>
                     </li>
@@ -120,8 +120,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="best && best[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="best && best[item.name]">{{item.name}}
+                                       (change)="bestChangeCheckBox($event.target.checked,item)">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -130,8 +129,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="type && type[item.name]=$event.target.checked ? true : undefined"
-                                       [ngModel]="type && type[item.name]">{{item.name}}
+                                       (change)="typeChangeCheckBox($event.target.checked,item)">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -148,7 +146,7 @@
                         <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
                     </select>
                 </div>
-                <div class="table-cell text-right" (click)="clearSort()">Clear Filters</div>
+                <div class="table-cell text-right"><span (click)="clearAllFilter()">Clear Filters</span></div>
                 <div class="clearfix"></div>
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
