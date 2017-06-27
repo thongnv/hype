@@ -677,11 +677,10 @@ body, html {
   .place-name {
     overflow: hidden;
     text-overflow: ellipsis;
-    word-break: keep-all;
-    width: 470px;
+    display: inline-block;
     margin: 0;
     padding: 0;
-
+    width: 80%;
   }
   .carousel-header {
     margin: 10px 0;
@@ -1140,12 +1139,11 @@ body, html {
       height: 70px!important;
       top: calc(100vh - 70px)!important;
     }
-    strong.place-name{
+    .place-name{
       width: 76%;
     }
   }
-  @media only screen and (max-width: 544px) {
-  }
+
   @media only screen and (min-width: 545px) and (max-width: 767px) {
   }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -1228,9 +1226,7 @@ body, html {
         margin: 10px 0;
     }
 
-    .place-name{
-        width: auto;
-    }
+
     .place-item-description{
         margin: 10px 0!important;
     }

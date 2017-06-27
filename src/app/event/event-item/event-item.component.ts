@@ -10,7 +10,6 @@ import { Component, EventEmitter, Input,Output,ViewChild,ViewEncapsulation} from
 export class EventItemComponent {
 
     @Input('events') public events:any;
-    @Input('loadMore') public loadMore:any;
     @Output('onClickLike') public onClickLike = new EventEmitter<any>();
 
     private message:string;
@@ -23,12 +22,5 @@ export class EventItemComponent {
     public currentNumberItems = this.itemsPerPage;
     public showEndOfList = false;
 
-    // Methods
-    public loadMore() {
-        this.currentNumberItems += this.itemsPerPage;
-        if (this.currentNumberItems >= this.events.length) {
-            this.showEndOfList = true;
-        }
-    }
 
 }
