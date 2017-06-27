@@ -129,7 +129,7 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location, 'region': 'sg'}, (response, status)=> {
+                        geocoder.geocode({'address': param.location +' Singapore', 'region': 'sg'}, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
