@@ -1,4 +1,6 @@
-import { Component, OnInit,ViewEncapsulation,NgZone,AfterViewInit, EventEmitter, Output} from '@angular/core';
+import { Component, OnInit,ViewEncapsulation,
+    HostListener,NgZone,AfterViewInit,
+    EventEmitter, Output,Inject} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../services/mode.service";
@@ -10,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../app.setting';
 import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
+import { DOCUMENT } from "@angular/platform-browser";
 
 declare let google:any;
 
@@ -85,7 +88,8 @@ export class ModeComponent implements OnInit {
                        private loaderService:LoaderService,
                        private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
-                       private router:Router) {
+                       private router:Router,
+                       @Inject(DOCUMENT) private document: Document) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -382,7 +386,26 @@ export class ModeComponent implements OnInit {
 
     }
 
+    public navIsFixed: boolean = false;
+    @HostListener("window:scroll", [])
+    onWindowScroll() {
+        let number = this.document.body.scrollTop;
+        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+            if (this.total > this.items.length) {
+                this.loadMore = true;
+                this.params.page += 1;
+                this.getDataModes();
+            }
+        }
+        //if (number > 380) {
+        //    this.navIsFixed = true;
+        //} else if (this.navIsFixed && number < 10) {
+        //    this.navIsFixed = false;
+        //}
+    }
+
     public onScroll(event) {
+        console.log('sss');
         let elm = event.srcElement;
         let baseHeight = event.target.clientHeight;
         let realScrollTop = event.target.scrollTop + baseHeight;
