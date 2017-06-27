@@ -439,13 +439,14 @@ export class ModeComponent implements OnInit {
             }
         }
         if (this.best) {
-            for (let b in this.best) {
-                best.push(b);
+            for (let b of this.best) {
+                best.push(b.name);
             }
         }
+
         if (this.type) {
-            for (let t in this.type) {
-                type.push(t);
+            for (let t of this.type) {
+                type.push(t.name);
             }
         }
         if (this.showPrice) {
@@ -648,9 +649,32 @@ export class ModeComponent implements OnInit {
     }
 
     private clearParams() {
+        if (this.cuisine) {
+            for (let i = 0; i < this.cuisine.length; i++) {
+                this.cuisine[i].checked = false;
+                if (this.cuisine[i].sub) {
+                    for (let j = 0; j < this.cuisine[i].sub.length; j++) {
+                        this.cuisine[i].sub[j].checked = false;
+                    }
+                }
+            }
+        }
+        if (this.best) {
+            for (let i = 0; i < this.best.length; i++) {
+                this.best[i].checked = false;
+                if (this.best[i].sub) {
+                    for (let j = 0; j < this.best[i].sub.length; j++) {
+                        this.best[i].sub[j].checked = false;
+                    }
+                }
+            }
+        }
+
         this.cuisine = [];
-        this.type = [];
         this.best = [];
+        this.type = [];
+        this.totalCuisine = 0;
+
         this.currentRate = 0;
         this.priceRange = [0, 50];
         this.params.cuisine = '';
@@ -738,17 +762,23 @@ export class ModeComponent implements OnInit {
     }
 
     bestChangeCheckBox(event, item) {
+        item.checked != item.checked;
         if (event) {
-            this.best.push(item.name);
+            item.checked = true;
+            this.best.push(item);
         } else {
+            item.checked = false;
             this.best.splice(this.best.length - 1, 1);
         }
     }
 
     typeChangeCheckBox(event, item) {
+        item.checked != item.checked;
         if (event) {
-            this.type.push(item.name);
+            item.checked = true;
+            this.type.push(item);
         } else {
+            item.checked = false;
             this.type.splice(this.type.length - 1, 1);
         }
     }

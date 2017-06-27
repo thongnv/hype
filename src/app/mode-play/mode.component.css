@@ -547,6 +547,7 @@ select.form-control-static::-ms-expand {
     line-height: 1;
     text-align: right;
     color: #ec3d62;
+    cursor: pointer;
 }
 
 .list-items .d-inline-flex .star {
