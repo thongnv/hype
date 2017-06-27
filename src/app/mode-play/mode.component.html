@@ -123,7 +123,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="bestChangeCheckBox($event.target.checked,item)">{{item.name}}
+                                       (change)="bestChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                              style="margin-left: 40px">
                             <div class="checkbox">
                                 <input type="checkbox"
-                                       (change)="typeChangeCheckBox($event.target.checked,item)">{{item.name}}
+                                       (change)="typeChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
                             </div>
                         </div>
                     </div>
