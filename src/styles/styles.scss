@@ -79,13 +79,16 @@ body, html {
 .text-white {
   color: #ffffff;
 }
-
+.pointer{
+  cursor: pointer;
+}
 .hype {
   //header
   .nav-item {
     height: 60px;
     line-height: 60px;
   }
+
   .sidebar {
     position: fixed;
     top: 60px;
@@ -1130,7 +1133,6 @@ body, html {
     margin: auto;
     max-width: 300px;
   }
-
   //END Notifications
 
   //responsive
@@ -1143,13 +1145,20 @@ body, html {
       width: 76%;
     }
   }
-
-  @media only screen and (min-width: 545px) and (max-width: 767px) {
-  }
-  @media only screen and (min-width: 768px) and (max-width: 991px) {
-
-  }
   @media only screen and (min-width: 320px) and (max-width: 768px) {
+    .setting-title{
+      display: none;
+    }
+    .no-padding-mobile{
+      padding: 0!important;
+    }
+    .btn-update-interest{
+      margin-top: 5px;
+      margin-bottom: 60px;
+    }
+    .col-right.table-cell{
+      margin-top: 15px;
+    }
     .fav-component .wrap-each-items {
       width: 100%;
     }
