@@ -629,6 +629,12 @@ article {
 
 }
 
+@media only screen and (min-width: 1000px) and (max-width: 1024px){
+  .detail-page .col-md-6{
+    width: 48%;
+  }
+}
+
 @media only screen and (min-width: 769px) {
   article {
     margin: 0;

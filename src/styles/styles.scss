@@ -1228,6 +1228,12 @@ body, html {
       min-height: calc(100vh - 60px);
       padding: 0;
     }
+    .itemSort li.type {
+      width: 90px;
+    }
+    .showMoreType {
+      top: 5px;
+    }
   }
 
   @media only screen and (max-width: 575px) {
@@ -1310,7 +1316,8 @@ body, html {
   }
 
   @media only screen and (min-width: 1023px) and (max-width: 1200px) {
-    .col-xs-12 {
+    .detail-page .col-xs-12,
+    .discover-page .col-xs-12 {
       width: 49%;
     }
     .map-right{padding-right: 0;}
