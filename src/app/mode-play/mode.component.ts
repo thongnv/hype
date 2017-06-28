@@ -131,19 +131,24 @@ export class ModeComponent implements OnInit {
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
-                    console.log(param.location.replace('+', ' '));
+                    console.log(param.location.replace('+', ' ') + ' Singapore');
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
                         geocoder.geocode({
-                            'address': param.location.replace('+', ' ') + ' Singapore',
+                            'address': param.location.replace('+', ' ') + ' Xinh-ga-po',
                             'region': 'sg'
                         }, (response, status)=> {
+                            console.log(response);
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                                    console.log(response);
+                                    this.markers=[];
+                                    this.items =[];
                                     this.lat = response[0].geometry.location.lat();
                                     this.lng = response[0].geometry.location.lng();
                                     this.params.lat = this.lat;
                                     this.params.long = this.lng;
+                                    this.smallLoader.show();
                                     this.getDataModes();
                                 }
                             } else {
@@ -212,6 +217,7 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
+        console.log(params);
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
@@ -619,7 +625,9 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
+        console.log(this.sortPlace);
         if (this.sortPlace == 'ratings') {
+            console.log('ád');
             this.params.order_by = "ratings";
             this.params.order_dir = 'DESC';
         }
@@ -642,6 +650,7 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
+        this.smallLoader.show();
         this.getDataModes();
 
     }
