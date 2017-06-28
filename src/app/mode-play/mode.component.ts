@@ -76,7 +76,7 @@ export class ModeComponent implements OnInit {
         long: this.lng,
         radius: (this.currentRadius / 1000),
         page: 0,
-        limit: 20
+        limit: 10
     };
 
     public sortBy:any;
@@ -89,7 +89,7 @@ export class ModeComponent implements OnInit {
                        private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
                        private router:Router,
-                       @Inject(DOCUMENT) private document: Document) {
+                       @Inject(DOCUMENT) private document:Document) {
 
         this.filterFromMode = this.formBuilder.group({
             filterMode: 'all'
@@ -133,7 +133,10 @@ export class ModeComponent implements OnInit {
                 this.mapsAPILoader.load().then(() => {
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
-                        geocoder.geocode({'address': param.location +' Singapore', 'region': 'sg'}, (response, status)=> {
+                        geocoder.geocode({
+                            'address': param.location + ' Singapore',
+                            'region': 'sg'
+                        }, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     this.lat = response[0].geometry.location.lat();
@@ -206,9 +209,6 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
-        this.loaderService.show();
-        this.smallLoader.show();
-
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
@@ -338,8 +338,9 @@ export class ModeComponent implements OnInit {
                         });
                         let distance = companies[i]._dict_;
                         companies[i].distance = (distance).toFixed(1);
-                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                        if (parseInt(geometry) < this.currentRadius) {
+                        //let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                        //console.log(parseInt(geometry), this.currentRadius);
+                        //if (parseInt(geometry) <= this.currentRadius) {
                             this.items.push(companies[i]);
                             this.markers.push({
                                 lat: parseFloat(lat[1]),
@@ -348,7 +349,7 @@ export class ModeComponent implements OnInit {
                                 opacity: 0.6,
                                 isOpenInfo: false
                             });
-                        }
+                        //}
                     }
                 }
             });
@@ -381,12 +382,18 @@ export class ModeComponent implements OnInit {
 
     }
 
-    public navIsFixed: boolean = false;
+    public navIsFixed:boolean = false;
+
     @HostListener("window:scroll", [])
     onWindowScroll() {
         let number = this.document.body.scrollTop;
         if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
             if (this.total > this.items.length) {
+                if (this.items.length <= 1) {
+                    return false;
+                }
+                console.log(this.total, this.items.length);
+                this.smallLoader.show();
                 this.loadMore = true;
                 this.params.page += 1;
                 this.getDataModes();
@@ -397,37 +404,6 @@ export class ModeComponent implements OnInit {
         //} else if (this.navIsFixed && number < 10) {
         //    this.navIsFixed = false;
         //}
-    }
-
-    public onScroll(event) {
-        console.log('sss');
-        let elm = event.srcElement;
-        let baseHeight = event.target.clientHeight;
-        let realScrollTop = event.target.scrollTop + baseHeight;
-        let currentHeight:number = baseHeight;
-
-        // determine just scrolled to end
-        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-            console.log('end, params: ', this.params);
-            if (this.total > this.items.length) {
-                this.loadMore = true;
-                this.params.page += 1;
-                this.getDataModes();
-            }
-        }
-
-        if (event.target.children[0].children.length > 1) {
-            for (let i = 0; i < event.target.children[0].children.length; i++) {
-                let currentClientH = event.target.children[0].children[i].clientHeight;
-                currentHeight += currentClientH;
-                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-                    if (this.currentHighlightedMarker !== i) {
-                        this.currentHighlightedMarker = i;
-                        this.highlightMarker(i);
-                    }
-                }
-            }
-        }
     }
 
     private highlightMarker(markerId:number):void {
@@ -491,6 +467,9 @@ export class ModeComponent implements OnInit {
         if (this.type) {
             this.params.kind = type.join(',');
         }
+        this.markers = [];
+        this.items = [];
+        this.params.page = 0;
         this.smallLoader.show();
         this.getDataModes();
     }
@@ -511,11 +490,11 @@ export class ModeComponent implements OnInit {
         } else {
             let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth <= 768) {
-              if(this.categoriesDraw.length > number) {
-                this.categories = this.categoriesDraw.slice(0, number - 1);
-              }else{
-                this.categories = this.categoriesDraw;
-              }
+                if (this.categoriesDraw.length > number) {
+                    this.categories = this.categoriesDraw.slice(0, number - 1);
+                } else {
+                    this.categories = this.categoriesDraw;
+                }
             } else {
                 if(this.categoriesDraw.length > number){
                   this.categories = this.categoriesDraw.slice(0, 6);
