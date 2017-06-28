@@ -1146,7 +1146,18 @@ body, html {
     .place-name{
       width: 76%;
     }
+
+    ul.list-pictures-experience li{
+      margin-right: 10px !important;
+      margin-bottom: 10px;
+    }
+    ul.list-pictures-experience li div img {
+      width: 100%;
+      height: 100%;
+    }
   }
+
+
   @media only screen and (min-width: 320px) and (max-width: 768px) {
     .fav-component .tab-control .btn{
       width: 95px;
