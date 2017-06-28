@@ -26,10 +26,6 @@
 .interest-item:hover span{
     background: rgba(0, 0, 0, 0.6);
 }
-.interest-item:hover{
-    color: #ec3d62;
-    border: 2px solid #ec3d62;
-}
 .interest-item.selected{
     color: #ec3d62;
     border: 2px solid #ec3d62;
