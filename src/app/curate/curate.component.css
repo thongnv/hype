@@ -200,6 +200,8 @@ ul.list-items li a img {
     padding: 15px;
   }
 
+  .article-item{width: 100%}
+
 }
 @media only screen and (min-width: 375px) and (max-width: 543px) {
   .primary-content h4.head{ padding: 15px; margin: 10px 0px}
@@ -215,6 +217,7 @@ ul.list-items li a img {
     padding: 15px;
   }
 
+  .article-item{width: 100%}
 }
 @media only screen and (min-width: 545px) and (max-width: 767px) {
   .primary-content h4.head{ padding: 15px; margin: 10px 0px}
