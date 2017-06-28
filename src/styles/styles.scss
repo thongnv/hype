@@ -1129,9 +1129,7 @@ body, html {
     position: relative;
     overflow: hidden;
   }
-  .list-bottom{
-    margin-bottom: 70px;
-  }
+
   .price-slider{
     margin-top:1em; margin-bottom: 1em;padding-bottom: 20px;
     width: 80%;
@@ -1281,6 +1279,10 @@ body, html {
     .mobile-footer{height: 80px; width: 100%; display: block;}
     .table-wrap {
       display: block;
+    }
+
+    .hype .arrow-up{
+        border-bottom: 12px solid #f1f1f1;
     }
     .main {
       left: 0;
