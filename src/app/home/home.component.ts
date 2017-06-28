@@ -160,11 +160,7 @@ export class HomeComponent implements OnInit {
                 if(this.drawCategories.length > number){
                     this.categories = this.drawCategories.slice(0, 6);
                 }else{
-                    if(this.screenWidth <=1024){
-                      this.categories = this.drawCategories.slice(0, 6);
-                    }else{
-                      this.categories = this.drawCategories;
-                    }
+                  this.categories = this.drawCategories.slice(0, 6);
                 }
 
 
@@ -378,11 +374,7 @@ export class HomeComponent implements OnInit {
                 if(this.drawCategories.length > number){
                   this.categories = this.drawCategories.slice(0, 6);
                 }else{
-                  if(this.screenWidth <=1024){
-                    this.categories = this.drawCategories.slice(0, 6);
-                  }else{
-                    this.categories = this.drawCategories;
-                  }
+                  this.categories = this.drawCategories.slice(0, 6);
                 }
 
             }
@@ -408,11 +400,7 @@ export class HomeComponent implements OnInit {
               if(this.drawCategories.length > number){
                 this.categories = this.drawCategories.slice(0, 6);
               }else{
-                if(this.screenWidth <=1024){
-                    this.categories = this.drawCategories.slice(0, 6);
-                }else{
-                    this.categories = this.drawCategories;
-                }
+                this.categories = this.drawCategories.slice(0, 6);
 
               }
 

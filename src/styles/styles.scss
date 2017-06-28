@@ -1270,6 +1270,7 @@ body, html {
     }
   }
   @media only screen and (max-width: 991px) {
+    .mobile-footer{height: 80px; width: 100%; display: block;}
     .table-wrap {
       display: block;
     }
