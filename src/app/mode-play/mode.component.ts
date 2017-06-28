@@ -109,7 +109,6 @@ export class ModeComponent implements OnInit {
         ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-        this.loaderService.show();
     }
 
     public ngOnInit() {
@@ -178,21 +177,20 @@ export class ModeComponent implements OnInit {
         this.screenHeight = height;
 
         let number = Math.floor(this.screenWidth / 55) - 1;
-        if (this.screenWidth < 768) {
-            if (this.categoriesDraw.length > number) {
-                this.categories = this.categoriesDraw.slice(0, number - 1);
-            } else {
-                this.categories = this.categoriesDraw;
-            }
+
+        if (this.screenWidth <= 768) {
+          if(this.categoriesDraw.length > number) {
+
+            this.categories = this.categoriesDraw.slice(0, number - 1);
+          }else{
+
+            this.categories = this.categoriesDraw;
+          }
         } else {
-            if (this.categoriesDraw.length > number) {
-                this.categories = this.categoriesDraw.slice(0, 6);
-            } else {
-                if (this.screenWidth <= 1024) {
-                    this.categories = this.categoriesDraw.slice(0, 6);
-                } else {
-                    this.categories = this.categoriesDraw;
-                }
+            if(this.categoriesDraw.length > number){
+              this.categories = this.categoriesDraw.slice(0, 6);
+            }else{
+              this.categories = this.categoriesDraw.slice(0, 6);
             }
         }
     }
@@ -217,7 +215,6 @@ export class ModeComponent implements OnInit {
             if (parseInt(resp.total) > 0) {
                 this.showMap = true;
             }
-            console.log(this.loadMore);
             if (this.loadMore) {
                 this.initMap(this.items.concat(resp.company));
             } else {
@@ -255,14 +252,10 @@ export class ModeComponent implements OnInit {
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
             let number = Math.floor(this.screenWidth / 55) - 1;
-            if (this.categoriesDraw.length > number) {
-                this.categories = this.categoriesDraw.slice(0, 6);
-            } else {
-                if (this.screenWidth <= 1024) {
-                    this.categories = this.categoriesDraw.slice(0, 6);
-                } else {
-                    this.categories = this.categoriesDraw;
-                }
+            if(this.categoriesDraw.length > number){
+              this.categories = this.categoriesDraw.slice(0, 6);
+            }else{
+              this.categories = this.categoriesDraw.slice(0, 6);
             }
         });
 
@@ -503,14 +496,10 @@ export class ModeComponent implements OnInit {
                     this.categories = this.categoriesDraw;
                 }
             } else {
-                if (this.categoriesDraw.length > number) {
-                    this.categories = this.categoriesDraw.slice(0, 6);
-                } else {
-                    if (this.screenWidth <= 1024) {
-                        this.categories = this.categoriesDraw.slice(0, 6);
-                    } else {
-                        this.categories = this.categoriesDraw;
-                    }
+                if(this.categoriesDraw.length > number){
+                  this.categories = this.categoriesDraw.slice(0, 6);
+                }else{
+                  this.categories = this.categoriesDraw.slice(0, 6);
                 }
             }
             this.showAll = true;
@@ -646,7 +635,6 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
-        this.smallLoader.show();
         this.getDataModes();
 
     }
@@ -655,7 +643,6 @@ export class ModeComponent implements OnInit {
         this.clearParams();
         this.params.radius = 5;
         this.sortPlace = 'all';
-        this.smallLoader.show();
         this.getDataModes();
     }
 

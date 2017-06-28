@@ -164,8 +164,9 @@ export class HomeComponent implements OnInit {
             } else {
                 if (this.screenWidth <= 1024) {
                     this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    this.categories = this.drawCategories;
+                }else{
+                  this.categories = this.drawCategories.slice(0, 6);
+
                 }
             }
 
@@ -373,14 +374,11 @@ export class HomeComponent implements OnInit {
                     this.categories = resp.data;
                 }
             } else {
-                if (this.drawCategories.length > number) {
-                    this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    if (this.screenWidth <= 1024) {
-                        this.categories = this.drawCategories.slice(0, 6);
-                    } else {
-                        this.categories = this.drawCategories;
-                    }
+
+                if(this.drawCategories.length > number){
+                  this.categories = this.drawCategories.slice(0, 6);
+                }else {
+                  this.categories = this.drawCategories.slice(0, 6);
                 }
 
             }
@@ -403,16 +401,13 @@ export class HomeComponent implements OnInit {
                 }
             } else {
 
-                if (this.drawCategories.length > number) {
-                    this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    if (this.screenWidth <= 1024) {
-                        this.categories = this.drawCategories.slice(0, 6);
-                    } else {
-                        this.categories = this.drawCategories;
-                    }
 
-                }
+              if(this.drawCategories.length > number){
+                this.categories = this.drawCategories.slice(0, 6);
+              }else {
+                this.categories = this.drawCategories.slice(0, 6);
+
+              }
 
             }
             console.log(this.categories);
