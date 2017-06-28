@@ -2,12 +2,10 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import { ServerErrorComponent } from './server-error/server-error.component';
-import { DiscoverComponent } from './discover/discover.component';
 import { CurateComponent } from './curate/curate.component';
 import { EventDetailComponent } from './event/detail/detail.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
-import { CuratePreviewComponent } from './curate-preview/curate-preview.component';
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 import { ModeComponent } from './mode-play/mode.component';
@@ -26,7 +24,6 @@ export const ROUTES: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '404', component: NoContentComponent},
   {path: '500', component: ServerErrorComponent},
-  //{path: 'discover', component: DiscoverComponent},
   {path: 'curate', component: CurateComponent},
   {path: 'article/:slug', component: CurateDetailComponent},
   {path: 'curate/new', component: CurateNewComponent},

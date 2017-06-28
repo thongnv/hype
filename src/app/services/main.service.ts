@@ -76,7 +76,6 @@ export class MainService {
   }
 
   public getUserProfile(slugName?: string): Promise<any> {
-    this.checkLogin();
     let csrfToken = <string> this._localStorageService.get('csrf_token');
     let currentSlug = <string> this._localStorageService.get('slug');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});

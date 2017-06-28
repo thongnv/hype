@@ -177,7 +177,9 @@ export class ModeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
-        let number = Math.floor(this.screenWidth / 55) - 1;
+        let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
+
+        let number = Math.floor(menuWidth / 55) - 1;
 
         if (this.screenWidth <= 768) {
           if(this.categoriesDraw.length > number) {
@@ -252,9 +254,11 @@ export class ModeComponent implements OnInit {
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
-            let number = Math.floor(this.screenWidth / 55) - 1;
+          let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
+
+          let number = Math.floor(menuWidth / 55) - 1;
             if(this.categoriesDraw.length > number){
-              this.categories = this.categoriesDraw.slice(0, 6);
+              this.categories = this.categoriesDraw.slice(0, number-1);
             }else{
               this.categories = this.categoriesDraw.slice(0, 6);
             }
@@ -489,7 +493,9 @@ export class ModeComponent implements OnInit {
             this.categories = this.categoriesDraw;
             this.showAll = false;
         } else {
-            let number = Math.floor(this.screenWidth / 55) - 1;
+          let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
+
+          let number = Math.floor(menuWidth / 55) - 1;
             if (this.screenWidth <= 768) {
                 if (this.categoriesDraw.length > number) {
                     this.categories = this.categoriesDraw.slice(0, number - 1);

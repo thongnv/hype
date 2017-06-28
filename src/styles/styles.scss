@@ -1155,12 +1155,15 @@ body, html {
     .setting-title{
       display: none;
     }
+    .btn-primary{
+      margin-bottom: 70px;
+    }
     .no-padding-mobile{
       padding: 0!important;
     }
     .btn-update-interest{
       margin-top: 5px;
-      margin-bottom: 60px;
+      margin-bottom: 70px;
     }
     .col-right.table-cell{
       margin-top: 15px;
@@ -1248,6 +1251,10 @@ body, html {
   @media only screen and (max-width: 767px) {
     .navbar-toggle{
       margin-right: 5px;
+    }
+
+    .list-bottom{
+      height: 70px;
     }
 
     .navbar-brand{
