@@ -101,7 +101,7 @@
                  [railColor]="'#ec3d62'"
                  [color]="'#ec3d62'">
 
-              <li *ngFor="let option of mapOptions" [class.active]="option === selectedMapOption"
+              <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
                   (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
               </li>
             </div>
