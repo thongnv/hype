@@ -18,7 +18,7 @@
                 </ul>
             </div>
             <div class="filter-events clearfix" [class.top-100]="selectedEventOrder.name == 'top 100'">
-                <div class="btn-group tab-control" *ngIf="selectedEventOrder.name != 'top 100'">
+                <div id="timeFilter" class="btn-group tab-control" *ngIf="selectedEventOrder.name != 'top 100'">
                     <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
                             class="btn btn-default tab-control text-capitalize" [class.active]="filter===selectedEventFilter">
                         {{filter.name}}
