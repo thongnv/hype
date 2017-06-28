@@ -80,6 +80,7 @@
 .filter-events {
     padding: 30px 35px 0px 25px;
     border-bottom: 1px solid #eaeaea;
+   margin-bottom: 15px;
 }
 
 .filter-events .btn-group.tab-control {
@@ -147,8 +148,10 @@
 
 #filters {
     /*margin-left: 25px;*/
-    float: right;
+    float: left;
 }
+
+#timeFilter{float: right;}
 
 button.btn.btn-default.active {
     font-size: 14px;

@@ -17,7 +17,7 @@
             </form>
             <form [formGroup]="filterCategory" class="filterCategory">
                 <div>
-                    <div ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
+                    <div id="btnHeadFilter" ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
                          (window:resize)="onResize($event)" name="radioBasic"
                          formControlName="filterCategory">
                         <label class="btn btn-default">

@@ -1129,7 +1129,9 @@ body, html {
     position: relative;
     overflow: hidden;
   }
-
+  .list-bottom{
+    margin-bottom: 70px;
+  }
   .price-slider{
     margin-top:1em; margin-bottom: 1em;padding-bottom: 20px;
     width: 80%;
@@ -1251,6 +1253,10 @@ body, html {
   @media only screen and (max-width: 767px) {
     .navbar-toggle{
       margin-right: 5px;
+    }
+
+    .list-bottom{
+      height: 70px;
     }
 
     .navbar-brand{
