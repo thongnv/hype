@@ -298,7 +298,7 @@ export class HomeComponent implements OnInit {
         if (this.selectedEventOrder.name == 'top 100') {
             this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
                 this.total = resp.total;
-                this.events = resp.data;
+                this.events = this.events.concat(resp.data);
                 this.passerTop100(resp.data);
                 this.showMap = true;
                 this.loadMore = false;

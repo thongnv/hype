@@ -131,10 +131,11 @@ export class ModeComponent implements OnInit {
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
+                    console.log(param.location.replace('+', ' '));
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
                         geocoder.geocode({
-                            'address': param.location + ' Singapore',
+                            'address': param.location.replace('+', ' ') + ' Singapore',
                             'region': 'sg'
                         }, (response, status)=> {
                             if (status == google.maps.GeocoderStatus.OK) {
