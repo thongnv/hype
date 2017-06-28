@@ -50,8 +50,7 @@
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clear"></div>
-            <div id="v-scrollable" class="scrollable section"
-                 ng2-scrollable (elementVisible)="scrollEvent($event)" (scroll)="onScroll($event)"
+            <div id="v-scrollable" class="section"
             >
                 <app-event-item
                         [events]="events" (onClickLike)="onClickLike($event)"></app-event-item>
