@@ -456,18 +456,18 @@ export class HomeComponent implements OnInit {
         let realScrollTop = this.document.body.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
 
-        if (event.target.children[0].children.length > 1) {
-            for (let i = 0; i < event.target.children[0].children.length; i++) {
-                let currentClientH = event.target.children[0].children[i].clientHeight;
-                currentHeight += currentClientH;
-                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-                    if (this.currentHighlightedMarker !== i) {
-                        this.currentHighlightedMarker = i;
-                        this.highlightMarker(i);
-                    }
-                }
-            }
-        }
+        //if (event.target.children[0].children.length > 1) {
+        //    for (let i = 0; i < event.target.children[0].children.length; i++) {
+        //        let currentClientH = event.target.children[0].children[i].clientHeight;
+        //        currentHeight += currentClientH;
+        //        if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+        //            if (this.currentHighlightedMarker !== i) {
+        //                this.currentHighlightedMarker = i;
+        //                this.highlightMarker(i);
+        //            }
+        //        }
+        //    }
+        //}
         //if (number > 380) {
         //    this.navIsFixed = true;
         //} else if (this.navIsFixed && number < 10) {
