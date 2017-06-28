@@ -131,19 +131,24 @@ export class ModeComponent implements OnInit {
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
-                    console.log(param.location.replace('+', ' '));
+                    console.log(param.location.replace('+', ' ') + ' Singapore');
                     let geocoder = new google.maps.Geocoder();
                     if (geocoder) {
                         geocoder.geocode({
-                            'address': param.location.replace('+', ' ') + ' Singapore',
+                            'address': param.location.replace('+', ' ') + ' Xinh-ga-po',
                             'region': 'sg'
                         }, (response, status)=> {
+                            console.log(response);
                             if (status == google.maps.GeocoderStatus.OK) {
                                 if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                                    console.log(response);
+                                    this.markers = [];
+                                    this.items = [];
                                     this.lat = response[0].geometry.location.lat();
                                     this.lng = response[0].geometry.location.lng();
                                     this.params.lat = this.lat;
                                     this.params.long = this.lng;
+                                    this.smallLoader.show();
                                     this.getDataModes();
                                 }
                             } else {
@@ -182,18 +187,18 @@ export class ModeComponent implements OnInit {
         let number = Math.floor(menuWidth / 55) - 1;
 
         if (this.screenWidth <= 768) {
-          if(this.categoriesDraw.length > number) {
+            if (this.categoriesDraw.length > number) {
 
-            this.categories = this.categoriesDraw.slice(0, number - 1);
-          }else{
+                this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
 
-            this.categories = this.categoriesDraw;
-          }
+                this.categories = this.categoriesDraw;
+            }
         } else {
-            if(this.categoriesDraw.length > number){
-              this.categories = this.categoriesDraw.slice(0, 6);
-            }else{
-              this.categories = this.categoriesDraw.slice(0, 6);
+            if (this.categoriesDraw.length > number) {
+                this.categories = this.categoriesDraw.slice(0, 6);
+            } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
             }
         }
     }
@@ -212,6 +217,7 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
+        console.log(params);
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
@@ -254,13 +260,13 @@ export class ModeComponent implements OnInit {
         let params = this.catParam;
         this.modeService.getCategories(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.categoriesDraw = resp.data;
-          let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
+            let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
 
-          let number = Math.floor(menuWidth / 55) - 1;
-            if(this.categoriesDraw.length > number){
-              this.categories = this.categoriesDraw.slice(0, number-1);
-            }else{
-              this.categories = this.categoriesDraw.slice(0, 6);
+            let number = Math.floor(menuWidth / 55) - 1;
+            if (this.categoriesDraw.length > number) {
+                this.categories = this.categoriesDraw.slice(0, number - 1);
+            } else {
+                this.categories = this.categoriesDraw.slice(0, 6);
             }
         });
 
@@ -346,14 +352,14 @@ export class ModeComponent implements OnInit {
                         //let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
                         //console.log(parseInt(geometry), this.currentRadius);
                         //if (parseInt(geometry) <= this.currentRadius) {
-                            this.items.push(companies[i]);
-                            this.markers.push({
-                                lat: parseFloat(lat[1]),
-                                lng: parseFloat(lng[1]),
-                                label: companies[i].Company_Name,
-                                opacity: 0.6,
-                                isOpenInfo: false
-                            });
+                        this.items.push(companies[i]);
+                        this.markers.push({
+                            lat: parseFloat(lat[1]),
+                            lng: parseFloat(lng[1]),
+                            label: companies[i].Company_Name,
+                            opacity: 0.6,
+                            isOpenInfo: false
+                        });
                         //}
                     }
                 }
@@ -493,9 +499,9 @@ export class ModeComponent implements OnInit {
             this.categories = this.categoriesDraw;
             this.showAll = false;
         } else {
-          let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
+            let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
 
-          let number = Math.floor(menuWidth / 55) - 1;
+            let number = Math.floor(menuWidth / 55) - 1;
             if (this.screenWidth <= 768) {
                 if (this.categoriesDraw.length > number) {
                     this.categories = this.categoriesDraw.slice(0, number - 1);
@@ -503,10 +509,10 @@ export class ModeComponent implements OnInit {
                     this.categories = this.categoriesDraw;
                 }
             } else {
-                if(this.categoriesDraw.length > number){
-                  this.categories = this.categoriesDraw.slice(0, 6);
-                }else{
-                  this.categories = this.categoriesDraw.slice(0, 6);
+                if (this.categoriesDraw.length > number) {
+                    this.categories = this.categoriesDraw.slice(0, 6);
+                } else {
+                    this.categories = this.categoriesDraw.slice(0, 6);
                 }
             }
             this.showAll = true;
@@ -619,7 +625,9 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
+        console.log(this.sortPlace);
         if (this.sortPlace == 'ratings') {
+            console.log('ád');
             this.params.order_by = "ratings";
             this.params.order_dir = 'DESC';
         }
@@ -638,10 +646,12 @@ export class ModeComponent implements OnInit {
         if (this.sortPlace == 'distance') {
             this.params.order_by = "distance";
             this.params.order_dir = 'DESC';
-        } else {
+        }
+        if (this.sortPlace == 'all') {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
+        this.smallLoader.show();
         this.getDataModes();
 
     }
