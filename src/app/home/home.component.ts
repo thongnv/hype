@@ -1,5 +1,5 @@
 // core
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit,HostListener,ViewChild,Inject} from '@angular/core';
 import { Router } from '@angular/router';
 
 // 3rd libs
@@ -9,6 +9,7 @@ import {any} from "codelyzer/util/function";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
+import { DOCUMENT } from "@angular/platform-browser";
 
 // services
 import { MainService } from '../services/main.service';
@@ -101,7 +102,8 @@ export class HomeComponent implements OnInit {
                 private loaderService:LoaderService,
                 private smallLoader:SmallLoaderService,
                 private mapsAPILoader:MapsAPILoader,
-                private route:Router) {
+                private route:Router,
+                @Inject(DOCUMENT) private document:Document) {
         this.eventFilter = [
             {name: 'all'},
             {name: 'today'},
@@ -151,17 +153,22 @@ export class HomeComponent implements OnInit {
 
         let number = Math.floor(this.screenWidth / 55) - 1;
         if (this.screenWidth <= 768) {
-          if(this.drawCategories.length > number) {
-            this.categories = this.drawCategories.slice(0, number - 1);
-          }else{
-            this.categories = this.drawCategories;
-          }
+            if (this.drawCategories.length > number) {
+                this.categories = this.drawCategories.slice(0, number - 1);
+            } else {
+                this.categories = this.drawCategories;
+            }
         } else {
-                if(this.drawCategories.length > number){
+            if (this.drawCategories.length > number) {
+                this.categories = this.drawCategories.slice(0, 6);
+            } else {
+                if (this.screenWidth <= 1024) {
                     this.categories = this.drawCategories.slice(0, 6);
                 }else{
                   this.categories = this.drawCategories.slice(0, 6);
+
                 }
+            }
 
 
         }
@@ -291,12 +298,8 @@ export class HomeComponent implements OnInit {
         if (this.selectedEventOrder.name == 'top 100') {
             this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
                 this.total = resp.total;
-                if (this.loadMore) {
-                    this.listItems = this.listItems.concat(resp.data);
-                } else {
-                    this.listItems = resp.data;
-                }
-                this.passerTop100();
+                this.events = resp.data;
+                this.passerTop100(resp.data);
                 this.showMap = true;
                 this.loadMore = false;
                 this.loaderService.hide();
@@ -367,13 +370,14 @@ export class HomeComponent implements OnInit {
             if (this.screenWidth <= 768) {
                 if (resp.data.length >= number) {
                     this.categories = resp.data.slice(0, number - 1);
-                }else{
-                  this.categories = resp.data;
+                } else {
+                    this.categories = resp.data;
                 }
             } else {
+
                 if(this.drawCategories.length > number){
                   this.categories = this.drawCategories.slice(0, 6);
-                }else{
+                }else {
                   this.categories = this.drawCategories.slice(0, 6);
                 }
 
@@ -388,18 +392,19 @@ export class HomeComponent implements OnInit {
             this.categories = this.drawCategories;
         } else {
             this.showAll = true;
-          let number = Math.floor(this.screenWidth / 55) - 1;
+            let number = Math.floor(this.screenWidth / 55) - 1;
             if (this.screenWidth <= 768) {
-              if(this.drawCategories.length > number) {
-                this.categories = this.drawCategories.slice(0, number - 1);
-              }else{
-                this.categories = this.drawCategories;
-              }
+                if (this.drawCategories.length > number) {
+                    this.categories = this.drawCategories.slice(0, number - 1);
+                } else {
+                    this.categories = this.drawCategories;
+                }
             } else {
+
 
               if(this.drawCategories.length > number){
                 this.categories = this.drawCategories.slice(0, 6);
-              }else{
+              }else {
                 this.categories = this.drawCategories.slice(0, 6);
 
               }
@@ -418,36 +423,38 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    public onScroll(event) {
-        let elm = event.srcElement;
-        let baseHeight = event.target.clientHeight;
-        let realScrollTop = event.target.scrollTop + baseHeight;
-        let currentHeight:number = baseHeight;
-
-        // determine just scrolled to end
-        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
+    @HostListener("window:scroll", [])
+    onWindowScroll() {
+        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
             if (this.selectedEventOrder.name == 'top 100') {
-                console.log(this.params.start += 20);
-                if (this.total >= this.listItems.length) {
+                if (this.total >= this.events.length) {
+                    // check limit start
                     if (this.params.start >= 80) {
+                        return false;
+                    }
+                    //check limit length data response
+                    if (this.events.length < this.params.start) {
                         return false;
                     }
                     this.smallLoader.show();
                     this.loadMore = true;
                     this.params.start += 20;
+                    console.log(this.params.start);
                     this.getTrending();
-                }
-            } else {
-                this.loadMore = true;
-                if (this.total > this.events.length) {
-                    this.smallLoader.show();
-                    this.params.page += 1;
-                    this.getTrending();
+                } else {
+                    this.loadMore = true;
+                    if (this.total > this.events.length) {
+                        this.smallLoader.show();
+                        this.params.page += 1;
+                        this.getTrending();
+                    }
                 }
             }
-
-
         }
+
+        let baseHeight = this.document.body.clientHeight;
+        let realScrollTop = this.document.body.scrollTop + baseHeight;
+        let currentHeight:number = baseHeight;
 
         if (event.target.children[0].children.length > 1) {
             for (let i = 0; i < event.target.children[0].children.length; i++) {
@@ -461,6 +468,11 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+        //if (number > 380) {
+        //    this.navIsFixed = true;
+        //} else if (this.navIsFixed && number < 10) {
+        //    this.navIsFixed = false;
+        //}
     }
 
     private highlightMarker(markerId:number):void {
@@ -509,6 +521,7 @@ export class HomeComponent implements OnInit {
                         this.markers.push({
                             lat: parseFloat(latlng[0]),
                             lng: parseFloat(latlng[1]),
+                            label: '',
                             opacity: 0.6,
                             isOpenInfo: false
                         });
@@ -521,25 +534,43 @@ export class HomeComponent implements OnInit {
     }
 
 
-    private passerTop100() {
-        this.resetData();
+    private passerTop100(events:any) {
+        console.log(events);
         this.mapsAPILoader.load().then(()=> {
-                for (let i = 0; i < this.listItems.length; i++) {
-                    let latitude = (this.listItems[i].field_location_place.field_latitude) ? this.listItems[i].field_location_place.field_latitude : this.listItems[i].field_location_place[0].field_latitude;
-                    let longitude = (this.listItems[i].field_location_place.field_longitude) ? this.listItems[i].field_location_place.field_longitude : this.listItems[i].field_location_place[0].field_longitude;
-                    this.events.push(this.listItems[i]);
+                for (let i = 0; i < events.length; i++) {
+                    let latitude:any;
+                    let longitude:any;
+                    if (events[i].type == 'event') {
+                        if (typeof events[i].field_location_place.field_latitude !== null) {
+                            latitude = events[i].field_location_place.field_latitude;
+                        }
+
+                        if (typeof events[i].field_location_place.field_longitude != null) {
+                            longitude = events[i].field_location_place.field_longitude;
+                        }
+                    }
+                    if (events[i].type == 'article') {
+                        if (events[i].field_location_place.length > 0) {
+
+                            if (typeof events[i].field_location_place[0].field_latitude != null) {
+                                latitude = events[i].field_location_place[0].field_latitude;
+                            }
+                            if (typeof events[i].field_location_place[0].field_longitude != null) {
+                                longitude = events[i].field_location_place[0].field_longitude;
+                            }
+                        }
+
+                    }
                     this.markers.push({
                         lat: latitude,
                         lng: longitude,
-                        label: this.listItems[i].title,
+                        label: events[i].title,
                         opacity: 0.6,
                         isOpenInfo: false
                     });
 
 
                 }
-                this.loaderService.hide();
-                this.showMap = true;
             }
         );
     }
@@ -560,10 +591,6 @@ export class HomeComponent implements OnInit {
 
     public openPopupMention() {
 
-    }
-
-    close(event:MouseEvent){
-        console.log(event,'asdad');
     }
 
 }

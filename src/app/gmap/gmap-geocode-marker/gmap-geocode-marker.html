@@ -15,10 +15,9 @@
         [longitude]="m.lng"
         [iconUrl]="MARKER_ICON"
         [opacity]="m.opacity"
-        [openInfoWindow]="m.isOpenInfo"
 >
-    <!--<sebm-google-map-info-window [maxWidth]="264" [isOpen]="m.isOpenInfo" [disableAutoPan]="true">-->
-    <!--{{m.label}}-->
-    <!--</sebm-google-map-info-window>-->
+    <sebm-google-map-info-window>
+        <strong>{{m.label}}</strong>
+    </sebm-google-map-info-window>
 </sebm-google-map-marker>
 
