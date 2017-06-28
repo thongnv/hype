@@ -1144,7 +1144,6 @@ body, html {
   @media  only screen and(max-width: 374px) {
     .sidebar {
       height: 70px!important;
-      top: calc(100vh - 70px)!important;
     }
     .place-name{
       width: 76%;
@@ -1294,10 +1293,11 @@ body, html {
       height: 50px;
       left: 0;
       right: 0;
-      top: calc(100vh - 50px);
+      top: inherit;
       bottom: 0;
       width: 100%;
       z-index: 9999;
+      position: fixed;
     }
     .sidebar .list-tap > li {
       padding: 0;
