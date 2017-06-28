@@ -164,8 +164,9 @@ export class HomeComponent implements OnInit {
             } else {
                 if (this.screenWidth <= 1024) {
                     this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    this.categories = this.drawCategories;
+                }else{
+                  this.categories = this.drawCategories.slice(0, 6);
+
                 }
             }
 
@@ -373,14 +374,11 @@ export class HomeComponent implements OnInit {
                     this.categories = resp.data;
                 }
             } else {
-                if (this.drawCategories.length > number) {
-                    this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    if (this.screenWidth <= 1024) {
-                        this.categories = this.drawCategories.slice(0, 6);
-                    } else {
-                        this.categories = this.drawCategories;
-                    }
+
+                if(this.drawCategories.length > number){
+                  this.categories = this.drawCategories.slice(0, 6);
+                }else {
+                  this.categories = this.drawCategories.slice(0, 6);
                 }
 
             }
@@ -403,16 +401,13 @@ export class HomeComponent implements OnInit {
                 }
             } else {
 
-                if (this.drawCategories.length > number) {
-                    this.categories = this.drawCategories.slice(0, 6);
-                } else {
-                    if (this.screenWidth <= 1024) {
-                        this.categories = this.drawCategories.slice(0, 6);
-                    } else {
-                        this.categories = this.drawCategories;
-                    }
 
-                }
+              if(this.drawCategories.length > number){
+                this.categories = this.drawCategories.slice(0, 6);
+              }else {
+                this.categories = this.drawCategories.slice(0, 6);
+
+              }
 
             }
             console.log(this.categories);
@@ -461,18 +456,18 @@ export class HomeComponent implements OnInit {
         let realScrollTop = this.document.body.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
 
-        if (event.target.children[0].children.length > 1) {
-            for (let i = 0; i < event.target.children[0].children.length; i++) {
-                let currentClientH = event.target.children[0].children[i].clientHeight;
-                currentHeight += currentClientH;
-                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-                    if (this.currentHighlightedMarker !== i) {
-                        this.currentHighlightedMarker = i;
-                        this.highlightMarker(i);
-                    }
-                }
-            }
-        }
+        //if (event.target.children[0].children.length > 1) {
+        //    for (let i = 0; i < event.target.children[0].children.length; i++) {
+        //        let currentClientH = event.target.children[0].children[i].clientHeight;
+        //        currentHeight += currentClientH;
+        //        if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+        //            if (this.currentHighlightedMarker !== i) {
+        //                this.currentHighlightedMarker = i;
+        //                this.highlightMarker(i);
+        //            }
+        //        }
+        //    }
+        //}
         //if (number > 380) {
         //    this.navIsFixed = true;
         //} else if (this.navIsFixed && number < 10) {
