@@ -3,8 +3,8 @@ import { BaseApiService } from './service_base.service';
 import { AppSetting } from '../app.setting';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { map } from 'rxjs/operator/map';
-import { $SQ } from 'codelyzer/angular/styles/chars';
+// import { map } from 'rxjs/operator/map';
+// import { $SQ } from 'codelyzer/angular/styles/chars';
 
 @Injectable()
 

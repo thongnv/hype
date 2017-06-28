@@ -112,6 +112,8 @@ import { SmallLoaderComponent } from './shared/small-loader/small-loader.compone
 
 // services
 import {SeoService} from './services/seo.service';
+import { HomeRoutingModule } from './home/home-routing.module';
+import { EventRoutingModule } from './event/event-routing.module';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -229,7 +231,9 @@ type StoreType = {
     }),
     Daterangepicker,
     FacebookModule.forRoot(),
-    Ng2PopupModule
+    Ng2PopupModule,
+    HomeRoutingModule,
+    EventRoutingModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
