@@ -220,6 +220,10 @@ ul.list-items li a img {
   .top-content {
     padding: 15px;
   }
+  
+  .post-news .new-info{
+	padding: 10px 0px;
+  }
 
   .article-item{width: 100%}
 }

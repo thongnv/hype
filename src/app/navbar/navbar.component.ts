@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit {
     }
 
     public onClickNotify(event) {
+        console.log(event);
         this.isIn = false;
         this.onMobile = false;
         this.oncreate = false;
@@ -151,6 +152,7 @@ export class NavbarComponent implements OnInit {
         item.viewed = true;
         this.mainService.updateNotifications('any', item.mid).then((resp) => {
             console.log('resp', resp);
+            this.router.navigate([item.link]);
         });
     }
 

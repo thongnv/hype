@@ -179,8 +179,14 @@
   }
 
   .btn-login {
-    width: 80px;
+    width: 50px;
+    background: none;
+    box-shadow: none;
+    border:0px;
+    margin-right: 0px;
   }
+
+
 
   .show>.mobile-left-sidebar{
     display: block;
