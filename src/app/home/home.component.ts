@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 // 3rd libs
 import * as moment from 'moment/moment';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-import {any} from "codelyzer/util/function";
-import { Ng2ScrollableDirective } from 'ng2-scrollable';
+// import {any} from "codelyzer/util/function";
+// import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import { DOCUMENT } from "@angular/platform-browser";
@@ -17,12 +17,12 @@ import {HomeService} from "../services/home.service";
 import {LoaderService} from "../shared/loader/loader.service";
 
 // models
-import { EventType } from '../app.interface';
+// import { EventType } from '../app.interface';
 
 // components
-import {EventItemComponent} from '../event/event-item/event-item.component';
+// import {EventItemComponent} from '../event/event-item/event-item.component';
 import { AppSetting } from '../app.setting';
-import {of} from "rxjs/observable/of";
+// import {of} from "rxjs/observable/of";
 import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
 
 // assets
@@ -39,8 +39,8 @@ declare let google:any;
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    @ViewChild(EventItemComponent)
-    private eventItem:EventItemComponent;
+    // @ViewChild(EventItemComponent)
+    // private eventItem:EventItemComponent;
 
     // Set our default values
     public gMapStyles:any;
@@ -61,8 +61,8 @@ export class HomeComponent implements OnInit {
     public priceRange:number[] = [0, 50];
     public categories:any[];
     public selected:any = 'all';
-    public tabActive:boolean = false;
-    public isOpen:boolean = false;
+    // public tabActive:boolean = false;
+    // public isOpen:boolean = false;
     public currentHighlightedMarker:number = 1;
     public alertType:any = '';
     public showPrice:boolean = false;
@@ -93,11 +93,11 @@ export class HomeComponent implements OnInit {
     public drawCategories:any[];
 
     //date picker
-    model:NgbDateStruct;
+    //model:NgbDateStruct;
     date:{year: number, month: number};
 
     // TypeScript public modifiers
-    constructor(private mainService:MainService,
+    constructor(//private mainService:MainService,
                 private homeService:HomeService,
                 private loaderService:LoaderService,
                 private smallLoader:SmallLoaderService,
@@ -589,8 +589,8 @@ export class HomeComponent implements OnInit {
         this.showPrice = false;
     }
 
-    public openPopupMention() {
-
-    }
+    // public openPopupMention() {
+    //
+    // }
 
 }
