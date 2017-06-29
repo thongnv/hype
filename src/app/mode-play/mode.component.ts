@@ -162,6 +162,10 @@ export class ModeComponent implements OnInit {
                     } else {
                         this.lat = 1.359;
                         this.lng = 103.818;
+                        this.params.lat = this.lat;
+                        this.params.long = this.lng;
+                        this.smallLoader.show();
+                        this.getDataModes();
                     }
 
                 });
