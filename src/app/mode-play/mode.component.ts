@@ -170,6 +170,7 @@ export class ModeComponent implements OnInit {
         });
     }
 
+
     public onResize(event):void {
         let width = window.innerWidth
             || document.documentElement.clientWidth
@@ -659,6 +660,7 @@ export class ModeComponent implements OnInit {
         this.clearParams();
         this.params.radius = 5;
         this.sortPlace = 'all';
+        this.totalCuisine = 0;
         this.getDataModes();
     }
 
@@ -699,7 +701,7 @@ export class ModeComponent implements OnInit {
         this.best = [];
         this.type = [];
         this.totalCuisine = 0;
-
+        this.cuisineDraw = [];
         this.currentRate = 0;
         this.priceRange = [0, 50];
         this.params.cuisine = '';
