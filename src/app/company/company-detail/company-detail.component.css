@@ -625,8 +625,33 @@ article {
 
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 414px) {
+  .company-info  p   span{
+    float: none;
+  }
 
+  .company-info p a{
+    padding-left: inherit;
+  }
+
+  .company-wrap .company-header{
+     padding: 30px 0px;
+  }
+
+  .company-wrap .company-info{
+    padding: 30px 0px;
+  }
+
+  .company-wrap .company-header{
+    max-width: inherit;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1024px){
+  .detail-page .col-md-6{
+    width: 48%;
+  }
 }
 
 @media only screen and (min-width: 769px) {
