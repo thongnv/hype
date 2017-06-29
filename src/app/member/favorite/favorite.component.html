@@ -23,10 +23,11 @@
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeleteEvent($event)">
           </app-favorite-event>
-          <div class="list-bottom">
-            <div *ngIf="setEvent.loadingInProgress">Loading</div>
-            <div *ngIf="setEvent.endOfList">End Of List</div>
-          </div>
+          <!--<div class="list-bottom">-->
+            <!--<div *ngIf="setEvent.loadingInProgress">Loading</div>-->
+            <!--<div *ngIf="setEvent.endOfList">End Of List</div>-->
+          <!--</div>-->
+          <app-small-loader></app-small-loader>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.lists" [class.in] = "selectedFavoriteType === 'list'">
           <app-favorite-list *ngFor="let fav of userInfo.lists"
@@ -34,10 +35,11 @@
                              [canDelete]="canDelete"
                              (onClickDelete)="onClickDeleteList($event)">
           </app-favorite-list>
-          <div class="list-bottom">
-            <div *ngIf="setList.loadingInProgress">Loading</div>
-            <div *ngIf="setList.endOfList">End Of List</div>
-          </div>
+          <!--<div class="list-bottom">-->
+            <!--<div *ngIf="setList.loadingInProgress">Loading</div>-->
+            <!--<div *ngIf="setList.endOfList">End Of List</div>-->
+          <!--</div>-->
+          <app-small-loader></app-small-loader>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.places" [class.in] = "selectedFavoriteType === 'place'">
           <app-favorite-place *ngFor="let fav of userInfo.places"
@@ -45,10 +47,11 @@
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">
           </app-favorite-place>
-          <div class="list-bottom">
-            <div *ngIf="setPlace.loadingInProgress">Loading</div>
-            <div *ngIf="setPlace.endOfList">End Of List</div>
-          </div>
+          <!--<div class="list-bottom">-->
+            <!--<div *ngIf="setPlace.loadingInProgress">Loading</div>-->
+            <!--<div *ngIf="setPlace.endOfList">End Of List</div>-->
+          <!--</div>-->
+          <app-small-loader></app-small-loader>
         </div>
       </div>
 
