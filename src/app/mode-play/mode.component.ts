@@ -719,6 +719,7 @@ export class ModeComponent implements OnInit {
         this.params.type = '';
         this.params.limit = 20;
         this.params.page = 0;
+        this.params.rate = 0;
         this.params.order_by = "Company_Name";
         this.params.order_dir = 'DESC';
         this.markers = [];
