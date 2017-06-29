@@ -381,7 +381,7 @@ nouislider.ng2-nouislider {
     height: 600px !important;
 }
 
-.fixed-right {
+.discover-page .fixed-right {
     position: fixed;
     right: 0px;
     width: 47%;

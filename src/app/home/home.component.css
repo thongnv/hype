@@ -216,7 +216,7 @@ button.btn.btn-default.active {
 }
 
 /*gmap*/
-.fixed-right {
+.home-page .fixed-right {
     position: fixed;
     right: 0px;
     width: 48%;
