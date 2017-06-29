@@ -47,7 +47,6 @@ export class ModeComponent implements OnInit {
     public lng:number = 103.818;
     public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
-    public showMap:boolean = false;
     private total:number = 0;
     public showAll:boolean = true;
     public showTab:boolean = true;
@@ -231,7 +230,6 @@ export class ModeComponent implements OnInit {
 
             this.total = resp.total;
             if (parseInt(resp.total) > 0) {
-                this.showMap = true;
             }
             if (this.loadMore) {
                 this.initMap(this.items.concat(resp.company));

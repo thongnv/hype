@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit {
     public selectedEventOrder:any;
     public events:any = [];
     private listItems:any[] = [];
-    public showMap = false;
     public lists:any[] = [];
     public markers:any[] = [];
     public mapZoom:number = 12;
@@ -305,7 +304,6 @@ export class HomeComponent implements OnInit {
         this.markers = [];
         this.events = [];
         this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
-        this.showMap = false;
         this.smallLoader.show();
         this.getTrending();
     }
@@ -317,7 +315,6 @@ export class HomeComponent implements OnInit {
                 this.total = resp.total;
                 this.events = this.events.concat(resp.data);
                 this.passerTop100(resp.data);
-                this.showMap = true;
                 this.loadMore = false;
                 this.loaderService.hide();
                 this.smallLoader.hide();
@@ -326,7 +323,6 @@ export class HomeComponent implements OnInit {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
-                this.showMap = true;
                 this.loadMore = false;
                 this.loaderService.hide();
                 this.smallLoader.hide();
@@ -341,7 +337,6 @@ export class HomeComponent implements OnInit {
                 this.total = response.total;
                 this.passerTrending(response.geo);
                 this.loadMore = false;
-                this.showMap = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             }, err=> {
@@ -349,7 +344,6 @@ export class HomeComponent implements OnInit {
                 this.events = [];
                 this.markers = [];
                 this.loadMore = false;
-                this.showMap = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             });
@@ -366,16 +360,17 @@ export class HomeComponent implements OnInit {
     }
 
     public markerRadiusChange(radius) {
-
+        this.smallLoader.show();
+        console.log(this.currentRadius,radius);
         if (this.currentRadius <= radius) {
-            this.mapZoom--;
+            console.log(1);
+            this.mapZoom = 10;
         } else {
-            this.mapZoom++;
+            console.log(2);
+            this.mapZoom = 15;
         }
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
-        this.showMap = false;
-        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -505,8 +500,7 @@ export class HomeComponent implements OnInit {
     }
 
     public markerDragEnd(event) {
-        console.log(event);
-        this.showMap = false;
+        this.markers =[];
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
         this.params.lat = event.coords.lat;
@@ -543,14 +537,11 @@ export class HomeComponent implements OnInit {
                     }
                 }
             }
-            this.showMap = true;
-            console.log(this.markers);
         });
     }
 
 
     private passerTop100(events:any) {
-        console.log(events);
         this.mapsAPILoader.load().then(()=> {
                 for (let i = 0; i < events.length; i++) {
                     let latitude:any;
