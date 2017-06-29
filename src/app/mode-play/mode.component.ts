@@ -43,8 +43,8 @@ export class ModeComponent implements OnInit {
     public best:any = [];
     public type:any = [];
     public mapZoom:number = 12;
-    public lat:number = 1.3089757786697331;
-    public lng:number = 103.8258969783783;
+    public lat:number = 1.359;
+    public lng:number = 103.818;
     public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
     public showMap:boolean = false;
@@ -131,34 +131,43 @@ export class ModeComponent implements OnInit {
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
-                    console.log(param.location.replace('+', ' ') + ' Singapore');
-                    let geocoder = new google.maps.Geocoder();
-                    if (geocoder) {
-                        geocoder.geocode({
-                            'address': param.location.replace('+', ' ') + ' Xinh-ga-po',
-                            'region': 'sg'
-                        }, (response, status)=> {
-                            console.log(response);
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                                    console.log(response);
-                                    this.markers = [];
-                                    this.items = [];
-                                    this.lat = response[0].geometry.location.lat();
-                                    this.lng = response[0].geometry.location.lng();
-                                    this.params.lat = this.lat;
-                                    this.params.long = this.lng;
-                                    this.smallLoader.show();
-                                    this.getDataModes();
-                                }
-                            } else {
+                    if (param.location.replace('+', ' ') != 'Singapore') {
+                        let geocoder = new google.maps.Geocoder();
+                        if (geocoder) {
+                            geocoder.geocode({
+                                'address': param.location.replace('+', ' ') + ' Xinh-ga-po',
+                                'region': 'sg'
+                            }, (response, status)=> {
+                                console.log(response);
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                                        console.log(response);
+                                        this.markers = [];
+                                        this.items = [];
+                                        this.lat = response[0].geometry.location.lat();
+                                        this.lng = response[0].geometry.location.lng();
+                                        this.params.lat = this.lat;
+                                        this.params.long = this.lng;
+                                        this.smallLoader.show();
+                                        this.getDataModes();
+                                    }
+                                } else {
 
-                                if (navigator.geolocation) {
-                                    navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
+                    } else {
+                        this.lat = 1.359;
+                        this.lng = 103.818;
+                        this.params.lat = this.lat;
+                        this.params.long = this.lng;
+                        this.smallLoader.show();
+                        this.getDataModes();
                     }
+
                 });
 
             } else {
@@ -169,6 +178,7 @@ export class ModeComponent implements OnInit {
             }
         });
     }
+
 
     public onResize(event):void {
         let width = window.innerWidth
@@ -659,6 +669,7 @@ export class ModeComponent implements OnInit {
         this.clearParams();
         this.params.radius = 5;
         this.sortPlace = 'all';
+        this.totalCuisine = 0;
         this.getDataModes();
     }
 
@@ -699,7 +710,7 @@ export class ModeComponent implements OnInit {
         this.best = [];
         this.type = [];
         this.totalCuisine = 0;
-
+        this.cuisineDraw = [];
         this.currentRate = 0;
         this.priceRange = [0, 50];
         this.params.cuisine = '';
@@ -708,6 +719,7 @@ export class ModeComponent implements OnInit {
         this.params.type = '';
         this.params.limit = 20;
         this.params.page = 0;
+        this.params.rate = 0;
         this.params.order_by = "Company_Name";
         this.params.order_dir = 'DESC';
         this.markers = [];
