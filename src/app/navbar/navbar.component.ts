@@ -114,8 +114,10 @@ export class NavbarComponent implements OnInit {
         // get current param
         let params_url = this.location.path().split("/");
         console.log(params_url);
-        if (params_url[2]) {
-            this.selectedMapOption = {id: 0, name: params_url[2].replace("%2B"," ").replace("%20"," ")};
+        if (params_url[1]=='discover') {
+            if(params_url[2]) {
+                this.selectedMapOption = {id: 0, name: params_url[2].replace("%2B", " ").replace("%20", " ")};
+            }
         } else {
             this.selectedMapOption = this.mapOptions[0];
         }

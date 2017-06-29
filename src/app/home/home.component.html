@@ -66,10 +66,10 @@
                              [disableDefaultUI]="false"
                              [zoomControl]="false"
                              [streetViewControl]="true"
-                             (mapClick)="mapClicked($event,index)"
-                             [styles] = "gMapStyles"
+                             [styles]="gMapStyles"
             >
-                <gmap-geocode-marker [showCircle]="showCircle"[circleDraggable]="circleDraggable" [markers]="markers" [currentRadius]="currentRadius"
+                <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
+                                     [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                      (markerClick)="clickedMarker($event)"
                                      (dragEnd)="markerDragEnd($event)"

@@ -164,8 +164,8 @@ export class HomeComponent implements OnInit {
             } else {
                 if (this.screenWidth <= 1024) {
                     this.categories = this.drawCategories.slice(0, 6);
-                }else{
-                  this.categories = this.drawCategories.slice(0, 6);
+                } else {
+                    this.categories = this.drawCategories.slice(0, 6);
 
                 }
             }
@@ -184,7 +184,8 @@ export class HomeComponent implements OnInit {
             this.selected = event.tid;
             this.params.tid = event.tid;
         }
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -246,7 +247,8 @@ export class HomeComponent implements OnInit {
             this.showCircle = true;
             this.params.latest = 1;
         }
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -280,7 +282,7 @@ export class HomeComponent implements OnInit {
             '#v' + selector,
             '#v-scrollable',
             horizontal,
-            0
+            100
         );
 
     }
@@ -375,10 +377,10 @@ export class HomeComponent implements OnInit {
                 }
             } else {
 
-                if(this.drawCategories.length > number){
-                  this.categories = this.drawCategories.slice(0, 6);
-                }else {
-                  this.categories = this.drawCategories.slice(0, 6);
+                if (this.drawCategories.length > number) {
+                    this.categories = this.drawCategories.slice(0, 6);
+                } else {
+                    this.categories = this.drawCategories.slice(0, 6);
                 }
 
             }
@@ -402,12 +404,12 @@ export class HomeComponent implements OnInit {
             } else {
 
 
-              if(this.drawCategories.length > number){
-                this.categories = this.drawCategories.slice(0, 6);
-              }else {
-                this.categories = this.drawCategories.slice(0, 6);
+                if (this.drawCategories.length > number) {
+                    this.categories = this.drawCategories.slice(0, 6);
+                } else {
+                    this.categories = this.drawCategories.slice(0, 6);
 
-              }
+                }
 
             }
             console.log(this.categories);
@@ -455,24 +457,21 @@ export class HomeComponent implements OnInit {
         let baseHeight = this.document.body.clientHeight;
         let realScrollTop = this.document.body.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
+        let content_element = this.document.body.getElementsByTagName('app-event-item')[0].children;
 
-        //if (event.target.children[0].children.length > 1) {
-        //    for (let i = 0; i < event.target.children[0].children.length; i++) {
-        //        let currentClientH = event.target.children[0].children[i].clientHeight;
-        //        currentHeight += currentClientH;
-        //        if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-        //            if (this.currentHighlightedMarker !== i) {
-        //                this.currentHighlightedMarker = i;
-        //                this.highlightMarker(i);
-        //            }
-        //        }
-        //    }
-        //}
-        //if (number > 380) {
-        //    this.navIsFixed = true;
-        //} else if (this.navIsFixed && number < 10) {
-        //    this.navIsFixed = false;
-        //}
+        if (content_element.length > 1) {
+            for (let i = 0; i < content_element.length; i++) {
+                let currentClientH = content_element[i].clientHeight;
+                currentHeight += currentClientH;
+                console.log(currentHeight);
+                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+                    if (this.currentHighlightedMarker !== i) {
+                        this.currentHighlightedMarker = i;
+                        this.highlightMarker(i);
+                    }
+                }
+            }
+        }
     }
 
     private highlightMarker(markerId:number):void {
