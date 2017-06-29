@@ -590,7 +590,6 @@ export class ModeComponent implements OnInit {
         this.showType = false;
     }
 
-
     showBestFind(e) {
         if (e) {
             this.showBest = false;
