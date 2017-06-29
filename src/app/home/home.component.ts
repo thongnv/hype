@@ -55,8 +55,8 @@ export class HomeComponent implements OnInit {
     public lists:any[] = [];
     public markers:any[] = [];
     public mapZoom:number = 12;
-    public lat:number = 1.3089757786697331;
-    public lng:number = 103.8258969783783;
+    public lat:number = 1.359;
+    public lng:number = 103.818;
     public currentRadius:any = 5000;
     public priceRange:number[] = [0, 50];
     public categories:any[];
@@ -116,6 +116,9 @@ export class HomeComponent implements OnInit {
         ];
 
         this.loaderService.show();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+        }
 
     }
 
@@ -137,6 +140,18 @@ export class HomeComponent implements OnInit {
 
         this.screenWidth = width;
         this.screenHeight = height;
+
+    }
+
+    // set position current
+    setPosition(position) {
+        if (position.coords) {
+            this.lat = position.coords.latitude;
+            this.lng = position.coords.longitude;
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+        }
+
     }
 
     public onResize(event):void {
