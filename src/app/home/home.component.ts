@@ -190,8 +190,6 @@ export class HomeComponent implements OnInit {
     }
 
     public onSelectEventType(event):void {
-        console.log(event);
-
         if (event == 'all') {
             this.selected = 'all';
             this.params.tid = '';
@@ -208,7 +206,8 @@ export class HomeComponent implements OnInit {
     public onClearForm():void {
         //this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.selected = false;
         this.showDate = false;
         this.showPrice = false;
@@ -219,7 +218,7 @@ export class HomeComponent implements OnInit {
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
-        this.params.price = [0, 50]
+        this.params.price = [0, 50];
         this.getTrending();
     }
 
@@ -247,8 +246,8 @@ export class HomeComponent implements OnInit {
         } else {
             this.showCircle = true;
         }
-
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -303,10 +302,11 @@ export class HomeComponent implements OnInit {
     }
 
     public selectedDate(value:any) {
-        console.log(value);
+        this.markers = [];
+        this.events = [];
         this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
         this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -375,7 +375,7 @@ export class HomeComponent implements OnInit {
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
         this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -433,7 +433,8 @@ export class HomeComponent implements OnInit {
     }
 
     public onChangePrice(value) {
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.params.price = this.priceRange.join(',');
         this.params.type = 'event';
         this.smallLoader.show();
@@ -510,7 +511,7 @@ export class HomeComponent implements OnInit {
         this.lng = event.coords.lng;
         this.params.lat = event.coords.lat;
         this.params.long = event.coords.lng;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
