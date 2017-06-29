@@ -36,7 +36,7 @@
         </div>
         <h4 class="head">What's news</h4>
         <div *ngIf="latestArticles" class="row wrap-post-news">
-          <div *ngFor="let art of latestArticles" class=" col-xs-6 col-sm-12  col-lg-4 post-news article-item">
+          <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
             <div class="image-post-news">
               <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
             </div>
@@ -60,7 +60,7 @@
 
     <!--right box start-->
     <div class="col-lg-3 col-xs-12 right-box table-cell">
-      <h3>Trending this week</h3>
+      <h3 class="title-trending">Trending this week</h3>
       <ul *ngIf="trending" class="list-items">
         <li *ngFor="let art of trending">
           <a [title]="art.title" [routerLink]="[art.alias]">

@@ -172,6 +172,10 @@ ul.list-items li a img {
     padding: 15px 0px;
   }
 
+  .title-trending{
+    font-size: 18px;
+  }
+
   ul.list-category li{
     margin-right: 10px;
     line-height: 1.5em;
