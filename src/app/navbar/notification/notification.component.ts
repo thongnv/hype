@@ -24,11 +24,12 @@ export class NotificationComponent {
   }
 
   public onClickItem(item: any) {
+    console.log(item);
     this.onMarkOneRead.emit(item);
   }
   public notifyClick(event){
     console.log(event);
-    this.onClickNotify.emit();
+    this.onClickNotify.emit(event);
     this.onNotify= !this.onNotify;
   }
   public onScrollDown(event) {
