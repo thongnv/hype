@@ -621,6 +621,8 @@ ul.list-stars-on-post {
   height: 282px;
 }
 
+.memberRate{float: left;}
+
 /*gmap end*/
 @media only screen and (max-width: 767px) {
   .wrap-primary-content-event{
@@ -639,6 +641,7 @@ ul.list-stars-on-post {
   ul.list-pictures-experience li div{
 
   }
+
 
 
 
@@ -691,3 +694,135 @@ ul.list-stars-on-post {
 
 }
 
+@media only screen and (max-width: 575px) {
+  .memberRate{display: block; clear: both; float: none}
+  .list-stars-review-experience{margin-left: 62px;}
+  .memberRate .img-circle{width: 50px;
+    height:50px;}
+
+  .memberRate .content-info-experience{ margin: 0px 12px}
+
+  .right-creator-information-event{
+    float: none!important;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .information-event{
+      display: flex;
+      flex-direction: column-reverse;
+  }
+
+  .right-creator-information-event .avatar-creator{
+    float: left;
+    margin: 10px;
+  }
+
+  .right-creator-information-event .avatar-creator img{
+    width: 40px;
+    height:40px;
+  }
+
+  .right-creator-information-event .title-creator{
+    width: calc(100% - 65px);
+    float: right;
+    text-align: left;
+    text-transform: uppercase;
+
+  }
+
+  .right-creator-information-event .name-creator{
+    width: calc(100% - 65px);
+    float: right;
+    text-align: left;
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 28px;
+  }
+
+  .right-creator-information-event .avg-rating{
+    width: 50px;
+     position: absolute;
+    top: 10px; right: 10px;
+    text-align: left;
+    font-size: 34px;
+  }
+
+  .left-content-information-event .info-label{
+      width: 35px;
+    margin-right: 0;
+  }
+  .left-content-information-event .info-label>span{
+      display: none;
+  }
+
+  .left-content-information-event .info-value{
+    padding-left: 40px;
+  }
+
+  .left-content-information-event > li {
+    margin-bottom: 10px;
+  }
+
+  .left-content-information-event{
+    list-style: none;
+    float: left;
+    width: 75%;
+    margin-left: 20px;
+  }
+
+  .left-content-information-event .mentioned_by{
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    float: none;
+  }
+
+  .list-mention{
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+
+  }
+
+  .title-event h3{
+    padding-left: 15px;
+    line-height: 1.5em;
+    font-size: 24px;
+  }
+
+  .list-mention > li  {
+    float: none;
+    margin-right: 16px;
+    display: inline-block;
+  }
+
+  .title-detail-event{
+    text-transform: uppercase;
+  }
+
+  .write-your-comment,
+  .detail-event{
+    padding-left: 20px;
+  }
+
+  h4.title-experiences-area{
+    text-transform: uppercase;
+    padding-left: 20px;
+  }
+
+  .experiences-area{
+    padding-left: 20px;
+  }
+
+  .mention_link .sprite{
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  .info-label i.sprite{display: block;}
+
+  .post-your-experience{
+     padding-left: 20px;
+  }
+}
