@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,HostListener, OnInit,Inject } from '@angular/core';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
 import { LoaderService } from '../../shared/loader/loader.service';
 import {SmallLoaderService} from "../../shared/small-loader/small-loader.service";
+import { DOCUMENT } from "@angular/platform-browser";
 
 @Component({
     selector: 'app-favorite',
@@ -40,7 +41,8 @@ export class FavoriteComponent implements OnInit {
                        private mainService:MainService,
                        private route:ActivatedRoute,
                        private localStorageService:LocalStorageService,
-                       private smallLoader:SmallLoaderService) {
+                       private smallLoader:SmallLoaderService,
+                       @Inject(DOCUMENT) private document:Document) {
         this.smallLoader.show();
         this.loaderService.show();
         this.selectedFavoriteType = 'event';
@@ -150,10 +152,11 @@ export class FavoriteComponent implements OnInit {
         });
     }
 
-    public onScrollToBottom(event) {
+  @HostListener("window:scroll", [])
+  onWindowScroll() {
         let elm = event.srcElement;
-        if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-            this.smallLoader.hide();
+    if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+            this.smallLoader.show();
             switch (this.selectedFavoriteType) {
                 case 'event':
                     this.getEvent(this.slugName, this.eventPageNum);
