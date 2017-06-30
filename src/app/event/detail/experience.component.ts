@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
             {{date | date:'d MMMM y'}}
           </p>
         </div>
+          <div class="clear"></div>
         </div>
         <div class="list-stars-review-experience">
           <rating [ngModel]="rating" [readonly]="true" emptyIcon="★"></rating>

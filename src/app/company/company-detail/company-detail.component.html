@@ -58,19 +58,19 @@
           <!-- company info start -->
           <div class="company-info">
             <p>
-              <span class="info-label">Location</span>
+              <span class="info-label"><i class="sprite sprite-location"></i><span>Location</span></span>
               <a>{{location.name}}</a>
             </p>
             <p>
-              <span class="info-label">Website</span>
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Website</span></span>
               <a [href]="website" target="_blank" title="Go to company's website">{{website}}</a>
             </p>
             <p>
-              <span class="info-label">Phone No.</span>
+              <span class="info-label"><i class="sprite sprite-phone_icon"></i><span>Phone No.</span></span>
               <a href="tel:{{phone}}" title="Call now">{{phone}}</a>
             </p>
             <p>
-              <span class="info-label">Opening Hours</span>
+              <span class="info-label"><i class="sprite sprite-time_icon_grey"></i><span>Opening Hours</span></span>
               <span class="info-value" ngbDropdown *ngIf="openingHours.length">
                 <span ngbDropdownToggle>
                   <span [innerHTML]="openingHours[0]"></span>
