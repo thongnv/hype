@@ -54,7 +54,7 @@
     color: #3b3b3b;
     cursor: pointer;
 }
-@media screen and (max-width: 768px) and (min-width: 320px){
+@media screen and (max-width: 800px) and (min-width: 320px){
   .follow-block{
     margin-bottom: 15px;
     margin-top: 15px;
