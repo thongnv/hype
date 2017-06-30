@@ -46,7 +46,7 @@
     font-size: 15px;
     margin: 0 15px;
     float: right;
-    width: 130px;
+    width: 140px;
 }
 .search-location-search-area ul {
     padding-left: 0;
@@ -73,7 +73,7 @@
 .list-location-address li {
     padding: 10px;
     background: #fff;
-    width: 420px;
+    width: 100%;
 }
 .list-location-address li:hover {
     background: #fff;
@@ -112,7 +112,7 @@
     height: 48px;
     padding-left: 10px;
     font-weight: bold;
-    width: calc(100% - 200px);
+    width: calc(100% - 205px);
 }
 .input-keyword{
     width: 80%;

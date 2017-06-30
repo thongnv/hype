@@ -212,6 +212,7 @@
     left:0;
     display: block;
     padding-left: 0px;
+    top: 61px;
   }
     .show .map-option-dropdown-mobile li.text-ellipsis {
         width: 50%;
