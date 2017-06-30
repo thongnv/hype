@@ -4,6 +4,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
 import { EventService } from '../../services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'event-experience',
@@ -123,7 +124,8 @@ export class ExperienceComponent implements Experience, OnInit {
 
   constructor(private eventService: EventService,
               private event: EventDetailComponent,
-              public sanitizer: DomSanitizer) {
+              public sanitizer: DomSanitizer,
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -157,6 +159,9 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public addComment(msgInput) {
+    if (!this.event.loggedIn) {
+      this.router.navigate(['/login'], {skipLocationChange: true}).then();
+    }
     if (msgInput.value.trim()) {
       let eventSlugName = this.event.slugName;
       let data = {

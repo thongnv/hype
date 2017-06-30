@@ -84,6 +84,9 @@
 .mobile-left-sidebar{
   display: none;
 }
+.map-option-dropdown-mobile{
+  display: none;
+}
 /*responsive*/
 
 @media only screen and (min-width: 575px) {
@@ -203,6 +206,27 @@
   .show>.extra-menu{
     display: none;
   }
+  .show .map-option-dropdown-mobile{
+    position: fixed;
+    background: #fff;
+    left:0;
+    display: block;
+    padding-left: 0px;
+  }
+    .show .map-option-dropdown-mobile li.text-ellipsis {
+        width: 50%;
+        float: left;
+        text-align: center;
+    }
+    .show .map-option-dropdown-mobile li.text-ellipsis.active {
+        background: #ec3d62;
+        color: #fff;
+        text-decoration: none;
+        outline: 0;
+    }
+    .show .map-option-dropdown-mobile li.text-ellipsis:hover {
+        background: rgba(236, 61, 98, 0.5);
+    }
   .user-info-mobile {
     min-height: 60px;
     padding-top: 7%;
@@ -257,6 +281,14 @@
         width: 100%;
     }
 
+}
+
+@media screen and (min-width: 567px) {
+    .show .map-option-dropdown-mobile li.text-ellipsis {
+        width: 33.333%;
+        float: left;
+        text-align: center;
+    }
 }
 
 

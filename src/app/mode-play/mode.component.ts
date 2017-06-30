@@ -47,7 +47,6 @@ export class ModeComponent implements OnInit {
     public lng:number = 103.818;
     public currentRadius:any = 5000;
     private catParam = {mode_type: ''};
-    public showMap:boolean = false;
     private total:number = 0;
     public showAll:boolean = true;
     public showTab:boolean = true;
@@ -227,12 +226,10 @@ export class ModeComponent implements OnInit {
 
     getDataModes() {
         let params = this.params;
-        console.log(params);
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
 
             this.total = resp.total;
             if (parseInt(resp.total) > 0) {
-                this.showMap = true;
             }
             if (this.loadMore) {
                 this.initMap(this.items.concat(resp.company));
@@ -317,6 +314,7 @@ export class ModeComponent implements OnInit {
         let radius = parseInt(event);
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
+        this.smallLoader.show();
         this.getDataModes();
     }
 
@@ -329,6 +327,7 @@ export class ModeComponent implements OnInit {
 
         this.params.type = this.filterFromMode.value.filterMode;
         this.params.kind = '';
+        this.smallLoader.show();
         this.getCategories(this.filterFromMode.value.filterMode);
         this.getDataModes();
         this.getFilter();
@@ -498,6 +497,7 @@ export class ModeComponent implements OnInit {
     public filterCancel() {
         this.filterFromMode.value.filterMode = 'all';
         this.filterCategory.value.filterCategory = 'all';
+        this.smallLoader.show();
         this.clearParams();
         this.getDataModes();
 
@@ -634,7 +634,7 @@ export class ModeComponent implements OnInit {
     }
 
     public changeSort() {
-        console.log(this.sortPlace);
+
         if (this.sortPlace == 'ratings') {
             console.log('ád');
             this.params.order_by = "ratings";
@@ -670,6 +670,7 @@ export class ModeComponent implements OnInit {
         this.params.radius = 5;
         this.sortPlace = 'all';
         this.totalCuisine = 0;
+        this.smallLoader.show();
         this.getDataModes();
     }
 
