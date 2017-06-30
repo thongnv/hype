@@ -1152,13 +1152,13 @@ body, html {
       margin-bottom: 10px;
     }
     ul.list-pictures-experience li div img {
-      width: 100%;
-      height: 100%;
+      width: 60px;
+      height: 60px;
     }
   }
 
 
-  @media only screen and (min-width: 320px) and (max-width: 768px) {
+  @media only screen and (min-width: 320px) and (max-width: 800px) {
     .fav-component .tab-control .btn{
       width: 95px;
     }
@@ -1273,6 +1273,8 @@ body, html {
     .navbar-toggle{
       margin-right: 5px;
     }
+
+    .end-of-list{margin-top: 20px;}
 
     .list-bottom{
       height: 70px;

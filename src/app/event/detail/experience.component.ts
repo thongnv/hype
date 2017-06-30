@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   template: `
     <div class="experiences-area border-bottom padding-top-30 padding-bottom-35">
       <div class="information-experience">
+        <div class="memberRate">
         <img class="img-circle" [src]="author.avatar" alt="user avatar" width="70"
              height="70">
         <div class="content-info-experience">
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
           <p class="info-date-experience">
             {{date | date:'d MMMM y'}}
           </p>
+        </div>
         </div>
         <div class="list-stars-review-experience">
           <rating [ngModel]="rating" [readonly]="true" emptyIcon="★"></rating>

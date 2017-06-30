@@ -25,7 +25,7 @@
           </app-favorite-event>
           <!--<div class="list-bottom">-->
             <!--<div *ngIf="setEvent.loadingInProgress">Loading</div>-->
-            <!--<div *ngIf="setEvent.endOfList">End Of List</div>-->
+            <!--<div class="end-of-list" *ngIf="setEvent.endOfList">End Of List</div>-->
           <!--</div>-->
           <div class="list-bottom">
           </div>
@@ -39,7 +39,7 @@
           </app-favorite-list>
           <!--<div class="list-bottom">-->
             <!--<div *ngIf="setList.loadingInProgress">Loading</div>-->
-            <!--<div *ngIf="setList.endOfList">End Of List</div>-->
+            <!--<div class="end-of-list" *ngIf="setList.endOfList">End Of List</div>-->
           <!--</div>-->
           <div class="list-bottom">
           </div>
@@ -50,9 +50,10 @@
                               [item]="fav"
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">
-          </app-favorite-place>
+          </app-favorite-place> 
           <div class="list-bottom">
           </div>
+ 
           <app-small-loader></app-small-loader>
         </div>
       </div>

@@ -655,6 +655,39 @@ ul.list-stars-on-post {
     padding-left: 10px;
   }
 
+  .page-event>div.row{
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 0;
+  }
+
+  .page-event .map-location-area{
+    display: none!important;
+  }
+
+  .title-event a.left-arrow {
+    float: left;
+    margin: 7px 20px 0 15px;
+    position: absolute;
+    top: -395px;
+    left: 0;
+    z-index: 99999999;
+    box-shadow: aqua;
+  }
+
+  #eventCarousel{display: none!important;}
+  .title-event h3{
+    padding-left: 15px;
+  }
+
+  .title-event{
+    padding-top: 0px;
+  }
+
+  .page-event .information-experience .img-circle{
+    width: 50px;
+    width: 50px;
+  }
 
 }
 
