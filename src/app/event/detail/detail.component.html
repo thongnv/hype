@@ -4,7 +4,7 @@
 
       <!-- title event start -->
       <div class="title-event border-bottom">
-        <a class="left-arrow">
+        <a class="left-arrow" routerLink="/home">
           <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
         </a>
         <h3>{{name}}</h3>
@@ -96,6 +96,7 @@
             <div class="content-your-post clearfix">
               <textarea #msgInput
                         (keydown.enter)="addExperience(msgInput);false"
+                        (keyup)="checkLogin()"
                         cols="30" rows="10" placeholder="What's your experience here?"
               ></textarea>
             </div>
