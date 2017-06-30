@@ -641,6 +641,7 @@ ul.list-stars-on-post {
   }
 
 
+
   ul.list-comments-ago li{
     margin-left: 10px;
     margin-bottom: 10px;
@@ -653,5 +654,7 @@ ul.list-stars-on-post {
   .title-map-location{
     padding-left: 10px;
   }
+
+
 }
 
