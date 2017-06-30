@@ -301,7 +301,7 @@ ul.mentioned-item {
 
     .wrap-each-items {
         height: auto;
-
+        margin-top: 10px;
     }
 
     .list-item .caption {

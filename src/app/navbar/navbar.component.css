@@ -216,7 +216,9 @@
     .show .map-option-dropdown-mobile li.text-ellipsis {
         width: 50%;
         float: left;
-        text-align: center;
+        text-align: left;
+        padding-left: 10px;
+        line-height: 2.5em;
     }
     .show .map-option-dropdown-mobile li.text-ellipsis.active {
         background: #ec3d62;
@@ -285,9 +287,11 @@
 
 @media screen and (min-width: 567px) {
     .show .map-option-dropdown-mobile li.text-ellipsis {
-        width: 33.333%;
-        float: left;
-        text-align: center;
+      width: 33.333%;
+      float: left;
+      text-align: left;
+      padding-left: 10px;
+      line-height: 2.5em;
     }
 }
 
