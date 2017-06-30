@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
         'tid': '',
         'date': '',
         'latest': '',
-        'weeken': '',
+        'weekend': '',
         'when': '',
         'lat': this.lat,
         'long': this.lng,
