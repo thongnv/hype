@@ -168,8 +168,8 @@ export class CompanyDetailComponent implements Company, OnInit {
             likeNumber: 0,
             liked: false
           };
-          console.log('review:', resp);
-          this.reviews.unshift(resp);
+          console.log('review:', review);
+          this.reviews.unshift(review);
           this.loaderService.hide();
         },
         (error) => {
