@@ -39,13 +39,17 @@ export class AuthComponent implements OnInit {
     this.fb.login(loginOptions)
       .then((res: LoginResponse) => {
         console.log('Login FB: ', res);
-        this.mainService.login(res.authResponse.accessToken).then((resp: any) => {
+        this.mainService.login(res.authResponse.accessToken).then((resp) => {
           this.localStorageService.set('loginData', JSON.stringify(resp));
           console.log('Login response: ', resp);
           window.location.reload();
         });
       })
-      .catch(console.error('Error processing action', error));
+      .catch(this.handleError);
+  }
+
+  private handleError(error) {
+    console.error('Error processing action', error);
   }
 
 }
