@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
         'tid': '',
         'date': '',
         'latest': '',
-        'weekend': '',
+        'thisweek': '',
         'when': '',
         'lat': this.lat,
         'long': this.lng,
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
             {name: 'all'},
             {name: 'today'},
             {name: 'tomorrow'},
-            {name: 'weekend'},
+            {name: 'this week'},
         ];
         this.eventOrder = [
             {name: 'top 100'},
@@ -214,6 +214,7 @@ export class HomeComponent implements OnInit {
         this.params.limit = 10;
         this.params.tid = '';
         this.params.date = '';
+        this.params.thisweek = '';
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
@@ -231,12 +232,12 @@ export class HomeComponent implements OnInit {
             let tomorrow = date.setDate(date.getDate() + 1);
             this.params.date = moment(date).format('YYYY-MM-DD');
         }
-        if (filter.name == 'weekend') {
-            this.params.weeken = 1;
+        if (filter.name == 'this week') {
+            this.params.thisweek = 1;
             this.params.date = '';
         }
         if (filter.name == 'all') {
-            this.params.weeken = 0;
+            this.params.thisweek = 0;
             this.params.date = '';
         }
 
