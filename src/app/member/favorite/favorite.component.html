@@ -27,6 +27,8 @@
             <!--<div *ngIf="setEvent.loadingInProgress">Loading</div>-->
             <!--<div *ngIf="setEvent.endOfList">End Of List</div>-->
           <!--</div>-->
+          <div class="list-bottom">
+          </div>
           <app-small-loader></app-small-loader>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.lists" [class.in] = "selectedFavoriteType === 'list'">
@@ -39,6 +41,8 @@
             <!--<div *ngIf="setList.loadingInProgress">Loading</div>-->
             <!--<div *ngIf="setList.endOfList">End Of List</div>-->
           <!--</div>-->
+          <div class="list-bottom">
+          </div>
           <app-small-loader></app-small-loader>
         </div>
         <div class="tab-content fade" *ngIf="userInfo.places" [class.in] = "selectedFavoriteType === 'place'">
@@ -47,10 +51,8 @@
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">
           </app-favorite-place>
-          <!--<div class="list-bottom">-->
-            <!--<div *ngIf="setPlace.loadingInProgress">Loading</div>-->
-            <!--<div *ngIf="setPlace.endOfList">End Of List</div>-->
-          <!--</div>-->
+          <div class="list-bottom">
+          </div>
           <app-small-loader></app-small-loader>
         </div>
       </div>

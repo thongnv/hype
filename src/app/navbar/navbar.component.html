@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">Hylo</a>
+    <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">hylo</a>
     <div class="hidden-md hidden-lg hidden-xl extra-menu" style="overflow: hidden">
       <ul class="nav navbar-nav hype-nav">
         <li *ngIf="loginData" class="pull-right nav-item add-event-button">
@@ -55,7 +55,6 @@
         <li *ngIf="loginData" class="pull-right nav-item notification-area">
           <app-notification *ngIf="notifications"
                             [notifications]="notifications"
-                            [onNotify]="onNotify"
                             [loadingInProgress]="set.loadingInProgress"
                             [endOfList]="set.endOfList"
                             (onScrollToBottom)="onScrollToBottom()"
@@ -98,7 +97,7 @@
   </div>
   <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
-      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo"
+      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="hylo"
                                      class="sprite sprite-hylo-final-logo-125x50"></a></li>
       <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>
