@@ -1161,6 +1161,9 @@ body, html {
 
 
   @media only screen and (min-width: 320px) and (max-width: 800px) {
+    .container{
+      width: 100% !important;
+    }
     .fav-component .tab-control .btn{
       width: 95px;
     }
