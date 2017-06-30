@@ -14,19 +14,19 @@ export class BoostrapAlertComponent implements OnInit {
   public ngOnInit() {
     switch (this.type.toLowerCase()) {
       case 'success':
-        this.headerContent = 'Success';
+        this.headerContent = '';
         break;
       case 'info':
-        this.headerContent = 'Information';
+        this.headerContent = '';
         break;
       case 'warning':
-        this.headerContent = 'Warning';
+        this.headerContent = '';
         break;
       case 'danger':
-        this.headerContent = 'Oops';
+        this.headerContent = '';
         break;
       default:
-        this.headerContent = 'Oops';
+        this.headerContent = '';
     }
   }
 }

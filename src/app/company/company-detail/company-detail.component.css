@@ -636,6 +636,7 @@ article {
 
   .company-wrap .company-header{
      padding: 30px 0px;
+    width: 100%;
   }
 
 
@@ -649,6 +650,16 @@ article {
     max-width: inherit;
   }
 
+  .rating-star{
+    display: block;
+    clear: both;
+
+  }
+
+  .company-wrap  .company-header h3{
+    max-width: inherit;
+    width: 100%;
+  }
 
 }
 
@@ -709,6 +720,15 @@ article {
   }
   .detail-info-experience{
     margin: 10px 0 20px;
+  }
+
+  .info-label i.sprite{display: block; float: left; margin-right: 20px;}
+  .info-label >span{display: none;}
+
+  .company-info  p  a{
+    width: 74%;
+    float: left;
+    margin-bottom: 10px;
   }
 
 }

@@ -728,6 +728,7 @@ ul.list-stars-on-post {
     float: right;
     text-align: left;
     text-transform: uppercase;
+    font-size: 15px;
 
   }
 
@@ -737,15 +738,14 @@ ul.list-stars-on-post {
     text-align: left;
     text-transform: uppercase;
     margin: 0;
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .right-creator-information-event .avg-rating{
-    width: 50px;
      position: absolute;
     top: 10px; right: 10px;
     text-align: left;
-    font-size: 34px;
+    font-size: 28px;
   }
 
   .left-content-information-event .info-label{
@@ -804,15 +804,18 @@ ul.list-stars-on-post {
   .write-your-comment,
   .detail-event{
     padding-left: 20px;
+    padding-right: 20px;
   }
 
   h4.title-experiences-area{
     text-transform: uppercase;
     padding-left: 20px;
+    padding-right: 20px;
   }
 
   .experiences-area{
     padding-left: 20px;
+    padding-right: 20px;
   }
 
   .mention_link .sprite{
@@ -824,5 +827,14 @@ ul.list-stars-on-post {
 
   .post-your-experience{
      padding-left: 20px;
+     padding-right: 20px;
+  }
+}
+
+@media  only screen and(max-width: 374px) {
+  a.post-your-experience{
+    position: inherit;
+    top: inherit;
+    right:inherit;
   }
 }
