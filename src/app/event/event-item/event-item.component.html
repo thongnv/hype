@@ -54,6 +54,7 @@
                             #p="ngbPopover"
                             (click)="p.open()"
                             (document:mouseup)="p.close()"
+                            (document:touchend)="p.close()"
                             popoverTitle="Mentioned by">
                         <i fa class="fa-plus"></i>
                     </button>
