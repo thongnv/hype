@@ -70,15 +70,13 @@ header ul li.active {
     font-size: 12px;
 }
 .input-box .field-group {
-    margin-left: 10px;
     margin-bottom: 30px;
-    width: 200%;
+    width: 100%;
 }
 .input-box .field-group label {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
-    margin-left: 10px;
 }
 .input-box > .field-group > .form-group > select {
     height: 48px;
@@ -90,7 +88,7 @@ header ul li.active {
     margin-bottom: 20px;
     float: left;
     margin-right: 15px;
-    padding-left: 20px;
+    padding-left: 10px;
     width: 25%;
 }
 .input-box > .field-group > .form-group > input {
@@ -473,6 +471,24 @@ span.dollar-character {
     margin-top: 15px;
     margin-bottom: 15px;
   }
+
+  .list-preview-wrap .post-experience{
+    font-size: 16px;
+  }
+
+  .left-content-information-event .info-label{
+    width: 35px;
+    margin-right: 0;
+  }
+  .left-content-information-event .info-label>span{
+    display: none;
+  }
+
+  .info-label i.sprite {
+    display: block;
+  }
+
+
 }
 
 @media only screen and (min-width: 545px) and (max-width: 767px) {
@@ -489,10 +505,27 @@ span.dollar-character {
     margin-bottom: 15px;
   }
 }
+@media only screen and (max-width: 767px) {
+  .add-mention-group button{
+    margin: 10px 0;
+  }
 
+  .mention-by-group .form-group{
+    margin: 5px 0;
+
+  }
+
+  .mention-by-group .form-group input{
+    width: 95%;
+  }
+}
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap{
     padding: 5px 10px;
     margin-bottom: 80px;
   }
+  .list-preview-wrap .left-content {
+    border-right:0;
+  }
+
 }

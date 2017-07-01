@@ -98,7 +98,7 @@
 
             </small>
           </div>
-          <div class="field-group row">
+          <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
               <select name="" id="event-type" formControlName="eventType">
@@ -108,7 +108,7 @@
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group  mention-by-group">
             <label>Mentioned By</label>
             <div formArrayName="eventMentions">
               <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
@@ -116,8 +116,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-success" (click)="addMention()">
+          <div class="form-group add-mention-group">
+            <button type="button" class="btn btn-success add-mention-btn" (click)="addMention()">
               <i class="fa fa-plus"></i>&nbsp;Add Mention
             </button>
           </div>
@@ -153,21 +153,23 @@
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
-              <p>location</p><span>{{previewData.eventPlace.place}}</span>
+              <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span>
+              <span class="info-value">{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <p>date / time</p><span>{{previewData.Date*1000 | date:'d MMMM y'}}</span>
+              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>date / time</span></span>
+              <span class="info-value">{{previewData.Date*1000 | date:'d MMMM y'}}</span>
             </li>
             <li>
-              <p>price range</p>
-              <span>{{previewData.eventPrice}}$<b>.</b>
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
+              <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
                   <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>
               </span>
             </li>
             <li>
-              <p>Mentioned by</p>
+              <p class="info-label mentioned_by">Mentioned by</p>
               <ul class="list-mention">
                 <li *ngFor="let mention of previewData.eventMentions">
                   <a [href]="mention" target="_blank">
@@ -219,6 +221,7 @@
             <a>+ Add Images</a>
           </p>
         </div>
+        <div class="mobile-footer"></div>
       </div>
 
       <div class="col-md-5 right-content">
@@ -234,7 +237,7 @@
           </carousel>
         </div>
 
-        <div class="event-location">
+        <div class="event-location hidden-md hidden-xs hidden-sm">
           <p>Location</p>
           <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
             [zoom]="13" [styles]="gMapStyles">
