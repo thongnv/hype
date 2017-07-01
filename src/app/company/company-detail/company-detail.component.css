@@ -625,7 +625,7 @@ article {
 
 }
 
-@media only screen and (min-width: 414px) {
+@media only screen and (max-width: 414px) {
   .company-info  p   span{
     float: none;
   }
@@ -636,16 +636,31 @@ article {
 
   .company-wrap .company-header{
      padding: 30px 0px;
+    width: 100%;
   }
 
-  .company-wrap .company-info{
-    padding: 30px 0px;
-  }
+
 
   .company-wrap .company-header{
     max-width: inherit;
     width: 100%;
   }
+
+  .company-wrap .company-header h3{
+    max-width: inherit;
+  }
+
+  .rating-star{
+    display: block;
+    clear: both;
+
+  }
+
+  .company-wrap  .company-header h3{
+    max-width: inherit;
+    width: 100%;
+  }
+
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1024px){
@@ -660,18 +675,54 @@ article {
     padding: 0;
   }
 
-  .content {
-    padding: 0;
-    width: 51.3%;
-  }
-
   .map-fix {
     padding: 0;
-    /*width: 51.1%;*/
   }
 
 }
 
 @media only screen and (max-width: 768px) {
+  .detail-page .col-md-6{
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .reviews-wrap{
+    padding: 10px 0px;
+  }
+  .detail-page .company-header{
+    padding: 15px 0;
+  }
+
+  .company-wrap .company-info{
+    padding: 30px 0px;
+    box-shadow: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .content-info-experience{
+    margin-right: 10px;
+  }
+
+  .information-experience .img-circle{
+    width: 50px;
+    height:50px;
+  }
+
+  .rating-star{
+    margin-left: 62px;
+    margin-top: 5px;
+  }
+  .detail-info-experience{
+    margin: 10px 0 20px;
+  }
+
+  .info-label i.sprite{display: block; float: left; margin-right: 20px;}
+  .info-label >span{display: none;}
+
+  .company-info  p  a{
+    width: 74%;
+    float: left;
+    margin-bottom: 10px;
+  }
 
 }

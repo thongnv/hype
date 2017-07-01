@@ -25,7 +25,7 @@
           </app-follow-item>
         <div class="list-bottom">
           <div *ngIf="set.loadingInProgress">Loading</div>
-          <div *ngIf="set.endOfList">End Of List</div>
+          <div class="end-of-list" *ngIf="set.endOfList">End Of List</div>
         </div>
       </div>
     </section>

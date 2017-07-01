@@ -1,10 +1,10 @@
-<section>
+<section class="page-event">
   <div class="row" *ngIf="ready">
     <div class="col-lg-6 col-xs-12 left-box">
 
       <!-- title event start -->
       <div class="title-event border-bottom">
-        <a class="left-arrow">
+        <a class="left-arrow" routerLink="/home">
           <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
         </a>
         <h3>{{name}}</h3>
@@ -17,24 +17,29 @@
         <div class="information-event border-bottom padding-top-30 padding-bottom-35">
           <ul class="left-content-information-event">
             <li>
-              <span class="info-label">location</span><span class="info-value">{{location.name}}</span>
+              <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span><span class="info-value">{{location.name}}</span>
             </li>
             <li>
-              <span class="info-label">date / time</span><span class="info-value">{{date | date:'d MMMM y'}}</span>
+              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>date / time</span></span><span class="info-value">{{date | date:'d MMMM y'}}</span>
             </li>
             <li>
-              <span class="info-label">price range</span>
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
               <span class="info-value">
                 <span *ngIf="price!=0">${{price}}</span>
                 <span *ngIf="price==0">Free</span>
-                <b>.</b>
-              <a href="{{call2action.link}}" target="_blank">
+                <b>.</b></span>
+            </li>
+            <li>
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i>
+              </span>
+                <span>
+              <a href="{{call2action.link}}" target="_blank" class="mention_link">
                 <span class="action">{{call2action.action}}</span>
               </a>
             </span>
             </li>
             <li>
-              <span class="info-label">Mentioned by</span>
+              <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li class="mention" *ngFor="let mention of mentions">
                   <a [href]="mention.url" target="_blank">
@@ -96,6 +101,7 @@
             <div class="content-your-post clearfix">
               <textarea #msgInput
                         (keydown.enter)="addExperience(msgInput);false"
+                        (keyup)="checkLogin()"
                         cols="30" rows="10" placeholder="What's your experience here?"
               ></textarea>
             </div>

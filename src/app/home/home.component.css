@@ -219,7 +219,7 @@ button.btn.btn-default.active {
 .home-page .fixed-right {
     position: fixed;
     right: 0px;
-    width: 48%;
+    width: 47%;
 }
 
 .ginfo-img-wrap {
@@ -252,7 +252,8 @@ button.btn.btn-default.active {
 .wrap-each-items {
     /*border-bottom: 1px solid #eaeaea;*/
     width: 100%;
-    height: 180px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 20px;
 }
 
@@ -483,12 +484,14 @@ button.btn.btn-default.active {
     }
 
     .filter-events {
-        padding: 15px 10px;
+        padding: 15px 0px;
     }
 
     .btn {
         padding: 5px 10px;
     }
+
+
 }
 
 @media only screen and (min-width: 320px) and (max-width: 374px) {
@@ -505,7 +508,7 @@ button.btn.btn-default.active {
 @media only screen and (min-width: 375px) and (max-width: 543px) {
     .btn {
         padding: 5px 8px;
-        font-size: 13px;
+        font-size: 12px;
     }
 
     button.btn.btn-default.active {
@@ -525,6 +528,7 @@ button.btn.btn-default.active {
     .filter-events.top-100 {
         padding: 15px;
     }
+
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {

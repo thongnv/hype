@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
 import { AppSetting } from '../app.setting';
 import { MainService } from '../services/main.service';
-import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
@@ -11,30 +10,22 @@ import { LocalStorageService } from 'angular-2-local-storage';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  private userInfo = {
-    isLogin: false,
-    userName: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    contactNumber: '',
-    userAvatar: 'assets/img/avatar/demoavatar.png',
-    followingNumber: 0,
-    followerNumber: 0,
-    receiveEmail: 0,
-    userFollowing: [],
-    userFollower: [],
-    showNav: true,
-    acceptNotification: true
-  };
-  private initParams: InitParams;
+  public ready = false;
+  private loggedIn = this.localStorageService.get('loginData');
+  private initParams: InitParams = AppSetting.FACEBOOK;
 
   constructor(private fb: FacebookService,
               private mainService: MainService,
-              private router: Router,
               private localStorageService: LocalStorageService) {
+  }
 
-    this.initParams = AppSetting.FACEBOOK;
+  public ngOnInit() {
+    if (this.loggedIn) {
+      window.location.href = '/home';
+    } else {
+      this.fb.init(this.initParams).then();
+      this.ready = true;
+    }
   }
 
   public loginWithOptions() {
@@ -48,19 +39,13 @@ export class AuthComponent implements OnInit {
     this.fb.login(loginOptions)
       .then((res: LoginResponse) => {
         console.log('Login FB: ', res);
-        this.mainService.login(res.authResponse.accessToken).then((respone: any) => {
-          this.localStorageService.set('loginData', JSON.stringify(respone));
-          console.log('Login respone: ', respone);
-          // this.router.navigate(['']);
-          window.location.href = '/';
+        this.mainService.login(res.authResponse.accessToken).then((resp) => {
+          this.localStorageService.set('loginData', JSON.stringify(resp));
+          console.log('Login response: ', resp);
+          window.location.reload();
         });
       })
       .catch(this.handleError);
-  }
-
-  public ngOnInit() {
-    console.log('login initial');
-    this.fb.init(this.initParams);
   }
 
   private handleError(error) {

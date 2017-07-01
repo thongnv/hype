@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">Hylo</a>
+    <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">hylo</a>
     <div class="hidden-md hidden-lg hidden-xl extra-menu" style="overflow: hidden">
       <ul class="nav navbar-nav hype-nav">
         <li *ngIf="loginData" class="pull-right nav-item add-event-button">
@@ -55,7 +55,6 @@
         <li *ngIf="loginData" class="pull-right nav-item notification-area">
           <app-notification *ngIf="notifications"
                             [notifications]="notifications"
-                            [onNotify]="onNotify"
                             [loadingInProgress]="set.loadingInProgress"
                             [endOfList]="set.endOfList"
                             (onScrollToBottom)="onScrollToBottom()"
@@ -70,8 +69,25 @@
         <li class="mobile-search-icon pull-right map-option nav-item"(click)="mobile_searchState()">
           <i class="glyphicon glyphicon-search text-white glyphicon-2x"></i>
         </li>
-        <li class="mobile-location-icon pull-right nav-item">
+        <li class="mobile-location-icon pull-right nav-item" ngbDropdown>
+          <div id="mobile-location" class="mobile-location" ngbDropdownToggle>
           <i class="glyphicon glyphicon-map-marker text-white glyphicon-2x"></i>
+            <ul *ngIf="mapOptions" class="map-option-dropdown-mobile" aria-labelledby="drop1" id="map-option-dropdown-mobile">
+              <div slimScroll
+                   width="100vw"
+                   height="100vh"
+                   size="7px"
+                   [railVisible]="true"
+                   [railOpacity]="0.1"
+                   [railColor]="'#ec3d62'"
+                   [color]="'#ec3d62'">
+
+                <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
+                    (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
+                </li>
+              </div>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
@@ -81,7 +97,7 @@
   </div>
   <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
-      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="Hylo"
+      <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="hylo"
                                      class="sprite sprite-hylo-final-logo-125x50"></a></li>
       <li class="map-option nav-item" id="map-option">
         <div ngbDropdown>

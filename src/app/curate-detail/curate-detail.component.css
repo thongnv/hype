@@ -103,6 +103,13 @@
     float: left;
     width: 100%!important;
   }
+
+  .carousel-item{
+    height: 280px!important;
+    background-position: center center;
+  }
+
+
 }
 
 

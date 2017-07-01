@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -35,7 +35,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public images: Image[] = [];
   public rating: number = 0;
   public experiences: Experience[] = [];
-  public user: BaseUser = {name: '', avatar: '', slug: ''};
+  public user: BaseUser = {name: '', avatar: 'assets/img/avatar/demoavatar.png', slug: ''};
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -47,6 +47,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public ready: boolean = false;
   public slugName = '';
   public gMapStyles: any;
+  public loggedIn = Boolean(this._localStorageService.get('loginData'));
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -63,6 +64,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public formBuilder: FormBuilder,
               public rateConfig: NgbRatingConfig,
               private route: ActivatedRoute,
+              private router: Router,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService) {
     this.route.params.subscribe((e) => {
@@ -82,8 +84,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         }
       );
     });
-    let loggedIn = this._localStorageService.get('loginData');
-    if (loggedIn) {
+    if (this.loggedIn) {
       this.mainService.getUserProfile().then((response) => {
         this.user.name = response.name;
         this.user.avatar = response.field_image;
@@ -94,6 +95,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.initRating();
+  }
+
+  public checkLogin(): void {
+    if (!this.loggedIn) {
+      this.router.navigate(['/login'], {skipLocationChange: true}).then();
+    }
   }
 
   public onClickFocusMsgInput() {

@@ -14,9 +14,6 @@ import {NotificationComponent} from "./notification/notification.component";
 })
 export class NavbarComponent implements OnInit {
     public loginData:any;
-    public isIn = false;
-    public onMobile = false;
-    public oncreate = false;
     public onsearch = false;
     public userInfo:any;
     public mapOptions:any[];
@@ -44,34 +41,12 @@ export class NavbarComponent implements OnInit {
         this.selectedMapOption = option;
         this.router.navigate(['/discover/' + option.name.replace(" ","+")]);
     }
-
-    public toggleState() {
-        this.isIn = !this.isIn;
-        this.onMobile = !this.onMobile;
-        this.oncreate = false;
-        this.onsearch = false;
-        this.NotificationComponent.onNotify = false;
-    }
-
-    public onClickNotify(event) {
-        console.log(event);
-        this.isIn = false;
-        this.onMobile = false;
-        this.oncreate = false;
-        this.onsearch = false;
-    }
-
     public mobile_searchState() {
         this.onsearch = !this.onsearch;
-        this.oncreate = false;
-        this.NotificationComponent.onNotify = false;
     }
 
     public mobile_createState() {
-        this.oncreate = !this.oncreate;
         this.onsearch = false;
-        this.NotificationComponent.onNotify = false;
-
     }
 
     public ngOnInit() {

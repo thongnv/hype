@@ -569,7 +569,7 @@ select.form-control-static::-ms-expand {
     font-size: 18px;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 800px) {
   .itemSort li.type {
     width: auto;
   }

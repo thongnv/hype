@@ -192,14 +192,14 @@
                 </div>
                 <app-small-loader></app-small-loader>
                 <div class="list-bottom">
-                    <div *ngIf="items?.length ==0">End Of List</div>
+                    <div class="end-of-list" *ngIf="items?.length ==0">End Of List</div>
                 </div>
             </div>
 
         </div>
         <div class="col-lg-6 col-xs-12 right-box fixed-right map-right hidden-xs hidden-sm">
             <div class="box-map">
-                <sebm-google-map *ngIf="showMap"
+                <sebm-google-map
                                  [latitude]="lat"
                                  [longitude]="lng"
                                  [zoom]="mapZoom"

@@ -51,7 +51,6 @@ export class HomeComponent implements OnInit {
     public selectedEventOrder:any;
     public events:any = [];
     private listItems:any[] = [];
-    public showMap = false;
     public lists:any[] = [];
     public markers:any[] = [];
     public mapZoom:number = 12;
@@ -82,7 +81,7 @@ export class HomeComponent implements OnInit {
         'tid': '',
         'date': '',
         'latest': '',
-        'weeken': '',
+        'thisweek': '',
         'when': '',
         'lat': this.lat,
         'long': this.lng,
@@ -108,7 +107,7 @@ export class HomeComponent implements OnInit {
             {name: 'all'},
             {name: 'today'},
             {name: 'tomorrow'},
-            {name: 'weekend'},
+            {name: 'this week'},
         ];
         this.eventOrder = [
             {name: 'top 100'},
@@ -190,8 +189,6 @@ export class HomeComponent implements OnInit {
     }
 
     public onSelectEventType(event):void {
-        console.log(event);
-
         if (event == 'all') {
             this.selected = 'all';
             this.params.tid = '';
@@ -208,7 +205,8 @@ export class HomeComponent implements OnInit {
     public onClearForm():void {
         //this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.selected = false;
         this.showDate = false;
         this.showPrice = false;
@@ -216,10 +214,11 @@ export class HomeComponent implements OnInit {
         this.params.limit = 10;
         this.params.tid = '';
         this.params.date = '';
+        this.params.thisweek = '';
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
-        this.params.price = [0, 50]
+        this.params.price = [0, 50];
         this.getTrending();
     }
 
@@ -233,12 +232,12 @@ export class HomeComponent implements OnInit {
             let tomorrow = date.setDate(date.getDate() + 1);
             this.params.date = moment(date).format('YYYY-MM-DD');
         }
-        if (filter.name == 'weekend') {
-            this.params.weeken = 1;
+        if (filter.name == 'this week') {
+            this.params.thisweek = 1;
             this.params.date = '';
         }
         if (filter.name == 'all') {
-            this.params.weeken = 0;
+            this.params.thisweek = 0;
             this.params.date = '';
         }
 
@@ -247,8 +246,8 @@ export class HomeComponent implements OnInit {
         } else {
             this.showCircle = true;
         }
-
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -303,10 +302,10 @@ export class HomeComponent implements OnInit {
     }
 
     public selectedDate(value:any) {
-        console.log(value);
+        this.markers = [];
+        this.events = [];
         this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
-        this.showMap = false;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -317,7 +316,6 @@ export class HomeComponent implements OnInit {
                 this.total = resp.total;
                 this.events = this.events.concat(resp.data);
                 this.passerTop100(resp.data);
-                this.showMap = true;
                 this.loadMore = false;
                 this.loaderService.hide();
                 this.smallLoader.hide();
@@ -326,7 +324,6 @@ export class HomeComponent implements OnInit {
                 this.listItems = [];
                 this.events = [];
                 this.markers = [];
-                this.showMap = true;
                 this.loadMore = false;
                 this.loaderService.hide();
                 this.smallLoader.hide();
@@ -341,7 +338,6 @@ export class HomeComponent implements OnInit {
                 this.total = response.total;
                 this.passerTrending(response.geo);
                 this.loadMore = false;
-                this.showMap = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             }, err=> {
@@ -349,7 +345,6 @@ export class HomeComponent implements OnInit {
                 this.events = [];
                 this.markers = [];
                 this.loadMore = false;
-                this.showMap = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             });
@@ -366,16 +361,17 @@ export class HomeComponent implements OnInit {
     }
 
     public markerRadiusChange(radius) {
-
+        this.smallLoader.show();
+        console.log(this.currentRadius,radius);
         if (this.currentRadius <= radius) {
-            this.mapZoom--;
+            console.log(1);
+            this.mapZoom = 10;
         } else {
-            this.mapZoom++;
+            console.log(2);
+            this.mapZoom = 15;
         }
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
-        this.showMap = false;
-        this.loaderService.show();
         this.getTrending();
     }
 
@@ -433,7 +429,8 @@ export class HomeComponent implements OnInit {
     }
 
     public onChangePrice(value) {
-        this.showMap = false;
+        this.markers = [];
+        this.events = [];
         this.params.price = this.priceRange.join(',');
         this.params.type = 'event';
         this.smallLoader.show();
@@ -504,13 +501,12 @@ export class HomeComponent implements OnInit {
     }
 
     public markerDragEnd(event) {
-        console.log(event);
-        this.showMap = false;
+        this.markers =[];
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
         this.params.lat = event.coords.lat;
         this.params.long = event.coords.lng;
-        this.loaderService.show();
+        this.smallLoader.show();
         this.getTrending();
     }
 
@@ -542,14 +538,11 @@ export class HomeComponent implements OnInit {
                     }
                 }
             }
-            this.showMap = true;
-            console.log(this.markers);
         });
     }
 
 
     private passerTop100(events:any) {
-        console.log(events);
         this.mapsAPILoader.load().then(()=> {
                 for (let i = 0; i < events.length; i++) {
                     let latitude:any;

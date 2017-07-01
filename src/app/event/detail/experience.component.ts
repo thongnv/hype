@@ -4,12 +4,14 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
 import { EventService } from '../../services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'event-experience',
   template: `
     <div class="experiences-area border-bottom padding-top-30 padding-bottom-35">
       <div class="information-experience">
+        <div class="memberRate">
         <img class="img-circle" [src]="author.avatar" alt="user avatar" width="70"
              height="70">
         <div class="content-info-experience">
@@ -17,6 +19,8 @@ import { EventService } from '../../services/event.service';
           <p class="info-date-experience">
             {{date | date:'d MMMM y'}}
           </p>
+        </div>
+          <div class="clear"></div>
         </div>
         <div class="list-stars-review-experience">
           <rating [ngModel]="rating" [readonly]="true" emptyIcon="★"></rating>
@@ -123,7 +127,8 @@ export class ExperienceComponent implements Experience, OnInit {
 
   constructor(private eventService: EventService,
               private event: EventDetailComponent,
-              public sanitizer: DomSanitizer) {
+              public sanitizer: DomSanitizer,
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -157,6 +162,9 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public addComment(msgInput) {
+    if (!this.event.loggedIn) {
+      this.router.navigate(['/login'], {skipLocationChange: true}).then();
+    }
     if (msgInput.value.trim()) {
       let eventSlugName = this.event.slugName;
       let data = {
