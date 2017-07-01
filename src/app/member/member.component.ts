@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-member',
@@ -26,6 +27,7 @@ export class MemberComponent implements OnInit {
               public fb: FormBuilder,
               public loaderService: LoaderService,
               private appState: AppState,
+              private localStorageService: LocalStorageService,
               private router: Router,
               private mainService: MainService) {
     this.loaderService.show();
@@ -66,7 +68,8 @@ export class MemberComponent implements OnInit {
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+      let currentSlug = this.localStorageService.get('slug');
+      if (!currentSlug || this.slugName !== currentSlug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
       this.getUserProfile(this.slugName);
@@ -91,7 +94,6 @@ export class MemberComponent implements OnInit {
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = true;
-      console.log('====> userProfile response: ', response);
       this.loaderService.hide();
     });
   }
