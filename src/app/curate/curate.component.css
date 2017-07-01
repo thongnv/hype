@@ -115,33 +115,29 @@ ul.list-items li:not(:last-child) {
 }
 ul.list-items li {
     margin: 20px 0;
-
 }
 ul.list-items li a {
     color: #3b3b3b;
     font-size: 13px;
-    display: table;
 }
 ul.list-items li p {
-    display: table-cell;
-    vertical-align: top;
+    display: inline-block;
     overflow: hidden;
     line-height: 1.5;
-    font-size: 18px;
+    font-size: 16px;
     text-align: left;
+    width: calc(100% - 70px);
     color: #3b3b3b;
-    padding-left: 10px;
+    height: 48px;
     overflow-y: hidden;
     margin-top: 6px;
-    font-weight: bold;
 }
 ul.list-items li a img {
     margin-right: 10px;
-    float: none;
-    width: 100px;
-    height: 100px;
+    float: left;
+    width: 60px;
+    height: 60px;
     border-radius: 2px;
-    display: table-cell;
 }
 .list-category li.active{
     color: #2a6be1;
@@ -199,7 +195,6 @@ ul.list-items li a img {
   .primary-content{
     padding: 15px 0px;
   }
-  h4.text-ellipsis{white-space: inherit}
   ul.list-category li{
     margin-right: 10px;
     line-height: 1.5em;
