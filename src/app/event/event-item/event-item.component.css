@@ -1,9 +1,8 @@
 .wrap-each-items {
     /*border-bottom: 1px solid #eaeaea;*/
     width: 100%;
-    height: 180px;
-    float: left;
-    clear: both;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .wrap-each-items.article {
