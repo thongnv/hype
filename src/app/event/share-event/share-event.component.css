@@ -463,6 +463,64 @@ span.dollar-character {
     margin: 0;
   }
 
+  h4.title-experiences-area{
+    font-size: 15px;
+    padding-left: 0;
+  }
+  .left-content-information-event{
+    padding-left: 15px;
+  }
+  .left-content-information-event > li > span
+  {
+    padding-left: 0;
+  }
+
+  .list-preview-wrap .detail-event {
+    margin: 10px 10px 10px 20px;
+  }
+
+  .list-preview-wrap .post-experience {
+    margin: 20px 20px;
+
+  }
+
+  .information-event{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .right-creator-share-event .avatar-creator {
+      float: left;
+      margin-right: 10px;
+      margin-left: 10px;
+
+  }
+  h4.title-creator{
+    width: 70%;
+    float: right;
+    text-align: left;
+  }
+  .right-creator-share-event .name-creator{
+    width: 70%;
+    float: right;
+    text-align: left;
+  }
+  .list-preview-wrap .event-title img{
+    float: left;
+    margin-top: 8px;
+  }
+
+
+  p.mentioned_by {
+    width: 100%!important;
+  }
+  .list-mention[_ngcontent-c5] {
+    padding-left:0;
+  }
+
+  .list-preview-wrap .left-content{
+    border-right:0;
+  }
+
   .new-list .recaptcha{
     margin-left: 15px;
     clear: both;
@@ -479,6 +537,8 @@ span.dollar-character {
   .left-content-information-event .info-label{
     width: 35px;
     margin-right: 0;
+    padding-left: 0;
+    float: left;
   }
   .left-content-information-event .info-label>span{
     display: none;

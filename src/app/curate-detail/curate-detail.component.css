@@ -109,7 +109,22 @@
     background-position: center center;
   }
 
+  .carousel-header{
+    padding: 20px 20px 20px 0px;
+  }
+  .place-item-header[_ngcontent-c5] strong.place-name[_ngcontent-c5] {
+    padding: 3px 0px 0px 10px;
+    font-size: 24px;
 
+  }
+
+}
+
+@media only screen and (max-width: 574px) {
+  .place-item-header{
+    padding: 20px 10px 20px 0;
+    height: auto;
+  }
 }
 
 
