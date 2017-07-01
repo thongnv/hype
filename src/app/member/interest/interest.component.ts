@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-interest',
@@ -22,6 +23,7 @@ export class InterestComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private loaderService: LoaderService,
               private appState: AppState,
+              private localStorageService: LocalStorageService,
               private router: Router,
               private mainService: MainService) {
     this.loaderService.show();
@@ -52,14 +54,14 @@ export class InterestComponent implements OnInit {
           this.interests.push(item);
         });
       }
-      console.log('response: ', response);
     });
   }
 
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+      let currentSlug = this.localStorageService.get('slug');
+      if (!currentSlug || this.slugName !== currentSlug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
       this.getUserProfile(this.slugName);

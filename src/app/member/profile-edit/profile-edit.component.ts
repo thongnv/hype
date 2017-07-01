@@ -5,6 +5,7 @@ import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-profile-edit',
@@ -39,6 +40,7 @@ export class ProfileEditComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private appState: AppState,
+              private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
               private countryPickerService: CountryPickerService,
               private mainService: MainService,
@@ -64,7 +66,8 @@ export class ProfileEditComponent implements OnInit {
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+      let currentSlug = this.localStorageService.get('slug');
+      if (!currentSlug || this.slugName !== currentSlug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
       this.getUserProfile(this.slugName);
@@ -133,7 +136,6 @@ export class ProfileEditComponent implements OnInit {
       this.userInfo.contactNumber = response.field_contact_number;
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = true;
-      this.appState.set('userInfo', this.userInfo);
       this.loaderService.hide();
     });
   }
