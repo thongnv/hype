@@ -565,7 +565,6 @@ article {
 .company-info p a {
   display: block;
   line-height: 1.8;
-  padding-left: 27%;
   font-size: 14px;
   font-weight: 300;
   text-align: left;
@@ -716,8 +715,7 @@ article {
     margin: 10px 0 20px;
   }
 
-  .info-label i.sprite{display: block; float: left; margin-right: 20px;}
-  .info-label >span{display: none;}
+
 
   .company-info  p  a{
     width: 74%;
@@ -725,4 +723,9 @@ article {
     margin-bottom: 10px;
   }
 
+}
+
+@media  only screen and (max-width: 414px)  {
+  .info-label i.sprite{display: block; float: left; margin-right: 20px;}
+  .info-label >span{display: none;}
 }
