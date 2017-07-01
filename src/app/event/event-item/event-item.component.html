@@ -14,7 +14,7 @@
         </div>
         <div class="information-profile">
             <div class="top-content">
-                <h4 class="information-title" [routerLink]="[item.alias]"><p class="pull-left text-ellipsis real-title"
+                <h4 class="information-title pointer" [routerLink]="[item.alias]"><p class="pull-left text-ellipsis real-title"
                                                                              *ngIf="item.title">
                     {{item.title | truncate : 45}}</p>
                     <span *ngIf="item.field_event_option.field_price !='0'"
@@ -59,7 +59,7 @@
                         <i fa class="fa-plus"></i>
                     </button>
                 </ul>
-                <div class="pull-right">
+                <div class="pull-right comments-item-icon">
                     <ul class="list-inline">
                         <li>
                             <span class="count_comment">Comments {{item.comment_count}}</span>
@@ -72,6 +72,7 @@
                 </div>
             </div>
         </div>
+        <div class="clear"></div>
     </div>
     <div *ngIf="item.type=='article'" class="article">
         <div class="list-item">

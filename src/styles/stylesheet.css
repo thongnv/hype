@@ -397,7 +397,8 @@
 .sprite-icon-search {
   width: 20px;
   height: 19px;
-  background-position: 0 -2622px;
+  background-color: transparent;
+  background-position: 0 -2620px;
 }
 
 .sprite-icon-search_2x {

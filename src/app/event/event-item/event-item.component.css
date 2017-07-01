@@ -76,6 +76,7 @@
     height: 20px;
     line-height: 18px;
     margin-bottom: 14px;
+    margin-top: 0px;
 }
 
 .information-title .real-title {
@@ -268,6 +269,11 @@ ul.mentioned-item {
     .avatar-profile {
         width: 100px;
     }
+
+  .comments-item-icon{
+      clear: both;
+      float: none!important;
+  }
 
     .information-profile {
         width: calc(100% - 120px);
