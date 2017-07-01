@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
         this.selectedMapOption = option;
         this.router.navigate(['/discover/' + option.name.replace(" ", "+")]);
     }
+
     public mobile_searchState() {
         this.onsearch = !this.onsearch;
     }
@@ -107,7 +108,8 @@ export class NavbarComponent implements OnInit {
         // Socket Notification
         this.socket = io(AppSetting.NODE_SERVER);
         this.socket.on('notification', (data) => {
-            if (this.checkUserId(parseInt(data.uid))) {
+            console.log(data);
+            if (data.uid.indexOf(this.loginData.current_user.uid)) {
                 this.notifications = data.notifications;
             }
         });
@@ -118,15 +120,10 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    //Search a user in array
-    checkUserId(uid) {
-        return uid == parseInt(this.loginData.current_user.uid);
-    }
 
     public getNotifications() {
         this.mainService.getNotifications(this.notificationPage).then((resp) => {
             this.notifications = resp.data;
-            console.log('this.notifications', this.notifications);
         });
     }
 
