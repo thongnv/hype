@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
@@ -22,6 +22,7 @@ export class InterestComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private loaderService: LoaderService,
               private appState: AppState,
+              private router: Router,
               private mainService: MainService) {
     this.loaderService.show();
     this.userInfo = this.appState.state.userInfo;
@@ -29,10 +30,8 @@ export class InterestComponent implements OnInit {
   }
 
   public onSubmit() {
-    console.log('sending update: ', this.interests);
     this.loaderService.show();
     this.mainService.updateUserInterests(null, this.interests).then((resp) => {
-      console.log('update: ', resp);
       if (resp.status === null) {
         this.alertType = 'danger';
         this.msgContent = resp.message;
@@ -60,7 +59,9 @@ export class InterestComponent implements OnInit {
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      console.log('USER: ', this.slugName);
+      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+        this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
+      }
       this.getUserProfile(this.slugName);
       this.getInterests(this.slugName, this.pageNumber);
     });
@@ -80,7 +81,6 @@ export class InterestComponent implements OnInit {
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = true;
       this.appState.set('userInfo', this.userInfo);
-      console.log('response: ', response);
       this.loaderService.hide();
     });
   }

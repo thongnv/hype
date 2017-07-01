@@ -51,6 +51,13 @@ export class CurateNewComponent implements OnInit {
 
   public ngOnInit() {
     this.loaderService.show();
+    this.mainService.checkLogin().subscribe(
+      (response: any) => {
+        if (response === 0) {
+          this.router.navigate(['/login'], {skipLocationChange: true}).then();
+        }
+      }
+    );
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;

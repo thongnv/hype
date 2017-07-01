@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
-import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../shared/loader/loader.service';
 
 @Component({
@@ -43,6 +42,7 @@ export class ProfileEditComponent implements OnInit {
               private loaderService: LoaderService,
               private countryPickerService: CountryPickerService,
               private mainService: MainService,
+              private router: Router,
               private route: ActivatedRoute) {
     this.loaderService.show();
     this.countryPickerService.getCountries().subscribe((countries) => {
@@ -64,7 +64,9 @@ export class ProfileEditComponent implements OnInit {
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      console.log('USER: ', this.slugName);
+      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+        this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
+      }
       this.getUserProfile(this.slugName);
 
     });
@@ -84,7 +86,6 @@ export class ProfileEditComponent implements OnInit {
           follower: this.userInfo.followerNumber,
         }
       };
-      console.log('sending data: ', userProfile);
       this.loaderService.show();
       this.mainService.setUserProfile(userProfile).then(
         (resp) => {
@@ -133,7 +134,6 @@ export class ProfileEditComponent implements OnInit {
       this.userInfo.receiveEmail = response.field_notify_email;
       this.userInfo.showNav = true;
       this.appState.set('userInfo', this.userInfo);
-      console.log('response: ', response);
       this.loaderService.hide();
     });
   }

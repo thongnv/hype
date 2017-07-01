@@ -65,6 +65,13 @@ export class ShareEventComponent implements OnInit {
               private router: Router) {
 
     this.loaderService.show();
+    this.mainService.checkLogin().subscribe(
+      (response: any) => {
+        if (response === 0) {
+          this.router.navigate(['/login'], {skipLocationChange: true}).then();
+        }
+      }
+    );
     this.eventService.getCategoryEvent().subscribe(
       (response: any) => {
         this.categories = response.data;

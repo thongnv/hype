@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../shared/loader/loader.service';
@@ -26,6 +26,7 @@ export class MemberComponent implements OnInit {
               public fb: FormBuilder,
               public loaderService: LoaderService,
               private appState: AppState,
+              private router: Router,
               private mainService: MainService) {
     this.loaderService.show();
     this.userInfo = this.appState.state.userInfo;
@@ -45,9 +46,7 @@ export class MemberComponent implements OnInit {
         follower: this.userInfo.followerNumber,
       }
     };
-    console.log('sending setting data: ', userSetting);
     this.mainService.setUserProfile(userSetting).then((resp) => {
-      console.log('updated setting: ', resp);
       if (resp.status) {
         this.alertType = 'success';
         this.msgContent = 'Updated user information successful.';
@@ -67,7 +66,9 @@ export class MemberComponent implements OnInit {
   public ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      console.log('USER: ', this.slugName);
+      if (!this.userInfo || this.slugName !== this.userInfo.slugName) {
+        this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
+      }
       this.getUserProfile(this.slugName);
     });
   }
