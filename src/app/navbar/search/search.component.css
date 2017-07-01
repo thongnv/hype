@@ -115,12 +115,12 @@
     width: calc(100% - 205px);
 }
 .input-keyword{
-    width: 80%;
+    width: 100%;
     border-radius: 4px !important;
     padding: 6px 26px 6px 12px;
 }
 .wrap-search-input{
-    width: 420px;
+    width: 395px;
 }
 .display-location-address .close:hover{
     opacity: 1;
@@ -145,7 +145,7 @@
     box-shadow: none;
     z-index: 999;
     top: 9px;
-    right: 89px;
+    right: 9px;
 }
 .wrap-search-input .search-icon:focus {
     outline: none;
