@@ -85,6 +85,7 @@
   margin: 0 15px;
   float: right;
   width: 120px;
+  position: absolute;
 
 }
 .search-location-search-area ul {
@@ -165,4 +166,14 @@
   text-align: center;
   line-height: 25px;
   font-size: 1.5em;
+}
+
+
+@media only screen and (max-width: 768px) {
+  .result-info .text-ellipsis{
+    white-space: normal;
+  }
+  .list-location-address .result-info{
+    overflow: hidden;
+  }
 }
