@@ -3,11 +3,14 @@ let PAGE_SIZE = 10;
 let FOLLOW_PAGE_SIZE = 60;
 let INTERVAL_NOTIFIATION = 1000;
 let API_ENDPOINT = '';
+let NODE_JS='';
 
 if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+    NODE_JS ='http://52.220.246.146:8000';
 } else {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+  NODE_JS ='http://52.220.246.146:8000';
 }
 
 console.log('current API: ', API_ENDPOINT);
@@ -16,6 +19,7 @@ const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
 export class AppSetting {
   public static API_ENDPOINT = API_ENDPOINT;
+    public static NODE_SERVER = NODE_JS;
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
   public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile/';
   public static API_LOGOUT = API_ENDPOINT + 'api/user/logout?_format=json';

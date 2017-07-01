@@ -5,6 +5,9 @@ import { MainService } from '../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router,ActivatedRoute} from '@angular/router';
 import {NotificationComponent} from "./notification/notification.component";
+import * as io from "socket.io-client";
+import {AppSetting} from "../app.setting";
+
 
 @Component({
     selector: 'app-navbar',
@@ -13,6 +16,7 @@ import {NotificationComponent} from "./notification/notification.component";
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    private socket;
     public loginData:any;
     public onsearch = false;
     public userInfo:any;
@@ -34,12 +38,13 @@ export class NavbarComponent implements OnInit {
         if (notificationPage !== undefined) {
             this.notificationPage = notificationPage;
         }
+
         this.appState.set('notificationPage', this.notificationPage);
     }
 
     public onSelectMapOption(option:any):void {
         this.selectedMapOption = option;
-        this.router.navigate(['/discover/' + option.name.replace(" ","+")]);
+        this.router.navigate(['/discover/' + option.name.replace(" ", "+")]);
     }
     public mobile_searchState() {
         this.onsearch = !this.onsearch;
@@ -90,21 +95,33 @@ export class NavbarComponent implements OnInit {
         // get current param
         let params_url = this.location.path().split("/");
         console.log(params_url);
-        if (params_url[1]=='discover') {
-            if(params_url[2]) {
+        if (params_url[1] == 'discover') {
+            if (params_url[2]) {
                 this.selectedMapOption = {id: 0, name: params_url[2].replace("%2B", " ").replace("%20", " ")};
-            }else{
+            } else {
                 this.selectedMapOption = this.mapOptions[0];
             }
         } else {
             this.selectedMapOption = this.mapOptions[0];
         }
-        console.log(this.selectedMapOption);
+        // Socket Notification
+        this.socket = io(AppSetting.NODE_SERVER);
+        this.socket.on('notification', (data) => {
+            if (this.checkUserId(parseInt(data.uid))) {
+                this.notifications = data.notifications;
+            }
+        });
+
+        //get notification
         if (this.loginData) {
             this.getNotifications();
         }
     }
 
+    //Search a user in array
+    checkUserId(uid) {
+        return uid == parseInt(this.loginData.current_user.uid);
+    }
 
     public getNotifications() {
         this.mainService.getNotifications(this.notificationPage).then((resp) => {
