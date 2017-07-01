@@ -416,14 +416,27 @@ export class MainService {
       .catch(this.handleError);
   }
 
+  public checkLogin(): Observable<Response> {
+    let headers = this.defaultHeaders;
+    let myParams = new URLSearchParams();
+    let options = new RequestOptions({
+      headers,
+      params: myParams,
+      withCredentials: true
+    });
+
+    return this._http.get(AppSetting.API_LOGIN_STATUS, options)
+      .map((res) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error.json()));
+      });
+  }
+
   private handleError(error: any): Promise<any> {
     // console.error(error);
     return Promise.reject(error.message || error);
   }
 
-  private checkLogin(): void {
-    if (!this._localStorageService.get('loginData')) {
-      this.route.navigate(['/login']);
-    }
-  }
 }
