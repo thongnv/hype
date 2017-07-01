@@ -1150,6 +1150,7 @@ body, html {
 
   //responsive
   @media  only screen and(max-width: 374px) {
+    .mobile-footer{height: 70px!important; width: 100%; display: block;}
     .sidebar {
       height: 70px!important;
     }
