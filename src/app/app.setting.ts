@@ -3,14 +3,14 @@ let PAGE_SIZE = 10;
 let FOLLOW_PAGE_SIZE = 60;
 let INTERVAL_NOTIFIATION = 1000;
 let API_ENDPOINT = '';
-let NODE_JS='';
+let NODE_JS = '';
 
 if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
-    NODE_JS ='http://52.220.246.146:8000';
+  NODE_JS = 'http://52.220.246.146:8000';
 } else {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
-  NODE_JS ='http://52.220.246.146:8000';
+  NODE_JS = 'http://52.220.246.146:8000';
 }
 
 console.log('current API: ', API_ENDPOINT);
@@ -56,11 +56,11 @@ export class AppSetting {
     version: 'v2.9'
   };
 
-  public static MobileSize ={
-      mobile_p:545,
-      mobile_l:768,
-      tab_mii:992
-  }
+  public static MobileSize = {
+      mobile_p: 545,
+      mobile_l: 768,
+      tab_mii: 992
+  };
   public static PAGE_SIZE: number = PAGE_SIZE;
   public static FOLLOW_PAGE_SIZE: number = FOLLOW_PAGE_SIZE;
   public static INTERVAL_NOTIFIATION: number = INTERVAL_NOTIFIATION;
