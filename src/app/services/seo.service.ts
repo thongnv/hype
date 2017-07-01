@@ -4,7 +4,7 @@ import {Title, Meta} from '@angular/platform-browser';
 @Injectable()
 export class SeoService {
 
-  constructor(private title: Title, private meta: Meta) { }
+  constructor(private meta: Meta) { }
 
   /**
    * Set SEO meta tags for web page
@@ -14,7 +14,6 @@ export class SeoService {
    * @param description: short description of the page
    */
   setSEOMetaTags(title: string, author: string, keywords: string, description: string) {
-    this.title.setTitle(title);
     this.meta.addTags([
       {name: 'author', content: author},
       {name: 'keywords', content: keywords},
