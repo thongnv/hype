@@ -182,6 +182,6 @@
     overflow: hidden;
   }
   ul#list-events-location-address {
-    height: 50vh;
+    height: 500px;
   }
 }
