@@ -1282,6 +1282,13 @@ body, html {
     }
 
   }
+
+  @media only screen and (max-width: 1280px)and (min-width: 800px) {
+    .slide-group> img{
+      height: 100%;
+    }
+
+  }
   @media only screen and (max-width: 767px) {
     .navbar-toggle{
       margin-right: 5px;
