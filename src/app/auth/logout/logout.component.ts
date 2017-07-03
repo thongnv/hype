@@ -3,6 +3,7 @@ import { AppState } from '../../app.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { MainService } from '../../services/main.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -15,7 +16,8 @@ export class LogoutComponent implements OnInit {
      private localStorageService: LocalStorageService,
      private appState: AppState,
      private mainService: MainService,
-     private loaderService: LoaderService) {
+     private loaderService: LoaderService,
+     private router: Router) {
   }
 
   public ngOnInit() {
@@ -25,6 +27,7 @@ export class LogoutComponent implements OnInit {
       (res) => {
         console.log(res);
         this.localStorageService.clearAll();
+        this.router.navigate(['home']).then();
         window.location.reload();
       },
       (error) => {
