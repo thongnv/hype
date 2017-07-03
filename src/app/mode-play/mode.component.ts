@@ -393,11 +393,13 @@ export class ModeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
+        const element = document.querySelector('#v' + selector);
+        element.scrollIntoView(true);
         scrollTo(
             '#v' + selector,
             '#v-scrollable',
             horizontal,
-            0
+            100
         );
 
     }
