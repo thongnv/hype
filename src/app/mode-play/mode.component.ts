@@ -404,9 +404,11 @@ export class ModeComponent implements OnInit {
 
     public navIsFixed:boolean = false;
 
-    @HostListener("window:scroll", [])
-    onWindowScroll() {
-        let number = this.document.body.scrollTop;
+    @HostListener("window:scroll", ['$event'])
+    onWindowScroll($event) {
+        console.log($event);
+        console.log('clientHeight',this.document.body.clientHeight + this.document.body.scrollTop);
+        console.log('scrollHeight',this.document.body.scrollHeight);
         if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
             if (this.total > this.items.length) {
                 if (this.items.length <= 1) {
