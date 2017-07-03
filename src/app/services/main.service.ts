@@ -21,36 +21,28 @@ export class MainService {
                      private router: Router) {
   }
 
-  public login(fbToken: string) {
-    return new Promise((resolve, reject) => {
+  public login(fbToken: string): Observable<Response>  {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers, withCredentials: true});
 
-      let token = {fb_token: fbToken};
-      let headers = new Headers({'Content-Type': 'application/json'});
-      let options = new RequestOptions({headers, withCredentials: true});
-
-      this.http.post(AppSetting.API_LOGIN, JSON.stringify(token), options).subscribe(
-        (response) => {
-          let resData = response.json();
-          resolve(resData);
-        },
-        (err) => {
-          console.debug(err);
-          reject(err);
-        }
-      );
-    });
+    return this.http.post(
+      AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
+    )
+      .map((res: any) => res.json())
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public logout(): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_LOGOUT, JSON.stringify({}), options)
+    return this.http.post(
+      AppSetting.API_ENDPOINT + 'api/user/logout?_format=json', options
+    )
       .map((res: Response) => res.json())
       .catch((error) => {
-        if (error.status === 403) {
-          this.router.navigate(['login']).then();
-        }
         return Observable.throw(new Error(error));
       });
   }
