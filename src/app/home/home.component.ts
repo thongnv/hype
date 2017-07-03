@@ -439,7 +439,15 @@ export class HomeComponent implements OnInit {
 
     @HostListener("window:scroll", [])
     onWindowScroll() {
-        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+        let windowHeight = 'innerHeight' in window ? window.innerHeight
+            : this.document.documentElement.offsetHeight;
+        let body = this.document.body;
+        let html = this.document.documentElement;
+        let docHeight = Math.max(body.scrollHeight,
+            body.offsetHeight, html.clientHeight,
+            html.scrollHeight, html.offsetHeight);
+        let windowBottom = windowHeight + window.pageYOffset;
+        if (docHeight >= windowBottom) {
             if (this.selectedEventOrder.name == 'top 100') {
                 if (this.total >= this.events.length) {
                     // check limit start

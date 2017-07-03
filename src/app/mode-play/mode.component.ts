@@ -406,10 +406,16 @@ export class ModeComponent implements OnInit {
 
     @HostListener("window:scroll", ['$event'])
     onWindowScroll($event) {
-        console.log($event);
-        console.log('clientHeight',this.document.body.clientHeight + this.document.body.scrollTop);
-        console.log('scrollHeight',this.document.body.scrollHeight);
-        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+
+        let windowHeight = 'innerHeight' in window ? window.innerHeight
+            : this.document.documentElement.offsetHeight;
+        let body = this.document.body;
+        let html = this.document.documentElement;
+        let docHeight = Math.max(body.scrollHeight,
+            body.offsetHeight, html.clientHeight,
+            html.scrollHeight, html.offsetHeight);
+        let windowBottom = windowHeight + window.pageYOffset;
+        if (docHeight >= windowBottom) {
             if (this.total > this.items.length) {
                 if (this.items.length <= 1) {
                     return false;
