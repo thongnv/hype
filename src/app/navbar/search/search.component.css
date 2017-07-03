@@ -181,4 +181,7 @@
   .list-location-address .result-info{
     overflow: hidden;
   }
+  ul#list-events-location-address {
+    height: 50vh;
+  }
 }
