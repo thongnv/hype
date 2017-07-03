@@ -7,7 +7,7 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { EventService } from '../../services/event.service';
-import { LoaderService } from '../../shared/loader/loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
 
 import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
 import { AppSetting } from '../../app.setting';

@@ -4,7 +4,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
-  NgModule, ApplicationRef
+  NgModule, ApplicationRef, NO_ERRORS_SCHEMA
 } from '@angular/core';
 import {
   removeNgStyles, createNewHosts, createInputTransfer
@@ -22,21 +22,21 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { HomeComponent } from './home';
 import { NoContentComponent } from './no-content';
 import { ServerErrorComponent } from './server-error';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+
 import { Ng2ScrollableModule } from 'ng2-scrollable';
-import { TruncateModule } from 'ng2-truncate';
+
 import { SlimScroll } from 'angular-io-slimscroll';
 import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
+import { TruncateModule } from 'ng2-truncate';
 
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
 import { DiscoverComponent } from './discover/discover.component';
-import { CurateComponent } from './curate/curate.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
@@ -50,7 +50,7 @@ import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 import { GmapService } from './services/gmap.service';
 import { EventDetailComponent } from './event/detail/detail.component';
-import { CurateNewComponent } from './curate-new/curate-new.component';
+
 import { SlideComponent } from './event/detail/slide.component';
 import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
@@ -59,27 +59,27 @@ import { EventService } from './services/event.service';
 import { CompanyService } from './services/company.service';
 import { MyArray } from './shared/num-to-array.pipe';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
-import { CurateDetailComponent } from './curate-detail/curate-detail.component';
+// import { CurateDetailComponent } from './article/curate-detail/curate-detail.component';
 import { CommentComponent } from './event/detail/comment.component';
 import { ExperienceComponent } from './event/detail/experience.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
-import { BoostrapCarouselComponent } from './boostrap-carousel/boostrap-carousel.component';
-import { SlideCarouselComponent } from './slide-carousel/slide-carousel.component';
+import { BoostrapCarouselComponent } from './helper/boostrap-carousel/boostrap-carousel.component';
+import { SlideCarouselComponent } from './helper/slide-carousel/slide-carousel.component';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
 import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
-import { NouisliderModule } from 'ng2-nouislider';
-import { ModeComponent } from './mode-play/mode.component';
+
+// import { ModeComponent } from './discover/mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
 import { WriteReviewComponent } from './company/write-review/write-review.component';
-import { EventItemComponent } from './event/event-item/event-item.component';
+// import { EventItemComponent } from './event/event-item/event-item.component';
 import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-marker';
 import { FollowingComponent } from './member/following/following.component';
 import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
 import { FollowItemComponent } from './member/follow-item/follow-item.component';
-import { BoostrapAlertComponent } from './shared/boostrap-alert/boostrap-alert.component';
+
 import { FavoritePipe } from './shared/favorite.pipe';
 import { FavoriteEventComponent } from './member/favorite-event/favorite-event.component';
 import { InterestComponent } from './member/interest/interest.component';
@@ -94,12 +94,12 @@ import { FavoritePlaceComponent } from './member/favorite-place/favorite-place.c
 import { HomeService } from './services/home.service';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { NotificationComponent } from './navbar/notification/notification.component';
-import { StarVoteComponent } from './shared/star-vote/star-vote.component';
-import { LoaderComponent } from './shared/loader/loader.component';
-import { LoaderService } from './shared/loader/loader.service';
-import { SmallLoaderService } from './shared/small-loader/small-loader.service';
+import { StarVoteComponent } from './helper/star-vote/star-vote.component';
+import { LoaderComponent } from './helper/loader/loader.component';
+import { LoaderService } from './helper/loader/loader.service';
+
 import { ReviewComponent } from './company/company-detail/review.component';
-import { Html2TextPipe } from './shared/html-2-text.pipe';
+
 import { FacebookModule } from 'ngx-facebook';
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
@@ -107,8 +107,10 @@ import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
-import { PlaceImageComponent } from './shared/place-image/place-image.component';
-import { SmallLoaderComponent } from './shared/small-loader/small-loader.component';
+import { PlaceImageComponent } from './helper/place-image/place-image.component';
+// import { SmallLoaderComponent } from './helper/small-loader/small-loader.component';
+
+import {HtmlToTextModule} from './html-to-text/html-to-text.module';
 
 // services
 import {SeoService} from './services/seo.service';
@@ -132,16 +134,13 @@ type StoreType = {
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    HomeComponent,
     NoContentComponent,
     ServerErrorComponent,
     GmapComponent,
     DiscoverComponent,
-    CurateComponent,
     NavbarComponent,
     GmapClustererDirective,
     EventDetailComponent,
-    CurateNewComponent,
     SlideComponent,
     CarouselComponent,
     ShareEventComponent,
@@ -151,7 +150,7 @@ type StoreType = {
     ReviewComponent,
     MyArray,
     CustomMarkerComponent,
-    CurateDetailComponent,
+    // CurateDetailComponent,
     CurateListPipe,
     SlimScroll,
     BoostrapCarouselComponent,
@@ -159,16 +158,16 @@ type StoreType = {
     TripleSlidePipe,
     CompanyDetailComponent,
     CurateListPipe,
-    ModeComponent,
+    // ModeComponent,
     WriteReviewComponent,
     ImageModal,
-    EventItemComponent,
+    // EventItemComponent,
     GeocodeMarkerComponent,
     MemberNavigationComponent,
     FollowingComponent,
     FollowerComponent,
     FollowItemComponent,
-    BoostrapAlertComponent,
+
     InterestComponent,
     MemberComponent,
     MemberNavigationComponent,
@@ -180,17 +179,15 @@ type StoreType = {
     FavoritePlaceComponent,
     FavoriteEventComponent,
     FavoritePipe,
-    BoostrapAlertComponent,
     NotificationComponent,
     StarVoteComponent,
     LoaderComponent,
-    Html2TextPipe,
     AuthComponent,
     LogoutComponent,
     SearchComponent,
     HyperSearchComponent,
     PlaceImageComponent,
-    SmallLoaderComponent,
+    // SmallLoaderComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -199,13 +196,10 @@ type StoreType = {
     ReactiveFormsModule,
     HttpModule,
     JsonpModule,
-    NouisliderModule,
+    TruncateModule,
+    HtmlToTextModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
-    AgmCoreModule.forRoot({
-      // apiKey: 'AIzaSyDFn2a42XdwJAPtDUBCFq6jgTuMHmIoZEQ',
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
+
     NgbModule.forRoot(),
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
@@ -221,7 +215,6 @@ type StoreType = {
     RatingModule,
     MomentModule,
     ReCaptchaModule,
-    TruncateModule,
     TinymceModule.withConfig({}),
     ReactiveFormsModule,
     CountryPickerModule.forRoot({
@@ -237,8 +230,6 @@ type StoreType = {
     Title,
     GmapService,
     LoaderService,
-    SmallLoaderService,
-    GoogleMapsAPIWrapper,
     EventService,
     CompanyService,
     EventService,
@@ -246,7 +237,8 @@ type StoreType = {
     ModeService,
     HomeService,
     SeoService,
-  ]
+  ],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class AppModule {
 

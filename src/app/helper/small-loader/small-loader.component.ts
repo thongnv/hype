@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { SmallLoaderService } from '../small-loader/small-loader.service';
+import { SmallLoaderService } from './small-loader.service';
 import { SmallLoaderState } from '../../app.interface';
 
 @Component({

@@ -3,7 +3,7 @@ import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { LoaderService } from '../../shared/loader/loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
 
 const PAGE_SIZE = 10;
 

@@ -14,7 +14,7 @@ import { DOCUMENT } from "@angular/platform-browser";
 // services
 import { MainService } from '../services/main.service';
 import {HomeService} from "../services/home.service";
-import {LoaderService} from "../shared/loader/loader.service";
+import {LoaderService} from "../helper/loader/loader.service";
 
 // models
 import { EventType } from '../app.interface';
@@ -23,7 +23,7 @@ import { EventType } from '../app.interface';
 import {EventItemComponent} from '../event/event-item/event-item.component';
 import { AppSetting } from '../app.setting';
 import {of} from "rxjs/observable/of";
-import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
+import {SmallLoaderService} from "../helper/small-loader/small-loader.service";
 
 // assets
 const MARKER_ICON = '/assets/icon/icon_pointer.png';

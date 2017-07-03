@@ -21,7 +21,7 @@
                          (window:resize)="onResize($event)" name="radioBasic"
                          formControlName="filterCategory">
                         <label class="btn btn-default">
-                            <img src="../../assets/img/icons/All.png" alt="All">
+                            <img src="../../../assets/img/icons/All.png" alt="All">
                             <span class="clearfix">
                                 <input type="radio" value="all"> All
                             </span>
@@ -183,8 +183,8 @@
                             <span class="review">{{item.rating.total}} Reviews</span>
                             <div class="box-content">
                                 <!--<p>{{item.Email_Address}} | {{item.Tel_No}}</p>-->
-                                <p *ngIf="item.Company_Profile"
-                                   [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>
+                                <!--<p *ngIf="item.Company_Profile" [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>-->
+                                <p *ngIf="item.Company_Profile" [innerHTML]="item.Company_Profile"></p>
                             </div>
                         </div>
                         <div class="clearfix"></div>
