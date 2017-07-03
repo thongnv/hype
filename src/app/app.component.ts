@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   ) {
     // set meta data for seo
     this.seoService.setSEOMetaTags(
-      'Hylo - The paradise of food', 'Hylo corp', 'hylo, food, hylo food, promote events', 'Description');
+      'Hylo - Discover things to do in Singapore today', 'Hylo corp', 'hylo, food, hylo food, promote events', 'Description');
 
     this.userInfo = {
       isLogin: false,

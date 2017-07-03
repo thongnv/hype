@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
         'tid': '',
         'date': '',
         'latest': '',
-        'thisweek': '',
+        'weekend': '',
         'when': '',
         'lat': this.lat,
         'long': this.lng,
@@ -207,6 +207,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = this.eventFilter[0];
         this.markers = [];
         this.events = [];
+        this.priceRange = [0, 50]
         this.selected = false;
         this.showDate = false;
         this.showPrice = false;
@@ -214,11 +215,10 @@ export class HomeComponent implements OnInit {
         this.params.limit = 10;
         this.params.tid = '';
         this.params.date = '';
-        this.params.thisweek = '';
+        this.params.weekend = '';
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
-        this.params.price = [0, 50];
         this.getTrending();
     }
 
@@ -233,11 +233,11 @@ export class HomeComponent implements OnInit {
             this.params.date = moment(date).format('YYYY-MM-DD');
         }
         if (filter.name == 'this week') {
-            this.params.thisweek = 1;
+            this.params.weekend = 1;
             this.params.date = '';
         }
         if (filter.name == 'all') {
-            this.params.thisweek = 0;
+            this.params.weekend = 0;
             this.params.date = '';
         }
 
@@ -362,7 +362,7 @@ export class HomeComponent implements OnInit {
 
     public markerRadiusChange(radius) {
         this.smallLoader.show();
-        console.log(this.currentRadius,radius);
+        console.log(this.currentRadius, radius);
         if (this.currentRadius <= radius) {
             console.log(1);
             this.mapZoom = 10;
@@ -501,7 +501,7 @@ export class HomeComponent implements OnInit {
     }
 
     public markerDragEnd(event) {
-        this.markers =[];
+        this.markers = [];
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
         this.params.lat = event.coords.lat;
