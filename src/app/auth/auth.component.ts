@@ -28,22 +28,21 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  public loginWithOptions() {
-
+  public onClickLogin() {
     const loginOptions: LoginOptions = {
       enable_profile_selector: true,
       return_scopes: true,
       scope: 'public_profile,user_friends,email,pages_show_list'
     };
-
-    this.fb.login(loginOptions)
-      .then((res: LoginResponse) => {
-        console.log('Login FB: ', res);
-        this.mainService.login(res.authResponse.accessToken).then((resp) => {
-          this.localStorageService.set('loginData', JSON.stringify(resp));
-          console.log('Login response: ', resp);
-          window.location.reload();
-        });
+    this.fb.login(loginOptions).then(
+      (loginRes: LoginResponse) => {
+        this.mainService.login(loginRes.authResponse.accessToken).then(
+          (resp) => {
+            this.localStorageService.set('loginData', JSON.stringify(resp));
+            this.localStorageService.set('csrf_token', resp.csrf_token);
+            this.localStorageService.set('slug', resp.current_user.slug);
+            window.location.reload();
+          });
       })
       .catch(this.handleError);
   }
