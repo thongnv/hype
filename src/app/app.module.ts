@@ -49,7 +49,7 @@ import { ModeService } from './services/mode.service';
 import { HomeService } from './services/home.service';
 import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
-
+import { ProfileService } from './services/profile.service';
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 
@@ -185,6 +185,7 @@ type StoreType = {
     EventService,
     ModeService,
     SeoService,
+    ProfileService
   ],
 })
 export class AppModule {
