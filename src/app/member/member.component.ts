@@ -37,7 +37,7 @@ export class MemberComponent implements OnInit {
 
   public onSubmit(event): void {
     let userSetting = {
-      field_notify_email: (this.settingForm.value.receiveEmail) ? 1 : 0,
+      field_notify_email: (this.settingForm.value.email) ? 1 : 0,
       field_first_name: this.userInfo.firstName,
       field_last_name: this.userInfo.lastName,
       email: this.userInfo.email,
@@ -52,13 +52,13 @@ export class MemberComponent implements OnInit {
       if (resp.status) {
         this.alertType = 'success';
         this.msgContent = 'Updated user information successful.';
-        this.userInfo.receiveEmail = userSetting.field_notify_email;
+        this.userInfo.email = userSetting.field_notify_email;
         this.appState.set('userInfo', this.userInfo);
       } else {
         this.alertType = 'danger';
         this.msgContent = 'Updated user information failed.';
         this.settingForm.patchValue({
-          receiveEmail: parseInt(this.userInfo.receiveEmail, 2)
+          receiveEmail: parseInt(this.userInfo.email, 2)
         });
       }
     });
@@ -78,7 +78,7 @@ export class MemberComponent implements OnInit {
 
   private getUserProfile(slugName: string): void {
 
-    this.mainService.getUserProfile(slugName).then((response) => {
+    this.mainService.getUserProfile(slugName).subscribe((response) => {
       this.settingForm.patchValue({
         receiveEmail: parseInt(response.field_notify_email, 2)
       });
@@ -92,7 +92,7 @@ export class MemberComponent implements OnInit {
       this.userInfo.followingNumber = response.follow.following;
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.receiveEmail = response.field_notify_email;
+      this.userInfo.email = response.field_notify_email;
       this.userInfo.showNav = true;
       this.loaderService.hide();
     });

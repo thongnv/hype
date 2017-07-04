@@ -1,24 +1,24 @@
 <header class="navbar navbar-default navbar-fixed-top hype-header">
   <div class="navbar-header" ngbDropdown>
       <!-- mobile sidebar -->
-      <div *ngIf="loginData" class="mobile-left-sidebar" aria-labelledby="bar-mobile">
+      <div *ngIf="!user.isAnonymous" class="mobile-left-sidebar" aria-labelledby="bar-mobile">
         <div class="user-info-mobile">
-          <img class="img-circle" [src]="loginData.current_user.avatar" width="30" height="30">
-          <span class="user-name-info text-ellipsis">{{loginData.current_user.field_first_name}}&nbsp;{{loginData.current_user.field_last_name}}</span>
+          <img class="img-circle" [src]="user.avatar" width="30" height="30">
+          <span class="user-name-info text-ellipsis">{{user.name}}</span>
         </div>
         <ul class="user-menu-mobile" aria-labelledby="drop-0">
-          <li [routerLink]="['/' + loginData.current_user.slug + '/profile-edit']" routerLinkActive="active"
+          <li [routerLink]="['/' + user.slug + '/profile-edit']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
           </li>
-          <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active"
+          <li [routerLink]="['/' + user.slug + '/setting']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Settings
           </li>
-          <li [routerLink]="['/' + loginData.current_user.slug + '/interest']" routerLinkActive="active"
+          <li [routerLink]="['/' + user.slug + '/interest']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Interests
           </li>
-          <li [routerLink]="['/' + loginData.current_user.slug + '/favorite']" routerLinkActive="active"
+          <li [routerLink]="['/' + user.slug + '/favorite']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Favorites
           </li>
@@ -37,7 +37,7 @@
     <a [routerLink]="['./home']" title="Hylo" class="hidden-md hidden-lg hidden-xl navbar-brand text-white">hylo</a>
     <div class="hidden-md hidden-lg hidden-xl extra-menu" style="overflow: hidden">
       <ul class="nav navbar-nav hype-nav">
-        <li *ngIf="loginData" class="pull-right nav-item add-event-button">
+        <li *ngIf="!user.isAnonymous" class="pull-right nav-item add-event-button">
           <div class="user-option map-option pull-right" ngbDropdown>
             <a class="dropdown-toggle" id="drop-create-new" role="button" aria-haspopup="true" aria-expanded="false"(click)="mobile_createState()" ngbDropdownToggle>
               <i class="glyphicon glyphicon-plus text-white glyphicon-2x"></i>
@@ -52,15 +52,14 @@
             </ul>
           </div>
         </li>
-        <li *ngIf="loginData" class="pull-right nav-item notification-area">
+        <li *ngIf="!user.isAnonymous" class="pull-right nav-item notification-area">
           <app-notification *ngIf="notifications"
                             [notifications]="notifications"
                             [loadingInProgress]="set.loadingInProgress"
                             [endOfList]="set.endOfList"
                             (onScrollToBottom)="onScrollToBottom()"
                             (onMarkAllRead)="onMarkAllRead()"
-                            (onMarkOneRead)="onMarkOneRead($event)"
-                            (onClickNotify)="onClickNotify($event)">
+                            (onMarkOneRead)="onMarkOneRead($event)">
           </app-notification>
         </li>
         <li class="pull-right login-mobile" *ngIf="!loginData">
@@ -92,7 +91,7 @@
       </ul>
     </div>
   </div>
-  <div class="search-mobile"[class.on-mobile]="onsearch">
+  <div class="search-mobile"[class.on-mobile]="onSearch">
     <app-search></app-search>
   </div>
   <div class="row navbar-collapse collapse">
@@ -128,7 +127,7 @@
       <li class="sprite sprite-line nav-indicator">
         <app-search></app-search>
       </li>
-      <li *ngIf="loginData" class="pull-right nav-item add-event-button">
+      <li *ngIf="!user.isAnonymous" class="pull-right nav-item add-event-button">
         <div class="user-option map-option pull-right" ngbDropdown>
           <a class="dropdown-toggle" id="drop4" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
@@ -155,26 +154,28 @@
         </app-notification>
       </li>
       <li class="pull-right info-user nav-item">
-        <div *ngIf="loginData" class="user-option map-option right" ngbDropdown>
+        <div *ngIf="!user.isAnonymous" class="user-option map-option right" ngbDropdown>
           <a class="dropdown-toggle" id="drop2" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
-            <img class="img-circle" [src]="loginData.current_user.avatar" width="30" height="30">
-            <span class="user-name-info text-ellipsis">{{loginData.current_user.field_first_name}}&nbsp;{{loginData.current_user.field_last_name}}</span>
+            <img class="img-circle" [src]="user.avatar" width="30" height="30">
+            <span class="user-name-info text-ellipsis">
+              {{user.name}}
+            </span>
             <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop2">
-            <li [routerLink]="['/' + loginData.current_user.slug + '/profile-edit']" routerLinkActive="active"
+            <li [routerLink]="['/' + user.slug + '/profile-edit']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/setting']" routerLinkActive="active"
+            <li [routerLink]="['/' + user.slug + '/setting']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Settings
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/interest']" routerLinkActive="active"
+            <li [routerLink]="['/' + user.slug + '/interest']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Interests
             </li>
-            <li [routerLink]="['/' + loginData.current_user.slug + '/favorite']" routerLinkActive="active"
+            <li [routerLink]="['/' + user.slug + '/favorite']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Favorites
             </li>
@@ -183,7 +184,7 @@
             </li>
           </ul>
         </div>
-        <div *ngIf="!loginData">
+        <div *ngIf="user.isAnonymous">
           <span [routerLink]="['/login']" class="btn btn-success btn-login">Login</span>
         </div>
       </li>

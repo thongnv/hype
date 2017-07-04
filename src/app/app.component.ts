@@ -7,7 +7,7 @@ import {
 import { AppState } from './app.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
-import {SeoService} from './services/seo.service';
+import { SeoService } from './services/seo.service';
 
 @Component({
   selector: 'app',
@@ -21,16 +21,16 @@ import {SeoService} from './services/seo.service';
 export class AppComponent implements OnInit {
 
   public userInfo = {};
-  public loginData = {};
+  public loginData = JSON.parse(<string> this.localStorageService.get('loginData'));
 
-  constructor(
-    public appState: AppState,
-    private localStorageService: LocalStorageService,
-    private seoService: SeoService,
-  ) {
+  constructor(public appState: AppState,
+              private localStorageService: LocalStorageService,
+              private seoService: SeoService) {
     // set meta data for seo
     this.seoService.setSEOMetaTags(
-      'Hylo - Discover things to do in Singapore today', 'Hylo corp', 'hylo, food, hylo food, promote events', 'Description');
+      'Hylo - Discover things to do in Singapore today', 'Hylo corp',
+      'hylo, food, hylo food, promote events', 'Description'
+    );
 
     this.userInfo = {
       isLogin: false,
@@ -51,12 +51,9 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loginData = JSON.parse(<string> this.localStorageService.get('loginData'));
-    console.log('Initial App State 1', this.appState.state.userInfo);
     if (this.appState.state.userInfo === undefined) {
       this.appState.set('userInfo', this.userInfo);
     }
-    console.log('Initial App State 2', this.appState.state.userInfo);
   }
 
 }

@@ -100,9 +100,8 @@ export class CompanyDetailComponent implements Company, OnInit {
       );
     });
     if (this.loggedIn) {
-      this.mainService.getUserProfile().then((response) => {
-        this.user.name = response.name;
-        this.user.avatar = response.field_image;
+      this.mainService.getUserProfile().subscribe((response) => {
+        this.user = response;
       });
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;

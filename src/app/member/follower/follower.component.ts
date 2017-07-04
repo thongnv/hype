@@ -106,7 +106,7 @@ export class FollowerComponent implements OnInit {
 
   private getUserProfile(slugName: string): void {
     this.userInfo = this.appState.state.userInfo;
-    this.mainService.getUserProfile(slugName).then((response) => {
+    this.mainService.getUserProfile(slugName).subscribe((response) => {
       this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
       this.userInfo.firstName = response.field_first_name;
       this.userInfo.lastName = response.field_last_name;
@@ -116,7 +116,7 @@ export class FollowerComponent implements OnInit {
       this.userInfo.followingNumber = response.follow.following;
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.receiveEmail = response.field_notify_email;
+      this.userInfo.email = response.field_notify_email;
       this.userInfo.showNav = false;
       this.userInfo.uid = response.uid;
       this.userFollow = response.user_follow;
