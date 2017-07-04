@@ -169,11 +169,14 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
   .result-info .text-ellipsis{
     white-space: normal;
   }
   .list-location-address .result-info{
     overflow: hidden;
+  }
+  .gmap-place{
+    padding: 0px;
   }
 }
