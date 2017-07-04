@@ -22,21 +22,14 @@ import '../styles/styles.scss';
 import '../styles/headings.css';
 
 // 3rd modules
-import { Ng2ScrollableModule } from 'ng2-scrollable';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
-import { TruncateModule } from 'ng2-truncate';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { ImageUploadModule } from 'ng2-imageupload';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
-import { Daterangepicker } from 'ng2-daterangepicker';
-import { Ng2PopupModule } from 'ng2-popup/dist/index';
-import { RatingModule } from 'ng2-rating';
 import { FacebookModule } from 'ngx-facebook';
 
 // modules
@@ -53,7 +46,7 @@ import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
 import { HomeService } from './services/home.service';
 import { LoaderService } from './helper/loader/loader.service';
-import {SeoService} from './services/seo.service';
+import { SeoService } from './services/seo.service';
 
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -149,9 +142,9 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+
     HttpModule,
     JsonpModule,
-    TruncateModule,
     HtmlToTextModule,
     TinymceModule.withConfig({}),
     ReCaptchaModule,
@@ -163,7 +156,7 @@ type StoreType = {
       libraries: ['places', 'geometry']
     }),
 
-    TranslateModule.forRoot(),
+    // TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
@@ -172,18 +165,8 @@ type StoreType = {
       storageType: 'localStorage'
     }),
     Angular2FontawesomeModule,
-    NguiDatetimePickerModule,
-    Ng2ScrollableModule,
-    RatingModule,
     MomentModule,
-    ReactiveFormsModule,
-    CountryPickerModule.forRoot({
-      baseUrl: 'assets/'
-    }),
-    Daterangepicker,
     FacebookModule.forRoot(),
-    Ng2PopupModule,
-
     SlimScrollModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
@@ -193,11 +176,10 @@ type StoreType = {
     GoogleMapsAPIWrapper,
     GmapService,
     LoaderService,
-    EventService,
-    EventService,
     BaseApiService,
-    ModeService,
     HomeService,
+    EventService,
+    ModeService,
     SeoService,
   ],
 })

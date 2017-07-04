@@ -1,7 +1,10 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+
 import {HelperModule} from '../helper/helper.module';
+import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
 import { ArticleRoutingModule } from './article-routing.module';
 
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
@@ -10,12 +13,18 @@ import { CurateDetailComponent } from './curate-detail/curate-detail.component';
   imports: [
     CommonModule,
 
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
+      libraries: ['places', 'geometry']
+    }),
+
     HelperModule,
+    SlimScrollModule,
     ArticleRoutingModule
   ],
   declarations: [
     CurateDetailComponent
   ],
-  schemas: [NO_ERRORS_SCHEMA]
+  providers: [GoogleMapsAPIWrapper]
 })
 export class ArticleModule { }

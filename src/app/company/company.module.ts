@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TruncateModule } from 'ng2-truncate';
@@ -33,7 +33,6 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     CompanyService,
     NgbRatingConfig
   ],
-  // schemas: [NO_ERRORS_SCHEMA]
 })
 export class CompanyModule {
 }

@@ -1,10 +1,15 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NouisliderModule } from 'ng2-nouislider';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { MomentModule } from 'angular2-moment';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Daterangepicker } from 'ng2-daterangepicker';
 
 import {HelperModule} from '../helper/helper.module';
+import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import { HomeRoutingModule } from './home-routing.module';
 
 import { HomeComponent } from './home.component';
@@ -14,20 +19,24 @@ import { HomeComponent } from './home.component';
     CommonModule,
 
     NouisliderModule,
+    MomentModule,
+    NgbModule,
+    Daterangepicker,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places', 'geometry']
     }),
 
     HelperModule,
+    HtmlToTextModule,
     HomeRoutingModule
   ],
   declarations: [
     HomeComponent
   ],
   providers: [
-    GoogleMapsAPIWrapper
+    GoogleMapsAPIWrapper,
+    NgbPopoverConfig,
   ],
-  schemas: [NO_ERRORS_SCHEMA]
 })
 export class HomeModule { }

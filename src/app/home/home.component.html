@@ -50,10 +50,7 @@
             </div>
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clear"></div>
-            <div id="v-scrollable" class="section v-scrollable"
-            >
-                <!--<app-event-item-->
-                        <!--[events]="events" (onClickLike)="onClickLike($event)"></app-event-item>-->
+            <div id="v-scrollable" class="section v-scrollable">
                 <div *ngFor="let item of events; let i = index"
                      [ngStyle]="{'transition': 'ease-in 15s'}"
                      class="wrap-each-items"
