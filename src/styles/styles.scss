@@ -1093,7 +1093,7 @@ body, html {
   }
 
   .filter-events .btn-default{
-    width: 80px;
+    width: 84px;
   }
   .daterangepicker .ranges {
     float: right !important;
@@ -1187,6 +1187,10 @@ body, html {
       display: none;
     }
 
+    .filter-events .btn-default{
+      width: inherit;
+    }
+
     .no-padding-mobile{
       padding: 0!important;
     }
@@ -1231,7 +1235,7 @@ body, html {
     background: transparent !important;
   }
 
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 800px) {
     .new-list {
       .sebm-google-map-container, .list-box {
         height: calc(100vh - 160px);
@@ -1259,7 +1263,7 @@ body, html {
   @media only screen and (min-width: 992px) {
     .setting-wrap > div {
       min-height: calc(100vh - 60px);
-      padding: 0;
+      padding:  0 15px;
     }
     .itemSort li.type {
       width: 90px;
@@ -1295,7 +1299,7 @@ body, html {
     }
 
   }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 800px) {
     .navbar-toggle{
       margin-right: 5px;
     }
@@ -1319,7 +1323,8 @@ body, html {
       height: auto;
     }
     .form-wrap, .form-wrap form > div {
-      padding: 0;
+      padding:  0 15px;
+      margin-bottom: 15px;
     }
     .carousel-inner .slide-group {
       width: 100%;
