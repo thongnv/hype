@@ -357,7 +357,7 @@ header ul li.pull-right {
     width: calc(50% - 7px);
   }
   .form-wrap .form-actions{
-    margin: 0 40px;
+    padding: 0 15px;
   }
   .image-box .form-group{
     margin: 0;
