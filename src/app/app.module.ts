@@ -2,9 +2,9 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {  NgModule, ApplicationRef } from '@angular/core';
-import {  removeNgStyles, createNewHosts, createInputTransfer} from '@angularclass/hmr';
-import {  RouterModule,  PreloadAllModules} from '@angular/router';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -22,7 +22,7 @@ import '../styles/styles.scss';
 import '../styles/headings.css';
 
 // 3rd modules
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
@@ -32,14 +32,13 @@ import { ImageUploadModule } from 'ng2-imageupload';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { FacebookModule } from 'ngx-facebook';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 
 // modules
-import {HtmlToTextModule} from './html-to-text/html-to-text.module';
-import {SlimScrollModule} from './slim-scroll/slim-scroll.module';
-import {CarouseModule} from './carouse/carouse.module';
-import {HelperModule} from './helper/helper.module';
+import { HtmlToTextModule } from './html-to-text/html-to-text.module';
+import { SlimScrollModule } from './slim-scroll/slim-scroll.module';
+import { CarouseModule } from './carouse/carouse.module';
+import { HelperModule } from './helper/helper.module';
 
 // services
 import { MainService } from './services/main.service';
@@ -164,7 +163,6 @@ type StoreType = {
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'
     }),
-    NgbModule.forRoot(),
     LocalStorageModule.withConfig({
       prefix: 'hylo-app',
       storageType: 'localStorage'
