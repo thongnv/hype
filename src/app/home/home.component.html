@@ -119,7 +119,7 @@
                                         <li>
                                             <span class="count_comment">Comments {{item.comment_count}}</span>
                                         </li>
-                                        <li (click)="onLikeEmit(item)" class="heart-icon">
+                                        <li (click)="onClickLike(item)" class="heart-icon">
                                             <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
                                                [class.heart-selected]="item.user_bookmark" aria-hidden="true"></i>
                                         </li>
