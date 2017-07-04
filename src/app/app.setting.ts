@@ -6,10 +6,10 @@ let API_ENDPOINT = '';
 let NODE_JS = '';
 
 if (_ENV === 'development') {
-  API_ENDPOINT = 'http://dev-hylo.iypuat.com:5656/';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
   NODE_JS = 'http://52.220.246.146:8000';
 } else {
-  API_ENDPOINT = 'http://dev-hylo.iypuat.com:5656/';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
   NODE_JS = 'http://52.220.246.146:8000';
 }
 
