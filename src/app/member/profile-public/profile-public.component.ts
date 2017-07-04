@@ -169,7 +169,7 @@ export class ProfilePublicComponent implements OnInit {
 
   private getUserProfile(slugName?: string): void {
 
-    this.mainService.getUserProfile(slugName).then((response) => {
+    this.mainService.getUserProfile(slugName).subscribe((response) => {
       // this.mainService.getUserPublicProfile().then((response) => {
       this.userInfo.userName = response.field_first_name +
         ' ' + response.field_last_name;
@@ -181,7 +181,7 @@ export class ProfilePublicComponent implements OnInit {
       this.userInfo.followingNumber = response.follow.following;
       this.userInfo.followerNumber = response.follow.follower;
       this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.receiveEmail = response.field_notify_email;
+      this.userInfo.email = response.field_notify_email;
       this.userFollow = response.user_follow;
       this.userInfo.uid = response.uid;
       console.log('====> userProfile response: ', response);

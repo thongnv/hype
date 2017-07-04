@@ -6,6 +6,8 @@ import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { ProfileService } from '../../services/profile.service';
+import { User } from '../../app.interface';
 
 @Component({
   selector: 'app-profile-edit',
@@ -15,13 +17,13 @@ import { LocalStorageService } from 'angular-2-local-storage';
 
 export class ProfileEditComponent implements OnInit {
 
-  public userInfo: any;
+  public user: User;
   public countries: any[];
   public profileForm = this.fb.group({
     firstName: ['', Validators.compose([
       this.requiredField,
       Validators.maxLength(30)
-      ])],
+    ])],
     lastName: ['', Validators.compose([
       Validators.maxLength(30)
     ])],
@@ -33,10 +35,11 @@ export class ProfileEditComponent implements OnInit {
     ])],
     country: [''],
   });
-  public alertType: string;
+  public alertType = 'danger';
   public msgContent: string;
   public sub: any;
   public slugName: any;
+  public ready = false;
 
   constructor(public fb: FormBuilder,
               private appState: AppState,
@@ -45,68 +48,72 @@ export class ProfileEditComponent implements OnInit {
               private countryPickerService: CountryPickerService,
               private mainService: MainService,
               private router: Router,
-              private route: ActivatedRoute) {
-    this.loaderService.show();
-    this.countryPickerService.getCountries().subscribe((countries) => {
-
-      let defaultCountry = <ICountry> {
-        cca3: 'null',
-        name: {
-          common: 'Country'
-        }
-      };
-      this.countries = countries;
-      this.countries.unshift(defaultCountry);
-    });
-
-    this.userInfo = this.appState.state.userInfo;
-    this.userInfo.showNav = true;
+              private route: ActivatedRoute,
+              private profileService: ProfileService) {
   }
 
   public ngOnInit() {
+    this.countryPickerService.getCountries().subscribe(
+      (countries) => {
+        let defaultCountry = <ICountry> {
+          cca3: 'null',
+          name: {
+            common: 'Country'
+          }
+        };
+        this.countries = countries;
+        this.countries.unshift(defaultCountry);
+      }
+    );
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       let currentSlug = this.localStorageService.get('slug');
       if (!currentSlug || this.slugName !== currentSlug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
-      this.getUserProfile(this.slugName);
-
+      if (!this.user) {
+        this.getUserProfile(this.slugName);
+      }
     });
   }
 
   public onSubmit(): void {
     if (this.profileForm.valid) {
-      let userProfile = {
+      let data = {
         field_first_name: this.profileForm.value.firstName,
         field_last_name: this.profileForm.value.lastName,
-        email: this.userInfo.email,
+        email: this.user.email,
         field_contact_number: this.profileForm.value.contactNumber,
         field_country: this.profileForm.value.country,
-        field_notify_email: this.userInfo.receiveEmail,
+        field_notify_email: this.user.email,
         follow: {
-          following: this.userInfo.followingNumber,
-          follower: this.userInfo.followerNumber,
+          following: this.user.followingNumber,
+          follower: this.user.followerNumber,
         }
       };
       this.loaderService.show();
-      this.mainService.setUserProfile(userProfile).then(
+      this.mainService.setUserProfile(this.user, data).subscribe(
         (resp) => {
+          this.user.firstName = data.field_first_name;
+          this.user.lastName = data.field_last_name;
+          this.user.name = this.user.firstName + ' ' + this.user.lastName;
+          this.appState.set('user', this.user);
+          this.localStorageService.set('current_user', this.user);
+          this.msgContent = resp.message;
+          this.profileService.change(this.user);
           if (resp.status) {
             this.alertType = 'success';
-            this.msgContent = resp.message;
-            this.userInfo.firstName = userProfile.field_first_name;
-            this.userInfo.lastName = userProfile.field_last_name;
-            this.appState.set('userInfo', this.userInfo);
-          } else {
-            this.alertType = 'danger';
-            this.msgContent = resp.message;
           }
-          this.loaderService.hide();
-        }
+          let loginData = this.localStorageService.get('loginData');
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => this.loaderService.hide()
       );
     }
   }
+
   public requiredField(control: FormControl) {
     if (control.value == null) {
       return {
@@ -117,26 +124,25 @@ export class ProfileEditComponent implements OnInit {
       requiredField: true
     };
   }
+
   private getUserProfile(slugName: string): void {
-    this.mainService.getUserProfile(slugName).then((response) => {
-      this.profileForm.patchValue({
-        firstName: response.field_first_name,
-        lastName: response.field_last_name,
-        contactNumber: response.field_contact_number,
-        country: response.field_country,
-      });
-      this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
-      this.userInfo.firstName = response.field_first_name;
-      this.userInfo.lastName = response.field_last_name;
-      this.userInfo.userAvatar = response.field_image;
-      this.userInfo.email = response.email;
-      this.userInfo.country = response.field_country;
-      this.userInfo.followingNumber = response.follow.following;
-      this.userInfo.followerNumber = response.follow.follower;
-      this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.receiveEmail = response.field_notify_email;
-      this.userInfo.showNav = true;
-      this.loaderService.hide();
-    });
+    this.mainService.getUserProfile(slugName).subscribe(
+      (user: User) => {
+        this.profileForm.patchValue({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          contactNumber: user.contactNumber,
+          country: '',
+        });
+        this.user = user;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        this.loaderService.hide();
+        this.ready = true;
+      }
+    );
   }
 }
