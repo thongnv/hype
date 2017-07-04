@@ -28,8 +28,7 @@ import { ServerErrorComponent } from './server-error';
 
 import { Ng2ScrollableModule } from 'ng2-scrollable';
 
-import { SlimScroll } from 'angular-io-slimscroll';
-import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
+
 import { TruncateModule } from 'ng2-truncate';
 
 import '../styles/styles.scss';
@@ -56,7 +55,7 @@ import { CarouselComponent } from './event/detail/carousel.component';
 import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
-import { CompanyService } from './services/company.service';
+
 import { MyArray } from './shared/num-to-array.pipe';
 import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
 // import { CurateDetailComponent } from './article/curate-detail/curate-detail.component';
@@ -68,12 +67,10 @@ import { CurateListPipe } from './shared/curate-list.pipe';
 import { BoostrapCarouselComponent } from './helper/boostrap-carousel/boostrap-carousel.component';
 import { SlideCarouselComponent } from './helper/slide-carousel/slide-carousel.component';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
-import { CompanyDetailComponent } from './company/company-detail/company-detail.component';
 
 // import { ModeComponent } from './discover/mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
-import { WriteReviewComponent } from './company/write-review/write-review.component';
 // import { EventItemComponent } from './event/event-item/event-item.component';
 import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-marker';
 import { FollowingComponent } from './member/following/following.component';
@@ -97,8 +94,6 @@ import { NotificationComponent } from './navbar/notification/notification.compon
 import { StarVoteComponent } from './helper/star-vote/star-vote.component';
 import { LoaderComponent } from './helper/loader/loader.component';
 import { LoaderService } from './helper/loader/loader.service';
-
-import { ReviewComponent } from './company/company-detail/review.component';
 
 import { FacebookModule } from 'ngx-facebook';
 import { AuthComponent } from './auth/auth.component';
@@ -147,20 +142,16 @@ type StoreType = {
     GmapAutoPlaceComponent,
     CommentComponent,
     ExperienceComponent,
-    ReviewComponent,
     MyArray,
     CustomMarkerComponent,
     // CurateDetailComponent,
     CurateListPipe,
-    SlimScroll,
+
     BoostrapCarouselComponent,
     SlideCarouselComponent,
     TripleSlidePipe,
-    CompanyDetailComponent,
     CurateListPipe,
     // ModeComponent,
-    WriteReviewComponent,
-    ImageModal,
     // EventItemComponent,
     GeocodeMarkerComponent,
     MemberNavigationComponent,
@@ -231,7 +222,6 @@ type StoreType = {
     GmapService,
     LoaderService,
     EventService,
-    CompanyService,
     EventService,
     BaseApiService,
     ModeService,

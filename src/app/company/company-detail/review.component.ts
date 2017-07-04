@@ -18,7 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
           </p>
         </div>
         <div class="rating-star">
-          <rating [ngModel]="review.rating" [readonly]="true" emptyIcon="★"></rating>
+          <!--<rating [ngModel]="review.rating" [readonly]="true" emptyIcon="★"></rating>-->
         </div>
       </div>
       <p class="detail-info-experience clearfix" [innerHTML]="text"></p>
@@ -38,11 +38,11 @@ import { DomSanitizer } from '@angular/platform-browser';
         </li>
       </ul>
       <div *ngIf="openModalWindow">
-        <ImageModal
-          [modalImages]="thumbImages"
-          [imagePointer]="imagePointer"
-          (cancelEvent)="cancelImageModel()">
-        </ImageModal>
+        <!--<ImageModal-->
+          <!--[modalImages]="thumbImages"-->
+          <!--[imagePointer]="imagePointer"-->
+          <!--(cancelEvent)="cancelImageModel()">-->
+        <!--</ImageModal>-->
       </div>
 
       <div class="likes-comments-experience-area clearfix">
