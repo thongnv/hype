@@ -292,13 +292,14 @@ export class HomeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
+        const element = document.querySelector('#v' + selector);
+        element.scrollIntoView(true);
         scrollTo(
             '#v' + selector,
             '#v-scrollable',
             horizontal,
             100
         );
-
     }
 
     public selectedDate(value:any) {
@@ -439,45 +440,11 @@ export class HomeComponent implements OnInit {
 
     @HostListener("window:scroll", [])
     onWindowScroll() {
-        let windowHeight = 'innerHeight' in window ? window.innerHeight
-            : this.document.documentElement.offsetHeight;
-        let body = this.document.body;
-        let html = this.document.documentElement;
-        let docHeight = Math.max(body.scrollHeight,
-            body.offsetHeight, html.clientHeight,
-            html.scrollHeight, html.offsetHeight);
-        let windowBottom = windowHeight + window.pageYOffset;
-        if (docHeight >= windowBottom) {
-            if (this.selectedEventOrder.name == 'top 100') {
-                if (this.total >= this.events.length) {
-                    // check limit start
-                    if (this.params.start >= 80) {
-                        return false;
-                    }
-                    //check limit length data response
-                    if (this.events.length < this.params.start) {
-                        return false;
-                    }
-                    this.smallLoader.show();
-                    this.loadMore = true;
-                    this.params.start += 20;
-                    console.log(this.params.start);
-                    this.getTrending();
-                } else {
-                    this.loadMore = true;
-                    if (this.total > this.events.length) {
-                        this.smallLoader.show();
-                        this.params.page += 1;
-                        this.getTrending();
-                    }
-                }
-            }
-        }
 
         let baseHeight = this.document.body.clientHeight;
         let realScrollTop = this.document.body.scrollTop + baseHeight;
         let currentHeight:number = baseHeight;
-        let content_element = this.document.body.getElementsByTagName('app-event-item')[0].children;
+        let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
 
         if (content_element.length > 1) {
             for (let i = 0; i < content_element.length; i++) {
@@ -492,6 +459,44 @@ export class HomeComponent implements OnInit {
                 }
             }
         }
+
+
+        //load more
+        let windowHeight = 'innerHeight' in window ? window.innerHeight
+            : this.document.documentElement.offsetHeight;
+        let body = this.document.body;
+        let html = this.document.documentElement;
+        let docHeight = Math.max(body.scrollHeight,
+            body.offsetHeight, html.clientHeight,
+            html.scrollHeight, html.offsetHeight);
+        let windowBottom = windowHeight + window.pageYOffset;
+        console.log(docHeight, windowBottom);
+        //if (docHeight >= windowBottom) {
+        //    if (this.selectedEventOrder.name == 'top 100') {
+        //        if (this.total >= this.events.length) {
+        //            // check limit start
+        //            if (this.params.start >= 80) {
+        //                return false;
+        //            }
+        //            //check limit length data response
+        //            if (this.events.length < this.params.start) {
+        //                return false;
+        //            }
+        //            this.smallLoader.show();
+        //            this.loadMore = true;
+        //            this.params.start += 20;
+        //            console.log(this.params.start);
+        //            this.getTrending();
+        //        } else {
+        //            this.loadMore = true;
+        //            if (this.total > this.events.length) {
+        //                this.smallLoader.show();
+        //                this.params.page += 1;
+        //                this.getTrending();
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     private highlightMarker(markerId:number):void {
