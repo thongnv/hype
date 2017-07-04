@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { AppState } from '../app.service';
 import { MainService } from '../services/main.service';
@@ -8,7 +8,7 @@ import { NotificationComponent } from './notification/notification.component';
 import * as io from 'socket.io-client';
 import { AppSetting } from '../app.setting';
 import { ProfileService } from '../services/profile.service';
-import { BaseUser, User } from '../app.interface';
+import { User } from '../app.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +18,6 @@ import { BaseUser, User } from '../app.interface';
 })
 export class NavbarComponent implements OnInit {
   public onSearch = false;
-  public user: BaseUser;
   public mapOptions: any[] = [];
   public notifications: any;
   public selectedMapOption: any;
@@ -26,12 +25,7 @@ export class NavbarComponent implements OnInit {
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
-  public user: BaseUser = {
-    avatar: 'assets/img/avatar/demoavatar.png',
-    name: '',
-    slug: '',
-    isAnonymous: true
-  };
+  public user = AppSetting.defaultUser;
   @ViewChild(NotificationComponent) public NotificationComponent: NotificationComponent;
   private socket;
 
@@ -40,19 +34,14 @@ export class NavbarComponent implements OnInit {
                      private router: Router,
                      private location: Location,
                      private profileService: ProfileService) {
-    let notificationPage = this.appState.state.notificationPage;
-    if (notificationPage !== undefined) {
-      this.notificationPage = notificationPage;
-    }
-
-    this.appState.set('notificationPage', this.notificationPage);
   }
 
   public ngOnInit() {
-    let user = this.localStorageService.get('user');
+    let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
     }
+    this.appState.set('notificationPage', this.notificationPage);
     AppSetting.NEIGHBOURHOODS.forEach((item, index) => {
       this.mapOptions.push({id: index + 1, name: item});
     });
@@ -63,6 +52,10 @@ export class NavbarComponent implements OnInit {
       this.selectedMapOption = this.mapOptions[0];
     }
     // Socket Notification
+    let notificationPage = this.appState.state.notificationPage;
+    if (notificationPage !== undefined) {
+      this.notificationPage = notificationPage;
+    }
     this.socket = io(AppSetting.NODE_SERVER);
     this.socket.on('notification', (data) => {
       if (data.uid.indexOf(this.user.id)) {
@@ -73,7 +66,7 @@ export class NavbarComponent implements OnInit {
     if (!this.user.isAnonymous) {
       this.getNotifications();
     }
-    this.subscription = this.profileService.getEmittedValue().subscribe(
+    this.profileService.getEmittedValue().subscribe(
       (data) => {
         this.user.name = data.name;
         this.user.firstName = data.firstName;

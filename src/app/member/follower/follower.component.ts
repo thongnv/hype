@@ -115,7 +115,6 @@ export class FollowerComponent implements OnInit {
       },
       () => {
         this.loaderService.hide();
-        this.ready = true;
       });
   }
 }

@@ -4,14 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../shared/loader/loader.service';
-
-import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
-import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
+
+import { AppSetting } from '../../app.setting';
+import {
+Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User
+} from '../../app.interface';
 
 @Component({
   selector: 'app-detail',
@@ -23,7 +24,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   @ViewChild('msgInput') public msgInput: ElementRef;
 
   public id: number;
-  public creator: BaseUser = {name: '', avatar: '', slug: ''};
+  public creator: BaseUser = {name: '', avatar: '', slug: '', isAnonymous: false};
   public name: string = '';
   public location: Location = {name: '', lat: 0, lng: 0};
   public detail: string = '';
@@ -35,7 +36,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public images: Image[] = [];
   public rating: number = 0;
   public experiences: Experience[] = [];
-  public user: BaseUser = {name: '', avatar: 'assets/img/avatar/demoavatar.png', slug: ''};
+  public user = AppSetting.defaultUser;
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -56,8 +57,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  constructor(public appState: AppState,
-              public localStorageService: LocalStorageService,
+  constructor(public localStorageService: LocalStorageService,
               public mainService: MainService,
               public eventService: EventService,
               public formBuilder: FormBuilder,
@@ -69,7 +69,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public ngOnInit() {
-    let user = this.localStorageService.get('user');
+    let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
     }

@@ -192,7 +192,6 @@ export class FavoriteComponent implements OnInit {
       () => {
         this.smallLoader.hide();
         this.loaderService.hide();
-        this.ready = true;
       });
   }
 

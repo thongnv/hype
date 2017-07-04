@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
-import { BaseUser, Company, Experience, Image, Location } from '../../app.interface';
+import { Company, Experience, Image, Location, User } from '../../app.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../shared/loader/loader.service';
@@ -26,12 +26,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public images: Image[];
   public instagramUrl = '';
   public slugName: string;
-  public user: BaseUser = {
-    avatar: 'assets/img/avatar/demoavatar.png',
-    name: '',
-    slug: '',
-    isAnonymous: true
-  };
+  public user = AppSetting.defaultUser;
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;
@@ -57,7 +52,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
-    let user = this.localStorageService.get('user');
+    let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
     }

@@ -6,7 +6,6 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { Router } from '@angular/router';
 import { BaseUser, User } from '../app.interface';
 
 @Injectable()
@@ -77,7 +76,7 @@ export class MainService {
       });
   }
 
-  public setUserProfile(user: BaseUser, data: any): Observable<Response> {
+  public setUserProfile(user: BaseUser, data: any): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});

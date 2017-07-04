@@ -3,7 +3,8 @@ import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../shared/loader/loader.service';
-import { BaseUser, User } from '../../app.interface';
+import { User } from '../../app.interface';
+import { AppSetting } from '../../app.setting';
 
 const PAGE_SIZE = 10;
 
@@ -14,12 +15,7 @@ const PAGE_SIZE = 10;
 })
 export class ProfilePublicComponent implements OnInit {
 
-  public user: BaseUser = {
-    avatar: 'assets/img/avatar/demoavatar.png',
-    name: '',
-    slug: '',
-    isAnonymous: true
-  };
+  public user = AppSetting.defaultUser;
   public favorite: any;
   public selectedFavoriteType: any;
   public canDelete: boolean = false;
@@ -36,6 +32,9 @@ export class ProfilePublicComponent implements OnInit {
   public slugName: any;
   public userFollow: boolean = false;
 
+  public events = [];
+  private places = [];
+  private lists = [];
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -49,13 +48,10 @@ export class ProfilePublicComponent implements OnInit {
   public ngOnInit() {
     this.loaderService.show();
     this.selectedFavoriteType = 'event';
-    let user = this.localStorageService.get('user');
+    let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
     }
-    this.user.places = [];
-    this.user.lists = [];
-    this.user.events = [];
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.canDelete = this.user.slug === this.slugName;
@@ -103,9 +99,9 @@ export class ProfilePublicComponent implements OnInit {
   public onClickDeleteEvent(item: any) {
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.user.events.forEach((event, index) => {
+        this.events.forEach((event, index) => {
           if (item === event) {
-            delete this.user.events[index];
+            delete this.events[index];
             this.setEvent.offset--;
             if (this.setEvent.offset === 0) {
               this.setEvent.endOfList = true;
@@ -119,9 +115,9 @@ export class ProfilePublicComponent implements OnInit {
   public onClickDeleteList(item: any) {
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.user.lists.forEach((list, index) => {
+        this.lists.forEach((list, index) => {
           if (item === list) {
-            delete this.user.lists[index];
+            delete this.lists[index];
             this.setList.offset--;
             if (this.setList.offset === 0) {
               this.setList.endOfList = true;
@@ -135,9 +131,9 @@ export class ProfilePublicComponent implements OnInit {
   public onClickDeletePlace(item: any) {
     this.mainService.favoritePlace(item.ids_no).then((response) => {
       if (response.error === 0) {
-        this.user.places.forEach((place, index) => {
+        this.places.forEach((place, index) => {
           if (item === place) {
-            delete this.user.places[index];
+            delete this.places[index];
             this.setPlace.offset--;
             if (this.setPlace.offset === 0) {
               this.setPlace.endOfList = true;
@@ -177,7 +173,7 @@ export class ProfilePublicComponent implements OnInit {
           if (this.setPlace.offset < response.total) {
             response.results.forEach((item) => {
               this.setPlace.offset++;
-              this.user.places.push(item);
+              this.places.push(item);
             });
             this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
           } else {
@@ -200,7 +196,7 @@ export class ProfilePublicComponent implements OnInit {
           if (this.setList.offset < response.total) {
             response.data.forEach((item) => {
               this.setList.offset++;
-              this.user.lists.push(item);
+              this.lists.push(item);
             });
             this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
           } else {
@@ -222,7 +218,7 @@ export class ProfilePublicComponent implements OnInit {
         if (this.setEvent.offset < response.total) {
           response.data.forEach((item) => {
             this.setEvent.offset++;
-            this.user.events.push(item);
+            this.events.push(item);
           });
           this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
         } else {

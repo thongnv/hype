@@ -113,7 +113,6 @@ export class FollowingComponent implements OnInit {
       },
       () => {
         this.loaderService.hide();
-        this.ready = true;
       });
   }
 }

@@ -12,7 +12,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 
 export class CurateNewComponent implements OnInit {
-  public userInfo: any;
   public favorite: any;
   public categories: any[];
   public previewUrl: any[] = [];
