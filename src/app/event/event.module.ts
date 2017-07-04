@@ -8,12 +8,11 @@ import {RatingModule} from "ng2-rating";
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
 import {HelperModule} from '../helper/helper.module';
+import {CarouseModule} from '../carouse/carouse.module';
 import { EventRoutingModule } from './event-routing.module';
 
 import { EventDetailComponent } from './detail/detail.component';
 import {ExperienceComponent} from './detail/experience.component';
-import {CarouselComponent} from './detail/carousel.component';
-import {SlideComponent} from './detail/slide.component';
 import {CommentComponent} from './detail/comment.component';
 
 @NgModule({
@@ -31,17 +30,12 @@ import {CommentComponent} from './detail/comment.component';
 
 
     HelperModule,
+    CarouseModule,
     EventRoutingModule
-  ],
-  exports: [
-    CarouselComponent,
-    SlideComponent
   ],
   declarations: [
     EventDetailComponent,
     ExperienceComponent,
-    CarouselComponent,
-    SlideComponent,
     CommentComponent
   ],
   providers: [NgbRatingConfig, GoogleMapsAPIWrapper],

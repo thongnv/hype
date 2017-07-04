@@ -1,10 +1,12 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // modules
 import { TruncateModule } from 'ng2-truncate';
 import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
 import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import {CompanyService} from '../services/company.service';
@@ -24,6 +26,13 @@ import {GeocodeMarkerComponent} from '../gmap/gmap-geocode-marker/gmap-geocode-m
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
+      libraries: ['places', 'geometry']
+    }),
 
     TruncateModule,
     HtmlToTextModule,
@@ -57,10 +66,10 @@ import {GeocodeMarkerComponent} from '../gmap/gmap-geocode-marker/gmap-geocode-m
 
   ],
   providers: [
+    GoogleMapsAPIWrapper,
     SmallLoaderService,
     CompanyService
   ],
-  schemas: [NO_ERRORS_SCHEMA]
 })
 export class HelperModule {
 }

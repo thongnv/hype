@@ -42,7 +42,7 @@ import { FacebookModule } from 'ngx-facebook';
 // modules
 import {HtmlToTextModule} from './html-to-text/html-to-text.module';
 import {SlimScrollModule} from './slim-scroll/slim-scroll.module';
-import {EventModule} from './event/event.module';
+import {CarouseModule} from './carouse/carouse.module';
 import {HelperModule} from './helper/helper.module';
 
 // services
@@ -155,7 +155,7 @@ type StoreType = {
     HtmlToTextModule,
     TinymceModule.withConfig({}),
     ReCaptchaModule,
-    EventModule,
+    CarouseModule,
     HelperModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
     AgmCoreModule.forRoot({

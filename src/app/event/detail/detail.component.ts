@@ -68,7 +68,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService) {
     this.route.params.subscribe((e) => {
+      console.log(e);
       this.slugName = e.slug;
+      // this.slugName = 'big-foot-vn';
       this.loaderService.show();
       this.eventService.getEventDetail(this.slugName).subscribe(
         (resp) => {
