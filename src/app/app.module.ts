@@ -30,7 +30,7 @@ import { Ng2ScrollableModule } from 'ng2-scrollable';
 
 
 import { TruncateModule } from 'ng2-truncate';
-
+import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 import '../styles/styles.scss';
 import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
@@ -46,16 +46,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 import { GmapService } from './services/gmap.service';
-import { EventDetailComponent } from './event/detail/detail.component';
 
-import { SlideComponent } from './event/detail/slide.component';
-import { CarouselComponent } from './event/detail/carousel.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 
 import { MyArray } from './shared/num-to-array.pipe';
-import { CommentComponent } from './event/detail/comment.component';
-import { ExperienceComponent } from './event/detail/experience.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
@@ -94,6 +89,7 @@ import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 
 import {HtmlToTextModule} from './html-to-text/html-to-text.module';
+import {SlimScrollModule} from './slim-scroll/slim-scroll.module';
 
 // services
 import {SeoService} from './services/seo.service';
@@ -123,12 +119,7 @@ type StoreType = {
     DiscoverComponent,
     NavbarComponent,
     GmapClustererDirective,
-    EventDetailComponent,
-    SlideComponent,
-    CarouselComponent,
     ShareEventComponent,
-    CommentComponent,
-    ExperienceComponent,
     MyArray,
     CurateListPipe,
     TripleSlidePipe,
@@ -167,7 +158,10 @@ type StoreType = {
     TruncateModule,
     HtmlToTextModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
-
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
+      libraries: ['places', 'geometry']
+    }),
 
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
@@ -188,12 +182,15 @@ type StoreType = {
     }),
     Daterangepicker,
     FacebookModule.forRoot(),
-    Ng2PopupModule
+    Ng2PopupModule,
+
+    SlimScrollModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
     Title,
+    GoogleMapsAPIWrapper,
     GmapService,
     LoaderService,
     EventService,

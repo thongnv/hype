@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 // modules
 import { TruncateModule } from 'ng2-truncate';
 import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
-import { SlimScroll } from 'angular-io-slimscroll';
+import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import {CompanyService} from '../services/company.service';
@@ -26,7 +26,8 @@ import {GeocodeMarkerComponent} from '../gmap/gmap-geocode-marker/gmap-geocode-m
     CommonModule,
 
     TruncateModule,
-    HtmlToTextModule
+    HtmlToTextModule,
+    SlimScrollModule
   ],
   exports: [
     TruncateModule,
@@ -38,11 +39,12 @@ import {GeocodeMarkerComponent} from '../gmap/gmap-geocode-marker/gmap-geocode-m
     GmapAutoPlaceComponent,
     CustomMarkerComponent,
     PlaceImageComponent,
-    GeocodeMarkerComponent
+    GeocodeMarkerComponent,
+
+    ImageModal
   ],
   declarations: [
     ImageModal,
-    SlimScroll,
 
     BoostrapAlertComponent,
     BoostrapCarouselComponent,

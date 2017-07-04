@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -35,6 +35,5 @@ import { ModeComponent } from './mode-play/mode.component';
   providers: [
     GoogleMapsAPIWrapper
   ],
-  // schemas: [NO_ERRORS_SCHEMA]
 })
 export class DiscoverModule { }

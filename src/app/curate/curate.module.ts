@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -41,6 +41,5 @@ import { CurateNewComponent } from './curate-new/curate-new.component';
   providers: [
     GoogleMapsAPIWrapper
   ],
-  // schemas: [NO_ERRORS_SCHEMA]
 })
 export class CurateModule { }
