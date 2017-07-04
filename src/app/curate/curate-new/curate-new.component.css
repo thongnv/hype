@@ -45,7 +45,7 @@ header ul li.pull-right {
     border-right: 1px solid #eaeaea;
 }
 .image-box {
-    padding: 16px 30px;
+    padding: 0px 40px 20px;
 }
 .input-box h3 {
     font-size: 30px;
@@ -156,7 +156,7 @@ header ul li.pull-right {
     padding: 10px 0px;
 }
 .image-box .form-group  {
-    margin-left: 16px;
+    margin: 0 15px;
 }
 .image-box .form-group button {
     width: 100%;
@@ -346,19 +346,21 @@ header ul li.pull-right {
 @media only screen and (min-width: 320px) and (max-width: 800px) {
   .new-list .form-wrap{
     padding: 0;
-    margin-bottom: 80px;
   }
   .new-list .form-wrap{
     padding: 0;
   }
   .mobile-margin{
-    margin-bottom: 70px;
+    margin-bottom: 70px !important;
   }
   .form-actions button{
     width: calc(50% - 7px);
   }
   .form-wrap .form-actions{
-    margin: 0 45px;
+    padding: 0 15px;
+  }
+  .image-box .form-group{
+    margin: 0;
   }
 
 }

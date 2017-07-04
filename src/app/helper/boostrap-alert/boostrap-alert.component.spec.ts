@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BoostrapAlertComponent } from './boostrap-alert.component';
+import { BootstrapAlertComponent } from './boostrap-alert.component';
 
-describe('BoostrapAlertComponent', () => {
-  let component: BoostrapAlertComponent;
-  let fixture: ComponentFixture<BoostrapAlertComponent>;
+describe('BootstrapAlertComponent', () => {
+  let component: BootstrapAlertComponent;
+  let fixture: ComponentFixture<BootstrapAlertComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoostrapAlertComponent ]
+      declarations: [ BootstrapAlertComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BoostrapAlertComponent);
+    fixture = TestBed.createComponent(BootstrapAlertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

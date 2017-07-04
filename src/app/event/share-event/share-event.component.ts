@@ -78,7 +78,7 @@ export class ShareEventComponent implements OnInit {
         this.loaderService.hide();
       }
     );
-    this.mainService.getUserProfile().then((response) => {
+    this.mainService.getUserProfile().subscribe((response) => {
       this.user = response;
     });
   }

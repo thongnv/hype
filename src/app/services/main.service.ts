@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Router } from '@angular/router';
+import { BaseUser, User } from '../app.interface';
 
 @Injectable()
 export class MainService {
@@ -17,14 +18,12 @@ export class MainService {
   });
 
   public constructor(private localStorageService: LocalStorageService,
-                     private http: Http,
-                     private router: Router) {
+                     private http: Http) {
   }
 
-  public login(fbToken: string): Observable<Response>  {
+  public login(fbToken: string): Observable<Response> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers, withCredentials: true});
-
     return this.http.post(
       AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
     )
@@ -47,29 +46,48 @@ export class MainService {
       });
   }
 
-  public getUserProfile(slugName?: string): Promise<any> {
+  public getUserProfile(slugName?: string): Observable<User> {
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let currentSlug = <string> this.localStorageService.get('slug');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     let slug = slugName ? slugName : currentSlug;
-    console.log('options: ', options);
     return this.http.get(AppSetting.API_USER_PROFILE + slug + '?_format=json', options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
+      .map((res) => {
+        let data = res.json();
+        return {
+          avatar: data.field_image,
+          name: data.field_first_name + ' ' + data.field_last_name,
+          slug: slugName,
+          isAnonymous: false,
+          firstName: data.field_first_name,
+          lastName: data.field_last_name,
+          contactNumber: data.field_contact_number,
+          followingNumber: data.follow.following,
+          followerNumber: data.follow.follower,
+          email: data.email,
+          userFollowing: [],
+          userFollower: [],
+          showNav: true,
+          acceptNotification: true
+        };
+      })
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
-  public setUserProfile(userProfile: any): Promise<any> {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let currentSlug = <string> this.localStorageService.get('slug');
+  public setUserProfile(user: BaseUser, data: any): Observable<Response> {
+    let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_USER_PROFILE + currentSlug + '?_format=json',
-      JSON.stringify(userProfile), options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
+    return this.http.post(
+      AppSetting.API_USER_PROFILE + user.slug + '?_format=json',
+      JSON.stringify(data), options)
+      .map((res) => res.json())
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getUserFollow(followFlag: string, slugName: string, page: number): Promise<any> {
@@ -135,7 +153,7 @@ export class MainService {
       return res.json();
     })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 
@@ -147,7 +165,7 @@ export class MainService {
         return res.json();
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 
@@ -177,7 +195,7 @@ export class MainService {
         return res.json();
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 
@@ -196,7 +214,7 @@ export class MainService {
         return res.json();
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 
@@ -379,7 +397,7 @@ export class MainService {
         return res.json();
       })
       .catch((error: any) => {
-        return Observable.throw(new Error(error.json()));
+        return Observable.throw(new Error(error));
       });
   }
 

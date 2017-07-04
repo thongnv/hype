@@ -26,7 +26,12 @@ export class CompanyDetailComponent implements Company, OnInit {
   public images: Image[];
   public instagramUrl = '';
   public slugName: string;
-  public user: BaseUser = {name: '', avatar: '', slug: ''};
+  public user: BaseUser = {
+    avatar: 'assets/img/avatar/demoavatar.png',
+    name: '',
+    slug: '',
+    isAnonymous: true
+  };
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;
@@ -41,10 +46,9 @@ export class CompanyDetailComponent implements Company, OnInit {
   public ready: boolean = false;
   public imageReady: boolean = false;
   public gMapStyles: any;
-  public loggedIn = Boolean(this._localStorageService.get('loginData'));
 
   constructor(
-    private _localStorageService: LocalStorageService,
+    private localStorageService: LocalStorageService,
     public mainService: MainService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
@@ -53,6 +57,10 @@ export class CompanyDetailComponent implements Company, OnInit {
   ) {}
 
   public ngOnInit() {
+    let user = this.localStorageService.get('user');
+    if (user) {
+      this.user = user;
+    }
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
@@ -99,10 +107,9 @@ export class CompanyDetailComponent implements Company, OnInit {
         }
       );
     });
-    if (this.loggedIn) {
-      this.mainService.getUserProfile().then((response) => {
-        this.user.name = response.name;
-        this.user.avatar = response.field_image;
+    if (!this.user.isAnonymous) {
+      this.mainService.getUserProfile().subscribe((response) => {
+        this.user = response;
       });
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;
@@ -127,7 +134,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public showReviewModal() {
-    if (this.loggedIn) {
+    if (!this.user.isAnonymous) {
       this.showForm = true;
     } else {
       this.router.navigate(['login'], {skipLocationChange: true}).then();

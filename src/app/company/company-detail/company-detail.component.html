@@ -1,5 +1,5 @@
-<article class="container" *ngIf="ready">
-  <div class="detail-page">
+<article class="" *ngIf="ready">
+  <div class="detail-page row">
     <div class="content col-md-6">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
@@ -19,7 +19,7 @@
                  [class.icon-heart]="!bookmarked"
                  [class.icon-heart-selected]="bookmarked"
                  (click)="toggleBookmark()" aria-hidden="true"
-                  *ngIf="loggedIn">
+                  *ngIf="!user.isAnonymous">
               </i>
             </app-boostrap-carousel>
           </div>

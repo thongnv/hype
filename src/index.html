@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title><%= htmlWebpackPlugin.options.title %></title>
     <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
@@ -12,44 +12,44 @@
     <%= webpackConfig.htmlElements.headTags %>
     <% } %>
 
-    <!-- base url -->
-    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
-    <link rel="stylesheet" href="assets/css/image-modal.css">
-    <link rel="stylesheet" href="assets/css/preload.css">
+  <!-- base url -->
+  <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+  <link rel="stylesheet" href="assets/css/image-modal.css">
+  <link rel="stylesheet" href="assets/css/preload.css">
 </head>
 
 <body class="hype">
 <div class="container-fluid">
-    <aside class="sidebar">
-        <ul class="navbar-collapse list-tap">
-            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Trending30x30"></i>
-                <span>Trending Event</span>
-            </li>
-            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Discover30x30"></i>
-                <span>Discover Places</span>
-            </li>
-            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Curated30x30"></i>
-                <span>Curated</span>
-            </li>
-            <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="loginData"
-                [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Favourites30x30"></i>
-                <span>Favorites</span>
-            </li>
-        </ul>
-    </aside>
-    <app></app>
-    <footer>
-        <p></p>
+  <aside class="sidebar">
+    <ul class="navbar-collapse list-tap">
+      <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="sprite-icon sprite sprite-Trending30x30"></i>
+        <span>Trending Event</span>
+      </li>
+      <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="sprite-icon sprite sprite-Discover30x30"></i>
+        <span>Discover Places</span>
+      </li>
+      <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="sprite-icon sprite sprite-Curated30x30"></i>
+        <span>Curated</span>
+      </li>
+      <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="user"
+          [routerLink]="['/'+user.slug+'/favorite']" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}">
+        <i class="sprite-icon sprite sprite-Favourites30x30"></i>
+        <span>Favorites</span>
+      </li>
+    </ul>
+  </aside>
+  <app></app>
+  <footer>
+    <p></p>
 
-    </footer>
+  </footer>
 
 </div>
 

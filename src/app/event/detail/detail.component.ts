@@ -47,7 +47,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public ready: boolean = false;
   public slugName = '';
   public gMapStyles: any;
-  public loggedIn = Boolean(this._localStorageService.get('loginData'));
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -58,7 +57,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   });
 
   constructor(public appState: AppState,
-              private _localStorageService: LocalStorageService,
+              public localStorageService: LocalStorageService,
               public mainService: MainService,
               public eventService: EventService,
               public formBuilder: FormBuilder,
@@ -67,6 +66,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               private router: Router,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService) {
+  }
+
+  public ngOnInit() {
+    let user = this.localStorageService.get('user');
+    if (user) {
+      this.user = user;
+    }
     this.route.params.subscribe((e) => {
       console.log(e);
       this.slugName = e.slug;
@@ -86,21 +92,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         }
       );
     });
-    if (this.loggedIn) {
-      this.mainService.getUserProfile().then((response) => {
-        this.user.name = response.name;
-        this.user.avatar = response.field_image;
-      });
-    }
-  }
-
-  public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.initRating();
   }
 
   public checkLogin(): void {
-    if (!this.loggedIn) {
+    if (!this.user.isAnonymous) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
   }
