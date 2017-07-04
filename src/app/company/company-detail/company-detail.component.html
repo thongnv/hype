@@ -7,29 +7,29 @@
         <div class="company-wrap">
           <!-- carousel start -->
           <div class="carousel">
-            <!--<app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true" [noTransition]="noTransition">-->
-              <!--<app-slide-carousel *ngFor="let slide of slides; let index=index"-->
-                                  <!--[ngStyle]="{-->
-                                    <!--'background-image': 'url(' + slide.image + ')',-->
-                                     <!--'height': '400px', 'background-size': 'cover',-->
-                                     <!--'background-position': 'center'-->
-                                   <!--}">-->
-              <!--</app-slide-carousel>-->
-              <!--<i class="icon-sm"-->
-                 <!--[class.icon-heart]="!bookmarked"-->
-                 <!--[class.icon-heart-selected]="bookmarked"-->
-                 <!--(click)="toggleBookmark()" aria-hidden="true"-->
-                  <!--*ngIf="loggedIn">-->
-              <!--</i>-->
-            <!--</app-boostrap-carousel>-->
+            <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true" [noTransition]="noTransition">
+              <app-slide-carousel *ngFor="let slide of slides; let index=index"
+                                  [ngStyle]="{
+                                    'background-image': 'url(' + slide.image + ')',
+                                     'height': '400px', 'background-size': 'cover',
+                                     'background-position': 'center'
+                                   }">
+              </app-slide-carousel>
+              <i class="icon-sm"
+                 [class.icon-heart]="!bookmarked"
+                 [class.icon-heart-selected]="bookmarked"
+                 (click)="toggleBookmark()" aria-hidden="true"
+                  *ngIf="loggedIn">
+              </i>
+            </app-boostrap-carousel>
           </div>
           <!-- carousel end -->
           <!-- company header start -->
           <div class="company-header">
             <h3>{{name}}</h3>
-            <!--<div class="rating-star">-->
-              <!--<rating [ngModel]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>-->
-            <!--</div>-->
+            <div class="rating-star">
+              <rating [(ngModel)]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
+            </div>
             <div class="google-plus-point">
               <div class="rating-number">
                 {{rating}}/5
@@ -129,11 +129,11 @@
       <div class="mobile-bottom"></div>
     </div>
     <div class="col-md-6 map-fix">
-      <!--<sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12" [styles]="gMapStyles">-->
-        <!--<sebm-google-map-marker [latitude]="location.lat"-->
-                                <!--[longitude]="location.lng">-->
-        <!--</sebm-google-map-marker>-->
-      <!--</sebm-google-map>-->
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12" [styles]="gMapStyles">
+        <sebm-google-map-marker [latitude]="location.lat"
+                                [longitude]="location.lng">
+        </sebm-google-map-marker>
+      </sebm-google-map>
     </div>
   </div>
 </article>
