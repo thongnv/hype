@@ -169,20 +169,17 @@
         top: 17px;
         right: 13px;
     }
-  .wrap-search-input{
-    width: 100%;
-  }
+    .wrap-search-input{
+        width: 100%;
+    }
+    .result-info .text-ellipsis{
+        white-space: normal;
+    }
+    .list-location-address .result-info{
+        overflow: hidden;
+    }
+    ul#list-events-location-address {
+        height: 500px;
+    }
 }
 
-@media only screen and (max-width: 768px) {
-  .result-info .text-ellipsis{
-    white-space: normal;
-  }
-
-  .list-location-address .result-info{
-    overflow: hidden;
-  }
-  ul#list-events-location-address {
-    height: 500px;
-  }
-}
