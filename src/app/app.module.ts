@@ -31,6 +31,8 @@ import { ImageUploadModule } from 'ng2-imageupload';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { FacebookModule } from 'ngx-facebook';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 
 // modules
 import {HtmlToTextModule} from './html-to-text/html-to-text.module';
@@ -147,6 +149,7 @@ type StoreType = {
     JsonpModule,
     HtmlToTextModule,
     TinymceModule.withConfig({}),
+    NgbModule,
     ReCaptchaModule,
     CarouseModule,
     HelperModule,
@@ -174,6 +177,7 @@ type StoreType = {
     APP_PROVIDERS,
     Title,
     GoogleMapsAPIWrapper,
+    NgbDropdownConfig,
     GmapService,
     LoaderService,
     BaseApiService,
