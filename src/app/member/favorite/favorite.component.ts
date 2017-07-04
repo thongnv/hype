@@ -1,12 +1,12 @@
 import { Component, HostListener, OnInit, Inject } from '@angular/core';
-import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
 import { LoaderService } from '../../shared/loader/loader.service';
-import { SmallLoaderService } from "../../shared/small-loader/small-loader.service";
-import { DOCUMENT } from "@angular/platform-browser";
+import { SmallLoaderService } from '../../shared/small-loader/small-loader.service';
+import { DOCUMENT } from '@angular/platform-browser';
+import { User } from '../../app.interface';
 
 @Component({
   selector: 'app-favorite',
@@ -17,7 +17,7 @@ import { DOCUMENT } from "@angular/platform-browser";
 export class FavoriteComponent implements OnInit {
   public msgContent: any;
   public alertType: string;
-  public userInfo: any;
+  public user: any;
   public favorite: any;
   public selectedFavoriteType: any;
   public canDelete: boolean = false;
@@ -36,8 +36,7 @@ export class FavoriteComponent implements OnInit {
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
 
-  public constructor(private appState: AppState,
-                     private loaderService: LoaderService,
+  public constructor(private loaderService: LoaderService,
                      private mainService: MainService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
@@ -46,12 +45,11 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.loaderService.show();
     this.selectedFavoriteType = 'event';
-
-    this.userInfo = this.appState.state.userInfo;
-    this.userInfo.showNav = true;
-    this.userInfo.places = [];
-    this.userInfo.lists = [];
-    this.userInfo.events = [];
+    this.user = this.localStorageService.get('user');
+    this.user.showNav = true;
+    this.user.places = [];
+    this.user.lists = [];
+    this.user.events = [];
   }
 
   public onSelectFavoriteType(type: string): void {
@@ -84,9 +82,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.userInfo.events.forEach((event, index) => {
+        this.user.events.forEach((event, index) => {
           if (item === event) {
-            delete this.userInfo.events[index];
+            delete this.user.events[index];
             this.setEvent.offset--;
             if (this.setEvent.offset === 0) {
               this.setEvent.endOfList = true;
@@ -108,9 +106,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.userInfo.lists.forEach((list, index) => {
+        this.user.lists.forEach((list, index) => {
           if (item === list) {
-            delete this.userInfo.lists[index];
+            delete this.user.lists[index];
             this.setList.offset--;
             if (this.setList.offset === 0) {
               this.setList.endOfList = true;
@@ -132,9 +130,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.favoritePlace(item.ids_no).then((response) => {
       if (response.error === 0) {
-        this.userInfo.places.forEach((place, index) => {
+        this.user.places.forEach((place, index) => {
           if (item === place) {
-            delete this.userInfo.places[index];
+            delete this.user.places[index];
             this.setPlace.offset--;
             if (this.setPlace.offset === 0) {
               this.setPlace.endOfList = true;
@@ -152,8 +150,8 @@ export class FavoriteComponent implements OnInit {
     });
   }
 
-  @HostListener("window:scroll", [])
-  onWindowScroll() {
+  @HostListener('window:scroll', [])
+  public onWindowScroll() {
     let elm = event.srcElement;
     if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
       this.smallLoader.show();
@@ -184,23 +182,18 @@ export class FavoriteComponent implements OnInit {
   }
 
   private getUserProfile(slugName?: string): void {
-
-    this.mainService.getUserProfile(slugName).subscribe((response) => {
-      // this.mainService.getUserPublicProfile().then((response) => {
-      this.userInfo.userName = response.field_first_name +
-        ' ' + response.field_last_name;
-      this.userInfo.firstName = response.field_first_name;
-      this.userInfo.lastName = response.field_last_name;
-      this.userInfo.userAvatar = response.field_image;
-      this.userInfo.email = response.email;
-      this.userInfo.country = response.field_country;
-      this.userInfo.followingNumber = response.follow.following;
-      this.userInfo.followerNumber = response.follow.follower;
-      this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.email = response.field_notify_email;
-      this.smallLoader.hide();
-      this.loaderService.hide();
-    });
+    this.mainService.getUserProfile(slugName).subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        this.smallLoader.hide();
+        this.loaderService.hide();
+        this.ready = true;
+      });
   }
 
   private getPlace(slugName?: string, page?: number) {
@@ -213,7 +206,7 @@ export class FavoriteComponent implements OnInit {
           if (this.setPlace.offset < response.total) {
             response.results.forEach((item) => {
               this.setPlace.offset++;
-              this.userInfo.places.push(item);
+              this.user.places.push(item);
             });
             this.smallLoader.hide();
             this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
@@ -240,7 +233,7 @@ export class FavoriteComponent implements OnInit {
           if (this.setList.offset < response.total) {
             response.data.forEach((item) => {
               this.setList.offset++;
-              this.userInfo.lists.push(item);
+              this.user.lists.push(item);
             });
             this.smallLoader.hide();
             this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
@@ -266,7 +259,7 @@ export class FavoriteComponent implements OnInit {
         if (this.setEvent.offset < response.total) {
           response.data.forEach((item) => {
             this.setEvent.offset++;
-            this.userInfo.events.push(item);
+            this.user.events.push(item);
           });
           this.smallLoader.hide();
           this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);

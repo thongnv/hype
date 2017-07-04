@@ -17,7 +17,6 @@ import { BaseUser, User } from '../app.interface';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public loginData: any;
   public onSearch = false;
   public user: BaseUser;
   public mapOptions: any[] = [];
@@ -40,8 +39,7 @@ export class NavbarComponent implements OnInit {
                      private localStorageService: LocalStorageService,
                      private router: Router,
                      private location: Location,
-                     private profileService: ProfileService
-  ) {
+                     private profileService: ProfileService) {
     let notificationPage = this.appState.state.notificationPage;
     if (notificationPage !== undefined) {
       this.notificationPage = notificationPage;
@@ -51,16 +49,9 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit() {
-    let loginData = this.localStorageService.get('loginData');
-    this.loginData = loginData ? JSON.parse(loginData) : null;
-    if (this.loginData) {
-      let user = this.loginData.current_user;
-      this.user = {
-        avatar: user.avatar,
-        name: user.field_first_name + ' ' + user.field_last_name,
-        slug: user.slug,
-        isAnonymous: false
-      };
+    let user = this.localStorageService.get('user');
+    if (user) {
+      this.user = user;
     }
     AppSetting.NEIGHBOURHOODS.forEach((item, index) => {
       this.mapOptions.push({id: index + 1, name: item});
@@ -74,22 +65,20 @@ export class NavbarComponent implements OnInit {
     // Socket Notification
     this.socket = io(AppSetting.NODE_SERVER);
     this.socket.on('notification', (data) => {
-      console.log(data);
-      if (data.uid.indexOf(this.loginData.current_user.uid)) {
+      if (data.uid.indexOf(this.user.id)) {
         this.notifications = data.notifications;
       }
     });
 
-    if (this.loginData) {
+    if (!this.user.isAnonymous) {
       this.getNotifications();
     }
     this.subscription = this.profileService.getEmittedValue().subscribe(
       (data) => {
-        debugger
-        this.user.name  = data.name;
-        this.loginData.current_user.field_first_name = data.firstName;
-        this.loginData.current_user.field_last_name = data.lastName;
-        this.localStorageService.set('loginData', JSON.stringify(this.loginData));
+        this.user.name = data.name;
+        this.user.firstName = data.firstName;
+        this.user.lastName = data.lastName;
+        this.localStorageService.set('user', this.user);
       },
       (error) => {
         console.log(error);

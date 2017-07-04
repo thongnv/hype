@@ -1,4 +1,5 @@
 export interface User extends BaseUser {
+  id: number;
   firstName: string;
   lastName: string;
   contactNumber: string;

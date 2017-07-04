@@ -53,6 +53,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.user = this.localStorageService.get('user');
     this.countryPickerService.getCountries().subscribe(
       (countries) => {
         let defaultCountry = <ICountry> {
@@ -67,12 +68,29 @@ export class ProfileEditComponent implements OnInit {
     );
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      let currentSlug = this.localStorageService.get('slug');
-      if (!currentSlug || this.slugName !== currentSlug) {
+      if (!this.user.slug || this.slugName !== this.user.slug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
-      if (!this.user) {
-        this.getUserProfile(this.slugName);
+      if (!this.user.isAnonymous) {
+        this.loaderService.show();
+        this.mainService.getUserProfile(this.slugName).subscribe(
+          (user: User) => {
+            this.profileForm.patchValue({
+              firstName: user.firstName,
+              lastName: user.lastName,
+              contactNumber: user.contactNumber,
+              country: '',
+            });
+            this.user = user;
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            this.loaderService.hide();
+            this.ready = true;
+          }
+        );
       }
     });
   }
@@ -97,14 +115,12 @@ export class ProfileEditComponent implements OnInit {
           this.user.firstName = data.field_first_name;
           this.user.lastName = data.field_last_name;
           this.user.name = this.user.firstName + ' ' + this.user.lastName;
-          this.appState.set('user', this.user);
-          this.localStorageService.set('current_user', this.user);
+          this.localStorageService.set('user', this.user);
           this.msgContent = resp.message;
           this.profileService.change(this.user);
           if (resp.status) {
             this.alertType = 'success';
           }
-          let loginData = this.localStorageService.get('loginData');
         },
         (error) => {
           console.log(error);
@@ -125,24 +141,4 @@ export class ProfileEditComponent implements OnInit {
     };
   }
 
-  private getUserProfile(slugName: string): void {
-    this.mainService.getUserProfile(slugName).subscribe(
-      (user: User) => {
-        this.profileForm.patchValue({
-          firstName: user.firstName,
-          lastName: user.lastName,
-          contactNumber: user.contactNumber,
-          country: '',
-        });
-        this.user = user;
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        this.loaderService.hide();
-        this.ready = true;
-      }
-    );
-  }
 }

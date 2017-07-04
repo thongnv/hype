@@ -20,8 +20,7 @@ import { SeoService } from './services/seo.service';
 
 export class AppComponent implements OnInit {
 
-  public userInfo = {};
-  public loginData = JSON.parse(<string> this.localStorageService.get('loginData'));
+  public user = this.localStorageService.get('user');
 
   constructor(public appState: AppState,
               private localStorageService: LocalStorageService,
@@ -51,8 +50,8 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.appState.state.userInfo === undefined) {
-      this.appState.set('userInfo', this.userInfo);
+    if (this.appState.state.user === undefined) {
+      this.appState.set('user', this.userInfo);
     }
   }
 

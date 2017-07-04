@@ -4,6 +4,7 @@ import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../shared/loader/loader.service';
+import { User } from '../../app.interface';
 
 @Component({
   selector: 'app-follower',
@@ -13,7 +14,7 @@ import { LoaderService } from '../../shared/loader/loader.service';
 
 export class FollowerComponent implements OnInit {
 
-  public userInfo: any;
+  public user: User;
   public followingPage: number = 0;
   public msgContent: string;
   public alertType: string;
@@ -31,14 +32,13 @@ export class FollowerComponent implements OnInit {
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
     this.loaderService.show();
-    this.userInfo = this.appState.state.userInfo;
+    this.user = this.localStorageService.get('user');
 
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
       this.followingPage = followingPage;
     }
     this.appState.set('followingPage', this.followingPage);
-    console.log('followingPage', this.followingPage);
   }
 
   public onFollowScrollDown(data) {
@@ -56,7 +56,7 @@ export class FollowerComponent implements OnInit {
         .then((response) => {
           response.forEach((item) => {
             count++;
-            this.userInfo.userFollowing.push(item);
+            this.user.userFollowing.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
@@ -85,11 +85,11 @@ export class FollowerComponent implements OnInit {
     console.log('item', item);
     if (item.stateFollow === 'yes') {
       if (this.isCurrentUser) {
-        this.userInfo.followingNumber--;
+        this.user.followingNumber--;
       }
     } else {
       if (this.isCurrentUser) {
-        this.userInfo.followingNumber++;
+        this.user.followingNumber++;
       }
     }
     this.alertType = 'success';
@@ -98,31 +98,24 @@ export class FollowerComponent implements OnInit {
 
   private getUserFollow(followFlag: string, slugName: string, page: number): void {
     this.mainService.getUserFollow(followFlag, slugName, page).then((response) => {
-      this.userInfo.userFollower = response;
+      this.user.userFollower = response;
       console.log('response', response);
-      this.appState.set('userInfo', this.userInfo);
+      this.appState.set('user', this.user);
     });
   }
 
   private getUserProfile(slugName: string): void {
-    this.userInfo = this.appState.state.userInfo;
-    this.mainService.getUserProfile(slugName).subscribe((response) => {
-      this.userInfo.userName = response.field_first_name + ' ' + response.field_last_name;
-      this.userInfo.firstName = response.field_first_name;
-      this.userInfo.lastName = response.field_last_name;
-      this.userInfo.userAvatar = response.field_image;
-      this.userInfo.email = response.email;
-      this.userInfo.country = response.field_country;
-      this.userInfo.followingNumber = response.follow.following;
-      this.userInfo.followerNumber = response.follow.follower;
-      this.userInfo.contactNumber = response.field_contact_number;
-      this.userInfo.email = response.field_notify_email;
-      this.userInfo.showNav = false;
-      this.userInfo.uid = response.uid;
-      this.userFollow = response.user_follow;
-      this.appState.set('userInfo', this.userInfo);
-      console.log('response: ', response);
-      this.loaderService.hide();
-    });
+    this.user = this.localStorageService.get('user');
+    this.mainService.getUserProfile(slugName).subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        this.loaderService.hide();
+        this.ready = true;
+      });
   }
 }

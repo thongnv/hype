@@ -1,28 +1,32 @@
 <angular-loader></angular-loader>
 <app-navbar></app-navbar>
 <aside class="sidebar">
-    <ul class="navbar-collapse list-tap">
-        <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <i class="sprite-icon sprite sprite-Trending30x30"></i>
-            <span>Trending Event</span>
-        </li>
-        <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <i class="sprite-icon sprite sprite-Discover30x30"></i>
-            <span>Discover Places</span>
-        </li>
-        <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <i class="sprite-icon sprite sprite-Curated30x30"></i>
-            <span>Curated</span>
-        </li>
-        <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="loginData" [routerLink]="['/'+loginData.current_user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]= "{exact: true}">
-            <i class="sprite-icon sprite sprite-Favourites30x30"></i>
-            <span>Favorites</span>
-        </li>
-    </ul>
+  <ul class="navbar-collapse list-tap">
+    <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+      <i class="sprite-icon sprite sprite-Trending30x30"></i>
+      <span>Trending Event</span>
+    </li>
+    <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+      <i class="sprite-icon sprite sprite-Discover30x30"></i>
+      <span>Discover Places</span>
+    </li>
+    <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+      <i class="sprite-icon sprite sprite-Curated30x30"></i>
+      <span>Curated</span>
+    </li>
+    <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
+        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <i class="sprite-icon sprite sprite-Favourites30x30"></i>
+      <span>Favorites</span>
+    </li>
+  </ul>
 </aside>
 <main class="main">
-    <div class="outlet">
-        <router-outlet class="content"></router-outlet>
-    </div>
+  <div class="outlet">
+    <router-outlet class="content"></router-outlet>
+  </div>
 
 </main>

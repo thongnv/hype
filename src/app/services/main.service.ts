@@ -18,11 +18,10 @@ export class MainService {
   });
 
   public constructor(private localStorageService: LocalStorageService,
-                     private http: Http,
-                     private router: Router) {
+                     private http: Http) {
   }
 
-  public login(fbToken: string): Observable<Response>  {
+  public login(fbToken: string): Observable<Response> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(

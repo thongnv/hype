@@ -19,12 +19,11 @@ export class MemberNavigationComponent implements OnInit {
   private isCurrentUser: boolean = false;
 
   public constructor(public appState: AppState,
-                     private mainService: MainService,
-                     private localStorageService: LocalStorageService) {
+                     private mainService: MainService) {
   }
 
   public ngOnInit() {
-    this.isCurrentUser = this.localStorageService.get('slug') === this.slugName;
+    this.isCurrentUser = this.user.slug === this.slugName;
     this.show = !!this.user;
   }
 
