@@ -351,7 +351,7 @@ header ul li.pull-right {
     padding: 0;
   }
   .mobile-margin{
-    margin-bottom: 70px;
+    margin-bottom: 70px !important;
   }
   .form-actions button{
     width: calc(50% - 7px);

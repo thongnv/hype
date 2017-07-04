@@ -556,6 +556,9 @@ span.dollar-character {
     padding: 0;
     margin-bottom: 80px;
   }
+  .row{
+    padding: 0 !important;
+  }
   .new-list .form-wrap{
     padding: 0;
     margin-bottom: 80px;

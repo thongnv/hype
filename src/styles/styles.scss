@@ -1174,8 +1174,38 @@ body, html {
 
 
   @media only screen and (min-width: 320px) and (max-width: 800px) {
-    .container{
-      width: 100% !important;
+
+    .navbar-toggle{
+      margin-right: 5px;
+    }
+
+    .end-of-list{margin-top: 20px;}
+
+    .list-bottom{
+      height: 70px;
+    }
+
+    .navbar-brand{
+      padding-left: 5px;
+    }
+    .setting-wrap > div {
+      height: auto;
+    }
+    .sebm-google-map-container, .list-box {
+      height: 100vh;
+    }
+    .left-box {
+      height: auto;
+    }
+    .form-wrap, .form-wrap form > div {
+      padding:  0 15px;
+      margin-bottom: 15px;
+    }
+    .carousel-inner .slide-group {
+      width: 100%;
+    }
+    .new-list .wrap-search-input{
+      padding: 0px;
     }
     .fav-component .tab-control .btn{
       width: 95px;
@@ -1300,35 +1330,6 @@ body, html {
 
   }
   @media only screen and (max-width: 800px) {
-    .navbar-toggle{
-      margin-right: 5px;
-    }
-
-    .end-of-list{margin-top: 20px;}
-
-    .list-bottom{
-      height: 70px;
-    }
-
-    .navbar-brand{
-      padding-left: 5px;
-    }
-    .setting-wrap > div {
-      height: auto;
-    }
-    .sebm-google-map-container, .list-box {
-      height: 100vh;
-    }
-    .left-box {
-      height: auto;
-    }
-    .form-wrap, .form-wrap form > div {
-      padding:  0 15px;
-      margin-bottom: 15px;
-    }
-    .carousel-inner .slide-group {
-      width: 100%;
-    }
   }
   @media only screen and (max-width: 991px) {
     .mobile-footer{height: 50px; width: 100%; display: block;}
