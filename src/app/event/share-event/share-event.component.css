@@ -495,12 +495,12 @@ span.dollar-character {
 
   }
   h4.title-creator{
-    width: 70%;
+    width: 65%;
     float: right;
     text-align: left;
   }
   .right-creator-share-event .name-creator{
-    width: 70%;
+    width: 65%;
     float: right;
     text-align: left;
   }
@@ -513,7 +513,7 @@ span.dollar-character {
   p.mentioned_by {
     width: 100%!important;
   }
-  .list-mention[_ngcontent-c5] {
+  .list-mention{
     padding-left:0;
   }
 

@@ -1093,7 +1093,7 @@ body, html {
   }
 
   .filter-events .btn-default{
-    width: 80px;
+    width: 84px;
   }
   .daterangepicker .ranges {
     float: right !important;
@@ -1185,6 +1185,10 @@ body, html {
     }
     .setting-title{
       display: none;
+    }
+
+    .filter-events .btn-default{
+      width: inherit;
     }
 
     .no-padding-mobile{
