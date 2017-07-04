@@ -6,7 +6,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import {RatingModule} from "ng2-rating";
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
-// import { TinymceModule } from 'angular2-tinymce';
 
 import {HelperModule} from '../helper/helper.module';
 import { EventRoutingModule } from './event-routing.module';
@@ -29,10 +28,14 @@ import {CommentComponent} from './detail/comment.component';
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places', 'geometry']
     }),
-    // TinymceModule.withConfig({}),
+
 
     HelperModule,
     EventRoutingModule
+  ],
+  exports: [
+    CarouselComponent,
+    SlideComponent
   ],
   declarations: [
     EventDetailComponent,
