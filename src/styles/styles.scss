@@ -1250,8 +1250,14 @@ body, html {
   }
 
   //Landscape IPAD
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    .slide-group> img{
+      height: 100%;
+    }
 
+    .map-box, .list-box {
+      width: 100%;
+    }
   }
 
   @media only screen and (min-width: 992px) {
@@ -1283,6 +1289,13 @@ body, html {
 
     .place-item-description{
         margin: 10px 0!important;
+    }
+
+  }
+
+  @media only screen and (max-width: 1280px)and (min-width: 800px) {
+    .slide-group> img{
+      height: 100%;
     }
 
   }

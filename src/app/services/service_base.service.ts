@@ -17,6 +17,7 @@ export class BaseApiService {
         let headers = new Headers();
         headers.append('X-CSRF-Token', csrfToken);
         headers.append('Content-Type','application/json');
+        headers.append('Accept', 'q=0.8;application/json;q=0.9');
         let options = new RequestOptions({
             headers: headers,
             withCredentials:true

@@ -393,21 +393,31 @@ export class ModeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
+        const element = document.querySelector('#v' + selector);
+        element.scrollIntoView(true);
         scrollTo(
             '#v' + selector,
             '#v-scrollable',
             horizontal,
-            0
+            100
         );
 
     }
 
     public navIsFixed:boolean = false;
 
-    @HostListener("window:scroll", [])
-    onWindowScroll() {
-        let number = this.document.body.scrollTop;
-        if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
+    @HostListener("window:scroll", ['$event'])
+    onWindowScroll($event) {
+
+        let windowHeight = 'innerHeight' in window ? window.innerHeight
+            : this.document.documentElement.offsetHeight;
+        let body = this.document.body;
+        let html = this.document.documentElement;
+        let docHeight = Math.max(body.scrollHeight,
+            body.offsetHeight, html.clientHeight,
+            html.scrollHeight, html.offsetHeight);
+        let windowBottom = windowHeight + window.pageYOffset;
+        if (docHeight >= windowBottom) {
             if (this.total > this.items.length) {
                 if (this.items.length <= 1) {
                     return false;

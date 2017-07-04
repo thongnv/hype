@@ -14,7 +14,7 @@ export class AuthComponent implements OnInit {
   private loggedIn = this.localStorageService.get('loginData');
   private initParams: InitParams = AppSetting.FACEBOOK;
 
-  constructor(private fb: FacebookService,
+  constructor(private facebookService: FacebookService,
               private mainService: MainService,
               private localStorageService: LocalStorageService) {
   }
@@ -23,7 +23,7 @@ export class AuthComponent implements OnInit {
     if (this.loggedIn) {
       window.location.href = '/home';
     } else {
-      this.fb.init(this.initParams).then();
+      this.facebookService.init(this.initParams).then();
       this.ready = true;
     }
   }
@@ -34,21 +34,20 @@ export class AuthComponent implements OnInit {
       return_scopes: true,
       scope: 'public_profile,user_friends,email,pages_show_list'
     };
-    this.fb.login(loginOptions).then(
+    this.facebookService.login(loginOptions).then(
       (loginRes: LoginResponse) => {
-        this.mainService.login(loginRes.authResponse.accessToken).then(
-          (resp) => {
+        console.log(loginRes);
+        this.mainService.login(loginRes.authResponse.accessToken).subscribe(
+          (resp: any) => {
             this.localStorageService.set('loginData', JSON.stringify(resp));
             this.localStorageService.set('csrf_token', resp.csrf_token);
             this.localStorageService.set('slug', resp.current_user.slug);
             window.location.reload();
+          },
+          (error) => {
+            console.log(error);
           });
-      })
-      .catch(this.handleError);
-  }
-
-  private handleError(error) {
-    console.error('Error processing action', error);
+      });
   }
 
 }
