@@ -39,11 +39,10 @@ import { DiscoverComponent } from './discover/discover.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
-import { TinymceModule } from 'angular2-tinymce';
+
 import { CountryPickerModule } from 'angular2-countrypicker';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { ImageUploadModule } from 'ng2-imageupload';
-import { ReCaptchaModule } from 'angular2-recaptcha';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MainService } from './services/main.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -52,26 +51,19 @@ import { EventDetailComponent } from './event/detail/detail.component';
 
 import { SlideComponent } from './event/detail/slide.component';
 import { CarouselComponent } from './event/detail/carousel.component';
-import { GmapAutoPlaceComponent } from './gmap/gmap-auto-place/gmap-auto-place.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { EventService } from './services/event.service';
 
 import { MyArray } from './shared/num-to-array.pipe';
-import { CustomMarkerComponent } from './gmap/custom-marker/custom-marker.component';
-// import { CurateDetailComponent } from './article/curate-detail/curate-detail.component';
 import { CommentComponent } from './event/detail/comment.component';
 import { ExperienceComponent } from './event/detail/experience.component';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { CurateListPipe } from './shared/curate-list.pipe';
-import { BoostrapCarouselComponent } from './helper/boostrap-carousel/boostrap-carousel.component';
-import { SlideCarouselComponent } from './helper/slide-carousel/slide-carousel.component';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
 
-// import { ModeComponent } from './discover/mode-play/mode.component';
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
-// import { EventItemComponent } from './event/event-item/event-item.component';
 import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-marker';
 import { FollowingComponent } from './member/following/following.component';
 import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
@@ -103,7 +95,6 @@ import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { PlaceImageComponent } from './helper/place-image/place-image.component';
-// import { SmallLoaderComponent } from './helper/small-loader/small-loader.component';
 
 import {HtmlToTextModule} from './html-to-text/html-to-text.module';
 
@@ -139,20 +130,12 @@ type StoreType = {
     SlideComponent,
     CarouselComponent,
     ShareEventComponent,
-    GmapAutoPlaceComponent,
     CommentComponent,
     ExperienceComponent,
     MyArray,
-    CustomMarkerComponent,
-    // CurateDetailComponent,
     CurateListPipe,
-
-    BoostrapCarouselComponent,
-    SlideCarouselComponent,
     TripleSlidePipe,
     CurateListPipe,
-    // ModeComponent,
-    // EventItemComponent,
     GeocodeMarkerComponent,
     MemberNavigationComponent,
     FollowingComponent,
@@ -178,7 +161,6 @@ type StoreType = {
     SearchComponent,
     HyperSearchComponent,
     PlaceImageComponent,
-    // SmallLoaderComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -205,8 +187,6 @@ type StoreType = {
     Ng2ScrollableModule,
     RatingModule,
     MomentModule,
-    ReCaptchaModule,
-    TinymceModule.withConfig({}),
     ReactiveFormsModule,
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'

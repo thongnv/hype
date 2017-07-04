@@ -12,6 +12,11 @@ import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import { SmallLoaderService } from './small-loader/small-loader.service';
 
 import { BoostrapAlertComponent } from './boostrap-alert/boostrap-alert.component';
+import {BoostrapCarouselComponent} from './boostrap-carousel/boostrap-carousel.component';
+import {SlideCarouselComponent} from './slide-carousel/slide-carousel.component';
+import {SmallLoaderComponent} from './small-loader/small-loader.component';
+import {GmapAutoPlaceComponent} from '../gmap/gmap-auto-place/gmap-auto-place.component';
+import {CustomMarkerComponent} from '../gmap/custom-marker/custom-marker.component';
 
 @NgModule({
   imports: [
@@ -23,10 +28,21 @@ import { BoostrapAlertComponent } from './boostrap-alert/boostrap-alert.componen
   exports: [
     TruncateModule,
 
-    BoostrapAlertComponent
+    BoostrapAlertComponent,
+    BoostrapCarouselComponent,
+    SlideCarouselComponent,
+    SmallLoaderComponent,
+    GmapAutoPlaceComponent,
+    CustomMarkerComponent
   ],
   declarations: [
     BoostrapAlertComponent,
+    BoostrapCarouselComponent,
+    SlideCarouselComponent,
+    SmallLoaderComponent,
+    GmapAutoPlaceComponent,
+    CustomMarkerComponent,
+
     ImageModal,
     SlimScroll,
   ],
