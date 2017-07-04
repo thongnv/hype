@@ -36,7 +36,6 @@ import '../styles/headings.css';
 import { GmapComponent } from './gmap/gmap.component';
 import { DiscoverComponent } from './discover/discover.component';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
@@ -64,7 +63,6 @@ import { TripleSlidePipe } from './shared/triple-slide.pipe';
 
 import { BaseApiService } from './services/service_base.service';
 import { ModeService } from './services/mode.service';
-import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-marker';
 import { FollowingComponent } from './member/following/following.component';
 import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
 import { FollowItemComponent } from './member/follow-item/follow-item.component';
@@ -94,7 +92,6 @@ import { Ng2PopupModule } from 'ng2-popup/dist/index';
 import { RatingModule } from 'ng2-rating';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
-import { PlaceImageComponent } from './helper/place-image/place-image.component';
 
 import {HtmlToTextModule} from './html-to-text/html-to-text.module';
 
@@ -136,7 +133,6 @@ type StoreType = {
     CurateListPipe,
     TripleSlidePipe,
     CurateListPipe,
-    GeocodeMarkerComponent,
     MemberNavigationComponent,
     FollowingComponent,
     FollowerComponent,
@@ -160,7 +156,6 @@ type StoreType = {
     LogoutComponent,
     SearchComponent,
     HyperSearchComponent,
-    PlaceImageComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -173,7 +168,7 @@ type StoreType = {
     HtmlToTextModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
 
-    NgbModule.forRoot(),
+
     TranslateModule.forRoot(),
     CountryPickerModule.forRoot({
       baseUrl: 'assets/'

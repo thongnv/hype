@@ -7,6 +7,7 @@ import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup
 import { SlimScroll } from 'angular-io-slimscroll';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
+import {CompanyService} from '../services/company.service';
 
 // services
 import { SmallLoaderService } from './small-loader/small-loader.service';
@@ -17,6 +18,8 @@ import {SlideCarouselComponent} from './slide-carousel/slide-carousel.component'
 import {SmallLoaderComponent} from './small-loader/small-loader.component';
 import {GmapAutoPlaceComponent} from '../gmap/gmap-auto-place/gmap-auto-place.component';
 import {CustomMarkerComponent} from '../gmap/custom-marker/custom-marker.component';
+import {PlaceImageComponent} from './place-image/place-image.component';
+import {GeocodeMarkerComponent} from '../gmap/gmap-geocode-marker/gmap-geocode-marker';
 
 @NgModule({
   imports: [
@@ -33,21 +36,27 @@ import {CustomMarkerComponent} from '../gmap/custom-marker/custom-marker.compone
     SlideCarouselComponent,
     SmallLoaderComponent,
     GmapAutoPlaceComponent,
-    CustomMarkerComponent
+    CustomMarkerComponent,
+    PlaceImageComponent,
+    GeocodeMarkerComponent
   ],
   declarations: [
+    ImageModal,
+    SlimScroll,
+
     BoostrapAlertComponent,
     BoostrapCarouselComponent,
     SlideCarouselComponent,
     SmallLoaderComponent,
     GmapAutoPlaceComponent,
     CustomMarkerComponent,
+    PlaceImageComponent,
+    GeocodeMarkerComponent,
 
-    ImageModal,
-    SlimScroll,
   ],
   providers: [
-    SmallLoaderService
+    SmallLoaderService,
+    CompanyService
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
