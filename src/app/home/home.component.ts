@@ -292,7 +292,9 @@ export class HomeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
+        this.currentHighlightedMarker = selector;
         const element = document.querySelector('#v' + selector);
+        this.highlightMarker(selector);
         element.scrollIntoView(true);
         scrollTo(
             '#v' + selector,
@@ -438,6 +440,10 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
+    onScroll(event) {
+        console.log('onScroll', event);
+    }
+
     @HostListener("window:scroll", [])
     onWindowScroll() {
 
@@ -447,12 +453,13 @@ export class HomeComponent implements OnInit {
         let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
 
         if (content_element.length > 1) {
+            console.log(' content_element.length', content_element.length);
             for (let i = 0; i < content_element.length; i++) {
                 let currentClientH = content_element[i].clientHeight;
                 currentHeight += currentClientH;
-                console.log(currentHeight);
                 if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
                     if (this.currentHighlightedMarker !== i) {
+                        console.log("this.currentHighlightedMarker", this.currentHighlightedMarker);
                         this.currentHighlightedMarker = i;
                         this.highlightMarker(i);
                     }
@@ -470,39 +477,38 @@ export class HomeComponent implements OnInit {
             body.offsetHeight, html.clientHeight,
             html.scrollHeight, html.offsetHeight);
         let windowBottom = windowHeight + window.pageYOffset;
-        console.log(docHeight, windowBottom);
-        //if (docHeight >= windowBottom) {
-        //    if (this.selectedEventOrder.name == 'top 100') {
-        //        if (this.total >= this.events.length) {
-        //            // check limit start
-        //            if (this.params.start >= 80) {
-        //                return false;
-        //            }
-        //            //check limit length data response
-        //            if (this.events.length < this.params.start) {
-        //                return false;
-        //            }
-        //            this.smallLoader.show();
-        //            this.loadMore = true;
-        //            this.params.start += 20;
-        //            console.log(this.params.start);
-        //            this.getTrending();
-        //        } else {
-        //            this.loadMore = true;
-        //            if (this.total > this.events.length) {
-        //                this.smallLoader.show();
-        //                this.params.page += 1;
-        //                this.getTrending();
-        //            }
-        //        }
-        //    }
-        //}
+        if ((docHeight - 50) <= windowBottom) {
+            if (this.selectedEventOrder.name == 'top 100') {
+                if (this.total >= this.events.length) {
+                    // check limit start
+                    if (this.params.start >= 80) {
+                        return false;
+                    }
+                    //check limit length data response
+                    if (this.events.length < this.params.start) {
+                        return false;
+                    }
+                    this.smallLoader.show();
+                    this.loadMore = true;
+                    this.params.start += 20;
+                    console.log(this.params.start);
+                    this.getTrending();
+                } else {
+                    this.loadMore = true;
+                    if (this.total > this.events.length) {
+                        this.smallLoader.show();
+                        this.params.page += 1;
+                        this.getTrending();
+                    }
+                }
+            }
+        }
     }
 
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
             this.markers.forEach((marker, index) => {
-                if (index === markerId) {
+                if (index == markerId) {
                     this.markers[index].opacity = 1;
                     this.markers[index].isOpenInfo = true;
                 } else {
@@ -524,7 +530,7 @@ export class HomeComponent implements OnInit {
     }
 
     private passerTrending(geo:any) {
-        this.resetData();
+        this.markers =[];
         this.mapsAPILoader.load().then(()=> {
 
             let mapCenter = new google.maps.Marker({
@@ -534,13 +540,15 @@ export class HomeComponent implements OnInit {
             let searchCenter = mapCenter.getPosition();
             for (let i = 0; i < geo.length; i++) {
                 for (let item of geo[i]) {
+                    console.log(item);
                     let latlng = item.split(',');
                     let myMarker = new google.maps.Marker({
                         position: new google.maps.LatLng(latlng[0], latlng[1]),
                         draggable: true
                     });
                     let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                    if (parseInt(geometry) < this.currentRadius) {
+
+                    if ((parseInt(geometry)-100) < this.currentRadius) {
                         this.markers.push({
                             lat: parseFloat(latlng[0]),
                             lng: parseFloat(latlng[1]),
@@ -593,10 +601,6 @@ export class HomeComponent implements OnInit {
                 }
             }
         );
-    }
-
-    private resetData() {
-        this.markers = [];
     }
 
     public showRagePrice() {
