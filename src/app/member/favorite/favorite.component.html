@@ -14,8 +14,8 @@
         <button class="btn btn-default" (click)="onSelectFavoriteType('place')" [class.active]="selectedFavoriteType === 'place'">Places</button>
       </div>
       <div class="tab-wrap">
-        <div class="tab-content fade" *ngIf="user.events" [class.in] = "selectedFavoriteType === 'event'">
-          <app-favorite-event *ngFor="let fav of user.events"
+        <div class="tab-content fade" *ngIf="events" [class.in] = "selectedFavoriteType === 'event'">
+          <app-favorite-event *ngFor="let fav of events"
                               [item]="fav"
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeleteEvent($event)">
@@ -24,8 +24,8 @@
           </div>
           <app-small-loader></app-small-loader>
         </div>
-        <div class="tab-content fade" *ngIf="user.lists" [class.in] = "selectedFavoriteType === 'list'">
-          <app-favorite-list *ngFor="let fav of user.lists"
+        <div class="tab-content fade" *ngIf="lists" [class.in] = "selectedFavoriteType === 'list'">
+          <app-favorite-list *ngFor="let fav of lists"
                              [item]="fav"
                              [canDelete]="canDelete"
                              (onClickDelete)="onClickDeleteList($event)">
@@ -34,8 +34,8 @@
           </div>
           <app-small-loader></app-small-loader>
         </div>
-        <div class="tab-content fade" *ngIf="user.places" [class.in] = "selectedFavoriteType === 'place'">
-          <app-favorite-place *ngFor="let fav of user.places"
+        <div class="tab-content fade" *ngIf="places" [class.in] = "selectedFavoriteType === 'place'">
+          <app-favorite-place *ngFor="let fav of places"
                               [item]="fav"
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">

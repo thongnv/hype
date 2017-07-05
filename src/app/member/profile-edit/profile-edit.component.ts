@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from '../../app.service';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -42,7 +41,6 @@ export class ProfileEditComponent implements OnInit {
   public ready = false;
 
   constructor(public fb: FormBuilder,
-              private appState: AppState,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
               private countryPickerService: CountryPickerService,
