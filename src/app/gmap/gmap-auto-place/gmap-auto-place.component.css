@@ -85,6 +85,7 @@
   margin: 0 15px;
   float: right;
   width: 120px;
+  position: absolute;
 
 }
 .search-location-search-area ul {

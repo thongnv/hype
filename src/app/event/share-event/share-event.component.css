@@ -321,15 +321,38 @@ header ul li.active {
     margin-right: 40px;
 }
 
-.left-content-information-event > li > span {
-    padding-left: 32%;
-    display: block;
+.left-content-information-event .info-label {
+     float: left;
+     text-transform: capitalize;
+     width: 25%;
+     margin-right: 40px;
+     font-family: Roboto, sans-serif;
+     font-size: 16px;
+     font-weight: 600;
+     line-height: 20px;
+     text-align: left;
+     color: #3b3b3b;
+ }
+
+.left-content-information-event .info-value {
     font-size: 14px;
     font-weight: 300;
-    line-height: 1.43;
+    line-height: 20px;
     text-align: left;
     color: #3b3b3b;
+    display: block;
+    padding-left: 40%;
 }
+
+/*.left-content-information-event > li > span {*/
+    /*padding-left: 32%;*/
+    /*display: block;*/
+    /*font-size: 14px;*/
+    /*font-weight: 300;*/
+    /*line-height: 1.43;*/
+    /*text-align: left;*/
+    /*color: #3b3b3b;*/
+/*}*/
 
 .left-content-information-event > li > span > b {
   position: relative;
@@ -358,7 +381,7 @@ span.dollar-character {
 }
 .list-mention {
   list-style: none;
-  padding-left: 32%;
+  padding-left: 39%;
 }
 
 .list-mention > li {
