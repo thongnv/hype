@@ -32,7 +32,7 @@ export class MemberComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     this.user.showNav = true;
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
