@@ -59,9 +59,7 @@ export class GmapAutoPlaceComponent implements OnInit {
         let inputText = this.searchElementRef.nativeElement.value;
         let autocompleteService = new google.maps.places.AutocompleteService();
         autocompleteService.getPlacePredictions(
-          {input: inputText,
-            address:'Xinh-ga-po',
-            region: 'sg'},
+          {input: inputText},
           (result, status) => this.gmapResults = result);
       });
 
