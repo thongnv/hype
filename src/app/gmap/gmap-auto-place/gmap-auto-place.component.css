@@ -84,9 +84,9 @@
   font-size: 15px;
   margin: 0 15px;
   float: right;
-  width: 120px;
+  width: 130px;
   position: absolute;
-
+  right: 1%;
 }
 .search-location-search-area ul {
   padding-left: 0;
