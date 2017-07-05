@@ -79,7 +79,7 @@ import { GeocodeMarkerComponent } from './gmap/gmap-geocode-marker/gmap-geocode-
 import { FollowingComponent } from './member/following/following.component';
 import { MemberNavigationComponent } from './member/member-navigation/member-navigation.component';
 import { FollowItemComponent } from './member/follow-item/follow-item.component';
-import { BoostrapAlertComponent } from './shared/boostrap-alert/boostrap-alert.component';
+import { BootstrapAlertComponent } from './shared/boostrap-alert/boostrap-alert.component';
 import { FavoritePipe } from './shared/favorite.pipe';
 import { FavoriteEventComponent } from './member/favorite-event/favorite-event.component';
 import { InterestComponent } from './member/interest/interest.component';
@@ -112,6 +112,7 @@ import { SmallLoaderComponent } from './shared/small-loader/small-loader.compone
 
 // services
 import {SeoService} from './services/seo.service';
+import { ProfileService } from './services/profile.service';
 import { HomeRoutingModule } from './home/home-routing.module';
 import { EventRoutingModule } from './event/event-routing.module';
 
@@ -170,7 +171,7 @@ type StoreType = {
     FollowingComponent,
     FollowerComponent,
     FollowItemComponent,
-    BoostrapAlertComponent,
+    BootstrapAlertComponent,
     InterestComponent,
     MemberComponent,
     MemberNavigationComponent,
@@ -182,7 +183,7 @@ type StoreType = {
     FavoritePlaceComponent,
     FavoriteEventComponent,
     FavoritePipe,
-    BoostrapAlertComponent,
+    BootstrapAlertComponent,
     NotificationComponent,
     StarVoteComponent,
     LoaderComponent,
@@ -250,6 +251,7 @@ type StoreType = {
     ModeService,
     HomeService,
     SeoService,
+    ProfileService
   ]
 })
 export class AppModule {

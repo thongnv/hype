@@ -162,7 +162,7 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public addComment(msgInput) {
-    if (!this.event.loggedIn) {
+    if (this.event.user.isAnonymous) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
     if (msgInput.value.trim()) {

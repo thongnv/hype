@@ -1,9 +1,11 @@
 <div class="user-info-wrap">
   <div *ngIf="show" class="avatar-wrap col-xs-7 col-sm-7 col-md-12 col-lg-12">
     <div class="avatar">
-      <img class="user-avatar pull-left" [src]="data.userAvatar" [alt]="data.userName" width="100">
+      <img class="user-avatar pull-left" [src]="user.avatar" [alt]="user.name" width="100">
       <div class="user-name-wrap">
-        <span class="user-name text-ellipsis" *ngIf="data.firstName || data.lastName" [routerLink]="['/'+slugName]">{{data.firstName+' '+data.lastName | truncate: 17}}</span>
+        <span class="user-name text-ellipsis" [routerLink]="['/'+user.slug]">
+          {{user.name | truncate: 17}}
+        </span>
         <div *ngIf="showFollow" class="follow-btn-wrap">
           <a class="follow-btn unfollow-btn follow" *ngIf="!userFollow" (click)="onFollow()">Follow</a>
           <a class="follow-btn unfollow-btn" *ngIf="userFollow" (click)="onUnFollow()">Unfollow</a>
@@ -12,31 +14,31 @@
     </div>
   </div>
   <div class="follow-wrap col-xs-5 col-sm-5 col-md-12 col-lg-12">
-    <div class="follow-item" [routerLink]="['/'+slugName+'/following']" routerLinkActive="active"
+    <div class="follow-item" [routerLink]="['/'+user.slug+'/following']" routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}">
-      <strong class="follow-number">{{ data.followingNumber }}</strong>
+      <strong class="follow-number">{{ user.followingNumber }}</strong>
       <p class="follow-number-label">Following</p>
     </div>
-    <div class="follow-item" [routerLink]="['/'+slugName+'/follower']" routerLinkActive="active"
+    <div class="follow-item" [routerLink]="['/'+user.slug+'/follower']" routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}">
-      <strong class="follow-number">{{ data.followerNumber }}</strong>
+      <strong class="follow-number">{{ user.followerNumber }}</strong>
       <p class="follow-number-label">Followers</p>
     </div>
   </div>
 </div>
 <div class="clear"></div>
-<div *ngIf="data.showNav">
+<div *ngIf="user.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/'+slugName+'/profile-edit']" routerLinkActive="active"
+    <li [routerLink]="['/'+user.slug+'/profile-edit']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}" class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">My Profile
     </li>
-    <li [routerLink]="['/'+slugName+'/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    <li [routerLink]="['/'+user.slug+'/setting']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Settings
     </li>
-    <li [routerLink]="['/'+slugName+'/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    <li [routerLink]="['/'+user.slug+'/interest']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Interests
     </li>
-    <li [routerLink]="['/'+slugName+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    <li [routerLink]="['/'+user.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Favorites
     </li>
     <li [routerLink]="['/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
@@ -44,10 +46,10 @@
     </li>
   </ul>
 </div>
-<div *ngIf="!data.showNav">
+<div *ngIf="!user.showNav">
   <ul class="member-nav">
-    <li [routerLink]="['/' + slugName]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-5 col-sm-5 col-md-12 col-lg-12 text-ellipsis">@{{slugName}}
+    <li [routerLink]="['/' + user.slug]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="col-xs-5 col-sm-5 col-md-12 col-lg-12 text-ellipsis">@{{user.slug}}
     </li>
     <li [routerLink]="['/curate']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-sm-3 col-md-12 col-lg-12 text-ellipsis">Lists
