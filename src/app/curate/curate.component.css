@@ -115,6 +115,7 @@ ul.list-items li:not(:last-child) {
 }
 ul.list-items li {
     margin: 20px 0;
+    overflow: hidden;
 }
 ul.list-items li a {
     color: #3b3b3b;
