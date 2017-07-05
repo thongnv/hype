@@ -901,6 +901,12 @@ ul.mentioned-item {
 
 }
 
+@media only screen and (min-width: 320px) and (max-width: 800px) {
+
+  .wrap-each-items {
+    padding: 0;
+  }
+}
 @media only screen and (min-width: 320px) and (max-width: 374px) {
     .btn {
         padding: 5px 5px;

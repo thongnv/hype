@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { } from '@types/googlemaps';
+import {  } from '@types/googlemaps';
 import { MapsAPILoader } from 'angular2-google-maps/core';
 
 import { MainService } from '../services/main.service';
@@ -59,9 +59,7 @@ export class HyperSearchComponent implements OnInit {
         let inputText = this.searchElementRef.nativeElement.value;
         let autocompleteService = new google.maps.places.AutocompleteService();
         autocompleteService.getPlacePredictions(
-          {input: inputText,
-            address:'Xinh-ga-po',
-            region: 'sg'},
+          {input: inputText},
           (result, status) => this.gmapResults = result);
       });
 

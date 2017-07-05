@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-follower',
@@ -14,8 +15,9 @@ import { User } from '../../app.interface';
 
 export class FollowerComponent implements OnInit {
 
-  public user: User;
-  public followingPage: number = 0;
+  public currentUser: User;
+  public user = AppSetting.defaultUser;
+  public followerPage: number = 0;
   public msgContent: string;
   public alertType: string;
   public userFollow: boolean = false;
@@ -25,20 +27,51 @@ export class FollowerComponent implements OnInit {
   };
   public slugName: any;
   public sub: any;
+  public ready = false;
 
   public constructor(private appState: AppState,
                      private loaderService: LoaderService,
                      private mainService: MainService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
-    this.loaderService.show();
-    this.user = this.localStorageService.get('user') as User;
+  }
 
-    let followingPage = this.appState.state.followingPaging;
-    if (followingPage !== undefined) {
-      this.followingPage = followingPage;
+  public ngOnInit() {
+    this.loaderService.show();
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
     }
-    this.appState.set('followingPage', this.followingPage);
+    this.appState.set('followerPage', this.followerPage);
+    let followerPage = this.appState.state.followerPaging;
+    if (followerPage !== undefined) {
+      this.followerPage = followerPage;
+    }
+    this.sub = this.route.params.subscribe(
+      (params) => {
+        this.slugName = params['slug'];
+        this.isCurrentUser = this.slugName === this.user.slug;
+        this.mainService.getUserProfile(this.slugName).subscribe(
+          (resp: User) => {
+            this.currentUser = resp;
+            this.currentUser.showNav = this.isCurrentUser;
+            this.ready = true;
+            this.mainService.getFollowers(this.slugName, this.followerPage).subscribe(
+              (response) => {
+                this.currentUser.userFollower = response.result;
+                this.currentUser.showNav = this.isCurrentUser;
+              }
+            );
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => {
+            this.loaderService.hide();
+          }
+        );
+      }
+    );
   }
 
   public onFollowScrollDown(data) {
@@ -52,15 +85,16 @@ export class FollowerComponent implements OnInit {
     if (!this.set.loadingInProgress) {
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
-        .then((response) => {
-          response.forEach((item) => {
+      this.mainService.getFollowers(this.slugName, ++this.followerPage).subscribe(
+        (resp) => {
+          let data = resp.result;
+          data.forEach((item) => {
             count++;
-            this.user.userFollowing.push(item);
+            this.currentUser.userFollower.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
-            this.followingPage--;
+            this.followerPage--;
           } else {
             this.set.offset += count;
           }
@@ -69,52 +103,17 @@ export class FollowerComponent implements OnInit {
     }
   }
 
-  public ngOnInit() {
-    let userSlug = this.localStorageService.get('slug');
-    this.sub = this.route.params.subscribe((params) => {
-      this.slugName = params['slug'];
-      this.slugName = params['slug'];
-      this.isCurrentUser = this.slugName === userSlug;
-      console.log('USER: ', this.slugName);
-      this.getUserProfile(this.slugName);
-      this.getUserFollow('follower', this.slugName, this.followingPage);
-    });
-  }
-
   public updateFollow(item: any) {
-    console.log('item', item);
     if (item.stateFollow === 'yes') {
       if (this.isCurrentUser) {
-        this.user.followingNumber--;
+        this.currentUser.followerNumber--;
       }
     } else {
       if (this.isCurrentUser) {
-        this.user.followingNumber++;
+        this.currentUser.followerNumber++;
       }
     }
     this.alertType = 'success';
-    this.msgContent = 'Update following successful';
-  }
-
-  private getUserFollow(followFlag: string, slugName: string, page: number): void {
-    this.mainService.getUserFollow(followFlag, slugName, page).then((response) => {
-      this.user.userFollower = response;
-      console.log('response', response);
-      this.appState.set('user', this.user);
-    });
-  }
-
-  private getUserProfile(slugName: string): void {
-    this.user = this.localStorageService.get('user') as User;
-    this.mainService.getUserProfile(slugName).subscribe(
-      (user: User) => {
-        this.user = user;
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        this.loaderService.hide();
-      });
+    this.msgContent = 'Update follower successful';
   }
 }

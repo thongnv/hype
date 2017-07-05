@@ -89,18 +89,38 @@ export class MainService {
       });
   }
 
-  public getUserFollow(followFlag: string, slugName: string, page: number): Promise<any> {
-    const followUrl = (followFlag === 'following') ?
-      AppSetting.API_USER_FOLLOWING + '&slug=/user/' + slugName + '&page = ' + page :
-      AppSetting.API_USER_FOLLOWER + '&slug=/user/' + slugName + '&page = ' + page;
+  public getFollowings(userSlug: string, page: number): Observable<any> {
+    const url = AppSetting.API_ENDPOINT + 'api/user/flag/follow/list' +
+      '?_format=hal_json' +
+      '&limit=60' +
+      '&type=following' +
+      '&slug=/user/' + userSlug +
+      '&page=' + page;
+    let csrfToken = this.localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(url, options)
+      .map((res) => res.json())
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getFollowers(userSlug: string, page: number): Observable<any> {
+    const url = AppSetting.API_ENDPOINT + 'api/user/flag/follow/list' +
+      '?_format=hal_json' +
+      '&limit=60' +
+      '&type=follower' +
+      '&slug=/user/' + userSlug +
+      '&page=' + page;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-
-    return this.http.get(followUrl, options)
-      .toPromise()
-      .then((resp) => resp.json().result)
-      .catch(handleError);
+    return this.http.get(url, options)
+      .map((res) => res.json())
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public updateUserFollow(uid: number): Promise<any> {

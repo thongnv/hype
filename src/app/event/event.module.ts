@@ -1,19 +1,19 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import {RatingModule} from "ng2-rating";
+import { RatingModule } from 'ng2-rating';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
 
-import {HelperModule} from '../helper/helper.module';
-import {CarouseModule} from '../carouse/carouse.module';
+import { HelperModule } from '../helper/helper.module';
+import { CarouseModule } from '../carouse/carouse.module';
 import { EventRoutingModule } from './event-routing.module';
 
 import { EventDetailComponent } from './detail/detail.component';
-import {ExperienceComponent} from './detail/experience.component';
-import {CommentComponent} from './detail/comment.component';
+import { ExperienceComponent } from './detail/experience.component';
+import { CommentComponent } from './detail/comment.component';
 
 @NgModule({
   imports: [
@@ -28,7 +28,6 @@ import {CommentComponent} from './detail/comment.component';
       libraries: ['places', 'geometry']
     }),
 
-
     HelperModule,
     CarouseModule,
     EventRoutingModule
@@ -40,4 +39,5 @@ import {CommentComponent} from './detail/comment.component';
   ],
   providers: [NgbRatingConfig, GoogleMapsAPIWrapper],
 })
-export class EventModule { }
+export class EventModule {
+}

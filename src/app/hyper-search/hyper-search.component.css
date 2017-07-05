@@ -45,7 +45,6 @@
   margin: 0 15px;
   float: right;
   width: 140px;
-  position: absolute;
 }
 .search-location-search-area ul {
   padding-left: 0;
@@ -108,7 +107,7 @@
   height: 48px;
   padding-left: 10px;
   font-weight: bold;
-  width: calc(100% - 170px);
+  width: calc(90% - 170px);
 }
 .input-keyword{
   width: 320px;
