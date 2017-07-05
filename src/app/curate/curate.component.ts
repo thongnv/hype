@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../services/main.service';
-import { LoaderService } from '../shared/loader/loader.service';
-import { SmallLoaderService } from '../shared/small-loader/small-loader.service';
+import { LoaderService } from '../helper/loader/loader.service';
+import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 
 @Component({
     selector: 'app-curate',

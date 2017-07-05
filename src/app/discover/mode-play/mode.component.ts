@@ -3,15 +3,15 @@ import { Component, OnInit,ViewEncapsulation,
     EventEmitter, Output,Inject} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
-import {ModeService} from "../services/mode.service";
+import {ModeService} from "../../services/mode.service";
 import {GoogleMapsAPIWrapper} from "angular2-google-maps/core/services/google-maps-api-wrapper";
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
-import {LoaderService} from "../shared/loader/loader.service";
+import {LoaderService} from "../../helper/loader/loader.service";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { scrollTo } from 'ng2-utils';
-import { AppSetting } from '../app.setting';
-import {SmallLoaderService} from "../shared/small-loader/small-loader.service";
+import { AppSetting } from '../../app.setting';
+import {SmallLoaderService} from "../../helper/small-loader/small-loader.service";
 import { DOCUMENT } from "@angular/platform-browser";
 
 declare let google:any;

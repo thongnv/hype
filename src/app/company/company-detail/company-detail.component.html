@@ -28,7 +28,7 @@
           <div class="company-header">
             <h3>{{name}}</h3>
             <div class="rating-star">
-              <rating [ngModel]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
+              <rating [(ngModel)]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
             </div>
             <div class="google-plus-point">
               <div class="rating-number">
@@ -43,7 +43,8 @@
             </div>
             <div class="company-description-wrap" *ngIf="description">
               <div *ngIf="descTruncated">
-                <div class="company-description">{{description | truncate:200}}</div>
+                <div class="company-description">{{description | truncate:200 }}</div>
+                <div class="company-description">{{description | slice:0:200}}</div>
                 <div class="read-more" *ngIf="description.length>200" (click)="showMore()">
                   <i class="fa fa-angle-down" title="Show more"></i>
                 </div>

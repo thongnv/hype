@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { MainService } from '../services/main.service';
 import { Router } from '@angular/router';
-import { LoaderService } from '../shared/loader/loader.service';
 import { DomSanitizer } from '@angular/platform-browser';
+
+import { MainService } from '../../services/main.service';
+import { LoaderService } from '../../helper/loader/loader.service';
+
 
 @Component({
   selector: 'app-curate-new',

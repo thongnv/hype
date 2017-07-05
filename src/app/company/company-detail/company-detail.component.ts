@@ -4,7 +4,7 @@ import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import { Company, Experience, Image, Location, User } from '../../app.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
-import { LoaderService } from '../../shared/loader/loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 @Component({
