@@ -32,7 +32,7 @@ export class FollowerComponent implements OnInit {
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
     this.loaderService.show();
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
 
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
@@ -105,7 +105,7 @@ export class FollowerComponent implements OnInit {
   }
 
   private getUserProfile(slugName: string): void {
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     this.mainService.getUserProfile(slugName).subscribe(
       (user: User) => {
         this.user = user;
