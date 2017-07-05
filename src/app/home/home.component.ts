@@ -267,7 +267,7 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    public onClickLike(item:any) {
+    public onLikeEmit(item:any) {
         item.user_bookmark = !item.user_bookmark;
         console.log(item);
         let param = {
