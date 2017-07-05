@@ -7,11 +7,10 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MainService } from '../../services/main.service';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
-
-import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image } from '../../app.interface';
-import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 
+import { AppSetting } from '../../app.setting';
+import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User } from '../../app.interface';
 
 @Component({
   selector: 'app-detail',
