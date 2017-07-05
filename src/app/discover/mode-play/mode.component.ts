@@ -1,6 +1,9 @@
 import { Component, OnInit,ViewEncapsulation,
     HostListener,NgZone,AfterViewInit,
     EventEmitter, Output,Inject} from '@angular/core';
+
+import $ from "jquery";
+
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../../services/mode.service";
@@ -37,7 +40,7 @@ export class ModeComponent implements OnInit {
     public filterCategory:FormGroup;
     public items = [];
     public filterData:any = [];
-    public currentHighlightedMarker:number = 1;
+    public currentHighlightedMarker:number=1;
     public currentRate = 0;
     private cuisine:any;
     public best:any = [];
@@ -130,6 +133,8 @@ export class ModeComponent implements OnInit {
         this.route.params.subscribe((param) => {
             if (param.location) {
                 this.mapsAPILoader.load().then(() => {
+                    this.items = [];
+                    this.markers = [];
                     if (param.location.replace('+', ' ') != 'Singapore') {
                         let geocoder = new google.maps.Geocoder();
                         if (geocoder) {
@@ -140,9 +145,6 @@ export class ModeComponent implements OnInit {
                                 console.log(response);
                                 if (status == google.maps.GeocoderStatus.OK) {
                                     if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                                        console.log(response);
-                                        this.markers = [];
-                                        this.items = [];
                                         this.lat = response[0].geometry.location.lat();
                                         this.lng = response[0].geometry.location.lng();
                                         this.params.lat = this.lat;
@@ -335,8 +337,6 @@ export class ModeComponent implements OnInit {
     }
 
     private initMap(companies:any) {
-        this.items = [];
-        this.markers = [];
         if (companies) {
             this.mapsAPILoader.load().then(() => {
 
@@ -358,18 +358,18 @@ export class ModeComponent implements OnInit {
                         });
                         let distance = companies[i]._dict_;
                         companies[i].distance = (distance).toFixed(1);
-                        //let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                        //console.log(parseInt(geometry), this.currentRadius);
-                        //if (parseInt(geometry) <= this.currentRadius) {
-                        this.items.push(companies[i]);
-                        this.markers.push({
-                            lat: parseFloat(lat[1]),
-                            lng: parseFloat(lng[1]),
-                            label: companies[i].Company_Name,
-                            opacity: 0.6,
-                            isOpenInfo: false
-                        });
-                        //}
+                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
+                        console.log(parseInt(geometry), this.currentRadius);
+                        if (parseInt(geometry) <= this.currentRadius) {
+                            this.items.push(companies[i]);
+                            this.markers.push({
+                                lat: parseFloat(lat[1]),
+                                lng: parseFloat(lng[1]),
+                                label: companies[i].Company_Name,
+                                opacity: 0.6,
+                                isOpenInfo: false
+                            });
+                        }
                     }
                 }
             });
@@ -393,14 +393,11 @@ export class ModeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
-        const element = document.querySelector('#v' + selector);
-        element.scrollIntoView(true);
-        scrollTo(
-            '#v' + selector,
-            '#v-scrollable',
-            horizontal,
-            100
-        );
+        this.currentHighlightedMarker = selector;
+        this.currentHighlightedMarker = selector;
+        $('html, body').animate({
+            scrollTop: $("#v"+selector).offset().top - 80
+        }, 'slow');
 
     }
 
@@ -409,6 +406,27 @@ export class ModeComponent implements OnInit {
     @HostListener("window:scroll", ['$event'])
     onWindowScroll($event) {
 
+        //Hilight marker map
+        let baseHeight = this.document.body.clientHeight;
+        let realScrollTop = this.document.body.scrollTop + baseHeight;
+        let currentHeight:number = baseHeight;
+        let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
+
+        if (content_element.length > 1) {
+            for (let i = 0; i < content_element.length; i++) {
+                let currentClientH = content_element[i].clientHeight;
+                currentHeight += currentClientH;
+                console.log(currentHeight);
+                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+                    if (this.currentHighlightedMarker !== i) {
+                        this.currentHighlightedMarker = i;
+                        this.highlightMarker(i);
+                    }
+                }
+            }
+        }
+
+        //Scroll Load more
         let windowHeight = 'innerHeight' in window ? window.innerHeight
             : this.document.documentElement.offsetHeight;
         let body = this.document.body;
@@ -417,7 +435,8 @@ export class ModeComponent implements OnInit {
             body.offsetHeight, html.clientHeight,
             html.scrollHeight, html.offsetHeight);
         let windowBottom = windowHeight + window.pageYOffset;
-        if (docHeight >= windowBottom) {
+        console.log((docHeight - 50), windowBottom);
+        if ((docHeight - 50) <= windowBottom) {
             if (this.total > this.items.length) {
                 if (this.items.length <= 1) {
                     return false;
@@ -429,11 +448,7 @@ export class ModeComponent implements OnInit {
                 this.getDataModes();
             }
         }
-        //if (number > 380) {
-        //    this.navIsFixed = true;
-        //} else if (this.navIsFixed && number < 10) {
-        //    this.navIsFixed = false;
-        //}
+
     }
 
     private highlightMarker(markerId:number):void {

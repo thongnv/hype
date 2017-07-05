@@ -10,6 +10,7 @@ import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import { DOCUMENT } from "@angular/platform-browser";
+import $ from "jquery";
 
 // services
 import { MainService } from '../services/main.service';
@@ -293,15 +294,9 @@ export class HomeComponent implements OnInit {
 
     public clickedMarker(selector, horizontal) {
         this.currentHighlightedMarker = selector;
-        const element = document.querySelector('#v' + selector);
-        this.highlightMarker(selector);
-        element.scrollIntoView(true);
-        scrollTo(
-            '#v' + selector,
-            '#v-scrollable',
-            horizontal,
-            100
-        );
+        $('html, body').animate({
+            scrollTop: $("#v"+selector).offset().top - 80
+        }, 'slow');
     }
 
     public selectedDate(value:any) {
@@ -440,10 +435,6 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    onScroll(event) {
-        console.log('onScroll', event);
-    }
-
     @HostListener("window:scroll", [])
     onWindowScroll() {
 
@@ -469,40 +460,42 @@ export class HomeComponent implements OnInit {
 
 
         //load more
-        let windowHeight = 'innerHeight' in window ? window.innerHeight
-            : this.document.documentElement.offsetHeight;
-        let body = this.document.body;
-        let html = this.document.documentElement;
-        let docHeight = Math.max(body.scrollHeight,
-            body.offsetHeight, html.clientHeight,
-            html.scrollHeight, html.offsetHeight);
-        let windowBottom = windowHeight + window.pageYOffset;
-        if ((docHeight - 50) <= windowBottom) {
-            if (this.selectedEventOrder.name == 'top 100') {
-                if (this.total >= this.events.length) {
-                    // check limit start
-                    if (this.params.start >= 80) {
-                        return false;
-                    }
-                    //check limit length data response
-                    if (this.events.length < this.params.start) {
-                        return false;
-                    }
-                    this.smallLoader.show();
-                    this.loadMore = true;
-                    this.params.start += 20;
-                    console.log(this.params.start);
-                    this.getTrending();
-                } else {
-                    this.loadMore = true;
-                    if (this.total > this.events.length) {
-                        this.smallLoader.show();
-                        this.params.page += 1;
-                        this.getTrending();
-                    }
-                }
-            }
-        }
+        //let windowHeight = 'innerHeight' in window ? window.innerHeight
+        //    : this.document.documentElement.offsetHeight;
+        //let body = this.document.body;
+        //let html = this.document.documentElement;
+        //let docHeight = Math.max(body.scrollHeight,
+        //    body.offsetHeight, html.clientHeight,
+        //    html.scrollHeight, html.offsetHeight);
+        //let windowBottom = windowHeight + window.pageYOffset;
+        //if ((docHeight - 50) <= windowBottom) {
+        //    if (this.selectedEventOrder.name == 'top 100') {
+        //        if (this.total >= this.events.length) {
+        //            // check limit start
+        //            if (this.params.start >= 80) {
+        //                return false;
+        //            }
+        //            //check limit length data response
+        //            if (this.events.length < this.params.start) {
+        //                return false;
+        //            }
+        //            this.smallLoader.show();
+        //            this.loadMore = true;
+        //            this.params.start += 20;
+        //            console.log(this.params.start);
+        //            this.getTrending();
+        //        } else {
+        //            this.loadMore = true;
+        //            if (this.total > this.events.length) {
+        //                this.smallLoader.show();
+        //                this.params.page += 1;
+        //                this.getTrending();
+        //            }
+        //        }
+        //    }
+        //}
+
+
     }
 
     private highlightMarker(markerId:number):void {

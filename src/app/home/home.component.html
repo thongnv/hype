@@ -20,7 +20,8 @@
             <div class="filter-events clearfix" [class.top-100]="selectedEventOrder.name == 'top 100'">
                 <div id="timeFilter" class="btn-group tab-control" *ngIf="selectedEventOrder.name != 'top 100'">
                     <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
-                            class="btn btn-default tab-control text-capitalize" [class.active]="filter===selectedEventFilter">
+                            class="btn btn-default tab-control text-capitalize"
+                            [class.active]="filter===selectedEventFilter">
                         {{filter.name}}
                     </button>
                 </div>
@@ -37,10 +38,11 @@
                     <a (click)="showWhen()" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                     <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
                     <div class="clearfix"></div>
-                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [tooltips]="[true,true]"
+                    <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10"
+                                [tooltips]="[true,true]"
                                 [(ngModel)]="priceRange"
                                 (ngModelChange)="onChangePrice($event)"
-                               class="price-slider">
+                                class="price-slider">
                     </nouislider>
                     <div *ngIf="showPrice" class="price-desc"><span>$0</span><span>$150</span><span>$300</span></div>
                     <input *ngIf="showDate" style="margin-top: 1em; margin-bottom: 1em" class="form-control"
@@ -67,15 +69,15 @@
                             <div class="top-content">
                                 <h4 class="information-title pointer" [routerLink]="[item.alias]">
                                     <p class="pull-left text-ellipsis real-title"
-                                                                                                     *ngIf="item.title">
-                                    {{item.title | truncate : 45}}</p>
-                    <span *ngIf="item.field_event_option.field_price !='0'"
+                                       *ngIf="item.title">
+                                        {{item.title | truncate : 45}}</p>
+                    <span *ngIf="item.field_event_option.field_price !='0' && (item.field_event_option.field_price|json) != 'null'"
                           class="free-price-button text-capitalize pull-right"
                           [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
 
-                    <span *ngIf="item.field_event_option.field_price =='0'"
+                    <span *ngIf="item.field_event_option.field_price =='0' || (item.field_event_option.field_price|json) == 'null'"
                           class="free-price-button text-capitalize pull-right"
-                          [class.free-price]="item.field_event_option.field_price == '0'">Free</span>
+                          [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
                                 </h4>
                                 <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
                             </div>
@@ -84,14 +86,16 @@
                                 <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
                                     <li *ngFor="let ment of item.field_event_option.field_mentioned_by | slice:0:3">
                                         <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
-                                                [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28" height="28"></a>
+                                                [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28"
+                                                height="28"></a>
                                     </li>
                                     <ng-template #popContent>
                                         <!--<a class="mentioned_title" (click)="p.close()"><i fa class="fa-close"></i></a>-->
                                         <ul class="list-inline">
                                             <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
                                                 <a class="mentioned-item-wrap" href="{{ment}}" target="_blank">
-                                                    <img [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28"
+                                                    <img [src]="'https://www.google.com/s2/favicons?domain='+ment"
+                                                         width="28"
                                                          height="28">
                                                 </a>
                                             </li>
@@ -132,10 +136,12 @@
                                 <i class="icon-sm" [class.icon-heart]="!item.user_bookmark"
                                    [class.icon-heart-selected]="item.user_bookmark" aria-hidden="true"></i>
                             </div>
-                            <img *ngIf="item.field_images.length" [src]="item.field_images[0]" width="100%" height="300">
+                            <img *ngIf="item.field_images.length" [src]="item.field_images[0]" width="100%"
+                                 height="300">
                             <div class="list-item-overlay"></div>
                             <div class="caption">
-                                <h3 class="list-item-title" [routerLink]="[item.alias]">{{item.title | truncate : 45}}</h3>
+                                <h3 class="list-item-title" [routerLink]="[item.alias]">{{item.title | truncate :
+                                    45}}</h3>
                                 <a class="text-capitalize list-item-link" [routerLink]="[item.alias]">read &nbsp;<i
                                         class="fa fa-angle-right"
                                         aria-hidden="true"></i></a>
@@ -150,13 +156,13 @@
 
         <div class="col-lg-6 col-xs-12 right-box map-right fixed-right hidden-xs hidden-sm">
             <sebm-google-map
-                             [latitude]="lat"
-                             [longitude]="lng"
-                             [zoom]="mapZoom"
-                             [disableDefaultUI]="false"
-                             [zoomControl]="false"
-                             [streetViewControl]="true"
-                             [styles]="gMapStyles"
+                    [latitude]="lat"
+                    [longitude]="lng"
+                    [zoom]="mapZoom"
+                    [disableDefaultUI]="false"
+                    [zoomControl]="false"
+                    [streetViewControl]="true"
+                    [styles]="gMapStyles"
             >
                 <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                                      [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
