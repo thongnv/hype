@@ -86,7 +86,7 @@
   float: right;
   width: 120px;
   position: absolute;
-
+  right: 1%;
 }
 .search-location-search-area ul {
   padding-left: 0;
