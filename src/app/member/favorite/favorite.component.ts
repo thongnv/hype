@@ -3,8 +3,8 @@ import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
-import { LoaderService } from '../../shared/loader/loader.service';
-import { SmallLoaderService } from '../../shared/small-loader/small-loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { DOCUMENT } from '@angular/platform-browser';
 import { User } from '../../app.interface';
 

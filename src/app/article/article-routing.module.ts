@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { EventDetailComponent } from './detail/detail.component';
+import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 
 const routes: Routes = [
-  {path: ':slug', component: EventDetailComponent},
+  {path: ':slug', component: CurateDetailComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EventRoutingModule { }
+export class ArticleRoutingModule { }

@@ -1,42 +1,39 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NouisliderModule } from 'ng2-nouislider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
-import { MomentModule } from 'angular2-moment';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Daterangepicker } from 'ng2-daterangepicker';
 
-import {HelperModule} from '../helper/helper.module';
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
-import { HomeRoutingModule } from './home-routing.module';
+import {HelperModule} from '../helper/helper.module';
+import { DiscoverRoutingModule } from './discover-routing.module';
 
-import { HomeComponent } from './home.component';
+import { ModeComponent } from './mode-play/mode.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
 
     NouisliderModule,
-    MomentModule,
-    NgbModule,
-    Daterangepicker,
+    NgbModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places', 'geometry']
     }),
 
-    HelperModule,
     HtmlToTextModule,
-    HomeRoutingModule
+    HelperModule,
+    DiscoverRoutingModule
   ],
   declarations: [
-    HomeComponent
+    ModeComponent
   ],
   providers: [
-    GoogleMapsAPIWrapper,
-    NgbPopoverConfig,
+    GoogleMapsAPIWrapper
   ],
 })
-export class HomeModule { }
+export class DiscoverModule { }

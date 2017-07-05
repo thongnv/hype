@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { LoaderService } from '../../shared/loader/loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
 import { MainService } from '../../services/main.service';
 import { Router } from '@angular/router';
 

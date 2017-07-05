@@ -6,7 +6,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@ang
 import * as moment from 'moment/moment';
 import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
-import { LoaderService } from '../../shared/loader/loader.service';
+import { LoaderService } from '../../helper/loader/loader.service';
 import { MainService } from '../../services/main.service';
 import { AppSetting } from '../../app.setting';
 

@@ -6,8 +6,8 @@ import { LoaderState } from '../../app.interface';
 
 @Component({
   selector: 'angular-loader',
-  templateUrl: 'loader.component.html',
-  styleUrls: ['loader.component.css']
+  templateUrl: './loader.component.html',
+  styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent implements OnInit {
 

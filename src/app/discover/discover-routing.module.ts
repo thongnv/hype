@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { EventDetailComponent } from './detail/detail.component';
+import { ModeComponent } from './mode-play/mode.component';
 
 const routes: Routes = [
-  {path: ':slug', component: EventDetailComponent},
+  {path: '', component: ModeComponent},
+  {path: ':location', component: ModeComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EventRoutingModule { }
+export class DiscoverRoutingModule { }
