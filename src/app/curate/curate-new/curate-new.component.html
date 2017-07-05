@@ -82,8 +82,10 @@
       </div>
 
       <div class="form-actions clearfix">
-        <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
-        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+        <div class="wrap-full-50">
+          <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
+          <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+        </div>
       </div>
       <div class="mobile-margin"></div>
 
