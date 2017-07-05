@@ -11,6 +11,7 @@ import { MainService } from '../../services/main.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-share-event',
@@ -58,14 +59,14 @@ export class ShareEventComponent implements OnInit {
   private hyperSearchComponent: HyperSearchComponent;
 
   constructor(public fb: FormBuilder, private eventService: EventService,
-              public appState: AppState,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               public mainService: MainService,
+              public userService: UserService,
               private router: Router) {
 
     this.loaderService.show();
-    this.mainService.checkLogin().subscribe(
+    this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {
           this.router.navigate(['/login'], {skipLocationChange: true}).then();
@@ -78,7 +79,7 @@ export class ShareEventComponent implements OnInit {
         this.loaderService.hide();
       }
     );
-    this.mainService.getUserProfile().subscribe((response) => {
+    this.userService.getUserProfile().subscribe((response) => {
       this.user = response;
     });
   }

@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
+              private userService: UserService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router) {
@@ -52,7 +54,7 @@ export class CurateNewComponent implements OnInit {
 
   public ngOnInit() {
     this.loaderService.show();
-    this.mainService.checkLogin().subscribe(
+    this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {
           this.router.navigate(['/login'], {skipLocationChange: true}).then();

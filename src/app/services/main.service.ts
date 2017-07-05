@@ -6,30 +6,18 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { BaseUser, User } from '../app.interface';
+import { BaseUser } from '../app.interface';
 
 @Injectable()
 export class MainService {
   private defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'X-CSRF-Token': <string> this.localStorageService.get('csrf_token')
+    'X-CSRF-Token': this.localStorageService.get('csrf_token')
   });
 
   public constructor(private localStorageService: LocalStorageService,
                      private http: Http) {
-  }
-
-  public getCsrfToken(): Observable<any> {
-    let headers = new Headers({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get( AppSetting.API_ENDPOINT + '/session/token', options)
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
   }
 
   public login(fbToken: string): Observable<Response> {
@@ -57,37 +45,6 @@ export class MainService {
       });
   }
 
-  public getUserProfile(slugName?: string): Observable<User> {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let user = this.localStorageService.get('user') as User;
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    let slug = slugName ? slugName : user.slug;
-    return this.http.get(AppSetting.API_USER_PROFILE + slug + '?_format=json', options)
-      .map((res) => {
-        let data = res.json();
-        return {
-          avatar: data.field_image,
-          name: data.field_first_name + ' ' + data.field_last_name,
-          slug: slugName,
-          isAnonymous: false,
-          firstName: data.field_first_name,
-          lastName: data.field_last_name,
-          contactNumber: data.field_contact_number,
-          followingNumber: data.follow.following,
-          followerNumber: data.follow.follower,
-          email: data.email,
-          userFollowing: [],
-          userFollower: [],
-          showNav: true,
-          acceptNotification: true
-        };
-      })
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
   public setUserProfile(user: BaseUser, data: any): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
@@ -99,80 +56,6 @@ export class MainService {
       .catch((error: any) => {
         return Observable.throw(new Error(error));
       });
-  }
-
-  public getFollowings(userSlug: string, page: number): Observable<any> {
-    const url = AppSetting.API_ENDPOINT + 'api/user/flag/follow/list' +
-      '?_format=hal_json' +
-      '&limit=60' +
-      '&type=following' +
-      '&slug=/user/' + userSlug +
-      '&page=' + page;
-    let csrfToken = this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get(url, options)
-      .map((res) => res.json())
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
-  public getFollowers(userSlug: string, page: number): Observable<any> {
-    const url = AppSetting.API_ENDPOINT + 'api/user/flag/follow/list' +
-      '?_format=hal_json' +
-      '&limit=60' +
-      '&type=follower' +
-      '&slug=/user/' + userSlug +
-      '&page=' + page;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get(url, options)
-      .map((res) => res.json())
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
-  public updateUserFollow(uid: number): Promise<any> {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    let targetUser = {uid};
-    return this.http.post(AppSetting.API_USER_UNFOLLOW, JSON.stringify(targetUser), options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
-  public getUserInterest(slugName?: string, page?: number): Promise<any> {
-    let user = this.localStorageService.get('user') as User;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-    slugName = slugName ? slugName : user.slug;
-    return this.http.get(AppSetting.API_USER_INTEREST + slugName, options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
-  public updateUserInterests(slugName?: string, item?: any[]): Promise<any> {
-    let user = this.localStorageService.get('user') as User;
-    slugName = slugName ? slugName : user.slug;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_USER_INTEREST +
-      slugName + '?_format=json', JSON.stringify(item), options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
   }
 
   public getArticle(slugName): Observable<Response> {
@@ -250,7 +133,7 @@ export class MainService {
   }
 
   public postArticle(data) {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
+    let csrfToken = this.localStorageService.get('csrf_token');
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
@@ -266,7 +149,7 @@ export class MainService {
   }
 
   public getNotifications(page: number) {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
+    let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
@@ -280,7 +163,7 @@ export class MainService {
   }
 
   public updateNotifications(type: string, mid?: string) {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
+    let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(AppSetting.API_NOTIFICATION, JSON.stringify({type, mid}), options)
@@ -289,104 +172,8 @@ export class MainService {
       .catch(handleError);
   }
 
-  public getUserEvent(slugName?: string, page?: number): Promise<any> {
-    let user = this.localStorageService.get('user') as User;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    if (slugName) {
-      myParams.set('slug', '/user/' + slugName);
-    } else {
-      myParams.set('slug', '/user/' + user.slug);
-    }
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    myParams.set('type', 'event');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
-  public getUserList(slugName?: string, page?: number): Promise<any> {
-    let user = this.localStorageService.get('user') as User;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    myParams.set('type', 'list');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    if (slugName) {
-      myParams.set('slug', '/user/' + slugName);
-    } else {
-      myParams.set('slug', '/user/' + user.slug);
-    }
-
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
-  public getUserPlace(slugName?: string, page?: number): Promise<any> {
-    let user = this.localStorageService.get('user') as User;
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    if (slugName) {
-      myParams.set('slug', slugName);
-    } else {
-      myParams.set('slug', user.slug);
-    }
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_PLACE, options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
-  public removeFavoritedEventList(slug: string): Promise<any> {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    if (slug) {
-      myParams.set('slug', slug);
-    } else {
-      myParams.set('slug', slug);
-    }
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.post(AppSetting.API_UNFAVORITE_EVENT_LIST, JSON.stringify({}), options)
-      .toPromise()
-      .then((resp) => resp.json())
-      .catch(handleError);
-  }
-
   public favoritePlace(idsNo: string): Promise<any> {
-    let csrfToken = <string> this.localStorageService.get('csrf_token');
+    let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
 
@@ -412,24 +199,6 @@ export class MainService {
       .toPromise()
       .then((resp) => resp.json())
       .catch(handleError);
-  }
-
-  public checkLogin(): Observable<Response> {
-    let headers = this.defaultHeaders;
-    let myParams = new URLSearchParams();
-    let options = new RequestOptions({
-      headers,
-      params: myParams,
-      withCredentials: true
-    });
-
-    return this.http.get(AppSetting.API_LOGIN_STATUS, options)
-      .map((res) => {
-        return res.json();
-      })
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
   }
 
 }

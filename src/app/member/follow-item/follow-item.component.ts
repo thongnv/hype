@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style } from '@angular/animations';
-import { MainService } from '../../services/main.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-follow-item',
@@ -25,16 +25,17 @@ export class FollowItemComponent implements OnInit {
   @Output('onUpdate') public onUpdate = new EventEmitter<any>();
   public stateFollow: string;
 
-  constructor(private mainService: MainService) {
+  constructor(private userService: UserService) {
   }
 
   public updateFollow(item: any): void {
-    this.mainService.updateUserFollow(item.id).then((resp) => {
-      if (resp.status) {
-        this.stateFollow = this.stateFollow === 'yes' ? 'no' : 'yes';
-        item.stateFollow = this.stateFollow;
-        this.onUpdate.emit(item);
-      }
+    this.userService.updateUserFollow(item.id).subscribe(
+      (resp) => {
+        if (resp.status) {
+          this.stateFollow = this.stateFollow === 'yes' ? 'no' : 'yes';
+          item.stateFollow = this.stateFollow;
+          this.onUpdate.emit(item);
+        }
     });
   }
 

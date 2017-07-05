@@ -7,6 +7,7 @@ import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -45,6 +46,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   constructor(
     private localStorageService: LocalStorageService,
     public mainService: MainService,
+    public userService: UserService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
     private loaderService: LoaderService,
@@ -103,7 +105,7 @@ export class CompanyDetailComponent implements Company, OnInit {
       );
     });
     if (!this.user.isAnonymous) {
-      this.mainService.getUserProfile().subscribe((response) => {
+      this.userService.getUserProfile().subscribe((response) => {
         this.user = response;
       });
     }

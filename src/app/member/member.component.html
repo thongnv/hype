@@ -6,7 +6,7 @@
     <section *ngIf="user" class="form-wrap">
       <h3 class="col-xs-12 col-lg-12 setting-title">Settings</h3>
       <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
-      <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit($event)">
+      <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit()">
         <div class="form-group col-xs-12 col-lg-12">
           <label for="checkbox">
             <input id="checkbox" type="checkbox" formControlName="receiveEmail">

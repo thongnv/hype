@@ -1,12 +1,12 @@
-import { Component, HostListener, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { DOCUMENT } from '@angular/platform-browser';
 import { User } from '../../app.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-favorite',
@@ -42,11 +42,10 @@ export class FavoriteComponent implements OnInit {
 
   public constructor(private loaderService: LoaderService,
                      private mainService: MainService,
+                     private userService: UserService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
-                     private smallLoader: SmallLoaderService,
-                     private router: Router,
-                     @Inject(DOCUMENT) private document: Document) {
+                     private smallLoader: SmallLoaderService) {
   }
 
   public ngOnInit() {
@@ -61,7 +60,7 @@ export class FavoriteComponent implements OnInit {
           this.slugName = params['slug'];
           this.getEvent(this.slugName, this.eventPageNum);
           this.canDelete = this.user.slug === this.slugName;
-          this.mainService.getUserProfile(this.slugName).subscribe(
+          this.userService.getUserProfile(this.slugName).subscribe(
             (user: User) => {
               this.user = user;
               this.ready = true;
@@ -105,50 +104,54 @@ export class FavoriteComponent implements OnInit {
 
   public onClickDeleteEvent(item: any) {
     this.smallLoader.show();
-    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      if (response.status) {
-        this.events.forEach((event, index) => {
-          if (item === event) {
-            delete this.events[index];
-            this.setEvent.offset--;
-            if (this.setEvent.offset === 0) {
-              this.setEvent.endOfList = true;
+    this.userService.removeFavoritedEventList(item.slug).subscribe(
+      (response) => {
+        if (response.status) {
+          this.events.forEach((event, index) => {
+            if (item === event) {
+              delete this.events[index];
+              this.setEvent.offset--;
+              if (this.setEvent.offset === 0) {
+                this.setEvent.endOfList = true;
+              }
             }
-          }
-        });
-        this.smallLoader.hide();
-        this.alertType = 'success';
-        this.msgContent = response.message;
-      } else {
-        this.smallLoader.hide();
-        this.alertType = 'danger';
-        this.msgContent = response.message;
+          });
+          this.smallLoader.hide();
+          this.alertType = 'success';
+          this.msgContent = response.message;
+        } else {
+          this.smallLoader.hide();
+          this.alertType = 'danger';
+          this.msgContent = response.message;
+        }
       }
-    });
+    );
   }
 
   public onClickDeleteList(item: any) {
     this.smallLoader.show();
-    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      if (response.status) {
-        this.lists.forEach((list, index) => {
-          if (item === list) {
-            delete this.lists[index];
-            this.setList.offset--;
-            if (this.setList.offset === 0) {
-              this.setList.endOfList = true;
+    this.userService.removeFavoritedEventList(item.slug).subscribe(
+      (response) => {
+        if (response.status) {
+          this.lists.forEach((list, index) => {
+            if (item === list) {
+              delete this.lists[index];
+              this.setList.offset--;
+              if (this.setList.offset === 0) {
+                this.setList.endOfList = true;
+              }
             }
-          }
-        });
-        this.smallLoader.hide();
-        this.alertType = 'success';
-        this.msgContent = response.message;
-      } else {
-        this.smallLoader.hide();
-        this.alertType = 'danger';
-        this.msgContent = response.message;
+          });
+          this.smallLoader.hide();
+          this.alertType = 'success';
+          this.msgContent = response.message;
+        } else {
+          this.smallLoader.hide();
+          this.alertType = 'danger';
+          this.msgContent = response.message;
+        }
       }
-    });
+    );
   }
 
   public onClickDeletePlace(item: any) {
@@ -175,53 +178,33 @@ export class FavoriteComponent implements OnInit {
     });
   }
 
-  @HostListener('window:scroll', [])
-  public onWindowScroll() {
-    let elm = event.srcElement;
-    if (this.document.body.clientHeight + this.document.body.scrollTop === this.document.body.scrollHeight) {
-      this.smallLoader.show();
-      switch (this.selectedFavoriteType) {
-        case 'event':
-          this.getEvent(this.slugName, this.eventPageNum);
-          break;
-        case 'list':
-          this.getList(this.slugName, this.listPageNum);
-          break;
-        case 'place':
-          this.getPlace(this.slugName, this.placePageNum);
-          break;
-        default:
-          break;
-      }
-    }
-
-  }
-
   private getPlace(slugName?: string, page?: number) {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
-      this.mainService.getUserPlace(slugName, page).then((response) => {
-        if (response.total > 0) {
-          this.smallLoader.hide();
-          if (this.setPlace.offset < response.total) {
-            response.results.forEach((item) => {
-              this.setPlace.offset++;
-              this.places.push(item);
-            });
+      this.userService.getUserPlace(slugName, page).subscribe(
+        (response) => {
+          if (response.total > 0) {
             this.smallLoader.hide();
-            this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
+            if (this.setPlace.offset < response.total) {
+              response.results.forEach((item) => {
+                this.setPlace.offset++;
+                this.places.push(item);
+              });
+              this.smallLoader.hide();
+              this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
+            } else {
+              this.smallLoader.hide();
+              this.setPlace.endOfList = true;
+            }
           } else {
             this.smallLoader.hide();
             this.setPlace.endOfList = true;
           }
-        } else {
           this.smallLoader.hide();
-          this.setPlace.endOfList = true;
+          this.setPlace.loadingInProgress = false;
         }
-        this.smallLoader.hide();
-        this.setPlace.loadingInProgress = false;
-      });
+      );
     }
   }
 
@@ -229,26 +212,28 @@ export class FavoriteComponent implements OnInit {
     if (!this.setList.loadingInProgress) {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
-      this.mainService.getUserList(slugName, page).then((response) => {
-        if (response.total > 0) {
-          if (this.setList.offset < response.total) {
-            response.data.forEach((item) => {
-              this.setList.offset++;
-              this.lists.push(item);
-            });
-            this.smallLoader.hide();
-            this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
+      this.userService.getUserList(slugName, page).subscribe(
+        (response) => {
+          if (response.total > 0) {
+            if (this.setList.offset < response.total) {
+              response.data.forEach((item) => {
+                this.setList.offset++;
+                this.lists.push(item);
+              });
+              this.smallLoader.hide();
+              this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
+            } else {
+              this.smallLoader.hide();
+              this.setList.endOfList = true;
+            }
           } else {
             this.smallLoader.hide();
             this.setList.endOfList = true;
           }
-        } else {
           this.smallLoader.hide();
-          this.setList.endOfList = true;
+          this.setList.loadingInProgress = false;
         }
-        this.smallLoader.hide();
-        this.setList.loadingInProgress = false;
-      });
+      );
     }
   }
 
@@ -256,19 +241,21 @@ export class FavoriteComponent implements OnInit {
     if (!this.setEvent.loadingInProgress) {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
-      this.mainService.getUserEvent(slugName, page).then((response) => {
-        if (this.setEvent.offset < response.total) {
-          response.data.forEach((item) => {
-            this.setEvent.offset++;
-            this.events.push(item);
-          });
-          this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);
-        } else {
-          this.setEvent.endOfList = true;
+      this.userService.getUserEvent(slugName, page).subscribe(
+        (response) => {
+          if (this.setEvent.offset < response.total) {
+            response.data.forEach((item) => {
+              this.setEvent.offset++;
+              this.events.push(item);
+            });
+            this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);
+          } else {
+            this.setEvent.endOfList = true;
+          }
+          this.smallLoader.hide();
+          this.setEvent.loadingInProgress = false;
         }
-        this.smallLoader.hide();
-        this.setEvent.loadingInProgress = false;
-      });
+      );
     }
   }
 }

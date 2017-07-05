@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-facebook';
 import { AppSetting } from '../app.setting';
-import { MainService } from '../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../app.interface';
 import * as moment from 'moment';
 import _date = moment.unitOfTime._date;
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-auth',
@@ -18,7 +18,7 @@ export class AuthComponent implements OnInit {
   private initParams: InitParams = AppSetting.FACEBOOK;
 
   constructor(private facebookService: FacebookService,
-              private mainService: MainService,
+              private userService: UserService,
               private localStorageService: LocalStorageService) {
   }
 
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit {
     this.facebookService.login(loginOptions).then(
       (loginRes: LoginResponse) => {
         console.log(loginRes);
-        this.mainService.login(loginRes.authResponse.accessToken).subscribe(
+        this.userService.login(loginRes.authResponse.accessToken).subscribe(
           (resp: any) => {
             let data = resp.current_user;
             let user: User = {

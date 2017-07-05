@@ -85,6 +85,7 @@ import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
+import { UserService } from './services/user.service';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -187,7 +188,8 @@ type StoreType = {
     EventService,
     ModeService,
     SeoService,
-    ProfileService
+    ProfileService,
+    UserService
   ],
 })
 export class AppModule {
