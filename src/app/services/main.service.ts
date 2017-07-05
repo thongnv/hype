@@ -112,7 +112,7 @@ export class MainService {
       '&limit=60' +
       '&type=follower' +
       '&slug=/user/' + userSlug +
-      '&page = ' + page;
+      '&page=' + page;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
