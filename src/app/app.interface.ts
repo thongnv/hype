@@ -1,20 +1,22 @@
 export interface User extends BaseUser {
+  id: number;
   firstName: string;
   lastName: string;
   contactNumber: string;
   followingNumber: number;
   followerNumber: number;
-  receiveEmail: number;
+  email: string;
   userFollowing: User[];
   userFollower: User[];
-  showNav: true;
-  acceptNotification: true;
+  showNav: boolean;
+  acceptNotification: boolean;
 }
 
 export interface BaseUser {
   avatar: string;
   name: string;
   slug: string;
+  isAnonymous: boolean;
 }
 
 export interface HyloEvent {

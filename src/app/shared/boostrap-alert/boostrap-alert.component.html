@@ -1,3 +1,5 @@
-<div [class.alert-success]="type.toString() === 'success'" [class.alert-danger]="type.toString() === 'danger'" class="alert">
-  <strong class="text-capitalize {{'text-'+type.toLowerCase()}}">{{headerContent}}!</strong> {{content}}
+<div class="alert"
+     [class.alert-success]="type.toString() === 'success'"
+     [class.alert-danger]="type.toString() === 'danger'">
+  {{content}}
 </div>

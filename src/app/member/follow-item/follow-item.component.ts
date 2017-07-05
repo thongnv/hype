@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style } from '@angular/animations';
 import { MainService } from '../../services/main.service';
 
@@ -10,12 +10,10 @@ import { MainService } from '../../services/main.service';
     trigger('follow', [
       state('yes', style({opacity: .5, display: 'inline-block'})),
       state('no', style({opacity: 0, display: 'none'})),
-      // transition('1 <=> 2', animate( '300ms' )),
     ]),
     trigger('unfollow', [
       state('yes', style({opacity: 0, display: 'none'})),
       state('no', style({opacity: .5, display: 'inline-block'})),
-      // transition('1 <=> 2', animate( '300ms' )),
     ])
   ],
 })

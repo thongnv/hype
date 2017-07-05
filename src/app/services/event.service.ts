@@ -25,7 +25,8 @@ export class EventService {
       creator: {
         name: data.user_post.name,
         avatar: data.user_post.user_picture,
-        slug: data.user_post.slug.replace('/user/', '')
+        slug: data.user_post.slug.replace('/user/', ''),
+        isAnonymous: false
       },
       images: extractImages(data.field_image),
       detail: data.body,
@@ -131,7 +132,12 @@ export class EventService {
       let resData = res.json().data;
       return {
         id: resData.cid,
-        author: {avatar: resData.author_avatar, name: resData.author_name},
+        author: {
+          avatar: resData.author_avatar,
+          name: resData.author_name,
+          slug: '',
+          isAnonymous: false
+        },
         text: resData.comment_body,
         likeNumber: 0,
         liked: false,
@@ -162,7 +168,12 @@ export class EventService {
       return {
         id: d.cid,
         pid: d.pid,
-        author: {name: d.author_name, avatar: d.author_avatar},
+        author: {
+          name: d.author_name,
+          avatar: d.author_avatar,
+          slug: '',
+          isAnonymous: false
+        },
         text: d.comment_body,
         likeNumber: 0,
         liked: false,
@@ -233,6 +244,8 @@ function extractExperiences(data): Experience[] {
         author: {
           name: item.author_name,
           avatar: item.author_avatar,
+          slug: '',
+          isAnonymous: false
         },
         rating: item.rating,
         date: item.created * 1000,
@@ -257,7 +270,8 @@ function extractComments(data): HyloComment[] {
         author: {
           name: item.author_name,
           avatar: item.author_avatar,
-          slug: ''
+          slug: '',
+          isAnonymous: false
         },
         text: item.comment_body,
         likeNumber: Number(item.like_comment),

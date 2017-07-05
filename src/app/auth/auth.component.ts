@@ -3,6 +3,9 @@ import { FacebookService, InitParams, LoginResponse, LoginOptions } from 'ngx-fa
 import { AppSetting } from '../app.setting';
 import { MainService } from '../services/main.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { User } from '../app.interface';
+import * as moment from 'moment';
+import _date = moment.unitOfTime._date;
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +14,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class AuthComponent implements OnInit {
   public ready = false;
-  private loggedIn = this.localStorageService.get('loginData');
+  private user = this.localStorageService.get('user');
   private initParams: InitParams = AppSetting.FACEBOOK;
 
   constructor(private facebookService: FacebookService,
@@ -20,7 +23,7 @@ export class AuthComponent implements OnInit {
   }
 
   public ngOnInit() {
-    if (this.loggedIn) {
+    if (this.user) {
       window.location.href = '/home';
     } else {
       this.facebookService.init(this.initParams).then();
@@ -39,9 +42,26 @@ export class AuthComponent implements OnInit {
         console.log(loginRes);
         this.mainService.login(loginRes.authResponse.accessToken).subscribe(
           (resp: any) => {
-            this.localStorageService.set('loginData', JSON.stringify(resp));
+            let data = resp.current_user;
+            let user: User = {
+              id: <number> data.uid,
+              firstName: <string> data.field_first_name,
+              lastName: <string> data.field_last_name,
+              name: data.field_first_name + ' ' + data.field_last_name,
+              contactNumber: '',
+              followingNumber: 0,
+              followerNumber: 0,
+              email: '',
+              userFollowing: [],
+              userFollower: [],
+              showNav: true,
+              acceptNotification: true,
+              slug: data.slug,
+              avatar: data.avatar,
+              isAnonymous: false
+            };
+            this.localStorageService.set('user', user);
             this.localStorageService.set('csrf_token', resp.csrf_token);
-            this.localStorageService.set('slug', resp.current_user.slug);
             window.location.reload();
           },
           (error) => {

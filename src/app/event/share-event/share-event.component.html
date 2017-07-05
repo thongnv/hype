@@ -71,13 +71,13 @@
           </div>
         </div>
       </div>
-      <div class="option-info col-xs-12 col-md-12">
+      <div class="option-info">
         <a (click)="showMore = !showMore">
           <i class="fa" [class.fa-plus]="!showMore" [class.fa-minus]="showMore"  aria-hidden="true"></i> Optional info
         </a>
       </div>
       <div *ngIf="showMore" class="row">
-        <div class="input-box col-xs-12 col-md-6">
+        <div class="input-box">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
             <input id="event-date" required formControlName="eventDate" ngui-datetime-picker  />
@@ -127,13 +127,14 @@
         <re-captcha (captchaResponse)="checkCaptcha($event)" site_key="6LexpiUTAAAAABQlThPYAyDxBJoTP_QFzwdE4L9p">
         </re-captcha>
       </div>
-      <div class="form-actions col-xs-12 col-md-12">
+      <div class="form-actions">
         <button type="submit"
                 [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
           Share
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
+      <div class="mobile-margin"></div>
     </form>
   </div>
   <!--form wrap end-->
