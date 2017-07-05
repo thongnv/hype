@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -30,7 +29,7 @@ export class InterestComponent implements OnInit {
 
   public onSubmit() {
     this.loaderService.show();
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     this.user.showNav = true;
     this.mainService.updateUserInterests(null, this.interests).then((resp) => {
       if (resp.status === null) {
@@ -56,7 +55,7 @@ export class InterestComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user.slug || this.slugName !== this.user.slug) {

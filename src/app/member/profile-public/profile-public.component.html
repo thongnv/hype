@@ -23,8 +23,8 @@
            (scroll)="onScrollToBottom($event)"
            [alwaysVisible]="true"
            [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
-        <div class="tab-content fade" *ngIf="user.events" [class.in]="selectedFavoriteType === 'event'">
-          <app-favorite-event *ngFor="let fav of user.events"
+        <div class="tab-content fade" *ngIf="events" [class.in]="selectedFavoriteType === 'event'">
+          <app-favorite-event *ngFor="let fav of events"
                               [item]="fav"
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeleteEvent($event)">

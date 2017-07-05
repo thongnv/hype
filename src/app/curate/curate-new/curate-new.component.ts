@@ -14,7 +14,6 @@ import { LoaderService } from '../../helper/loader/loader.service';
 })
 
 export class CurateNewComponent implements OnInit {
-  public userInfo: any;
   public favorite: any;
   public categories: any[];
   public previewUrl: any[] = [];

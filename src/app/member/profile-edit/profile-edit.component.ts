@@ -53,7 +53,7 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     this.countryPickerService.getCountries().subscribe(
       (countries) => {
         let defaultCountry = <ICountry> {

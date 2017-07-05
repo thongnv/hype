@@ -1,3 +1,4 @@
+import { User } from './app.interface';
 let _ENV = process.env.NODE_ENV || process.env.ENV || 'product';
 let PAGE_SIZE = 10;
 let FOLLOW_PAGE_SIZE = 60;
@@ -392,4 +393,22 @@ export class AppSetting {
     'Tanah Merah', 'Tanglin', 'Tanjong Katong', 'Tanjong Pagar', 'Telok Ayer', 'Telok Blangah',
     'Thomson', 'Tiong Bahru', 'Toa Payoh', 'Tuas', 'Upper Bukit Timah', 'Upper East Coast Road',
     'West Coast', 'Woodlands', 'Yio Chu Kang', 'Yishun'];
+
+  public static defaultUser: User = {
+    id: 0,
+    avatar: 'assets/img/avatar/demoavatar.png',
+    name: '',
+    slug: '',
+    isAnonymous: true,
+    firstName: '',
+    lastName: '',
+    contactNumber: '',
+    followingNumber: 0,
+    followerNumber: 0,
+    email: '',
+    userFollowing: [],
+    userFollower: [],
+    showNav: true,
+    acceptNotification: false,
+  };
 }

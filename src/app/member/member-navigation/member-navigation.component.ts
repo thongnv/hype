@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AppState } from '../../app.service';
 import { MainService } from '../../services/main.service';
-import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-member-navigation',
@@ -18,8 +16,7 @@ export class MemberNavigationComponent implements OnInit {
   public show: boolean = false;
   private isCurrentUser: boolean = false;
 
-  public constructor(public appState: AppState,
-                     private mainService: MainService) {
+  public constructor(private mainService: MainService) {
   }
 
   public ngOnInit() {

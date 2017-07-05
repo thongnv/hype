@@ -20,10 +20,6 @@
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeleteEvent($event)">
           </app-favorite-event>
-          <!--<div class="list-bottom">-->
-            <!--<div *ngIf="setEvent.loadingInProgress">Loading</div>-->
-            <!--<div class="end-of-list" *ngIf="setEvent.endOfList">End Of List</div>-->
-          <!--</div>-->
           <div class="list-bottom">
           </div>
           <app-small-loader></app-small-loader>
@@ -34,10 +30,6 @@
                              [canDelete]="canDelete"
                              (onClickDelete)="onClickDeleteList($event)">
           </app-favorite-list>
-          <!--<div class="list-bottom">-->
-            <!--<div *ngIf="setList.loadingInProgress">Loading</div>-->
-            <!--<div class="end-of-list" *ngIf="setList.endOfList">End Of List</div>-->
-          <!--</div>-->
           <div class="list-bottom">
           </div>
           <app-small-loader></app-small-loader>

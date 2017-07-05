@@ -5,11 +5,11 @@ export interface User extends BaseUser {
   contactNumber: string;
   followingNumber: number;
   followerNumber: number;
-  email: number;
+  email: string;
   userFollowing: User[];
   userFollower: User[];
-  showNav: true;
-  acceptNotification: true;
+  showNav: boolean;
+  acceptNotification: boolean;
 }
 
 export interface BaseUser {
