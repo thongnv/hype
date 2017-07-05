@@ -56,14 +56,16 @@ export class NavbarComponent implements OnInit {
     if (notificationPage !== undefined) {
       this.notificationPage = notificationPage;
     }
-    this.socket = io(AppSetting.NODE_SERVER);
-    this.socket.on('notification', (data) => {
-      if (data.uid.indexOf(this.user.id)) {
-        this.notifications = data.notifications;
-      }
-    });
 
     if (!this.user.isAnonymous) {
+
+      this.socket = io(AppSetting.NODE_SERVER);
+      this.socket.on('notification', (data) => {
+        if (data.uid.indexOf(this.user.id)) {
+          this.notifications = data.notifications;
+        }
+      });
+
       this.getNotifications();
     }
     this.profileService.getEmittedValue().subscribe(
