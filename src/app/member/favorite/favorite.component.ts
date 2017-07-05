@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, Inject } from '@angular/core';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -32,6 +32,10 @@ export class FavoriteComponent implements OnInit {
   };
   public sub: any;
   public slugName: any;
+  public places = [];
+  public lists = [];
+  public events = [];
+  public ready = false;
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -41,15 +45,36 @@ export class FavoriteComponent implements OnInit {
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
                      private smallLoader: SmallLoaderService,
+                     private router: Router,
                      @Inject(DOCUMENT) private document: Document) {
-    this.smallLoader.show();
-    this.loaderService.show();
+  }
+
+  public ngOnInit() {
     this.selectedFavoriteType = 'event';
-    this.user = this.localStorageService.get('user');
-    this.user.showNav = true;
-    this.user.places = [];
-    this.user.lists = [];
-    this.user.events = [];
+    this.user = this.localStorageService.get('user') as User;
+    if (this.user) {
+      this.smallLoader.show();
+      this.loaderService.show();
+      this.user.showNav = true;
+      this.sub = this.route.params.subscribe(
+        (params) => {
+          this.slugName = params['slug'];
+          this.getEvent(this.slugName, this.eventPageNum);
+          this.canDelete = this.user.slug === this.slugName;
+          this.mainService.getUserProfile(this.slugName).subscribe(
+            (user: User) => {
+              this.user = user;
+              this.ready = true;
+            },
+            (error) => {
+              console.log(error);
+            },
+            () => {
+              this.smallLoader.hide();
+              this.loaderService.hide();
+            });
+      });
+    }
   }
 
   public onSelectFavoriteType(type: string): void {
@@ -82,9 +107,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.user.events.forEach((event, index) => {
+        this.events.forEach((event, index) => {
           if (item === event) {
-            delete this.user.events[index];
+            delete this.events[index];
             this.setEvent.offset--;
             if (this.setEvent.offset === 0) {
               this.setEvent.endOfList = true;
@@ -106,9 +131,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.removeFavoritedEventList(item.slug).then((response) => {
       if (response.status) {
-        this.user.lists.forEach((list, index) => {
+        this.lists.forEach((list, index) => {
           if (item === list) {
-            delete this.user.lists[index];
+            delete this.lists[index];
             this.setList.offset--;
             if (this.setList.offset === 0) {
               this.setList.endOfList = true;
@@ -130,9 +155,9 @@ export class FavoriteComponent implements OnInit {
     this.smallLoader.show();
     this.mainService.favoritePlace(item.ids_no).then((response) => {
       if (response.error === 0) {
-        this.user.places.forEach((place, index) => {
+        this.places.forEach((place, index) => {
           if (item === place) {
-            delete this.user.places[index];
+            delete this.places[index];
             this.setPlace.offset--;
             if (this.setPlace.offset === 0) {
               this.setPlace.endOfList = true;
@@ -172,29 +197,6 @@ export class FavoriteComponent implements OnInit {
 
   }
 
-  public ngOnInit() {
-    this.sub = this.route.params.subscribe((params) => {
-      this.slugName = params['slug'];
-      this.getEvent(this.slugName, this.eventPageNum);
-      this.canDelete = this.localStorageService.get('slug') === this.slugName;
-      this.getUserProfile(this.slugName);
-    });
-  }
-
-  private getUserProfile(slugName?: string): void {
-    this.mainService.getUserProfile(slugName).subscribe(
-      (user: User) => {
-        this.user = user;
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        this.smallLoader.hide();
-        this.loaderService.hide();
-      });
-  }
-
   private getPlace(slugName?: string, page?: number) {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
@@ -205,7 +207,7 @@ export class FavoriteComponent implements OnInit {
           if (this.setPlace.offset < response.total) {
             response.results.forEach((item) => {
               this.setPlace.offset++;
-              this.user.places.push(item);
+              this.places.push(item);
             });
             this.smallLoader.hide();
             this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
@@ -232,7 +234,7 @@ export class FavoriteComponent implements OnInit {
           if (this.setList.offset < response.total) {
             response.data.forEach((item) => {
               this.setList.offset++;
-              this.user.lists.push(item);
+              this.lists.push(item);
             });
             this.smallLoader.hide();
             this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
@@ -258,12 +260,10 @@ export class FavoriteComponent implements OnInit {
         if (this.setEvent.offset < response.total) {
           response.data.forEach((item) => {
             this.setEvent.offset++;
-            this.user.events.push(item);
+            this.events.push(item);
           });
-          this.smallLoader.hide();
           this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);
         } else {
-          this.smallLoader.hide();
           this.setEvent.endOfList = true;
         }
         this.smallLoader.hide();
