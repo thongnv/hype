@@ -20,6 +20,18 @@ export class MainService {
                      private http: Http) {
   }
 
+  public getCsrfToken(): Observable<any> {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get( AppSetting.API_ENDPOINT + '/session/token', options)
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
   public login(fbToken: string): Observable<Response> {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers, withCredentials: true});
@@ -47,10 +59,10 @@ export class MainService {
 
   public getUserProfile(slugName?: string): Observable<User> {
     let csrfToken = <string> this.localStorageService.get('csrf_token');
-    let currentSlug = <string> this.localStorageService.get('slug');
+    let user = this.localStorageService.get('user') as User;
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    let slug = slugName ? slugName : currentSlug;
+    let slug = slugName ? slugName : user.slug;
     return this.http.get(AppSetting.API_USER_PROFILE + slug + '?_format=json', options)
       .map((res) => {
         let data = res.json();
@@ -135,7 +147,7 @@ export class MainService {
   }
 
   public getUserInterest(slugName?: string, page?: number): Promise<any> {
-    let currentSlug = <string> this.localStorageService.get('slug');
+    let user = this.localStorageService.get('user') as User;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
 
@@ -143,7 +155,7 @@ export class MainService {
     myParams.set('_format', 'json');
 
     let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-    slugName = slugName ? slugName : currentSlug;
+    slugName = slugName ? slugName : user.slug;
     return this.http.get(AppSetting.API_USER_INTEREST + slugName, options)
       .toPromise()
       .then((resp) => resp.json())
@@ -151,8 +163,8 @@ export class MainService {
   }
 
   public updateUserInterests(slugName?: string, item?: any[]): Promise<any> {
-    let currentSlug = <string> this.localStorageService.get('slug');
-    slugName = slugName ? slugName : currentSlug;
+    let user = this.localStorageService.get('user') as User;
+    slugName = slugName ? slugName : user.slug;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
@@ -278,7 +290,7 @@ export class MainService {
   }
 
   public getUserEvent(slugName?: string, page?: number): Promise<any> {
-    let currentSlug = <string> this.localStorageService.get('slug');
+    let user = this.localStorageService.get('user') as User;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let myParams = new URLSearchParams();
@@ -286,7 +298,7 @@ export class MainService {
     if (slugName) {
       myParams.set('slug', '/user/' + slugName);
     } else {
-      myParams.set('slug', '/user/' + currentSlug);
+      myParams.set('slug', '/user/' + user.slug);
     }
     if (page) {
       myParams.set('page', page.toString());
@@ -304,7 +316,7 @@ export class MainService {
   }
 
   public getUserList(slugName?: string, page?: number): Promise<any> {
-    let currentSlug = <string> this.localStorageService.get('slug');
+    let user = this.localStorageService.get('user') as User;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let myParams = new URLSearchParams();
     myParams.set('_format', 'json');
@@ -318,7 +330,7 @@ export class MainService {
     if (slugName) {
       myParams.set('slug', '/user/' + slugName);
     } else {
-      myParams.set('slug', '/user/' + currentSlug);
+      myParams.set('slug', '/user/' + user.slug);
     }
 
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
@@ -331,7 +343,7 @@ export class MainService {
   }
 
   public getUserPlace(slugName?: string, page?: number): Promise<any> {
-    let currentSlug = <string> this.localStorageService.get('slug');
+    let user = this.localStorageService.get('user') as User;
     let csrfToken = <string> this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let myParams = new URLSearchParams();
@@ -345,7 +357,7 @@ export class MainService {
     if (slugName) {
       myParams.set('slug', slugName);
     } else {
-      myParams.set('slug', currentSlug);
+      myParams.set('slug', user.slug);
     }
     let options = new RequestOptions({headers, withCredentials: true, params: myParams});
 
