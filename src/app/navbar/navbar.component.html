@@ -64,7 +64,7 @@
                             (onMarkOneRead)="onMarkOneRead($event)">
           </app-notification>
         </li>
-        <li class="pull-right login-mobile" *ngIf="!user">
+        <li class="pull-right login-mobile" *ngIf="user.isAnonymous">
           <span [routerLink]="['/login']" class="btn btn-success btn-login">Login</span>
         </li>
         <li class="mobile-search-icon pull-right map-option nav-item" (click)="mobile_searchState()">
