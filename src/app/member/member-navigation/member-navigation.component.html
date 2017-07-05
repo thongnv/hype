@@ -1,7 +1,7 @@
 <div class="user-info-wrap">
   <div *ngIf="show" class="avatar-wrap col-xs-7 col-sm-7 col-md-12 col-lg-12">
     <div class="avatar">
-      <img class="user-avatar pull-left" [src]="user.avatar" [alt]="user.name" width="100">
+      <img class="user-avatar pull-left" [src]="user.avatar" width="100">
       <div class="user-name-wrap">
         <span class="user-name text-ellipsis" [routerLink]="['/'+user.slug]">
           {{user.name | truncate: 17}}

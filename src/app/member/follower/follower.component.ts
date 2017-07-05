@@ -104,7 +104,6 @@ export class FollowerComponent implements OnInit {
   }
 
   public updateFollow(item: any) {
-    console.log('item', item);
     if (item.stateFollow === 'yes') {
       if (this.isCurrentUser) {
         this.currentUser.followerNumber--;
