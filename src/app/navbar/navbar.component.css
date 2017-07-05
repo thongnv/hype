@@ -208,6 +208,9 @@
   .show>.navbar-toggle{
     margin-left: 50%;
   }
+    .navbar-toggle {
+        padding: 9px 15px;
+    }
   .show>.extra-menu{
     display: none;
   }
