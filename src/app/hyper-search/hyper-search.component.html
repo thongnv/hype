@@ -27,7 +27,7 @@
            [color]="'#ec3d62'">
         <ul *ngIf="result.company?.length" class="list-location-address">
           <li class="title-search-location-address">
-            <a>Place</a>
+            <a>Places</a>
           </li>
           <li *ngFor="let item of result.company;trackBy:item?.id">
             <a class="item-link" (click)="onCloseSuggestion(item)">
