@@ -1,16 +1,19 @@
-<div class="setting-wrap table-wrap">
+<div class="setting-wrap table-wrap" *ngIf="ready">
+
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
-    <app-member-navigation *ngIf="!user.isAnonymous" [user]="user" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true">
-      Loading...
+    <app-member-navigation
+      [user]="currentUser" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true">
     </app-member-navigation>
   </div>
+
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
-    <section *ngIf="user.userFollowing" class="follow-list-wrap">
-      <h3 class="col-xs-12 count-follow">{{user.followingNumber}} Following</h3>
+    <section *ngIf="currentUser.userFollowing" class="follow-list-wrap">
+      <h3 class="col-xs-12 count-follow">{{currentUser.followingNumber}} Following</h3>
       <div class="col-xs-12">
         <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       </div>
-      <div class="infinite-list" (scroll)="onFollowScrollDown($event)"
+      <div class="infinite-list"
+           (scroll)="onFollowScrollDown($event)"
            slimScroll
            width="100%"
            height="calc(100vh - 145px)"
@@ -20,10 +23,14 @@
            [railOpacity]="0.1"
            [railColor]="'#ec3d62'"
            [color]="'#ec3d62'">
-          <app-follow-item [item]="following" [flag]="'following'" *ngFor="let following of user.userFollowing"
-                           (onUpdate)="updateFollow($event)"
-                           class="col-xs-6 col-sm-6 col-md-4 col-lg-3 interest-item-wrap">
-          </app-follow-item>
+
+        <app-follow-item
+          [item]="following" [flag]="'following'"
+          *ngFor="let following of currentUser.userFollowing"
+          (onUpdate)="updateFollow($event)"
+          class="col-xs-6 col-sm-6 col-md-4 col-lg-3 interest-item-wrap">
+        </app-follow-item>
+
         <div class="list-bottom">
           <div *ngIf="set.loadingInProgress">Loading</div>
           <div class="end-of-list" *ngIf="set.endOfList">End Of List</div>

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-following',
@@ -13,7 +14,8 @@ import { User } from '../../app.interface';
 })
 export class FollowingComponent implements OnInit {
 
-  public user: any;
+  public user = AppSetting.defaultUser;
+  public currentUser: User;
   public msgContent: string;
   public alertType: string;
   public followingPage: number = 0;
@@ -24,29 +26,44 @@ export class FollowingComponent implements OnInit {
   };
   public slugName: any;
   public sub: any;
+  public ready = false;
 
   constructor(private appState: AppState,
               private loaderService: LoaderService,
               private mainService: MainService,
               private route: ActivatedRoute,
               private localStorageService: LocalStorageService) {
+  }
+
+  public ngOnInit() {
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
+    }
     this.loaderService.show();
     let followingPage = this.appState.state.followingPaging;
     if (followingPage !== undefined) {
       this.followingPage = followingPage;
     }
     this.appState.set('followingPage', this.followingPage);
-    console.log('followingPage', this.followingPage);
-  }
-
-  public ngOnInit() {
-    let userSlug = this.localStorageService.get('slug');
-    this.sub = this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      this.isCurrentUser = this.slugName === userSlug;
-      console.log('USER: ', this.slugName);
-      this.getUserProfile(this.slugName);
-      this.getUserFollow('following', this.slugName, this.followingPage);
+      this.isCurrentUser = this.slugName === this.user.slug;
+      this.mainService.getUserProfile(this.slugName).subscribe(
+        (resp: User) => {
+          this.currentUser = resp;
+          this.currentUser.showNav = this.isCurrentUser;
+          this.ready = true;
+          this.mainService.getFollowings(this.slugName, this.followingPage).subscribe(
+            (res) => {
+              this.currentUser.userFollowing = res.result;
+            },
+            (error) => console.log(error)
+          );
+        },
+        (error) => console.log(error),
+        () => this.loaderService.hide()
+      );
     });
   }
 
@@ -61,11 +78,12 @@ export class FollowingComponent implements OnInit {
     if (!this.set.loadingInProgress) {
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getUserFollow('following', this.slugName, ++this.followingPage)
-        .then((response) => {
-          response.forEach((item) => {
+      this.mainService.getFollowings(this.slugName, ++this.followingPage).subscribe(
+        (resp) => {
+          let data = resp.result;
+          data.forEach((item) => {
             count++;
-            this.user.userFollowing.push(item);
+            this.currentUser.userFollowing.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
@@ -82,37 +100,14 @@ export class FollowingComponent implements OnInit {
     console.log('item', item);
     if (item.stateFollow === 'yes') {
       if (this.isCurrentUser) {
-        this.user.followingNumber--;
+        this.currentUser.followingNumber--;
       }
     } else {
       if (this.isCurrentUser) {
-        this.user.followingNumber++;
+        this.currentUser.followingNumber++;
       }
     }
     this.alertType = 'success';
     this.msgContent = 'Update following successful';
-  }
-
-  private getUserFollow(followFlag: string, slugName: string, page: number): void {
-    this.mainService.getUserFollow(followFlag, slugName, page).then((response) => {
-      this.user.userFollowing = response;
-      console.log('response', response);
-      console.log('this.user.userFollowing', this.user.userFollowing);
-      this.appState.set('user', this.user);
-    });
-  }
-
-  private getUserProfile(slugName: string): void {
-    this.user = this.localStorageService.get('user');
-    this.mainService.getUserProfile(slugName).subscribe(
-      (user: User) => {
-        this.user = user;
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        this.loaderService.hide();
-      });
   }
 }
