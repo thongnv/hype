@@ -77,6 +77,7 @@ header ul li.active {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 15px;
+    display: inherit;
 }
 .input-box > .field-group > .form-group > select {
     height: 48px;
@@ -149,7 +150,8 @@ header ul li.active {
 }
 
 .option-info {
-  margin-left: 10px;
+  margin-left: 25px;
+  margin-bottom: 15px;
 }
 .form-group .ngui-datetime-picker-wrapper input {
     padding: 10px;
@@ -164,7 +166,8 @@ header ul li.active {
     font-size: 12px;
 }
 .form-actions {
-  margin-left: 10px;
+  margin-left: 25px;
+  margin-right: 25px;
   padding-top: 40px;
 }
 .form-actions button {
@@ -321,15 +324,38 @@ header ul li.active {
     margin-right: 40px;
 }
 
-.left-content-information-event > li > span {
-    padding-left: 32%;
-    display: block;
+.left-content-information-event .info-label {
+     float: left;
+     text-transform: capitalize;
+     width: 25%;
+     margin-right: 40px;
+     font-family: Roboto, sans-serif;
+     font-size: 16px;
+     font-weight: 600;
+     line-height: 20px;
+     text-align: left;
+     color: #3b3b3b;
+ }
+
+.left-content-information-event .info-value {
     font-size: 14px;
     font-weight: 300;
-    line-height: 1.43;
+    line-height: 20px;
     text-align: left;
     color: #3b3b3b;
+    display: block;
+    padding-left: 40%;
 }
+
+/*.left-content-information-event > li > span {*/
+    /*padding-left: 32%;*/
+    /*display: block;*/
+    /*font-size: 14px;*/
+    /*font-weight: 300;*/
+    /*line-height: 1.43;*/
+    /*text-align: left;*/
+    /*color: #3b3b3b;*/
+/*}*/
 
 .left-content-information-event > li > span > b {
   position: relative;
@@ -358,7 +384,7 @@ span.dollar-character {
 }
 .list-mention {
   list-style: none;
-  padding-left: 32%;
+  padding-left: 39%;
 }
 
 .list-mention > li {
@@ -397,6 +423,35 @@ span.dollar-character {
 }
 
 
+.input-box .form-group label{
+  display: inherit;
+}
+.input-box .call-action-group .form-group select{
+  width: 40%;
+  margin-right: 10px;
+}
+.input-box .call-action-group .form-group input{
+  width: calc(60% - 10px);
+}
+.mention-by-group .form-group input{
+
+}
+.form-wrap .option-info-content {
+  padding: 0 25px !important;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.form-wrap .option-info-content .form-group{
+  margin-left: 0px;
+  width: 100%;
+  padding: 0;
+}
+.input-box .form-group {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
 @media only screen and (min-width: 320px) and (max-width: 374px) {
 
   .input-box h3{
@@ -522,12 +577,13 @@ span.dollar-character {
   }
 
   .new-list .recaptcha{
-    margin-left: 15px;
+    margin-left: 0px;
     clear: both;
   }
   .input-box .form-group label{
     margin-top: 15px;
     margin-bottom: 15px;
+    display: inherit;
   }
 
   .list-preview-wrap .post-experience{
@@ -552,20 +608,48 @@ span.dollar-character {
 }
 
 @media only screen and (min-width: 320px) and (max-width: 800px) {
+  .form-actions{
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 0 15px;
+  }
+  .option-info {
+    margin-left: 15px;
+  }
+  .input-box .call-action-group .form-group select{
+    width: 40%;
+    margin-right: 10px;
+  }
+  .input-box .call-action-group .form-group input{
+    width: calc(60% - 10px);
+  }
+  .mention-by-group .form-group input{
+
+  }
+  .form-wrap .option-info-content {
+    padding: 0 15px !important;
+  }
+  .form-wrap .option-info-content .form-group{
+    margin-left: 0px;
+    width: 100%;
+  }
+  .input-box .form-group {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
   .new-list .form-wrap{
     padding: 0;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
   }
   .row{
     padding: 0 !important;
   }
-  .new-list .form-wrap{
-    padding: 0;
-    margin-bottom: 80px;
-  }
   .input-box .form-group label{
     margin-top: 15px;
     margin-bottom: 15px;
+    display: inherit;
   }
   .mobile-margin{
   }
@@ -575,8 +659,6 @@ span.dollar-character {
   .list-preview-wrap .row{
     margin: 0px;
   }
-}
-@media only screen and (max-width: 767px) {
   .add-mention-group button{
     margin: 10px 0;
   }
@@ -584,10 +666,6 @@ span.dollar-character {
   .mention-by-group .form-group{
     margin: 5px 0;
 
-  }
-
-  .mention-by-group .form-group input{
-    width: 95%;
   }
 }
 @media only screen and (min-width: 992px) {

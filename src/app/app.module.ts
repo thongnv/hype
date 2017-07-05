@@ -33,6 +33,7 @@ import { Angular2FontawesomeModule } from 'angular2-fontawesome';
 import { MomentModule } from 'angular2-moment';
 import { FacebookModule } from 'ngx-facebook';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 // modules
 import { HtmlToTextModule } from './html-to-text/html-to-text.module';
@@ -154,6 +155,7 @@ type StoreType = {
     CarouseModule,
     HelperModule,
     RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
+    NguiDatetimePickerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places', 'geometry']

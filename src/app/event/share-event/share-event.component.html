@@ -76,7 +76,7 @@
           <i class="fa" [class.fa-plus]="!showMore" [class.fa-minus]="showMore"  aria-hidden="true"></i> Optional info
         </a>
       </div>
-      <div *ngIf="showMore" class="row">
+      <div *ngIf="showMore" class="row option-info-content">
         <div class="input-box">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
@@ -170,7 +170,7 @@
               </span>
             </li>
             <li>
-              <p class="info-label mentioned_by">Mentioned by</p>
+              <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li *ngFor="let mention of previewData.eventMentions">
                   <a [href]="mention" target="_blank">

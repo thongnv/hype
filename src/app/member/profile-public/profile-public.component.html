@@ -35,8 +35,8 @@
             <div class="end-of-list" *ngIf="setEvent.endOfList">End Of List</div>
           </div>
         </div>
-        <div class="tab-content fade" *ngIf="user.lists" [class.in]="selectedFavoriteType === 'list'">
-          <app-favorite-list *ngFor="let fav of user.lists"
+        <div class="tab-content fade" *ngIf="lists" [class.in]="selectedFavoriteType === 'list'">
+          <app-favorite-list *ngFor="let fav of lists"
                              [item]="fav"
                              [canDelete]="canDelete"
                              (onClickDelete)="onClickDeleteList($event)">
@@ -46,8 +46,8 @@
             <div class="end-of-list" *ngIf="setList.endOfList">End Of List</div>
           </div>
         </div>
-        <div class="tab-content fade" *ngIf="user.places" [class.in]="selectedFavoriteType === 'place'">
-          <app-favorite-place *ngFor="let fav of user.places"
+        <div class="tab-content fade" *ngIf="places" [class.in]="selectedFavoriteType === 'place'">
+          <app-favorite-place *ngFor="let fav of places"
                               [item]="fav"
                               [canDelete]="canDelete"
                               (onClickDelete)="onClickDeletePlace($event)">

@@ -59,7 +59,9 @@ export class HyperSearchComponent implements OnInit {
         let inputText = this.searchElementRef.nativeElement.value;
         let autocompleteService = new google.maps.places.AutocompleteService();
         autocompleteService.getPlacePredictions(
-          {input: inputText},
+          {input: inputText,
+            address:'Xinh-ga-po',
+            region: 'sg'},
           (result, status) => this.gmapResults = result);
       });
 
