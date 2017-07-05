@@ -10,7 +10,10 @@
                 <span class="location-address">location address</span>
                 <span class="sprite sprite-icon-add close" (click)="onCloseSuggestion()"></span>
             </div>
-            <div class="suggestion-wrap" slimScroll width="auto" height="290px" size="7px" [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+            <div class="suggestion-wrap" slimScroll width="auto" height="290px" size="7px"
+                 [railVisible]="true" [railOpacity]="0.1"
+                 [touchScrollStep]="75"
+                 [railColor]="'#ec3d62'" [color]="'#ec3d62'">
                 <div [class.hide]="hideNoResult" class="no-result text-info text-center">No result found.</div>
                 <ul *ngIf="result.article?.length" class="list-location-address">
                     <li class="title-search-location-address">

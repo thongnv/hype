@@ -568,7 +568,12 @@ span.dollar-character {
     margin-bottom: 15px;
   }
   .mobile-margin{
-    margin-bottom: 70px;
+  }
+  .list-preview-wrap .left-content{
+    padding: 0px;
+  }
+  .list-preview-wrap .row{
+    margin: 0px;
   }
 }
 @media only screen and (max-width: 767px) {
@@ -588,7 +593,6 @@ span.dollar-character {
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap{
     padding: 5px 10px;
-    margin-bottom: 80px;
   }
   .list-preview-wrap .left-content {
     border-right:0;
