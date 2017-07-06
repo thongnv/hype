@@ -40,7 +40,7 @@ export class ModeComponent implements OnInit {
     public filterCategory:FormGroup;
     public items = [];
     public filterData:any = [];
-    public currentHighlightedMarker:number=1;
+    public currentHighlightedMarker:number = 1;
     public currentRate = 0;
     private cuisine:any;
     public best:any = [];
@@ -178,6 +178,22 @@ export class ModeComponent implements OnInit {
 
             }
         });
+
+        $(window).scroll(()=> {
+            //load more data
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (this.loadMore) {
+                    return false;
+                }
+                if (this.total <= this.items.length) {
+                    return false;
+                }
+                this.loadMore = true;
+                this.smallLoader.show();
+                this.params.page++;
+                this.getDataModes();
+            }
+        });
     }
 
 
@@ -229,7 +245,7 @@ export class ModeComponent implements OnInit {
     getDataModes() {
         let params = this.params;
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-
+            this.loadMore = false;
             this.total = resp.total;
             if (parseInt(resp.total) > 0) {
             }
@@ -242,6 +258,7 @@ export class ModeComponent implements OnInit {
             this.smallLoader.hide();
 
         }, err=> {
+            this.loadMore = false;
             this.items = [];
             this.markers = [];
             this.loaderService.hide();
@@ -338,6 +355,8 @@ export class ModeComponent implements OnInit {
 
     private initMap(companies:any) {
         if (companies) {
+            this.markers = [];
+            this.currentHighlightedMarker = 0;
             this.mapsAPILoader.load().then(() => {
 
                 let mapCenter = new google.maps.Marker({
@@ -357,18 +376,30 @@ export class ModeComponent implements OnInit {
                             draggable: true
                         });
                         let distance = companies[i]._dict_;
-                        companies[i].distance = (distance).toFixed(1);
                         let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
                         console.log(parseInt(geometry), this.currentRadius);
                         if (parseInt(geometry) <= this.currentRadius) {
+                            companies[i].distance = (distance).toFixed(1);
                             this.items.push(companies[i]);
-                            this.markers.push({
-                                lat: parseFloat(lat[1]),
-                                lng: parseFloat(lng[1]),
-                                label: companies[i].Company_Name,
-                                opacity: 0.6,
-                                isOpenInfo: false
-                            });
+                            if (i == 0) {
+                                this.markers.push({
+                                    lat: parseFloat(lat[1]),
+                                    lng: parseFloat(lng[1]),
+                                    label: companies[i].Company_Name,
+                                    opacity: 0.4,
+                                    isOpenInfo: false,
+                                    icon: 'assets/icon/icon_pointer.png'
+                                });
+                            } else {
+                                this.markers.push({
+                                    lat: parseFloat(lat[1]),
+                                    lng: parseFloat(lng[1]),
+                                    label: companies[i].Company_Name,
+                                    opacity: 0.4,
+                                    isOpenInfo: false,
+                                    icon: 'assets/icon/icon_pointer.png'
+                                });
+                            }
                         }
                     }
                 }
@@ -396,60 +427,60 @@ export class ModeComponent implements OnInit {
         this.currentHighlightedMarker = selector;
         this.currentHighlightedMarker = selector;
         $('html, body').animate({
-            scrollTop: $("#v"+selector).offset().top - 80
+            scrollTop: $("#v" + selector).offset().top - 80
         }, 'slow');
 
     }
 
     public navIsFixed:boolean = false;
 
-    @HostListener("window:scroll", ['$event'])
-    onWindowScroll($event) {
-
-        //Hilight marker map
-        let baseHeight = this.document.body.clientHeight;
-        let realScrollTop = this.document.body.scrollTop + baseHeight;
-        let currentHeight:number = baseHeight;
-        let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
-
-        if (content_element.length > 1) {
-            for (let i = 0; i < content_element.length; i++) {
-                let currentClientH = content_element[i].clientHeight;
-                currentHeight += currentClientH;
-                console.log(currentHeight);
-                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-                    if (this.currentHighlightedMarker !== i) {
-                        this.currentHighlightedMarker = i;
-                        this.highlightMarker(i);
-                    }
-                }
-            }
-        }
-
-        //Scroll Load more
-        let windowHeight = 'innerHeight' in window ? window.innerHeight
-            : this.document.documentElement.offsetHeight;
-        let body = this.document.body;
-        let html = this.document.documentElement;
-        let docHeight = Math.max(body.scrollHeight,
-            body.offsetHeight, html.clientHeight,
-            html.scrollHeight, html.offsetHeight);
-        let windowBottom = windowHeight + window.pageYOffset;
-        console.log((docHeight - 50), windowBottom);
-        if ((docHeight - 50) <= windowBottom) {
-            if (this.total > this.items.length) {
-                if (this.items.length <= 1) {
-                    return false;
-                }
-                console.log(this.total, this.items.length);
-                this.smallLoader.show();
-                this.loadMore = true;
-                this.params.page += 1;
-                this.getDataModes();
-            }
-        }
-
-    }
+    //@HostListener("window:scroll", ['$event'])
+    //onWindowScroll($event) {
+    //
+    //    //Hilight marker map
+    //    let baseHeight = this.document.body.clientHeight;
+    //    let realScrollTop = this.document.body.scrollTop + baseHeight;
+    //    let currentHeight:number = baseHeight;
+    //    let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
+    //
+    //    if (content_element.length > 1) {
+    //        for (let i = 0; i < content_element.length; i++) {
+    //            let currentClientH = content_element[i].clientHeight;
+    //            currentHeight += currentClientH;
+    //            console.log(currentHeight);
+    //            if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
+    //                if (this.currentHighlightedMarker !== i) {
+    //                    this.currentHighlightedMarker = i;
+    //                    this.highlightMarker(i);
+    //                }
+    //            }
+    //        }
+    //    }
+    //
+    //    //Scroll Load more
+    //    let windowHeight = 'innerHeight' in window ? window.innerHeight
+    //        : this.document.documentElement.offsetHeight;
+    //    let body = this.document.body;
+    //    let html = this.document.documentElement;
+    //    let docHeight = Math.max(body.scrollHeight,
+    //        body.offsetHeight, html.clientHeight,
+    //        html.scrollHeight, html.offsetHeight);
+    //    let windowBottom = windowHeight + window.pageYOffset;
+    //    console.log((docHeight - 50), windowBottom);
+    //    if ((docHeight - 50) <= windowBottom) {
+    //        if (this.total > this.items.length) {
+    //            if (this.items.length <= 1) {
+    //                return false;
+    //            }
+    //            console.log(this.total, this.items.length);
+    //            this.smallLoader.show();
+    //            this.loadMore = true;
+    //            this.params.page += 1;
+    //            this.getDataModes();
+    //        }
+    //    }
+    //
+    //}
 
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
@@ -685,6 +716,8 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
+        this.items=[];
+        this.markers =[];
         this.smallLoader.show();
         this.getDataModes();
 

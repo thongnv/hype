@@ -75,6 +75,7 @@ export class HomeComponent implements OnInit {
     public screenWidth:number = 0;
     public screenHeight:number = 0;
     public circleDraggable:boolean = true;
+    private stopped:boolean = false;
     private params:any = {
         'page': 0,
         'limit': 20,
@@ -140,7 +141,61 @@ export class HomeComponent implements OnInit {
 
         this.screenWidth = width;
         this.screenHeight = height;
+        $(window).scroll(()=> {
+            //load more data
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (this.loadMore) {
+                    return false;
+                }
 
+                if (this.selectedEventOrder.name == 'top 100') {
+                    // check limit start
+                    if (this.params.start >= 80) {
+                        return false;
+                    }
+                    //check limit length data response
+                    if (this.events.length < this.params.start) {
+                        return false;
+                    }
+                    this.smallLoader.show();
+                    this.loadMore = true;
+                    this.params.start += 20;
+                    console.log(this.params.start);
+                    this.getTrending();
+
+                } else {
+                    if (this.total <= this.events.length) {
+                        return false;
+                    }
+                    this.loadMore = true;
+                    this.smallLoader.show();
+                    this.params.page++;
+                    this.getTrending();
+
+                }
+            }
+
+            //index marker Highlight
+            let baseHeight = $("#v-scrollable")[0].clientHeight;
+            let realScrollTop = this.document.body.scrollTop + baseHeight;
+            let currentHeight:number = baseHeight;
+            let content_element = $("#v-scrollable")[0].children;
+
+            console.log($("#v-scrollable"));
+            console.log(realScrollTop);
+            if (content_element.length > 1) {
+                for (let i = 0; i < content_element.length; i++) {
+                    let currentClientH = content_element[i].clientHeight;
+                    currentHeight += currentClientH;
+                    if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                        if (this.currentHighlightedMarker !== i) {
+                            this.currentHighlightedMarker = i;
+                            this.highlightMarker(i);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     // set position current
@@ -294,8 +349,9 @@ export class HomeComponent implements OnInit {
 
     public clickedMarker(selector, horizontal) {
         this.currentHighlightedMarker = selector;
+        this.markers[selector].opacity = !this.markers[selector].opacity;
         $('html, body').animate({
-            scrollTop: $("#v"+selector).offset().top - 80
+            scrollTop: $("#v" + selector).offset().top - 80
         }, 'slow');
     }
 
@@ -435,73 +491,11 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    @HostListener("window:scroll", [])
-    onWindowScroll() {
-
-        let baseHeight = this.document.body.clientHeight;
-        let realScrollTop = this.document.body.scrollTop + baseHeight;
-        let currentHeight:number = baseHeight;
-        let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
-
-        if (content_element.length > 1) {
-            console.log(' content_element.length', content_element.length);
-            for (let i = 0; i < content_element.length; i++) {
-                let currentClientH = content_element[i].clientHeight;
-                currentHeight += currentClientH;
-                if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-                    if (this.currentHighlightedMarker !== i) {
-                        console.log("this.currentHighlightedMarker", this.currentHighlightedMarker);
-                        this.currentHighlightedMarker = i;
-                        this.highlightMarker(i);
-                    }
-                }
-            }
-        }
-
-
-        //load more
-        //let windowHeight = 'innerHeight' in window ? window.innerHeight
-        //    : this.document.documentElement.offsetHeight;
-        //let body = this.document.body;
-        //let html = this.document.documentElement;
-        //let docHeight = Math.max(body.scrollHeight,
-        //    body.offsetHeight, html.clientHeight,
-        //    html.scrollHeight, html.offsetHeight);
-        //let windowBottom = windowHeight + window.pageYOffset;
-        //if ((docHeight - 50) <= windowBottom) {
-        //    if (this.selectedEventOrder.name == 'top 100') {
-        //        if (this.total >= this.events.length) {
-        //            // check limit start
-        //            if (this.params.start >= 80) {
-        //                return false;
-        //            }
-        //            //check limit length data response
-        //            if (this.events.length < this.params.start) {
-        //                return false;
-        //            }
-        //            this.smallLoader.show();
-        //            this.loadMore = true;
-        //            this.params.start += 20;
-        //            console.log(this.params.start);
-        //            this.getTrending();
-        //        } else {
-        //            this.loadMore = true;
-        //            if (this.total > this.events.length) {
-        //                this.smallLoader.show();
-        //                this.params.page += 1;
-        //                this.getTrending();
-        //            }
-        //        }
-        //    }
-        //}
-
-
-    }
-
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
             this.markers.forEach((marker, index) => {
                 if (index == markerId) {
+                    console.log("markerId", markerId);
                     this.markers[index].opacity = 1;
                     this.markers[index].isOpenInfo = true;
                 } else {
@@ -523,7 +517,7 @@ export class HomeComponent implements OnInit {
     }
 
     private passerTrending(geo:any) {
-        this.markers =[];
+        this.markers = [];
         this.mapsAPILoader.load().then(()=> {
 
             let mapCenter = new google.maps.Marker({
@@ -541,7 +535,7 @@ export class HomeComponent implements OnInit {
                     });
                     let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
 
-                    if ((parseInt(geometry)-100) < this.currentRadius) {
+                    if ((parseInt(geometry) - 100) < this.currentRadius) {
                         this.markers.push({
                             lat: parseFloat(latlng[0]),
                             lng: parseFloat(latlng[1]),
@@ -557,6 +551,7 @@ export class HomeComponent implements OnInit {
 
 
     private passerTop100(events:any) {
+        this.currentHighlightedMarker = 0;
         this.mapsAPILoader.load().then(()=> {
                 for (let i = 0; i < events.length; i++) {
                     let latitude:any;
@@ -582,13 +577,25 @@ export class HomeComponent implements OnInit {
                         }
 
                     }
-                    this.markers.push({
-                        lat: latitude,
-                        lng: longitude,
-                        label: events[i].title,
-                        opacity: 0.6,
-                        isOpenInfo: false
-                    });
+                    if (i == 0) {
+                        this.markers.push({
+                            lat: latitude,
+                            lng: longitude,
+                            label: events[i].title,
+                            opacity: 1,
+                            isOpenInfo: true,
+                            icon: 'assets/icon/icon_pointer.png'
+                        });
+                    } else {
+                        this.markers.push({
+                            lat: latitude,
+                            lng: longitude,
+                            label: events[i].title,
+                            opacity: 0.4,
+                            isOpenInfo: false,
+                            icon: 'assets/icon/icon_pointer.png'
+                        });
+                    }
 
 
                 }
