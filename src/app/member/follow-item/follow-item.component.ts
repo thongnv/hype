@@ -29,7 +29,7 @@ export class FollowItemComponent implements OnInit {
   }
 
   public updateFollow(item: any): void {
-    this.userService.updateUserFollow(item.id).subscribe(
+    this.userService.toggleFollow(item.id).subscribe(
       (resp) => {
         if (resp.status) {
           this.stateFollow = this.stateFollow === 'yes' ? 'no' : 'yes';

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CountryPickerService, ICountry } from 'angular2-countrypicker';
-import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ProfileService } from '../../services/profile.service';
@@ -53,6 +52,9 @@ export class ProfileEditComponent implements OnInit {
 
   public ngOnInit() {
     this.user = this.localStorageService.get('user') as User;
+    if (this.user.isAnonymous || this.slugName !== this.user.slug) {
+      this.router.navigate(['/' + this.user.slug]).then();
+    }
     this.countryPickerService.getCountries().subscribe(
       (countries) => {
         let defaultCountry = <ICountry> {
@@ -67,30 +69,25 @@ export class ProfileEditComponent implements OnInit {
     );
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      if (!this.user.slug || this.slugName !== this.user.slug) {
-        this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
-      }
-      if (!this.user.isAnonymous) {
-        this.loaderService.show();
-        this.userService.getUserProfile(this.slugName).subscribe(
-          (user: User) => {
-            this.profileForm.patchValue({
-              firstName: user.firstName,
-              lastName: user.lastName,
-              contactNumber: user.contactNumber,
-              country: '',
-            });
-            this.user = user;
-          },
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            this.loaderService.hide();
-            this.ready = true;
-          }
-        );
-      }
+      this.loaderService.show();
+      this.userService.getUserProfile(this.slugName).subscribe(
+        (resp) => {
+          this.user = resp.user;
+          this.profileForm.patchValue({
+            firstName: this.user.firstName,
+            lastName: this.user.lastName,
+            contactNumber: this.user.contactNumber,
+            country: '',
+          });
+          this.ready = true;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.loaderService.hide();
+        }
+      );
     });
   }
 

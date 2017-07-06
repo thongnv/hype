@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class FavoriteListComponent {
   @Input('item') public item: any;
-  @Input('canDelete') public canDelete: boolean;
+  @Input('isCurrentUser') public isCurrentUser: boolean;
   @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
 
   public onDeleteEmit(item: any): void {

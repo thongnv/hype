@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
-import { MainService } from '../../services/main.service';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -56,7 +55,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   });
 
   constructor(public localStorageService: LocalStorageService,
-              public mainService: MainService,
               public eventService: EventService,
               public formBuilder: FormBuilder,
               public rateConfig: NgbRatingConfig,

@@ -50,13 +50,15 @@ export class UserService {
     return this.http.post(
       AppSetting.API_ENDPOINT + 'api/user/logout?_format=json', options
     )
-      .map((res: Response) => res.json())
+      .map((res: Response) => {
+        return res.json();
+      })
       .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getUserProfile(slugName?: string): Observable<User> {
+  public getUserProfile(slugName?: string): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let user = this.localStorageService.get('user') as User;
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
@@ -66,20 +68,24 @@ export class UserService {
       .map((res) => {
         let data = res.json();
         return {
-          avatar: data.field_image,
-          name: data.field_first_name + ' ' + data.field_last_name,
-          slug: slugName,
-          isAnonymous: false,
-          firstName: data.field_first_name,
-          lastName: data.field_last_name,
-          contactNumber: data.field_contact_number,
-          followingNumber: data.follow.following,
-          followerNumber: data.follow.follower,
-          email: data.email,
-          userFollowing: [],
-          userFollower: [],
-          showNav: true,
-          acceptNotification: true
+          user: {
+            id: data.uid,
+            avatar: data.field_image,
+            name: data.field_first_name + ' ' + data.field_last_name,
+            slug: slugName,
+            isAnonymous: false,
+            firstName: data.field_first_name,
+            lastName: data.field_last_name,
+            contactNumber: data.field_contact_number,
+            followingNumber: data.follow.following,
+            followerNumber: data.follow.follower,
+            email: data.email,
+            userFollowing: [],
+            userFollower: [],
+            showNav: true,
+            acceptNotification: true
+          },
+          followed: data.user_follow
         };
       })
       .catch((error: any) => {
@@ -134,12 +140,11 @@ export class UserService {
       });
   }
 
-  public updateUserFollow(uid: number): Observable<any> {
+  public toggleFollow(userId: number): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    let targetUser = {uid};
-    return this.http.post(AppSetting.API_USER_UNFOLLOW, JSON.stringify(targetUser), options)
+    return this.http.post(AppSetting.API_USER_UNFOLLOW, JSON.stringify({uid: userId}), options)
       .map((resp) => resp.json())
       .catch((error: any) => {
         return Observable.throw(new Error(error));

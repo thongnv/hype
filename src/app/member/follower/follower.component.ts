@@ -20,7 +20,7 @@ export class FollowerComponent implements OnInit {
   public followerPage: number = 0;
   public msgContent: string;
   public alertType: string;
-  public userFollow: boolean = false;
+  public followed: boolean = false;
   public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
@@ -52,8 +52,9 @@ export class FollowerComponent implements OnInit {
         this.slugName = params['slug'];
         this.isCurrentUser = this.slugName === this.user.slug;
         this.userService.getUserProfile(this.slugName).subscribe(
-          (resp: User) => {
-            this.currentUser = resp;
+          (resp) => {
+            this.currentUser = resp.user;
+            this.followed = resp.followed;
             this.currentUser.showNav = this.isCurrentUser;
             this.ready = true;
             this.userService.getFollowers(this.slugName, this.followerPage).subscribe(

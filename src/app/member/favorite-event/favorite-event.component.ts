@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class FavoriteEventComponent {
   @Input('item') public item: any;
-  @Input('canDelete') public canDelete: boolean;
+  @Input('isCurrentUser') public isCurrentUser: boolean;
 
   @Output('onClickLike') public onClickLike = new EventEmitter<any>();
   @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
