@@ -167,10 +167,9 @@ export class HomeComponent implements OnInit {
 
             //index marker Highlight
             let baseHeight = $("#v-scrollable")[0].clientHeight;
-            let realScrollTop = this.document.body.scrollTop + baseHeight;
+            let realScrollTop = $(window).scrollTop() + baseHeight;
             let currentHeight:number = baseHeight;
             let content_element = $("#v-scrollable")[0].children;
-
             if (content_element.length > 1) {
                 for (let i = 0; i < content_element.length; i++) {
                     let currentClientH = content_element[i].clientHeight;
