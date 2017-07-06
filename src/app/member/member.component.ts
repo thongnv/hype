@@ -16,10 +16,7 @@ export class MemberComponent implements OnInit {
 
   public user = AppSetting.defaultUser;
   public currentUser: User;
-  public settingForm = this.fb.group({
-    receiveEmail: true
-  });
-
+  public settingForm = this.formBuilder.group({receiveEmail: true});
   public alertType = 'danger';
   public msgContent: string;
   public sub: any;
@@ -27,7 +24,7 @@ export class MemberComponent implements OnInit {
   public ready = false;
 
   constructor(private route: ActivatedRoute,
-              public fb: FormBuilder,
+              public formBuilder: FormBuilder,
               public loaderService: LoaderService,
               public userService: UserService,
               private localStorageService: LocalStorageService,
@@ -50,6 +47,9 @@ export class MemberComponent implements OnInit {
         (resp) => {
           this.currentUser = resp.user;
           this.ready = true;
+          this.settingForm.patchValue({
+            receiveEmail: this.currentUser.acceptNotification
+          });
         },
         (error) => {
           console.log(error);
@@ -63,27 +63,17 @@ export class MemberComponent implements OnInit {
 
   public onSubmit(): void {
     let data = {
-      field_notify_email: this.settingForm.value.email,
-      field_first_name: this.user.firstName,
-      field_last_name: this.user.lastName,
-      email: this.user.email,
-      field_contact_number: this.user.contactNumber,
-      field_country: '',
-      follow: {
-        following: this.user.followingNumber,
-        follower: this.user.followerNumber,
-      }
+      field_notify_email: this.settingForm.value.receiveEmail
     };
     this.userService.setUserProfile(this.user, data).subscribe(
       (resp) => {
         if (resp.status) {
           this.alertType = 'success';
-          this.user.email = data.field_notify_email;
+          this.settingForm.patchValue({
+            receiveEmail: data.field_notify_email
+          });
         } else {
           this.alertType = 'danger';
-          this.settingForm.patchValue({
-            receiveEmail: parseInt(this.user.email, 2)
-          });
         }
         this.msgContent = resp.message;
       },

@@ -667,6 +667,11 @@ span.dollar-character {
     margin: 5px 0;
 
   }
+  .list-preview-wrap > .row {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0px;
+  }
 }
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap{
@@ -677,3 +682,4 @@ span.dollar-character {
   }
 
 }
+
