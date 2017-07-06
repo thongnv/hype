@@ -41,7 +41,7 @@
                     <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10"
                                 [tooltips]="[true,true]"
                                 [(ngModel)]="priceRange"
-                                (ngModelChange)="onChangePrice($event)"
+                                (change)="onChangePrice($event)"
                                 class="price-slider">
                     </nouislider>
                     <div *ngIf="showPrice" class="price-desc"><span>$0</span><span>$150</span><span>$300</span></div>

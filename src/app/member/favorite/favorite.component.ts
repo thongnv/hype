@@ -3,7 +3,6 @@ import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
-import { LoaderService } from '../../helper/loader/loader.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
@@ -17,10 +16,11 @@ import { UserService } from '../../services/user.service';
 export class FavoriteComponent implements OnInit {
   public msgContent: any;
   public alertType: string;
-  public user: any;
+  public user = AppSetting.defaultUser;
+  public currentUser: User;
   public favorite: any;
   public selectedFavoriteType: any;
-  public canDelete: boolean = false;
+  public isCurrentUser: boolean = false;
   public setList: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
@@ -40,8 +40,7 @@ export class FavoriteComponent implements OnInit {
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
 
-  public constructor(private loaderService: LoaderService,
-                     private mainService: MainService,
+  public constructor(private mainService: MainService,
                      private userService: UserService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
@@ -50,30 +49,27 @@ export class FavoriteComponent implements OnInit {
 
   public ngOnInit() {
     this.selectedFavoriteType = 'event';
-    this.user = this.localStorageService.get('user') as User;
-    if (this.user) {
-      this.smallLoader.show();
-      this.loaderService.show();
-      this.user.showNav = true;
-      this.sub = this.route.params.subscribe(
-        (params) => {
-          this.slugName = params['slug'];
-          this.getEvent(this.slugName, this.eventPageNum);
-          this.canDelete = this.user.slug === this.slugName;
-          this.userService.getUserProfile(this.slugName).subscribe(
-            (user: User) => {
-              this.user = user;
-              this.ready = true;
-            },
-            (error) => {
-              console.log(error);
-            },
-            () => {
-              this.smallLoader.hide();
-              this.loaderService.hide();
-            });
-      });
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
     }
+    this.user.showNav = true;
+    this.sub = this.route.params.subscribe(
+      (params) => {
+        this.slugName = params.slug;
+        this.getEvent(this.slugName, this.eventPageNum);
+        this.isCurrentUser = this.user.slug === this.slugName;
+        this.userService.getUserProfile(this.slugName).subscribe(
+          (resp) => {
+            this.currentUser = resp.user;
+            this.ready = true;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
+    );
   }
 
   public onSelectFavoriteType(type: string): void {
@@ -241,6 +237,7 @@ export class FavoriteComponent implements OnInit {
     if (!this.setEvent.loadingInProgress) {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
+      this.smallLoader.show();
       this.userService.getUserEvent(slugName, page).subscribe(
         (response) => {
           if (this.setEvent.offset < response.total) {

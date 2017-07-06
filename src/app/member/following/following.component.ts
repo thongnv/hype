@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
-import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -20,7 +19,7 @@ export class FollowingComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
   public followingPage: number = 0;
-  public userFollow: boolean = false;
+  public followed: boolean = false;
   public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
@@ -51,8 +50,9 @@ export class FollowingComponent implements OnInit {
       this.slugName = params['slug'];
       this.isCurrentUser = this.slugName === this.user.slug;
       this.userService.getUserProfile(this.slugName).subscribe(
-        (resp: User) => {
-          this.currentUser = resp;
+        (resp) => {
+          this.currentUser = resp.user;
+          this.followed  = resp.followed;
           this.currentUser.showNav = this.isCurrentUser;
           this.ready = true;
           this.userService.getFollowings(this.slugName, this.followingPage).subscribe(

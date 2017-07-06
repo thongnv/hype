@@ -256,6 +256,7 @@ export class HomeComponent implements OnInit {
         this.showPrice = false;
         this.smallLoader.show();
         this.params.limit = 10;
+        this.params.page = 0;
         this.params.tid = '';
         this.params.date = '';
         this.params.weekend = '';
@@ -297,8 +298,9 @@ export class HomeComponent implements OnInit {
 
     public onSelectEventOrder(order:any):void {
         this.selectedEventOrder = order;
+        this.onClearForm();
         if (order.name == 'top 100') {
-            this.params.limit = 100;
+            //this.params.limit = 100;
             this.showCircle = false;
         } else {
             this.showCircle = true;
@@ -345,6 +347,7 @@ export class HomeComponent implements OnInit {
     public selectedDate(value:any) {
         this.markers = [];
         this.events = [];
+        this.params.page = 0;
         this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
         this.smallLoader.show();
         this.getTrending();
@@ -365,10 +368,8 @@ export class HomeComponent implements OnInit {
                 this.smallLoader.hide();
 
             }, err=> {
-                this.listItems = [];
-                this.events = [];
-                this.markers = [];
-                this.loadMore = false;
+                this.loadMore = true;
+                this.end_record = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             })
@@ -388,10 +389,8 @@ export class HomeComponent implements OnInit {
                 this.loaderService.hide();
                 this.smallLoader.hide();
             }, err=> {
-                this.listItems = [];
-                this.events = [];
-                this.markers = [];
-                this.loadMore = false;
+                this.loadMore = true;
+                this.end_record = true;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             });
@@ -478,7 +477,10 @@ export class HomeComponent implements OnInit {
     public onChangePrice(value) {
         this.markers = [];
         this.events = [];
-        this.params.price = this.priceRange.join(',');
+        this.params.page = 0;
+        this.priceRange = value;
+        this.params.price = value.join(',');
+        console.log(this.params.price);
         this.params.type = 'event';
         this.smallLoader.show();
         this.getTrending();
@@ -520,7 +522,6 @@ export class HomeComponent implements OnInit {
             let searchCenter = mapCenter.getPosition();
             for (let i = 0; i < geo.length; i++) {
                 for (let item of geo[i]) {
-                    console.log(item);
                     let latlng = item.split(',');
                     let myMarker = new google.maps.Marker({
                         position: new google.maps.LatLng(latlng[0], latlng[1]),

@@ -17,9 +17,10 @@ const PAGE_SIZE = 10;
 export class ProfilePublicComponent implements OnInit {
 
   public user = AppSetting.defaultUser;
+  public currentUser: User;
   public favorite: any;
   public selectedFavoriteType: any;
-  public canDelete: boolean = false;
+  public isCurrentUser: boolean = false;
   public setList: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
@@ -31,11 +32,12 @@ export class ProfilePublicComponent implements OnInit {
   };
   public sub: any;
   public slugName: any;
-  public userFollow: boolean = false;
+  public followed: boolean = false;
+  public ready = false;
 
   public events = [];
-  private places = [];
-  private lists = [];
+  public places = [];
+  public lists = [];
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -56,13 +58,16 @@ export class ProfilePublicComponent implements OnInit {
     }
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
-      this.canDelete = this.user.slug === this.slugName;
+      this.isCurrentUser = this.user.slug === this.slugName;
       this.userService.getUserProfile(this.slugName).subscribe(
-        (resp: User) => {
-          this.user = resp;
-          this.user.showNav = false;
+        (resp) => {
+          this.currentUser = resp.user;
+          this.followed = resp.followed;
+          this.currentUser.showNav = false;
+          this.ready = true;
           this.loaderService.hide();
-        });
+        },
+      );
       this.getEvent(this.slugName, this.eventPageNum);
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { User } from '../../app.interface';
 
 @Component({
   selector: 'app-member-navigation',
@@ -8,26 +9,23 @@ import { UserService } from '../../services/user.service';
 })
 export class MemberNavigationComponent implements OnInit {
 
-  @Input() public user: any;
-  @Input() public slugName: any;
-  @Input() public userFollow: any;
-  @Input() public showFollow: boolean;
-  @Input() public currentComponent: string = '';
-  public show: boolean = false;
+  @Input() public user: User;
+  @Input() public currentUser: User;
+  @Input() public followed: boolean;
+  @Input() public showFollowBtn: boolean;
   private isCurrentUser: boolean = false;
 
   public constructor(private userService: UserService) {
   }
 
   public ngOnInit() {
-    this.isCurrentUser = this.user.slug === this.slugName;
-    this.show = !!this.user;
+    this.isCurrentUser = this.user.slug === this.currentUser.slug;
   }
 
   public onFollow() {
-    this.userService.updateUserFollow(this.user.uid).subscribe(
+    this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
-        this.userFollow = !this.userFollow;
+        this.followed = !this.followed;
         if (this.isCurrentUser) {
           this.user.followingNumber++;
           this.user.followerNumber++;
@@ -38,9 +36,9 @@ export class MemberNavigationComponent implements OnInit {
   }
 
   public onUnFollow() {
-    this.userService.updateUserFollow(this.user.uid).subscribe(
+    this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
-        this.userFollow = !this.userFollow;
+        this.followed = !this.followed;
         if (this.isCurrentUser) {
           this.user.followingNumber--;
           this.user.followerNumber--;

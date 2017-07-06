@@ -20,44 +20,6 @@ export class MainService {
                      private http: Http) {
   }
 
-  public login(fbToken: string): Observable<Response> {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(
-      AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
-    )
-      .map((res: any) => res.json())
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
-  public logout(): Observable<any> {
-    let csrfToken = this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(
-      AppSetting.API_ENDPOINT + 'api/user/logout?_format=json', options
-    )
-      .map((res: Response) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
-  public setUserProfile(user: BaseUser, data: any): Observable<any> {
-    let csrfToken = this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(
-      AppSetting.API_USER_PROFILE + user.slug + '?_format=json',
-      JSON.stringify(data), options)
-      .map((res) => res.json())
-      .catch((error: any) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
   public getArticle(slugName): Observable<Response> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});

@@ -173,7 +173,7 @@
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li *ngFor="let mention of previewData.eventMentions">
-                  <a [href]="mention" target="_blank">
+                  <a [href]="mention" target="_blank" *ngIf="mention !==''">
                     <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
                   </a>
                 </li>
@@ -207,7 +207,7 @@
         <div class="post-experience">
           <h4 class="experiences-post-review">Experiences (0)</h4>
           <h5 class="bold">Post your experience</h5>
-          <img class="img-circle pull-left" [src]="user.field_image" alt="hklin avatar" width="70" height="70">
+          <img class="img-circle pull-left" [src]="user.avatar" alt="{{user.name}}" width="70" height="70">
           <p class="rate-stars-post-experiences">
             <i fa [name]="'star-o'" [size]=1></i>
             <i fa [name]="'star-o'" [size]=1></i>
