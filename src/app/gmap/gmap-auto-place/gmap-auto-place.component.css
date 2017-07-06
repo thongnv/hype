@@ -82,11 +82,10 @@
   font-weight: bold;
   text-transform: capitalize;
   font-size: 15px;
-  margin: 0 15px;
-  float: right;
-  width: 120px;
+  margin: 0;
+  width: 125px;
   position: absolute;
-  right: 1%;
+  right: 5px;
 }
 .search-location-search-area ul {
   padding-left: 0;
@@ -153,7 +152,7 @@
   height: 48px;
   padding-left: 10px;
   font-weight: bold;
-  width: calc(90% - 170px);
+  width: calc(100% - 170px);
 }
 
 .display-location-address .close{
