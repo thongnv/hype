@@ -58,7 +58,6 @@ export class NavbarComponent implements OnInit {
     }
 
     if (!this.user.isAnonymous) {
-
       this.socket = io(AppSetting.NODE_SERVER);
       this.socket.on('notification', (data) => {
         if (data.uid.indexOf(this.user.id)) {

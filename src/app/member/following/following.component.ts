@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-following',
@@ -30,7 +31,7 @@ export class FollowingComponent implements OnInit {
 
   constructor(private appState: AppState,
               private loaderService: LoaderService,
-              private mainService: MainService,
+              private userService: UserService,
               private route: ActivatedRoute,
               private localStorageService: LocalStorageService) {
   }
@@ -49,12 +50,12 @@ export class FollowingComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.isCurrentUser = this.slugName === this.user.slug;
-      this.mainService.getUserProfile(this.slugName).subscribe(
+      this.userService.getUserProfile(this.slugName).subscribe(
         (resp: User) => {
           this.currentUser = resp;
           this.currentUser.showNav = this.isCurrentUser;
           this.ready = true;
-          this.mainService.getFollowings(this.slugName, this.followingPage).subscribe(
+          this.userService.getFollowings(this.slugName, this.followingPage).subscribe(
             (res) => {
               this.currentUser.userFollowing = res.result;
             },
@@ -78,7 +79,7 @@ export class FollowingComponent implements OnInit {
     if (!this.set.loadingInProgress) {
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getFollowings(this.slugName, ++this.followingPage).subscribe(
+      this.userService.getFollowings(this.slugName, ++this.followingPage).subscribe(
         (resp) => {
           let data = resp.result;
           data.forEach((item) => {

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-interest',
@@ -24,34 +24,38 @@ export class InterestComponent implements OnInit {
               private loaderService: LoaderService,
               private localStorageService: LocalStorageService,
               private router: Router,
-              private mainService: MainService) {
+              private userService: UserService) {
   }
 
   public onSubmit() {
     this.loaderService.show();
     this.user = this.localStorageService.get('user') as User;
     this.user.showNav = true;
-    this.mainService.updateUserInterests(null, this.interests).then((resp) => {
-      if (resp.status === null) {
-        this.alertType = 'danger';
-        this.msgContent = resp.message;
-        this.getInterests(this.slugName, this.pageNumber);
-      } else {
-        this.alertType = 'success';
-        this.msgContent = resp.message;
+    this.userService.updateUserInterests(null, this.interests).subscribe(
+      (resp) => {
+        if (resp.status === null) {
+          this.alertType = 'danger';
+          this.msgContent = resp.message;
+          this.getInterests(this.slugName, this.pageNumber);
+        } else {
+          this.alertType = 'success';
+          this.msgContent = resp.message;
+        }
+        this.loaderService.hide();
       }
-      this.loaderService.hide();
-    });
+    );
   }
 
   public getInterests(slugName: string, page: number): void {
-    this.mainService.getUserInterest(slugName, page).then((response) => {
-      if (response.length > 0) {
-        response.forEach((item) => {
-          this.interests.push(item);
-        });
+    this.userService.getUserInterest(slugName, page).subscribe(
+      (response) => {
+        if (response.length > 0) {
+          response.forEach((item) => {
+            this.interests.push(item);
+          });
+        }
       }
-    });
+    );
   }
 
   public ngOnInit() {

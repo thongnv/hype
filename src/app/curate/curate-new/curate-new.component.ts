@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
-
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-curate-new',
@@ -44,6 +44,7 @@ export class CurateNewComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
+              private userService: UserService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router) {
@@ -52,7 +53,7 @@ export class CurateNewComponent implements OnInit {
 
   public ngOnInit() {
     this.loaderService.show();
-    this.mainService.checkLogin().subscribe(
+    this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {
           this.router.navigate(['/login'], {skipLocationChange: true}).then();
@@ -90,28 +91,31 @@ export class CurateNewComponent implements OnInit {
   public readUrl(event) {
     let reader = [];
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 5) {
+      let typeFile = new RegExp(`^img\/\w+`);
       for (let i = 0; i < event.target.files.length && i < 5; i++) {
-        reader[i] = new FileReader();
-        reader[i].onload = (e) => {
-          let image = new Image();
-          image.src = e.target.result;
+        if (typeFile.test(event.target.files[i].type)) {
+          reader[i] = new FileReader();
+          reader[i].onload = (e) => {
+            let image = new Image();
+            image.src = e.target.result;
 
-          this.resizeImage(image, 680, 360, (resizedImage) => {
-            let img = {
-              url: resizedImage,
-              value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-              filename: event.target.files[i].name,
-              filemime: event.target.files[i].type
-            };
+            this.resizeImage(image, 680, 360, (resizedImage) => {
+              let img = {
+                url: resizedImage,
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type
+              };
 
-            this.previewUrl.push(img);
+              this.previewUrl.push(img);
 
-            if (this.previewUrl.length >= 5) {
-              this.addImage = false;
-            }
-          });
-        };
-        reader[i].readAsDataURL(event.target.files[i]);
+              if (this.previewUrl.length >= 5) {
+                this.addImage = false;
+              }
+            });
+          };
+          reader[i].readAsDataURL(event.target.files[i]);
+        }
       }
     }
   }

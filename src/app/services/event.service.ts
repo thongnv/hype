@@ -53,7 +53,7 @@ export class EventService {
   private defaultHeaders = new Headers({
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')});
+  'X-CSRF-Token': this._localStorageService.get('csrf_token')});
 
   constructor(private _localStorageService: LocalStorageService,
               private _http: Http, private router: Router) {
@@ -136,7 +136,6 @@ export class EventService {
           avatar: resData.author_avatar,
           name: resData.author_name,
           slug: '',
-          isAnonymous: false
         },
         text: resData.comment_body,
         likeNumber: 0,

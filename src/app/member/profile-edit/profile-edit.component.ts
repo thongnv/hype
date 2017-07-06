@@ -7,6 +7,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ProfileService } from '../../services/profile.service';
 import { User } from '../../app.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -44,7 +45,7 @@ export class ProfileEditComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
               private countryPickerService: CountryPickerService,
-              private mainService: MainService,
+              private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
               private profileService: ProfileService) {
@@ -71,7 +72,7 @@ export class ProfileEditComponent implements OnInit {
       }
       if (!this.user.isAnonymous) {
         this.loaderService.show();
-        this.mainService.getUserProfile(this.slugName).subscribe(
+        this.userService.getUserProfile(this.slugName).subscribe(
           (user: User) => {
             this.profileForm.patchValue({
               firstName: user.firstName,
@@ -108,7 +109,7 @@ export class ProfileEditComponent implements OnInit {
         }
       };
       this.loaderService.show();
-      this.mainService.setUserProfile(this.user, data).subscribe(
+      this.userService.setUserProfile(this.user, data).subscribe(
         (resp) => {
           this.user.firstName = data.field_first_name;
           this.user.lastName = data.field_last_name;

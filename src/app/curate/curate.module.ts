@@ -6,7 +6,7 @@ import { TruncateModule } from 'ng2-truncate';
 import { MomentModule } from 'angular2-moment';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import {HelperModule} from '../helper/helper.module';
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
@@ -39,7 +39,7 @@ import { CurateNewComponent } from './curate-new/curate-new.component';
     CurateNewComponent
   ],
   providers: [
-    GoogleMapsAPIWrapper
+
   ],
 })
 export class CurateModule { }

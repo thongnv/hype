@@ -2,7 +2,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, enableProdMode, ModuleWithProviders } from '@angular/core';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 
@@ -51,6 +51,7 @@ import { HomeService } from './services/home.service';
 import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
 import { ProfileService } from './services/profile.service';
+
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 
@@ -85,6 +86,11 @@ import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
+import { UserService } from './services/user.service';
+
+enableProdMode();
+
+const Routing: ModuleWithProviders = RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules});
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -154,7 +160,7 @@ type StoreType = {
     ReCaptchaModule,
     CarouseModule,
     HelperModule,
-    RouterModule.forRoot(ROUTES, {useHash: false, preloadingStrategy: PreloadAllModules}),
+    Routing,
     NguiDatetimePickerModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
@@ -187,7 +193,8 @@ type StoreType = {
     EventService,
     ModeService,
     SeoService,
-    ProfileService
+    ProfileService,
+    UserService
   ],
 })
 export class AppModule {
