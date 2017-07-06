@@ -111,7 +111,12 @@ export class NavbarComponent implements OnInit {
 
   public onMarkOneRead(item) {
     item.viewed = true;
-    this.notifications.unread =this.notifications.unread -1;
+    if(parseInt(this.notifications.unread) > 0){
+      this.notifications.unread =this.notifications.unread -1;
+    }else{
+      this.notifications.unread = 0;
+    }
+
     this.mainService.updateNotifications('any', item.mid).then((resp) => {
       this.router.navigate([item.link]).then();
     });
