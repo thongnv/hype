@@ -12,8 +12,6 @@ if (_ENV === 'development') {
   NODE_JS = 'http://52.220.246.146:8000';
 }
 
-console.log('current API: ', API_ENDPOINT);
-
 const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
 
 export class AppSetting {
@@ -32,7 +30,6 @@ export class AppSetting {
   public static API_ENDPOINT_CAT_MODE = API_ENDPOINT + 'api/v1/category/mode?_format=json';
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';
   public static API_ENDPOINT_TOP = API_ENDPOINT + 'api/v1/top?_format=json';
-
   public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
   public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
@@ -46,7 +43,6 @@ export class AppSetting {
     xfbml: true,
     version: 'v2.9'
   };
-
   public static PAGE_SIZE: number = PAGE_SIZE;
   public static GMAP_STYLE = [
     {
