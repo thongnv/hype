@@ -59,6 +59,7 @@ export class ModeComponent implements OnInit {
     public gMapStyles:any;
     public sortPlace:string = 'all';
     private loadMore:boolean = false;
+    private end_record:boolean = false;
     public circleDraggable:boolean = false;
     public screenWidth:number = 0;
     public screenHeight:number = 0;
@@ -77,7 +78,7 @@ export class ModeComponent implements OnInit {
         lat: this.lat,
         long: this.lng,
         radius: (this.currentRadius / 1000),
-        page: 0,
+        page: 1,
         limit: 10
     };
 
@@ -111,30 +112,12 @@ export class ModeComponent implements OnInit {
         ];
         this.rateConfig.max = 5;
         this.rateConfig.readonly = false;
-    }
 
-    public ngOnInit() {
-        this.gMapStyles = AppSetting.GMAP_STYLE;
-        this.getCategories(this.filterFromMode.value.filterMode);
-        this.getDataModes();
-        this.getFilter();
-        let width = window.innerWidth
-            || document.documentElement.clientWidth
-            || document.body.clientWidth;
-
-        let height = window.innerHeight
-            || document.documentElement.clientHeight
-            || document.body.clientHeight;
-
-        this.screenWidth = width;
-        this.screenHeight = height;
-
-        // this.renderMaker(5000);
         this.route.params.subscribe((param) => {
             if (param.location) {
+                this.items = [];
+                this.markers = [];
                 this.mapsAPILoader.load().then(() => {
-                    this.items = [];
-                    this.markers = [];
                     if (param.location.replace('+', ' ') != 'Singapore') {
                         let geocoder = new google.maps.Geocoder();
                         if (geocoder) {
@@ -178,20 +161,48 @@ export class ModeComponent implements OnInit {
 
             }
         });
+    }
+
+    public ngOnInit() {
+        this.gMapStyles = AppSetting.GMAP_STYLE;
+        this.getCategories(this.filterFromMode.value.filterMode);
+        this.getDataModes();
+        this.getFilter();
+        let width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        let height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        this.screenWidth = width;
+        this.screenHeight = height;
 
         $(window).scroll(()=> {
             //load more data
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                if (this.loadMore) {
-                    return false;
+            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                if (this.loadMore == false && this.end_record == false) {
+                    this.loadMore = true;
+                    this.params.page = this.params.page + 1;
+                    let params = this.params;
+                    console.log(params.page);
+                    this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+                        this.loadMore = false;
+                        if (resp.company.length == 0) {
+                            this.end_record = true
+                        }
+                        this.initMap(resp.company);
+                        this.smallLoader.hide();
+                        this.loadMore = false;
+                    }, err=> {
+                        this.loadMore = false;
+                        this.items = [];
+                        this.markers = [];
+                        this.smallLoader.hide();
+                    });
                 }
-                if (this.total <= this.items.length) {
-                    return false;
-                }
-                this.loadMore = true;
-                this.smallLoader.show();
-                this.params.page++;
-                this.getDataModes();
+
             }
         });
     }
@@ -247,13 +258,7 @@ export class ModeComponent implements OnInit {
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.loadMore = false;
             this.total = resp.total;
-            if (parseInt(resp.total) > 0) {
-            }
-            if (this.loadMore) {
-                this.initMap(this.items.concat(resp.company));
-            } else {
-                this.initMap(resp.company);
-            }
+            this.initMap(resp.company);
             this.loaderService.hide();
             this.smallLoader.hide();
 
@@ -355,7 +360,6 @@ export class ModeComponent implements OnInit {
 
     private initMap(companies:any) {
         if (companies) {
-            this.markers = [];
             this.currentHighlightedMarker = 0;
             this.mapsAPILoader.load().then(() => {
 
@@ -371,13 +375,12 @@ export class ModeComponent implements OnInit {
                         let lat = companies[i].YP_Address[6].split("/");
                         let lng = companies[i].YP_Address[5].split("/");
 
-                        let myMarker = new google.maps.Marker({
+                        let gmarkers = new google.maps.Marker({
                             position: new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1])),
                             draggable: true
                         });
                         let distance = companies[i]._dict_;
-                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                        console.log(parseInt(geometry), this.currentRadius);
+                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
                         if (parseInt(geometry) <= this.currentRadius) {
                             companies[i].distance = (distance).toFixed(1);
                             this.items.push(companies[i]);
@@ -386,7 +389,7 @@ export class ModeComponent implements OnInit {
                                     lat: parseFloat(lat[1]),
                                     lng: parseFloat(lng[1]),
                                     label: companies[i].Company_Name,
-                                    opacity: 0.4,
+                                    opacity: 1,
                                     isOpenInfo: false,
                                     icon: 'assets/icon/icon_pointer.png'
                                 });
@@ -716,8 +719,8 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
-        this.items=[];
-        this.markers =[];
+        this.items = [];
+        this.markers = [];
         this.smallLoader.show();
         this.getDataModes();
 
