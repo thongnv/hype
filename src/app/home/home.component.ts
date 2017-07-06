@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit {
     private total:any;
     public showCircle:boolean = false;
     private loadMore:boolean = false;
+    private end_record:boolean = false;
     public screenWidth:number = 0;
     public screenHeight:number = 0;
     public circleDraggable:boolean = true;
@@ -141,36 +142,25 @@ export class HomeComponent implements OnInit {
 
         this.screenWidth = width;
         this.screenHeight = height;
+        //var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         $(window).scroll(()=> {
             //load more data
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                if (this.loadMore) {
-                    return false;
-                }
-
+            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
                 if (this.selectedEventOrder.name == 'top 100') {
-                    // check limit start
-                    if (this.params.start >= 80) {
-                        return false;
+                    if (this.loadMore == false && this.end_record == false) {
+                        this.loadMore = true;
+                        this.params.start += 20;
+                        this.smallLoader.show();
+                        this.getTrending();
                     }
-                    //check limit length data response
-                    if (this.events.length < this.params.start) {
-                        return false;
-                    }
-                    this.smallLoader.show();
-                    this.loadMore = true;
-                    this.params.start += 20;
-                    console.log(this.params.start);
-                    this.getTrending();
 
                 } else {
-                    if (this.total <= this.events.length) {
-                        return false;
+                    if (this.loadMore == false && this.end_record == false) {
+                        this.loadMore = true;
+                        this.smallLoader.show();
+                        this.params.page++;
+                        this.getTrending();
                     }
-                    this.loadMore = true;
-                    this.smallLoader.show();
-                    this.params.page++;
-                    this.getTrending();
 
                 }
             }
@@ -181,8 +171,6 @@ export class HomeComponent implements OnInit {
             let currentHeight:number = baseHeight;
             let content_element = $("#v-scrollable")[0].children;
 
-            console.log($("#v-scrollable"));
-            console.log(realScrollTop);
             if (content_element.length > 1) {
                 for (let i = 0; i < content_element.length; i++) {
                     let currentClientH = content_element[i].clientHeight;
@@ -368,6 +356,9 @@ export class HomeComponent implements OnInit {
         if (this.selectedEventOrder.name == 'top 100') {
             this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
                 this.total = resp.total;
+                if (resp.data.length == 0) {
+                    this.end_record = true;
+                }
                 this.events = this.events.concat(resp.data);
                 this.passerTop100(resp.data);
                 this.loadMore = false;
@@ -388,6 +379,9 @@ export class HomeComponent implements OnInit {
                     this.events = this.events.concat(response.data);
                 } else {
                     this.events = response.data;
+                }
+                if (response.data.length == 0) {
+                    this.end_record = true;
                 }
                 this.total = response.total;
                 this.passerTrending(response.geo);
@@ -536,13 +530,25 @@ export class HomeComponent implements OnInit {
                     let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
 
                     if ((parseInt(geometry) - 100) < this.currentRadius) {
-                        this.markers.push({
-                            lat: parseFloat(latlng[0]),
-                            lng: parseFloat(latlng[1]),
-                            label: '',
-                            opacity: 0.6,
-                            isOpenInfo: false
-                        });
+                        if (i == 0) {
+                            this.markers.push({
+                                lat: parseFloat(latlng[0]),
+                                lng: parseFloat(latlng[1]),
+                                label: '',
+                                opacity: 1,
+                                isOpenInfo: true,
+                                icon: 'assets/icon/icon_pointer.png'
+                            });
+                        } else {
+                            this.markers.push({
+                                lat: parseFloat(latlng[0]),
+                                lng: parseFloat(latlng[1]),
+                                label: '',
+                                opacity: 0.4,
+                                isOpenInfo: false,
+                                icon: 'assets/icon/icon_pointer.png'
+                            });
+                        }
                     }
                 }
             }
