@@ -89,14 +89,12 @@ export class ShareEventComponent implements OnInit {
   }
 
   public minMax(control: FormControl) {
-    console.log(control.value);
     return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
       minMax: true
     };
   }
 
   public onEventPriceChange(evt) {
-    console.log('evt: ', evt.target.value);
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price is number and between 0-300 $';
     } else if (evt.target.value.length === 0) {
@@ -155,7 +153,7 @@ export class ShareEventComponent implements OnInit {
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
       let typeFile = new RegExp(`^img\/\w+`);
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
-        if (typeFile.test(event.target.files[i].type)) {
+        if (true) {
           reader[i] = new FileReader();
           reader[i].onload = (e) => {
             let image = new Image();
