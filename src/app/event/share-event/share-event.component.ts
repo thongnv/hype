@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment/moment';
-import { AppState } from '../../app.service';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { MainService } from '../../services/main.service';
@@ -154,30 +153,31 @@ export class ShareEventComponent implements OnInit {
   public readUrl(event) {
     let reader = [];
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+      let typeFile = new RegExp(`^img\/\w+`);
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
-        reader[i] = new FileReader();
-        reader[i].onload = (e) => {
-          let image = new Image();
-          image.src = e.target.result;
+        if (typeFile.test(event.target.files[i].type)) {
+          reader[i] = new FileReader();
+          reader[i].onload = (e) => {
+            let image = new Image();
+            image.src = e.target.result;
 
-          this.resizeImage(image, 480, 330, (resizedImage) => {
-                    console.log('resize ok');
-                    let img = {
-                      url: resizedImage,
-                      value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-                      filename: event.target.files[i].name,
-                      filemime: event.target.files[i].type
-                    };
+            this.resizeImage(image, 480, 330, (resizedImage) => {
+              let img = {
+                url: resizedImage,
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type
+              };
 
-                    this.previewUrl.push(img);
+              this.previewUrl.push(img);
 
-                    if (this.previewUrl.length >= 4) {
-                      this.addImage = false;
-                    }
-          });
-        };
-
-        reader[i].readAsDataURL(event.target.files[i]);
+              if (this.previewUrl.length >= 4) {
+                this.addImage = false;
+              }
+            });
+          };
+          reader[i].readAsDataURL(event.target.files[i]);
+        }
       }
     }
   }

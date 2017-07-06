@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import {HelperModule} from '../helper/helper.module';
 import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
@@ -25,6 +25,8 @@ import { CurateDetailComponent } from './curate-detail/curate-detail.component';
   declarations: [
     CurateDetailComponent
   ],
-  providers: [GoogleMapsAPIWrapper]
+  providers: [
+
+  ]
 })
 export class ArticleModule { }

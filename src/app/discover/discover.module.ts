@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NouisliderModule } from 'ng2-nouislider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import {HelperModule} from '../helper/helper.module';
@@ -33,7 +33,7 @@ import { ModeComponent } from './mode-play/mode.component';
     ModeComponent
   ],
   providers: [
-    GoogleMapsAPIWrapper
+
   ],
 })
 export class DiscoverModule { }

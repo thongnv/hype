@@ -21,7 +21,6 @@ export class GeocodeMarkerComponent implements OnInit {
     @Input('circleDraggable') public circleDraggable:any;
 
     public events:any[];
-    public MARKER_ICON = '/assets/icon/icon_pointer.png';
 
     public constructor(private mapsAPILoader:MapsAPILoader, private ngZone:NgZone) {
 

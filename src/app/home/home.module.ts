@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NouisliderModule } from 'ng2-nouislider';
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 import { MomentModule } from 'angular2-moment';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -35,7 +35,6 @@ import { HomeComponent } from './home.component';
     HomeComponent
   ],
   providers: [
-    GoogleMapsAPIWrapper,
     NgbPopoverConfig,
   ],
 })

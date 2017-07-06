@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { RatingModule } from 'ng2-rating';
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { HelperModule } from '../helper/helper.module';
 import { CarouseModule } from '../carouse/carouse.module';
@@ -37,7 +37,9 @@ import { CommentComponent } from './detail/comment.component';
     ExperienceComponent,
     CommentComponent
   ],
-  providers: [NgbRatingConfig, GoogleMapsAPIWrapper],
+  providers: [
+    NgbRatingConfig,
+  ],
 })
 export class EventModule {
 }

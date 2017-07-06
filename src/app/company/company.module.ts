@@ -7,7 +7,7 @@ import { MomentModule } from 'angular2-moment';
 import {RatingModule} from "ngx-rating";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { HelperModule } from '../helper/helper.module';
 import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
@@ -44,7 +44,6 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     ReviewComponent,
   ],
   providers: [
-    GoogleMapsAPIWrapper,
     NgbRatingConfig,
 
     CompanyService,

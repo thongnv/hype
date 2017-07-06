@@ -14,7 +14,7 @@
         (markerClick)="clickedMarker(i)"
         [latitude]="m.lat"
         [longitude]="m.lng"
-        [iconUrl]="MARKER_ICON"
+        [iconUrl]="m.icon"
         [opacity]="m.opacity"
 >
     <sebm-google-map-info-window *ngIf="m.label">
