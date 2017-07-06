@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
   public result: any = {};
   public searchToken: string = '';
 
-  constructor(public fb: FormBuilder, private mainservice: MainService) {
+  constructor(public fb: FormBuilder, private mainService: MainService) {
   }
 
   public ngOnInit() {
@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit {
     console.log('searchToken: ', this.searchToken);
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
-      this.mainservice.search(this.searchToken).then((resp) => {
+      this.mainService.search(this.searchToken).then((resp) => {
         console.log('searchForm ==> resp: ', resp);
         this.result = resp;
         if (resp.event.length + resp.article.length === 0) {

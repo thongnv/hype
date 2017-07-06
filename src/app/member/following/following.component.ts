@@ -49,7 +49,7 @@ export class FollowingComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.isCurrentUser = this.slugName === this.user.slug;
-      this.userService.getUserProfile(this.slugName).subscribe(
+      this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.currentUser = resp.user;
           this.followed  = resp.followed;
@@ -98,17 +98,18 @@ export class FollowingComponent implements OnInit {
   }
 
   public updateFollow(item: any) {
-    console.log('item', item);
-    if (item.stateFollow === 'yes') {
-      if (this.isCurrentUser) {
-        this.currentUser.followingNumber--;
-      }
+    let targetUser = this.user;
+    if (this.isCurrentUser) {
+      targetUser = this.currentUser;
+    }
+    if (item.followed) {
+      targetUser.followingNumber++;
+      targetUser.followerNumber++;
     } else {
-      if (this.isCurrentUser) {
-        this.currentUser.followingNumber++;
-      }
+      targetUser.followingNumber--;
+      targetUser.followerNumber--;
     }
     this.alertType = 'success';
-    this.msgContent = 'Update following successful';
+    this.msgContent = 'Update successfully';
   }
 }

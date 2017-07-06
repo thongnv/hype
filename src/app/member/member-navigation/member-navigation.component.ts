@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from '../../app.interface';
 
@@ -13,6 +13,9 @@ export class MemberNavigationComponent implements OnInit {
   @Input() public currentUser: User;
   @Input() public followed: boolean;
   @Input() public showFollowBtn: boolean;
+
+  @Output() public onUpdate = new EventEmitter<any>();
+
   private isCurrentUser: boolean = false;
 
   public constructor(private userService: UserService) {
@@ -25,26 +28,30 @@ export class MemberNavigationComponent implements OnInit {
   public onFollow() {
     this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
+        console.log(resp);
         this.followed = !this.followed;
         if (this.isCurrentUser) {
-          this.user.followingNumber++;
-          this.user.followerNumber++;
+          this.currentUser.followingNumber++;
+          this.currentUser.followerNumber++;
         } else {
           this.user.followerNumber++;
         }
+        // TODO: update followings + follower
     });
   }
 
   public onUnFollow() {
     this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
+        console.log(resp);
         this.followed = !this.followed;
         if (this.isCurrentUser) {
-          this.user.followingNumber--;
-          this.user.followerNumber--;
+          this.currentUser.followingNumber--;
+          this.currentUser.followerNumber--;
         } else {
           this.user.followerNumber--;
         }
+        // TODO: update followers + follower
     });
   }
 

@@ -12,16 +12,10 @@ if (_ENV === 'development') {
   NODE_JS = 'http://52.220.246.146:8000';
 }
 
-const API_FOLLOW = API_ENDPOINT + 'api/user/flag/follow';
-
 export class AppSetting {
   public static API_ENDPOINT = API_ENDPOINT;
   public static NODE_SERVER = NODE_JS;
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
-  public static API_USER_PROFILE = API_ENDPOINT + 'api/v1/profile/';
-  public static API_LOGIN_STATUS = API_ENDPOINT + 'user/login_status?_format=json';
-  public static API_USER_UNFOLLOW = API_FOLLOW + '?_format=json';
-  public static API_USER_INTEREST = API_ENDPOINT + 'api/v1/user/interest/';
   public static API_ARTICLE = API_ENDPOINT + 'api/v1/article';
   public static API_CURATE_TRENDING = API_ENDPOINT + 'api/v1/toparticle';
   public static API_CATEGORIES_ARTICLE = API_ENDPOINT + 'api/v1/category/article/?_format=json';
@@ -33,8 +27,6 @@ export class AppSetting {
   public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
   public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
-  public static API_FAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark/list';
-  public static API_UNFAVORITE_EVENT_LIST = API_ENDPOINT + 'api/user/flag/bookmark';
   public static API_SEARCH = API_ENDPOINT + 'api/v1/suggestion/';
   public static API_COMPANY_SEARCH = API_ENDPOINT + 'api/v1/company/suggestion/';
   public static INSTAGRAM_ACCESS_TOKEN = '1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1';
@@ -347,7 +339,8 @@ export class AppSetting {
     }
   ];
 
-  public static NEIGHBOURHOODS = ['Singapore', 'Alexandra', 'Aljunied', 'Amoy Street', 'Ang Mo Kio', 'Balestier', 'Bartley',
+  public static NEIGHBOURHOODS = [
+    'Singapore', 'Alexandra', 'Aljunied', 'Amoy Street', 'Ang Mo Kio', 'Balestier', 'Bartley',
     'Bayfront', 'Beach Road', 'Beauty World', 'Bedok', 'Bedok Reservoir', 'Bencoolen', 'Bishan',
     'Boat Quay', 'Boon Keng', 'Boon Lay', 'Botanic Gardens', 'Braddell', 'Bras Basah', 'Buangkok',
     'Bugis', 'Bukit Batok', 'Bukit Gombak', 'Bukit Merah', 'Bukit Panjang', 'Bukit Timah',

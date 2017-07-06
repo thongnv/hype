@@ -59,7 +59,7 @@ export class ProfilePublicComponent implements OnInit {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.isCurrentUser = this.user.slug === this.slugName;
-      this.userService.getUserProfile(this.slugName).subscribe(
+      this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.currentUser = resp.user;
           this.followed = resp.followed;
@@ -104,7 +104,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onClickDeleteEvent(item: any) {
-    this.userService.removeFavoritedEventList(item.slug).subscribe(
+    this.userService.unFavoriteEventList(item.slug).subscribe(
       (response) => {
         if (response.status) {
           this.events.forEach((event, index) => {
@@ -122,7 +122,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onClickDeleteList(item: any) {
-    this.userService.removeFavoritedEventList(item.slug).subscribe(
+    this.userService.unFavoriteEventList(item.slug).subscribe(
       (response) => {
         if (response.status) {
           this.lists.forEach((list, index) => {
@@ -179,7 +179,7 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
-      this.userService.getUserPlace(slugName, page).subscribe(
+      this.userService.getFavoritePlaces(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
             if (this.setPlace.offset < response.total) {
@@ -204,7 +204,7 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setList.loadingInProgress) {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
-      this.userService.getUserList(slugName, page).subscribe(
+      this.userService.getLists(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
             if (this.setList.offset < response.total) {
@@ -229,7 +229,7 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setEvent.loadingInProgress) {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
-      this.userService.getUserEvent(slugName, page).subscribe(
+      this.userService.getEvents(slugName, page).subscribe(
         (response) => {
           if (this.setEvent.offset < response.total) {
             response.data.forEach((item) => {

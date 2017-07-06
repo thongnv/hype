@@ -4,6 +4,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-interest',
@@ -14,58 +15,51 @@ import { UserService } from '../../services/user.service';
 export class InterestComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
-  public user: User;
+  public user = AppSetting.defaultUser;
   public interests: any[] = [];
-  public pageNumber: number = 0;
   public sub: any;
   public slugName: any;
+  public ready = false;
 
   constructor(private route: ActivatedRoute,
               private loaderService: LoaderService,
               private localStorageService: LocalStorageService,
-              private router: Router,
               private userService: UserService) {
+  }
+
+  public ngOnInit() {
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
+    }
+    this.sub = this.route.params.subscribe((params) => {
+      this.slugName = params.slug;
+      this.userService.getInterests(this.slugName).subscribe(
+        (response) => {
+          if (response.length > 0) {
+            response.forEach((item) => {
+              this.interests.push(item);
+            });
+          }
+          this.ready = true;
+        }
+      );
+    });
   }
 
   public onSubmit() {
     this.loaderService.show();
-    this.user = this.localStorageService.get('user') as User;
     this.user.showNav = true;
-    this.userService.updateUserInterests(null, this.interests).subscribe(
+    this.userService.updateInterests(null, this.interests).subscribe(
       (resp) => {
-        if (resp.status === null) {
-          this.alertType = 'danger';
-          this.msgContent = resp.message;
-          this.getInterests(this.slugName, this.pageNumber);
-        } else {
+        if (resp.status) {
           this.alertType = 'success';
-          this.msgContent = resp.message;
+        } else {
+          this.alertType = 'danger';
         }
+        this.msgContent = resp.message;
         this.loaderService.hide();
       }
     );
-  }
-
-  public getInterests(slugName: string, page: number): void {
-    this.userService.getUserInterest(slugName, page).subscribe(
-      (response) => {
-        if (response.length > 0) {
-          response.forEach((item) => {
-            this.interests.push(item);
-          });
-        }
-      }
-    );
-  }
-
-  public ngOnInit() {
-    this.user = this.localStorageService.get('user') as User;
-    this.sub = this.route.params.subscribe((params) => {
-      this.slugName = params['slug'];
-      if (!this.user.slug || this.slugName !== this.user.slug) {
-        this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
-      }
-      this.getInterests(this.slugName, this.pageNumber);
-    });
   }
 }
