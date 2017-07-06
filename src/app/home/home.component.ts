@@ -10,6 +10,7 @@ import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { scrollTo } from 'ng2-utils';
 import {MapsAPILoader} from "angular2-google-maps/core/services/maps-api-loader/maps-api-loader";
 import { DOCUMENT } from "@angular/platform-browser";
+import $ from "jquery";
 
 // services
 import { MainService } from '../services/main.service';
@@ -292,14 +293,10 @@ export class HomeComponent implements OnInit {
     }
 
     public clickedMarker(selector, horizontal) {
-        const element = document.querySelector('#v' + selector);
-        element.scrollIntoView(true);
-        scrollTo(
-            '#v' + selector,
-            '#v-scrollable',
-            horizontal,
-            100
-        );
+        this.currentHighlightedMarker = selector;
+        $('html, body').animate({
+            scrollTop: $("#v"+selector).offset().top - 80
+        }, 'slow');
     }
 
     public selectedDate(value:any) {
@@ -447,12 +444,13 @@ export class HomeComponent implements OnInit {
         let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
 
         if (content_element.length > 1) {
+            console.log(' content_element.length', content_element.length);
             for (let i = 0; i < content_element.length; i++) {
                 let currentClientH = content_element[i].clientHeight;
                 currentHeight += currentClientH;
-                console.log(currentHeight);
                 if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
                     if (this.currentHighlightedMarker !== i) {
+                        console.log("this.currentHighlightedMarker", this.currentHighlightedMarker);
                         this.currentHighlightedMarker = i;
                         this.highlightMarker(i);
                     }
@@ -462,16 +460,15 @@ export class HomeComponent implements OnInit {
 
 
         //load more
-        let windowHeight = 'innerHeight' in window ? window.innerHeight
-            : this.document.documentElement.offsetHeight;
-        let body = this.document.body;
-        let html = this.document.documentElement;
-        let docHeight = Math.max(body.scrollHeight,
-            body.offsetHeight, html.clientHeight,
-            html.scrollHeight, html.offsetHeight);
-        let windowBottom = windowHeight + window.pageYOffset;
-        console.log(docHeight, windowBottom);
-        //if (docHeight >= windowBottom) {
+        //let windowHeight = 'innerHeight' in window ? window.innerHeight
+        //    : this.document.documentElement.offsetHeight;
+        //let body = this.document.body;
+        //let html = this.document.documentElement;
+        //let docHeight = Math.max(body.scrollHeight,
+        //    body.offsetHeight, html.clientHeight,
+        //    html.scrollHeight, html.offsetHeight);
+        //let windowBottom = windowHeight + window.pageYOffset;
+        //if ((docHeight - 50) <= windowBottom) {
         //    if (this.selectedEventOrder.name == 'top 100') {
         //        if (this.total >= this.events.length) {
         //            // check limit start
@@ -497,12 +494,14 @@ export class HomeComponent implements OnInit {
         //        }
         //    }
         //}
+
+
     }
 
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
             this.markers.forEach((marker, index) => {
-                if (index === markerId) {
+                if (index == markerId) {
                     this.markers[index].opacity = 1;
                     this.markers[index].isOpenInfo = true;
                 } else {
@@ -524,7 +523,7 @@ export class HomeComponent implements OnInit {
     }
 
     private passerTrending(geo:any) {
-        this.resetData();
+        this.markers =[];
         this.mapsAPILoader.load().then(()=> {
 
             let mapCenter = new google.maps.Marker({
@@ -534,13 +533,15 @@ export class HomeComponent implements OnInit {
             let searchCenter = mapCenter.getPosition();
             for (let i = 0; i < geo.length; i++) {
                 for (let item of geo[i]) {
+                    console.log(item);
                     let latlng = item.split(',');
                     let myMarker = new google.maps.Marker({
                         position: new google.maps.LatLng(latlng[0], latlng[1]),
                         draggable: true
                     });
                     let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-                    if (parseInt(geometry) < this.currentRadius) {
+
+                    if ((parseInt(geometry)-100) < this.currentRadius) {
                         this.markers.push({
                             lat: parseFloat(latlng[0]),
                             lng: parseFloat(latlng[1]),
@@ -593,10 +594,6 @@ export class HomeComponent implements OnInit {
                 }
             }
         );
-    }
-
-    private resetData() {
-        this.markers = [];
     }
 
     public showRagePrice() {

@@ -5,6 +5,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
+import { UserService } from '../../services/user.service';
 
 const PAGE_SIZE = 10;
 
@@ -41,6 +42,7 @@ export class ProfilePublicComponent implements OnInit {
 
   public constructor(private loaderService: LoaderService,
                      private mainService: MainService,
+                     private userService: UserService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
   }
@@ -55,7 +57,7 @@ export class ProfilePublicComponent implements OnInit {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.canDelete = this.user.slug === this.slugName;
-      this.mainService.getUserProfile(this.slugName).subscribe(
+      this.userService.getUserProfile(this.slugName).subscribe(
         (resp: User) => {
           this.user = resp;
           this.user.showNav = false;
@@ -97,35 +99,39 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onClickDeleteEvent(item: any) {
-    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      if (response.status) {
-        this.events.forEach((event, index) => {
-          if (item === event) {
-            delete this.events[index];
-            this.setEvent.offset--;
-            if (this.setEvent.offset === 0) {
-              this.setEvent.endOfList = true;
+    this.userService.removeFavoritedEventList(item.slug).subscribe(
+      (response) => {
+        if (response.status) {
+          this.events.forEach((event, index) => {
+            if (item === event) {
+              delete this.events[index];
+              this.setEvent.offset--;
+              if (this.setEvent.offset === 0) {
+                this.setEvent.endOfList = true;
+              }
             }
-          }
-        });
+          });
+        }
       }
-    });
+    );
   }
 
   public onClickDeleteList(item: any) {
-    this.mainService.removeFavoritedEventList(item.slug).then((response) => {
-      if (response.status) {
-        this.lists.forEach((list, index) => {
-          if (item === list) {
-            delete this.lists[index];
-            this.setList.offset--;
-            if (this.setList.offset === 0) {
-              this.setList.endOfList = true;
+    this.userService.removeFavoritedEventList(item.slug).subscribe(
+      (response) => {
+        if (response.status) {
+          this.lists.forEach((list, index) => {
+            if (item === list) {
+              delete this.lists[index];
+              this.setList.offset--;
+              if (this.setList.offset === 0) {
+                this.setList.endOfList = true;
+              }
             }
-          }
-        });
+          });
+        }
       }
-    });
+    );
   }
 
   public onClickDeletePlace(item: any) {
@@ -168,22 +174,24 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
-      this.mainService.getUserPlace(slugName, page).then((response) => {
-        if (response.total > 0) {
-          if (this.setPlace.offset < response.total) {
-            response.results.forEach((item) => {
-              this.setPlace.offset++;
-              this.places.push(item);
-            });
-            this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
+      this.userService.getUserPlace(slugName, page).subscribe(
+        (response) => {
+          if (response.total > 0) {
+            if (this.setPlace.offset < response.total) {
+              response.results.forEach((item) => {
+                this.setPlace.offset++;
+                this.places.push(item);
+              });
+              this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
+            } else {
+              this.setPlace.endOfList = true;
+            }
           } else {
             this.setPlace.endOfList = true;
           }
-        } else {
-          this.setPlace.endOfList = true;
+          this.setPlace.loadingInProgress = false;
         }
-        this.setPlace.loadingInProgress = false;
-      });
+      );
     }
   }
 
@@ -191,22 +199,24 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setList.loadingInProgress) {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
-      this.mainService.getUserList(slugName, page).then((response) => {
-        if (response.total > 0) {
-          if (this.setList.offset < response.total) {
-            response.data.forEach((item) => {
-              this.setList.offset++;
-              this.lists.push(item);
-            });
-            this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
+      this.userService.getUserList(slugName, page).subscribe(
+        (response) => {
+          if (response.total > 0) {
+            if (this.setList.offset < response.total) {
+              response.data.forEach((item) => {
+                this.setList.offset++;
+                this.lists.push(item);
+              });
+              this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
+            } else {
+              this.setList.endOfList = true;
+            }
           } else {
             this.setList.endOfList = true;
           }
-        } else {
-          this.setList.endOfList = true;
+          this.setList.loadingInProgress = false;
         }
-        this.setList.loadingInProgress = false;
-      });
+      );
     }
   }
 
@@ -214,18 +224,20 @@ export class ProfilePublicComponent implements OnInit {
     if (!this.setEvent.loadingInProgress) {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
-      this.mainService.getUserEvent(slugName, page).then((response) => {
-        if (this.setEvent.offset < response.total) {
-          response.data.forEach((item) => {
-            this.setEvent.offset++;
-            this.events.push(item);
-          });
-          this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
-        } else {
-          this.setEvent.endOfList = true;
+      this.userService.getUserEvent(slugName, page).subscribe(
+        (response) => {
+          if (this.setEvent.offset < response.total) {
+            response.data.forEach((item) => {
+              this.setEvent.offset++;
+              this.events.push(item);
+            });
+            this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
+          } else {
+            this.setEvent.endOfList = true;
+          }
+          this.setEvent.loadingInProgress = false;
         }
-        this.setEvent.loadingInProgress = false;
-      });
+      );
     }
   }
 }

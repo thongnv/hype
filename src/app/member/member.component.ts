@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainService } from '../services/main.service';
 import { LoaderService } from '../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../app.interface';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-member',
@@ -26,9 +26,9 @@ export class MemberComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
               public loaderService: LoaderService,
+              public userService: UserService,
               private localStorageService: LocalStorageService,
-              private router: Router,
-              private mainService: MainService) {
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -42,7 +42,7 @@ export class MemberComponent implements OnInit {
     });
   }
 
-  public onSubmit(event): void {
+  public onSubmit(): void {
     let data = {
       field_notify_email: this.settingForm.value.email,
       field_first_name: this.user.firstName,
@@ -55,7 +55,7 @@ export class MemberComponent implements OnInit {
         follower: this.user.followerNumber,
       }
     };
-    this.mainService.setUserProfile(this.user, data).subscribe(
+    this.userService.setUserProfile(this.user, data).subscribe(
       (resp) => {
         if (resp.status) {
           this.alertType = 'success';

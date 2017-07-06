@@ -93,7 +93,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   public checkLogin(): void {
-    if (!this.user.isAnonymous) {
+    if (this.user.isAnonymous) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
   }

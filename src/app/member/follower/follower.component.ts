@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../app.service';
-import { MainService } from '../../services/main.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-follower',
@@ -31,7 +31,7 @@ export class FollowerComponent implements OnInit {
 
   public constructor(private appState: AppState,
                      private loaderService: LoaderService,
-                     private mainService: MainService,
+                     private userService: UserService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
   }
@@ -51,12 +51,12 @@ export class FollowerComponent implements OnInit {
       (params) => {
         this.slugName = params['slug'];
         this.isCurrentUser = this.slugName === this.user.slug;
-        this.mainService.getUserProfile(this.slugName).subscribe(
+        this.userService.getUserProfile(this.slugName).subscribe(
           (resp: User) => {
             this.currentUser = resp;
             this.currentUser.showNav = this.isCurrentUser;
             this.ready = true;
-            this.mainService.getFollowers(this.slugName, this.followerPage).subscribe(
+            this.userService.getFollowers(this.slugName, this.followerPage).subscribe(
               (response) => {
                 this.currentUser.userFollower = response.result;
                 this.currentUser.showNav = this.isCurrentUser;
@@ -85,7 +85,7 @@ export class FollowerComponent implements OnInit {
     if (!this.set.loadingInProgress) {
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getFollowers(this.slugName, ++this.followerPage).subscribe(
+      this.userService.getFollowers(this.slugName, ++this.followerPage).subscribe(
         (resp) => {
           let data = resp.result;
           data.forEach((item) => {

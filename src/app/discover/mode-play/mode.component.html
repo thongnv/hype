@@ -154,7 +154,7 @@
             <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
             <div class="clearfix"></div>
 
-            <div id="v-scrollable" class="section">
+            <div id="v-scrollable" class="section v-scrollable">
                 <div class="items" *ngFor="let item of items; let index = 'index'"
                      [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
                     <div class="list-items">

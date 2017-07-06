@@ -15,14 +15,9 @@
         <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       </div>
       <div class="infinite-list" (scroll)="onFollowScrollDown($event)"
-           slimScroll
            width="100%"
            height="calc(100vh - 145px)"
-           size="7px"
-           [railVisible]="true"
-           [railOpacity]="0.1"
-           [railColor]="'#ec3d62'"
-           [color]="'#ec3d62'">
+           size="7px">
         <app-follow-item
           *ngFor="let follower of currentUser.userFollower"
           [item]="follower"
