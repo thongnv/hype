@@ -44,9 +44,7 @@
     font-weight: bold;
     text-transform: capitalize;
     font-size: 15px;
-    margin: 0 15px;
-    float: right;
-    width: 140px;
+    width: 125px;
     right: 5px;
 }
 .search-location-search-area ul {
