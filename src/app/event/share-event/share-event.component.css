@@ -498,7 +498,7 @@ span.dollar-character {
   .new-list .input-box{ border-right: 0}
 
   .form-actions button{
-    width: 150px;
+    width: calc(50% - 10px);
   }
 
   .image-box .form-group{
