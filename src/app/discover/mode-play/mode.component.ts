@@ -130,8 +130,8 @@ export class ModeComponent implements OnInit {
                                     if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
                                         this.lat = response[0].geometry.location.lat();
                                         this.lng = response[0].geometry.location.lng();
-                                        this.params.lat = this.lat;
-                                        this.params.long = this.lng;
+                                        this.params.lat = response[0].geometry.location.lat();
+                                        this.params.long = response[0].geometry.location.lng();
                                         this.smallLoader.show();
                                         this.getDataModes();
                                     }
@@ -454,6 +454,7 @@ export class ModeComponent implements OnInit {
     }
 
     public navIsFixed:boolean = false;
+
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
             this.markers.forEach((marker, index) => {
