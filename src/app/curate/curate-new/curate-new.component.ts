@@ -93,7 +93,7 @@ export class CurateNewComponent implements OnInit {
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 5) {
       let typeFile = new RegExp(`^img\/\w+`);
       for (let i = 0; i < event.target.files.length && i < 5; i++) {
-        if (typeFile.test(event.target.files[i].type)) {
+        if (true) {
           reader[i] = new FileReader();
           reader[i].onload = (e) => {
             let image = new Image();
