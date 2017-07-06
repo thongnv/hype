@@ -204,6 +204,24 @@ export class ModeComponent implements OnInit {
                 }
 
             }
+
+            //index marker Highlight
+            let baseHeight = $("#v-scrollable")[0].clientHeight;
+            let realScrollTop = $(window).scrollTop() + baseHeight;
+            let currentHeight:number = baseHeight;
+            let content_element = $("#v-scrollable")[0].children;
+            if (content_element.length > 1) {
+                for (let i = 0; i < content_element.length; i++) {
+                    let currentClientH = content_element[i].clientHeight;
+                    currentHeight += currentClientH;
+                    if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                        if (this.currentHighlightedMarker !== i) {
+                            this.currentHighlightedMarker = i;
+                            this.highlightMarker(i);
+                        }
+                    }
+                }
+            }
         });
     }
 
@@ -436,55 +454,6 @@ export class ModeComponent implements OnInit {
     }
 
     public navIsFixed:boolean = false;
-
-    //@HostListener("window:scroll", ['$event'])
-    //onWindowScroll($event) {
-    //
-    //    //Hilight marker map
-    //    let baseHeight = this.document.body.clientHeight;
-    //    let realScrollTop = this.document.body.scrollTop + baseHeight;
-    //    let currentHeight:number = baseHeight;
-    //    let content_element = this.document.body.getElementsByClassName('v-scrollable')[0].children;
-    //
-    //    if (content_element.length > 1) {
-    //        for (let i = 0; i < content_element.length; i++) {
-    //            let currentClientH = content_element[i].clientHeight;
-    //            currentHeight += currentClientH;
-    //            console.log(currentHeight);
-    //            if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-    //                if (this.currentHighlightedMarker !== i) {
-    //                    this.currentHighlightedMarker = i;
-    //                    this.highlightMarker(i);
-    //                }
-    //            }
-    //        }
-    //    }
-    //
-    //    //Scroll Load more
-    //    let windowHeight = 'innerHeight' in window ? window.innerHeight
-    //        : this.document.documentElement.offsetHeight;
-    //    let body = this.document.body;
-    //    let html = this.document.documentElement;
-    //    let docHeight = Math.max(body.scrollHeight,
-    //        body.offsetHeight, html.clientHeight,
-    //        html.scrollHeight, html.offsetHeight);
-    //    let windowBottom = windowHeight + window.pageYOffset;
-    //    console.log((docHeight - 50), windowBottom);
-    //    if ((docHeight - 50) <= windowBottom) {
-    //        if (this.total > this.items.length) {
-    //            if (this.items.length <= 1) {
-    //                return false;
-    //            }
-    //            console.log(this.total, this.items.length);
-    //            this.smallLoader.show();
-    //            this.loadMore = true;
-    //            this.params.page += 1;
-    //            this.getDataModes();
-    //        }
-    //    }
-    //
-    //}
-
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
             this.markers.forEach((marker, index) => {
