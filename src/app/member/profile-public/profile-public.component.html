@@ -1,8 +1,8 @@
-<div class="setting-wrap table-wrap">
+<div class="setting-wrap table-wrap" *ngIf="ready">
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation
       *ngIf="!user.isAnonymous"
-      [user]="user" [slugName]="slugName" [userFollow]="userFollow" [showFollow]="true">
+      [user]="user" [currentUser]="currentUser" [followed]="followed" [showFollowBtn]="true">
     </app-member-navigation>
   </div>
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
@@ -27,7 +27,7 @@
         <div class="tab-content fade" *ngIf="events" [class.in]="selectedFavoriteType === 'event'">
           <app-favorite-event *ngFor="let fav of events"
                               [item]="fav"
-                              [canDelete]="canDelete"
+                              [isCurrentUser]="isCurrentUser"
                               (onClickDelete)="onClickDeleteEvent($event)">
           </app-favorite-event>
           <div class="list-bottom">
@@ -38,7 +38,7 @@
         <div class="tab-content fade" *ngIf="lists" [class.in]="selectedFavoriteType === 'list'">
           <app-favorite-list *ngFor="let fav of lists"
                              [item]="fav"
-                             [canDelete]="canDelete"
+                             [isCurrentUser]="isCurrentUser"
                              (onClickDelete)="onClickDeleteList($event)">
           </app-favorite-list>
           <div class="list-bottom">
@@ -49,7 +49,7 @@
         <div class="tab-content fade" *ngIf="places" [class.in]="selectedFavoriteType === 'place'">
           <app-favorite-place *ngFor="let fav of places"
                               [item]="fav"
-                              [canDelete]="canDelete"
+                              [isCurrentUser]="isCurrentUser"
                               (onClickDelete)="onClickDeletePlace($event)">
           </app-favorite-place>
           <div class="list-bottom">

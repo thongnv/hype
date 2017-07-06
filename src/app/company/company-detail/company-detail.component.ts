@@ -45,7 +45,6 @@ export class CompanyDetailComponent implements Company, OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    public mainService: MainService,
     public userService: UserService,
     public companyService: CompanyService,
     private route: ActivatedRoute,
@@ -106,7 +105,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     });
     if (!this.user.isAnonymous) {
       this.userService.getUserProfile().subscribe((response) => {
-        this.user = response;
+        this.user = response.user;
       });
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;

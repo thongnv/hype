@@ -60,7 +60,6 @@ export class ShareEventComponent implements OnInit {
   constructor(public fb: FormBuilder, private eventService: EventService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              public mainService: MainService,
               public userService: UserService,
               private router: Router) {
 
@@ -79,7 +78,7 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.userService.getUserProfile().subscribe((response) => {
-      this.user = response;
+      this.user = response.user;
     });
   }
 

@@ -1,9 +1,9 @@
-<div class="setting-wrap table-wrap">
+<div class="setting-wrap table-wrap" *ngIf="ready">
   <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-left table-cell">
-    <app-member-navigation *ngIf="!user.isAnonymous" [user]="user" [slugName]="slugName"></app-member-navigation>
+    <app-member-navigation *ngIf="!user.isAnonymous" [user]="user" [currentUser]="currentUser"></app-member-navigation>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-right table-cell">
-    <section *ngIf="user" class="form-wrap">
+    <section *ngIf="!user.isAnonymous" class="form-wrap">
       <h3 class="col-xs-12 col-lg-12 setting-title">Settings</h3>
       <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
       <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit()">

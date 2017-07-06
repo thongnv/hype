@@ -5,6 +5,7 @@ import { LoaderService } from '../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../app.interface';
 import { UserService } from '../services/user.service';
+import { AppSetting } from '../app.setting';
 
 @Component({
   selector: 'app-member',
@@ -13,7 +14,8 @@ import { UserService } from '../services/user.service';
 })
 export class MemberComponent implements OnInit {
 
-  public user: User;
+  public user = AppSetting.defaultUser;
+  public currentUser: User;
   public settingForm = this.fb.group({
     receiveEmail: true
   });
@@ -21,7 +23,8 @@ export class MemberComponent implements OnInit {
   public alertType = 'danger';
   public msgContent: string;
   public sub: any;
-  public slugName: any;
+  public slugName: string;
+  public ready = false;
 
   constructor(private route: ActivatedRoute,
               public fb: FormBuilder,
@@ -32,13 +35,29 @@ export class MemberComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.user = this.localStorageService.get('user') as User;
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
+    }
     this.user.showNav = true;
+    this.loaderService.show();
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user.slug || this.slugName !== this.user.slug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
+      this.userService.getUserProfile(this.slugName).subscribe(
+        (resp) => {
+          this.currentUser = resp.user;
+          this.ready = true;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.loaderService.hide();
+        }
+      );
     });
   }
 

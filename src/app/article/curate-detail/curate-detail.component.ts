@@ -2,7 +2,6 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../../app.setting';
 
 @Injectable()
@@ -34,7 +33,7 @@ export class CurateDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.gMapStyles = AppSetting.GMAP_STYLE
+    this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
