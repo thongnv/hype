@@ -25,6 +25,7 @@ import {EventItemComponent} from '../event/event-item/event-item.component';
 import { AppSetting } from '../app.setting';
 import {of} from "rxjs/observable/of";
 import {SmallLoaderService} from "../helper/small-loader/small-loader.service";
+import { LocalStorageService } from "angular-2-local-storage";
 
 // assets
 const MARKER_ICON = '/assets/icon/icon_pointer.png';
@@ -104,6 +105,7 @@ export class HomeComponent implements OnInit {
                 private loaderService:LoaderService,
                 private smallLoader:SmallLoaderService,
                 private mapsAPILoader:MapsAPILoader,
+                private localStorageService: LocalStorageService,
                 private route:Router,
                 @Inject(DOCUMENT) private document:Document) {
         this.eventFilter = [
@@ -328,26 +330,29 @@ export class HomeComponent implements OnInit {
 
     public onLikeEmit(item:any) {
         item.user_bookmark = !item.user_bookmark;
-        console.log(item);
-        let param = {
-            'slug': item.alias
-        };
-        this.smallLoader.show();
-        this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
+        let user = this.localStorageService.get('user');
+        if (!user) {
+          this.route.navigate(['login'], {skipLocationChange: true}).then();
+        } else {
+          let param = {
+            slug: item.alias
+          };
+          this.smallLoader.show();
+          this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
             this.loaderService.hide();
             this.alertType = 'success';
             this.msgContent = res.message;
-        }, err=> {
+          }, err=> {
             if (err.status == 403) {
-                this.loaderService.hide();
-                this.route.navigate(['login']);
+              this.loaderService.hide();
+              this.route.navigate(['login']);
             } else {
-                this.smallLoader.hide();
-                this.alertType = 'error';
-                this.msgContent = 'Sorry, bookmark error please try again';
+              this.smallLoader.hide();
+              this.alertType = 'error';
+              this.msgContent = 'Sorry, bookmark error please try again';
             }
-        });
-
+          });
+        }
     }
 
     public clickedMarker(markerId, horizontal) {
