@@ -64,6 +64,7 @@ export class ModeComponent implements OnInit {
     public screenWidth:number = 0;
     public screenHeight:number = 0;
     public totalCuisine:number = 0;
+    private stopped:boolean = false;
     private params = {
         type: 'all',
         kind: '',
@@ -181,52 +182,56 @@ export class ModeComponent implements OnInit {
         this.screenHeight = height;
 
         let paramsUrl = this.location.path().split('/');
+        $("body").bind("DOMMouseScroll mousewheel", ()=> {
+            $(window).scroll(()=> {
+                //load more data
+                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                    if (this.loadMore == false && this.end_record == false) {
+                        this.loadMore = true;
+                        this.params.page = this.params.page + 1;
+                        let params = this.params;
+                        console.log(params.page);
+                        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
+                            this.loadMore = false;
+                            if (resp.company.length == 0) {
+                                this.end_record = true
+                            }
+                            this.initMap(resp.company);
+                            this.smallLoader.hide();
+                            this.loadMore = false;
+                        }, err=> {
+                            this.loadMore = false;
+                            this.items = [];
+                            this.markers = [];
+                            this.smallLoader.hide();
+                        });
+                    }
 
-        $(window).scroll(()=> {
-            //load more data
-            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                if (this.loadMore == false && this.end_record == false) {
-                    this.loadMore = true;
-                    this.params.page = this.params.page + 1;
-                    let params = this.params;
-                    console.log(params.page);
-                    this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-                        this.loadMore = false;
-                        if (resp.company.length == 0) {
-                            this.end_record = true
-                        }
-                        this.initMap(resp.company);
-                        this.smallLoader.hide();
-                        this.loadMore = false;
-                    }, err=> {
-                        this.loadMore = false;
-                        this.items = [];
-                        this.markers = [];
-                        this.smallLoader.hide();
-                    });
                 }
 
-            }
-
-            //index marker Highlight
-            if(paramsUrl[1]=='discover') {
-                let baseHeight = $("#v-scrollable")[0].clientHeight;
-                let realScrollTop = $(window).scrollTop() + baseHeight;
-                let currentHeight:number = baseHeight;
-                let content_element = $("#v-scrollable")[0].children;
-                if (content_element.length > 1) {
-                    for (let i = 0; i < content_element.length; i++) {
-                        let currentClientH = content_element[i].clientHeight;
-                        currentHeight += currentClientH;
-                        if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                            if (this.currentHighlightedMarker !== i) {
-                                this.currentHighlightedMarker = i;
-                                this.highlightMarker(i);
+                if (this.stopped) {
+                    return true;
+                }
+                //index marker Highlight
+                if (paramsUrl[1] == 'discover') {
+                    let baseHeight = $("#v-scrollable")[0].clientHeight;
+                    let realScrollTop = $(window).scrollTop() + baseHeight;
+                    let currentHeight:number = baseHeight;
+                    let content_element = $("#v-scrollable")[0].children;
+                    if (content_element.length > 1) {
+                        for (let i = 0; i < content_element.length; i++) {
+                            let currentClientH = content_element[i].clientHeight;
+                            currentHeight += currentClientH;
+                            if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                                if (this.currentHighlightedMarker !== i) {
+                                    this.currentHighlightedMarker = i;
+                                    this.highlightMarker(i);
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
         });
     }
 
@@ -405,27 +410,27 @@ export class ModeComponent implements OnInit {
                         let distance = companies[i]._dict_;
                         //let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
                         //if (parseInt(geometry) <= this.currentRadius) {
-                            companies[i].distance = (distance).toFixed(1);
-                            this.items.push(companies[i]);
-                            if (i == 0) {
-                                this.markers.push({
-                                    lat: parseFloat(lat[1]),
-                                    lng: parseFloat(lng[1]),
-                                    label: companies[i].Company_Name,
-                                    opacity: 1,
-                                    isOpenInfo: false,
-                                    icon: 'assets/icon/icon_pointer.png'
-                                });
-                            } else {
-                                this.markers.push({
-                                    lat: parseFloat(lat[1]),
-                                    lng: parseFloat(lng[1]),
-                                    label: companies[i].Company_Name,
-                                    opacity: 0.4,
-                                    isOpenInfo: false,
-                                    icon: 'assets/icon/icon_pointer.png'
-                                });
-                            }
+                        companies[i].distance = (distance).toFixed(1);
+                        this.items.push(companies[i]);
+                        if (i == 0) {
+                            this.markers.push({
+                                lat: parseFloat(lat[1]),
+                                lng: parseFloat(lng[1]),
+                                label: companies[i].Company_Name,
+                                opacity: 1,
+                                isOpenInfo: false,
+                                icon: 'assets/icon/icon_pointer.png'
+                            });
+                        } else {
+                            this.markers.push({
+                                lat: parseFloat(lat[1]),
+                                lng: parseFloat(lng[1]),
+                                label: companies[i].Company_Name,
+                                opacity: 0.4,
+                                isOpenInfo: false,
+                                icon: 'assets/icon/icon_pointer.png'
+                            });
+                        }
                         //}
                     }
                 }
@@ -449,11 +454,12 @@ export class ModeComponent implements OnInit {
         return x * Math.PI / 180;
     }
 
-    public clickedMarker(selector, horizontal) {
-        this.currentHighlightedMarker = selector;
-        this.currentHighlightedMarker = selector;
+    public clickedMarker(markerId, horizontal) {
+        this.currentHighlightedMarker = markerId;
+        this.highlightMarker(markerId);
+        this.stopped = true;
         $('html, body').animate({
-            scrollTop: $("#v" + selector).offset().top - 80
+            scrollTop: $("#v" + markerId).offset().top - 80
         }, 'slow');
 
     }

@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit {
                 private loaderService:LoaderService,
                 private smallLoader:SmallLoaderService,
                 private mapsAPILoader:MapsAPILoader,
-                private localStorageService: LocalStorageService,
+                private localStorageService:LocalStorageService,
                 private route:Router,
                 private location:Location,
                 @Inject(DOCUMENT) private document:Document) {
@@ -148,51 +148,56 @@ export class HomeComponent implements OnInit {
         this.screenHeight = height;
         //var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         let paramsUrl = this.location.path().split('/');
-        $(window).scroll(()=> {
-            //load more data
-            if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                if (this.selectedEventOrder.name == 'top 100') {
-                    if (this.loadMore == false && this.end_record == false) {
-                        if (this.events.length > 10) {
-                            this.loadMore = true;
-                            this.params.start += 20;
-                            this.smallLoader.show();
-                            this.getTrending();
+        $("body").bind("DOMMouseScroll mousewheel", ()=> {
+            $(window).scroll(()=> {
+                //load more data
+                if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+                    if (this.selectedEventOrder.name == 'top 100') {
+                        if (this.loadMore == false && this.end_record == false) {
+                            if (this.events.length > 10) {
+                                this.loadMore = true;
+                                this.params.start += 20;
+                                this.smallLoader.show();
+                                this.getTrending();
+                            }
                         }
-                    }
 
-                } else {
-                    if (this.loadMore == false && this.end_record == false) {
-                        if (this.events.length > 10) {
-                            this.loadMore = true;
-                            this.smallLoader.show();
-                            this.params.page++;
-                            this.getTrending();
+                    } else {
+                        if (this.loadMore == false && this.end_record == false) {
+                            if (this.events.length > 10) {
+                                this.loadMore = true;
+                                this.smallLoader.show();
+                                this.params.page++;
+                                this.getTrending();
+                            }
                         }
-                    }
 
+                    }
                 }
-            }
 
-            //index marker Highlight
-            if(paramsUrl[1]=="home") {
-                let baseHeight = $("#v-scrollable")[0].clientHeight;
-                let realScrollTop = $(window).scrollTop() + baseHeight;
-                let currentHeight:number = baseHeight;
-                let content_element = $("#v-scrollable")[0].children;
-                if (content_element.length > 1) {
-                    for (let i = 0; i < content_element.length; i++) {
-                        let currentClientH = content_element[i].clientHeight;
-                        currentHeight += currentClientH;
-                        if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                            if (this.currentHighlightedMarker !== i) {
-                                this.currentHighlightedMarker = i;
-                                this.highlightMarker(i);
+                //index marker Highlight
+                if(this.stopped){
+                    return false;
+                }
+                if (paramsUrl[1] == "home") {
+                    let baseHeight = $("#v-scrollable")[0].clientHeight;
+                    let realScrollTop = $(window).scrollTop() + baseHeight;
+                    let currentHeight:number = baseHeight;
+                    let content_element = $("#v-scrollable")[0].children;
+                    if (content_element.length > 1) {
+                        for (let i = 0; i < content_element.length; i++) {
+                            let currentClientH = content_element[i].clientHeight;
+                            currentHeight += currentClientH;
+                            if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                                if (this.currentHighlightedMarker !== i) {
+                                    this.currentHighlightedMarker = i;
+                                    this.highlightMarker(i);
+                                }
                             }
                         }
                     }
                 }
-            }
+            });
         });
     }
 
@@ -336,26 +341,26 @@ export class HomeComponent implements OnInit {
         item.user_bookmark = !item.user_bookmark;
         let user = this.localStorageService.get('user');
         if (!user) {
-          this.route.navigate(['login'], {skipLocationChange: true}).then();
+            this.route.navigate(['login'], {skipLocationChange: true}).then();
         } else {
-          let param = {
-            slug: item.alias
-          };
-          this.smallLoader.show();
-          this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
-            this.loaderService.hide();
-            this.alertType = 'success';
-            this.msgContent = res.message;
-          }, err=> {
-            if (err.status == 403) {
-              this.loaderService.hide();
-              this.route.navigate(['login']);
-            } else {
-              this.smallLoader.hide();
-              this.alertType = 'error';
-              this.msgContent = 'Sorry, bookmark error please try again';
-            }
-          });
+            let param = {
+                slug: item.alias
+            };
+            this.smallLoader.show();
+            this.homeService.likeEvent(param).map(res=>res.json()).subscribe(res=> {
+                this.loaderService.hide();
+                this.alertType = 'success';
+                this.msgContent = res.message;
+            }, err=> {
+                if (err.status == 403) {
+                    this.loaderService.hide();
+                    this.route.navigate(['login']);
+                } else {
+                    this.smallLoader.hide();
+                    this.alertType = 'error';
+                    this.msgContent = 'Sorry, bookmark error please try again';
+                }
+            });
         }
     }
 
@@ -363,6 +368,7 @@ export class HomeComponent implements OnInit {
         $('html, body').animate({
             scrollTop: $("#v" + markerId).offset().top - 80
         });
+        this.stopped = true;
         this.currentHighlightedMarker = markerId;
         this.highlightMarker(markerId);
     }
