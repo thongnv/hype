@@ -47,12 +47,9 @@ export class UserService {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(
-      AppSetting.API_ENDPOINT + 'api/user/logout?_format=json', options
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'user/logout', options
     )
-      .map((res: Response) => {
-        return res.json();
-      })
       .catch((error) => {
         return Observable.throw(new Error(error));
       });
@@ -60,6 +57,11 @@ export class UserService {
 
   public getProfile(slugName?: string): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
+    this.checkLogin().subscribe(
+      (resp) => {
+        return resp;
+      }
+    );
     let user = this.localStorageService.get('user') as User;
     let slug = slugName ? slugName : user.slug;
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
