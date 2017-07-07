@@ -1103,10 +1103,21 @@ body, html {
     font-size: 12px;
     width: 30px;
   }
-
-  .filter-events .btn-default {
-    width: 84px;
+  
+  .filter-events #timeFilter .btn-default {
+    width: 103px;
   }
+  // .filter-events #timeFilter .btn-default.active {
+  //   right: 1px;
+  // }
+  
+  .filter-events #filters .btn-default {
+    width: 80px;
+  }
+  // .filter-events #filters .btn-default.active {
+  //     left: 1px;
+  // }
+
   .daterangepicker .ranges {
     float: right !important;
     clear: both;
@@ -1226,6 +1237,7 @@ body, html {
     }
     .left-box {
       height: auto;
+      padding: 0px;
     }
     .form-wrap, .form-wrap form > div {
       padding: 0 15px;
