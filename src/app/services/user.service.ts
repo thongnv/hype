@@ -57,11 +57,6 @@ export class UserService {
 
   public getProfile(slugName?: string): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
-    this.checkLogin().subscribe(
-      (resp) => {
-        return resp;
-      }
-    );
     let user = this.localStorageService.get('user') as User;
     let slug = slugName ? slugName : user.slug;
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
