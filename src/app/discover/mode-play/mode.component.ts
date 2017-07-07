@@ -3,7 +3,7 @@ import { Component, OnInit,ViewEncapsulation,
     EventEmitter, Output,Inject} from '@angular/core';
 
 import $ from "jquery";
-
+import { Location } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap'
 import {ModeService} from "../../services/mode.service";
@@ -92,6 +92,7 @@ export class ModeComponent implements OnInit {
                        private smallLoader:SmallLoaderService,
                        private route:ActivatedRoute,
                        private router:Router,
+                       private location:Location,
                        @Inject(DOCUMENT) private document:Document) {
 
         this.filterFromMode = this.formBuilder.group({
@@ -179,6 +180,8 @@ export class ModeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
 
+        let paramsUrl = this.location.path().split('/');
+
         $(window).scroll(()=> {
             //load more data
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -206,18 +209,20 @@ export class ModeComponent implements OnInit {
             }
 
             //index marker Highlight
-            let baseHeight = $("#v-scrollable")[0].clientHeight;
-            let realScrollTop = $(window).scrollTop() + baseHeight;
-            let currentHeight:number = baseHeight;
-            let content_element = $("#v-scrollable")[0].children;
-            if (content_element.length > 1) {
-                for (let i = 0; i < content_element.length; i++) {
-                    let currentClientH = content_element[i].clientHeight;
-                    currentHeight += currentClientH;
-                    if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                        if (this.currentHighlightedMarker !== i) {
-                            this.currentHighlightedMarker = i;
-                            this.highlightMarker(i);
+            if(paramsUrl[1]=='discover') {
+                let baseHeight = $("#v-scrollable")[0].clientHeight;
+                let realScrollTop = $(window).scrollTop() + baseHeight;
+                let currentHeight:number = baseHeight;
+                let content_element = $("#v-scrollable")[0].children;
+                if (content_element.length > 1) {
+                    for (let i = 0; i < content_element.length; i++) {
+                        let currentClientH = content_element[i].clientHeight;
+                        currentHeight += currentClientH;
+                        if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                            if (this.currentHighlightedMarker !== i) {
+                                this.currentHighlightedMarker = i;
+                                this.highlightMarker(i);
+                            }
                         }
                     }
                 }
@@ -398,8 +403,8 @@ export class ModeComponent implements OnInit {
                             draggable: true
                         });
                         let distance = companies[i]._dict_;
-                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
-                        if (parseInt(geometry) <= this.currentRadius) {
+                        //let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
+                        //if (parseInt(geometry) <= this.currentRadius) {
                             companies[i].distance = (distance).toFixed(1);
                             this.items.push(companies[i]);
                             if (i == 0) {
@@ -421,7 +426,7 @@ export class ModeComponent implements OnInit {
                                     icon: 'assets/icon/icon_pointer.png'
                                 });
                             }
-                        }
+                        //}
                     }
                 }
             });
