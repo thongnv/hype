@@ -30,13 +30,11 @@ export class MemberNavigationComponent implements OnInit {
       (resp) => {
         console.log(resp);
         this.followed = !this.followed;
+        this.currentUser.followerNumber++;
         if (this.isCurrentUser) {
           this.currentUser.followingNumber++;
-          this.currentUser.followerNumber++;
-        } else {
-          this.user.followerNumber++;
         }
-        // TODO: update followings + follower
+        // TODO: update followings + followers on right area
     });
   }
 
@@ -45,13 +43,11 @@ export class MemberNavigationComponent implements OnInit {
       (resp) => {
         console.log(resp);
         this.followed = !this.followed;
+        this.currentUser.followerNumber--;
         if (this.isCurrentUser) {
           this.currentUser.followingNumber--;
-          this.currentUser.followerNumber--;
-        } else {
-          this.user.followerNumber--;
         }
-        // TODO: update followers + follower
+        // TODO: update followings + followers on right area
     });
   }
 
