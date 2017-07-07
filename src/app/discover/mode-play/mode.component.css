@@ -570,6 +570,9 @@ select.form-control-static::-ms-expand {
 }
 
 @media only screen and (max-width: 800px) {
+  .filterCategory .btn-filter-block label {
+    width: auto;
+  }
   .itemSort li.type {
     width: auto;
   }
