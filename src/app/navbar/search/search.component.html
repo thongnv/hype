@@ -49,7 +49,7 @@
                     </li>
                     <li *ngFor="let item of result.company;trackBy:item?.id">
                         <a [routerLink]="['/company',item.Slug]" class="item-link" (click)="onCloseSuggestion()">
-                            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+                            <img class="icon-location-address" src="assets/icon/default-logo.png" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
                                 <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
