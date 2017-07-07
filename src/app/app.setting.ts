@@ -29,7 +29,7 @@ export class AppSetting {
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
   public static API_SEARCH = API_ENDPOINT + 'api/v1/suggestion/';
   public static API_COMPANY_SEARCH = API_ENDPOINT + 'api/v1/company/suggestion/';
-  public static INSTAGRAM_ACCESS_TOKEN = '1175510051.4e32184.4c50556a3ebe4cf5bd18ecfa9a12ebc1';
+  public static INSTAGRAM_ACCESS_TOKEN = '5544202380.58b5f2c.fa60c5d58b8443e6a654f966753ad5ba';
   public static FACEBOOK = {
     appId: '289859484806086',
     xfbml: true,

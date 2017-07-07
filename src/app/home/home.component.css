@@ -14,6 +14,7 @@
     display: block;
     float: left;
     width: 100%;
+    position: relative;
 }
 
 .type-events ul {
@@ -86,7 +87,7 @@
     border: 1px solid #d8d8d8;
     border-radius: 4px;
     background: #f6f6f6;
-    height: 28px;
+    height: 30px;
 }
 
 .filter-events.top-100 {
@@ -105,6 +106,9 @@
     text-align: right;
 }
 
+.tab-choose-option {
+    padding: 0px 2px;
+}
 .price-range {
     margin: 20px 0;
     text-transform: capitalize;
@@ -152,7 +156,7 @@
 
 button.btn.btn-default.active {
     font-size: 14px;
-    height: 32px;
+    height: 120%;
     color: #fff;
     position: relative;
     bottom: 3px;
@@ -165,6 +169,7 @@ button.btn.btn-default.active {
     border-bottom-right-radius: 4px !important;
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
+    text-shadow: none;
 }
 
 .list-item {
@@ -221,6 +226,7 @@ button.btn.btn-default.active {
     right: 0px;
     width: 47%;
     padding: 0px;
+    border-left: solid 1px #d6d6d6;
 }
 
 .ginfo-img-wrap {
@@ -879,7 +885,14 @@ ul.mentioned-item {
 /*
 ==============
 */
-
+@media only screen and (max-width: 420px) {
+    .filter-events #timeFilter .btn-default {
+        max-width: 67px;
+    }
+    .filter-events #filters .btn-default {
+        max-width: 60px;
+    }
+}
 @media only screen and (max-width: 544px) {
     .type-events {
         padding: 5px 0px 0;
@@ -894,7 +907,7 @@ ul.mentioned-item {
     }
 
     .filter-events {
-        padding: 15px 0px;
+        padding: 15px 3px;
     }
 
     .btn {
@@ -902,12 +915,13 @@ ul.mentioned-item {
     }
 
 
+
 }
 
 @media only screen and (min-width: 320px) and (max-width: 800px) {
 
   .wrap-each-items {
-    padding: 0;
+    padding: 0px 15px;
   }
 }
 @media only screen and (min-width: 320px) and (max-width: 374px) {
@@ -958,7 +972,16 @@ ul.mentioned-item {
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-
+    .home-page .left-box {
+        padding: 0px;
+    }
+    .filter-events #timeFilter .btn-default {
+        max-width: 70px;
+        padding: 0px;
+    }
+    .filter-events #filters .btn-default {
+        max-width: 70px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -970,5 +993,9 @@ ul.mentioned-item {
     }
     .type-events .type-event-item {
         margin: 0px 20px 10px;
+    }
+    .type-events .type-event-more {
+        position: absolute;
+        right: 6%;
     }
 }

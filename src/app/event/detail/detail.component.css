@@ -856,3 +856,17 @@ ul.list-stars-on-post {
     right:inherit;
   }
 }
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .page-event .row {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .gmap-box .map-location-area {
+    display: none;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .gmap-box .map-location-area {
+    display: block;
+  }
+}

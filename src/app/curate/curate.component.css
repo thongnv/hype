@@ -112,6 +112,7 @@ ul.list-items {
 }
 ul.list-items li:not(:last-child) {
     border-bottom: 1px solid #eaeaea;
+    padding-bottom: 20px;
 }
 ul.list-items li {
     margin: 20px 0;
@@ -185,7 +186,7 @@ ul.list-items li a img {
   }
   .left-box{
     height: auto;
-    border-right: none;
+    border-right: 1px solid #eaeaea;
   }
 
   .top-content {
