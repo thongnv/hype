@@ -78,7 +78,7 @@
 }
 
 .filter-events {
-    padding: 30px 35px 0px 25px;
+    padding: 20px 20px 0px;
     border-bottom: 1px solid #eaeaea;
 }
 
@@ -220,6 +220,7 @@ button.btn.btn-default.active {
     position: fixed;
     right: 0px;
     width: 47%;
+    padding: 0px;
 }
 
 .ginfo-img-wrap {
@@ -250,7 +251,7 @@ button.btn.btn-default.active {
 }
 
 .wrap-each-items {
-    /*border-bottom: 1px solid #eaeaea;*/
+    border-bottom: 1px solid #eaeaea;
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -960,5 +961,13 @@ ul.mentioned-item {
 }
 
 @media only screen and (min-width: 1200px) {
-
+    .home-page .left-box {
+        padding: 0px;
+    }
+    .type-events {
+        padding: 25px 10px 0px 20px;
+    }
+    .type-events .type-event-item {
+        margin: 0px 20px 10px;
+    }
 }
