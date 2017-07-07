@@ -179,7 +179,7 @@ export class HomeComponent implements OnInit {
                 if(this.stopped){
                     return false;
                 }
-                if (paramsUrl[1] == "home") {
+                if (paramsUrl[1] == "home" && $("#v-scrollable").length) {
                     let baseHeight = $("#v-scrollable")[0].clientHeight;
                     let realScrollTop = $(window).scrollTop() + baseHeight;
                     let currentHeight:number = baseHeight;

@@ -213,7 +213,8 @@ export class ModeComponent implements OnInit {
                     return true;
                 }
                 //index marker Highlight
-                if (paramsUrl[1] == 'discover') {
+                if (paramsUrl[1] == 'discover' && $("#v-scrollable").length) {
+
                     let baseHeight = $("#v-scrollable")[0].clientHeight;
                     let realScrollTop = $(window).scrollTop() + baseHeight;
                     let currentHeight:number = baseHeight;
