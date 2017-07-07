@@ -77,27 +77,14 @@ export class FavoriteComponent implements OnInit {
 
   public onSelectFavoriteType(type: string): void {
     this.selectedFavoriteType = type;
-    switch (this.selectedFavoriteType) {
-      case 'event':
-        if (!this.setEvent.offset) {
-          this.smallLoader.show();
-          this.getEvent(this.slugName, this.eventPageNum);
-        }
-        break;
-      case 'list':
-        if (!this.setList.offset) {
-          this.smallLoader.show();
-          this.getList(this.slugName, this.listPageNum);
-        }
-        break;
-      case 'place':
-        if (!this.setPlace.offset) {
-          this.smallLoader.show();
-          this.getPlace(this.slugName, this.placePageNum);
-        }
-        break;
-      default:
-        break;
+    if (type === 'event' && !this.setEvent.offset) {
+      this.getEvent(this.slugName, this.eventPageNum);
+    }
+    if (type === 'list' && !this.setList.offset) {
+      this.getList(this.slugName, this.listPageNum);
+    }
+    if (type === 'place' && !this.setPlace.offset) {
+      this.getPlace(this.slugName, this.placePageNum);
     }
   }
 
@@ -115,14 +102,12 @@ export class FavoriteComponent implements OnInit {
               }
             }
           });
-          this.smallLoader.hide();
           this.alertType = 'success';
-          this.msgContent = response.message;
         } else {
-          this.smallLoader.hide();
           this.alertType = 'danger';
-          this.msgContent = response.message;
         }
+        this.msgContent = response.message;
+        this.smallLoader.hide();
       }
     );
   }
@@ -141,14 +126,12 @@ export class FavoriteComponent implements OnInit {
               }
             }
           });
-          this.smallLoader.hide();
           this.alertType = 'success';
-          this.msgContent = response.message;
         } else {
-          this.smallLoader.hide();
           this.alertType = 'danger';
-          this.msgContent = response.message;
         }
+        this.msgContent = response.message;
+        this.smallLoader.hide();
       }
     );
   }
@@ -166,14 +149,12 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
-        this.smallLoader.hide();
         this.alertType = 'success';
-        this.msgContent = response.message;
       } else {
-        this.smallLoader.hide();
         this.alertType = 'danger';
-        this.msgContent = response.message;
       }
+      this.msgContent = response.message;
+      this.smallLoader.hide();
     });
   }
 
@@ -184,22 +165,18 @@ export class FavoriteComponent implements OnInit {
       this.userService.getFavoritePlaces(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
-            this.smallLoader.hide();
             if (this.setPlace.offset < response.total) {
               response.results.forEach((item) => {
                 this.setPlace.offset++;
                 this.places.push(item);
                                 this.loadMore = false;
               });
-              this.smallLoader.hide();
               this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
             } else {
-              this.smallLoader.hide();
               this.setPlace.endOfList = true;
               this.endRecord = true;
             }
           } else {
-            this.smallLoader.hide();
             this.setPlace.endOfList = true;
             this.endRecord = true;
           }
@@ -223,14 +200,11 @@ export class FavoriteComponent implements OnInit {
                 this.lists.push(item);
                 this.loadMore = false;
               });
-              this.smallLoader.hide();
               this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
             } else {
-              this.smallLoader.hide();
               this.setList.endOfList = true;
             }
           } else {
-            this.smallLoader.hide();
             this.setList.endOfList = true;
           }
           this.smallLoader.hide();
