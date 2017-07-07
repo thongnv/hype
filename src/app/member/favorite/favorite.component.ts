@@ -79,13 +79,16 @@ export class FavoriteComponent implements OnInit {
         let type = this.selectedFavoriteType;
         if (!this.loadMore && !this.endRecord) {
           if (type === 'event') {
-            this.getEvent(this.slugName, this.eventPageNum = this.eventPageNum + 1);
+            this.loadMore =true;
+            this.getEvent(this.slugName, this.eventPageNum);
           }
           if (type === 'list') {
-            this.getList(this.slugName, this.listPageNum = this.listPageNum + 1);
+            this.loadMore =true;
+            this.getList(this.slugName, this.listPageNum);
           }
           if (type === 'place') {
-            this.getPlace(this.slugName, this.placePageNum = this.placePageNum + 1);
+            this.loadMore =true;
+            this.getPlace(this.slugName, this.placePageNum);
           }
         }
       }
@@ -182,6 +185,7 @@ export class FavoriteComponent implements OnInit {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
+      this.smallLoader.show();
       this.userService.getFavoritePlaces(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
@@ -211,6 +215,7 @@ export class FavoriteComponent implements OnInit {
     if (!this.setList.loadingInProgress) {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
+      this.smallLoader.show();
       this.userService.getLists(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
