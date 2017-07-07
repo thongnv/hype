@@ -15,7 +15,7 @@
                  [touchScrollStep]="75"
                  [railColor]="'#ec3d62'" [color]="'#ec3d62'">
                 <div [class.hide]="hideNoResult" class="no-result text-info text-center">No result found.</div>
-                <ul *ngIf="result.article?.length" class="list-location-address">
+                <ul *ngIf="result.article?.length > 0" class="list-location-address">
                     <li class="title-search-location-address">
                         <a>Lists</a>
                     </li>
@@ -29,12 +29,26 @@
                         </a>
                     </li>
                 </ul>
-                <ul *ngIf="result.event?.length" class="list-location-address" id="list-events-location-address">
+                <ul *ngIf="result.event?.length >0" class="list-location-address" id="list-events-location-address">
                     <li class="title-search-location-address">
                         <a>Events</a>
                     </li>
                     <li *ngFor="let item of result.event;trackBy:item?.id">
                         <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
+                            <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
+                            <div class="result-info">
+                                <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>
+                                <small class="location-address-content-each text-ellipsis">{{item.Title}}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <ul *ngIf="result.company?.length >0" class="list-location-address" id="list-company-location-address">
+                    <li class="title-search-location-address">
+                        <a>Companies</a>
+                    </li>
+                    <li *ngFor="let item of result.company;trackBy:item?.id">
+                        <a [routerLink]="['/company',item.Slug]" class="item-link" (click)="onCloseSuggestion()">
                             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Address}}</span>

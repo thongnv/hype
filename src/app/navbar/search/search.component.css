@@ -45,7 +45,8 @@
     text-transform: capitalize;
     font-size: 15px;
     width: 125px;
-    right: 5px;
+    float: right;
+    margin-right: 15px;
 }
 .search-location-search-area ul {
     padding-left: 0;
