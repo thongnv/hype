@@ -98,18 +98,26 @@ export class FollowingComponent implements OnInit {
   }
 
   public updateFollow(item: any) {
-    let targetUser = this.user;
     if (this.isCurrentUser) {
-      targetUser = this.currentUser;
-    }
-    if (item.followed) {
-      targetUser.followingNumber++;
-      targetUser.followerNumber++;
+      if (item.followed) {
+        this.currentUser.followingNumber++;
+        if (item.id === this.user.id) {
+          this.currentUser.followerNumber++;
+        }
+      } else {
+        this.currentUser.followingNumber--;
+        if (item.id === this.user.id) {
+          this.currentUser.followerNumber--;
+        }
+      }
     } else {
-      targetUser.followingNumber--;
-      targetUser.followerNumber--;
+      if (item.id === this.currentUser.id) {
+        if (item.followed) {
+          this.currentUser.followerNumber++;
+        } else {
+          this.currentUser.followerNumber--;
+        }
+      }
     }
-    this.alertType = 'success';
-    this.msgContent = 'Update successfully';
   }
 }

@@ -12,7 +12,6 @@ export class MemberNavigationComponent implements OnInit {
   @Input() public user: User;
   @Input() public currentUser: User;
   @Input() public followed: boolean;
-  @Input() public showFollowBtn: boolean;
 
   @Output() public onUpdate = new EventEmitter<any>();
 
@@ -30,13 +29,11 @@ export class MemberNavigationComponent implements OnInit {
       (resp) => {
         console.log(resp);
         this.followed = !this.followed;
+        this.currentUser.followerNumber++;
         if (this.isCurrentUser) {
           this.currentUser.followingNumber++;
-          this.currentUser.followerNumber++;
-        } else {
-          this.user.followerNumber++;
         }
-        // TODO: update followings + follower
+        // TODO: update followings + followers on right area
     });
   }
 
@@ -45,13 +42,11 @@ export class MemberNavigationComponent implements OnInit {
       (resp) => {
         console.log(resp);
         this.followed = !this.followed;
+        this.currentUser.followerNumber--;
         if (this.isCurrentUser) {
           this.currentUser.followingNumber--;
-          this.currentUser.followerNumber--;
-        } else {
-          this.user.followerNumber--;
         }
-        // TODO: update followers + follower
+        // TODO: update followings + followers on right area
     });
   }
 
