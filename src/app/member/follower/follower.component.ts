@@ -6,6 +6,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
+import { FollowService } from '../../services/follow.service';
 
 @Component({
   selector: 'app-follower',
@@ -32,6 +33,7 @@ export class FollowerComponent implements OnInit {
   public constructor(private appState: AppState,
                      private loaderService: LoaderService,
                      private userService: UserService,
+                     private followService: FollowService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
   }
@@ -64,13 +66,33 @@ export class FollowerComponent implements OnInit {
               }
             );
           },
-          (error) => {
+        (error) => {
             console.log(error);
           },
           () => {
             this.loaderService.hide();
           }
         );
+      }
+    );
+    this.followService.getEmittedValue().subscribe(
+      (data) => {
+        if (this.currentUser.id === data.user.id) {
+          this.followed = data.followed;
+        }
+        if (this.followed) {
+          this.currentUser.userFollower.push(this.user);
+        } else {
+          // remove this.user from follower list
+          this.currentUser.userFollower.splice(
+            this.currentUser.userFollower.findIndex(
+              (u) => u.id === this.user.id
+            ), 1
+          );
+        }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }
