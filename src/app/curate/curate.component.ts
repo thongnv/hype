@@ -103,7 +103,7 @@ export class CurateComponent implements OnInit {
             }else{
                 if (this.screenWidth > 767 && this.screenWidth < 992) {
                     console.log(234,this.screenWidth);
-                    number= 3;
+                    number= 2;
                 }
             }
         } else {
