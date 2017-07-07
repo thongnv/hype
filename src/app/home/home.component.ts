@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // 3rd libs
 import * as moment from 'moment/moment';
+import { Location } from '@angular/common';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {any} from "codelyzer/util/function";
 import { Ng2ScrollableDirective } from 'ng2-scrollable';
@@ -107,6 +108,7 @@ export class HomeComponent implements OnInit {
                 private mapsAPILoader:MapsAPILoader,
                 private localStorageService: LocalStorageService,
                 private route:Router,
+                private location:Location,
                 @Inject(DOCUMENT) private document:Document) {
         this.eventFilter = [
             {name: 'all'},
@@ -145,6 +147,7 @@ export class HomeComponent implements OnInit {
         this.screenWidth = width;
         this.screenHeight = height;
         //var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        let paramsUrl = this.location.path().split('/');
         $(window).scroll(()=> {
             //load more data
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -172,7 +175,7 @@ export class HomeComponent implements OnInit {
             }
 
             //index marker Highlight
-            if (this.stopped == false) {
+            if(paramsUrl[1]=="home") {
                 let baseHeight = $("#v-scrollable")[0].clientHeight;
                 let realScrollTop = $(window).scrollTop() + baseHeight;
                 let currentHeight:number = baseHeight;
@@ -279,8 +282,9 @@ export class HomeComponent implements OnInit {
     }
 
     public onSelectEventFilter(filter:any):void {
-        this.selectedEventFilter = filter;
         this.onClearForm();
+        this.selectedEventFilter = filter;
+        console.log(filter);
         let date = new Date();
         if (filter.name == 'today') {
             this.params.date = moment(date).format('YYYY-MM-DD');
