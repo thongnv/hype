@@ -82,7 +82,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         },
         (error) => {
           this.loaderService.hide();
-          console.log(error);
         }
       );
     });
@@ -169,6 +168,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   }
 
   private initSlide(images) {
+    this.slides = [];
     for (let image of images) {
       this.slides.push({image: image.url});
     }
