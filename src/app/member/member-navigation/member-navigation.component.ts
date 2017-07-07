@@ -12,7 +12,6 @@ export class MemberNavigationComponent implements OnInit {
   @Input() public user: User;
   @Input() public currentUser: User;
   @Input() public followed: boolean;
-  @Input() public showFollowBtn: boolean;
 
   @Output() public onUpdate = new EventEmitter<any>();
 

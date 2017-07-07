@@ -114,7 +114,9 @@ body, html {
     color: #000;
     font-weight: 600;
   }
-
+  .gm-style > div:nth-child(1)>div:nth-child(4)>div:nth-child(3)>div>div:nth-child(1){
+    display: none;
+  }
   .main {
     position: absolute;
     top: 60px;
