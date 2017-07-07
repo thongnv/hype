@@ -126,8 +126,8 @@
                                             <span class="count_comment">Comments {{item.comment_count}}</span>
                                         </li>
                                         <li (click)="onLikeEmit(item)" class="heart-icon">
-                                            <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
-                                               [class.heart-selected]="item.user_bookmark" aria-hidden="true"></i>
+                                            <i class="sprite" [class.sprite-Unfavourites20x20]="!item.user_bookmark"
+                                               [class.sprite-Favourites20x20]="item.user_bookmark" aria-hidden="true"></i>
                                         </li>
                                     </ul>
                                 </div>
