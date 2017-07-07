@@ -9,7 +9,7 @@
   <div class="information-profile">
     <div class="top-content">
       <h4 [routerLink]="['/company/'+item.company_slug]" class="information-title text-ellipsis">{{item.company_name}}</h4>
-      <app-star-vote [stars]="item.rate_total" (onVote)="onVoteEvent($event)"></app-star-vote>
+      <app-star-vote [stars]="item.rate_value" (onVote)="onVoteEvent($event)"></app-star-vote>
       <p *ngIf="item.Hylo_Activity_Description" class="detail-information" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 150"></p>
     </div>
   </div>
