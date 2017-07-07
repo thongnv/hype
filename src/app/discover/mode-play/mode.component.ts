@@ -182,7 +182,7 @@ export class ModeComponent implements OnInit {
         this.screenHeight = height;
 
         let paramsUrl = this.location.path().split('/');
-        $("body").bind("DOMMouseScroll mousewheel", ()=> {
+        $("body").bind("DOMMouseScroll mousewheel touchmove", ()=> {
             $(window).scroll(()=> {
                 //load more data
                 if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -368,6 +368,9 @@ export class ModeComponent implements OnInit {
         this.currentRadius = radius;
         this.params.radius = (radius / 1000);
         this.smallLoader.show();
+        this.markers=[];
+        this.items = [];
+        this.params.page = 0;
         this.getDataModes();
     }
 
@@ -409,30 +412,30 @@ export class ModeComponent implements OnInit {
                             draggable: true
                         });
                         let distance = companies[i]._dict_;
-                        //let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
-                        //if (parseInt(geometry) <= this.currentRadius) {
-                        companies[i].distance = (distance).toFixed(1);
-                        this.items.push(companies[i]);
-                        if (i == 0) {
-                            this.markers.push({
-                                lat: parseFloat(lat[1]),
-                                lng: parseFloat(lng[1]),
-                                label: companies[i].Company_Name,
-                                opacity: 1,
-                                isOpenInfo: false,
-                                icon: 'assets/icon/icon_pointer.png'
-                            });
-                        } else {
-                            this.markers.push({
-                                lat: parseFloat(lat[1]),
-                                lng: parseFloat(lng[1]),
-                                label: companies[i].Company_Name,
-                                opacity: 0.4,
-                                isOpenInfo: false,
-                                icon: 'assets/icon/icon_pointer.png'
-                            });
+                        let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
+                        if (parseInt(geometry) <= this.currentRadius) {
+                            companies[i].distance = (distance).toFixed(1);
+                            this.items.push(companies[i]);
+                            if (i == 0) {
+                                this.markers.push({
+                                    lat: parseFloat(lat[1]),
+                                    lng: parseFloat(lng[1]),
+                                    label: companies[i].Company_Name,
+                                    opacity: 1,
+                                    isOpenInfo: false,
+                                    icon: 'assets/icon/icon_pointer.png'
+                                });
+                            } else {
+                                this.markers.push({
+                                    lat: parseFloat(lat[1]),
+                                    lng: parseFloat(lng[1]),
+                                    label: companies[i].Company_Name,
+                                    opacity: 0.4,
+                                    isOpenInfo: false,
+                                    icon: 'assets/icon/icon_pointer.png'
+                                });
+                            }
                         }
-                        //}
                     }
                 }
             });
@@ -701,6 +704,7 @@ export class ModeComponent implements OnInit {
             this.params.order_by = "Company_Name";
             this.params.order_dir = 'DESC';
         }
+        this.params.page = 0;
         this.items = [];
         this.markers = [];
         this.smallLoader.show();

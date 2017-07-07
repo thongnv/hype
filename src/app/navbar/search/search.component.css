@@ -44,9 +44,8 @@
     font-weight: bold;
     text-transform: capitalize;
     font-size: 15px;
-    width: 125px;
     float: right;
-    margin-right: 15px;
+    margin-right: 20px;
 }
 .search-location-search-area ul {
     padding-left: 0;
@@ -176,8 +175,22 @@
     .list-location-address .result-info{
         overflow: hidden;
     }
-    ul#list-events-location-address {
+    /*ul#list-events-location-address {
         height: 500px;
-    }
+    }*/
 }
-
+@media screen and (min-width: 480px) {
+    ul#list-events-location-address {
+        min-height: 270px;
+    }
+} 
+@media screen and (min-width: 667px) {
+    ul#list-events-location-address {
+        min-height: 220px;
+    }
+} 
+@media screen and (min-width: 736px) {
+    ul#list-events-location-address {
+        min-height: 180px;
+    }
+} 

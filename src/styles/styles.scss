@@ -1103,10 +1103,21 @@ body, html {
     font-size: 12px;
     width: 30px;
   }
-
-  .filter-events .btn-default {
-    width: 84px;
+  
+  .filter-events #timeFilter .btn-default {
+    width: 103px;
   }
+  // .filter-events #timeFilter .btn-default.active {
+  //   right: 1px;
+  // }
+  
+  .filter-events #filters .btn-default {
+    width: 80px;
+  }
+  // .filter-events #filters .btn-default.active {
+  //     left: 1px;
+  // }
+
   .daterangepicker .ranges {
     float: right !important;
     clear: both;
@@ -1191,7 +1202,16 @@ body, html {
       height: 60px;
     }
   }
-
+  @media only screen and (min-width: 320px) and (max-width: 767px){
+    .carousel-inner .slide-group {
+      width: 100%;
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 992px){
+    .carousel-inner .slide-group {
+      width: 50%;
+    }
+  }
   @media only screen and (min-width: 320px) and (max-width: 800px) {
 
     .navbar-toggle {
@@ -1217,14 +1237,13 @@ body, html {
     }
     .left-box {
       height: auto;
+      padding: 0px;
     }
     .form-wrap, .form-wrap form > div {
       padding: 0 15px;
       margin-bottom: 15px;
     }
-    .carousel-inner .slide-group {
-      width: 100%;
-    }
+
     .new-list .wrap-search-input {
       padding: 0px;
     }

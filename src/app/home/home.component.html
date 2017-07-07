@@ -1,6 +1,6 @@
 <section>
     <div class="home-page">
-        <div class="col-lg-6 col-xs-12 left-box">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 left-box">
             <div class="type-events">
                 <ul [class.show-all]="!showAll" (window:resize)="onResize($event)">
                     <li class="type-event-item" [class.active]="'all'==selected" (click)="onSelectEventType('all')">
@@ -35,7 +35,7 @@
 
               </div>
                 <div class="clear"></div>
-              <div *ngIf="selectedEventOrder.name!='top 100'">
+              <div class="tab-choose-option" *ngIf="selectedEventOrder.name!='top 100'">
                   <a (click)="showRagePrice()" class="price-range">price range <i class="fa fa-angle-down"
                                                                                   aria-hidden="true"></i></a>
                   <a (click)="showWhen()" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -126,8 +126,8 @@
                                             <span class="count_comment">Comments {{item.comment_count}}</span>
                                         </li>
                                         <li (click)="onLikeEmit(item)" class="heart-icon">
-                                            <i fa class="fa-heart-o" [class.icon-heart]="!item.user_bookmark"
-                                               [class.heart-selected]="item.user_bookmark" aria-hidden="true"></i>
+                                            <i class="sprite" [class.sprite-Unfavourites20x20]="!item.user_bookmark"
+                                               [class.sprite-Favourites20x20]="item.user_bookmark" aria-hidden="true"></i>
                                         </li>
                                     </ul>
                                 </div>

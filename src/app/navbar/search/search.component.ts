@@ -28,13 +28,11 @@ export class SearchComponent implements OnInit {
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
 
-    console.log('searchToken: ', this.searchToken);
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
       this.mainService.search(this.searchToken).then((resp) => {
-        console.log('searchForm ==> resp: ', resp);
         this.result = resp;
-        if (resp.event.length + resp.article.length === 0) {
+        if (resp.event.length + resp.article.length + resp.company.length === 0) {
           this.hideNoResult = false;
         } else {
           this.hideNoResult = true;

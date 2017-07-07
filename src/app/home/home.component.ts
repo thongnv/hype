@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
         this.screenHeight = height;
         //var userAgent = navigator.userAgent || navigator.vendor || window.opera;
         let paramsUrl = this.location.path().split('/');
-        $("body").bind("DOMMouseScroll mousewheel", ()=> {
+        $("body").bind("DOMMouseScroll mousewheel touchmove", ()=> {
             $(window).scroll(()=> {
                 //load more data
                 if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
