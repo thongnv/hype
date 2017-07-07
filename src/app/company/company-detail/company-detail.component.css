@@ -685,6 +685,12 @@ article {
     padding-left: 0;
     padding-right: 0;
   }
+  .all-reviews-wrap {
+    padding: 15px;
+  }
+  .experience-top h4.title-experiences-reviews-area{
+    font-size: 20px;
+  }
   .detail-page{
     margin: 0;
     padding: 0 15px;
