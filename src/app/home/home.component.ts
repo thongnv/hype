@@ -175,7 +175,7 @@ export class HomeComponent implements OnInit {
             }
 
             //index marker Highlight
-            if(paramsUrl[1]=="home") {
+            if(paramsUrl[1]=="home" && $("#v-scrollable").length) {
                 let baseHeight = $("#v-scrollable")[0].clientHeight;
                 let realScrollTop = $(window).scrollTop() + baseHeight;
                 let currentHeight:number = baseHeight;
