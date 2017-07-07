@@ -6,6 +6,7 @@ import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-favorite',
@@ -72,10 +73,30 @@ export class FavoriteComponent implements OnInit {
         );
       }
     );
+
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        let type = this.selectedFavoriteType;
+        if (!this.loadMore && !this.endRecord) {
+          if (type === 'event') {
+            this.getEvent(this.slugName, this.eventPageNum = this.eventPageNum + 1);
+          }
+          if (type === 'list') {
+            this.getList(this.slugName, this.listPageNum = this.listPageNum + 1);
+          }
+          if (type === 'place') {
+            this.getPlace(this.slugName, this.placePageNum = this.placePageNum + 1);
+          }
+        }
+      }
+    });
   }
 
   public onSelectFavoriteType(type: string): void {
     this.selectedFavoriteType = type;
+    this.listPageNum = 0;
+    this.eventPageNum = 0;
+    this.placePageNum = 0;
     if (type === 'event' && !this.setEvent.offset) {
       this.getEvent(this.slugName, this.eventPageNum);
     }
