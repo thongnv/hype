@@ -1,5 +1,5 @@
 .sprite {
-    background-image: url(../assets/img/spritesheet.png);
+    background-image: url(spritesheet.png);
     background-repeat: no-repeat;
     display: block;
 }
@@ -13,413 +13,413 @@
 .sprite-All30x30 {
     width: 30px;
     height: 30px;
-    background-position: -30px 0;
+    background-position: 0 -30px;
 }
 
 .sprite-Appreciate30x30 {
     width: 30px;
     height: 30px;
-    background-position: -60px 0;
+    background-position: 0 -60px;
 }
 
 .sprite-Bar30x30 {
     width: 30px;
     height: 30px;
-    background-position: -90px 0;
+    background-position: 0 -90px;
 }
 
 .sprite-Buffet30x30 {
     width: 30px;
     height: 30px;
-    background-position: -120px 0;
+    background-position: 0 -120px;
 }
 
 .sprite-Cafe30x30 {
     width: 30px;
     height: 30px;
-    background-position: -150px 0;
+    background-position: 0 -150px;
 }
 
 .sprite-Chill-Out30x30 {
     width: 30px;
     height: 30px;
-    background-position: -180px 0;
+    background-position: 0 -180px;
 }
 
 .sprite-Concert30x30 {
     width: 30px;
     height: 30px;
-    background-position: -210px 0;
+    background-position: 0 -210px;
 }
 
 .sprite-Curated30x30 {
     width: 30px;
     height: 30px;
-    background-position: -240px 0;
+    background-position: 0 -240px;
 }
 
 .sprite-Discover30x30 {
     width: 30px;
     height: 30px;
-    background-position: -270px 0;
+    background-position: 0 -270px;
 }
 
 .sprite-Family30x30 {
     width: 30px;
     height: 30px;
-    background-position: -300px 0;
+    background-position: 0 -300px;
 }
 
 .sprite-Favourites20x20 {
     width: 20px;
     height: 20px;
-    background-position: 0 -30px;
+    background-position: 0 -330px;
 }
 
 .sprite-Favourites30x30 {
     width: 30px;
     height: 30px;
-    background-position: -20px -30px;
+    background-position: 0 -350px;
 }
 
 .sprite-Food30x30 {
     width: 30px;
     height: 30px;
-    background-position: -50px -30px;
+    background-position: 0 -380px;
 }
 
 .sprite-Hotels30x30 {
     width: 30px;
     height: 30px;
-    background-position: -80px -30px;
+    background-position: 0 -410px;
 }
 
 .sprite-Learn30x30 {
     width: 30px;
     height: 30px;
-    background-position: -110px -30px;
+    background-position: 0 -440px;
 }
 
 .sprite-Promo30x30 {
     width: 30px;
     height: 30px;
-    background-position: -140px -30px;
+    background-position: 0 -470px;
 }
 
 .sprite-Pure-Fun30x30 {
     width: 30px;
     height: 30px;
-    background-position: -170px -30px;
+    background-position: 0 -500px;
 }
 
 .sprite-Restaurant30x30 {
     width: 30px;
     height: 30px;
-    background-position: -200px -30px;
+    background-position: 0 -530px;
 }
 
 .sprite-Sports30x30 {
     width: 30px;
     height: 30px;
-    background-position: -230px -30px;
+    background-position: 0 -560px;
 }
 
 .sprite-Sweat30x30 {
     width: 30px;
     height: 30px;
-    background-position: -260px -30px;
+    background-position: 0 -590px;
 }
 
 .sprite-Trending30x30 {
     width: 30px;
     height: 30px;
-    background-position: -290px -30px;
+    background-position: 0 -620px;
 }
 
 .sprite-Unfavourites20x20 {
     width: 20px;
     height: 20px;
-    background-position: -320px -30px;
+    background-position: 0 -650px;
 }
 
 .sprite-Unique30x30 {
     width: 30px;
     height: 30px;
-    background-position: 0 -60px;
+    background-position: 0 -670px;
 }
 
 .sprite-arrow-up {
     width: 25px;
     height: 15px;
-    background-position: -320px -50px;
+    background-position: 0 -700px;
 }
 
 .sprite-autocomplete-icon-area {
     width: 32px;
     height: 46px;
-    background-position: -30px -60px;
+    background-position: 0 -715px;
 }
 
 .sprite-bell-icon {
     width: 26px;
     height: 31px;
-    background-position: -62px -65px;
+    background-position: 0 -761px;
 }
 
 .sprite-favorite {
     width: 34px;
     height: 32px;
-    background-position: -88px -60px;
+    background-position: 0 -792px;
 }
 
 .sprite-favorite-selected {
     width: 34px;
     height: 32px;
-    background-position: -122px -65px;
+    background-position: 0 -824px;
 }
 
 .sprite-favorite-selected_2x {
     width: 68px;
     height: 64px;
-    background-position: -156px -60px;
+    background-position: 0 -856px;
 }
 
 .sprite-favorite_2x {
     width: 68px;
     height: 64px;
-    background-position: -224px -60px;
+    background-position: 0 -920px;
 }
 
 .sprite-hylo-final-logo-125x50 {
     width: 125px;
     height: 50px;
-    background-position: 0 -124px;
+    background-position: 0 -984px;
 }
 
 .sprite-icon-add {
     width: 20px;
     height: 20px;
-    background-position: -292px -65px;
+    background-position: 0 -1034px;
 }
 
 .sprite-icon-add_2x {
     width: 40px;
     height: 40px;
-    background-position: -292px -85px;
+    background-position: 0 -1054px;
 }
 
 .sprite-icon-calendar {
     width: 20px;
     height: 20px;
-    background-position: -312px -65px;
+    background-position: 0 -1094px;
 }
 
 .sprite-icon-comment {
     width: 17px;
     height: 16px;
-    background-position: -330px 0;
+    background-position: 0 -1114px;
 }
 
 .sprite-icon-comment_2x {
     width: 34px;
     height: 32px;
-    background-position: -125px -125px;
+    background-position: 0 -1130px;
 }
 
 .sprite-icon-commented {
     width: 17px;
     height: 16px;
-    background-position: -159px -125px;
+    background-position: 0 -1162px;
 }
 
 .sprite-icon-commented_2x {
     width: 34px;
     height: 32px;
-    background-position: -176px -125px;
+    background-position: 0 -1178px;
 }
 
 .sprite-icon-down {
     width: 15px;
     height: 11px;
-    background-position: -330px -16px;
+    background-position: 0 -1210px;
 }
 
 .sprite-icon-down_2x {
     width: 30px;
     height: 22px;
-    background-position: -210px -125px;
+    background-position: 0 -1221px;
 }
 
 .sprite-icon-down_3x {
     width: 45px;
     height: 33px;
-    background-position: -240px -125px;
+    background-position: 0 -1243px;
 }
 
 .sprite-icon-left {
     width: 10px;
     height: 17px;
-    background-position: -332px -65px;
+    background-position: 0 -1276px;
 }
 
 .sprite-icon-left_2x {
     width: 20px;
     height: 34px;
-    background-position: -285px -125px;
+    background-position: 0 -1293px;
 }
 
 .sprite-icon-left_3x {
     width: 30px;
     height: 51px;
-    background-position: -305px -125px;
+    background-position: 0 -1327px;
 }
 
 .sprite-icon-like {
     width: 17px;
     height: 16px;
-    background-position: 0 -176px;
+    background-position: 0 -1378px;
 }
 
 .sprite-icon-like_2x {
     width: 34px;
     height: 32px;
-    background-position: -17px -176px;
+    background-position: 0 -1394px;
 }
 
 .sprite-icon-liked {
     width: 17px;
     height: 16px;
-    background-position: -51px -176px;
+    background-position: 0 -1426px;
 }
 
 .sprite-icon-pointer {
     width: 32px;
     height: 32px;
-    background-position: -68px -176px;
+    background-position: 0 -1442px;
 }
 
 .sprite-icon-report {
     width: 18px;
     height: 18px;
-    background-position: -100px -176px;
+    background-position: 0 -1474px;
 }
 
 .sprite-icon-report_2x {
     width: 36px;
     height: 36px;
-    background-position: -118px -176px;
+    background-position: 0 -1492px;
 }
 
 .sprite-icon-search {
     width: 20px;
     height: 19px;
-    background-position: -154px -176px;
+    background-position: 0 -1528px;
 }
 
 .sprite-l {
     width: 44px;
     height: 44px;
-    background-position: -174px -176px;
+    background-position: 0 -1547px;
 }
 
 .sprite-l_2x {
     width: 88px;
     height: 88px;
-    background-position: -218px -176px;
+    background-position: 0 -1591px;
 }
 
 .sprite-l_3x {
     width: 132px;
     height: 132px;
-    background-position: -347px 0;
+    background-position: 0 -1679px;
 }
 
 .sprite-line {
     width: 6px;
     height: 28px;
-    background-position: -335px -132px;
+    background-position: 0 -1811px;
 }
 
 .sprite-location {
     width: 20px;
     height: 20px;
-    background-position: -341px -132px;
+    background-position: 0 -1839px;
 }
 
 .sprite-permalink-gray {
     width: 20px;
     height: 20px;
-    background-position: -361px -132px;
+    background-position: 0 -1859px;
 }
 
 .sprite-phone_icon {
     width: 20px;
     height: 20px;
-    background-position: -381px -132px;
+    background-position: 0 -1879px;
 }
 
 .sprite-r {
     width: 44px;
     height: 44px;
-    background-position: -401px -132px;
+    background-position: 0 -1899px;
 }
 
 .sprite-r_2x {
     width: 88px;
     height: 88px;
-    background-position: -306px -176px;
+    background-position: 0 -1943px;
 }
 
 .sprite-r_3x {
     width: 132px;
     height: 132px;
-    background-position: 0 -264px;
+    background-position: 0 -2031px;
 }
 
 .sprite-small-star {
     width: 19px;
     height: 18px;
-    background-position: -445px -132px;
+    background-position: 0 -2163px;
 }
 
 .sprite-small-star-selected {
     width: 19px;
     height: 18px;
-    background-position: -210px -150px;
+    background-position: 0 -2181px;
 }
 
 .sprite-small-star-selected_2x {
     width: 38px;
     height: 36px;
-    background-position: -394px -176px;
+    background-position: 0 -2199px;
 }
 
 .sprite-small-star-selected_3x {
     width: 57px;
     height: 54px;
-    background-position: -394px -212px;
+    background-position: 0 -2235px;
 }
 
 .sprite-small-star_2x {
     width: 38px;
     height: 36px;
-    background-position: -432px -176px;
+    background-position: 0 -2289px;
 }
 
 .sprite-small-star_3x {
     width: 57px;
     height: 54px;
-    background-position: -132px -266px;
+    background-position: 0 -2325px;
 }
 
 .sprite-tag {
     width: 20px;
     height: 20px;
-    background-position: -445px -150px;
+    background-position: 0 -2379px;
 }
 
 .sprite-time_icon_grey {
     width: 20px;
     height: 20px;
-    background-position: 0 -212px;
+    background-position: 0 -2399px;
 }

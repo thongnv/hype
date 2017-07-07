@@ -52,9 +52,6 @@ export class ProfileEditComponent implements OnInit {
 
   public ngOnInit() {
     this.user = this.localStorageService.get('user') as User;
-    if (this.user.isAnonymous || this.slugName !== this.user.slug) {
-      this.router.navigate(['/' + this.user.slug]).then();
-    }
     this.countryPickerService.getCountries().subscribe(
       (countries) => {
         let defaultCountry = <ICountry> {
@@ -69,6 +66,9 @@ export class ProfileEditComponent implements OnInit {
     );
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
+      if (!this.user || this.slugName !== this.user.slug) {
+        this.router.navigate(['/' + this.slugName]).then();
+      }
       this.loaderService.show();
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
