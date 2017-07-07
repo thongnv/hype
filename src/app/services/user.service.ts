@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { BaseUser, User } from '../app.interface';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
@@ -16,6 +17,7 @@ export class UserService {
   });
 
   public constructor(private localStorageService: LocalStorageService,
+                     private router: Router,
                      private http: Http) {
   }
 
@@ -26,9 +28,7 @@ export class UserService {
     });
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(AppSetting.API_ENDPOINT + '/session/token', options)
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public login(fbToken: string): Observable<Response> {
@@ -38,9 +38,7 @@ export class UserService {
       AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
     )
       .map((res: any) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public logout(): Observable<any> {
@@ -50,9 +48,7 @@ export class UserService {
     return this.http.get(
       AppSetting.API_ENDPOINT + 'user/logout', options
     )
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getProfile(slugName?: string): Observable<any> {
@@ -87,9 +83,7 @@ export class UserService {
           followed: data.user_follow
         };
       })
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public setProfile(user: BaseUser, data: any): Observable<any> {
@@ -101,9 +95,7 @@ export class UserService {
       JSON.stringify(data), options
     )
       .map((res) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getFollowings(userSlug: string, page: number): Observable<any> {
@@ -118,9 +110,7 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getFollowers(userSlug: string, page: number): Observable<any> {
@@ -135,9 +125,7 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public toggleFollow(userId: number): Observable<any> {
@@ -149,9 +137,7 @@ export class UserService {
       JSON.stringify({uid: userId}), options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getInterests(slugName?: string): Observable<any> {
@@ -164,9 +150,7 @@ export class UserService {
       AppSetting.API_ENDPOINT + 'api/v1/user/interest/' + slugName + '?_format=json', options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public updateInterests(slugName?: string, item?: any[]): Observable<any> {
@@ -180,9 +164,7 @@ export class UserService {
       JSON.stringify(item), options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getEvents(slugName?: string, page?: number): Observable<any> {
@@ -201,9 +183,7 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getLists(slugName?: string, page?: number): Observable<any> {
@@ -222,9 +202,7 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public getFavoritePlaces(slugName?: string, page?: number): Observable<any> {
@@ -242,9 +220,7 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public unFavoriteEventList(slug: string): Observable<any> {
@@ -256,9 +232,7 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
   }
 
   public checkLogin(): Observable<Response> {
@@ -266,8 +240,13 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(AppSetting.API_ENDPOINT + 'user/login_status?_format=json', options)
       .map((res) => res.json())
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
+      .catch((error) => this.handleError(error));
+  }
+
+  private handleError(error) {
+    if (error.status === 403) {
+      this.router.navigate(['login']).then();
+    }
+    return Observable.throw(new Error(error));
   }
 }
