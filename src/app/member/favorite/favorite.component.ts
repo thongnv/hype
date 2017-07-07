@@ -6,6 +6,7 @@ import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-favorite',
@@ -72,10 +73,33 @@ export class FavoriteComponent implements OnInit {
         );
       }
     );
+
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        let type = this.selectedFavoriteType;
+        if (!this.loadMore && !this.endRecord) {
+          if (type === 'event') {
+            this.loadMore =true;
+            this.getEvent(this.slugName, this.eventPageNum);
+          }
+          if (type === 'list') {
+            this.loadMore =true;
+            this.getList(this.slugName, this.listPageNum);
+          }
+          if (type === 'place') {
+            this.loadMore =true;
+            this.getPlace(this.slugName, this.placePageNum);
+          }
+        }
+      }
+    });
   }
 
   public onSelectFavoriteType(type: string): void {
     this.selectedFavoriteType = type;
+    this.listPageNum = 0;
+    this.eventPageNum = 0;
+    this.placePageNum = 0;
     if (type === 'event' && !this.setEvent.offset) {
       this.getEvent(this.slugName, this.eventPageNum);
     }
@@ -161,6 +185,7 @@ export class FavoriteComponent implements OnInit {
     if (!this.setPlace.loadingInProgress) {
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
+      this.smallLoader.show();
       this.userService.getFavoritePlaces(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
@@ -190,6 +215,7 @@ export class FavoriteComponent implements OnInit {
     if (!this.setList.loadingInProgress) {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
+      this.smallLoader.show();
       this.userService.getLists(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {

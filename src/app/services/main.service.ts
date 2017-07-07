@@ -6,7 +6,6 @@ import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import { BaseUser } from '../app.interface';
 
 @Injectable()
 export class MainService {
