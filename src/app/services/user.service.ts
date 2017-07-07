@@ -239,7 +239,7 @@ export class UserService {
     return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/favorite/place' +
       '?_format=json' +
-      '&slug=/user/' + slugName +
+      '&slug=' + slugName +
       '&page=' + page +
       '&limit=10',
       options
