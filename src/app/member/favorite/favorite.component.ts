@@ -39,8 +39,8 @@ export class FavoriteComponent implements OnInit {
     private listPageNum:number = 0;
     private eventPageNum:number = 0;
     private placePageNum:number = 0;
-    private loadMore:boolean=false;
-    private end_record:boolean=false;
+    private loadMore:boolean = false;
+    private end_record:boolean = false;
 
     public constructor(private mainService:MainService,
                        private userService:UserService,
@@ -76,31 +76,32 @@ export class FavoriteComponent implements OnInit {
         $(window).scroll(()=> {
             //load more data
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-                if (this.loadMore == false && this.end_record == false) {
-                    this.loadMore = true;
-                    switch (this.selectedFavoriteType) {
-                        case 'event':
-                            if (!this.setEvent.offset) {
-                                this.smallLoader.show();
-                                this.getEvent(this.slugName, this.eventPageNum = this.eventPageNum +1);
-                            }
-                            break;
-                        case 'list':
-                            if (!this.setList.offset) {
-                                this.smallLoader.show();
-                                this.getList(this.slugName, this.listPageNum = this.listPageNum + 1);
-                            }
-                            break;
-                        case 'place':
-                            if (!this.setPlace.offset) {
-                                this.smallLoader.show();
-                                this.getPlace(this.slugName, this.placePageNum = this.placePageNum + 1);
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                switch (this.selectedFavoriteType) {
+                    case 'event':
+                        if (this.loadMore == false && this.end_record == false) {
+                            this.loadMore = true;
+                            this.smallLoader.show();
+                            this.getEvent(this.slugName, this.eventPageNum = this.eventPageNum + 1);
+                        }
+                        break;
+                    case 'list':
+                        if (this.loadMore == false && this.end_record == false) {
+                            this.loadMore = true;
+                            this.smallLoader.show();
+                            this.getList(this.slugName, this.listPageNum = this.listPageNum + 1);
+                        }
+                        break;
+                    case 'place':
+                        if (this.loadMore == false && this.end_record == false) {
+                            this.smallLoader.show();
+                            this.loadMore = true;
+                            this.getPlace(this.slugName, this.placePageNum = this.placePageNum + 1);
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
 
             }
         });
@@ -108,6 +109,9 @@ export class FavoriteComponent implements OnInit {
 
     public onSelectFavoriteType(type:string):void {
         this.selectedFavoriteType = type;
+        this.listPageNum =0;
+        this.eventPageNum =0;
+        this.placePageNum =0;
         switch (this.selectedFavoriteType) {
             case 'event':
                 if (!this.setEvent.offset) {
@@ -220,19 +224,19 @@ export class FavoriteComponent implements OnInit {
                             response.results.forEach((item) => {
                                 this.setPlace.offset++;
                                 this.places.push(item);
-                                this.loadMore=false;
+                                this.loadMore = false;
                             });
                             this.smallLoader.hide();
                             this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
                         } else {
                             this.smallLoader.hide();
                             this.setPlace.endOfList = true;
-                            this.end_record=true;
+                            this.end_record = true;
                         }
                     } else {
                         this.smallLoader.hide();
                         this.setPlace.endOfList = true;
-                        this.end_record=true;
+                        this.end_record = true;
                     }
                     this.smallLoader.hide();
                     this.setPlace.loadingInProgress = false;
@@ -252,19 +256,19 @@ export class FavoriteComponent implements OnInit {
                             response.data.forEach((item) => {
                                 this.setList.offset++;
                                 this.lists.push(item);
-                                this.loadMore=false;
+                                this.loadMore = false;
                             });
                             this.smallLoader.hide();
                             this.listPageNum = Math.round(this.setList.offset / AppSetting.PAGE_SIZE);
                         } else {
                             this.smallLoader.hide();
                             this.setList.endOfList = true;
-                            this.end_record=true;
+                            this.end_record = true;
                         }
                     } else {
                         this.smallLoader.hide();
                         this.setList.endOfList = true;
-                        this.end_record=true;
+                        this.end_record = true;
                     }
                     this.smallLoader.hide();
                     this.setList.loadingInProgress = false;
@@ -284,12 +288,12 @@ export class FavoriteComponent implements OnInit {
                         response.data.forEach((item) => {
                             this.setEvent.offset++;
                             this.events.push(item);
-                            this.loadMore=false;
+                            this.loadMore = false;
                         });
                         this.eventPageNum = Math.round(this.setEvent.offset / AppSetting.PAGE_SIZE);
                     } else {
                         this.setEvent.endOfList = true;
-                        this.end_record=true;
+                        this.end_record = true;
                     }
                     this.smallLoader.hide();
                     this.setEvent.loadingInProgress = false;
