@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Observable } from 'rxjs/Observable';
@@ -26,7 +26,7 @@ export class UserService {
     });
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(AppSetting.API_ENDPOINT + '/session/token', options)
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -38,7 +38,7 @@ export class UserService {
       AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
     )
       .map((res: any) => res.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -58,13 +58,15 @@ export class UserService {
       });
   }
 
-  public getUserProfile(slugName?: string): Observable<any> {
+  public getProfile(slugName?: string): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let user = this.localStorageService.get('user') as User;
+    let slug = slugName ? slugName : user.slug;
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    let slug = slugName ? slugName : user.slug;
-    return this.http.get(AppSetting.API_USER_PROFILE + slug + '?_format=json', options)
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/profile/' + slug + '?_format=json', options
+    )
       .map((res) => {
         let data = res.json();
         return {
@@ -88,20 +90,21 @@ export class UserService {
           followed: data.user_follow
         };
       })
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public setUserProfile(user: BaseUser, data: any): Observable<any> {
+  public setProfile(user: BaseUser, data: any): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(
-      AppSetting.API_USER_PROFILE + user.slug + '?_format=json',
-      JSON.stringify(data), options)
+      AppSetting.API_ENDPOINT + 'api/v1/profile/' + user.slug + '?_format=json',
+      JSON.stringify(data), options
+    )
       .map((res) => res.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -118,7 +121,7 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -135,7 +138,7 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -144,160 +147,130 @@ export class UserService {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_USER_UNFOLLOW, JSON.stringify({uid: userId}), options)
+    return this.http.post(
+      AppSetting.API_ENDPOINT + 'api/user/flag/follow?_format=json',
+      JSON.stringify({uid: userId}), options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getUserInterest(slugName?: string, page?: number): Observable<any> {
+  public getInterests(slugName?: string): Observable<any> {
     let user = this.localStorageService.get('user') as User;
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
+    let options = new RequestOptions({headers, withCredentials: true});
     slugName = slugName ? slugName : user.slug;
-    return this.http.get(AppSetting.API_USER_INTEREST + slugName, options)
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/user/interest/' + slugName + '?_format=json', options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public updateUserInterests(slugName?: string, item?: any[]): Observable<any> {
+  public updateInterests(slugName?: string, item?: any[]): Observable<any> {
     let user = this.localStorageService.get('user') as User;
     slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_USER_INTEREST +
-      slugName + '?_format=json', JSON.stringify(item), options)
+    return this.http.post(
+      AppSetting.API_ENDPOINT + 'api/v1/user/interest/' + slugName + '?_format=json',
+      JSON.stringify(item), options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getUserEvent(slugName?: string, page?: number): Observable<any> {
+  public getEvents(slugName?: string, page?: number): Observable<any> {
     let user = this.localStorageService.get('user') as User;
+    slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    if (slugName) {
-      myParams.set('slug', '/user/' + slugName);
-    } else {
-      myParams.set('slug', '/user/' + user.slug);
-    }
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    myParams.set('type', 'event');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/user/flag/bookmark/list' +
+      '?_format=json' +
+      '&slug=/user/' + slugName +
+      '&page=' + page +
+      '&type=event' +
+      '&limit=10',
+      options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getUserList(slugName?: string, page?: number): Observable<any> {
+  public getLists(slugName?: string, page?: number): Observable<any> {
     let user = this.localStorageService.get('user') as User;
+    slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    myParams.set('type', 'list');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    if (slugName) {
-      myParams.set('slug', '/user/' + slugName);
-    } else {
-      myParams.set('slug', '/user/' + user.slug);
-    }
-
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_EVENT_LIST, options)
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/user/flag/bookmark/list' +
+      '?_format=json' +
+      '&slug=/user/' + slugName +
+      '&page=' + page +
+      '&type=list' +
+      '&limit=10',
+      options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getUserPlace(slugName?: string, page?: number): Observable<any> {
+  public getFavoritePlaces(slugName?: string, page?: number): Observable<any> {
     let user = this.localStorageService.get('user') as User;
+    slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    if (page) {
-      myParams.set('page', page.toString());
-    } else {
-      myParams.set('page', '0');
-    }
-    if (slugName) {
-      myParams.set('slug', slugName);
-    } else {
-      myParams.set('slug', user.slug);
-    }
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.get(AppSetting.API_FAVORITE_PLACE, options)
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/favorite/place' +
+      '?_format=json' +
+      '&slug=/user/' + slugName +
+      '&page=' + page +
+      '&limit=10',
+      options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public removeFavoritedEventList(slug: string): Observable<any> {
+  public unFavoriteEventList(slug: string): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    if (slug) {
-      myParams.set('slug', slug);
-    } else {
-      myParams.set('slug', slug);
-    }
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-
-    return this.http.post(AppSetting.API_UNFAVORITE_EVENT_LIST, JSON.stringify({}), options)
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.post(
+      AppSetting.API_ENDPOINT + 'api/user/flag/bookmark?_format=json&slug=' + slug,
+      options
+    )
       .map((resp) => resp.json())
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
   public checkLogin(): Observable<Response> {
     let headers = this.defaultHeaders;
-    let myParams = new URLSearchParams();
-    let options = new RequestOptions({
-      headers,
-      params: myParams,
-      withCredentials: true
-    });
-
-    return this.http.get(AppSetting.API_LOGIN_STATUS, options)
-      .map((res) => {
-        return res.json();
-      })
-      .catch((error: any) => {
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(AppSetting.API_ENDPOINT + 'user/login_status?_format=json', options)
+      .map((res) => res.json())
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
-
 }

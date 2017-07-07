@@ -148,36 +148,42 @@ export class HomeComponent implements OnInit {
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
                 if (this.selectedEventOrder.name == 'top 100') {
                     if (this.loadMore == false && this.end_record == false) {
-                        this.loadMore = true;
-                        this.params.start += 20;
-                        this.smallLoader.show();
-                        this.getTrending();
+                        if (this.events.length > 10) {
+                            this.loadMore = true;
+                            this.params.start += 20;
+                            this.smallLoader.show();
+                            this.getTrending();
+                        }
                     }
 
                 } else {
                     if (this.loadMore == false && this.end_record == false) {
-                        this.loadMore = true;
-                        this.smallLoader.show();
-                        this.params.page++;
-                        this.getTrending();
+                        if (this.events.length > 10) {
+                            this.loadMore = true;
+                            this.smallLoader.show();
+                            this.params.page++;
+                            this.getTrending();
+                        }
                     }
 
                 }
             }
 
             //index marker Highlight
-            let baseHeight = $("#v-scrollable")[0].clientHeight;
-            let realScrollTop = $(window).scrollTop() + baseHeight;
-            let currentHeight:number = baseHeight;
-            let content_element = $("#v-scrollable")[0].children;
-            if (content_element.length > 1) {
-                for (let i = 0; i < content_element.length; i++) {
-                    let currentClientH = content_element[i].clientHeight;
-                    currentHeight += currentClientH;
-                    if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                        if (this.currentHighlightedMarker !== i) {
-                            this.currentHighlightedMarker = i;
-                            this.highlightMarker(i);
+            if (this.stopped == false) {
+                let baseHeight = $("#v-scrollable")[0].clientHeight;
+                let realScrollTop = $(window).scrollTop() + baseHeight;
+                let currentHeight:number = baseHeight;
+                let content_element = $("#v-scrollable")[0].children;
+                if (content_element.length > 1) {
+                    for (let i = 0; i < content_element.length; i++) {
+                        let currentClientH = content_element[i].clientHeight;
+                        currentHeight += currentClientH;
+                        if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                            if (this.currentHighlightedMarker !== i) {
+                                this.currentHighlightedMarker = i;
+                                this.highlightMarker(i);
+                            }
                         }
                     }
                 }
@@ -241,6 +247,7 @@ export class HomeComponent implements OnInit {
         }
         this.markers = [];
         this.events = [];
+        this.params.page=0;
         this.smallLoader.show();
         this.getTrending();
     }
@@ -268,6 +275,7 @@ export class HomeComponent implements OnInit {
 
     public onSelectEventFilter(filter:any):void {
         this.selectedEventFilter = filter;
+        this.onClearForm();
         let date = new Date();
         if (filter.name == 'today') {
             this.params.date = moment(date).format('YYYY-MM-DD');
@@ -336,15 +344,16 @@ export class HomeComponent implements OnInit {
 
     }
 
-    public clickedMarker(selector, horizontal) {
-        this.currentHighlightedMarker = selector;
-        this.markers[selector].opacity = !this.markers[selector].opacity;
+    public clickedMarker(markerId, horizontal) {
         $('html, body').animate({
-            scrollTop: $("#v" + selector).offset().top - 80
-        }, 'slow');
+            scrollTop: $("#v" + markerId).offset().top - 80
+        });
+        this.currentHighlightedMarker = markerId;
+        this.highlightMarker(markerId);
     }
 
     public selectedDate(value:any) {
+        this.onClearForm();
         this.markers = [];
         this.events = [];
         this.params.page = 0;
@@ -407,8 +416,8 @@ export class HomeComponent implements OnInit {
     }
 
     public markerRadiusChange(radius) {
+        this.onClearForm();
         this.smallLoader.show();
-        console.log(this.currentRadius, radius);
         if (this.currentRadius <= radius) {
             console.log(1);
             this.mapZoom = 10;
@@ -488,6 +497,7 @@ export class HomeComponent implements OnInit {
 
     private highlightMarker(markerId:number):void {
         if (this.markers[markerId]) {
+            this.markers[markerId].opacity = 1;
             this.markers.forEach((marker, index) => {
                 if (index == markerId) {
                     console.log("markerId", markerId);

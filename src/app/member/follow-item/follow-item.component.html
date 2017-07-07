@@ -3,8 +3,8 @@
     <img class="user-avatar" src="{{item.avatar}}" [width]="50" [height]="50" />
     <div class="follow-action">
       <div [routerLink]="['/' + item.slug]" class="follow-name text-ellipsis">{{item.name}}</div>
-      <span class="unfollow-btn" [@unfollow]="stateFollow" (click)="updateFollow(item)">Unfollow</span>
-      <span class="unfollow-btn follow" [@follow]="stateFollow" (click)="updateFollow(item)">Follow</span>
+      <span class="unfollow-btn" *ngIf="item.followed" (click)="toggleFollow()">Unfollow</span>
+      <span class="unfollow-btn follow" *ngIf="!item.followed" (click)="toggleFollow()">Follow</span>
     </div>
   </div>
 </div>

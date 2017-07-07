@@ -70,7 +70,7 @@ export class ProfileEditComponent implements OnInit {
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       this.loaderService.show();
-      this.userService.getUserProfile(this.slugName).subscribe(
+      this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.user = resp.user;
           this.profileForm.patchValue({
@@ -106,7 +106,7 @@ export class ProfileEditComponent implements OnInit {
         }
       };
       this.loaderService.show();
-      this.userService.setUserProfile(this.user, data).subscribe(
+      this.userService.setProfile(this.user, data).subscribe(
         (resp) => {
           this.user.firstName = data.field_first_name;
           this.user.lastName = data.field_last_name;

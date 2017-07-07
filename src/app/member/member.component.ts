@@ -43,7 +43,7 @@ export class MemberComponent implements OnInit {
       if (!this.user.slug || this.slugName !== this.user.slug) {
         this.router.navigate(['/' + this.slugName], {skipLocationChange: true}).then();
       }
-      this.userService.getUserProfile(this.slugName).subscribe(
+      this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.currentUser = resp.user;
           this.ready = true;
@@ -65,7 +65,7 @@ export class MemberComponent implements OnInit {
     let data = {
       field_notify_email: this.settingForm.value.receiveEmail
     };
-    this.userService.setUserProfile(this.user, data).subscribe(
+    this.userService.setProfile(this.user, data).subscribe(
       (resp) => {
         if (resp.status) {
           this.alertType = 'success';

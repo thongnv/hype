@@ -20,7 +20,6 @@
         <app-follow-item
           *ngFor="let follower of currentUser.userFollower"
           [item]="follower"
-          [flag]="'follower'"
           (onUpdate)="updateFollow($event)"
           class="col-xs-6 col-sm-6 col-md-4 col-lg-3 interest-item-wrap">
         </app-follow-item>

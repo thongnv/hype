@@ -51,7 +51,7 @@ export class FollowerComponent implements OnInit {
       (params) => {
         this.slugName = params['slug'];
         this.isCurrentUser = this.slugName === this.user.slug;
-        this.userService.getUserProfile(this.slugName).subscribe(
+        this.userService.getProfile(this.slugName).subscribe(
           (resp) => {
             this.currentUser = resp.user;
             this.followed = resp.followed;
@@ -104,8 +104,8 @@ export class FollowerComponent implements OnInit {
     }
   }
 
-  public updateFollow(item: any) {
-    if (item.stateFollow === 'yes') {
+  public toggleFollow(item: any) {
+    if (item.followed) {
       if (this.isCurrentUser) {
         this.currentUser.followerNumber--;
       }

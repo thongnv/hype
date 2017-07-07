@@ -104,7 +104,7 @@ export class CompanyDetailComponent implements Company, OnInit {
       );
     });
     if (!this.user.isAnonymous) {
-      this.userService.getUserProfile().subscribe((response) => {
+      this.userService.getProfile().subscribe((response) => {
         this.user = response.user;
       });
     }

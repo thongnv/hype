@@ -14,19 +14,13 @@
       </div>
       <div class="infinite-list"
            (scroll)="onFollowScrollDown($event)"
-           slimScroll
            width="100%"
            height="calc(100vh - 145px)"
-           size="7px"
-           [railVisible]="true"
-           [touchScrollStep]="75"
-           [railOpacity]="0.1"
-           [railColor]="'#ec3d62'"
-           [color]="'#ec3d62'">
+           size="7px">
 
         <app-follow-item
-          [item]="following" [flag]="'following'"
           *ngFor="let following of currentUser.userFollowing"
+          [item]="following" [flag]="'following'"
           (onUpdate)="updateFollow($event)"
           class="col-xs-6 col-sm-6 col-md-4 col-lg-3 interest-item-wrap">
         </app-follow-item>
