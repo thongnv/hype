@@ -104,17 +104,29 @@ export class FollowerComponent implements OnInit {
     }
   }
 
-  public toggleFollow(item: any) {
-    if (item.followed) {
-      if (this.isCurrentUser) {
-        this.currentUser.followerNumber--;
+  public updateFollow(item: any) {
+    if (this.isCurrentUser) {
+      if (item.followed) {
+        this.currentUser.followingNumber++;
+        if (item.id === this.user.id) {
+          this.currentUser.followerNumber++;
+          this.followed = true;
+        }
+      } else {
+        this.currentUser.followingNumber--;
+        if (item.id === this.user.id) {
+          this.currentUser.followerNumber--;
+          this.followed = false;
+        }
       }
     } else {
-      if (this.isCurrentUser) {
-        this.currentUser.followerNumber++;
+      if (item.id === this.currentUser.id) {
+        if (item.followed) {
+          this.currentUser.followerNumber++;
+        } else {
+          this.currentUser.followerNumber--;
+        }
       }
     }
-    this.alertType = 'success';
-    this.msgContent = 'Update follower successful';
   }
 }
