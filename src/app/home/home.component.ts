@@ -247,7 +247,8 @@ export class HomeComponent implements OnInit {
         }
         this.markers = [];
         this.events = [];
-        this.params.page=0;
+        this.listItems = [];
+        this.params.page = 0;
         this.smallLoader.show();
         this.getTrending();
     }
@@ -257,6 +258,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventFilter = this.eventFilter[0];
         this.markers = [];
         this.events = [];
+        this.listItems = [];
         this.priceRange = [0, 50]
         this.selected = false;
         this.showDate = false;
@@ -270,6 +272,7 @@ export class HomeComponent implements OnInit {
         this.params.radius = (this.currentRadius / 1000);
         this.params.price = '';
         this.params.order = '';
+        this.selected = 'all';
         this.getTrending();
     }
 
@@ -300,6 +303,7 @@ export class HomeComponent implements OnInit {
         }
         this.markers = [];
         this.events = [];
+        this.listItems = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -314,8 +318,10 @@ export class HomeComponent implements OnInit {
             this.showCircle = true;
             this.params.latest = 1;
         }
+        this.selected = 'all';
         this.markers = [];
         this.events = [];
+        this.listItems = [];
         this.smallLoader.show();
         this.getTrending();
     }
@@ -356,6 +362,7 @@ export class HomeComponent implements OnInit {
         this.onClearForm();
         this.markers = [];
         this.events = [];
+        this.listItems = [];
         this.params.page = 0;
         this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
         this.smallLoader.show();
@@ -366,11 +373,16 @@ export class HomeComponent implements OnInit {
         let params = this.params;
         if (this.selectedEventOrder.name == 'top 100') {
             this.homeService.getTop100(this.params).map(resp=>resp.json()).subscribe(resp=> {
+                console.log(this.events);
                 this.total = resp.total;
                 if (resp.data.length == 0) {
                     this.end_record = true;
                 }
-                this.events = this.events.concat(resp.data);
+                if (this.loadMore) {
+                    this.events = this.events.concat(resp.data);
+                } else {
+                    this.events = resp.data;
+                }
                 this.passerTop100(resp.data);
                 this.loadMore = false;
                 this.loaderService.hide();
@@ -384,6 +396,7 @@ export class HomeComponent implements OnInit {
             })
         } else {
             this.homeService.getEvents(params).map(response=>response.json()).subscribe(response=> {
+                console.log(this.events);
                 if (this.loadMore) {
                     this.events = this.events.concat(response.data);
                 } else {
