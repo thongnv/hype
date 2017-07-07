@@ -6,7 +6,6 @@ import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
-import $ from 'jquery';
 
 @Component({
   selector: 'app-favorite',
@@ -169,7 +168,7 @@ export class FavoriteComponent implements OnInit {
               response.results.forEach((item) => {
                 this.setPlace.offset++;
                 this.places.push(item);
-                                this.loadMore = false;
+                this.loadMore = false;
               });
               this.placePageNum = Math.round(this.setPlace.offset / AppSetting.PAGE_SIZE);
             } else {
