@@ -374,6 +374,7 @@ export class AppSetting {
     email: '',
     followings: [],
     followers: [],
+    followed: false,
     showNav: true,
     acceptNotification: false,
   };

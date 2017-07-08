@@ -57,7 +57,7 @@ export class UserService {
       });
   }
 
-  public getProfile(slugName?: string): Observable<any> {
+  public getProfile(slugName?: string): Observable<User> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let user = this.localStorageService.get('user') as User;
     let slug = slugName ? slugName : user.slug;
@@ -69,24 +69,22 @@ export class UserService {
       .map((res) => {
         let data = res.json();
         return {
-          user: {
-            id: data.uid,
-            avatar: data.field_image,
-            name: data.field_first_name + ' ' + data.field_last_name,
-            slug: slugName,
-            isAnonymous: false,
-            firstName: data.field_first_name,
-            lastName: data.field_last_name,
-            contactNumber: data.field_contact_number,
-            followingNumber: data.follow.following,
-            followerNumber: data.follow.follower,
-            email: data.email,
-            followings: [],
-            followers: [],
-            showNav: true,
-            acceptNotification: data.field_notify_email === '1'
-          },
-          followed: data.user_follow
+          id: data.uid,
+          avatar: data.field_image,
+          name: data.field_first_name + ' ' + data.field_last_name,
+          slug: slugName,
+          isAnonymous: false,
+          firstName: data.field_first_name,
+          lastName: data.field_last_name,
+          contactNumber: data.field_contact_number,
+          followingNumber: data.follow.following,
+          followerNumber: data.follow.follower,
+          email: data.email,
+          followings: [],
+          followers: [],
+          followed: data.user_follow,
+          showNav: true,
+          acceptNotification: data.field_notify_email === '1'
         };
       })
       .catch((error) => {

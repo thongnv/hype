@@ -54,6 +54,7 @@ export class AuthComponent implements OnInit {
               email: '',
               followings: [],
               followers: [],
+              followed: false,
               showNav: true,
               acceptNotification: true,
               slug: data.slug,

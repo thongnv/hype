@@ -36,7 +36,6 @@ export class ProfileEditComponent implements OnInit {
   });
   public alertType = 'danger';
   public msgContent: string;
-  public sub: any;
   public slugName: any;
   public ready = false;
 
@@ -64,7 +63,7 @@ export class ProfileEditComponent implements OnInit {
         this.countries.unshift(defaultCountry);
       }
     );
-    this.sub = this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user || this.slugName !== this.user.slug) {
         this.router.navigate(['/' + this.slugName]).then();
@@ -72,7 +71,7 @@ export class ProfileEditComponent implements OnInit {
       this.loaderService.show();
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
-          this.user = resp.user;
+          this.user = resp;
           this.profileForm.patchValue({
             firstName: this.user.firstName,
             lastName: this.user.lastName,

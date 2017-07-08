@@ -61,8 +61,7 @@ export class ProfilePublicComponent implements OnInit {
       this.isCurrentUser = this.user.slug === this.slugName;
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
-          this.currentUser = resp.user;
-          this.followed = resp.followed;
+          this.currentUser = resp;
           this.currentUser.showNav = false;
           this.ready = true;
           this.loaderService.hide();

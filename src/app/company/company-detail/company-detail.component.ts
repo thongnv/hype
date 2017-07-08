@@ -3,7 +3,6 @@ import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import { Company, Experience, Image, Location, User } from '../../app.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -105,7 +104,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     });
     if (!this.user.isAnonymous) {
       this.userService.getProfile().subscribe((response) => {
-        this.user = response.user;
+        this.user = response;
       });
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;

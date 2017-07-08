@@ -1,3 +1,9 @@
+export interface BaseUser {
+  avatar: string;
+  name: string;
+  slug: string;
+}
+
 export interface User extends BaseUser {
   id: number;
   firstName: string;
@@ -6,17 +12,17 @@ export interface User extends BaseUser {
   followingNumber: number;
   followerNumber: number;
   email: string;
-  followings: User[];
-  followers: User[];
+  followings: Follower[];
+  followers: Follower[];
+  followed: boolean;
   showNav: boolean;
   acceptNotification: boolean;
+  isAnonymous: boolean;
 }
 
-export interface BaseUser {
-  avatar: string;
-  name: string;
-  slug: string;
-  isAnonymous: boolean;
+export interface Follower extends BaseUser {
+  id: number;
+  flag: number;
 }
 
 export interface HyloEvent {
