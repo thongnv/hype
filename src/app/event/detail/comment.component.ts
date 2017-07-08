@@ -49,7 +49,6 @@ export class CommentComponent implements HyloComment, OnInit {
   public clickedLike = false;
 
   constructor(private eventService: EventService) {
-    // TODO
   }
 
   public ngOnInit() {

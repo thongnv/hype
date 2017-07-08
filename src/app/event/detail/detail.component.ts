@@ -78,9 +78,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.loadData(event);
           this.initSlide(this.images);
           this.ready = true;
-          this.loaderService.hide();
         },
-        (error) => {
+        (error) => console.log(error),
+        () => {
           this.loaderService.hide();
         }
       );
