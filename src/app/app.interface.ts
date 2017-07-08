@@ -6,8 +6,8 @@ export interface User extends BaseUser {
   followingNumber: number;
   followerNumber: number;
   email: string;
-  userFollowing: User[];
-  userFollower: User[];
+  followings: User[];
+  followers: User[];
   showNav: boolean;
   acceptNotification: boolean;
 }
@@ -96,11 +96,6 @@ export interface Image {
   filename: string;
   filemime: string;
   filesize: number;
-}
-
-export interface InstagramImage extends Image {
-  thumbnail: string;
-  low_resolution: string;
 }
 
 export interface LoaderState {
