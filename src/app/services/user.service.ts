@@ -81,8 +81,8 @@ export class UserService {
             followingNumber: data.follow.following,
             followerNumber: data.follow.follower,
             email: data.email,
-            userFollowing: [],
-            userFollower: [],
+            followings: [],
+            followers: [],
             showNav: true,
             acceptNotification: data.field_notify_email === '1'
           },

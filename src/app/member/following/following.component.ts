@@ -57,7 +57,7 @@ export class FollowingComponent implements OnInit {
           this.ready = true;
           this.userService.getFollowings(this.slugName, this.followingPage).subscribe(
             (res) => {
-              this.currentUser.userFollowing = res.result;
+              this.currentUser.followings = res.result;
             },
             (error) => console.log(error)
           );
@@ -84,7 +84,7 @@ export class FollowingComponent implements OnInit {
           let data = resp.result;
           data.forEach((item) => {
             count++;
-            this.currentUser.userFollowing.push(item);
+            this.currentUser.followings.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;

@@ -61,7 +61,7 @@ export class FollowerComponent implements OnInit {
             this.ready = true;
             this.userService.getFollowers(this.slugName, this.followerPage).subscribe(
               (response) => {
-                this.currentUser.userFollower = response.result;
+                this.currentUser.followers = response.result;
                 this.currentUser.showNav = this.isCurrentUser;
               }
             );
@@ -81,11 +81,11 @@ export class FollowerComponent implements OnInit {
           this.followed = data.followed;
         }
         if (this.followed) {
-          this.currentUser.userFollower.push(this.user);
+          this.currentUser.followers.push(this.user);
         } else {
           // remove this.user from follower list
-          this.currentUser.userFollower.splice(
-            this.currentUser.userFollower.findIndex(
+          this.currentUser.followers.splice(
+            this.currentUser.followers.findIndex(
               (u) => u.id === this.user.id
             ), 1
           );
@@ -113,7 +113,7 @@ export class FollowerComponent implements OnInit {
           let data = resp.result;
           data.forEach((item) => {
             count++;
-            this.currentUser.userFollower.push(item);
+            this.currentUser.followers.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
