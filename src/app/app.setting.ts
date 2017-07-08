@@ -16,19 +16,13 @@ export class AppSetting {
   public static API_ENDPOINT = API_ENDPOINT;
   public static NODE_SERVER = NODE_JS;
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
-  public static API_ARTICLE = API_ENDPOINT + 'api/v1/article';
-  public static API_CURATE_TRENDING = API_ENDPOINT + 'api/v1/toparticle';
-  public static API_CATEGORIES_ARTICLE = API_ENDPOINT + 'api/v1/category/article/?_format=json';
   public static API_CATEGORIES_EVENT = API_ENDPOINT + 'api/v1/category/event/?_format=json';
   public static API_ENDPOINT_LIKE = API_ENDPOINT + 'api/user/flag/bookmark?_format=json';
   public static API_ENDPOINT_CAT_MODE = API_ENDPOINT + 'api/v1/category/mode?_format=json';
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';
   public static API_ENDPOINT_TOP = API_ENDPOINT + 'api/v1/top?_format=json';
   public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
-  public static API_NOTIFICATION = API_ENDPOINT + 'api/v1/notify?_format=json';
   public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
-  public static API_SEARCH = API_ENDPOINT + 'api/v1/suggestion/';
-  public static API_COMPANY_SEARCH = API_ENDPOINT + 'api/v1/company/suggestion/';
   public static INSTAGRAM_ACCESS_TOKEN = '5544202380.58b5f2c.fa60c5d58b8443e6a654f966753ad5ba';
   public static FACEBOOK = {
     appId: '289859484806086',
@@ -378,8 +372,8 @@ export class AppSetting {
     followingNumber: 0,
     followerNumber: 0,
     email: '',
-    userFollowing: [],
-    userFollower: [],
+    followings: [],
+    followers: [],
     showNav: true,
     acceptNotification: false,
   };

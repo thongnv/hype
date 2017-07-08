@@ -140,7 +140,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onClickDeletePlace(item: any) {
-    this.mainService.favoritePlace(item.ids_no).then((response) => {
+    this.mainService.favoritePlace(item.ids_no).subscribe((response) => {
       if (response.error === 0) {
         this.places.forEach((place, index) => {
           if (item === place) {

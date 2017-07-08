@@ -78,7 +78,7 @@ export class CurateComponent implements OnInit {
             }
         );
 
-        this.mainService.getCurateTrending('all').subscribe(
+        this.mainService.getCurateTrending().subscribe(
             (response) => {
                 this.trending = response.data;
             }
@@ -129,7 +129,7 @@ export class CurateComponent implements OnInit {
             }
         );
 
-        this.mainService.getCurateTrending(cat).subscribe(
+        this.mainService.getCurateTrending().subscribe(
             (response) => {
                 this.trending = response.data;
             }
