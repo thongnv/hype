@@ -7,8 +7,8 @@
           {{currentUser.name | truncate: 17}}
         </span>
         <div class="follow-btn-wrap">
-          <a class="follow-btn unfollow-btn follow" *ngIf="!currentUser.followed" (click)="onFollow()">Follow</a>
-          <a class="follow-btn unfollow-btn" *ngIf="currentUser.followed" (click)="onUnFollow()">Unfollow</a>
+          <a class="follow-btn unfollow-btn follow" *ngIf="!currentUser.followed" (click)="toggleFollow()">Follow</a>
+          <a class="follow-btn unfollow-btn" *ngIf="currentUser.followed" (click)="toggleFollow()">Unfollow</a>
         </div>
       </div>
     </div>

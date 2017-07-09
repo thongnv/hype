@@ -70,7 +70,7 @@ export class FollowerComponent implements OnInit {
               }
             );
           },
-        (error) => {
+          (error) => {
             console.log(error);
           },
           () => {
@@ -84,7 +84,6 @@ export class FollowerComponent implements OnInit {
         if (this.currentUser.id === data.user.id) {
           this.currentUser.followed = data.followed;
           if (this.currentUser.followed) {
-            let u = this.user;
             this.currentUser.followers.push(
               {
                 avatar: this.user.avatar,
@@ -147,26 +146,15 @@ export class FollowerComponent implements OnInit {
     if (this.isCurrentUser) {
       if (item.followed) {
         this.currentUser.followingNumber++;
-        if (item.id === this.user.id) {
-          this.currentUser.followerNumber++;
-          this.currentUser.followed = true;
-        }
       } else {
         this.currentUser.followingNumber--;
-        if (item.id === this.user.id) {
-          this.currentUser.followerNumber--;
-          this.currentUser.followed = false;
-        }
       }
-      this.user.followed = this.currentUser.followed;
-    } else {
-      if (item.id === this.currentUser.id) {
-        if (item.followed) {
-          this.currentUser.followerNumber++;
-        } else {
-          this.currentUser.followerNumber--;
-        }
+    }
+    if (item.id === this.currentUser.id) {
+      if (item.followed) {
+        this.currentUser.followerNumber++;
+      } else {
+        this.currentUser.followerNumber--;
       }
     }
   }
-}
