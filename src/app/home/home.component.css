@@ -1021,8 +1021,8 @@ ul.mentioned-item {
         width: 60px;
     }
 
-    .type-events .type-event-more {
-        position: absolute;
-        right: 6%;
-    }
+    /*.type-events .type-event-more {*/
+        /*position: absolute;*/
+        /*right: 6%;*/
+    /*}*/
 }
