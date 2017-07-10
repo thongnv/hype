@@ -21,7 +21,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   @ViewChild('msgInput') public msgInput: ElementRef;
 
   public id: number;
-  public creator: BaseUser = {name: '', avatar: '', slug: '', isAnonymous: false};
+  public creator: BaseUser;
   public name: string = '';
   public location: Location = {name: '', lat: 0, lng: 0};
   public detail: string = '';
@@ -78,9 +78,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.loadData(event);
           this.initSlide(this.images);
           this.ready = true;
-          this.loaderService.hide();
         },
-        (error) => {
+        (error) => console.log(error),
+        () => {
           this.loaderService.hide();
         }
       );

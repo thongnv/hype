@@ -19,7 +19,6 @@ export class FollowingComponent implements OnInit {
   public msgContent: string;
   public alertType: string;
   public followingPage: number = 0;
-  public followed: boolean = false;
   public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
@@ -51,13 +50,12 @@ export class FollowingComponent implements OnInit {
       this.isCurrentUser = this.slugName === this.user.slug;
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
-          this.currentUser = resp.user;
-          this.followed  = resp.followed;
+          this.currentUser = resp;
           this.currentUser.showNav = this.isCurrentUser;
           this.ready = true;
           this.userService.getFollowings(this.slugName, this.followingPage).subscribe(
             (res) => {
-              this.currentUser.userFollowing = res.result;
+              this.currentUser.followings = res.result;
             },
             (error) => console.log(error)
           );
@@ -84,7 +82,7 @@ export class FollowingComponent implements OnInit {
           let data = resp.result;
           data.forEach((item) => {
             count++;
-            this.currentUser.userFollowing.push(item);
+            this.currentUser.followings.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;

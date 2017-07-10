@@ -45,7 +45,7 @@ export class GmapAutoPlaceComponent implements OnInit {
       this.group.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
-      this.mainservice.search(this.searchToken).then((resp) => {
+      this.mainservice.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length === 0) {
           this.hideNoResult = false;

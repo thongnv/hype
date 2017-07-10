@@ -27,7 +27,7 @@ export class HyperSearchComponent implements OnInit {
   public searchToken: string = '';
 
   constructor(public fb: FormBuilder,
-              private mainservice: MainService,
+              private mainService: MainService,
               private mapsAPILoader: MapsAPILoader) {
   }
 
@@ -43,16 +43,13 @@ export class HyperSearchComponent implements OnInit {
       this.searchForm.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
-      this.mainservice.searchCompany(this.searchToken).then((resp) => {
-        console.log('searchForm ==> resp: ', resp);
-        this.result = resp;
-
-        if (resp.company.length === 0) {
-          this.hideNoResult = false;
-        } else {
-          this.hideNoResult = true;
+      this.mainService.searchCompany(this.searchToken).subscribe(
+        (resp) => {
+          console.log('searchForm ==> resp: ', resp);
+          this.result = resp;
+          this.hideNoResult = resp.company.length !== 0;
         }
-      });
+      );
 
       // get data from google map autocomplete
       this.mapsAPILoader.load().then(() => {

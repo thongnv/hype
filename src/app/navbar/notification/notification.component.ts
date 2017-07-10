@@ -14,8 +14,6 @@ export class NotificationComponent {
   @Output('onMarkOneRead') public onMarkOneRead = new EventEmitter<any>();
   @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();
 
-  constructor(){
-  }
   public onClickMarkAll() {
     this.onMarkAllRead.emit(null);
   }

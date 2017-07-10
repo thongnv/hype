@@ -4,7 +4,6 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
-import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-interest',
@@ -30,16 +29,17 @@ export class InterestComponent implements OnInit {
 
   public ngOnInit() {
     this.user = this.localStorageService.get('user') as User;
+    if (!this.user) {
+      this.router.navigate(['login']).then();
+    }
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params.slug;
-      if (!this.user) {
-        this.router.navigate(['login']).then();
-      }
       if (params.slug !== this.user.slug) {
         this.router.navigate(['/' + params.slug]).then();
       }
       this.userService.getProfile().subscribe((response) => {
         this.user = response.user;
+        this.user.slug = this.slugName;
         this.ready = true;
       });
       this.userService.getInterests(this.user.slug).subscribe(

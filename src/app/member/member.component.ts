@@ -45,7 +45,7 @@ export class MemberComponent implements OnInit {
       }
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
-          this.currentUser = resp.user;
+          this.currentUser = resp;
           this.ready = true;
           this.settingForm.patchValue({
             receiveEmail: this.currentUser.acceptNotification

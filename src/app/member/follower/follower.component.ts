@@ -6,6 +6,8 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
+import { FollowService } from '../../services/follow.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 
 @Component({
   selector: 'app-follower',
@@ -20,18 +22,18 @@ export class FollowerComponent implements OnInit {
   public followerPage: number = 0;
   public msgContent: string;
   public alertType: string;
-  public followed: boolean = false;
   public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
   public slugName: any;
-  public sub: any;
   public ready = false;
 
   public constructor(private appState: AppState,
                      private loaderService: LoaderService,
+                     private smallLoader: SmallLoaderService,
                      private userService: UserService,
+                     private followService: FollowService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService) {
   }
@@ -41,36 +43,73 @@ export class FollowerComponent implements OnInit {
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
+      this.userService.getProfile().subscribe(
+        (resp) => this.user = resp
+      );
     }
     this.appState.set('followerPage', this.followerPage);
     let followerPage = this.appState.state.followerPaging;
     if (followerPage !== undefined) {
       this.followerPage = followerPage;
     }
-    this.sub = this.route.params.subscribe(
+    this.route.params.subscribe(
       (params) => {
         this.slugName = params['slug'];
         this.isCurrentUser = this.slugName === this.user.slug;
         this.userService.getProfile(this.slugName).subscribe(
           (resp) => {
-            this.currentUser = resp.user;
-            this.followed = resp.followed;
+            this.currentUser = resp;
             this.currentUser.showNav = this.isCurrentUser;
             this.ready = true;
+            this.smallLoader.show();
             this.userService.getFollowers(this.slugName, this.followerPage).subscribe(
               (response) => {
-                this.currentUser.userFollower = response.result;
+                this.currentUser.followers = response.result;
                 this.currentUser.showNav = this.isCurrentUser;
+                this.smallLoader.hide();
               }
             );
           },
-          (error) => {
+        (error) => {
             console.log(error);
           },
           () => {
             this.loaderService.hide();
           }
         );
+      }
+    );
+    this.followService.getEmittedValue().subscribe(
+      (data) => {
+        if (this.currentUser.id === data.user.id) {
+          this.currentUser.followed = data.followed;
+          if (this.currentUser.followed) {
+            let u = this.user;
+            this.currentUser.followers.push(
+              {
+                avatar: this.user.avatar,
+                flag: 1,
+                id: this.user.id,
+                name: this.user.name,
+                slug: this.user.slug
+              }
+            );
+          } else {
+            // remove this.user from this.currentUser.followers
+            this.currentUser.followers.splice(
+              this.currentUser.followers.findIndex(
+                (u) => u.id === this.user.id
+              ), 1
+            );
+          }
+        } else {
+          if (this.user.id === data.user.id) {
+            this.user.followed = data.followed;
+          }
+        }
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }
@@ -91,7 +130,7 @@ export class FollowerComponent implements OnInit {
           let data = resp.result;
           data.forEach((item) => {
             count++;
-            this.currentUser.userFollower.push(item);
+            this.currentUser.followers.push(item);
           });
           if (count === 0) {
             this.set.endOfList = true;
@@ -110,15 +149,16 @@ export class FollowerComponent implements OnInit {
         this.currentUser.followingNumber++;
         if (item.id === this.user.id) {
           this.currentUser.followerNumber++;
-          this.followed = true;
+          this.currentUser.followed = true;
         }
       } else {
         this.currentUser.followingNumber--;
         if (item.id === this.user.id) {
           this.currentUser.followerNumber--;
-          this.followed = false;
+          this.currentUser.followed = false;
         }
       }
+      this.user.followed = this.currentUser.followed;
     } else {
       if (item.id === this.currentUser.id) {
         if (item.followed) {

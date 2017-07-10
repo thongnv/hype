@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public getNotifications() {
-    this.mainService.getNotifications(this.notificationPage).then((resp) => {
+    this.mainService.getNotifications(this.notificationPage).subscribe((resp) => {
       this.notifications = resp.data;
     });
   }
@@ -104,20 +104,21 @@ export class NavbarComponent implements OnInit {
       notif.viewed = 'true';
     });
     this.notifications.unread = 0;
-    this.mainService.updateNotifications('all', null).then((resp) => {
+    this.mainService.updateNotifications('all', null).subscribe((resp) => {
       console.log('resp', resp);
     });
   }
 
   public onMarkOneRead(item) {
     item.viewed = true;
-    if(parseInt(this.notifications.unread) > 0){
-      this.notifications.unread =this.notifications.unread -1;
-    }else{
+    if (parseInt(this.notifications.unread, 10) > 0) {
+      this.notifications.unread = this.notifications.unread - 1;
+    } else {
       this.notifications.unread = 0;
     }
 
-    this.mainService.updateNotifications('any', item.mid).then((resp) => {
+    this.mainService.updateNotifications('any', item.mid).subscribe((resp) => {
+      console.log(resp);
       this.router.navigate([item.link]).then();
     });
   }
@@ -127,7 +128,7 @@ export class NavbarComponent implements OnInit {
       this.set.endOfList = false;
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getNotifications(++this.notificationPage).then((response) => {
+      this.mainService.getNotifications(++this.notificationPage).subscribe((response) => {
         if (response.data.results.length) {
           response.data.results.forEach((item) => {
             count++;

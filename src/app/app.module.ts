@@ -87,6 +87,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { UserService } from './services/user.service';
+import { FollowService } from './services/follow.service';
 
 enableProdMode();
 
@@ -194,7 +195,8 @@ type StoreType = {
     ModeService,
     SeoService,
     ProfileService,
-    UserService
+    UserService,
+    FollowService
   ],
 })
 export class AppModule {

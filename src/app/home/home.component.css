@@ -893,7 +893,7 @@ ul.mentioned-item {
 */
 @media only screen and (max-width: 420px) {
     .filter-events #timeFilter .btn-default {
-        max-width: 67px;
+        max-width: 70px;
     }
     .filter-events #filters .btn-default {
         max-width: 60px;

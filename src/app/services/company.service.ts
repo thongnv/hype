@@ -30,13 +30,13 @@ export class CompanyService {
   private defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'X-CSRF-Token': <string> this._localStorageService.get('csrf_token')
+    'X-CSRF-Token': <string> this.localStorageService.get('csrf_token')
   });
 
-  constructor(private _localStorageService: LocalStorageService,
-              private _http: Http,
+  constructor(private localStorageService: LocalStorageService,
+              private http: Http,
               private router: Router,
-              private _jsonp: Jsonp) {
+              private jsonp: Jsonp) {
   }
 
   public getCompanyDetail(slugName): Observable<Company> {
@@ -44,7 +44,7 @@ export class CompanyService {
       'Content-Type': 'application/json',
       'Accept': 'application/json'});
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.get(
+    return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/company/detail?_format=json&key=' + slugName, options
     )
       .map((res: Response) => {
@@ -62,7 +62,7 @@ export class CompanyService {
   }
 
   public getInstagramProfile(username) {
-    return this._jsonp.get(
+    return this.jsonp.get(
       'https://api.instagram.com/v1/users/search' +
       '?q=' + username +
       '&access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
@@ -74,7 +74,7 @@ export class CompanyService {
   }
 
   public getInstagramImages(userId: string): Observable<any> {
-    return this._jsonp.get(
+    return this.jsonp.get(
       'https://api.instagram.com/v1/users/' + userId + '/media/recent/' +
       '?access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
       '&callback=JSONP_CALLBACK')
@@ -88,7 +88,7 @@ export class CompanyService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     let data = {ids_no: placeId};
-    return this._http.post(
+    return this.http.post(
       AppSetting.API_ENDPOINT + 'api/v1/favorite/place',
       JSON.stringify(data), options
     ).map((res: Response) => {
@@ -108,7 +108,7 @@ export class CompanyService {
   public postReview(data): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
-    return this._http.post(
+    return this.http.post(
       AppSetting.API_ENDPOINT + 'api/user/review/place',
       JSON.stringify(data), options
     )
@@ -132,7 +132,7 @@ export class CompanyService {
     let data = {
       id: review.id
     };
-    return this._http.post(
+    return this.http.post(
       AppSetting.API_ENDPOINT + 'api/v1/company/review/like',
       JSON.stringify(data), options
     )

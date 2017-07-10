@@ -28,7 +28,9 @@ export class UserService {
     });
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(AppSetting.API_ENDPOINT + '/session/token', options)
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public login(fbToken: string): Observable<Response> {
@@ -38,7 +40,9 @@ export class UserService {
       AppSetting.API_LOGIN, JSON.stringify({fb_token: fbToken}), options
     )
       .map((res: any) => res.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public logout(): Observable<any> {
@@ -48,10 +52,12 @@ export class UserService {
     return this.http.get(
       AppSetting.API_ENDPOINT + 'user/logout', options
     )
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
-  public getProfile(slugName?: string): Observable<any> {
+  public getProfile(slugName?: string): Observable<User> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let user = this.localStorageService.get('user') as User;
     let slug = slugName ? slugName : user.slug;
@@ -63,27 +69,27 @@ export class UserService {
       .map((res) => {
         let data = res.json();
         return {
-          user: {
-            id: data.uid,
-            avatar: data.field_image,
-            name: data.field_first_name + ' ' + data.field_last_name,
-            slug: slugName,
-            isAnonymous: false,
-            firstName: data.field_first_name,
-            lastName: data.field_last_name,
-            contactNumber: data.field_contact_number,
-            followingNumber: data.follow.following,
-            followerNumber: data.follow.follower,
-            email: data.email,
-            userFollowing: [],
-            userFollower: [],
-            showNav: true,
-            acceptNotification: data.field_notify_email === '1'
-          },
-          followed: data.user_follow
+          id: data.uid,
+          avatar: data.field_image,
+          name: data.field_first_name + ' ' + data.field_last_name,
+          slug: slugName,
+          isAnonymous: false,
+          firstName: data.field_first_name,
+          lastName: data.field_last_name,
+          contactNumber: data.field_contact_number,
+          followingNumber: data.follow.following,
+          followerNumber: data.follow.follower,
+          email: data.email,
+          followings: [],
+          followers: [],
+          followed: data.user_follow,
+          showNav: true,
+          acceptNotification: data.field_notify_email === '1'
         };
       })
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public setProfile(user: BaseUser, data: any): Observable<any> {
@@ -95,7 +101,9 @@ export class UserService {
       JSON.stringify(data), options
     )
       .map((res) => res.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getFollowings(userSlug: string, page: number): Observable<any> {
@@ -110,7 +118,9 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getFollowers(userSlug: string, page: number): Observable<any> {
@@ -125,11 +135,16 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(url, options)
       .map((res) => res.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public toggleFollow(userId: number): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
+    if (!this.localStorageService.get('user')) {
+      this.router.navigate(['login']).then();
+    }
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(
@@ -137,7 +152,9 @@ export class UserService {
       JSON.stringify({uid: userId}), options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getInterests(slugName?: string): Observable<any> {
@@ -150,7 +167,9 @@ export class UserService {
       AppSetting.API_ENDPOINT + 'api/v1/user/interest/' + slugName + '?_format=json', options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public updateInterests(slugName?: string, item?: any[]): Observable<any> {
@@ -164,7 +183,9 @@ export class UserService {
       JSON.stringify(item), options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getEvents(slugName?: string, page?: number): Observable<any> {
@@ -183,7 +204,9 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getLists(slugName?: string, page?: number): Observable<any> {
@@ -202,7 +225,9 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public getFavoritePlaces(slugName?: string, page?: number): Observable<any> {
@@ -220,7 +245,9 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public unFavoriteEventList(slug: string): Observable<any> {
@@ -232,7 +259,9 @@ export class UserService {
       options
     )
       .map((resp) => resp.json())
-      .catch((error) => this.handleError(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 
   public checkLogin(): Observable<Response> {
@@ -240,13 +269,8 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(AppSetting.API_ENDPOINT + 'user/login_status?_format=json', options)
       .map((res) => res.json())
-      .catch((error) => this.handleError(error));
-  }
-
-  private handleError(error) {
-    if (error.status === 403) {
-      this.router.navigate(['login']).then();
-    }
-    return Observable.throw(new Error(error));
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
   }
 }

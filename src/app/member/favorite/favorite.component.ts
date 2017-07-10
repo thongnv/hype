@@ -64,7 +64,7 @@ export class FavoriteComponent implements OnInit {
         this.isCurrentUser = this.user.slug === this.slugName;
         this.userService.getProfile(this.slugName).subscribe(
           (resp) => {
-            this.currentUser = resp.user;
+            this.currentUser = resp;
             this.ready = true;
           },
           (error) => {
@@ -79,15 +79,15 @@ export class FavoriteComponent implements OnInit {
         let type = this.selectedFavoriteType;
         if (!this.loadMore && !this.endRecord) {
           if (type === 'event') {
-            this.loadMore =true;
+            this.loadMore = true;
             this.getEvent(this.slugName, this.eventPageNum);
           }
           if (type === 'list') {
-            this.loadMore =true;
+            this.loadMore = true;
             this.getList(this.slugName, this.listPageNum);
           }
           if (type === 'place') {
-            this.loadMore =true;
+            this.loadMore = true;
             this.getPlace(this.slugName, this.placePageNum);
           }
         }
@@ -161,7 +161,7 @@ export class FavoriteComponent implements OnInit {
 
   public onClickDeletePlace(item: any) {
     this.smallLoader.show();
-    this.mainService.favoritePlace(item.ids_no).then((response) => {
+    this.mainService.favoritePlace(item.ids_no).subscribe((response) => {
       if (response.error === 0) {
         this.places.forEach((place, index) => {
           if (item === place) {

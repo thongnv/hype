@@ -140,13 +140,15 @@ export class CurateNewComponent implements OnInit {
       let  data = this.mapArticle(article);
       this.loaderService.show();
       if (!this.submitted) {
-        this.mainService.postArticle(data).then((response) => {
-          if (response.status) {
-            this.loaderService.hide();
-            this.submitted = false;
-            this.router.navigate([response.data.slug]);
+        this.mainService.postArticle(data).subscribe(
+          (response) => {
+            if (response.status) {
+              this.loaderService.hide();
+              this.submitted = false;
+              this.router.navigate([response.data.slug]);
+            }
           }
-        });
+        );
       }
     } else {
       this.formData.markAsTouched();
@@ -205,7 +207,7 @@ export class CurateNewComponent implements OnInit {
 
   public onMapsChangePlace(data, i) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder;
+    let geocoder = new google.maps.Geocoder();
     geocoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace

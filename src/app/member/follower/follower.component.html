@@ -2,12 +2,11 @@
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation
       [user]="user"
-      [currentUser]="currentUser"
-      [followed]="followed">
+      [currentUser]="currentUser">
     </app-member-navigation>
   </div>
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell" *ngIf="ready">
-    <section *ngIf="currentUser.userFollower" class="follow-list-wrap">
+    <section *ngIf="currentUser.followers" class="follow-list-wrap">
       <h3 class="col-xs-12 count-follow">{{ currentUser.followerNumber}} Followers</h3>
       <div class="col-xs-12">
         <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
@@ -17,7 +16,7 @@
            height="calc(100vh - 145px)"
            size="7px">
         <app-follow-item
-          *ngFor="let follower of currentUser.userFollower"
+          *ngFor="let follower of currentUser.followers"
           [item]="follower"
           (onUpdate)="updateFollow($event)"
           class="col-xs-6 col-sm-6 col-md-4 col-lg-3 interest-item-wrap">

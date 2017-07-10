@@ -61,8 +61,7 @@ export class ProfilePublicComponent implements OnInit {
       this.isCurrentUser = this.user.slug === this.slugName;
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
-          this.currentUser = resp.user;
-          this.followed = resp.followed;
+          this.currentUser = resp;
           this.currentUser.showNav = false;
           this.ready = true;
           this.loaderService.hide();
@@ -140,7 +139,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onClickDeletePlace(item: any) {
-    this.mainService.favoritePlace(item.ids_no).then((response) => {
+    this.mainService.favoritePlace(item.ids_no).subscribe((response) => {
       if (response.error === 0) {
         this.places.forEach((place, index) => {
           if (item === place) {

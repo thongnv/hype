@@ -21,6 +21,7 @@ export class CurateDetailComponent implements OnInit {
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
+  public noPause: boolean = false;
   public slides: any[] = [];
 
   public lat: number = 1.290270;
