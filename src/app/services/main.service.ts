@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Observable } from 'rxjs/Observable';
@@ -47,29 +47,17 @@ export class MainService {
 
   public getCurate(filter, cate, page, limit): Observable<Response> {
     let headers = this.defaultHeaders;
-    let searchParams = new URLSearchParams();
-    searchParams.set('_format', 'json');
-    searchParams.set('filter', filter);
-    if (limit) {
-      searchParams.set('limit', limit);
-    }
-    if (page) {
-      searchParams.set('page', page);
-    }
-    if (parseInt(cate, 10)) {
-      searchParams.set('cate', cate);
-    }
-
-    let options = new RequestOptions({
-      headers,
-      params: searchParams,
-      withCredentials: true
-    });
-
-    return this.http.get(AppSetting.API_ARTICLE, options)
-      .map((res) => {
-        return res.json();
-      })
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/article' +
+      '?_format=json' +
+      '&filter=' + filter +
+      '&limit=' + limit +
+      '&page=' + page +
+      '&cate=' + cate,
+      options
+    )
+      .map((res) => res.json())
       .catch((error) => {
         return Observable.throw(new Error(error));
       });
@@ -104,12 +92,14 @@ export class MainService {
   public getNotifications(page: number): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let myParams = new URLSearchParams();
-    myParams.set('_format', 'json');
-    myParams.set('limit', AppSetting.PAGE_SIZE.toString());
-    myParams.set('page', page ? page.toString() : '0');
-    let options = new RequestOptions({headers, withCredentials: true, params: myParams});
-    return this.http.get(AppSetting.API_ENDPOINT + 'api/v1/notify?_format=json', options)
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/notify' +
+      '?_format=json' +
+      '&limit=10' +
+      'page=' + page,
+      options
+    )
       .map((resp) => resp.json())
       .catch((error) => {
         return Observable.throw(new Error(error));

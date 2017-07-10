@@ -109,6 +109,7 @@
 .tab-choose-option {
     padding: 0px 2px;
 }
+
 .price-range {
     margin: 20px 0;
     text-transform: capitalize;
@@ -192,12 +193,12 @@ button.btn.btn-default.active  {
 }
 
 /*.list-item-title {*/
-    /*top: calc(50% - 84px);*/
-    /*height: 84px;*/
-    /*overflow: hidden;*/
-    /*font-size: 30px;*/
-    /*font-weight: bold;*/
-    /*line-height: 1.4;*/
+/*top: calc(50% - 84px);*/
+/*height: 84px;*/
+/*overflow: hidden;*/
+/*font-size: 30px;*/
+/*font-weight: bold;*/
+/*line-height: 1.4;*/
 /*}*/
 
 .list-item-link * {
@@ -212,13 +213,13 @@ button.btn.btn-default.active  {
 }
 
 /*.list-item-link, .list-item-title {*/
-    /*position: absolute;*/
-    /*left: 15%;*/
-    /*width: 70%;*/
-    /*text-align: left;*/
-    /*color: #ffffff;*/
-    /*opacity: 1;*/
-    /*margin: 0;*/
+/*position: absolute;*/
+/*left: 15%;*/
+/*width: 70%;*/
+/*text-align: left;*/
+/*color: #ffffff;*/
+/*opacity: 1;*/
+/*margin: 0;*/
 /*}*/
 
 /*gmap*/
@@ -260,9 +261,7 @@ button.btn.btn-default.active  {
 .wrap-each-items {
     border-bottom: 1px solid #eaeaea;
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 20px;
+    padding: 15px;
 }
 
 .cover-avatar-picture {
@@ -722,13 +721,16 @@ ul.mentioned-item {
     font-size: 18px;
     cursor: pointer;
 }
-.comments-item-icon .heart-icon{
+
+.comments-item-icon .heart-icon {
     position: relative;
 }
-.comments-item-icon .heart-icon i{
+
+.comments-item-icon .heart-icon i {
     position: absolute;
-    top:-15px;
+    top: -15px;
 }
+
 .heart-selected {
     color: #ec3d62;
 }
@@ -756,9 +758,9 @@ ul.mentioned-item {
         width: 100px;
     }
 
-    .comments-item-icon{
+    .comments-item-icon {
         clear: both;
-        float: none!important;
+        float: none !important;
     }
 
     .information-profile {
@@ -887,19 +889,23 @@ ul.mentioned-item {
     }
 }
 
-
-
 /*
 ==============
 */
 @media only screen and (max-width: 420px) {
     .filter-events #timeFilter .btn-default {
-        max-width: 70px;
+        min-width: 50px;
     }
+
     .filter-events #filters .btn-default {
         max-width: 60px;
     }
+
+    .filter-events #timeFilter .btn-default {
+        width: auto;
+    }
 }
+
 @media only screen and (max-width: 544px) {
     .type-events {
         padding: 5px 0px 0;
@@ -921,16 +927,15 @@ ul.mentioned-item {
         padding: 5px 10px;
     }
 
-
-
 }
 
 @media only screen and (min-width: 320px) and (max-width: 800px) {
 
-  .wrap-each-items {
-    padding: 0px 15px;
-  }
+    .wrap-each-items {
+        padding: 0px 15px;
+    }
 }
+
 @media only screen and (min-width: 320px) and (max-width: 374px) {
     .btn {
         padding: 5px 5px;
@@ -982,10 +987,12 @@ ul.mentioned-item {
     .home-page .left-box {
         padding: 0px;
     }
+
     .filter-events #timeFilter .btn-default {
         max-width: 70px;
         padding: 0px;
     }
+
     .filter-events #filters .btn-default {
         max-width: 70px;
     }
@@ -995,12 +1002,12 @@ ul.mentioned-item {
     .home-page .left-box {
         padding: 0px;
     }
-    .type-events {
-        padding: 25px 10px 0px 20px;
-    }
+
     .type-events .type-event-item {
-        margin: 0px 20px 10px;
+        /*margin: 0px 15px 10px;*/
+        width: 60px;
     }
+
     .type-events .type-event-more {
         position: absolute;
         right: 6%;

@@ -430,8 +430,8 @@ nouislider.ng2-nouislider {
     width: 100%;
 }
 
-#v-scrollable {
-    padding-left: 0px;
+.discover-page #v-scrollable {
+    padding-left: 15px;
 }
 
 .list-header {
@@ -558,9 +558,11 @@ select.form-control-static::-ms-expand {
     font-size: 18px;
     color: #d3d3d3;
 }
+
 .list-items .d-inline-flex .full {
     color: #ec3d62;
 }
+
 .list-items .d-inline-flex .half {
     position: absolute;
     display: inline-block;
@@ -570,19 +572,22 @@ select.form-control-static::-ms-expand {
 }
 
 @media only screen and (max-width: 800px) {
-  .filterCategory .btn-filter-block label {
-    width: auto;
-  }
-  .itemSort li.type {
-    width: auto;
-  }
+    .filterCategory .btn-filter-block label {
+        width: auto;
+    }
+    .discover-page .left-box{
+        padding: 10px;
+    }
+    .itemSort li.type {
+        width: auto;
+    }
 
-  .filter-item {
-    width: 37%;
-    float: left;
-  }
+    .filter-item {
+        width: 37%;
+        float: left;
+    }
 
-  .itemSort li {
+    .itemSort li {
         width: auto;
         text-align: left;
     }
@@ -637,5 +642,15 @@ select.form-control-static::-ms-expand {
         margin-left: 0px;
         display: block;
         padding-top: 10px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    #btnHeadFilter label:first-child {
+        margin-left: -15px;
+    }
+
+    .itemSort {
+        margin-left: 0px;
     }
 }
