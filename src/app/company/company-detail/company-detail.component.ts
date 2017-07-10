@@ -111,13 +111,13 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public toggleBookmark() {
-    let bookmarked = !this.bookmarked;
+    this.bookmarked = !this.bookmarked;
     this.companyService.toggleBookmark(this.id).subscribe(
       (resp) => {
         console.log(resp);
-        this.bookmarked = bookmarked;
       },
       (error) => {
+        this.bookmarked = !this.bookmarked;
         console.log(error);
       }
     );
@@ -170,7 +170,6 @@ export class CompanyDetailComponent implements Company, OnInit {
             likeNumber: 0,
             liked: false
           };
-          console.log('review:', review);
           this.reviews.unshift(review);
           this.loaderService.hide();
         },
