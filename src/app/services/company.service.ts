@@ -172,7 +172,6 @@ function getReviews(data): Experience[] {
         name: r.user.name,
         avatar: r.user.avatar,
         slug: '',
-        isAnonymous: false
       },
       rating: r.rate,
       date: Number(r.created) * 1000,
