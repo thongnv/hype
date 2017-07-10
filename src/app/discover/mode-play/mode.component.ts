@@ -189,22 +189,7 @@ export class ModeComponent implements OnInit {
                     if (this.loadMore == false && this.end_record == false) {
                         this.loadMore = true;
                         this.params.page = this.params.page + 1;
-                        let params = this.params;
-                        console.log(params.page);
-                        this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
-                            this.loadMore = false;
-                            if (resp.company.length == 0) {
-                                this.end_record = true
-                            }
-                            this.initMap(resp.company);
-                            this.smallLoader.hide();
-                            this.loadMore = false;
-                        }, err=> {
-                            this.loadMore = false;
-                            this.items = [];
-                            this.markers = [];
-                            this.smallLoader.hide();
-                        });
+                        this.getDataModes();
                     }
 
                 }
@@ -287,12 +272,16 @@ export class ModeComponent implements OnInit {
         this.modeService.getModes(params).map(resp=>resp.json()).subscribe((resp)=> {
             this.loadMore = false;
             this.total = resp.total;
+            if (resp.company.length == 0) {
+                this.end_record = true;
+            }
             this.initMap(resp.company);
             this.loaderService.hide();
             this.smallLoader.hide();
 
         }, err=> {
             this.loadMore = false;
+            this.end_record = false;
             this.items = [];
             this.markers = [];
             this.loaderService.hide();
@@ -371,6 +360,7 @@ export class ModeComponent implements OnInit {
         this.markers=[];
         this.items = [];
         this.params.page = 0;
+        this.end_record=false;
         this.getDataModes();
     }
 
