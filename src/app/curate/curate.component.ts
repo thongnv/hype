@@ -98,8 +98,7 @@ export class CurateComponent implements OnInit {
         let featuredArticles = [];
         if (this.screenWidth < 992) {
             if (this.screenWidth < 767) {
-                number= Math.floor(this.screenWidth / 70) - 4;
-                console.log(1,this.screenWidth);
+                number=1
             }else{
                 if (this.screenWidth > 767 && this.screenWidth < 992) {
                     console.log(234,this.screenWidth);

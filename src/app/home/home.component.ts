@@ -286,28 +286,43 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
+    private clearParam(){
+        this.selectedEventFilter = this.eventFilter[0];
+        this.markers = [];
+        this.events = [];
+        this.listItems = [];
+        this.priceRange = [0, 50]
+        this.selected = false;
+        this.showDate = false;
+        this.showPrice = false;
+        this.smallLoader.show();
+        this.params.limit = 10;
+        this.params.page = 0;
+        this.params.tid = '';
+        this.params.date = '';
+        this.params.weekend = '';
+        this.params.radius = (this.currentRadius / 1000);
+        this.params.price = '';
+        this.params.order = '';
+        this.selected = 'all';
+    }
     public onSelectEventFilter(filter:any):void {
-        this.onClearForm();
+        this.clearParam();
         this.selectedEventFilter = filter;
         console.log(filter);
         let date = new Date();
         if (filter.name == 'today') {
             this.params.date = moment(date).format('YYYY-MM-DD');
-        }
-        if (filter.name == 'tomorrow') {
+        }else if (filter.name == 'tomorrow') {
             let tomorrow = date.setDate(date.getDate() + 1);
             this.params.date = moment(date).format('YYYY-MM-DD');
-        }
-        if (filter.name == 'this week') {
+        }else if  (filter.name == 'this week') {
             this.params.weekend = 1;
             this.params.date = '';
-        }
-        if (filter.name == 'all') {
+        }else if  (filter.name == 'all') {
             this.params.weekend = 0;
             this.params.date = '';
-        }
-
-        if (this.selectedEventOrder.name == 'top 100') {
+        } else if  (this.selectedEventOrder.name == 'top 100') {
             this.showCircle = false;
         } else {
             this.showCircle = true;
@@ -406,6 +421,9 @@ export class HomeComponent implements OnInit {
             }, err=> {
                 this.loadMore = true;
                 this.end_record = true;
+                this.listItems=[];
+                this.events=[];
+                this.total=0;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             })
@@ -426,6 +444,9 @@ export class HomeComponent implements OnInit {
                 this.loaderService.hide();
                 this.smallLoader.hide();
             }, err=> {
+                this.listItems=[];
+                this.events=[];
+                this.total=0;
                 this.loadMore = true;
                 this.end_record = true;
                 this.loaderService.hide();
@@ -444,7 +465,7 @@ export class HomeComponent implements OnInit {
     }
 
     public markerRadiusChange(radius) {
-        this.onClearForm();
+        this.clearParam();
         this.smallLoader.show();
         if (this.currentRadius <= radius) {
             console.log(1);
