@@ -19,7 +19,6 @@ export class FollowItemComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.item.followed = this.item.flag === 1;
     this.followService.getEmittedValue().subscribe(
       (data) => {
         if (this.item.id === data.user.id) {

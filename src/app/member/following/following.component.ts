@@ -3,7 +3,7 @@ import { AppState } from '../../app.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { User } from '../../app.interface';
+import { Follower, User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
 
@@ -55,7 +55,7 @@ export class FollowingComponent implements OnInit {
           this.ready = true;
           this.userService.getFollowings(this.slugName, this.followingPage).subscribe(
             (res) => {
-              this.currentUser.followings = res.result;
+              this.currentUser.followings = extractFollowings(res.result);
             },
             (error) => console.log(error)
           );
@@ -118,4 +118,28 @@ export class FollowingComponent implements OnInit {
       }
     }
   }
+}
+
+function extractFollowings(data): Follower[] {
+  let followings = [];
+  for (let item of data) {
+    let followingName = '';
+    if (item.field_first_name) {
+      followingName += item.field_first_name;
+    }
+    if (item.field_last_name) {
+      followingName += ' ' + item.field_last_name;
+    }
+    if (!followingName) {
+      followingName = item.name;
+    }
+    followings.push({
+      id: item.id,
+      followed: item.flag === 1,
+      avatar: item.avatar,
+      name: followingName,
+      slug: item.slug
+    });
+  }
+  return followings;
 }

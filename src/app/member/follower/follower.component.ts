@@ -3,7 +3,7 @@ import { AppState } from '../../app.service';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { User } from '../../app.interface';
+import { Follower, User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
@@ -64,7 +64,7 @@ export class FollowerComponent implements OnInit {
             this.smallLoader.show();
             this.userService.getFollowers(this.slugName, this.followerPage).subscribe(
               (response) => {
-                this.currentUser.followers = response.result;
+                this.currentUser.followers =  extractFollowers(response.result);
                 this.currentUser.showNav = this.isCurrentUser;
                 this.smallLoader.hide();
               }
@@ -86,9 +86,9 @@ export class FollowerComponent implements OnInit {
           if (this.currentUser.followed) {
             this.currentUser.followers.push(
               {
-                avatar: this.user.avatar,
-                flag: 1,
                 id: this.user.id,
+                followed: true,
+                avatar: this.user.avatar,
                 name: this.user.name,
                 slug: this.user.slug
               }
@@ -158,4 +158,28 @@ export class FollowerComponent implements OnInit {
       }
     }
   }
+}
+
+function extractFollowers(data): Follower[] {
+  let followers = [];
+  for (let item of data) {
+    let followerName = '';
+    if (item.field_first_name) {
+      followerName += item.field_first_name;
+    }
+    if (item.field_last_name) {
+      followerName += ' ' + item.field_last_name;
+    }
+    if (!followerName) {
+      followerName = item.name;
+    }
+    followers.push({
+      id: item.id,
+      followed: item.flag === 1,
+      avatar: item.avatar,
+      name: followerName,
+      slug: item.slug
+    });
+  }
+  return followers;
 }
