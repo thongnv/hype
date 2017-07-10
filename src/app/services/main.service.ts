@@ -47,16 +47,26 @@ export class MainService {
 
   public getCurate(filter, cate, page, limit): Observable<Response> {
     let headers = this.defaultHeaders;
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/article' +
-      '?_format=json' +
-      '&filter=' + filter +
-      '&limit=' + limit +
-      '&page=' + page +
-      '&cate=' + cate,
-      options
-    )
+    let searchParams = new URLSearchParams();
+    searchParams.set('_format', 'json');
+    searchParams.set('filter', filter);
+    if (limit) {
+      searchParams.set('limit', limit);
+    }
+    if (page) {
+      searchParams.set('page', page);
+    }
+    if (parseInt(cate, 10)) {
+      searchParams.set('cate', cate);
+    }
+
+    let options = new RequestOptions({
+      headers,
+      params: searchParams,
+      withCredentials: true
+    });
+
+    return this.http.get(AppSetting.API_ARTICLE, options)
       .map((res) => {
         return res.json();
       })
