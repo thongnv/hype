@@ -38,7 +38,7 @@ export class InterestComponent implements OnInit {
         this.router.navigate(['/' + params.slug]).then();
       }
       this.userService.getProfile().subscribe((response) => {
-        this.user = response.user;
+        this.user = response;
         this.user.slug = this.slugName;
         this.ready = true;
       });

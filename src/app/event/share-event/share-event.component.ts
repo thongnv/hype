@@ -6,7 +6,6 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@ang
 import * as moment from 'moment/moment';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { MainService } from '../../services/main.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
@@ -78,7 +77,7 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.userService.getProfile().subscribe((response) => {
-      this.user = response.user;
+      this.user = response;
     });
   }
 
@@ -107,7 +106,7 @@ export class ShareEventComponent implements OnInit {
 
   public onMapsChangePlace(data) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder;
+    let geocoder = new google.maps.Geocoder();
     geocoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace

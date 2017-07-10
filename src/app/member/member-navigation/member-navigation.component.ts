@@ -21,30 +21,24 @@ export class MemberNavigationComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.isCurrentUser = this.user.slug === this.currentUser.slug;
+    this.isCurrentUser = this.user.id === this.currentUser.id;
   }
 
-  public onFollow() {
+  public toggleFollow() {
     this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
         console.log(resp);
         this.currentUser.followed = !this.currentUser.followed;
-        this.currentUser.followerNumber++;
-        if (this.isCurrentUser) {
-          this.currentUser.followingNumber++;
-        }
-        this.followService.change(this.currentUser, this.currentUser.followed);
-    });
-  }
-
-  public onUnFollow() {
-    this.userService.toggleFollow(this.currentUser.id).subscribe(
-      (resp) => {
-        console.log(resp);
-        this.currentUser.followed = !this.currentUser.followed;
-        this.currentUser.followerNumber--;
-        if (this.isCurrentUser) {
-          this.currentUser.followingNumber--;
+        if (this.currentUser.followed) {
+          this.currentUser.followerNumber++;
+          if (this.isCurrentUser) {
+            this.currentUser.followingNumber++;
+          }
+        } else {
+          this.currentUser.followerNumber--;
+          if (this.isCurrentUser) {
+            this.currentUser.followingNumber--;
+          }
         }
         this.followService.change(this.currentUser, this.currentUser.followed);
     });
