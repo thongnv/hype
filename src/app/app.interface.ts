@@ -22,7 +22,7 @@ export interface User extends BaseUser {
 
 export interface Follower extends BaseUser {
   id: number;
-  flag: number;
+  followed: boolean;
 }
 
 export interface HyloEvent {
