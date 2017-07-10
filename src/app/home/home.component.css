@@ -154,12 +154,12 @@
     float: right;
 }
 
-button.btn.btn-default.active {
+button.btn.btn-default.active  {
     font-size: 14px;
     height: 120%;
     color: #fff;
     position: relative;
-    bottom: 3px;
+    bottom: 2px;
     z-index: 999;
     border-radius: 4px;
     background-color: #2a6be1;
@@ -170,6 +170,7 @@ button.btn.btn-default.active {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
     text-shadow: none;
+    height: 32px;
 }
 
 .list-item {
