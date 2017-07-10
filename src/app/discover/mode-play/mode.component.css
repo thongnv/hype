@@ -412,7 +412,7 @@ nouislider.ng2-nouislider {
 }
 
 .itemSort li {
-    width: 125px;
+    width: 115px;
     text-align: center;
 }
 
@@ -649,8 +649,19 @@ select.form-control-static::-ms-expand {
     #btnHeadFilter label:first-child {
         margin-left: -15px;
     }
-
     .itemSort {
         margin-left: 0px;
     }
+    .discover-page .left-box {
+        width: 51.2%;
+    }
+    .filterCategory {
+        margin-left: 0px;
+        padding-left: 15px;
+    }
+    .discover-page #v-scrollable {
+        padding-right: 15px;
+    }
+
+
 }

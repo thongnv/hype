@@ -105,6 +105,7 @@ span.time-posts {
     font-weight: bold;
     line-height: 50px;
     font-size: 30px;
+    text-transform: capitalize;
 }
 ul.list-items {
     list-style: none;

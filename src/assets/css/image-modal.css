@@ -257,9 +257,11 @@ span.overlay {
 a.more {
   position: absolute;
   color: #fff;
-  padding: 25% 30%;
+  padding: 30%;
   z-index: 99;
   font-size: large;
+  top: 7%;
+  left: 7%;
 }
 
 div.view-more {
