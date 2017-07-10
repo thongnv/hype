@@ -25,8 +25,8 @@
             <li>
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
               <span class="info-value">
-                <span *ngIf="price!=0 && (price|json) !== 'null'">${{price}}</span>
-                <span *ngIf="price === 0 || (price|json) == 'null'">Free</span>
+                <span *ngIf="price">${{price}}</span>
+                <span *ngIf="!price">Free</span>
                 <b>.</b></span>
             </li>
             <li>

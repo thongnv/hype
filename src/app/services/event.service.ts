@@ -37,7 +37,7 @@ export class EventService {
         lng: Number(data.field_location_place.field_longitude)
       },
       name: data.title,
-      price: data.field_event_option.field_price,
+      price: Number(data.field_event_option.field_price),
       call2action: {
         link: data.field_event_option.field_call_to_action_link,
         action: MOCK_ACTIONS[data.field_event_option.field_call_to_action_group - 1]
