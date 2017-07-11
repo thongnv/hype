@@ -36,10 +36,18 @@ i#notif {
   background: #fff;
   position: absolute;
   padding: 0;
+  box-shadow: 0 2px 4px 0 rgba(166, 166, 166, 0.5);
+  border: solid 1px #d8d8d8;
 }
 .show>.notify-content li{
   list-style: none;
 }
+
+#notifications .arrow-up {
+  top: -125%;
+  right: 7%;
+}
+
 @media screen and (max-width: 800px) and (min-width: 320px){
 
   .show>.notify-content {

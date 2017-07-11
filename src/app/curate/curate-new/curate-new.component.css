@@ -61,7 +61,7 @@ header ul li.pull-right {
     color: #3b3b3b;
 }
 .input-box .form-group label {
-    font-weight: bold;
+    font-weight: normal;
     margin-bottom: 16px;
     font-size: 16px;
     line-height: 1.63;
