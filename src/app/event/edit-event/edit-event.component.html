@@ -84,8 +84,8 @@
         <div class="input-box">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
-            <input mdInput [(ngModel)]="displayDate" id="event-date" required formControlName="eventDate"
-                   ngui-datetime-picker date-only="'true'" parse-format="MMM-DD-YYYY" date-format="MMM-DD-YYYY"/>
+            <input [(ngModel)]="displayDate" id="event-date" required formControlName="eventDate"
+                   ngui-datetime-picker date-only="true"/>
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -93,31 +93,30 @@
                    class="form-control"
                    min="0"
                    max="300"
-                   value="0"
+                   [value]="event.price"
                    type="number"
                    (change)="onEventPriceChange($event)">
             <span class="dollar-character">$</span>
             <small id="eventPriceErr"
                    class="text-danger">
-
             </small>
           </div>
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
-              <select name="" id="event-type" formControlName="eventType">
-                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+              <select [(ngModel)]="event.call2action.action" name="" id="event-type" formControlName="eventType">
+                <option *ngFor="let action of actions" [value]="action.action">{{action.action}}</option>
               </select>
-              <input placeholder="http://wwww.sistic.com.sg" formControlName="eventLink" id="event-link"
-                     class="form-control" type="text">
+              <input formControlName="eventLink" id="event-link"
+                     class="form-control" type="text" [value]="event.call2action.link">
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
           <div class="form-group  mention-by-group">
             <label>Mentioned By</label>
             <div formArrayName="eventMentions">
-              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
-                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
+              <div class="form-group" *ngFor="let mention of event.mentions; let i=index">
+                <input type="text" [value]="mention.url"
                        class="form-control" [formControlName]="i">
               </div>
             </div>

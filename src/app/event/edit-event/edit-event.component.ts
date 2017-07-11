@@ -51,10 +51,7 @@ export class EditEventComponent implements OnInit {
   public showMore: boolean = true;
   public showPreview: boolean = false;
   public slides = [];
-  public types = [
-    {value: '1', display: 'Buy Tix'},
-    {value: '2', display: 'More Info'}
-  ];
+  public actions = [];
   public gMapStyles: any;
   public validCaptcha = false;
   public displayDate: Date;
@@ -90,8 +87,9 @@ export class EditEventComponent implements OnInit {
             lat: this.event.location.lat,
             lng: this.event.location.lng,
           });
-          this.displayDate = new Date(this.event.date);
+          this.displayDate = new Date(this.event.startDate);
           this.previewUrl = this.event.images;
+          this.actions = [this.event.call2action];
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
