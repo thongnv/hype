@@ -396,8 +396,6 @@ ul.list-comments-ago li .avatar-comment-ago {
   display: inline-block;
 }
 
-
-
 .avatar-comment-ago {
   float: left;
   margin-right: 2%;
@@ -413,10 +411,10 @@ ul.list-comments-ago li .avatar-comment-ago {
   color: #3b3b3b;
 }
 
-.likes-area a:after {
+.likes-area:after {
   content: ' . ';
   color: black;
-  font-size: 20px;
+  font-size: 26px;
   position: relative;
   top: -3px;
   margin: 0 5px;
