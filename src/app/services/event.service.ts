@@ -101,7 +101,7 @@ export class EventService {
     });
   }
 
-  public getCategoryEvent(): Observable<Response> {
+  public getCategoryEvent(): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(

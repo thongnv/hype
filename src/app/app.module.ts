@@ -88,6 +88,7 @@ import { SearchComponent } from './navbar/search/search.component';
 import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
+import { EditEventComponent } from './event/edit-event/edit-event.component';
 
 enableProdMode();
 
@@ -119,6 +120,7 @@ type StoreType = {
     NavbarComponent,
     GmapClustererDirective,
     ShareEventComponent,
+    EditEventComponent,
     MyArray,
     CurateListPipe,
     TripleSlidePipe,
@@ -127,7 +129,6 @@ type StoreType = {
     FollowingComponent,
     FollowerComponent,
     FollowItemComponent,
-
     InterestComponent,
     MemberComponent,
     MemberNavigationComponent,
@@ -152,7 +153,6 @@ type StoreType = {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-
     HttpModule,
     JsonpModule,
     HtmlToTextModule,
