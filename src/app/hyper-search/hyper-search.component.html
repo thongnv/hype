@@ -11,7 +11,8 @@
            autocapitalize="off"
            spellcheck="off" type="text"
            (keyup)="onSubmit($event, keyword.value)"
-           (click)="onOpenSuggestion()">
+           (click)="onOpenSuggestion()"
+           [ngModel]="text">
 
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>

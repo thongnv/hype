@@ -256,7 +256,7 @@ export class UserService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(
       AppSetting.API_ENDPOINT + 'api/user/flag/bookmark?_format=json&slug=' + slug,
-      JSON.stringify({}), options
+      null, options
     )
       .map((resp) => resp.json())
       .catch((error) => {
