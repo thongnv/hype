@@ -132,6 +132,7 @@
     opacity: 0.4;
     min-width: 45px;
     max-width: 80px;
+    font-size: 12px;
 }
 
 .filterCategory .btn-filter-block label.more {
