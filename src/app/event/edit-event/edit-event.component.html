@@ -115,9 +115,9 @@
           <div class="form-group  mention-by-group">
             <label>Mentioned By</label>
             <div formArrayName="eventMentions">
-              <div class="form-group" *ngFor="let mention of event.mentions; let i=index">
-                <input type="text" [value]="mention.url"
-                       class="form-control" [formControlName]="i">
+              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
+                <input type="text" *ngIf="mention.value" [value]="mention.value.url" class="form-control" [formControlName]="i">
+                <input type="text" *ngIf="!mention.value" class="form-control" [formControlName]="i">
               </div>
             </div>
           </div>

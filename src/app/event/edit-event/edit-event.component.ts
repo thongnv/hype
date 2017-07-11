@@ -9,7 +9,6 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
-import { UserService } from '../../services/user.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { HyloEvent, User } from '../../app.interface';
 
@@ -20,23 +19,23 @@ import { HyloEvent, User } from '../../app.interface';
 })
 export class EditEventComponent implements OnInit {
 
-  public eventForm: FormGroup = this.fb.group({
+  public eventForm: FormGroup = this.formBuilder.group({
     eventName: ['', Validators.required],
     eventDetail: ['', Validators.required],
     eventCategory: ['', Validators.required],
-    eventPlace: this.fb.group({
+    eventPlace: this.formBuilder.group({
       place: ['', Validators.required],
       lat: [''],
       lng: [''],
     }),
     eventDate: [''],
     eventPrice: [''],
-    call2action: this.fb.group({
+    call2action: this.formBuilder.group({
       eventType: ['1'],
       eventLink: [''],
     }),
     eventImages: [''],
-    eventMentions: this.fb.array(['']),
+    eventMentions: this.formBuilder.array([]),
   });
 
   public event: HyloEvent;
@@ -62,11 +61,10 @@ export class EditEventComponent implements OnInit {
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public fb: FormBuilder, private eventService: EventService,
+  constructor(public formBuilder: FormBuilder, private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
-              public userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -90,6 +88,7 @@ export class EditEventComponent implements OnInit {
           this.displayDate = new Date(this.event.startDate);
           this.previewUrl = this.event.images;
           this.actions = [this.event.call2action];
+          this.eventForm.controls.eventMentions = this.formBuilder.array(this.event.mentions);
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
