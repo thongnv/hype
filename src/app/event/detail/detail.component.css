@@ -300,7 +300,7 @@ ul.list-pictures-experience li img {
 }
 
 .likes-area {
-  margin-right: 20px;
+  /*margin-right: 20px;*/
   font-size: 14px;
   font-weight: 300;
   line-height: 1;
@@ -396,6 +396,8 @@ ul.list-comments-ago li .avatar-comment-ago {
   display: inline-block;
 }
 
+
+
 .avatar-comment-ago {
   float: left;
   margin-right: 2%;
@@ -409,6 +411,15 @@ ul.list-comments-ago li .avatar-comment-ago {
 
 .likes-area a {
   color: #3b3b3b;
+}
+
+.likes-area a:after {
+  content: ' . ';
+  color: black;
+  font-size: 20px;
+  position: relative;
+  top: -3px;
+  margin: 0 5px;
 }
 
 .reply-area a {
