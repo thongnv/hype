@@ -79,8 +79,12 @@
       <div *ngIf="showMore" class="row option-info-content">
         <div class="input-box">
           <div class="form-group">
-            <label for="event-date">Date & Time</label>
-            <input id="event-date" required formControlName="eventDate" ngui-datetime-picker  />
+            <label for="event-start-date">Start Date / Time</label>
+            <input id="event-start-date" required formControlName="eventStartDate" ngui-datetime-picker  />
+          </div>
+          <div class="form-group">
+            <label for="event-end-date">End Date / Time</label>
+            <input id="event-end-date" required formControlName="eventEndDate" ngui-datetime-picker  />
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -158,8 +162,12 @@
               <span class="info-value">{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>date / time</span></span>
-              <span class="info-value">{{previewData.Date*1000 | date:'d MMMM y'}}</span>
+              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
+              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y'}}</span>
+            </li>
+            <li>
+              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
+              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>

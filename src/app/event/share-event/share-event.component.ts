@@ -27,7 +27,8 @@ export class ShareEventComponent implements OnInit {
       lat: [''],
       lng: [''],
     }),
-    eventDate: [''],
+    eventStartDate: [''],
+    eventEndDate:[''],
     eventPrice: [''],
     call2action: this.fb.group({
       eventType: ['1'],
@@ -190,7 +191,8 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.created = moment(event.eventDate).unix();
+    event.created = moment(event.eventStartDate).unix();
+    event.enddate = moment(event.eventEndDate).unix();
     let data = this.mapEvent(event);
     this.loaderService.show();
     if (!this.submitted) {
@@ -208,7 +210,8 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.Date = moment(event.eventDate).unix();
+    event.startDate = moment(event.eventStartDate).unix();
+    event.endDate = moment(event.eventEndDate).unix();
     this.previewData = event;
     this.initPreview();
   }
@@ -239,7 +242,8 @@ export class ShareEventComponent implements OnInit {
         field_call_to_action_group: event.call2action.eventType,
         field_call_to_action_link: event.call2action.eventLink,
         field_price: event.eventPrice,
-        field_mentioned_by: event.eventMentions
+        field_mentioned_by: event.eventMentions,
+        field_end_date_time:event.enddate
       }]
     };
   }

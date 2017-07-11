@@ -26,7 +26,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public location: Location = {name: '', lat: 0, lng: 0};
   public detail: string = '';
   public category: string = '';
-  public date: number = 0;
+  public startDate: number = 0;
+  public endDate: number = 0;
   public price: number = 0;
   public call2action: Call2Action = {action: '', link: ''};
   public mentions: Icon[] = [];
@@ -74,6 +75,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       this.loaderService.show();
       this.eventService.getEventDetail(this.slugName).subscribe(
         (resp) => {
+          console.log(resp);
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
           this.initSlide(this.images);
@@ -157,7 +159,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.location = event.location;
     this.detail = event.detail;
     this.category = event.category;
-    this.date = event.date;
+    this.startDate = event.startDate;
+    this.endDate = event.endDate;
     this.price = event.price;
     this.call2action = event.call2action;
     this.mentions = event.mentions;

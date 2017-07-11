@@ -29,7 +29,8 @@ export class EventService {
       },
       images: extractImages(data.field_image),
       detail: data.body,
-      date: data.created * 1000,
+      startDate: data.created * 1000,
+      endDate: data.field_event_option.field_end_date_time * 1000,
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
