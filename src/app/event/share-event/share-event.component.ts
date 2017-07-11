@@ -45,6 +45,8 @@ export class ShareEventComponent implements OnInit {
   public showPreview: boolean = false;
   public slides: any[] = [];
   public addImage: boolean = true;
+  public minDate:any;
+  public maxDate:any;
   public types = [
     {value: '1', display: 'Buy Tix'},
     {value: '2', display: 'More Info'}
@@ -86,7 +88,9 @@ export class ShareEventComponent implements OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     // TODO
   }
-
+  public startDateChange(event){
+    this.minDate >= event;
+  }
   public minMax(control: FormControl) {
     return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
       minMax: true
