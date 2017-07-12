@@ -18,7 +18,7 @@ export class MainService {
                      private http: Http) {
   }
 
-  public getArticle(slugName): Observable<Response> {
+  public getArticle(slugName): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
@@ -165,15 +165,4 @@ export class MainService {
         return Observable.throw(new Error(error));
       });
   }
-
-  public getDetail(type:string,slug:string):Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers});
-    return this.http.get(AppSetting.API_ENDPOINT + 'api/v1/'+type+'/' + slug+'?_format=json', options)
-        .map((resp) => resp.json())
-        .catch((error) => {
-          return Observable.throw(new Error(error));
-        });
-  }
-
 }
