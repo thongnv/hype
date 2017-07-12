@@ -12,11 +12,12 @@ import { MainService } from '../services/main.service';
   styleUrls: ['./hyper-search.component.css']
 })
 export class HyperSearchComponent implements OnInit {
-  @Input('group') public group: FormGroup;
-  @Input('description') public description: boolean;
-  @Input('image') public image: boolean;
-  @Output('onMapsChangePlace') public onMapsChangePlace = new EventEmitter<any>();
-  @Output('onHyloChangePlace') public onHyloChangePlace = new EventEmitter<any>();
+  @Input() public group: FormGroup;
+  @Input() public description: boolean;
+  @Input() public image: boolean;
+  @Input() public text: string;
+  @Output() public onMapsChangePlace = new EventEmitter<any>();
+  @Output() public onHyloChangePlace = new EventEmitter<any>();
   @ViewChild('keyword')
   public searchElementRef: ElementRef;
   public searchForm: FormGroup;
@@ -45,7 +46,6 @@ export class HyperSearchComponent implements OnInit {
       this.hideSearchResult = false;
       this.mainService.searchCompany(this.searchToken).subscribe(
         (resp) => {
-          console.log('searchForm ==> resp: ', resp);
           this.result = resp;
           this.hideNoResult = resp.company.length !== 0;
         }

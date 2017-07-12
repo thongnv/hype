@@ -9,7 +9,7 @@
 }
 
 .type-events {
-    padding: 25px 10px 0px;
+    padding: 10px 0px 0px 30px;
     border-bottom: 1px solid #eaeaea;
     display: block;
     float: left;
@@ -23,6 +23,7 @@
     padding-left: 0px;
     display: block;
     float: left;
+    margin-bottom: 8px;
 }
 
 .type-events .type-event-item.active {
@@ -32,6 +33,10 @@
 .type-events .type-event-item span {
     font-size: 12px;
     line-height: 14px;
+    overflow: hidden;
+    width: 5em;
+    display: block;
+    margin-top: 4px;
 }
 
 .type-events .type-event-item {
@@ -40,7 +45,7 @@
     opacity: .4;
     cursor: pointer;
     transition: opacity .3s;
-    margin: 0px 8px 10px;
+    margin: 10px 8px 10px;
 }
 
 .type-events .type-event-item img {
@@ -51,7 +56,7 @@
 }
 
 .type-events .type-event-more {
-    margin-left: 10px;
+    margin-left: 26px;
     margin-top: 15px;
     letter-spacing: 1px;
     height: 40px;

@@ -1,4 +1,4 @@
-<article class="row new-list">
+<article class="row new-list" *ngIf="ready">
   <!--header start-->
   <header>
     <ul>
@@ -18,8 +18,8 @@
         <small class="col-md-12 col-xs-12">An event is an activity tagged to a place</small>
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
-          <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control"
-                 type="text">
+          <input formControlName="eventName" id="event-name" class="form-control"
+                 type="text" [(ngModel)]="event.name">
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
             Name event is required
@@ -28,7 +28,7 @@
         <div class="form-group col-md-12 col-xs-12">
           <label>Details</label>
           <div class="row">
-            <app-tinymce formControlName='eventDetail'></app-tinymce>
+            <app-tinymce formControlName='eventDetail' [(ngModel)]="event.detail"></app-tinymce>
             <small *ngIf="eventForm.get('eventDetail').touched && eventForm.get('eventDetail').hasError('required')"
                    class="text-danger">
               Event detail is required
@@ -40,15 +40,17 @@
           <label>Location / Place</label>
           <app-hyper-search
             (onMapsChangePlace)="onMapsChangePlace($event)"
-            (onHyloChangePlace)="onHyloChangePlace($event)">
-
+            (onHyloChangePlace)="onHyloChangePlace($event)"
+            [text]="event.location.name">
           </app-hyper-search>
         </div>
+
         <div class="form-group list-categories col-md-12 col-xs-12">
           <label for="event-category">Category</label>
-          <select name="" id="event-category" formControlName="eventCategory">
-            <option value="" selected="selected">Select a category</option>
-            <option *ngFor="let cat of categories, let i = index" [value]="cat.tid">{{cat.name}}</option>
+          <select [(ngModel)]="event.category.tid" name="" id="event-category" formControlName="eventCategory">
+            <option *ngFor="let cat of categories, let i = index" [value]="cat.tid">
+              {{cat.name}}
+            </option>
           </select>
           <small *ngIf="eventForm.get('eventCategory').touched && eventForm.get('eventCategory').hasError('required')"
                  class="text-danger">
@@ -57,12 +59,12 @@
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
           <label class="control-label">Images</label>
-          <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
+          <label class="control-label " id="list-img-label" for="listImg" *ngIf="previewUrl.length < 4">
             <i class="fa fa-plus"></i>&nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file'
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="previewUrl == 0" class="text-danger">
+          <small *ngIf="!previewUrl" class="text-danger">
             Event images is required
           </small>
           <div class="list-img-wrap">
@@ -81,13 +83,9 @@
       <div *ngIf="showMore" class="row option-info-content">
         <div class="input-box">
           <div class="form-group">
-            <label for="event-start-date">Start Date / Time</label>
-            <input id="event-start-date" required  [(ngModel)]="minDate" (ngModelChange)="startDateChange($event)" formControlName="eventStartDate" ngui-datetime-picker  date-only="true"/>
-          </div>
-          <div class="form-group">
-            {{eventStartDate}}
-            <label for="event-end-date">End Date / Time</label>
-            <input id="event-end-date" required min-date="minDate" [(ngModel)]="maxDate" formControlName="eventEndDate" ngui-datetime-picker  date-only="true"/>
+            <label for="event-date">Date & Time</label>
+            <input [(ngModel)]="displayDate" id="event-date" required formControlName="eventDate"
+                   ngui-datetime-picker date-only="true"/>
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -95,24 +93,22 @@
                    class="form-control"
                    min="0"
                    max="300"
-                   value="0"
+                   [value]="event.price"
                    type="number"
-                   (change)="onEventPriceChange($event)"
-            >
+                   (change)="onEventPriceChange($event)">
             <span class="dollar-character">$</span>
             <small id="eventPriceErr"
                    class="text-danger">
-
             </small>
           </div>
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
-              <select name="" id="event-type" formControlName="eventType">
-                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+              <select [(ngModel)]="event.call2action.action" name="" id="event-type" formControlName="eventType">
+                <option *ngFor="let action of actions" [value]="action.action">{{action.action}}</option>
               </select>
-              <input placeholder="http://wwww.sistic.com.sg" formControlName="eventLink" id="event-link"
-                     class="form-control" type="text">
+              <input formControlName="eventLink" id="event-link"
+                     class="form-control" type="text" [value]="event.call2action.link">
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
@@ -120,8 +116,8 @@
             <label>Mentioned By</label>
             <div formArrayName="eventMentions">
               <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
-                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
-                       class="form-control" [formControlName]="i">
+                <input type="text" *ngIf="mention.value" [value]="mention.value.url" class="form-control" [formControlName]="i">
+                <input type="text" *ngIf="!mention.value" class="form-control" [formControlName]="i">
               </div>
             </div>
           </div>
@@ -139,7 +135,7 @@
       <div class="form-actions">
         <button type="submit"
                 [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
-          Share
+          Update
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
@@ -167,16 +163,15 @@
               <span class="info-value">{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y'}}</span>
-            </li>
-            <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
+              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>date / time</span></span>
+              <span class="info-value">{{previewData.Date*1000 | date:'d MMMM y'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
+              <span class="info-value">
+                <span *ngIf="previewData.eventPrice">{{previewData.eventPrice}}$</span>
+                <span *ngIf="!previewData.eventPrice">Free</span>
+                <b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
                   <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>

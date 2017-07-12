@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
@@ -9,89 +9,100 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
-import { UserService } from '../../services/user.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { HyloEvent, User } from '../../app.interface';
 
 @Component({
-  selector: 'app-share-event',
-  templateUrl: './share-event.component.html',
-  styleUrls: ['./share-event.component.css']
+  selector: 'app-edit-event',
+  templateUrl: './edit-event.component.html',
+  styleUrls: ['./edit-event.component.css']
 })
+export class EditEventComponent implements OnInit {
 
-export class ShareEventComponent implements OnInit {
-  public eventForm: FormGroup = this.fb.group({
+  public eventForm: FormGroup = this.formBuilder.group({
     eventName: ['', Validators.required],
     eventDetail: ['', Validators.required],
     eventCategory: ['', Validators.required],
-    eventPlace: this.fb.group({
+    eventPlace: this.formBuilder.group({
       place: ['', Validators.required],
       lat: [''],
       lng: [''],
     }),
-    eventStartDate: [''],
-    eventEndDate:[''],
+    eventDate: [''],
     eventPrice: [''],
-    call2action: this.fb.group({
+    call2action: this.formBuilder.group({
       eventType: ['1'],
       eventLink: [''],
     }),
     eventImages: [''],
-    eventMentions: this.fb.array(['']),
+    eventMentions: this.formBuilder.array([]),
   });
-  public user: any;
+
+  public event: HyloEvent;
+  public user: User;
+
   public previewData: any;
   public categories: any[];
   public previewUrl: any[] = [];
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
-  public showMore: boolean = false;
+  public showMore: boolean = true;
   public showPreview: boolean = false;
-  public slides: any[] = [];
-  public addImage: boolean = true;
-  public minDate:any;
-  public maxDate:any;
-  public types = [
-    {value: '1', display: 'Buy Tix'},
-    {value: '2', display: 'More Info'}
-  ];
+  public slides = [];
+  public actions = [];
   public gMapStyles: any;
   public validCaptcha = false;
+  public displayDate: Date;
 
   public submitted: boolean = false;
+  public ready = false;
 
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public fb: FormBuilder, private eventService: EventService,
+  constructor(public formBuilder: FormBuilder, private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
-              public userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   public ngOnInit() {
     this.loaderService.show();
-    this.user = this.localStorageService.get('user');
+    this.user = this.localStorageService.get('user') as User;
     if (!this.user) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
-    this.eventService.getCategoryEvent().subscribe(
-      (response: any) => {
-        this.categories = response.data;
-        this.loaderService.hide();
-      }
-    );
+    this.route.params.subscribe((e) => {
+      this.loaderService.show();
+      this.eventService.getEventDetail(e.slug).subscribe(
+        (resp) => {
+          this.event = EventService.extractEventDetail(resp);
+          this.eventForm.controls.eventPlace.patchValue({
+            place: this.event.location.name,
+            lat: this.event.location.lat,
+            lng: this.event.location.lng,
+          });
+          this.displayDate = new Date(this.event.startDate);
+          this.previewUrl = this.event.images;
+          this.actions = [this.event.call2action];
+          this.eventForm.controls.eventMentions = this.formBuilder.array(this.event.mentions);
+          this.eventService.getCategoryEvent().subscribe(
+            (response) => {
+              this.categories = response.data;
+              this.ready = true;
+            }
+          );
+        },
+        (error) => console.log(error),
+        () => {
+          this.loaderService.hide();
+        }
+      );
+    });
     this.gMapStyles = AppSetting.GMAP_STYLE;
-  }
-  public startDateChange(event){
-    this.minDate >= event;
-  }
-  public minMax(control: FormControl) {
-    return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
-      minMax: true
-    };
   }
 
   public onEventPriceChange(evt) {
@@ -137,9 +148,6 @@ export class ShareEventComponent implements OnInit {
     let imageId = this.previewUrl.indexOf(imageUrl);
     delete this.previewUrl[imageId];
     this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
-    if (this.previewUrl.length < 4) {
-      this.addImage = true;
-    }
   }
 
   public checkCaptcha(captcha) {
@@ -164,12 +172,7 @@ export class ShareEventComponent implements OnInit {
               filename: event.target.files[i].name,
               filemime: event.target.files[i].type
             };
-
             this.previewUrl.push(img);
-
-            if (this.previewUrl.length >= 4) {
-              this.addImage = false;
-            }
           });
         };
         reader[i].readAsDataURL(event.target.files[i]);
@@ -187,14 +190,13 @@ export class ShareEventComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    let event = this.eventForm.value;
-    event.eventImages = this.previewUrl;
-    event.created = moment(event.eventStartDate).unix();
-    event.enddate = moment(event.eventEndDate).unix();
-    let data = mapEvent(event);
-    this.loaderService.show();
     if (!this.submitted) {
       this.submitted = true;
+      let event = this.eventForm.value;
+      event.eventImages = this.previewUrl;
+      event.created = moment(event.eventDate).unix();
+      let data = mapEvent(event);
+      this.loaderService.show();
       this.eventService.postEvent(data).subscribe((response: any) => {
         if (response.status) {
           this.loaderService.hide();
@@ -208,8 +210,7 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.startDate = moment(event.eventStartDate).unix();
-    event.endDate = moment(event.eventEndDate).unix();
+    event.Date = moment(event.eventDate).unix();
     this.previewData = event;
     this.initPreview();
   }

@@ -25,7 +25,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public name: string = '';
   public location: Location = {name: '', lat: 0, lng: 0};
   public detail: string = '';
-  public category: string = '';
+  public category: any;
   public startDate: number = 0;
   public endDate: number = 0;
   public price: number = 0;
