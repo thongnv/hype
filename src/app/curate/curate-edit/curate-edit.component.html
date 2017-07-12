@@ -1,0 +1,150 @@
+<article class="new-list">
+    <!--header start-->
+    <header>
+        <ul>
+            <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">List Info</li>
+            <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
+        </ul>
+    </header>
+    <!--header end-->
+
+    <!--form wrap start-->
+    <div class="form-wrap" [class.hide]="showPreview">
+
+        <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+            <div class="input-box col-xs-12 col-md-6">
+                <h3>Edit a list</h3>
+                <small>A list is a write-up with places or activities tagged to it</small>
+                <div class="form-group">
+                    <label class="control-label" for="list-name">List Name</label>
+                    <input formControlName="listName" id="list-name" class="form-control" type="text" placeholder="E.g Top Ten Things To Do In Punggol This Weekend" value="{{article.title}}">
+                    <small *ngIf="formData.get('listName').touched && formData.get('listName').hasError('required')" class="text-danger">
+                        List Name is required
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Tell us your story</label>
+                    <app-tinymce [(ngModel)]='contentControl' formControlName='listDescription'></app-tinymce>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="list-category">Category</label>
+                    <select aria-placeholder="abc" [(ngModel)]="category" class="form-control" name="" id="list-category" formControlName="listCategory">
+                        <option value="">Select a category</option>
+                        <option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>
+                    </select>
+                    <small *ngIf="formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
+                        List Category is required
+                    </small>
+                </div>
+                <div class="form-group list-img-box">
+                    <label class="control-label">Images</label>
+                    <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
+                        <i class="fa fa-plus"></i> &nbsp;Add images
+                        <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' imageUpload (change)="readUrl($event)" multiple="multiple">
+                    </label>
+                    <small *ngIf="previewUrl == 0" class="text-danger">
+                        List images is required
+                    </small>
+                    <div class="list-img-wrap">
+                        <div *ngFor="let img of article.field_images" class="preview-wrap">
+                            <img [src]="img" />
+                            <a class="fa fa-times delete-btn" (click)="onRemoveImage(img)"></a>
+                        </div>
+                        <div *ngFor="let img of previewUrl" class="preview-wrap">
+                            <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
+                            <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="recaptcha">
+                    <re-captcha (captchaResponse)="checkCaptcha($event)" site_key="6LexpiUTAAAAABQlThPYAyDxBJoTP_QFzwdE4L9p">
+                    </re-captcha>
+                </div>
+
+            </div>
+
+            <div class="image-box col-xs-12 col-md-6">
+                <div formArrayName="listPlaces">
+                    <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
+                        <div class="panel-heading">
+                            <span class="title-number-item"># {{i + 1}}</span>
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
+              </span>
+                        </div>
+                        <div class="panel-body" [formGroupName]="i">
+                            <app-gmap-auto-place [group]="formData.controls.listPlaces.controls[i]" (onMapsChangePlace)="onMapsChangePlace($event, i)" (onHyloChangePlace)="onHyloChangePlace($event, i)" [description]="true" [image]="true">
+                            </app-gmap-auto-place>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-success" (click)="onAddPlace()">
+                        <i class="fa fa-plus"></i>&nbsp;Add Item
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions clearfix">
+                <div class="wrap-full-50">
+                    <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
+                    <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+                </div>
+            </div>
+            <div class="mobile-margin"></div>
+
+        </form>
+
+    </div>
+    <!--form wrap end-->
+
+    <!--list preview wrap start-->
+    <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
+        <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll" style="height: calc(100vh - 150px); overflow: auto; margin-right: -35px;">
+            <div class="carousel-box" id="curate-carousel">
+                <div class="carousel-header">
+                    <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
+                    <strong>{{previewData.listName}}</strong>
+                </div>
+                <div *ngIf="slides" class="carousel">
+                    <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition">
+                        <app-slide-carousel *ngFor="let slide of slides; let index=index">
+                            <div [ngStyle]="{
+              'background-image': 'url(' + slide.image + ')',
+              'background-position': 'center',
+               'height': '400px', 'background-size': 'cover'}">
+
+                            </div>
+                        </app-slide-carousel>
+                    </app-boostrap-carousel>
+                </div>
+                <div class="description text-justify" [innerHTML]="previewData.listDescription">
+                </div>
+            </div>
+            <ng-container *ngIf="previewData.listPlaces">
+                <div *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
+                    <ng-container *ngIf="plc?.keyword">
+                        <div class="place-item-header">
+                            <strong class="pull-left place-index">#{{index+1}}</strong>
+                            <strong class="place-name">{{plc.keyword}}</strong>
+                            <span class="pull-right place-detail-btn">details</span>
+                        </div>
+                        <div class="place-item-img">
+                            <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
+                        </div>
+                        <p class="place-item-description">{{plc.description}}</p>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <div class="mobile-footer"></div>
+        </div>
+        <div class="col-xs-12 map-box hidden-xs hidden-sm">
+            <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index" [hasLabel]="true">
+                </app-custom-marker>
+            </sebm-google-map>
+        </div>
+    </div>
+    <!--list preview wrap end-->
+
+</article>
