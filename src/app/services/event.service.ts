@@ -13,7 +13,7 @@ import { AppSetting } from '../app.setting';
 
 let MOCK_ACTIONS = [
   'Buy Tickets',
-  'Special Order'
+  'More info'
 ];
 
 @Injectable()
