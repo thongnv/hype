@@ -174,7 +174,7 @@
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
               <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
             </li>
-            <li>
+            <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
               <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
@@ -182,7 +182,7 @@
                 </a>
               </span>
             </li>
-            <li>
+            <li *ngIf="previewData.eventMentions?.length > 1">
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li *ngFor="let mention of previewData.eventMentions">
