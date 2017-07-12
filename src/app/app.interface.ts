@@ -128,3 +128,11 @@ export interface Company {
   bookmarked: boolean;
   rated: boolean;
 }
+
+export interface Article {
+  body: string;
+  created: number;
+  field_category: any[];
+  field_images: string[];
+  field_places: any[];
+}
