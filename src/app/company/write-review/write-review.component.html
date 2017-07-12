@@ -3,7 +3,7 @@
     <h3>How is Your Experience With {{company.name}}
       <span class="close-button" (click)="closeForm()">×</span>
     </h3>
-    
+
     <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="390px" clear="both" size="7px"
          [railVisible]="true"
          [railOpacity]="0.1"
@@ -26,7 +26,7 @@
       <div class="form-group list-img-box">
         <label class="control-label " id="list-img-label" for="listImg">
           <i class="fa fa-plus"></i>&nbsp;Add images
-          <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file'
+          <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file' accept="image/*"
                  (change)="readUrl($event)" multiple="multiple">
         </label>
         <div class="list-img-wrap clearfix">

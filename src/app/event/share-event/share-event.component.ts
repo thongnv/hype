@@ -189,8 +189,9 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.created = moment(event.eventStartDate).unix();
-    event.enddate = moment(event.eventEndDate).unix();
+    //check date created and end date event set default date
+    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
     this.loaderService.show();
     if (!this.submitted) {
@@ -208,8 +209,8 @@ export class ShareEventComponent implements OnInit {
   public onPreview() {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    event.startDate = moment(event.eventStartDate).unix();
-    event.endDate = moment(event.eventEndDate).unix();
+    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     this.previewData = event;
     this.initPreview();
   }

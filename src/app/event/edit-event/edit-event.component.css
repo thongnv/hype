@@ -97,7 +97,6 @@ header ul li.active {
   border-radius: 4px;
   background-color: #e8e8e8;
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
-  color: #a29d9d;
   font-size: 14px;
   margin-bottom: 20px;
   float: left;
@@ -176,7 +175,7 @@ header ul li.active {
   margin-bottom: 15px;
 }
 
-.form-group .ngui-datetime-picker-wrapper input {
+input#event-date {
   padding: 10px;
 }
 

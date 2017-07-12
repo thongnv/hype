@@ -86,7 +86,7 @@ h4 {
 
 .left-content-information-event .info-label {
   float: left;
-  text-transform: none;
+  text-transform: capitalize;
   width: 25%;
   margin-right: 40px;
   font-family: Roboto, sans-serif;
@@ -95,6 +95,10 @@ h4 {
   line-height: 20px;
   text-align: left;
   color: #3b3b3b;
+}
+
+.left-content-information-event .mentioned_by{
+  text-transform: none;
 }
 
 .left-content-information-event .info-value {

@@ -9,7 +9,6 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
-import { UserService } from '../../services/user.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { HyloEvent, User } from '../../app.interface';
 
@@ -20,23 +19,23 @@ import { HyloEvent, User } from '../../app.interface';
 })
 export class EditEventComponent implements OnInit {
 
-  public eventForm: FormGroup = this.fb.group({
-    eventName: ['', Validators.required],
-    eventDetail: ['', Validators.required],
-    eventCategory: ['', Validators.required],
-    eventPlace: this.fb.group({
-      place: ['', Validators.required],
+  public eventForm: FormGroup = this.formBuilder.group({
+    name: ['', Validators.required],
+    detail: ['', Validators.required],
+    category: ['', Validators.required],
+    place: this.formBuilder.group({
+      name: ['', Validators.required],
       lat: [''],
       lng: [''],
     }),
-    eventDate: [''],
-    eventPrice: [''],
-    call2action: this.fb.group({
-      eventType: ['1'],
-      eventLink: [''],
+    date: [''],
+    price: [''],
+    call2action: this.formBuilder.group({
+      action: [''],
+      link: [''],
     }),
-    eventImages: [''],
-    eventMentions: this.fb.array(['']),
+    images: [''],
+    mentions: this.formBuilder.array([]),
   });
 
   public event: HyloEvent;
@@ -62,11 +61,11 @@ export class EditEventComponent implements OnInit {
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public fb: FormBuilder, private eventService: EventService,
+  constructor(public formBuilder: FormBuilder,
+              private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
-              public userService: UserService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -82,7 +81,7 @@ export class EditEventComponent implements OnInit {
       this.eventService.getEventDetail(e.slug).subscribe(
         (resp) => {
           this.event = EventService.extractEventDetail(resp);
-          this.eventForm.controls.eventPlace.patchValue({
+          this.eventForm.controls.place.patchValue({
             place: this.event.location.name,
             lat: this.event.location.lat,
             lng: this.event.location.lng,
@@ -90,27 +89,26 @@ export class EditEventComponent implements OnInit {
           this.displayDate = new Date(this.event.startDate);
           this.previewUrl = this.event.images;
           this.actions = [this.event.call2action];
+          this.eventForm.controls.mentions = this.formBuilder.array(this.event.mentions);
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
               this.ready = true;
+              this.loaderService.hide();
             }
           );
         },
-        (error) => console.log(error),
-        () => {
-          this.loaderService.hide();
-        }
+        (error) => console.log(error)
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
-  public onEventPriceChange(evt) {
+  public onPriceChange(evt) {
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price($) is a number between 0-300';
     } else if (evt.target.value.length === 0) {
-      this.eventForm.patchValue({eventPrice: 0});
+      this.eventForm.patchValue({price: 0});
       document.getElementById('eventPriceErr').innerText = '';
     }
     if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
@@ -123,8 +121,8 @@ export class EditEventComponent implements OnInit {
     let geocoder = new google.maps.Geocoder();
     geocoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
-        // set lat long for eventPlace
-        this.eventForm.controls.eventPlace.patchValue({
+        // set lat long for place
+        this.eventForm.controls.place.patchValue({
           place: data.structured_formatting.main_text,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng()
@@ -137,7 +135,7 @@ export class EditEventComponent implements OnInit {
   }
 
   public onHyloChangePlace(data) {
-    this.eventForm.controls.eventPlace.patchValue({
+    this.eventForm.controls.place.patchValue({
       place: data.Title,
       lat: Number(data.Lat),
       lng: Number(data.Long),
@@ -165,7 +163,6 @@ export class EditEventComponent implements OnInit {
         reader[i].onload = (e) => {
           let image = new Image();
           image.src = e.target.result;
-
           this.resizeImage(image, 480, 330, (resizedImage) => {
             let img = {
               url: resizedImage,
@@ -182,7 +179,7 @@ export class EditEventComponent implements OnInit {
   }
 
   public addMention() {
-    const mentions = this.eventForm.get('eventMentions') as FormArray;
+    const mentions = this.eventForm.get('mentions') as FormArray;
     mentions.push(new FormControl());
   }
 
@@ -194,8 +191,8 @@ export class EditEventComponent implements OnInit {
     if (!this.submitted) {
       this.submitted = true;
       let event = this.eventForm.value;
-      event.eventImages = this.previewUrl;
-      event.created = moment(event.eventDate).unix();
+      event.images = this.previewUrl;
+      event.created = moment(event.date).unix();
       let data = mapEvent(event);
       this.loaderService.show();
       this.eventService.postEvent(data).subscribe((response: any) => {
@@ -210,8 +207,8 @@ export class EditEventComponent implements OnInit {
 
   public onPreview() {
     let event = this.eventForm.value;
-    event.eventImages = this.previewUrl;
-    event.Date = moment(event.eventDate).unix();
+    event.images = this.previewUrl;
+    event.Date = moment(event.date).unix();
     this.previewData = event;
     this.initPreview();
   }
@@ -273,21 +270,21 @@ export class EditEventComponent implements OnInit {
 
 function  mapEvent(event) {
   return {
-    title: event.eventName,
-    body: event.eventDetail,
+    title: event.name,
+    body: event.detail,
     created: event.created,
-    field_images: event.eventImages,
-    field_event_category: event.eventCategory,
+    field_images: event.images,
+    field_event_category: event.category,
     field_location_place: [{
-      field_latitude: event.eventPlace.lat,
-      field_longitude: event.eventPlace.lng,
-      field_location_address: event.eventPlace.place
+      field_latitude: event.place.lat,
+      field_longitude: event.place.lng,
+      field_location_address: event.place.place
     }],
     field_event_option: [{
-      field_call_to_action_group: event.call2action.eventType,
-      field_call_to_action_link: event.call2action.eventLink,
-      field_price: event.eventPrice,
-      field_mentioned_by: event.eventMentions
+      field_call_to_action_group: event.call2action.action,
+      field_call_to_action_link: event.call2action.link,
+      field_price: event.price,
+      field_mentioned_by: event.mentions
     }]
   };
 }

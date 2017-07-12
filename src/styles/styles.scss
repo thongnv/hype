@@ -1110,18 +1110,12 @@ body, html {
   }
 
   .filter-events #timeFilter .btn-default {
-    width: 103px;
+    width: 7em;
   }
-  // .filter-events #timeFilter .btn-default.active {
-  //   right: 1px;
-  // }
-
+  
   .filter-events #filters .btn-default {
-    width: 80px;
+    width: 6em;
   }
-  // .filter-events #filters .btn-default.active {
-  //     left: 1px;
-  // }
 
   .daterangepicker .ranges {
     float: right !important;
@@ -1432,6 +1426,17 @@ body, html {
     .showMoreType {
       position: relative;
     }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    .filter-events #timeFilter .btn-default {
+      width: 6em;
+    }
+  
+    .filter-events #filters .btn-default {
+      width: 5em;
+    }
+
   }
 
 }

@@ -335,31 +335,10 @@ export class AppSetting {
   ];
 
   public static NEIGHBOURHOODS = [
-    'Singapore', 'Alexandra', 'Aljunied', 'Amoy Street', 'Ang Mo Kio', 'Balestier', 'Bartley',
-    'Bayfront', 'Beach Road', 'Beauty World', 'Bedok', 'Bedok Reservoir', 'Bencoolen', 'Bishan',
-    'Boat Quay', 'Boon Keng', 'Boon Lay', 'Botanic Gardens', 'Braddell', 'Bras Basah', 'Buangkok',
-    'Bugis', 'Bukit Batok', 'Bukit Gombak', 'Bukit Merah', 'Bukit Panjang', 'Bukit Timah',
-    'Buona Vista', 'Changi', 'Changi Airport', 'China Square Central', 'Chinatown',
-    'Chinese Garden', 'Chip Bee Gardens', 'Choa Chu Kang', 'Circular Road', 'City Hall',
-    'Clarke Quay', 'Clementi', 'Club Street', 'Commonwealth',
-    'Coronation', 'Dakota', 'Dempsey', 'Dhoby Ghaut', 'Dover', 'Downtown', 'Duxton',
-    'East Coast Parkway', 'Esplanade', 'Eunos', 'Everton Park', 'Expo', 'Farrer Park',
-    'Farrer Road', 'Fort Canning', 'Gardens by the Bay', 'Geylang', 'Geylang Bahru',
-    'Great World', 'Haji Lane', 'Harbourfront', 'Hillview', 'Holland Village',
-    'Hougang', 'Jalan Besar', 'Jalan Kayu', 'Jalan Riang', 'Joo Chiat', 'Jurong East',
-    'Jurong West', 'Kaki Bukit', 'Kallang', 'Katong', 'Kembangan', 'Kent Ridge',
-    'Khatib', 'King Albert Park', 'Kovan', 'Labrador', 'Lakeside', 'Lavender',
-    'Little India', 'Lorong Kilat', 'Macpherson', 'Marina Bay', 'Marina Square',
-    'Marine Parade', 'Marymount', 'Maxwell', 'Millenia Walk', 'Mountbatten',
-    'Newton', 'North Bridge Road', 'Novena', 'Old Airport Road', 'One North', 'Orchard',
-    'Orchard Road', 'Outram Park', 'Pasir Panjang', 'Pasir Ris', 'Paya Lebar', 'Portsdown',
-    'Potong Pasir', 'Promenade', 'Punggol', 'Punggol Waterway', 'Queenstown', 'Raffles Place',
-    'Rangoon Road', 'Redhill', 'River Valley', 'Robertson Quay', 'Rochor', 'Seletar', 'Sembawang',
-    'Sengkang', 'Sentosa', 'Serangoon', 'Serangoon Gardens', 'Shenton Way', 'Siglap', 'Simei',
-    'Simpang Bedok', 'Sixth Avenue', 'Somerset', 'Stadium', 'Stevens', 'Tai Seng', 'Tampines',
-    'Tanah Merah', 'Tanglin', 'Tanjong Katong', 'Tanjong Pagar', 'Telok Ayer', 'Telok Blangah',
-    'Thomson', 'Tiong Bahru', 'Toa Payoh', 'Tuas', 'Upper Bukit Timah', 'Upper East Coast Road',
-    'West Coast', 'Woodlands', 'Yio Chu Kang', 'Yishun'];
+    'Singapore', 'Bugis','Bukit Timah','Changi','Chinatown','Clarke Quay',
+    'Dempsey Hill','East Coast','Harbourfront','Holland Village','Joochiat',
+    'Katong','Jurong','Kampong Glam','Little India','Marina Bay','Orchard',
+    'Punggol','Sentosa','Serangoon','Tanjong Pagar','Thomson','Tiong Baru','Toa Payoh'];
 
   public static defaultUser: User = {
     id: 0,

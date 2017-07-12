@@ -56,7 +56,7 @@
 }
 
 .type-events .type-event-more {
-    margin-left: 26px;
+    margin-left: 17px;
     margin-top: 15px;
     letter-spacing: 1px;
     height: 40px;
@@ -323,6 +323,7 @@ button.btn.btn-default.active  {
     line-height: 18px;
     margin-bottom: 14px;
     cursor: pointer;
+    padding-right: 2%;
 }
 
 .information-title .real-title {
@@ -618,7 +619,9 @@ ul.mentioned-item {
     padding: 3px 5px;
     border-radius: 7px;
 }
-
+.comments-item-icon {
+    margin-right: 5%;
+}
 .free-price-button {
     height: 14px;
     font-size: 14px;
@@ -1007,12 +1010,12 @@ ul.mentioned-item {
     }
 
     .filter-events #timeFilter .btn-default {
-        max-width: 70px;
+        max-width: 5em;
         padding: 0px;
     }
 
     .filter-events #filters .btn-default {
-        max-width: 70px;
+        max-width: 4.5em;
     }
 }
 
@@ -1030,4 +1033,6 @@ ul.mentioned-item {
         /*position: absolute;*/
         /*right: 6%;*/
     /*}*/
+
+
 }

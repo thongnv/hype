@@ -112,7 +112,7 @@
             <div class="add-image-area">
               <label class="control-label " id="list-img-label" for="listImg">
                 + Add images
-                <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file'
+                <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file' accept="image/*"
                        (change)="readUrl($event)" multiple="multiple">
               </label>
               <div class="list-img-wrap">
