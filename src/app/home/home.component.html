@@ -168,12 +168,15 @@
                     [zoomControl]="false"
                     [streetViewControl]="true"
                     [styles]="gMapStyles"
+                    (centerChange)="centerChange($event)"
+                    (boundsChange)="boundsChange($event)"
+                    [draggable]="true"
+                    (dragEnd)="markerDragEnd($event)"
             >
                 <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                                      [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
                                      (radiusChange)="markerRadiusChange($event)" [lat]="lat"
                                      (markerClick)="clickedMarker($event)"
-                                     (dragEnd)="markerDragEnd($event)"
                                      [lng]="lng"></gmap-geocode-marker>
 
             </sebm-google-map>

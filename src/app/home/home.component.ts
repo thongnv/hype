@@ -79,6 +79,8 @@ export class HomeComponent implements OnInit {
     public screenHeight:number = 0;
     public circleDraggable:boolean = true;
     private stopped:boolean = false;
+    private zoomChanged:boolean = false;
+    private boundsChangeDefault:any={lat:any,lng:any};
     private params:any = {
         'page': 0,
         'limit': 20,
@@ -90,7 +92,7 @@ export class HomeComponent implements OnInit {
         'when': '',
         'lat': this.lat,
         'long': this.lng,
-        'radius': (this.currentRadius / 1000),
+        'radius': any,
         'price': ''
     };
     private userProfile:any;
@@ -133,6 +135,7 @@ export class HomeComponent implements OnInit {
         this.selectedEventOrder = this.eventOrder[0];
         this.selectedEventFilter = this.eventFilter[0];
         this.selected = 'all';
+
         this.getTrending();
         this.getTrandingCategories();
 
@@ -176,7 +179,7 @@ export class HomeComponent implements OnInit {
                 }
 
                 //index marker Highlight
-                if(this.stopped){
+                if (this.stopped) {
                     return false;
                 }
                 if (paramsUrl[1] == "home" && $("#v-scrollable").length) {
@@ -286,7 +289,7 @@ export class HomeComponent implements OnInit {
         this.getTrending();
     }
 
-    private clearParam(){
+    private clearParam() {
         this.selectedEventFilter = this.eventFilter[0];
         this.markers = [];
         this.events = [];
@@ -306,6 +309,7 @@ export class HomeComponent implements OnInit {
         this.params.order = '';
         this.selected = 'all';
     }
+
     public onSelectEventFilter(filter:any):void {
         this.clearParam();
         this.selectedEventFilter = filter;
@@ -313,16 +317,16 @@ export class HomeComponent implements OnInit {
         let date = new Date();
         if (filter.name == 'today') {
             this.params.date = moment(date).format('YYYY-MM-DD');
-        }else if (filter.name == 'tomorrow') {
+        } else if (filter.name == 'tomorrow') {
             let tomorrow = date.setDate(date.getDate() + 1);
             this.params.date = moment(date).format('YYYY-MM-DD');
-        }else if  (filter.name == 'this week') {
+        } else if (filter.name == 'this week') {
             this.params.weekend = 1;
             this.params.date = '';
-        }else if  (filter.name == 'all') {
+        } else if (filter.name == 'all') {
             this.params.weekend = 0;
             this.params.date = '';
-        } else if  (this.selectedEventOrder.name == 'top 100') {
+        } else if (this.selectedEventOrder.name == 'top 100') {
             this.showCircle = false;
         } else {
             this.showCircle = true;
@@ -343,6 +347,20 @@ export class HomeComponent implements OnInit {
         } else {
             this.showCircle = true;
             this.params.latest = 1;
+
+            let latLngNew = new google.maps.Marker({
+                position: new google.maps.LatLng(this.boundsChangeDefault.lat,this.boundsChangeDefault.lng),
+                draggable: true
+            });
+            this.zoomChanged = true;
+            let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+            });
+            let distance = this.getDistance(latLngNew.getPosition(), mapCenter.getPosition());
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.params.radius = parseInt(distance) / 1000;
         }
         this.selected = 'all';
         this.markers = [];
@@ -417,13 +435,13 @@ export class HomeComponent implements OnInit {
                 this.loadMore = false;
                 this.loaderService.hide();
                 this.smallLoader.hide();
-
+                this.zoomChanged = false;
             }, err=> {
                 this.loadMore = true;
                 this.end_record = true;
-                this.listItems=[];
-                this.events=[];
-                this.total=0;
+                this.listItems = [];
+                this.events = [];
+                this.total = 0;
                 this.loaderService.hide();
                 this.smallLoader.hide();
             })
@@ -444,9 +462,9 @@ export class HomeComponent implements OnInit {
                 this.loaderService.hide();
                 this.smallLoader.hide();
             }, err=> {
-                this.listItems=[];
-                this.events=[];
-                this.total=0;
+                this.listItems = [];
+                this.events = [];
+                this.total = 0;
                 this.loadMore = true;
                 this.end_record = true;
                 this.loaderService.hide();
@@ -559,55 +577,31 @@ export class HomeComponent implements OnInit {
             });
         }
     }
-
-    public markerDragEnd(event) {
-        this.markers = [];
-        this.lat = event.coords.lat;
-        this.lng = event.coords.lng;
-        this.params.lat = event.coords.lat;
-        this.params.long = event.coords.lng;
-        this.smallLoader.show();
-        this.getTrending();
-    }
-
     private passerTrending(geo:any) {
         this.markers = [];
         this.mapsAPILoader.load().then(()=> {
-
-            let mapCenter = new google.maps.Marker({
-                position: new google.maps.LatLng(this.lat, this.lng),
-                draggable: true
-            });
-            let searchCenter = mapCenter.getPosition();
             for (let i = 0; i < geo.length; i++) {
                 for (let item of geo[i]) {
                     let latlng = item.split(',');
-                    let myMarker = new google.maps.Marker({
-                        position: new google.maps.LatLng(latlng[0], latlng[1]),
-                        draggable: true
-                    });
-                    let geometry = google.maps.geometry.spherical.computeDistanceBetween(myMarker.getPosition(), searchCenter);
-
-                    if ((parseInt(geometry) - 100) < this.currentRadius) {
-                        if (i == 0) {
-                            this.markers.push({
-                                lat: parseFloat(latlng[0]),
-                                lng: parseFloat(latlng[1]),
-                                label: '',
-                                opacity: 1,
-                                isOpenInfo: true,
-                                icon: 'assets/icon/icon_pointer.png'
-                            });
-                        } else {
-                            this.markers.push({
-                                lat: parseFloat(latlng[0]),
-                                lng: parseFloat(latlng[1]),
-                                label: '',
-                                opacity: 0.4,
-                                isOpenInfo: false,
-                                icon: 'assets/icon/icon_pointer.png'
-                            });
-                        }
+                    console.log(parseFloat(latlng[0]));
+                    if (i == 0) {
+                        this.markers.push({
+                            lat: parseFloat(latlng[0]),
+                            lng: parseFloat(latlng[1]),
+                            label: '',
+                            opacity: 1,
+                            isOpenInfo: true,
+                            icon: 'assets/icon/icon_pointer.png'
+                        });
+                    } else {
+                        this.markers.push({
+                            lat: parseFloat(latlng[0]),
+                            lng: parseFloat(latlng[1]),
+                            label: '',
+                            opacity: 0.4,
+                            isOpenInfo: false,
+                            icon: 'assets/icon/icon_pointer.png'
+                        });
                     }
                 }
             }
@@ -682,4 +676,58 @@ export class HomeComponent implements OnInit {
 
     }
 
+
+
+    public centerChange(event) {
+        this.lat = event.lat;
+        this.lng = event.lng;
+        this.zoomChanged = false;
+    }
+
+    public boundsChange(event) {
+        this.boundsChangeDefault.lat=event.getNorthEast().lat();
+        this.boundsChangeDefault.lng = event.getNorthEast().lng();
+        if (!this.zoomChanged && this.selectedEventOrder.name != 'top 100') {
+            let latLngNew = new google.maps.Marker({
+                position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+                draggable: true
+            });
+            this.zoomChanged = true;
+            let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+            });
+            let searchCenter = mapCenter.getPosition();
+            let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.params.radius = (parseInt(distance) / 1000);
+            this.smallLoader.show();
+            this.events = [];
+            this.listItems = [];
+            this.markers = [];
+            this.getTrending();
+        }
+
+    }
+
+    private getDistance(p1, p2) {
+        var R = 6378137; // Earth’s mean radius in meter
+        var dLat = this.rad(p2.lat() - p1.lat());
+        var dLong = this.rad(p2.lng() - p1.lng());
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat())) *
+            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var d = R * c;
+        return d;
+    }
+
+    private rad(x) {
+        return x * Math.PI / 180;
+    }
+
+    public markerDragEnd(event){
+        console.log("markerDragEnd",event);
+    }
 }
