@@ -82,12 +82,12 @@
         <div class="input-box">
           <div class="form-group">
             <label for="event-start-date">Start Date / Time</label>
-            <input id="event-start-date" required  [(ngModel)]="minDate" (ngModelChange)="startDateChange($event)" formControlName="eventStartDate" ngui-datetime-picker  date-only="true"/>
+            <input id="event-start-date" required  [(ngModel)]="minDate" (ngModelChange)="startDateChange($event)" formControlName="eventStartDate" ngui-datetime-picker/>
           </div>
           <div class="form-group">
             {{eventStartDate}}
             <label for="event-end-date">End Date / Time</label>
-            <input id="event-end-date" required min-date="minDate" [(ngModel)]="maxDate" formControlName="eventEndDate" ngui-datetime-picker  date-only="true"/>
+            <input id="event-end-date" required min-date="minDate" [(ngModel)]="maxDate" formControlName="eventEndDate" ngui-datetime-picker/>
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
