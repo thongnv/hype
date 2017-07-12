@@ -1007,12 +1007,12 @@ ul.mentioned-item {
     }
 
     .filter-events #timeFilter .btn-default {
-        max-width: 70px;
+        max-width: 5em;
         padding: 0px;
     }
 
     .filter-events #filters .btn-default {
-        max-width: 70px;
+        max-width: 4.5em;
     }
 }
 
@@ -1030,4 +1030,6 @@ ul.mentioned-item {
         /*position: absolute;*/
         /*right: 6%;*/
     /*}*/
+
+
 }
