@@ -156,7 +156,7 @@ type StoreType = {
     HttpModule,
     JsonpModule,
     HtmlToTextModule,
-    TinymceModule.withConfig({}),
+    TinymceModule.withConfig({auto_focus: false}),
     NgbModule,
     ReCaptchaModule,
     CarouseModule,

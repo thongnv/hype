@@ -93,13 +93,12 @@ export class EditEventComponent implements OnInit {
             (response) => {
               this.categories = response.data;
               this.ready = true;
+              this.loaderService.hide();
+
             }
           );
         },
-        (error) => console.log(error),
-        () => {
-          this.loaderService.hide();
-        }
+        (error) => console.log(error)
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;

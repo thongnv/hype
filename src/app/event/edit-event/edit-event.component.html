@@ -19,7 +19,7 @@
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
           <input formControlName="eventName" id="event-name" class="form-control"
-                 type="text" [(ngModel)]="event.name">
+                 type="text" [(ngModel)]="event.name" autofocus>
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
             Name event is required
@@ -84,8 +84,7 @@
         <div class="input-box">
           <div class="form-group">
             <label for="event-date">Date & Time</label>
-            <input [(ngModel)]="displayDate" id="event-date" required formControlName="eventDate"
-                   ngui-datetime-picker date-only="true"/>
+            <input [(ngModel)]="displayDate" id="event-date" required formControlName="eventDate" ngui-datetime-picker/>
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -259,5 +258,8 @@
     </div>
   </div>
   <!--list preview wrap end-->
+
+  <!--Hacking to display correct date format-->
+  <input [(ngModel)]="displayDate" ngui-datetime-picker date-only="true" style="display: none">
 
 </article>
