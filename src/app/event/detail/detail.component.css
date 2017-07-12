@@ -31,10 +31,6 @@ h4 {
   text-transform: capitalize;
 }
 
-.border-bottom {
-  border-bottom: 1px solid #eaeaea;
-}
-
 .margin-bottom-25 {
   margin-bottom: 25px;
 }
@@ -55,6 +51,12 @@ h4 {
 .title-event h3 {
   padding-left: 50px;
   padding-right: 10px;
+  float: left;
+  margin-right: 10px;
+}
+.title-event .icon-edit img {
+  width: 25px;
+  height: auto;
 }
 
 .title-event a.left-arrow {
@@ -636,6 +638,7 @@ ul.list-stars-on-post {
 .memberRate{float: left;}
 
 /*gmap end*/
+
 @media only screen and (max-width: 767px) {
   .wrap-primary-content-event{
     padding: 10px;
@@ -682,18 +685,22 @@ ul.list-stars-on-post {
 
   .title-event a.left-arrow {
     float: left;
-    margin: 7px 20px 0 15px;
+    margin-left: 1em;
     position: absolute;
-    top: -395px;
-    left: 0;
+    top: 0px;
+    left: 10px;
     z-index: 99999999;
     box-shadow: aqua;
   }
+  .title-event h3 {
+    padding-left: 9%;
+  }
+
 
   #eventCarousel{display: none!important;}
-  .title-event h3{
-    padding-left: 15px;
-  }
+  /*.title-event h3{*/
+    /*padding-left: 15px;*/
+  /*}*/
 
   .title-event{
     padding-top: 0px;
@@ -706,7 +713,7 @@ ul.list-stars-on-post {
 
 }
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 568px) {
   .memberRate{display: block; clear: both; float: none}
   .list-stars-review-experience{margin-left: 62px;}
   .memberRate .img-circle{width: 50px;
@@ -815,10 +822,8 @@ ul.list-stars-on-post {
 
   }
 
-  .title-event h3{
-    padding-left: 15px;
-    line-height: 1.5em;
-    font-size: 24px;
+  .title-event h3 {
+    padding-left: 15%;
   }
 
   .list-mention > li  {

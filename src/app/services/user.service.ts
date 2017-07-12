@@ -53,6 +53,9 @@ export class UserService {
       AppSetting.API_ENDPOINT + 'user/logout', options
     )
       .catch((error) => {
+        if (error.status === 403) {
+          this.router.navigate(['login']).then();
+        }
         return Observable.throw(new Error(error));
       });
   }
