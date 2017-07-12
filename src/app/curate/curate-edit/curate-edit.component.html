@@ -41,7 +41,7 @@
                     <label class="control-label">Images</label>
                     <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
                         <i class="fa fa-plus"></i> &nbsp;Add images
-                        <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' imageUpload (change)="readUrl($event)" multiple="multiple">
+                        <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*" imageUpload (change)="readUrl($event)" multiple="multiple">
                     </label>
                     <small *ngIf="previewUrl == 0" class="text-danger">
                         List images is required

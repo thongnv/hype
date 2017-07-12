@@ -61,7 +61,8 @@ export class EditEventComponent implements OnInit {
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public formBuilder: FormBuilder, private eventService: EventService,
+  constructor(public formBuilder: FormBuilder,
+              private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
@@ -162,7 +163,6 @@ export class EditEventComponent implements OnInit {
         reader[i].onload = (e) => {
           let image = new Image();
           image.src = e.target.result;
-
           this.resizeImage(image, 480, 330, (resizedImage) => {
             let img = {
               url: resizedImage,

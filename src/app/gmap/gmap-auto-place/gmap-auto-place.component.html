@@ -78,7 +78,7 @@
   </div>
   <div class="form-group" *ngIf="image">
     <label class="upload-image-label"> <i class="fa fa-plus"></i>&nbsp;Add Images
-      <input type='file' (change)="readUrl($event)">
+      <input type='file' accept="image/*" (change)="readUrl($event)">
     </label>
     <input [hidden]="true" formControlName="image" type='text'>
     <small *ngIf="group.get('image').hasError('required')" class="text-danger">
