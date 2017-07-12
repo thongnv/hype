@@ -19,7 +19,6 @@ export class LogoutComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.loaderService.show();
     this.userService.logout().subscribe(
       (res) => {
         console.log(res);
@@ -29,8 +28,7 @@ export class LogoutComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      },
-      () => this.loaderService.hide()
+      }
     );
   }
 
