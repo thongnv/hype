@@ -62,7 +62,7 @@
             <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="previewUrl == 0" class="text-danger">
+          <small *ngIf="!previewUrl" class="text-danger">
             Event images is required
           </small>
           <div class="list-img-wrap">
@@ -82,12 +82,23 @@
         <div class="input-box">
           <div class="form-group">
             <label for="event-start-date">Start Date / Time</label>
-            <input id="event-start-date" required  [(ngModel)]="minDate" (ngModelChange)="startDateChange($event)" formControlName="eventStartDate" ngui-datetime-picker/>
+            <input id="event-start-date"
+                   required
+                   [(ngModel)]="startDate"
+                   [min-date]="today"
+                   [max-date]="endDate"
+                   formControlName="eventStartDate"
+                   ngui-datetime-picker/>
           </div>
           <div class="form-group">
             {{eventStartDate}}
             <label for="event-end-date">End Date / Time</label>
-            <input id="event-end-date" required min-date="minDate" [(ngModel)]="maxDate" formControlName="eventEndDate" ngui-datetime-picker/>
+            <input id="event-end-date"
+                   required
+                   [min-date]="startDate"
+                   [(ngModel)]="endDate"
+                   formControlName="eventEndDate"
+                   ngui-datetime-picker/>
           </div>
           <div class="form-group">
             <label for="event-price">Price</label>
@@ -168,15 +179,15 @@
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
+              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y HH:mm'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y'}}</span>
+              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y HH:mm'}}</span>
             </li>
             <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
+              <span class="info-value">${{previewData.eventPrice}}<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
                   <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>
@@ -264,5 +275,9 @@
     </div>
   </div>
   <!--list preview wrap end-->
+
+  <!--Hacking to display correct date format-->
+  <input [(ngModel)]="startDate" ngui-datetime-picker time-only="true" style="display: none">
+  <input [(ngModel)]="endDate" ngui-datetime-picker time-only="true" style="display: none">
 
 </article>

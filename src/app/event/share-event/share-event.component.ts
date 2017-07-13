@@ -29,7 +29,7 @@ export class ShareEventComponent implements OnInit {
       lng: [''],
     }),
     eventStartDate: [''],
-    eventEndDate:[''],
+    eventEndDate: [''],
     eventPrice: [''],
     call2action: this.fb.group({
       eventType: ['1'],
@@ -49,8 +49,9 @@ export class ShareEventComponent implements OnInit {
   public showPreview: boolean = false;
   public slides: any[] = [];
   public addImage: boolean = true;
-  public minDate:any;
-  public maxDate:any;
+  public startDate = new Date();
+  public endDate = new Date();
+  public today = new Date();
   public types = [
     {value: '1', display: 'Buy Tix'},
     {value: '2', display: 'More Info'}
@@ -84,14 +85,6 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.gMapStyles = AppSetting.GMAP_STYLE;
-  }
-  public startDateChange(event){
-    this.minDate >= event;
-  }
-  public minMax(control: FormControl) {
-    return parseInt(control.value, 10) >= 0 && parseInt(control.value, 10) <= 300 ? null : {
-      minMax: true
-    };
   }
 
   public onEventPriceChange(evt) {
@@ -270,7 +263,7 @@ export class ShareEventComponent implements OnInit {
   }
 }
 
-function  mapEvent(event) {
+function mapEvent(event) {
   return {
     title: event.eventName,
     body: event.eventDetail,
