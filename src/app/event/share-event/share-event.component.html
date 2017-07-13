@@ -87,7 +87,7 @@
                    required
                    [(ngModel)]="startDate"
                    [min-date]="today"
-                   (ngModelChange)="onStartDateChange()"
+                   (valueChanged)="onStartDateChange()"
                    formControlName="eventStartDate"
                    ngui-datetime-picker/>
           </div>
@@ -123,8 +123,13 @@
               <select name="" id="event-type" formControlName="eventType">
                 <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
               </select>
-              <input placeholder="http://wwww.sistic.com.sg" formControlName="eventLink" id="event-link"
-                     class="form-control" type="text">
+              <input placeholder="http://www.sistic.com.sg"
+                     formControlName="eventLink"
+                     id="event-link"
+                     class="form-control"
+                     type="text"
+                     (change)="onEvenActionLinkChange($event)">
+              <small id="eventLinkErr" class="text-danger"></small>
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
