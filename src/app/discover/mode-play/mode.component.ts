@@ -76,10 +76,13 @@ export class ModeComponent implements OnInit {
     order_dir: 'ASC',
     lat: this.lat,
     long: this.lng,
-    radius: (this.currentRadius / 1000),
+    radius:''
     page: 1,
     limit: 10
   };
+
+  private zoomChanged: boolean = false;
+  private boundsChangeDefault = {lat:'', lng:''};
 
   public sortBy: any;
 
@@ -167,7 +170,6 @@ export class ModeComponent implements OnInit {
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.getCategories(this.filterFromMode.value.filterMode);
-    this.getDataModes();
     this.getFilter();
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -266,6 +268,7 @@ export class ModeComponent implements OnInit {
 
   getDataModes() {
     let params = this.params;
+    console.log(params);
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
@@ -339,7 +342,7 @@ export class ModeComponent implements OnInit {
     });
   }
 
-  markerDragEnd($event) {
+  public markerDragEnd($event) {
     if ($event.coords) {
       console.log('dragEnd', $event);
       //Update center map
@@ -348,7 +351,7 @@ export class ModeComponent implements OnInit {
     }
   }
 
-  markerRadiusChange(event) {
+  public markerRadiusChange(event) {
     let radius = parseInt(event);
     this.currentRadius = radius;
     this.params.radius = (radius / 1000);
@@ -360,7 +363,7 @@ export class ModeComponent implements OnInit {
     this.getDataModes();
   }
 
-  changeType() {
+  public changeType() {
 
     this.params.limit = 20;
     this.params.page = 0;
@@ -380,27 +383,16 @@ export class ModeComponent implements OnInit {
     if (companies) {
       this.currentHighlightedMarker = 0;
       this.mapsAPILoader.load().then(() => {
-
-        let mapCenter = new google.maps.Marker({
-          position: new google.maps.LatLng(this.lat, this.lng),
-          draggable: true
-        });
-        let searchCenter = mapCenter.getPosition();
-
         for (let i = 0; i < companies.length; i++) {
           if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
 
             let lat = companies[i].YP_Address[6].split('/');
             let lng = companies[i].YP_Address[5].split('/');
-
-            let gmarkers = new google.maps.Marker({
-              position: new google.maps.LatLng(parseFloat(lat[1]), parseFloat(lng[1])),
-              draggable: true
-            });
             let distance = companies[i]._dict_;
-            let geometry = google.maps.geometry.spherical.computeDistanceBetween(gmarkers.getPosition(), searchCenter);
-            if (parseInt(geometry) <= this.currentRadius) {
-              companies[i].distance = (distance).toFixed(1);
+
+              if(distance) {
+                companies[i].distance = (distance).toFixed(1);
+              }
               this.items.push(companies[i]);
               if (i == 0) {
                 this.markers.push({
@@ -421,7 +413,6 @@ export class ModeComponent implements OnInit {
                   icon: 'assets/icon/icon_pointer.png'
                 });
               }
-            }
           }
         }
       });
@@ -471,7 +462,7 @@ export class ModeComponent implements OnInit {
 
   }
 
-  filterSubmit() {
+  public filterSubmit() {
     let cuisine = new Array();
     let best = new Array();
     let type = new Array();
@@ -533,7 +524,7 @@ export class ModeComponent implements OnInit {
 
   }
 
-  showAllKind(e) {
+  public showAllKind(e) {
     if (e) {
       this.categories = this.categoriesDraw;
       this.showAll = false;
@@ -585,7 +576,7 @@ export class ModeComponent implements OnInit {
   public showBest: boolean = false;
   public showType: boolean = false;
 
-  showRagePriceFind(e) {
+  public showRagePriceFind(e) {
     if (e) {
       this.showPrice = false;
     } else {
@@ -597,7 +588,7 @@ export class ModeComponent implements OnInit {
     this.showType = false;
   }
 
-  showCuisineFind(e) {
+  public showCuisineFind(e) {
     if (e) {
       this.showCuisine = false;
     } else {
@@ -609,7 +600,7 @@ export class ModeComponent implements OnInit {
     this.showType = false;
   }
 
-  showRateFind(e) {
+  public showRateFind(e) {
     if (e) {
       this.showRate = false;
     } else {
@@ -622,7 +613,7 @@ export class ModeComponent implements OnInit {
     this.showType = false;
   }
 
-  showBestFind(e) {
+  public showBestFind(e) {
     if (e) {
       this.showBest = false;
     } else {
@@ -636,7 +627,7 @@ export class ModeComponent implements OnInit {
 
   }
 
-  showTypeFind(e) {
+  public showTypeFind(e) {
     if (e) {
       this.showType = false;
     } else {
@@ -754,10 +745,10 @@ export class ModeComponent implements OnInit {
 
   private cuisineDraw = [];
 
-  selectCheckBox(event, parent, sub) {
+  public selectCheckBox(event, parent, sub) {
     if (event) {
-      parent.checked = true;
       if (sub) {
+          parent.checked = true;
         console.log(1);
         for (let i = 0; i < parent.sub.length; i++) {
           if (parent.sub[i].name == sub.name) {
@@ -824,7 +815,7 @@ export class ModeComponent implements OnInit {
 
   }
 
-  bestChangeCheckBox(event, item) {
+  public bestChangeCheckBox(event, item) {
     //item.checked != item.checked;
     if (event) {
       item.checked = true;
@@ -835,7 +826,7 @@ export class ModeComponent implements OnInit {
     }
   }
 
-  typeChangeCheckBox(event, item) {
+  public typeChangeCheckBox(event, item) {
     //item.checked != item.checked;
     if (event) {
       item.checked = true;
@@ -843,6 +834,38 @@ export class ModeComponent implements OnInit {
     } else {
       item.checked = false;
       this.type.splice(this.type.length - 1, 1);
+    }
+  }
+
+  public centerChange(event) {
+    this.lat = event.lat;
+    this.lng = event.lng;
+    this.zoomChanged = false;
+  }
+
+  public boundsChange(event) {
+    console.log(event);
+    this.boundsChangeDefault.lat = event.getNorthEast().lat();
+    this.boundsChangeDefault.lng = event.getNorthEast().lng();
+    if (!this.zoomChanged) {
+      let latLngNew = new google.maps.Marker({
+        position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+        draggable: true
+      });
+      this.zoomChanged = true;
+      let mapCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.lat, this.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+      this.params.lat = this.lat;
+      this.params.long = this.lng;
+      this.params.radius = distance / 1000;
+      this.smallLoader.show();
+      this.items = [];
+      this.markers = [];
+      this.getDataModes();
     }
   }
 }
