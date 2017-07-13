@@ -4,7 +4,7 @@ deploy:
     - cd /var/www/angular.hylo
     - git remote -v
     - git checkout staging
-    - git pull
+    - git pull origin staging
     - npm i
     - npm run build:prod
   only:
