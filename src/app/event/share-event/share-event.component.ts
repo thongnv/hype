@@ -31,6 +31,7 @@ export class ShareEventComponent implements OnInit {
     eventStartDate: [''],
     eventEndDate: [''],
     eventPrice: [''],
+    eventOrganized: [''],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
@@ -270,6 +271,7 @@ function mapEvent(event) {
     created: event.created,
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
+    field_organized: event.eventOrganized,
     field_location_place: [{
       field_latitude: event.eventPlace.lat,
       field_longitude: event.eventPlace.lng,

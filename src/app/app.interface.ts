@@ -35,6 +35,7 @@ export interface HyloEvent {
   startDate: number;
   endDate: number;
   price: number;
+  organized:string,
   call2action: Call2Action;
   mentions: Icon[];
   images: Image[];

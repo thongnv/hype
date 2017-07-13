@@ -128,6 +128,15 @@
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
+          <div class="form-group">
+            <label>Event Organized</label>
+            <div class="form-group">
+              <input formControlName="eventOrganized" id="event-organized"
+                     class="form-control"
+                     type="text"
+              >
+            </div>
+          </div>
           <div class="form-group  mention-by-group">
             <label>Mentioned By</label>
             <div formArrayName="eventMentions">
@@ -180,18 +189,23 @@
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y HH:mm'}}</span>
+              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y HH:mm'}}</span>
+              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y'}}</span>
             </li>
             <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">${{previewData.eventPrice}}<b>.</b>
+              <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
                 <a href="{{previewData.call2action.eventLink}}">
                   <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
                 </a>
+              </span>
+            </li>
+            <li *ngIf="previewData.eventOrganized">
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
+              <span class="info-value">{{previewData.eventOrganized}}<b>.</b>
               </span>
             </li>
             <li *ngIf="previewData.eventMentions?.length > 1">

@@ -44,6 +44,11 @@
               </a>
             </span>
             </li>
+            <li *ngIf="organized">
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
+              <span class="info-value">{{organized}}<b>.</b>
+              </span>
+            </li>
             <li>
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
