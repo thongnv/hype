@@ -26,21 +26,32 @@
           <!-- carousel end -->
           <!-- company header start -->
           <div class="company-header">
-            <h3>{{name}}</h3>
-            <div class="rating-star">
-              <rating [(ngModel)]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
-            </div>
-            <div class="google-plus-point">
-              <div class="rating-number">
-                {{rating}}/5
+            <div class="row">
+              <div class="col-lg-6 col-md-12">
+                <h3>{{name}}</h3>
               </div>
-              <div class="google-plus-dropdown-button">
-                <a>
-                  <i class="fa fa-google-plus" aria-hidden="true"></i>
-                  <i class="fa fa-angle-down" aria-hidden="true"></i>
-                </a>
+              <div class="col-lg-3 col-md-6">
+                <div class="rating-star">
+                  <rating [(ngModel)]="rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 head-right">
+                <div class="google-plus-point">
+                  <div class="rating-number">
+                    {{rating}}/5
+                  </div>
+                  <div class="google-plus-dropdown-button">
+                    <a>
+                      <i class="fa fa-google-plus" aria-hidden="true"></i>
+                      <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
+
+
+
             <div class="company-description-wrap" *ngIf="description">
               <div *ngIf="descTruncated">
                 <div class="company-description">{{description | truncate:200 }}</div>
