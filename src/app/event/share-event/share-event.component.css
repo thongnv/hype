@@ -293,7 +293,7 @@ input#event-start-date, #event-end-date {
 .list-preview-wrap .post-experience h4 {
   position: absolute;
   top: 1%;
-  left: 1%;
+  /*left: 1%;*/
   font-size: 18px;
   font-weight: 500;
   line-height: 1;
@@ -358,6 +358,7 @@ input#event-start-date, #event-end-date {
   list-style: none;
   float: left;
   width: 70%;
+  padding-left:25px;
 }
 
 .left-content-information-event > li {
@@ -409,7 +410,11 @@ input#event-start-date, #event-end-date {
 /*text-align: left;*/
 /*color: #3b3b3b;*/
 /*}*/
-
+.left-content-information-event .action {
+  font-size: 16px;
+  color: #ec3d62;
+  font-weight: 500;
+}
 .left-content-information-event > li > span > b {
   position: relative;
   top: -3px;
@@ -516,7 +521,9 @@ span.dollar-character {
   clear: both;
   padding-top: 10px;
 }
-
+.information-event .name-creator{
+  font-size: 16px;
+}
 @media only screen and (min-width: 320px) and (max-width: 374px) {
 
   .input-box h3 {
@@ -638,6 +645,26 @@ span.dollar-character {
     text-align: left;
   }
 
+  p.name-creator {
+    margin: 10px 0;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+    color: #3b3b3b;
+    text-transform: capitalize;
+  }
+
+  p.name-creator a {
+    color: #3b3b3b;
+  }
+
+  p.avg-rating {
+    color: #3b3b3b;
+    font-weight: bold;
+    font-size: 24px;
+  }
+
   .list-preview-wrap .event-title img {
     float: left;
     margin-top: 8px;
@@ -692,7 +719,9 @@ span.dollar-character {
     margin-left: 0;
     padding: 0 15px;
   }
-
+  .list-preview-wrap .event-title{
+    margin:10px;
+  }
   .option-info {
     margin-left: 15px;
   }
