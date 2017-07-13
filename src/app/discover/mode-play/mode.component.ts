@@ -76,7 +76,7 @@ export class ModeComponent implements OnInit {
     order_dir: 'ASC',
     lat: this.lat,
     long: this.lng,
-    radius:'',
+    radius: 0,
     page: 1,
     limit: 10
   };
