@@ -346,21 +346,6 @@ export class HomeComponent implements OnInit {
     this.getTrending();
   }
 
-  public markerRadiusChange(radius) {
-    this.clearParam();
-    this.smallLoader.show();
-    if (this.currentRadius <= radius) {
-      console.log(1);
-      this.mapZoom = 10;
-    } else {
-      console.log(2);
-      this.mapZoom = 15;
-    }
-    this.currentRadius = radius;
-    this.params.radius = (radius / 1000);
-    this.getTrending();
-  }
-
   public showRagePrice() {
     this.showPrice = true;
     this.showDate = false;
