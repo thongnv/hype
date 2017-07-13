@@ -88,6 +88,12 @@ export class ShareEventComponent implements OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
+  public onStartDateChange() {
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
+  }
+
   public onEventPriceChange(evt) {
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price($) is a number between 0-300';
