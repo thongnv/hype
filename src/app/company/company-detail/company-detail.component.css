@@ -469,7 +469,6 @@ article {
   line-height: 1.13;
   text-align: left;
   color: #3b3b3b;
-  max-width: 220px;
   vertical-align: top;
   margin-top: 0;
 }
@@ -500,6 +499,7 @@ article {
   padding: 6px 10px;
   position: relative;
   left: 10px;
+  float: right;
 }
 
 .google-plus-point .rating-number {
@@ -508,12 +508,12 @@ article {
   line-height: 1;
   text-align: center;
   color: #3b3b3b;
-  padding-right: 10px;
+  padding-right: 5px;
   border-right: solid 1px #eaeaea;
 }
 
 .google-plus-point .google-plus-dropdown-button {
-  margin-left: 10px;
+  margin-left: 4px;
 }
 
 .google-plus-dropdown-button .fa-google-plus {
@@ -738,4 +738,10 @@ article {
 @media  only screen and (max-width: 414px)  {
   .info-label i.sprite{display: block; float: left; margin-right: 20px;}
   .info-label >span{display: none;}
+}
+
+@media only screen and (max-width: 1504px) {
+  .company-header .col-lg-6{width: 100%; clear: both;}
+  .company-header .col-lg-3{width: 50%;}
+  .company-header .head-right{float: right;}
 }
