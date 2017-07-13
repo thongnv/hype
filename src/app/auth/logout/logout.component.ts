@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { LoaderService } from '../../helper/loader/loader.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -14,7 +13,6 @@ export class LogoutComponent implements OnInit {
   public constructor(
      private localStorageService: LocalStorageService,
      private userService: UserService,
-     private loaderService: LoaderService,
      private router: Router) {
   }
 
