@@ -12,9 +12,7 @@ a {
   clear: both;
 }
 
-.row {
-  margin-top: 20px;
-}
+.gmap-box{ padding-top: 40px; padding-left: 30px;}
 
 h3 {
   color: #3b3b3b;
@@ -31,6 +29,10 @@ h4 {
   text-transform: capitalize;
 }
 
+.border-bottom {
+  border-bottom: 1px solid #eaeaea;
+}
+
 .margin-bottom-25 {
   margin-bottom: 25px;
 }
@@ -43,6 +45,8 @@ h4 {
   padding-bottom: 35px;
 }
 
+.left-box{border-right: 1px solid #f1f1f1 }
+
 /*title event start*/
 
 .title-event {
@@ -51,12 +55,6 @@ h4 {
 .title-event h3 {
   padding-left: 50px;
   padding-right: 10px;
-  float: left;
-  margin-right: 10px;
-}
-.title-event .icon-edit img {
-  width: 25px;
-  height: auto;
 }
 
 .title-event a.left-arrow {
@@ -85,17 +83,20 @@ h4 {
 .left-content-information-event > li {
   margin-bottom: 30px;
 }
-
-.left-content-information-event .info-label {
+.left-content-information-event .info-label{
   float: left;
   text-transform: capitalize;
-  margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
   text-align: left;
   color: #3b3b3b;
+}
+
+.left-content-information-event .info-label span{
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
 }
 
 .left-content-information-event .mentioned_by{
@@ -149,6 +150,11 @@ h4 {
 }
 .right-creator-information-event {
   float: left;
+}
+
+.right-creator-information-event p ,
+.right-creator-information-event .name-creator{
+  text-align: right;
 }
 
 h4.title-creator {
@@ -345,12 +351,13 @@ ul.list-pictures-experience li img {
 
 .write-comment-area textarea {
   width: 80%;
-  height: 60px;
+  height: 69px;
   margin-top: 0;
   margin-left: 20px;
-  border-radius: 6px;
+  border-radius: 4px;
   background: #e8e8e8;
   padding: 10px;
+  border: 1px solid #ccc;
 }
 
 ul.list-comments-ago {
@@ -478,11 +485,13 @@ ul.list-stars-on-post {
 
 .content-your-post textarea {
   width: 100%;
-  height: 140px;
+  height: 69px;
   margin: 30px 0;
   background: #e8e8e8;
   padding: 15px;
   border-radius: 4px;
+  border: 1px solid #ccc;
+  color: #3b3b3b;
 }
 
 .add-image-area label {
@@ -495,7 +504,13 @@ ul.list-stars-on-post {
 /*post your experience end*/
 
 /*carousel start*/
+.carousel-item img{
+  border-radius: 5px;
+}
 
+.carousel-indicators img{
+  border-radius: 3px;
+}
 .slides {
   list-style: none;
   position: relative;
@@ -629,6 +644,12 @@ ul.list-stars-on-post {
 /*gmap start*/
 .map-location-area {
   margin-top: 60px;
+
+}
+
+.map-location-area .map_inner{
+  border-radius: 5px;
+  border: 1px solid #d8d8d8;
 }
 
 .sebm-google-map-container {
@@ -638,7 +659,6 @@ ul.list-stars-on-post {
 .memberRate{float: left;}
 
 /*gmap end*/
-
 @media only screen and (max-width: 767px) {
   .wrap-primary-content-event{
     padding: 10px;
@@ -685,23 +705,20 @@ ul.list-stars-on-post {
 
   .title-event a.left-arrow {
     float: left;
-    margin-left: 1em;
+    margin: 7px 20px 0 15px;
     position: absolute;
-    top: 0px;
-    left: 10px;
+    top: -395px;
+    left: 0;
     z-index: 99999999;
     box-shadow: aqua;
   }
-  .title-event h3 {
-    padding-left: 9%;
-  }
-
 
   #eventCarousel{display: none!important;}
-  /*.title-event h3{*/
-    /*padding-left: 15px;*/
-  /*}*/
+  .title-event h3{
+    padding-left: 15px;
+  }
 
+  .page-event-row {margin-top: 0;}
   .title-event{
     padding-top: 0px;
   }
@@ -713,7 +730,7 @@ ul.list-stars-on-post {
 
 }
 
-@media only screen and (max-width: 568px) {
+@media only screen and (max-width: 575px) {
   .memberRate{display: block; clear: both; float: none}
   .list-stars-review-experience{margin-left: 62px;}
   .memberRate .img-circle{width: 50px;
@@ -822,8 +839,10 @@ ul.list-stars-on-post {
 
   }
 
-  .title-event h3 {
-    padding-left: 15%;
+  .title-event h3{
+    padding-left: 15px;
+    line-height: 1.5em;
+    font-size: 24px;
   }
 
   .list-mention > li  {
@@ -886,4 +905,9 @@ ul.list-stars-on-post {
   .gmap-box .map-location-area {
     display: block;
   }
+}
+
+@media only screen and (max-height:800px ) {
+  .left-box{border: 0;}
+  .gmap-box{padding: 20px;}
 }
