@@ -194,9 +194,9 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public toggleLikeExperience() {
-    this.liked = !this.liked;
-    this.likeNumber += this.liked ? 1 : -1;
     if (!this.clickedLike) {
+      this.liked = !this.liked;
+      this.likeNumber += this.liked ? 1 : -1;
       this.clickedLike = true;
       this.eventService.toggleLike(this.event.id, this.id, this.liked).subscribe(
         (resp) => {
@@ -204,8 +204,8 @@ export class ExperienceComponent implements Experience, OnInit {
           this.clickedLike = false;
         },
         (error) => {
-          this.liked = !this.liked;
           this.likeNumber -= this.liked ? 1 : -1;
+          this.liked = !this.liked;
           this.clickedLike = false;
           console.log(error);
         }
