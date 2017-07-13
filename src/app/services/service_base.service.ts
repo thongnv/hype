@@ -23,7 +23,7 @@ export class BaseApiService {
     });
     if (params) {
       let p = new URLSearchParams();
-      for (let k of params) {
+      for (let k in params) {
         p.set(k, params[k]);
       }
       options.search = !options.search && p || options.search;

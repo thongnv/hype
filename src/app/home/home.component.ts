@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
   public mapZoom: number = 12;
   public lat: number = 1.359;
   public lng: number = 103.818;
-  public currentRadius: any = 5000;
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
@@ -417,7 +416,7 @@ export class HomeComponent implements OnInit {
     this.params.tid = '';
     this.params.date = '';
     this.params.weekend = '';
-    this.params.radius = (this.currentRadius / 1000);
+    this.params.radius = '';
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
