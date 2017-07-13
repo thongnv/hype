@@ -1,0 +1,12 @@
+deploy:
+  script:
+    - whoami
+    - cd /var/www/angular.hylo
+    - git remote -v
+    - git checkout staging
+    - git pull origin staging
+    - npm i
+    - npm run build:prod
+  only:
+  - staging
+

@@ -54,18 +54,18 @@ import { Router } from '@angular/router';
           <a (click)="toggleLikeExperience()">
             <img *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
             <img *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
+            <span [class.liked]="liked">{{likeNumber}} Likes</span>
           </a>
-          {{likeNumber}} Likes
         </div>
         <div class="comments-area" (click)="onClickFocusMsgInput()">
           <a>
-            <img src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
+            <img class="icon-comment" src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
             {{comments.length}} Comments
           </a>
         </div>
         <div class="report-area">
           <a>
-            <img src="/assets/img/event/detail/icon-report.png" alt="icon-report">
+            <img class="icon-report" src="/assets/img/event/detail/icon-report.png" alt="icon-report">
           </a>
           <a>
             Report
@@ -194,16 +194,18 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public toggleLikeExperience() {
+    this.liked = !this.liked;
+    this.likeNumber += this.liked ? 1 : -1;
     if (!this.clickedLike) {
       this.clickedLike = true;
-      this.eventService.toggleLike(this.event.id, this.id, !this.liked).subscribe(
+      this.eventService.toggleLike(this.event.id, this.id, this.liked).subscribe(
         (resp) => {
           console.log(resp);
-          this.liked = !this.liked;
-          this.likeNumber += this.liked ? 1 : -1;
           this.clickedLike = false;
         },
         (error) => {
+          this.liked = !this.liked;
+          this.likeNumber -= this.liked ? 1 : -1;
           this.clickedLike = false;
           console.log(error);
         }

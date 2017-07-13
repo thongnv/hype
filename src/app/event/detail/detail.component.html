@@ -156,7 +156,7 @@
         <h4 class="title-map-location margin-bottom-25">Location</h4>
         <div class="map_inner">
         <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13" [styles]="gMapStyles">
-          <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng">
+          <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
           </sebm-google-map-marker>
         </sebm-google-map>
         </div>
