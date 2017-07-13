@@ -282,7 +282,7 @@ function mapEvent(event) {
   return {
     title: event.eventName,
     body: event.eventDetail,
-    created: event.created,
+    created: event.startDate,
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
     field_organized: event.eventOrganized,
@@ -295,7 +295,8 @@ function mapEvent(event) {
       field_call_to_action_group: event.call2action.eventType,
       field_call_to_action_link: event.call2action.eventLink,
       field_price: event.eventPrice,
-      field_mentioned_by: event.eventMentions
+      field_mentioned_by: event.eventMentions,
+      field_end_date_time:event.endDate
     }]
   };
 }
