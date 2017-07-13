@@ -197,7 +197,7 @@ export class HomeComponent implements OnInit {
     this.params.tid = '';
     this.params.date = '';
     this.params.weekend = '';
-    this.params.radius = (this.currentRadius / 1000);
+    this.params.radius = 0;
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
