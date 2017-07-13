@@ -9,12 +9,13 @@
       <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit()">
         <div class="form-group col-xs-12 col-lg-12">
           <label for="checkbox">
-            <input id="checkbox" type="checkbox" formControlName="receiveEmail">
+            <input id="checkbox" type="checkbox" formControlName="receiveEmail" (change)="onChange($event)">
             Do you want to receive email notifications from us.
           </label>
         </div>
         <div class="form-actions col-xs-12 col-lg-12">
-          <button class="btn btn-primary setting-btn text-capitalize" type="submit">update</button>
+          <button class="btn btn-primary setting-btn text-capitalize"
+                  type="submit" [disabled]="disabled">update</button>
         </div>
       </form>
     </section>

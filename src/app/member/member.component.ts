@@ -21,6 +21,8 @@ export class MemberComponent implements OnInit {
   public msgContent: string;
   public sub: any;
   public slugName: string;
+  public disabled = true;
+  public acceptNotification: any;
   public ready = false;
 
   constructor(private route: ActivatedRoute,
@@ -46,10 +48,11 @@ export class MemberComponent implements OnInit {
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.currentUser = resp;
-          this.ready = true;
+          this.acceptNotification = this.currentUser.acceptNotification;
           this.settingForm.patchValue({
-            receiveEmail: this.currentUser.acceptNotification
+            receiveEmail: this.acceptNotification
           });
+          this.ready = true;
         },
         (error) => {
           console.log(error);
@@ -61,7 +64,16 @@ export class MemberComponent implements OnInit {
     });
   }
 
+  public onChange(event) {
+    this.msgContent = '';
+    if (this.acceptNotification !== this.settingForm.value.receiveEmail) {
+      this.acceptNotification = this.settingForm.value.receiveEmail;
+      this.disabled = false;
+    }
+  }
+
   public onSubmit(): void {
+    this.disabled = true;
     let data = {
       field_notify_email: this.settingForm.value.receiveEmail
     };
