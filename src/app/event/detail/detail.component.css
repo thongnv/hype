@@ -676,7 +676,9 @@ ul.list-stars-on-post {
 }
 
 .memberRate{float: left;}
-
+.list-img-wrap{
+  overflow: hidden;
+}
 /*gmap end*/
 @media only screen and (max-width: 767px) {
   .wrap-primary-content-event{
