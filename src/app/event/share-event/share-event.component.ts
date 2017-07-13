@@ -106,6 +106,14 @@ export class ShareEventComponent implements OnInit {
     }
   }
 
+  public onEvenActionLinkChange(e) {
+    if (e.target.value.length > 255) {
+      document.getElementById('eventLinkErr').innerText = 'Length of your link must be less than 255';
+    } else {
+      document.getElementById('eventLinkErr').innerText = '';
+    }
+  }
+
   public onMapsChangePlace(data) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder();
