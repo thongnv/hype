@@ -1,23 +1,20 @@
 import {
   Component, OnInit, ViewEncapsulation,
-  HostListener, NgZone, AfterViewInit,
   EventEmitter, Output, Inject
 } from '@angular/core';
 
 import $ from 'jquery';
 import { Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ModeService } from '../../services/mode.service';
-import { GoogleMapsAPIWrapper } from 'angular2-google-maps/core/services/google-maps-api-wrapper';
 import { MapsAPILoader } from 'angular2-google-maps/core/services/maps-api-loader/maps-api-loader';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { Ng2ScrollableDirective } from 'ng2-scrollable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { scrollTo } from 'ng2-utils';
 import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { DOCUMENT } from '@angular/platform-browser';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 declare let google: any;
 
@@ -95,6 +92,7 @@ export class ModeComponent implements OnInit {
                      private route: ActivatedRoute,
                      private router: Router,
                      private location: Location,
+                     private localStorageService: LocalStorageService,
                      @Inject(DOCUMENT) private document: Document) {
 
     this.filterFromMode = this.formBuilder.group({
@@ -561,6 +559,10 @@ export class ModeComponent implements OnInit {
   }
 
   public onLikeEmit(item: any) {
+    if (!this.localStorageService.get('user')) {
+      this.router.navigate(['login']).then();
+      return;
+    }
     item.is_favorite = !item.is_favorite;
     this.modeService.favoritePlace(item.Ids_No).subscribe(
       (resp) => {

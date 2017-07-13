@@ -22,7 +22,6 @@ export class AppSetting {
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';
   public static API_ENDPOINT_TOP = API_ENDPOINT + 'api/v1/top?_format=json';
   public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
-  public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
   public static INSTAGRAM_ACCESS_TOKEN = '5544202380.58b5f2c.fa60c5d58b8443e6a654f966753ad5ba';
   public static FACEBOOK = {
     appId: '289859484806086',
