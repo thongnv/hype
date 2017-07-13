@@ -52,20 +52,20 @@ import { Router } from '@angular/router';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a (click)="toggleLikeExperience()">
-            <img *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
-            <img *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
+            <img class="icon-like" *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
+            <img class="icon-liked" *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
           </a>
           {{likeNumber}} Likes
         </div>
         <div class="comments-area" (click)="onClickFocusMsgInput()">
           <a>
-            <img src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
+            <img class="icon-comment" src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
             {{comments.length}} Comments
           </a>
         </div>
         <div class="report-area">
           <a>
-            <img src="/assets/img/event/detail/icon-report.png" alt="icon-report">
+            <img class="icon-report" src="/assets/img/event/detail/icon-report.png" alt="icon-report">
           </a>
           <a>
             Report
