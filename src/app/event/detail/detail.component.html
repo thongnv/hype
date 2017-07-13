@@ -1,5 +1,5 @@
 <section class="page-event">
-  <div class="row" *ngIf="ready">
+  <div class="row page-event-row" *ngIf="ready">
     <div class="col-lg-6 col-xs-12 left-box">
 
       <!-- title event start -->
@@ -8,6 +8,9 @@
           <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
         </a>
         <h3>{{name}}</h3>
+        <a class="icon-edit" routerLink="edit">
+          <img src="/assets/img/event/detail/icon-edit.png" alt="icon-edit" width="10" height="10" style="display: none;">
+        </a>
       </div>
       <!-- title event end -->
 
@@ -30,16 +33,21 @@
               <span class="info-value">
                 <span *ngIf="price">${{price}}</span>
                 <span *ngIf="!price">Free</span>
-                <b>.</b></span>
+              </span>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-permalink-gray"></i>
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
               </span>
                 <span class="info-value">
               <a href="{{call2action.link}}" target="_blank" class="mention_link">
                 <span class="action">{{call2action.action}}</span>
               </a>
             </span>
+            </li>
+            <li *ngIf="organized">
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
+              <span class="info-value">{{organized}}<b>.</b>
+              </span>
             </li>
             <li>
               <span class="info-label mentioned_by">Mentioned by</span>
@@ -146,10 +154,12 @@
 
       <div class="map-location-area">
         <h4 class="title-map-location margin-bottom-25">Location</h4>
+        <div class="map_inner">
         <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="13" [styles]="gMapStyles">
-          <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng">
+          <sebm-google-map-marker [latitude]="location.lat" [longitude]="location.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
           </sebm-google-map-marker>
         </sebm-google-map>
+        </div>
       </div>
     </div>
   </div>

@@ -22,8 +22,6 @@ export class AppSetting {
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';
   public static API_ENDPOINT_TOP = API_ENDPOINT + 'api/v1/top?_format=json';
   public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
-  public static API_ARTICLE = API_ENDPOINT + 'api/v1/article';
-  public static API_FAVORITE_PLACE = API_ENDPOINT + 'api/v1/favorite/place';
   public static INSTAGRAM_ACCESS_TOKEN = '5544202380.58b5f2c.fa60c5d58b8443e6a654f966753ad5ba';
   public static FACEBOOK = {
     appId: '289859484806086',
@@ -335,10 +333,10 @@ export class AppSetting {
   ];
 
   public static NEIGHBOURHOODS = [
-    'Singapore', 'Bugis','Bukit Timah','Changi','Chinatown','Clarke Quay',
-    'Dempsey Hill','East Coast','Harbourfront','Holland Village','Joochiat',
-    'Katong','Jurong','Kampong Glam','Little India','Marina Bay','Orchard',
-    'Punggol','Sentosa','Serangoon','Tanjong Pagar','Thomson','Tiong Baru','Toa Payoh'];
+    'Singapore', 'Bugis', 'Bukit Timah', 'Changi', 'Chinatown', 'Clarke Quay',
+    'Dempsey Hill', 'East Coast', 'Harbourfront', 'Holland Village', 'Joochiat',
+    'Katong', 'Jurong', 'Kampong Glam', 'Little India', 'Marina Bay', 'Orchard',
+    'Punggol', 'Sentosa', 'Serangoon', 'Tanjong Pagar', 'Thomson', 'Tiong Baru', 'Toa Payoh'];
 
   public static defaultUser: User = {
     id: 0,

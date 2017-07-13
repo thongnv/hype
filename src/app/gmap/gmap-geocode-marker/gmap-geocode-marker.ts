@@ -19,7 +19,6 @@ export class GeocodeMarkerComponent implements OnInit {
     @Output('markerClick') public markerClick = new EventEmitter<any>();
     @Input('showCircle') public showCircle:any;
     @Input('circleDraggable') public circleDraggable:any;
-
     public events:any[];
 
     public constructor(private mapsAPILoader:MapsAPILoader, private ngZone:NgZone) {
@@ -45,6 +44,7 @@ export class GeocodeMarkerComponent implements OnInit {
     }
 
     public markerDragEnd($event) {
+        console.log($event);
         if ($event.coords) {
             this.lat = $event.coords.lat;
             this.lng = $event.coords.lng;

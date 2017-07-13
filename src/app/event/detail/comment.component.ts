@@ -22,7 +22,7 @@ import { EventService } from '../../services/event.service';
         <div class="likes-area">
           <a (click)="toggleLike()">
             <span *ngIf="!liked">Like</span>
-            <span *ngIf="liked">Liked</span>
+            <span *ngIf="liked" class="liked">Liked</span>
           </a>
         </div>
         <div class="reply-area">
