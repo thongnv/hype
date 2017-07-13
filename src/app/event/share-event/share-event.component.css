@@ -376,7 +376,6 @@ input#event-start-date, #event-end-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  width: 25%;
   margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
@@ -384,6 +383,11 @@ input#event-start-date, #event-end-date {
   line-height: 20px;
   text-align: left;
   color: #3b3b3b;
+}
+
+.left-content-information-event .info-label span{
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
 }
 
 .left-content-information-event .info-value {
@@ -667,7 +671,6 @@ span.dollar-character {
   }
 
   .left-content-information-event .info-label {
-    width: 35px;
     margin-right: 0;
     padding-left: 0;
     float: left;

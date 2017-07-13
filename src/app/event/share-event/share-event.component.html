@@ -202,15 +202,23 @@
             </li>
             <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">{{previewData.eventPrice}}$<b>.</b>
-                <a href="{{previewData.call2action.eventLink}}">
-                  <strong>{{previewData.call2action.eventType == '1' ? 'Buy Tix' : 'More Detail'}}</strong>
-                </a>
+              <span class="info-value">
+                <span *ngIf="price">${{previewData.eventPrice}}</span>
+                <span *ngIf="!price">Free</span>
               </span>
+            </li>
+            <li *ngIf="previewData.call2action?.eventLink">
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
+              </span>
+              <span class="info-value">
+              <a href="{{previewData.call2action.eventLink}}" target="_blank" class="mention_link">
+                <span class="action">{{previewData.call2action.eventType == '1' ? 'Buy Tickets' : 'More Detail'}}</span>
+              </a>
+            </span>
             </li>
             <li *ngIf="previewData.eventOrganized">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
-              <span class="info-value">{{previewData.eventOrganized}}<b>.</b>
+              <span class="info-value">{{previewData.eventOrganized}}
               </span>
             </li>
             <li *ngIf="previewData.eventMentions?.length > 1">
@@ -287,7 +295,7 @@
           <p>Location</p>
           <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
                            [zoom]="13" [styles]="gMapStyles">
-            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng">
+            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
             </sebm-google-map-marker>
           </sebm-google-map>
         </div>
