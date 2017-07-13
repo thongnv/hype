@@ -87,7 +87,7 @@
                    required
                    [(ngModel)]="startDate"
                    [min-date]="today"
-                   [max-date]="endDate"
+                   (ngModelChange)="onStartDateChange()"
                    formControlName="eventStartDate"
                    ngui-datetime-picker/>
           </div>
@@ -189,11 +189,11 @@
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y'}}</span>
+              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y HH:mm'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y'}}</span>
+              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y HH:mm'}}</span>
             </li>
             <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
