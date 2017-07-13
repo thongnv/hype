@@ -266,7 +266,7 @@ button.btn.btn-default.active  {
 .wrap-each-items {
     border-bottom: 1px solid #eaeaea;
     width: 100%;
-    padding: 15px;
+    padding: 20px;
 }
 
 .cover-avatar-picture {
@@ -484,17 +484,13 @@ button.btn.btn-default.active  {
 /*
 ====================*/
 .wrap-each-items {
-    /*border-bottom: 1px solid #eaeaea;*/
     width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    overflow: hidden;
 }
 
 .wrap-each-items.article {
     float: left;
-    height: 300px;
     clear: both;
-    margin: 15px 0;
     padding: 0px;
 
 }
