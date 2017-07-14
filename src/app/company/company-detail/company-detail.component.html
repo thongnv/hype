@@ -104,7 +104,7 @@
         <div class="reviews-wrap">
           <div class="experience-top">
             <h4 class="title-experiences-area">Latest Reviews</h4>
-            <a *ngIf="!rated" (click)="showReviewModal()" class="post-your-experience">Write a review</a>
+            <a *ngIf="!rated" (click)="showReviewModal()" class="post-your-experience">Write a Review</a>
           </div>
           <div *ngIf="reviews">
             <company-review *ngFor="let review of reviews.slice(0, 2); let index = index" [review]="review"
@@ -127,7 +127,7 @@
             <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
-          <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a review</a>
+          <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a Review</a>
         </div>
         <company-review *ngFor="let review of reviews; let index = index" [review]="review"
                         (onClickLike)="onLikeReview($event)">
@@ -137,7 +137,7 @@
       <app-write-review [user]="user" [company]="company" [submitted]="showForm"
                         (change)="postReview($event)"></app-write-review>
 
-      <div class="mobile-bottom"></div>
+      <div class="mobile-footer"></div>
     </div>
     <div class="col-md-6 map-fix">
       <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="20" >

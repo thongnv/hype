@@ -71,7 +71,7 @@ h4 {
 /*title event end*/
 
 .wrap-primary-content-event {
-  padding: 0 20px 30px 40px;
+  padding: 0 40px 30px 40px;
 }
 
 /*information event start*/
@@ -331,7 +331,7 @@ ul.list-pictures-experience li img {
 }
 
 .likes-area {
-  /*margin-right: 20px;*/
+  padding-right: 10px;
   font-size: 14px;
   font-weight: 300;
   line-height: 1;
@@ -370,7 +370,7 @@ ul.list-pictures-experience li img {
 }
 
 .write-comment-area textarea {
-  width: 80%;
+  width: calc(100% - 70px);
   height: 69px;
   margin-top: 0;
   margin-left: 20px;
@@ -444,17 +444,12 @@ ul.list-comments-ago li .avatar-comment-ago {
   margin-bottom: -3px;
 }
 
-.likes-area a {
-  color: #3b3b3b;
+.sprite-icon-report {
+  margin-bottom: -5px;
 }
 
-.likes-area:after {
-  content: ' . ';
-  color: black;
-  font-size: 26px;
-  position: relative;
-  top: -3px;
-  margin: 0 5px;
+.likes-area a {
+  color: #3b3b3b;
 }
 
 .reply-area a {
@@ -736,7 +731,7 @@ ul.list-stars-on-post {
   }
 
   .write-comment-area textarea {
-    width: 70%;
+    width: calc(100% - 70px);
   }
 
   h4.title-map-location {
@@ -777,7 +772,7 @@ ul.list-stars-on-post {
   }
 
   .title-event {
-    padding-top: 0px;
+    padding-top: 0;
   }
 
   .page-event .information-experience .img-circle {

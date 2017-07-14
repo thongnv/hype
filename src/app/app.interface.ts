@@ -9,6 +9,7 @@ export interface User extends BaseUser {
   firstName: string;
   lastName: string;
   contactNumber: string;
+  country: string;
   followingNumber: number;
   followerNumber: number;
   email: string;

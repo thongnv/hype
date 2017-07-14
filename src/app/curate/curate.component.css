@@ -21,6 +21,7 @@ ul.list-category li {
     line-height: 1;
     text-align: left;
     color: #3b3b3b;
+    padding: 10px;
 }
 ul.list-category li.active {
     font-size: 14px;
@@ -192,6 +193,14 @@ ul.list-items li a img {
 
   .top-content {
     padding: 15px;
+  }
+
+  ul.list-items li a img{
+    margin-right: 10px;
+    float: left;
+    width: 60px;
+    height: 60px;
+    border-radius: 2px;
   }
 }
 
