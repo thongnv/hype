@@ -140,9 +140,9 @@
       <div class="mobile-bottom"></div>
     </div>
     <div class="col-md-6 map-fix">
-      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12" [styles]="gMapStyles">
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="20" >
         <sebm-google-map-marker [latitude]="location.lat"
-                                [longitude]="location.lng">
+                                [longitude]="location.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
         </sebm-google-map-marker>
       </sebm-google-map>
     </div>

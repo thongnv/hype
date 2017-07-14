@@ -215,6 +215,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.phone = data.phone;
     this.openingHours = data.openingHours;
     this.location = data.location;
+    debugger
     this.instagramUrl = data.instagramUrl;
   }
 
