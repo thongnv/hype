@@ -22,7 +22,7 @@
                  type="text">
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
-            Name event is required
+            Please enter event name.
           </small>
         </div>
         <div class="form-group col-md-12 col-xs-12">
@@ -52,7 +52,7 @@
           </select>
           <small *ngIf="eventForm.get('eventCategory').touched && eventForm.get('eventCategory').hasError('required')"
                  class="text-danger">
-            Event category is required
+            Please select event category.
           </small>
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
