@@ -383,12 +383,14 @@ nouislider.ng2-nouislider {
     text-align: right;
     color: #ec3d62;
 }
+.discover-page{width: calc(100% - 80px)!important; margin: 0}
 
 .discover-page .fixed-right {
     position: fixed;
     right: 0px;
-    width: 47%;
+    width: 50%;
     padding-left: 0px;
+    padding-right: 0px;
 }
 
 .icon-heart {
@@ -668,7 +670,7 @@ select.form-control-static::-ms-expand {
         margin-left: 0px;
     }
     .discover-page .left-box {
-        width: 51.2%;
+        width: 50%;
     }
     .filterCategory {
         margin-left: 0px;

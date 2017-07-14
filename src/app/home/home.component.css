@@ -235,10 +235,14 @@ button.btn.btn-default.active  {
 /*}*/
 
 /*gmap*/
+.home-page{
+  width: calc(100% - 80px);
+  margin: 0px;
+}
 .home-page .fixed-right {
     position: fixed;
     right: 0px;
-    width: 47%;
+    width: 50%;
     padding: 0px;
     border-left: solid 1px #d6d6d6;
 }
