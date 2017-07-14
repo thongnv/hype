@@ -35,7 +35,7 @@ export class AuthComponent implements OnInit {
     const loginOptions: LoginOptions = {
       enable_profile_selector: true,
       return_scopes: true,
-      scope: 'public_profile,user_friends,email,pages_show_list, friends'
+      scope: 'public_profile,user_friends,email,pages_show_list'
     };
     this.facebookService.login(loginOptions).then(
       (loginRes: LoginResponse) => {
