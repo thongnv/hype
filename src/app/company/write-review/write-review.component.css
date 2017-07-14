@@ -50,7 +50,7 @@
   background-color: #2a6be1;
   font-family: Roboto, sans-serif;
   font-size: 14px;
-  line-height: 30px;
+  line-height: 34px;
   text-align: center;
   color: #ffffff;
   width: 100%;
@@ -108,6 +108,7 @@ ngb-rating {
   font-size: 16px;
   color: #ec3d62;
   width: auto;
+  font-weight: 500;
 }
 .form-group.list-img-box label i {
   color: #ec3d62;
