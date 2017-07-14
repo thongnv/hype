@@ -161,7 +161,7 @@
             <div class="avatar">
               <div class="badge">#{{index +1}}</div>
               <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
-              <app-place-image [name]="item.name" [width]="100" [height]="100">
+              <app-place-image [routerLink]="['/company',item.Company_Slug]" [name]="item.name" [width]="100" [height]="100">
               </app-place-image>
               <div (click)="onLikeEmit(item)" class="heart-icon">
                 <i [class.sprite-favorite-selected]="item.is_favorite" class="sprite-icon sprite sprite-favorite"></i>
