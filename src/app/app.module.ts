@@ -56,7 +56,7 @@ import { ProfileService } from './services/profile.service';
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
 
 // pipes
-import { MyArray } from './shared/num-to-array.pipe';
+import { Num2Array } from './shared/num-to-array.pipe';
 import { CurateListPipe } from './shared/curate-list.pipe';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
 import { FavoritePipe } from './shared/favorite.pipe';
@@ -121,7 +121,7 @@ type StoreType = {
     GmapClustererDirective,
     ShareEventComponent,
     EditEventComponent,
-    MyArray,
+    Num2Array,
     CurateListPipe,
     TripleSlidePipe,
     CurateListPipe,

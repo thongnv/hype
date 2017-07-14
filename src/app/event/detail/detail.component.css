@@ -12,7 +12,10 @@ a {
   clear: both;
 }
 
-.gmap-box{ padding-top: 30px; padding-left: 30px;}
+.gmap-box {
+  padding-top: 30px;
+  padding-left: 30px;
+}
 
 h3 {
   color: #3b3b3b;
@@ -45,13 +48,16 @@ h4 {
   padding-bottom: 35px;
 }
 
-.left-box{border-right: 1px solid #f1f1f1 }
+.left-box {
+  border-right: 1px solid #f1f1f1
+}
 
 /*title event start*/
 
 .title-event {
   padding: 15px 0 30px;
 }
+
 .title-event h3 {
   padding-left: 50px;
   padding-right: 10px;
@@ -83,7 +89,8 @@ h4 {
 .left-content-information-event > li {
   margin-bottom: 30px;
 }
-.left-content-information-event .info-label{
+
+.left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
   font-family: Roboto, sans-serif;
@@ -94,12 +101,12 @@ h4 {
   color: #3b3b3b;
 }
 
-.left-content-information-event .info-label span{
+.left-content-information-event .info-label span {
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
 
-.left-content-information-event .mentioned_by{
+.left-content-information-event .mentioned_by {
   text-transform: none;
 }
 
@@ -145,16 +152,18 @@ h4 {
   border: 1px solid #e6e6e6;
   padding: 5px;
 }
+
 .list-mention > li > a > img {
   width: 16px;
   height: 16px;
 }
+
 .right-creator-information-event {
   float: left;
 }
 
-.right-creator-information-event p ,
-.right-creator-information-event .name-creator{
+.right-creator-information-event p,
+.right-creator-information-event .name-creator {
   text-align: right;
 }
 
@@ -215,6 +224,7 @@ p.avg-rating {
 .liked {
   color: #5052ea;
 }
+
 /*information event end*/
 
 /*detail event start*/
@@ -234,6 +244,7 @@ p.avg-rating {
 .experiences-area {
   position: relative;
 }
+
 a.post-your-experience {
   position: absolute;
   top: 4%;
@@ -310,9 +321,11 @@ ul.list-pictures-experience li img {
 .likes-comments-experience-area {
   padding-top: 20px;
 }
+
 .likes-comments-experience-area div {
   display: inline-block;
 }
+
 .experiences-area {
   padding: 25px 0;
 }
@@ -426,6 +439,11 @@ ul.list-comments-ago li .avatar-comment-ago {
   margin-right: 2%;
 }
 
+.sprite {
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
 .likes-area a {
   color: #3b3b3b;
 }
@@ -456,12 +474,12 @@ span.count-comments {
   margin-right: 30px;
 }
 
-a.more{
+a.more {
   font-size: 26px;
   font-weight: 500;
 }
 
-a.more:hover{
+a.more:hover {
   color: #ec3d62;
 }
 
@@ -510,9 +528,15 @@ ul.list-stars-on-post {
   color: #3b3b3b;
 }
 
-.icon-like, .icon-liked,.icon-comment{width: 21px; height: 20px;}
-.icon-report{ width: 16px; height: 16px;}
+.icon-like, .icon-liked, .icon-comment {
+  width: 21px;
+  height: 20px;
+}
 
+.icon-report {
+  width: 16px;
+  height: 16px;
+}
 
 .add-image-area label {
   font-size: 16px;
@@ -525,13 +549,14 @@ ul.list-stars-on-post {
 /*post your experience end*/
 
 /*carousel start*/
-.carousel-item img{
+.carousel-item img {
   border-radius: 5px;
 }
 
-.carousel-indicators img{
+.carousel-indicators img {
   border-radius: 3px;
 }
+
 .slides {
   list-style: none;
   position: relative;
@@ -648,12 +673,13 @@ ul.list-stars-on-post {
   background: no-repeat center;
   background-size: cover;
 }
+
 .carousel-indicators > div:last-child {
   margin-right: 0;
 }
 
 .carousel-indicators > .active {
-  border: solid 1px  #ec3d62;
+  border: solid 1px #ec3d62;
 }
 
 .carousel-control.right {
@@ -668,7 +694,7 @@ ul.list-stars-on-post {
 
 }
 
-.map-location-area .map_inner{
+.map-location-area .map_inner {
   border-radius: 5px;
   border: 1px solid #d8d8d8;
 }
@@ -677,13 +703,17 @@ ul.list-stars-on-post {
   height: 282px;
 }
 
-.memberRate{float: left;}
-.list-img-wrap{
+.memberRate {
+  float: left;
+}
+
+.list-img-wrap {
   overflow: hidden;
 }
+
 /*gmap end*/
 @media only screen and (max-width: 767px) {
-  .wrap-primary-content-event{
+  .wrap-primary-content-event {
     padding: 10px;
   }
 
@@ -691,40 +721,37 @@ ul.list-stars-on-post {
     width: 21%;
   }
 
-  ul.list-pictures-experience li{
+  ul.list-pictures-experience li {
     margin-bottom: 10px;
 
   }
 
-  ul.list-pictures-experience li div{
+  ul.list-pictures-experience li div {
 
   }
 
-
-
-
-  ul.list-comments-ago li{
+  ul.list-comments-ago li {
     margin-left: 10px;
     margin-bottom: 10px;
   }
 
-  .write-comment-area textarea{
+  .write-comment-area textarea {
     width: 70%;
   }
 
-  h4.title-map-location{
+  h4.title-map-location {
     padding-left: 10px;
-    font-size: 18px!important;
+    font-size: 18px !important;
   }
 
-  .page-event>div.row{
+  .page-event > div.row {
     display: flex;
     flex-direction: column-reverse;
     margin-top: 0;
   }
 
-  .page-event .map-location-area{
-    display: none!important;
+  .page-event .map-location-area {
+    display: none !important;
   }
 
   .title-event a.left-arrow {
@@ -737,30 +764,46 @@ ul.list-stars-on-post {
     box-shadow: aqua;
   }
 
-  #eventCarousel{display: none!important;}
-  .title-event h3{
+  #eventCarousel {
+    display: none !important;
+  }
+
+  .title-event h3 {
     padding-left: 15px;
   }
 
-  .page-event-row {margin-top: 0;}
-  .title-event{
+  .page-event-row {
+    margin-top: 0;
+  }
+
+  .title-event {
     padding-top: 0px;
   }
 
-  .page-event .information-experience .img-circle{
+  .page-event .information-experience .img-circle {
     width: 50px;
-    width: 50px;
+    height: 50px;
   }
 
 }
 
 @media only screen and (max-width: 575px) {
-  .memberRate{display: block; clear: both; float: none}
-  .list-stars-review-experience{margin-left: 62px;}
-  .memberRate .img-circle{width: 50px;
-    height:50px;}
+  .memberRate {
+    display: block;
+    clear: both;
+    float: none
+  }
 
-  h4.title-experiences-area{
+  .list-stars-review-experience {
+    margin-left: 62px;
+  }
+
+  .memberRate .img-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  h4.title-experiences-area {
     font-size: 15px;
     padding-left: 0;
   }
@@ -768,40 +811,42 @@ ul.list-stars-on-post {
   h4.title-experiences-area {
     padding-left: 0;
   }
-  a.post-your-experience  {
+
+  a.post-your-experience {
     position: absolute;
     top: -1px;
-    right: 0%;
+    right: 0;
     color: #ec3d62;
     text-transform: capitalize;
     font-size: 14px;
   }
 
+  .memberRate .content-info-experience {
+    margin: 0 12px
+  }
 
-  .memberRate .content-info-experience{ margin: 0px 12px}
-
-  .right-creator-information-event{
-    float: none!important;
+  .right-creator-information-event {
+    float: none !important;
     position: relative;
     margin-bottom: 20px;
   }
 
-  .information-event{
-      display: flex;
-      flex-direction: column-reverse;
+  .information-event {
+    display: flex;
+    flex-direction: column-reverse;
   }
 
-  .right-creator-information-event .avatar-creator{
+  .right-creator-information-event .avatar-creator {
     float: left;
     margin: 10px;
   }
 
-  .right-creator-information-event .avatar-creator img{
+  .right-creator-information-event .avatar-creator img {
     width: 40px;
-    height:40px;
+    height: 40px;
   }
 
-  .right-creator-information-event .title-creator{
+  .right-creator-information-event .title-creator {
     width: calc(100% - 65px);
     float: right;
     text-align: left;
@@ -810,7 +855,7 @@ ul.list-stars-on-post {
 
   }
 
-  .right-creator-information-event .name-creator{
+  .right-creator-information-event .name-creator {
     width: calc(100% - 65px);
     float: right;
     text-align: left;
@@ -819,22 +864,24 @@ ul.list-stars-on-post {
     font-size: 20px;
   }
 
-  .right-creator-information-event .avg-rating{
-     position: absolute;
-    top: 10px; right: 10px;
+  .right-creator-information-event .avg-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     text-align: left;
     font-size: 28px;
   }
 
-  .left-content-information-event .info-label{
-      width: 35px;
+  .left-content-information-event .info-label {
+    width: 35px;
     margin-right: 0;
   }
-  .left-content-information-event .info-label>span{
-      display: none;
+
+  .left-content-information-event .info-label > span {
+    display: none;
   }
 
-  .left-content-information-event .info-value{
+  .left-content-information-event .info-value {
     padding-left: 40px;
   }
 
@@ -842,96 +889,106 @@ ul.list-stars-on-post {
     margin-bottom: 10px;
   }
 
-  .left-content-information-event{
+  .left-content-information-event {
     list-style: none;
     float: left;
     width: 75%;
     margin-left: 20px;
   }
 
-  .left-content-information-event .mentioned_by{
+  .left-content-information-event .mentioned_by {
     display: block;
     width: 100%;
     text-transform: uppercase;
     float: none;
   }
 
-  .list-mention{
+  .list-mention {
     list-style: none;
     padding-left: 0;
     margin-top: 15px;
 
   }
 
-  .title-event h3{
+  .title-event h3 {
     padding-left: 15px;
     line-height: 1.5em;
     font-size: 24px;
   }
 
-  .list-mention > li  {
+  .list-mention > li {
     float: none;
     margin-right: 16px;
     display: inline-block;
   }
 
-  .title-detail-event{
+  .title-detail-event {
     text-transform: uppercase;
   }
 
   .write-your-comment,
-  .detail-event{
+  .detail-event {
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  h4.title-experiences-area{
+  h4.title-experiences-area {
     text-transform: uppercase;
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  .experiences-area{
+  .experiences-area {
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  .mention_link .sprite{
+  .mention_link .sprite {
     display: inline-block;
     margin: 0 10px;
   }
 
-  .info-label i.sprite{display: block;}
+  .info-label i.sprite {
+    display: block;
+  }
 
-  .post-your-experience{
-     padding-left: 20px;
-     padding-right: 20px;
+  .post-your-experience {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
-@media  only screen and(max-width: 374px) {
-  a.post-your-experience{
+@media only screen and(max-width: 374px) {
+  a.post-your-experience {
     position: inherit;
     top: inherit;
-    right:inherit;
+    right: inherit;
   }
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .page-event .row {
     display: flex;
     flex-direction: column-reverse;
   }
+
   .gmap-box .map-location-area {
     display: none;
   }
 }
+
 @media only screen and (min-width: 1200px) {
   .gmap-box .map-location-area {
     display: block;
   }
 }
 
-@media only screen and (max-width:800px ) {
-  .left-box{border: 0;}
-  .gmap-box{padding: 20px;}
+@media only screen and (max-width: 800px ) {
+  .left-box {
+    border: 0;
+  }
+
+  .gmap-box {
+    padding: 20px;
+  }
 }
