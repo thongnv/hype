@@ -44,11 +44,12 @@ export class AuthComponent implements OnInit {
           (resp: any) => {
             let data = resp.current_user;
             let user: User = {
-              id: <number> data.uid,
-              firstName: <string> data.field_first_name,
-              lastName: <string> data.field_last_name,
+              id: data.uid,
+              firstName: data.field_first_name,
+              lastName: data.field_last_name,
               name: data.field_first_name + ' ' + data.field_last_name,
               contactNumber: '',
+              country: '',
               followingNumber: 0,
               followerNumber: 0,
               email: '',

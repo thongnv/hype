@@ -80,6 +80,7 @@ export class UserService {
           firstName: data.field_first_name,
           lastName: data.field_last_name,
           contactNumber: data.field_contact_number,
+          country: data.field_country,
           followingNumber: data.follow.following,
           followerNumber: data.follow.follower,
           email: data.email,
