@@ -76,15 +76,23 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       this.loaderService.show();
       this.eventService.getEventDetail(this.slugName).subscribe(
         (resp) => {
-          console.log(resp);
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
           this.initSlide(this.images);
           this.ready = true;
+
         },
         (error) => console.log(error),
         () => {
           this.loaderService.hide();
+          //focus comment element
+          if(e.notification=='comment'){
+            let interval = window.setInterval(()=>{
+              const element = document.getElementById('createComment').scrollIntoView();
+              window.clearInterval(interval);
+              document.getElementById('createComment').removeAttribute('id');
+            },200);
+          }
         }
       );
     });
