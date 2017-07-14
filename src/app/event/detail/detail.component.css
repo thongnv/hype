@@ -289,6 +289,8 @@ p.detail-info-experience {
   line-height: 30px;
   text-align: left;
   color: #3b3b3b;
+  width: 100%;
+  word-wrap: break-word;
 }
 
 ul.list-pictures-experience {
