@@ -24,7 +24,7 @@ import {CurateEditComponent} from "./curate-edit/curate-edit.component";
 
     TruncateModule,
     MomentModule,
-    TinymceModule.withConfig({}),
+    TinymceModule.withConfig({auto_focus: false}),
     ReCaptchaModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',

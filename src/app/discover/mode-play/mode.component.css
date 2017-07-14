@@ -159,7 +159,9 @@
     color: #3b3b3b;
 }
 
-
+#btnHeadFilter > label:hover {
+  opacity: 1;
+}
 
 .left-box {
     padding-right: 0px;
