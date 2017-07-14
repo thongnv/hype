@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { BaseUser, HyloComment } from '../../app.interface';
 import { EventService } from '../../services/event.service';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
@@ -48,7 +50,9 @@ export class CommentComponent implements HyloComment, OnInit {
   public liked: boolean;
   public clickedLike = false;
 
-  constructor(private eventService: EventService) {
+  constructor(private localStorageService: LocalStorageService,
+              private eventService: EventService,
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -62,6 +66,10 @@ export class CommentComponent implements HyloComment, OnInit {
   }
 
   public toggleLike() {
+    if (!this.localStorageService.get('user')) {
+      this.router.navigate(['login']).then();
+      return;
+    }
     if (!this.clickedLike) {
       this.clickedLike = true;
       this.eventService.toggleLike(this.pid, this.id, !this.liked).subscribe(
