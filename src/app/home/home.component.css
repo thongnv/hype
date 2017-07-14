@@ -941,7 +941,7 @@ ul.mentioned-item {
 */
 @media only screen and (max-width: 420px) {
     .filter-events #timeFilter .btn-default {
-        min-width: 46px;
+        min-width: 40px;
     }
 
     #filters{
@@ -949,7 +949,7 @@ ul.mentioned-item {
     }
 
     .filter-events #filters .btn-default {
-        max-width: 60px;
+        /*max-width: 60px;*/
     }
 
     .filter-events #timeFilter .btn-default {
@@ -1012,7 +1012,7 @@ ul.mentioned-item {
     }
 
     .filter-events #filters .btn-default {
-        max-width: 45px;
+        /*max-width: 45px;*/
     }
 
     button.btn.btn-default.active {
@@ -1025,7 +1025,7 @@ ul.mentioned-item {
         max-width: 80px;
     }
     .filter-events #filters .btn-default {
-        max-width: 70px;
+        /*max-width: 70px;*/
     }
 }
 

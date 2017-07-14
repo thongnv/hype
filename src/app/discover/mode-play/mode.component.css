@@ -247,9 +247,8 @@ ul.itemSort li a i {
     position: absolute;
     z-index: 9;
     border-radius: 10px;
-    top: -8px;
-    left: -12px;
-    /*width: 34px;*/
+    top: 5px;
+    left: -5px;
     height: 34px;
     background-color: #5052ea;
     padding-top: 10px;
@@ -263,6 +262,7 @@ ul.itemSort li a i {
 .items {
     padding: 7px;
     border-bottom: 1px solid #d1dadf;
+    position: relative;
 }
 
 .item-content {

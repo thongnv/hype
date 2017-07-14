@@ -104,8 +104,12 @@ export class NavbarComponent implements OnInit {
       notif.viewed = 'true';
     });
     this.notifications.unread = 0;
+    if(this.notifications.unread > 0){
+      this.set.loadingInProgress =true;
+    }
     this.mainService.updateNotifications('all', null).subscribe((resp) => {
       console.log('resp', resp);
+      this.set.loadingInProgress =false;
     });
   }
 
@@ -116,10 +120,9 @@ export class NavbarComponent implements OnInit {
     } else {
       this.notifications.unread = 0;
     }
-
     this.mainService.updateNotifications('any', item.mid).subscribe((resp) => {
-      console.log(resp);
-      this.router.navigate([item.link]).then();
+
+      this.router.navigate([item.link,{notification:item.code}]).then();
     });
   }
 
