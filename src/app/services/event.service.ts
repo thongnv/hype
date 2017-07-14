@@ -31,7 +31,7 @@ export class EventService {
       detail: data.body,
       startDate: data.created * 1000,
       endDate: data.field_event_option.field_end_date_time * 1000,
-      organized:data.field_organized,
+      organized: data.field_organized,
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
@@ -52,9 +52,10 @@ export class EventService {
   }
 
   private defaultHeaders = new Headers({
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'X-CSRF-Token': this._localStorageService.get('csrf_token')});
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'X-CSRF-Token': this._localStorageService.get('csrf_token')
+  });
 
   constructor(private _localStorageService: LocalStorageService,
               private _http: Http, private router: Router) {
@@ -66,9 +67,9 @@ export class EventService {
     return this._http.get(
       AppSetting.API_ENDPOINT + 'api/v1/event/' + slugName + '?_format=json', options
     )
-    .map((res: Response) => {
-      return res.json();
-    })
+      .map((res: Response) => {
+        return res.json();
+      })
       .catch((error: any) => {
         if (error.status === 404) {
           this.router.navigate(['404'], {skipLocationChange: true}).then();
@@ -88,9 +89,9 @@ export class EventService {
       data,
       options
     )
-    .map((res: Response) => {
-      return res.json();
-    })
+      .map((res: Response) => {
+        return res.json();
+      })
       .catch((error: any) => {
         if (error.status === 404) {
           this.router.navigate(['404'], {skipLocationChange: true}).then();
@@ -99,7 +100,7 @@ export class EventService {
           this.router.navigate(['500'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public getCategoryEvent(): Observable<any> {
@@ -108,9 +109,9 @@ export class EventService {
     return this._http.get(
       AppSetting.API_CATEGORIES_EVENT, options
     )
-    .map((res: Response) => {
-      return res.json();
-    })
+      .map((res: Response) => {
+        return res.json();
+      })
       .catch((error: any) => {
         if (error.status === 404) {
           this.router.navigate(['404'], {skipLocationChange: true}).then();
@@ -119,7 +120,7 @@ export class EventService {
           this.router.navigate(['500'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public postExperience(eventSlug: string, data): Observable<Experience> {
@@ -129,30 +130,30 @@ export class EventService {
       AppSetting.API_ENDPOINT + 'api/v1/comment/' + eventSlug,
       JSON.stringify(data), options
     )
-    .map((res: Response) => {
-      let resData = res.json().data;
-      return {
-        id: resData.cid,
-        author: {
-          avatar: resData.author_avatar,
-          name: resData.author_name,
-          slug: '',
-        },
-        text: resData.comment_body,
-        likeNumber: 0,
-        liked: false,
-        comments: [],
-        rating: resData.rating,
-        date: resData.created * 1000,
-        images: extractImages(resData.comment_images)
-      };
-    })
+      .map((res: Response) => {
+        let resData = res.json().data;
+        return {
+          id: resData.cid,
+          author: {
+            avatar: resData.author_avatar,
+            name: resData.author_name,
+            slug: '',
+          },
+          text: resData.comment_body,
+          likeNumber: 0,
+          liked: false,
+          comments: [],
+          rating: resData.rating,
+          date: resData.created * 1000,
+          images: extractImages(resData.comment_images)
+        };
+      })
       .catch((error: any) => {
         if (error.status === 403) {
           this.router.navigate(['login'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public postComment(eventSlug: string, data): Observable<HyloComment> {
@@ -163,29 +164,29 @@ export class EventService {
       JSON.stringify(data),
       options
     )
-    .map((res: Response) => {
-      let d = res.json().data;
-      return {
-        id: d.cid,
-        pid: d.pid,
-        author: {
-          name: d.author_name,
-          avatar: d.author_avatar,
-          slug: '',
-          isAnonymous: false
-        },
-        text: d.comment_body,
-        likeNumber: 0,
-        liked: false,
-        replies: []
-      };
-    })
+      .map((res: Response) => {
+        let d = res.json().data;
+        return {
+          id: d.cid,
+          pid: d.pid,
+          author: {
+            name: d.author_name,
+            avatar: d.author_avatar,
+            slug: '',
+            isAnonymous: false
+          },
+          text: d.comment_body,
+          likeNumber: 0,
+          liked: false,
+          replies: []
+        };
+      })
       .catch((error: any) => {
         if (error.status === 403) {
           this.router.navigate(['login'], {skipLocationChange: true}).then();
         }
         return Observable.throw(new Error(error));
-    });
+      });
   }
 
   public toggleLike(nid, cid, like): Observable<Response> {

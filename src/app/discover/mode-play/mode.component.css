@@ -408,8 +408,7 @@ nouislider.ng2-nouislider {
     width: 80px;
 }
 
-.itemSort li {
-    width: 115px;
+.itemSort li {   
     text-align: center;
 }
 

@@ -53,6 +53,7 @@ export class CurateNewComponent implements OnInit {
 
   public ngOnInit() {
     this.loaderService.show();
+    document.getElementById('list-name').focus();
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {

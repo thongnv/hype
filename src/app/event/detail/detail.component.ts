@@ -33,7 +33,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public mentions: Icon[] = [];
   public images: Image[] = [];
   public rating: number = 0;
-  public organized:string ='';
+  public organized: string = '';
   public experiences: Experience[] = [];
   public user = AppSetting.defaultUser;
   public NextPhotoInterval: number = 5000;

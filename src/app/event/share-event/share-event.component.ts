@@ -76,6 +76,7 @@ export class ShareEventComponent implements OnInit {
   public ngOnInit() {
     this.loaderService.show();
     this.user = this.localStorageService.get('user');
+    document.getElementById('event-name').focus();
     if (!this.user) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
