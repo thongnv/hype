@@ -782,7 +782,7 @@ ul.list-stars-on-post {
 
   .page-event .information-experience .img-circle {
     width: 50px;
-    width: 50px;
+    height: 50px;
   }
 
 }
@@ -815,14 +815,14 @@ ul.list-stars-on-post {
   a.post-your-experience {
     position: absolute;
     top: -1px;
-    right: 0%;
+    right: 0;
     color: #ec3d62;
     text-transform: capitalize;
     font-size: 14px;
   }
 
   .memberRate .content-info-experience {
-    margin: 0px 12px
+    margin: 0 12px
   }
 
   .right-creator-information-event {
