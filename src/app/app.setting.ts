@@ -347,6 +347,7 @@ export class AppSetting {
     firstName: '',
     lastName: '',
     contactNumber: '',
+    country: '',
     followingNumber: 0,
     followerNumber: 0,
     email: '',

@@ -158,7 +158,14 @@
 #filters {
     /*margin-left: 25px;*/
     float: right;
+   width: 30%;
+   max-width:200px;
 }
+
+#filters .btn{width:50%;}
+
+#timeFilter{width:66.7%}
+#timeFilter .btn{width:25%}
 
 button.btn.btn-default.active  {
     font-size: 14px;
@@ -1044,9 +1051,7 @@ ul.mentioned-item {
         padding: 0px;
     }
 
-    .filter-events #filters .btn-default {
-        max-width: 4.5em;
-    }
+
 }
 
 @media only screen and (min-width: 1200px) {
