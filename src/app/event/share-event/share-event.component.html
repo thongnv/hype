@@ -112,10 +112,6 @@
                    (change)="onEventPriceChange($event)"
             >
             <span class="dollar-character">$</span>
-            <small id="eventPriceErr"
-                   class="text-danger">
-
-            </small>
           </div>
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
@@ -135,7 +131,7 @@
           </div>
           <div class="form-group">
             <label>Event Organized</label>
-            <div class="form-group">
+            <div >
               <input formControlName="eventOrganized" id="event-organized"
                      class="form-control"
                      type="text"
@@ -145,7 +141,7 @@
           <div class="form-group  mention-by-group">
             <label>Mentioned by</label>
             <div formArrayName="eventMentions">
-              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
+              <div  *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
                 <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
                        class="form-control" [formControlName]="i">
               </div>
@@ -169,7 +165,7 @@
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
-      <div class="mobile-margin"></div>
+      <div class="mobile-footer"></div>
     </form>
   </div>
   <!--form wrap end-->

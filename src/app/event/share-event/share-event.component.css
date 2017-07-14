@@ -170,6 +170,7 @@ header ul li.active {
   color: #a29d9d;
   font-size: 14px;
   border: none;
+  text-indent: 10px;
 }
 
 .option-info {
@@ -195,7 +196,6 @@ input#event-start-date, #event-end-date {
 .form-actions {
   margin-left: 25px;
   margin-right: 25px;
-  padding-top: 40px;
 }
 
 .form-actions button {
