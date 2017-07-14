@@ -159,6 +159,8 @@
     color: #3b3b3b;
 }
 
+
+
 .left-box {
     padding-right: 0px;
 }
@@ -203,6 +205,8 @@ ul.itemSort li a {
     text-align: right;
     color: #3b3b3b;
 }
+
+.form-control-static{margin-left: -3px;}
 
 ul.itemSort li a i {
     font-size: 23px;
@@ -258,7 +262,7 @@ ul.itemSort li a i {
 }
 
 .items {
-    padding: 10px;
+    padding: 7px;
     border-bottom: 1px solid #d1dadf;
 }
 
@@ -413,10 +417,6 @@ nouislider.ng2-nouislider {
 
 .itemSort li {
     text-align: center;
-}
-
-.showTab li {
-    width: 120px;
 }
 
 .itemSort li a:hover {
