@@ -129,7 +129,7 @@ export class FavoriteComponent implements OnInit {
         } else {
           this.alertType = 'danger';
         }
-        this.msgContent = response.message;
+        this.msgContent = item.title + ' has been removed from your favorites';
         this.smallLoader.hide();
       }
     );
@@ -153,7 +153,7 @@ export class FavoriteComponent implements OnInit {
         } else {
           this.alertType = 'danger';
         }
-        this.msgContent = response.message;
+        this.msgContent = item.title + ' has been removed from your favorites';
         this.smallLoader.hide();
       }
     );
@@ -176,7 +176,7 @@ export class FavoriteComponent implements OnInit {
       } else {
         this.alertType = 'danger';
       }
-      this.msgContent = response.message;
+      this.msgContent = item.company_name + ' has been removed from your favorites.';
       this.smallLoader.hide();
     });
   }

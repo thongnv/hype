@@ -264,26 +264,23 @@ export class HomeComponent implements OnInit {
     let user = this.localStorageService.get('user');
     if (!user) {
       this.route.navigate(['login'], {skipLocationChange: true}).then();
-    } else {
-      let param = {
-        slug: item.alias
-      };
-      this.smallLoader.show();
-      this.homeService.likeEvent(param).map((res) => res.json()).subscribe((res) => {
-        this.loaderService.hide();
-        this.alertType = 'success';
-        this.msgContent = res.message;
-      }, (err) => {
-        if (err.status === 403) {
-          this.loaderService.hide();
-          this.route.navigate(['login']).then();
-        } else {
-          this.smallLoader.hide();
-          this.alertType = 'error';
-          this.msgContent = 'Sorry, bookmark error please try again';
-        }
-      });
+      return;
     }
+    let param = {
+      slug: item.alias
+    };
+    this.smallLoader.show();
+    this.homeService.likeEvent(param).map((res) => res.json()).subscribe((res) => {
+      console.log(res);
+      this.loaderService.hide();
+    }, (err) => {
+      if (err.status === 403) {
+        this.loaderService.hide();
+        this.route.navigate(['login']).then();
+      } else {
+        this.smallLoader.hide();
+      }
+    });
   }
 
   public clickedMarker(markerId, horizontal) {
