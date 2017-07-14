@@ -62,7 +62,7 @@
                      id="v{{i}}">
                     <div *ngIf="item.type=='event'">
                         <div class="avatar-profile">
-                            <div class="cover-avatar-picture"></div>
+                            <div class="cover-avatar-picture" [routerLink]="[item.alias]"></div>
                             <a class="avatar-picture">
                                 <img [src]="item.field_images[0]" width="140"
                                                            height="140">
@@ -143,7 +143,7 @@
                                 <i class="icon-sm" [class.icon-heart]="!item.user_bookmark"
                                    [class.icon-heart-selected]="item.user_bookmark" aria-hidden="true"></i>
                             </div>
-                            <div class="list-item-overlay"></div>
+                            <div class="list-item-overlay" [routerLink]="[item.alias]"></div>
                             <img *ngIf="item.field_images.length" [src]="item.field_images[0]" width="100%"
                                  height="300">
                             <div class="caption">
