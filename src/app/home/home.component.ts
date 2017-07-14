@@ -624,7 +624,6 @@ export class HomeComponent implements OnInit {
   private getEvents(params) {
     this.homeService.getEvents(params).map((response) => response.json()).subscribe(
       (response) => {
-        console.log(this.events);
         if (this.loadMore) {
           this.events = this.events.concat(response.data);
         } else {
@@ -641,8 +640,6 @@ export class HomeComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.events = [];
-        this.total = 0;
         this.loadMore = true;
         this.endRecord = true;
         this.loaderService.hide();
