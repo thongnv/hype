@@ -1212,7 +1212,12 @@ body, html {
     max-width: 300px;
   }
   //END Notifications
-
+  .btn-primary{
+    background: #2a6be1;
+  }
+  .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover{
+    background: #2a6be1;
+  }
   //responsive
   @media only screen and(max-width: 374px) {
     .mobile-footer {
