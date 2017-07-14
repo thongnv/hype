@@ -746,73 +746,71 @@ export class ModeComponent implements OnInit {
   private cuisineDraw = [];
 
   public selectCheckBox(event, parent, sub) {
-    if (event) {
-      if (sub) {
-          parent.checked = true;
-        console.log(1);
-        for (let i = 0; i < parent.sub.length; i++) {
-          if (parent.sub[i].name == sub.name) {
-            parent.sub[i].checked = true;
+      if(sub && event){
+          if(parent.sub.length > 0){
+              for(let i = 0; i < parent.sub.length; i ++){
+                  if(parent.sub[i].name == sub.name){
+                      parent.sub[i].checked=1;
+                  }
+              }
           }
-        }
-        this.cuisineDraw.push(parent);
-      } else {
-        console.log(2);
-        if (parent.sub) {
-          for (let i = 0; i < parent.sub.length; i++) {
-            parent.sub[i].checked = true;
+          parent.checked = 1;
+          if(this.cuisineDraw.length > 0){
+              let existArr=$.grep(this.cuisineDraw, function(obj) {
+                  return obj.name == parent.name;
+              });
+              if(existArr.length ==0){
+                  this.cuisineDraw.push(parent);
+              }
+          }else {
+              this.cuisineDraw.push(parent);
           }
-        } else {
-          parent.checked = true;
-        }
-        this.cuisineDraw.push(parent);
       }
-    } else {
-      if (sub) {
-        console.log(3);
-        if (parent.sub) {
-          for (let i = 0; i < parent.sub.length; i++) {
-            if (parent.sub[i].name == sub.name) {
-              parent.sub[i].checked = false;
-            }
+      if(event && !sub){
+          parent.checked =1;
+          if(parent.sub){
+              for(let i = 0 ;i < parent.sub.length; i ++){
+                  parent.sub[i].checked=1;
+              }
           }
-        } else {
-          parent.checked = false;
-        }
-        this.cuisineDraw = this.cuisineDraw.filter(function (el) {
-          return el.name !== parent.name;
-        });
+          this.cuisineDraw.push(parent);
+      }
+      if(!event && parent && !sub){
+          for(let i = 0 ;i < parent.sub.length; i ++){
+              parent.sub[i].checked=0;
+          }
+          parent.checked =0;
+          this.cuisineDraw = this.cuisineDraw.filter((el)=>{
+              return el.name !== parent.name;
+          })
+      }
+      if(!event && parent && sub){
+          for(let i = 0 ; i < parent.sub.length; i ++){
+              if(parent.sub[i].name == sub.name){
+                  parent.sub[i].checked=0;
+              }
+          }
 
-      } else {
-        console.log(4);
-        if (parent.sub) {
-          for (let i = 0; i < parent.sub.length; i++) {
-            parent.sub[i].checked = false;
-          }
-        } else {
-          parent.checked = false;
-        }
-        this.cuisineDraw = this.cuisineDraw.filter(function (el) {
-          return el.name !== parent.name;
-        });
       }
-    }
-    let totalCuisine = [];
-    this.cuisine = this.cuisineDraw;
-    if (this.cuisine) {
-      for (let j = 0; j < this.cuisine.length; j++) {
-        totalCuisine.push(this.cuisine[j].name);
-        if (this.cuisine[j].sub) {
-          for (let i = 0; i < this.cuisine[j].sub.length; i++) {
-            if (this.cuisine[j].sub[i].checked) {
-              totalCuisine.push(this.cuisine[j].sub[i].name);
-            }
-          }
-        }
-      }
-    }
-    this.totalCuisine = totalCuisine.length;
 
+      let totalCuisine = [];
+      this.cuisine = this.cuisineDraw;
+      if (this.cuisine) {
+          for (let j = 0; j < this.cuisine.length; j++) {
+              if(this.cuisine[j].checked){
+                  totalCuisine.push(this.cuisine[j].name);
+                  if (this.cuisine[j].sub) {
+                      for (let i = 0; i < this.cuisine[j].sub.length; i++) {
+                          if (this.cuisine[j].sub[i].checked) {
+                              totalCuisine.push(this.cuisine[j].sub[i].name);
+                          }
+                      }
+                  }
+              }
+
+          }
+      }
+      this.totalCuisine = totalCuisine.length;
   }
 
   public bestChangeCheckBox(event, item) {
