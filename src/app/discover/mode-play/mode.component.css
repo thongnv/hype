@@ -584,7 +584,9 @@ select.form-control-static::-ms-expand {
 }
 .btn-filter-block .btn{color: #3b3b3b; opacity: 0.5; font-size: 16px;}
 .btn-filter-block .active{opacity: 1;}
-
+#v-scrollable .item-content h3.pointer:hover{
+    color: rgba(236, 61, 98, 0.5);
+}
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
         width: auto;

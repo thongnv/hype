@@ -773,7 +773,9 @@ ul.mentioned-item {
        display: block;
        margin-bottom: 20px;
 }
-
+#v-scrollable .information-title:hover{
+    color: rgba(236, 61, 98, 0.5);
+}
 .mentioned-popup-wrap{ display: block; position: relative; bottom: 20px; height:50px; }
 
 @media only screen and (max-width: 544px) {
