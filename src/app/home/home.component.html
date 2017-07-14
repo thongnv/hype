@@ -63,9 +63,8 @@
                     <div *ngIf="item.type=='event'">
                         <div class="avatar-profile">
                             <div class="cover-avatar-picture" [routerLink]="[item.alias]"></div>
-                            <a class="avatar-picture">
-                                <img [src]="item.field_images[0]" width="140"
-                                                           height="140">
+                            <a class="avatar-picture" [routerLink]="[item.alias]">
+                                <img [src]="item.field_images[0]" width="140" height="140">
                             </a>
                             <div class="date-month">{{item.created| amFromUnix | date:'MMM'}}</div>
                             <div class="date-number">{{item.created| amFromUnix | date:'dd'}}</div>

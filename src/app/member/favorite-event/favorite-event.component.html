@@ -1,6 +1,6 @@
 <div class="wrap-each-items" *ngIf="item" [id]="item.nid">
   <div *ngIf="isCurrentUser" class="close-button text-right icon-times" (click)="onDeleteEmit(item)">&times;</div>
-  <div class="avatar-profile">
+  <div class="avatar-profile" [routerLink]="[item.slug]">
     <div class="img-layer"></div>
     <div class="fav-item-image">
       <img [src]="item.field_image" width="100" height="100">

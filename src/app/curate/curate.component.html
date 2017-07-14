@@ -37,7 +37,7 @@
         <h4 class="head">What's news</h4>
         <div *ngIf="latestArticles" class="row wrap-post-news">
           <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
-            <div class="image-post-news">
+            <div class="image-post-news" [routerLink]="[art.alias]">
               <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
             </div>
             <div class="new-info">
