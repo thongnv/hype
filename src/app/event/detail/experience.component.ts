@@ -5,6 +5,7 @@ import { HyloComment, Experience, BaseUser, Image } from '../../app.interface';
 import { EventDetailComponent } from './detail.component';
 import { EventService } from '../../services/event.service';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'event-experience',
@@ -128,6 +129,7 @@ export class ExperienceComponent implements Experience, OnInit {
   constructor(private eventService: EventService,
               private event: EventDetailComponent,
               public sanitizer: DomSanitizer,
+              private localStorageService: LocalStorageService,
               private router: Router) {
   }
 
@@ -194,6 +196,10 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public toggleLikeExperience() {
+    if (!this.localStorageService.get('user')) {
+      this.router.navigate(['login']).then();
+      return;
+    }
     console.log('clicked: ', this.clickedLike);
     if (!this.clickedLike) {
       this.liked = !this.liked;
