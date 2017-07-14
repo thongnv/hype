@@ -66,7 +66,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
         </div>
         <div class="report-area">
           <a>
-            <img class="icon-report" src="/assets/img/event/detail/icon-report.png" alt="icon-report">
+            <i class="sprite sprite-icon-report"></i>
           </a>
           <a>
             Report
