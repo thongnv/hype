@@ -420,8 +420,6 @@ button.btn.btn-default.active  {
 .list-item {
     float: left;
     height: 300px;
-    opacity: 0.6;
-    background-image: linear-gradient(145deg, #0e0f63, #5052ea);
     position: relative;
 }
 
@@ -672,8 +670,6 @@ ul.mentioned-item {
 .list-item {
     float: left;
     height: 300px;
-    opacity: 0.6;
-    background-image: linear-gradient(145deg, #0e0f63, #5052ea);
     position: relative;
     width: 100%;
 }
