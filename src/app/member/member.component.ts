@@ -80,14 +80,15 @@ export class MemberComponent implements OnInit {
     this.userService.setProfile(this.user, data).subscribe(
       (resp) => {
         if (resp.status) {
+          this.msgContent = 'Your profile has been successfully updated.';
           this.alertType = 'success';
           this.settingForm.patchValue({
             receiveEmail: data.field_notify_email
           });
         } else {
           this.alertType = 'danger';
+          this.msgContent = resp.message;
         }
-        this.msgContent = 'Your profile has been successfully updated.';
       },
       (error) => console.log(error)
     );
