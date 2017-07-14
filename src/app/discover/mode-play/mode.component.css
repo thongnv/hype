@@ -194,7 +194,7 @@ ul.itemSort li a {
     border: none;
     background: transparent;
     font-family: Roboto;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     line-height: 1;
     text-align: right;
@@ -566,6 +566,9 @@ select.form-control-static::-ms-expand {
     color: #ec3d62;
     font-size: 18px;
 }
+
+.btn-filter-block .btn{color: #3b3b3b; opacity: 0.5; font-size: 16px;}
+.btn-filter-block .active{opacity: 1;}
 
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {

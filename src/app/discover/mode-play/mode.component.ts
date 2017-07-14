@@ -76,7 +76,7 @@ export class ModeComponent implements OnInit {
     order_dir: 'ASC',
     lat: this.lat,
     long: this.lng,
-    radius:''
+    radius: 0,
     page: 1,
     limit: 10
   };
@@ -371,7 +371,7 @@ export class ModeComponent implements OnInit {
     this.items = [];
 
     this.params.type = this.filterFromMode.value.filterMode;
-    this.params.kind = '';
+    //this.params.kind = '';
     this.smallLoader.show();
     this.getCategories(this.filterFromMode.value.filterMode);
     this.getDataModes();
@@ -861,7 +861,7 @@ export class ModeComponent implements OnInit {
       let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = distance / 1000;
+      this.params.radius = Math.round(distance / 1000);
       this.smallLoader.show();
       this.items = [];
       this.markers = [];

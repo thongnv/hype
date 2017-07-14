@@ -143,8 +143,9 @@
     border: none;
     box-shadow: none;
     z-index: 999;
-    top: 9px;
+    top: 8px;
     right: 9px;
+    background-color: transparent;
 }
 .wrap-search-input .search-icon:focus {
     outline: none;
@@ -183,14 +184,14 @@
     ul#list-events-location-address {
         min-height: 270px;
     }
-} 
+}
 @media screen and (min-width: 667px) {
     ul#list-events-location-address {
         min-height: 220px;
     }
-} 
+}
 @media screen and (min-width: 736px) {
     ul#list-events-location-address {
         min-height: 180px;
     }
-} 
+}

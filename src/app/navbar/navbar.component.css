@@ -64,6 +64,7 @@
 .nav-indicator {
     margin: 13px 10px;
     padding-left: 30px;
+    background-position: 0 -1809px;
 }
 .add-event-button .sprite-icon-add {
     margin-top: 20px;
