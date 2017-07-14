@@ -104,6 +104,7 @@
 .filterCategory {
     border-bottom: 1px solid rgba(205, 205, 205, 0.5);
     margin-left: 15px;
+    text-align:center;
 }
 
 .filterCategory .btn-filter-block label:focus,
@@ -133,6 +134,8 @@
     min-width: 45px;
     max-width: 80px;
     font-size: 12px;
+    display: inline-block;
+    float: inherit;
 }
 
 .filterCategory .btn-filter-block label.more {
@@ -408,7 +411,7 @@ nouislider.ng2-nouislider {
     width: 80px;
 }
 
-.itemSort li {   
+.itemSort li {
     text-align: center;
 }
 
