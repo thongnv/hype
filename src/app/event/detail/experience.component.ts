@@ -52,8 +52,8 @@ import { Router } from '@angular/router';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a (click)="toggleLikeExperience()">
-            <img *ngIf="!liked" src="/assets/img/event/detail/icon-like.png" alt="icon-like">
-            <img *ngIf="liked" src="/assets/img/event/detail/icon-liked.png" alt="icon-like" width="24" height="23">
+            <i *ngIf="!liked" class="sprite sprite-icon-like"></i>
+            <i *ngIf="liked" class="sprite sprite-icon-like-blue"></i>
             <span [class.liked]="liked">{{likeNumber}} Likes</span>
           </a>
         </div>
@@ -194,6 +194,7 @@ export class ExperienceComponent implements Experience, OnInit {
   }
 
   public toggleLikeExperience() {
+    console.log('clicked: ', this.clickedLike);
     if (!this.clickedLike) {
       this.liked = !this.liked;
       this.likeNumber += this.liked ? 1 : -1;
