@@ -941,7 +941,11 @@ ul.mentioned-item {
 */
 @media only screen and (max-width: 420px) {
     .filter-events #timeFilter .btn-default {
-        min-width: 50px;
+        min-width: 46px;
+    }
+
+    #filters{
+      width: 29%;
     }
 
     .filter-events #filters .btn-default {
@@ -974,6 +978,12 @@ ul.mentioned-item {
         padding: 5px 10px;
     }
 
+  #filters{
+      width: 34%;
+  }
+  #timeFilter {
+    width: 65.7%;
+  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 800px) {
@@ -981,6 +991,18 @@ ul.mentioned-item {
     .wrap-each-items {
         padding: 0px 15px;
     }
+
+    .home-page{
+      width: 100%;
+      margin: 0px;
+    }
+
+  .detail-information{
+    margin-bottom: 5px;
+  }
+  .mentioned-item{
+    margin-bottom: 0;
+  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 374px) {

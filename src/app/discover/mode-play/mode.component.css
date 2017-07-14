@@ -592,6 +592,7 @@ select.form-control-static::-ms-expand {
     .filterCategory .btn-filter-block label {
         width: auto;
     }
+    .discover-page{width: 100%!important; margin: 0}
     .discover-page .left-box{
         padding: 10px;
     }
@@ -626,6 +627,7 @@ select.form-control-static::-ms-expand {
     .list-items .avatar {
         display: table-cell;
         float: none;
+        width: 35%;
     }
 
     .list-items .item-content {
