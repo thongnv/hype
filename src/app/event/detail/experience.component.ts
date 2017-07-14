@@ -59,7 +59,7 @@ import { Router } from '@angular/router';
         </div>
         <div class="comments-area" (click)="onClickFocusMsgInput()">
           <a>
-            <img class="icon-comment" src="/assets/img/event/detail/icon-comment.png" alt="icon-comment">
+            <i class="sprite sprite-icon-comment"></i>
             {{comments.length}} Comments
           </a>
         </div>
