@@ -16,7 +16,7 @@
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <small
               *ngIf="profileForm.controls['firstName'].hasError('requiredField') && profileForm.controls['firstName'].dirty"
-              class="help-block with-errors">First Name is required.
+              class="help-block with-errors">Please enter your first name.
             </small>
             <small
               *ngIf="profileForm.controls['firstName'].hasError('maxlength') && profileForm.controls['firstName'].dirty"
@@ -40,11 +40,11 @@
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <small
               *ngIf="profileForm.controls['contactNumber'].hasError('requiredField') && profileForm.controls['contactNumber'].dirty"
-              class="help-block with-errors">Contact Number is required.
+              class="help-block with-errors">Please enter your contact number.
             </small>
             <small
               *ngIf="profileForm.controls['contactNumber'].hasError('minlength') && profileForm.controls['contactNumber'].dirty"
-              class="help-block with-errors">Contact Number must be at least 8 characters long.
+              class="help-block with-errors">"Contact number must be at least 8 characters.
             </small>
             <small
               *ngIf="profileForm.controls['contactNumber'].hasError('maxlength') && profileForm.controls['contactNumber'].dirty"
@@ -52,7 +52,7 @@
             </small>
             <small
               *ngIf="profileForm.controls['contactNumber'].hasError('pattern') && profileForm.controls['contactNumber'].dirty"
-              class="help-block with-errors">Contact Number must be the digits or the digits which begin with (+).
+              class="help-block with-errors">Contact number must be digits or digits which start with (+).
             </small>
           </div>
           <div class="col-lg-6 form-group">
