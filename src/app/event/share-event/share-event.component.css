@@ -73,12 +73,15 @@ header ul li.active {
 
 .input-box .form-group label#list-img-label {
   font-weight: normal;
+  margin-bottom: 0px;
 }
 
 .input-box .form-group label#list-img-label i {
   color: #ec3d62;
   font-size: 12px;
 }
+
+.list-img-label .preview-wrap {margin-top: 10px!important;}
 
 .input-box .field-group {
   margin-bottom: 30px;
@@ -495,9 +498,13 @@ span.dollar-character {
   width: calc(60% - 10px);
 }
 
-.mention-by-group .form-group input {
-
+.mention-by-group  input {
+  margin-top: 10px!important;
 }
+.mention-by-group  input:first-child {
+  margin-top: 0px;
+}
+
 
 .form-wrap .option-info-content {
   padding: 0 25px !important;
@@ -735,9 +742,7 @@ span.dollar-character {
     width: calc(60% - 10px);
   }
 
-  .mention-by-group .form-group input {
 
-  }
 
   .form-wrap .option-info-content {
     padding: 0 15px !important;

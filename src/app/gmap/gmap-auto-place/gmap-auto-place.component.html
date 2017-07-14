@@ -14,7 +14,9 @@
     <input hidden type="text" formControlName="lat">
     <input hidden type="text" formControlName="lng">
     <input hidden type="text" formControlName="slug">
-    <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">This field is required</small>
+    <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">
+      This field is required
+    </small>
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
       <div class="display-location-address">
@@ -82,7 +84,7 @@
     </label>
     <input [hidden]="true" formControlName="image" type='text'>
     <small *ngIf="group.get('image').hasError('required')" class="text-danger">
-      Field image is required
+      No file selected.
     </small>
     <img *ngIf="imageUrl" [src]="sanitizer.bypassSecurityTrustUrl(imageUrl.url)" width="100%"/>
   </div>

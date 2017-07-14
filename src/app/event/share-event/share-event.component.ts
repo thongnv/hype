@@ -97,7 +97,7 @@ export class ShareEventComponent implements OnInit {
 
   public onEventPriceChange(evt) {
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
-      document.getElementById('eventPriceErr').innerText = 'Price($) is a number between 0-300';
+      document.getElementById('eventPriceErr').innerText = 'Please select between 0 and $300.';
     } else if (evt.target.value.length === 0) {
       this.eventForm.patchValue({eventPrice: 0});
       document.getElementById('eventPriceErr').innerText = '';

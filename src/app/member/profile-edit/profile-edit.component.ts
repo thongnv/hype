@@ -114,7 +114,7 @@ export class ProfileEditComponent implements OnInit {
           this.user.name = data.field_first_name + ' ' + data.field_last_name;
           this.user.country = data.field_country;
           this.localStorageService.set('user', this.user);
-          this.msgContent = resp.message;
+          this.msgContent = 'Your profile has been successfully updated.';
           this.profileService.change(this.user);
           if (resp.status) {
             this.alertType = 'success';

@@ -87,7 +87,7 @@ export class MemberComponent implements OnInit {
         } else {
           this.alertType = 'danger';
         }
-        this.msgContent = resp.message;
+        this.msgContent = 'Your profile has been successfully updated.';
       },
       (error) => console.log(error)
     );
