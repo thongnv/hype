@@ -429,6 +429,7 @@ ul.list-stars-on-post {
   height: 100vh;
   top: 0;
   right: 0;
+  width: calc(50% - 10px);
 }
 
 .sebm-google-map-container {
@@ -742,6 +743,6 @@ article {
 
 @media only screen and (max-width: 1504px) {
   .company-header .col-lg-6{width: 100%; clear: both;}
-  .company-header .col-lg-3{width: 50%;}
-  .company-header .head-right{float: right;}
+  .company-header .col-lg-3{width: 50%; padding-left: 0; padding-right: 0;}
+  .company-header .head-right{float: right; margin-right: -5px;}
 }

@@ -22,7 +22,7 @@
                  type="text">
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
-            Name event is required
+            Please enter event name.
           </small>
         </div>
         <div class="form-group col-md-12 col-xs-12">
@@ -52,7 +52,7 @@
           </select>
           <small *ngIf="eventForm.get('eventCategory').touched && eventForm.get('eventCategory').hasError('required')"
                  class="text-danger">
-            Event category is required
+            Please select event category.
           </small>
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
@@ -112,10 +112,6 @@
                    (change)="onEventPriceChange($event)"
             >
             <span class="dollar-character">$</span>
-            <small id="eventPriceErr"
-                   class="text-danger">
-
-            </small>
           </div>
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
@@ -135,7 +131,7 @@
           </div>
           <div class="form-group">
             <label>Event Organized</label>
-            <div class="form-group">
+            <div >
               <input formControlName="eventOrganized" id="event-organized"
                      class="form-control"
                      type="text"
@@ -145,7 +141,7 @@
           <div class="form-group  mention-by-group">
             <label>Mentioned by</label>
             <div formArrayName="eventMentions">
-              <div class="form-group" *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
+              <div  *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
                 <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
                        class="form-control" [formControlName]="i">
               </div>
@@ -169,7 +165,7 @@
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
       </div>
-      <div class="mobile-margin"></div>
+      <div class="mobile-footer"></div>
     </form>
   </div>
   <!--form wrap end-->
@@ -194,11 +190,11 @@
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y HH:mm'}}</span>
+              <span class="info-value">{{previewData.endDate*1000 | date:'d MMMM y / HH:mm'}}</span>
             </li>
             <li>
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y HH:mm'}}</span>
+              <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y / HH:mm'}}</span>
             </li>
             <li *ngIf="previewData.eventPrice">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>

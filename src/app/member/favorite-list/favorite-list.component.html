@@ -1,6 +1,6 @@
 <div class="wrap-each-items smaller" *ngIf="item">
   <div *ngIf="isCurrentUser" class="close-button text-right icon-times" (click)="onDeleteEmit(item)">&times;</div>
-  <div class="avatar-profile smaller">
+  <div class="avatar-profile smaller" [routerLink]="[item.slug]">
     <div class="fav-item-image fav-item-image-small">
       <img [src]="item.field_image" width="80" height="80">
     </div>

@@ -215,7 +215,6 @@ ul.itemSort li a i {
     left: 3px;
 }
 
-.avatar,
 .avatar img {
     width: 100px;
     height: 100px;
@@ -384,12 +383,14 @@ nouislider.ng2-nouislider {
     text-align: right;
     color: #ec3d62;
 }
+.discover-page{width: calc(100% - 80px)!important; margin: 0}
 
 .discover-page .fixed-right {
     position: fixed;
     right: 0px;
-    width: 47%;
+    width: 50%;
     padding-left: 0px;
+    padding-right: 0px;
 }
 
 .icon-heart {
@@ -584,11 +585,14 @@ select.form-control-static::-ms-expand {
 }
 .btn-filter-block .btn{color: #3b3b3b; opacity: 0.5; font-size: 16px;}
 .btn-filter-block .active{opacity: 1;}
-
+#v-scrollable .item-content h3.pointer:hover{
+    color: rgba(236, 61, 98, 0.5);
+}
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
         width: auto;
     }
+    .discover-page{width: 100%!important; margin: 0}
     .discover-page .left-box{
         padding: 10px;
     }
@@ -623,6 +627,7 @@ select.form-control-static::-ms-expand {
     .list-items .avatar {
         display: table-cell;
         float: none;
+        width: 35%;
     }
 
     .list-items .item-content {
@@ -667,7 +672,7 @@ select.form-control-static::-ms-expand {
         margin-left: 0px;
     }
     .discover-page .left-box {
-        width: 51.2%;
+        width: 50%;
     }
     .filterCategory {
         margin-left: 0px;
