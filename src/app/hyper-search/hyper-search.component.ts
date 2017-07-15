@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {  } from '@types/googlemaps';
@@ -30,6 +30,14 @@ export class HyperSearchComponent implements OnInit {
   constructor(public fb: FormBuilder,
               private mainService: MainService,
               private mapsAPILoader: MapsAPILoader) {
+  }
+
+  @HostListener('document:click', ['$event'])
+
+  public onClick(event) {
+    if (!this.searchElementRef.nativeElement.contains(event.target)) {
+      this.hideSearchResult = true;
+    }
   }
 
   public ngOnInit() {

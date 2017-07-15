@@ -254,8 +254,8 @@ export class CurateNewComponent implements OnInit {
     return this.formBuilder.group({
       keyword: ['', Validators.required],
       description: ['', Validators.required],
-      lat: [''],
-      lng: [''],
+      lat: ['', Validators.required],
+      lng: ['', Validators.required],
       slug: [''],
       image: ['', Validators.required]
     });

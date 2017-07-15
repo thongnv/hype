@@ -17,6 +17,9 @@
     <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">
       This field is required
     </small>
+    <small *ngIf="group.get('lat').hasError('required') && group.get('keyword').touched" class="text-danger">
+      Please choose activity /place from dropdown list
+    </small>
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
       <div class="display-location-address">

@@ -1,5 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, NgZone, OnInit, Output, ViewChild }
-from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnInit, Output, ViewChild
+}
+  from '@angular/core';
 import { MapsAPILoader } from 'angular2-google-maps/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {  } from '@types/googlemaps';
@@ -35,6 +37,13 @@ export class GmapAutoPlaceComponent implements OnInit {
     public sanitizer: DomSanitizer) {
   }
 
+  @HostListener('document:click', ['$event'])
+
+  public onClick(event) {
+    if (!this.searchElementRef.nativeElement.contains(event.target)) {
+      this.hideSearchResult = true;
+    }
+  }
   public ngOnInit() {
     // TODO
   }
