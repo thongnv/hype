@@ -228,14 +228,14 @@ ul.itemSort li a i {
 
 .avatar .heart-icon {
     position: absolute;
-    top: 5px;
+    /*top: 5px;*/
     right: 0px;
 }
 
-.avatar .heart-icon i {
-    color: #fff;
-    transform: scale(0.5);
-}
+/*.avatar .heart-icon i {*/
+    /*color: #fff;*/
+    /*transform: scale(0.5);*/
+/*}*/
 
 .list-items {
     display: block;
