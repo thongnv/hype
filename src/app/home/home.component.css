@@ -48,6 +48,10 @@
     margin: 10px 8px 10px;
 }
 
+.type-events .type-event-item:hover{
+  opacity: 1;
+}
+
 .type-events .type-event-item img {
     display: block;
     margin: 0 auto;
