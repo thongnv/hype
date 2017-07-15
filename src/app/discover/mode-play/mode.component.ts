@@ -842,7 +842,6 @@ export class ModeComponent implements OnInit {
   }
 
   public boundsChange(event) {
-    console.log(event);
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (!this.zoomChanged) {
@@ -850,6 +849,8 @@ export class ModeComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
+      //sleep change map call api
+      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -859,6 +860,7 @@ export class ModeComponent implements OnInit {
       let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
+      this.params.page=0;
       this.params.radius = Math.round(distance / 1000);
       this.smallLoader.show();
       this.items = [];
@@ -866,4 +868,8 @@ export class ModeComponent implements OnInit {
       this.getDataModes();
     }
   }
+}
+function sleep(delay) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
 }
