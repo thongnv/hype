@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MainService } from '../../services/main.service';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
+  styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
   public searchForm: FormGroup;
@@ -17,6 +17,14 @@ export class SearchComponent implements OnInit {
   constructor(public fb: FormBuilder,
               private mainService: MainService,
               private _elRef: ElementRef) {
+  }
+
+  @HostListener('document:click', ['$event'])
+
+  public onClick(event) {
+    if (!this._elRef.nativeElement.contains(event.target)) {
+      this.hideSearchResult = true;
+    }
   }
 
   public ngOnInit() {
@@ -44,10 +52,6 @@ export class SearchComponent implements OnInit {
       this.result = {};
       this.hideNoResult = false;
     }
-  }
-
-  public onCloseSuggestion() {
-    this.hideSearchResult = true;
   }
 
   public onOpenSuggestion() {
