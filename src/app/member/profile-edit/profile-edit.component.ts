@@ -37,6 +37,7 @@ export class ProfileEditComponent implements OnInit {
   public defaultCountry = <ICountry> {
     cca3: 'null',
     name: {
+      common: 'Country',
       official: 'Country'
     }
   };

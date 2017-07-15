@@ -58,7 +58,7 @@
           <div class="col-lg-6 form-group">
             <select formControlName="country" class="form-control form-control-sm" name="countrypicker">
               <option *ngFor="let c of countries" [value]="c.cca3"
-                      [selected]="user.country === c.cca3 || c.cca3=='null'">{{c.name.official}}
+                      [selected]="user.country === c.cca3 || c.cca3=='null'">{{c.name.common}}
               </option>
             </select>
           </div>
