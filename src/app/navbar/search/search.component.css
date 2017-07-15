@@ -25,11 +25,11 @@
 .display-location-address i {
     font-size: 18px;
     color: #3b3b3b;
-    width: 32px;
-    height: 46px;
     float: left;
     line-height: 50px;
-    transform: scale(0.5);
+    transform: scale(0.7);
+    position: absolute;
+    top:7px;
 
 }
 .keyword-search-input {
@@ -45,7 +45,6 @@
     text-transform: capitalize;
     font-size: 15px;
     float: right;
-    margin-right: 20px;
 }
 .search-location-search-area ul {
     padding-left: 0;
