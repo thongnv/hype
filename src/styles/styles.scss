@@ -307,6 +307,7 @@ body, html {
     text-align: left;
     color: #3b3b3b;
     margin-bottom: 20px;
+    margin-top: 10px;
   }
   //END follow
   .interest-item-wrap {
@@ -1245,6 +1246,9 @@ body, html {
     .carousel-inner .slide-group {
       width: 100%;
     }
+    .col-right, .setting-wrap {
+      border-left: 0px;
+    }
   }
   @media only screen and (min-width: 768px) and (max-width: 992px){
     .carousel-inner .slide-group {
@@ -1305,7 +1309,8 @@ body, html {
     }
 
     .col-right.table-cell {
-      margin-top: 15px;
+      margin-top: 10px;
+      padding: 10px;
     }
     .fav-component .wrap-each-items {
       width: 100%;
@@ -1475,7 +1480,9 @@ body, html {
     .filter-events #filters .btn-default {
       width: 5em;
     }
-
+    .no-padding-mobile{
+      padding-left: 10px;
+    }
   }
 
 }
