@@ -14,6 +14,7 @@ import { UserService } from '../services/user.service';
 })
 export class AuthComponent implements OnInit {
   public ready = false;
+  public accountDisabled = false;
   private user = this.localStorageService.get('user');
   private initParams: InitParams = AppSetting.FACEBOOK;
 
@@ -68,6 +69,7 @@ export class AuthComponent implements OnInit {
           },
           (error) => {
             console.log(error);
+            this.accountDisabled = true;
           });
       });
   }
