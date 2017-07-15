@@ -187,7 +187,7 @@
     background: transparent;
     border: none;
     box-shadow: none;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px;
     line-height: 1;
     text-align: right;
@@ -200,7 +200,7 @@
 ul.itemSort li a {
     border: none;
     background: transparent;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 16px;
     font-weight: 500;
     line-height: 1;
@@ -454,7 +454,7 @@ nouislider.ng2-nouislider {
 }
 
 .list-header .pull-left {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px;
     line-height: 1;
     text-align: left;
@@ -462,7 +462,7 @@ nouislider.ng2-nouislider {
 }
 
 .list-header .pull-right {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px;
     line-height: 1;
     text-align: right;
@@ -471,7 +471,7 @@ nouislider.ng2-nouislider {
 
 .item-content .distance {
     opacity: 0.6;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px !important;
     font-weight: 300;
     line-height: 1;
@@ -482,7 +482,7 @@ nouislider.ng2-nouislider {
 }
 
 .item-content .review {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px;
     font-weight: 300;
     line-height: 1;
@@ -538,7 +538,7 @@ nouislider.ng2-nouislider {
     border: none;
     background: transparent;
     font-size: 12px;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
 }
 
 select.form-control-static::-ms-expand {
@@ -546,7 +546,7 @@ select.form-control-static::-ms-expand {
 }
 
 .list-header .text-right span {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 12px;
     line-height: 1;
     text-align: right;
