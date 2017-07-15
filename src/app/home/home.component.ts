@@ -104,7 +104,8 @@ export class HomeComponent implements OnInit {
     this.selectedEventOrder = this.eventOrder[0];
     this.selectedEventFilter = this.eventFilter[0];
     this.selected = 'all';
-
+    this.smallLoader.hide();
+    this.loaderService.hide();
     this.getTrending();
     this.getTrandingCategories();
 
@@ -328,7 +329,6 @@ export class HomeComponent implements OnInit {
       }
       console.log(this.categories);
     }
-    console.log(e);
   }
 
   public onChangePrice(value) {
@@ -337,7 +337,6 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.priceRange = value;
     this.params.price = value.join(',');
-    console.log(this.params.price);
     this.params.type = 'event';
     this.smallLoader.show();
     this.getTrending();
@@ -367,6 +366,8 @@ export class HomeComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
+      //map change sleep call api
+      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -415,7 +416,6 @@ export class HomeComponent implements OnInit {
   private getTrandingCategories() {
     this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
       this.drawCategories = resp.data;
-      console.log(resp.data);
       let imageNumber = Math.floor(this.screenWidth / 55) - 1;
       if (this.screenWidth <= 768) {
         if (resp.data.length >= imageNumber) {
@@ -658,4 +658,8 @@ function getDistance(p1, p2) {
     Math.sin(dLong / 2) * Math.sin(dLong / 2);
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+function sleep(delay) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
 }

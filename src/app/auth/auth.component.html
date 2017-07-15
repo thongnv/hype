@@ -1,5 +1,5 @@
 <div class="container login-container" *ngIf="ready">
-  <div class="row">
+  <div class="row" *ngIf="!accountDisabled">
     <div class="col-xs-12 col-lg-5 col-lg-offset-4">
       <h2 class="title-login">Discover things to do in Singapore today</h2>
       <button (click)="onClickLogin()" class="btn btn-lg btn-primary btn-block">
@@ -8,4 +8,15 @@
       </button>
     </div>
   </div>
+  <div class="row" *ngIf="accountDisabled">
+    <div class="col-xs-12 col-lg-5 col-lg-offset-4">
+      <h2 class="title-login">Your account has been blocked by admin.</h2>
+      <h4 class="title-login">Please contact administrator for more details.</h4>
+      <button [routerLink]="['/home']" class="btn btn-lg btn-primary btn-block">
+        <i class="pull-left" aria-hidden="true"></i>
+        Back to homepage
+      </button>
+    </div>
+  </div>
 </div>
+

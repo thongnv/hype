@@ -61,10 +61,10 @@ export class InterestComponent implements OnInit {
       (resp) => {
         if (resp.status) {
           this.alertType = 'success';
+          this.msgContent = 'Your interests has been updated successfully.';
         } else {
           this.alertType = 'danger';
         }
-        this.msgContent = resp.message;
         this.loaderService.hide();
       }
     );
