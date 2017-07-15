@@ -23,11 +23,7 @@ nav {
   margin-top: 16px;
 }
 
-a {
-  cursor: pointer;
-  color: #3b3b3b;
-  text-decoration: none;
-}
+
 
 .rating i.star-icon,
 .rating i.star-icon:before {
@@ -105,6 +101,13 @@ body, html {
 }
 
 .hype {
+
+  a {
+    cursor: pointer;
+    color: #3b3b3b;
+    text-decoration: none;
+  }
+
   //header
   .nav-item {
     height: 60px;
