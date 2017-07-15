@@ -20,14 +20,14 @@ export class PlaceImageComponent implements OnInit {
 
   public ngOnInit(): void {
     // TODO: use this.name instead
-    let instagramUsername = 'billnguyen254';
-    this.companyService.getInstagramProfile(instagramUsername).subscribe(
-      (profile) => {
-        this.url = profile.data[0].profile_picture;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // let instagramUsername = 'billnguyen254';
+    // this.companyService.getInstagramProfile(instagramUsername).subscribe(
+    //   (profile) => {
+    //     this.url = profile.data[0].profile_picture;
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 }
