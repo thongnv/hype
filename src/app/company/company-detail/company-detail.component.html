@@ -124,7 +124,7 @@
       <div class="all-reviews-wrap" [@slideInOutAnimation]="commentPosition">
         <div class="experience-top">
           <a (click)="goBack()" class="left-arrow">
-            <img src="/assets/img/event/detail/icon-left.png" alt="icon-left">
+            <i class="sprite sprite-icon-left"></i>
           </a>
           <h4 class="title-experiences-reviews-area">Latest Reviews</h4>
           <a *ngIf="!rated" (click)="showReviewModal()" class="view-all-post-your-experience">Write a Review</a>
@@ -140,7 +140,7 @@
       <div class="mobile-footer"></div>
     </div>
     <div class="col-md-6 map-fix hidden-md hidden-xs hidden-sm">
-      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="20" >
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15" >
         <sebm-google-map-marker [latitude]="location.lat"
                                 [longitude]="location.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
         </sebm-google-map-marker>

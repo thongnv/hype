@@ -48,10 +48,8 @@ import { DomSanitizer } from '@angular/platform-browser';
       <div class="likes-comments-experience-area clearfix">
         <div class="likes-area">
           <a (click)="toggleLikeReview(review)">
-            <img *ngIf="!review.liked" src="/assets/img/company/detail/icon-like.png" alt="icon-like" width="24"
-                 height="23">
-            <img *ngIf="review.liked" src="/assets/img/company/detail/icon-liked.png" alt="icon-like" width="24"
-                 height="23">
+            <i *ngIf="!review.liked" class="sprite sprite-icon-like"></i>
+            <i *ngIf="review.liked" class="sprite sprite-icon-like-blue"></i>
           </a>
           {{review.likeNumber}} Likes
         </div>

@@ -85,13 +85,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         (error) => console.log(error),
         () => {
           this.loaderService.hide();
-          //focus comment element
-          if(e.notification=='comment'){
-            let interval = window.setInterval(()=>{
-              const element = document.getElementById('createComment').scrollIntoView();
+          if (e.notification === 'comment') {
+            let interval = window.setInterval(() => {
+              document.getElementById('createComment').scrollIntoView();
               window.clearInterval(interval);
               document.getElementById('createComment').removeAttribute('id');
-            },200);
+            }, 200);
           }
         }
       );

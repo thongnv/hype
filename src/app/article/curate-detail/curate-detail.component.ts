@@ -116,26 +116,23 @@ export class CurateDetailComponent implements OnInit {
     if (article.field_places && article.field_places.length) {
       let index = 0;
       for (let place of article.field_places) {
-        if (place.field_latitude && place.field_latitude) {
+        let marker = {
+          lat: 1.290270,
+          lng: 103.851959,
+          opacity: 0.4,
+          isOpenInfo: false,
+          icon: 'assets/icon/icon_pointer.png'
+        };
+        if (place.field_latitude !== '0' && place.field_longitude !== '0') {
+          marker.lat = Number(place.field_latitude);
+          marker.lng = Number(place.field_longitude);
           if (index === 0) {
-            this.markers.push({
-              lat: Number(place.field_latitude),
-              lng: Number(place.field_longitude),
-              opacity: 1,
-              isOpenInfo: true,
-              icon: 'assets/icon/icon_pointer.png'
-            });
-          } else {
-            this.markers.push({
-              lat: Number(place.field_latitude),
-              lng: Number(place.field_longitude),
-              opacity: 0.4,
-              isOpenInfo: false,
-              icon: 'assets/icon/icon_pointer.png'
-            });
+            marker.opacity = 1;
+            marker.isOpenInfo = true;
           }
-          index++;
         }
+        index++;
+        this.markers.push(marker);
       }
       this.showMap = true;
     }

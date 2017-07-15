@@ -617,7 +617,10 @@ article {
 /*company wrap end*/
 
 /*review wrap start*/
-
+.sprite {
+  display: inline-block;
+  margin-bottom: -3px;
+}
 /*review wrap end*/
 
 /*responsive*/
