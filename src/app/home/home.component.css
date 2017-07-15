@@ -9,12 +9,13 @@
 }
 
 .type-events {
-    padding: 10px 0;
+    padding: 6px 0;
     border-bottom: 1px solid #eaeaea;
     display: block;
     float: left;
     width: 100%;
     position: relative;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
 .type-events ul {
@@ -88,8 +89,9 @@
 }
 
 .filter-events {
-    padding: 20px 20px 0px;
+    padding: 20px 20px 0;
     border-bottom: 1px solid #eaeaea;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
 .filter-events .btn-group.tab-control {
@@ -338,7 +340,6 @@ button.btn.btn-default.active  {
     line-height: 18px;
     margin-bottom: 14px;
     cursor: pointer;
-    padding-right: 2%;
 }
 
 .information-title .real-title {
@@ -360,14 +361,15 @@ button.btn.btn-default.active  {
 }
 
 .information-profile {
-    width: calc(100% - 160px);
+    width: calc(100% - 156px);
     float: left;
     position: relative;
+  margin-top: 8px;
 }
 
 .mentioned-item-wrap img {
-    width: 28px;
-    height: 28px;
+  width: 16px;
+  height: 16px;
 }
 
 .mentioned {
@@ -389,7 +391,6 @@ button.btn.btn-default.active  {
     float: left;
     margin-right: 10px;
     border: 1px solid #ccc;
-    padding: 3px 5px;
     border-radius: 7px;
 }
 
@@ -588,20 +589,10 @@ button.btn.btn-default.active  {
     margin-bottom: 18px;
 }
 
-.information-profile {
-    width: calc(100% - 160px);
-    float: left;
-    position: relative;
-}
-
-.mentioned-item-wrap img {
-    width: 16px;
-    height: 16px;
-}
-
 .mentioned {
     float: left;
     margin-top: 0;
+  padding-top: 2px;
     font-size: 14px;
     width: 100px;
     line-height: 40px;
@@ -609,7 +600,6 @@ button.btn.btn-default.active  {
 }
 
 ul.mentioned-item {
-    /*padding-left: 25%;*/
     float: left;
 }
 
@@ -628,7 +618,7 @@ ul.mentioned-item {
     border-radius: 7px;
 }
 .comments-item-icon {
-    margin-right: 5%;
+    margin-right: 17px;
     margin-top: 5px;
 }
 
@@ -750,7 +740,7 @@ ul.mentioned-item {
 }
 
 .comments-item-icon .heart-icon {
-    position: relative;
+  position: relative;
 }
 
 .comments-item-icon .heart-icon i {
@@ -764,6 +754,10 @@ ul.mentioned-item {
 
 .bottom-content .pull-right .list-inline {
     margin-top: 5px;
+}
+
+.list-inline > li {
+  padding-right: 0;
 }
 
 .popover-content {
