@@ -236,9 +236,7 @@
         text-decoration: none;
         outline: 0;
     }
-    .show .map-option-dropdown-mobile li.text-ellipsis:hover {
-        background: rgba(236, 61, 98, 0.5);
-    }
+
   .user-info-mobile {
     min-height: 60px;
     padding-top: 7%;

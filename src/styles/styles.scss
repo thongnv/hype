@@ -25,6 +25,8 @@ nav {
 
 a {
   cursor: pointer;
+  color: #3b3b3b;
+  text-decoration: none;
 }
 
 .rating i.star-icon,
@@ -94,6 +96,12 @@ body, html {
 
 .pointer {
   cursor: pointer;
+}
+
+.title-hover:hover{
+  color: #ec3d62 !important;
+  text-decoration: none;
+  opacity: 1 !important;
 }
 
 .hype {
@@ -464,9 +472,7 @@ body, html {
       -webkit-transform: scale(1.1);
       transform: scale(1.1);
     }
-    h4.information-title:hover{
-      color: rgba(236, 61, 98, 0.5);
-    }
+
     .avatar-profile.smaller {
       width: 80px;
       height: 80px;
