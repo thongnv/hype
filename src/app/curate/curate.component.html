@@ -4,7 +4,7 @@
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li *ngFor="let cat of categories" (click)="onSelectCategory(cat.tid)"
+          <li class="title-hover" *ngFor="let cat of categories" (click)="onSelectCategory(cat.tid)"
               [class.active]="cat.tid===selectedCategory">{{cat.name}}
           </li>
         </ul>
@@ -23,7 +23,7 @@
                 <img [src]="art.field_images[0]" style="margin:auto;">
                 <div class="carousel-caption">
                   <div class="carousel-content">
-                    <strong [routerLink]="[art.alias]"  class="post-title-content text-ellipsis">{{art.title}}</strong>
+                    <strong [routerLink]="[art.alias]"  class="post-title-content title-hover text-ellipsis">{{art.title}}</strong>
                     <strong class="post-author">
                       <span class="auth-name">By: {{art.user_post.name}}</span>
                       <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
@@ -41,7 +41,11 @@
               <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
             </div>
             <div class="new-info">
-              <h4 [routerLink]="[art.alias]" class="post-title-content text-ellipsis">{{art.title}}</h4>
+              <h4 class="post-title-content text-ellipsis">
+                <a class="title-hover" [routerLink]="[art.alias]">
+                  {{art.title}}
+                </a>
+              </h4>
               <p class="post-author">
                 By: <span class="auth-name">{{art.user_post.name}}</span>
                 <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
@@ -66,7 +70,7 @@
         <li *ngFor="let art of trending">
           <a [title]="art.title" [routerLink]="[art.alias]">
             <img [src]="art.field_images[0]" [alt]="art.title" width="60" height="60">
-            <p class="title-trending">{{art.title | myHtml2Text | truncate : 48}}</p>
+            <p class="title-trending title-hover">{{art.title | myHtml2Text | truncate : 48}}</p>
           </a>
         </li>
       </ul>

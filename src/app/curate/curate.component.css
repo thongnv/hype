@@ -89,9 +89,6 @@ span.time-posts {
 .post-title-content{
   cursor: pointer;
 }
-.post-title-content:hover{
-    color: rgba(236, 61, 98, 0.5);
-}
 
 .post-news .image-post-news img{
     width: 100%;
@@ -137,10 +134,8 @@ ul.list-items li p {
     width: calc(100% - 120px);
     color: #3b3b3b;
     height: 48px;
-    overflow-y: hidden;
     margin-top: 6px;
-  font-weight: bold;
-  font-size: 16px;
+    font-size: 16px;
 }
 ul.list-items li a img {
     margin-right: 10px;

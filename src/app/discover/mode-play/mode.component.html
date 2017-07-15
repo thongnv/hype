@@ -168,8 +168,11 @@
               </div>
             </div>
             <div class="item-content">
-              <h3 class="name pointer" [routerLink]="['/company',item.Company_Slug]">
-                {{item.Company_Name}}</h3><span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
+              <h3 class="name pointer">
+                <a class="title-hover" [routerLink]="['/company',item.Company_Slug]">
+                {{item.Company_Name}}</a>
+              </h3>
+              <span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
               <div class="clearfix"></div>
               <ngb-rating [rate]="item.rating.average" disabled="true">
                 <ng-template let-fill="fill">
