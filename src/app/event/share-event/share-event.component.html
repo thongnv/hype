@@ -67,7 +67,7 @@
             <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="!previewUrl" class="text-danger">
+          <small *ngIf="!previewUrl.length" class="text-danger">
             Event images is required
           </small>
           <div class="list-img-wrap">
