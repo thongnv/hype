@@ -9,7 +9,9 @@
            [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
         <div class="carousel-box" id="curate-carousel">
           <div class="carousel-header">
-            <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
+            <a routerLink="/curate">
+              <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
+            </a>
             <strong>{{article.title}}</strong>
           </div>
           <div *ngIf="slides" class="carousel">
