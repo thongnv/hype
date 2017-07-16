@@ -863,7 +863,7 @@ export class ModeComponent implements OnInit {
   public boundsChange(event) {
     this.route.params.subscribe((param) => {
       if (param.location) {
-        this.mapZoom=15;
+        this.mapZoom=14;
       }
     });
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
