@@ -918,6 +918,10 @@ ul.mentioned-item {
   transform: scale(1.1);
 }
 
+.home-page .left-box {
+  padding: 0;
+}
+
 @media only screen and (max-width: 1200px) {
   .home-page .left-box {
     padding: 0;
