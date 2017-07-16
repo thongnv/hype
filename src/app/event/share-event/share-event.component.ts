@@ -206,7 +206,6 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    // check date created and end date event set default date
     event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);

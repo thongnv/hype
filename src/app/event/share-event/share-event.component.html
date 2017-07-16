@@ -205,11 +205,11 @@
               <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
               <span class="info-value">{{previewData.startDate*1000 | date:'d MMMM y / HH:mm'}}</span>
             </li>
-            <li *ngIf="previewData.eventPrice">
+            <li *ngIf="previewData.eventPrice !== ''">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
               <span class="info-value">
-                <span *ngIf="price">${{previewData.eventPrice}}</span>
-                <span *ngIf="!price">Free</span>
+                <span *ngIf="previewData.eventPrice">${{previewData.eventPrice}}</span>
+                <span *ngIf="!previewData.eventPrice">Free</span>
               </span>
             </li>
             <li *ngIf="previewData.call2action?.eventLink">
