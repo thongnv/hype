@@ -538,6 +538,7 @@ span.dollar-character {
 #eventPriceErr {
   clear: both;
   padding-top: 10px;
+  margin: 0;
 }
 
 .information-event .name-creator {
