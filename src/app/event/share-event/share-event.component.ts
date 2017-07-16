@@ -156,7 +156,6 @@ export class ShareEventComponent implements OnInit {
     if (this.previewUrl.length < 4) {
       this.addImage = true;
     }
-    console.log(this.previewUrl.length)
   }
 
   public checkCaptcha(captcha) {
@@ -167,7 +166,6 @@ export class ShareEventComponent implements OnInit {
 
   public readUrl(event) {
     let reader = [];
-    console.log(this.previewUrl.length)
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
         reader[i] = new FileReader();
@@ -182,10 +180,9 @@ export class ShareEventComponent implements OnInit {
               filename: event.target.files[i].name,
               filemime: event.target.files[i].type
             };
-
-            this.previewUrl.push(img);
-
-            if (this.previewUrl.length >= 4) {
+            if (this.previewUrl.length < 4) {
+              this.previewUrl.push(img);
+            } else {
               this.addImage = false;
             }
           });
