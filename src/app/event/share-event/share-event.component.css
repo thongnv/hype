@@ -23,7 +23,6 @@ header ul li {
   min-width: 70px;
   opacity: 0.5;
   line-height: 40px;
-  text-align: center;
   color: #3b3b3b;
   text-transform: capitalize;
 }
@@ -60,15 +59,14 @@ header ul li.active {
 }
 
 .input-box .form-group {
-  /*width: 90%;*/
   margin-left: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .input-box .form-group label {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .input-box .form-group label#list-img-label {
@@ -81,7 +79,9 @@ header ul li.active {
   font-size: 12px;
 }
 
-.list-img-label .preview-wrap {margin-top: 10px!important;}
+.list-img-label .preview-wrap {
+  margin-top: 10px !important;
+}
 
 .input-box .field-group {
   margin-bottom: 30px;
@@ -361,7 +361,7 @@ input#event-start-date, #event-end-date {
   list-style: none;
   float: left;
   width: 70%;
-  padding-left:25px;
+  padding-left: 25px;
 }
 
 .left-content-information-event > li {
@@ -389,7 +389,7 @@ input#event-start-date, #event-end-date {
   color: #3b3b3b;
 }
 
-.left-content-information-event .info-label span{
+.left-content-information-event .info-label span {
   font-family: Roboto, sans-serif;
   font-size: 16px;
 }
@@ -418,6 +418,7 @@ input#event-start-date, #event-end-date {
   color: #ec3d62;
   font-weight: 500;
 }
+
 .left-content-information-event > li > span > b {
   position: relative;
   top: -3px;
@@ -472,8 +473,17 @@ span.dollar-character {
   margin-right: 15px;
 }
 
+.input-box h3 {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+.input-box small {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
 .input-box small.text-danger {
-  margin: 10px 0;
+  margin: 0;
 }
 
 .carousel-indicators div {
@@ -498,13 +508,13 @@ span.dollar-character {
   width: calc(60% - 10px);
 }
 
-.mention-by-group  input {
-  margin-top: 10px!important;
-}
-.mention-by-group  input:first-child {
-  margin-top: 0px;
+.mention-by-group input {
+  margin-top: 10px !important;
 }
 
+.mention-by-group input:first-child {
+  margin-top: 0px;
+}
 
 .form-wrap .option-info-content {
   padding: 0 25px !important;
@@ -524,13 +534,16 @@ span.dollar-character {
   padding-left: 25px;
   padding-right: 25px;
 }
+
 #eventPriceErr {
   clear: both;
   padding-top: 10px;
 }
-.information-event .name-creator{
+
+.information-event .name-creator {
   font-size: 16px;
 }
+
 @media only screen and (min-width: 320px) and (max-width: 374px) {
 
   .input-box h3 {
@@ -726,9 +739,11 @@ span.dollar-character {
     margin-left: 0;
     padding: 0 15px;
   }
-  .list-preview-wrap .event-title{
-    margin:10px;
+
+  .list-preview-wrap .event-title {
+    margin: 10px;
   }
+
   .option-info {
     margin-left: 15px;
   }
@@ -741,8 +756,6 @@ span.dollar-character {
   .input-box .call-action-group .form-group input {
     width: calc(60% - 10px);
   }
-
-
 
   .form-wrap .option-info-content {
     padding: 0 15px !important;

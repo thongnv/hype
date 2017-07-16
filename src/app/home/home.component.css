@@ -918,7 +918,34 @@ ul.mentioned-item {
   transform: scale(1.1);
 }
 
-@media all and (min-width: 768px) and (max-width: 1024px) {
+@media only screen and (max-width: 1200px) {
+  .home-page .left-box {
+    padding: 0;
+  }
+
+  .type-events .type-event-item {
+    width: 60px;
+  }
+
+  .home-page .left-box {
+    padding: 0;
+  }
+
+  #timeFilter {
+    width: 65%;
+  }
+
+  .filter-events #timeFilter .btn-default {
+    min-width: 45px;
+    padding: 0;
+  }
+
+  .btn {
+    padding: 0;
+  }
+}
+
+@media all and (max-width: 1024px) {
   #timeFilter {
     width: 68%;
   }
@@ -932,7 +959,43 @@ ul.mentioned-item {
   }
 }
 
-@media only screen and (min-width: 544px) and (max-width: 767px) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  .fixed-right {
+    width: 45%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #timeFilter {
+    width: 48%;
+  }
+
+  #filters {
+    width: 31.5%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+
+  .wrap-each-items {
+    padding: 0 15px;
+  }
+
+  .home-page {
+    width: 100%;
+    margin: 0;
+  }
+
+  .detail-information {
+    margin-bottom: 5px;
+  }
+
+  .mentioned-item {
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
   .avatar-profile {
     width: 100px;
   }
@@ -946,13 +1009,44 @@ ul.mentioned-item {
     top: 2em;
     left: 2em;
   }
+
+  .type-events {
+    padding: 5px 0 0;
+  }
+
+  .btn-default {
+    width: auto;
+  }
+
+  .filter-events.top-100 {
+    padding: 15px;
+  }
+
+  #timeFilter {
+    width: 59%;
+  }
+
+  .filter-events #timeFilter .btn-default {
+    max-width: 105px;
+  }
+
+  #filters {
+    width: 31.5%;
+  }
+
 }
 
-@media only screen and (min-width: 992px) {
-  .list-item .caption {
-    width: auto;
-    top: 2em;
-    left: 2em;
+@media only screen and (max-width: 650px) {
+  #timeFilter {
+    width: 60%;
+  }
+
+  .filter-events #timeFilter .btn-default {
+    max-width: 80px;
+  }
+
+  #filters {
+    width: 31.5%;
   }
 }
 
@@ -982,84 +1076,9 @@ ul.mentioned-item {
   }
 
   #timeFilter {
-    width: 60.7%;
-  }
-}
-
-@media only screen and (min-width: 320px) and (max-width: 800px) {
-
-  .wrap-each-items {
-    padding: 0 15px;
+    width: 61.7%;
   }
 
-  .home-page {
-    width: 100%;
-    margin: 0;
-  }
-
-  .detail-information {
-    margin-bottom: 5px;
-  }
-
-  .mentioned-item {
-    margin-bottom: 0;
-  }
-}
-
-@media only screen and (min-width: 480px) and (max-width: 568px) {
-  .filter-events #timeFilter .btn-default {
-    max-width: 80px;
-  }
-
-  .filter-events #filters .btn-default {
-    /*max-width: 70px;*/
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  .home-page .left-box {
-    padding: 0;
-  }
-
-  .type-events .type-event-item {
-    width: 60px;
-  }
-}
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-  .fixed-right {
-    width: 45%;
-  }
-}
-
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
-  .home-page .left-box {
-    padding: 0;
-  }
-
-  .filter-events #timeFilter .btn-default {
-    max-width: 5em;
-    padding: 0;
-  }
-
-}
-
-@media only screen and (min-width: 545px) and (max-width: 767px) {
-  .type-events {
-    padding: 5px 0 0;
-  }
-
-  .btn-default {
-    width: auto;
-  }
-
-  .filter-events.top-100 {
-    padding: 15px;
-  }
-
-}
-
-@media only screen and (max-width: 543px) {
   .btn {
     padding: 5px 8px;
     font-size: 12px;
@@ -1076,7 +1095,7 @@ ul.mentioned-item {
   }
 
   .filter-events #timeFilter .btn-default {
-    min-width: 58px;
+    max-width: 66px;
   }
 
   #filters {
@@ -1100,9 +1119,7 @@ ul.mentioned-item {
   .filter-events #timeFilter .btn-default {
     min-width: 39px;
   }
-}
 
-@media only screen and (min-width: 320px) and (max-width: 380px) {
   .btn {
     padding: 2px;
     font-size: 11px;
@@ -1122,9 +1139,7 @@ ul.mentioned-item {
   button.btn.btn-default.active {
     font-size: 11px;
   }
-}
 
-@media only screen and (max-width: 320px) {
   #timeFilter {
     width: 68%;
   }

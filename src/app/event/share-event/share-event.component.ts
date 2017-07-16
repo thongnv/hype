@@ -25,8 +25,8 @@ export class ShareEventComponent implements OnInit {
     eventCategory: ['', Validators.required],
     eventPlace: this.fb.group({
       place: ['', Validators.required],
-      lat: [''],
-      lng: [''],
+      lat: ['', Validators.required],
+      lng: ['', Validators.required],
     }),
     eventStartDate: [''],
     eventEndDate: [''],
@@ -65,7 +65,8 @@ export class ShareEventComponent implements OnInit {
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public fb: FormBuilder, private eventService: EventService,
+  constructor(public fb: FormBuilder,
+              private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
@@ -115,6 +116,11 @@ export class ShareEventComponent implements OnInit {
     }
   }
 
+  public markAsTouchPlace() {
+    console.log('here');
+    this.eventForm.controls.eventPlace.markAsTouched();
+  }
+
   public onMapsChangePlace(data) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder();
@@ -129,6 +135,7 @@ export class ShareEventComponent implements OnInit {
       }
 
       // hide result
+      this.eventForm.controls.eventPlace.markAsTouched();
       this.hyperSearchComponent.hideSearchResult = true;
     });
   }
@@ -139,6 +146,7 @@ export class ShareEventComponent implements OnInit {
       lat: Number(data.Lat),
       lng: Number(data.Long),
     });
+    this.eventForm.controls.eventPlace.markAsTouched();
     this.hyperSearchComponent.hideSearchResult = true;
   }
 
@@ -198,7 +206,6 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
-    //check date created and end date event set default date
     event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
@@ -297,7 +304,7 @@ function mapEvent(event) {
       field_call_to_action_link: event.call2action.eventLink,
       field_price: event.eventPrice,
       field_mentioned_by: event.eventMentions,
-      field_end_date_time:event.endDate
+      field_end_date_time: event.endDate
     }]
   };
 }

@@ -108,7 +108,7 @@
 .keyword-copy{
     float: left;
     height: 48px;
-    padding-left: 10px;
+    padding-left: 30px;
     font-weight: bold;
     width: calc(100% - 205px);
 }

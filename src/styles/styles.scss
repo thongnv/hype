@@ -23,7 +23,9 @@ nav {
   margin-top: 16px;
 }
 
-
+.text-danger {
+  padding-top: 5px;
+}
 
 .rating i.star-icon,
 .rating i.star-icon:before {
@@ -749,7 +751,6 @@ body, html {
     display: inline-block;
     margin: 0;
     padding: 0;
-    width: 80%;
   }
   .carousel-header {
     margin: 10px 0;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, ElementRef, OnInit, Input, Output, ViewChild, EventEmitter, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {  } from '@types/googlemaps';
@@ -32,6 +32,14 @@ export class HyperSearchComponent implements OnInit {
               private mapsAPILoader: MapsAPILoader) {
   }
 
+  @HostListener('document:click', ['$event'])
+
+  public onClick(event) {
+    if (!this.searchElementRef.nativeElement.contains(event.target)) {
+      this.hideSearchResult = true;
+    }
+  }
+
   public ngOnInit() {
     this.searchForm = this.fb.group({
       keyword: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
@@ -39,7 +47,6 @@ export class HyperSearchComponent implements OnInit {
   }
 
   public onSubmit(event, keyword?: string) {
-    this.hideSearchResult = false;
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
@@ -60,9 +67,10 @@ export class HyperSearchComponent implements OnInit {
           (result, status) => this.gmapResults = result);
       });
 
-    } else {
+    }
+    if (this.searchToken.length === 0) {
       this.result = {};
-      this.hideNoResult = false;
+      this.hideSearchResult = true;
     }
   }
 
@@ -72,11 +80,6 @@ export class HyperSearchComponent implements OnInit {
     this.onHyloChangePlace.emit(data);
   }
 
-  public onOpenSuggestion() {
-    this.hideSearchResult = false;
-  }
-
-  // events
   public onGmapItemClick(data) {
     this.searchElementRef.nativeElement.value = data.structured_formatting.main_text;
     this.onMapsChangePlace.emit(data);
