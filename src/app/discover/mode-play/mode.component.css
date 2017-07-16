@@ -668,7 +668,7 @@ select.form-control-static::-ms-expand {
 
 @media only screen and (min-width: 1200px) {
     #btnHeadFilter label:first-child {
-        margin-left: -15px;
+        margin-left: -25px;
     }
     .itemSort {
         margin-left: 0px;
