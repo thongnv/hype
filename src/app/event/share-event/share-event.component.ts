@@ -127,7 +127,7 @@ export class ShareEventComponent implements OnInit {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
         this.eventForm.controls.eventPlace.patchValue({
-          place: data.structured_formatting.main_text,
+          place: data.description,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng()
         });

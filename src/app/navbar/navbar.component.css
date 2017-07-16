@@ -72,6 +72,9 @@
 }
 .navbar-default .navbar-brand{
     color: #ffffff;
+    max-width: 35px;
+    overflow: hidden;
+    padding: 0;
 }
 .glyphicon-2x{
     font-size: 1.5em;

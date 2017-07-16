@@ -33,7 +33,7 @@
 
 .filterFromMode {
     padding: 20px;
-    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
 .filterFromMode .btn-block {
@@ -102,7 +102,7 @@
 }
 
 .filterCategory {
-    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
     margin-left: 15px;
     text-align:center;
 }
@@ -587,6 +587,9 @@ select.form-control-static::-ms-expand {
 .btn-filter-block .btn{color: #3b3b3b; opacity: 0.5; font-size: 16px;}
 .btn-filter-block .active{opacity: 1;}
 
+.discover-page .left-box {
+  padding: 0;
+}
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
         width: auto;

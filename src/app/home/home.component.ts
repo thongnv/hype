@@ -366,7 +366,7 @@ export class HomeComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
-      //map change sleep call api
+      // map change sleep call api
       sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
