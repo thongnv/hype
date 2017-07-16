@@ -215,7 +215,7 @@ export class CurateNewComponent implements OnInit {
         let placeControl = this.formData.get('listPlaces') as FormArray;
         let place = placeControl.at(i);
         place.patchValue({
-          keyword: data.structured_formatting.main_text,
+          keyword: data.description,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng(),
           slug: '',

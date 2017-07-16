@@ -81,7 +81,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
 
   public onGmapItemClick(data) {
-    this.searchElementRef.nativeElement.value = data.structured_formatting.main_text;
+    this.searchElementRef.nativeElement.value = data.description;
     this.onMapsChangePlace.emit(data);
     this.hideSearchResult = true;
   }
