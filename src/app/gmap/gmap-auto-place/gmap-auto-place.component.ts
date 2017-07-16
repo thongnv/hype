@@ -49,18 +49,13 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
 
   public onSubmit(event, keyword?: string) {
-    this.hideSearchResult = false;
     this.searchToken = event.type === 'submit' ?
       this.group.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
       this.mainservice.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
-        if (resp.event.length + resp.article.length === 0) {
-          this.hideNoResult = false;
-        } else {
-          this.hideNoResult = true;
-        }
+        this.hideNoResult = resp.event.length + resp.article.length !== 0;
       });
 
       // get data from google map autocomplete
@@ -72,9 +67,10 @@ export class GmapAutoPlaceComponent implements OnInit {
           (result, status) => this.gmapResults = result);
       });
 
-    } else {
+    }
+    if (this.searchToken.length === 0) {
       this.result = {};
-      this.hideNoResult = false;
+      this.hideSearchResult = true;
     }
   }
 
@@ -84,11 +80,6 @@ export class GmapAutoPlaceComponent implements OnInit {
     this.onHyloChangePlace.emit(data);
   }
 
-  public onOpenSuggestion() {
-    this.hideSearchResult = false;
-  }
-
-  // events
   public onGmapItemClick(data) {
     this.searchElementRef.nativeElement.value = data.structured_formatting.main_text;
     this.onMapsChangePlace.emit(data);

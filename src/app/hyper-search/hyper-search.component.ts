@@ -47,7 +47,6 @@ export class HyperSearchComponent implements OnInit {
   }
 
   public onSubmit(event, keyword?: string) {
-    this.hideSearchResult = false;
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
@@ -68,9 +67,10 @@ export class HyperSearchComponent implements OnInit {
           (result, status) => this.gmapResults = result);
       });
 
-    } else {
+    }
+    if (this.searchToken.length === 0) {
       this.result = {};
-      this.hideNoResult = false;
+      this.hideSearchResult = true;
     }
   }
 
@@ -80,11 +80,6 @@ export class HyperSearchComponent implements OnInit {
     this.onHyloChangePlace.emit(data);
   }
 
-  public onOpenSuggestion() {
-    this.hideSearchResult = false;
-  }
-
-  // events
   public onGmapItemClick(data) {
     this.searchElementRef.nativeElement.value = data.structured_formatting.main_text;
     this.onMapsChangePlace.emit(data);
