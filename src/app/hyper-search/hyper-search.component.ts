@@ -62,8 +62,12 @@ export class HyperSearchComponent implements OnInit {
       this.mapsAPILoader.load().then(() => {
         let inputText = this.searchElementRef.nativeElement.value;
         let autocompleteService = new google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions(
-          {input: inputText},
+        autocompleteService.getPlacePredictions({
+            componentRestrictions: {
+              country: 'sg'
+            },
+            input: inputText
+          },
           (result, status) => this.gmapResults = result);
       });
 
