@@ -30,6 +30,8 @@
 }
 .description {
     margin: 20px 40px;
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
 }
 .description p {
     font-size: 14px;

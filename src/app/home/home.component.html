@@ -88,7 +88,7 @@
                                    [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
                             </div>
                             <div class="bottom-content">
-                                <h5 class="mentioned">Mentioned by</h5>
+                                <h5 class="mentioned" *ngIf="item.field_event_option.field_mentioned_by?.length > 0">Mentioned by</h5>
                                 <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
                                     <li *ngFor="let ment of item.field_event_option.field_mentioned_by | slice:0:3">
                                         <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
