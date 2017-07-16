@@ -64,7 +64,7 @@
               </span>
               <div class="clear"></div>
             </li>
-            <li>
+            <li *ngIf="mentions.length">
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li class="mention" *ngFor="let mention of mentions">

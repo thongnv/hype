@@ -123,6 +123,10 @@ header ul li.pull-right {
   overflow: hidden;
 }
 
+#list-img-label {
+  margin: 0;
+}
+
 .form-actions button {
   width: calc(50% - 10px);
   height: 34px;

@@ -117,7 +117,6 @@ export class ShareEventComponent implements OnInit {
   }
 
   public markAsTouchPlace() {
-    console.log('here');
     this.eventForm.controls.eventPlace.markAsTouched();
   }
 
@@ -181,10 +180,9 @@ export class ShareEventComponent implements OnInit {
               filename: event.target.files[i].name,
               filemime: event.target.files[i].type
             };
-
-            this.previewUrl.push(img);
-
-            if (this.previewUrl.length >= 4) {
+            if (this.previewUrl.length < 4) {
+              this.previewUrl.push(img);
+            } else {
               this.addImage = false;
             }
           });

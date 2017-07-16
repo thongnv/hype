@@ -37,8 +37,8 @@ header ul li.active {
 
 /*form wrap start*/
 .form-wrap {
-  padding-bottom: 30px;
   border-right: 1px solid #eaeaea;
+  padding: 5px 10px 5px 15px;
 }
 
 .form-wrap form .row {
@@ -538,6 +538,7 @@ span.dollar-character {
 #eventPriceErr {
   clear: both;
   padding-top: 10px;
+  margin: 0;
 }
 
 .information-event .name-creator {
@@ -817,7 +818,7 @@ span.dollar-character {
 
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap {
-    padding: 5px 10px;
+    padding: 5px 10px 5px 15px
   }
 
   .list-preview-wrap .left-content {
