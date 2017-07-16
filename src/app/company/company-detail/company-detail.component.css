@@ -621,53 +621,69 @@ article {
   display: inline-block;
   margin-bottom: -3px;
 }
+
 /*review wrap end*/
 
 /*responsive*/
+
+.company-header .col-lg-6 {
+  width: 100%;
+  clear: both;
+}
+
+.company-header .col-lg-3 {
+  width: 50%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.company-header .head-right {
+  float: right;
+  margin-right: -5px;
+}
+
 @media (min-width: 1200px) {
 
 }
 
 @media only screen and (max-width: 414px) {
-  .company-info  p   span{
+  .company-info p span {
     float: none;
   }
 
-  .company-info p a{
+  .company-info p a {
     padding-left: inherit;
   }
 
-  .company-wrap .company-header{
-     padding: 30px 0px;
+  .company-wrap .company-header {
+    padding: 30px 0px;
     width: 100%;
   }
 
-
-
-  .company-wrap .company-header{
+  .company-wrap .company-header {
     max-width: inherit;
     width: 100%;
   }
 
-  .company-wrap .company-header h3{
+  .company-wrap .company-header h3 {
     max-width: inherit;
   }
 
-  .rating-star{
+  .rating-star {
     display: block;
     clear: both;
 
   }
 
-  .company-wrap  .company-header h3{
+  .company-wrap .company-header h3 {
     max-width: inherit;
     width: 100%;
   }
 
 }
 
-@media only screen and (min-width: 1000px) and (max-width: 1024px){
-  .detail-page .col-md-6{
+@media only screen and (min-width: 1000px) and (max-width: 1024px) {
+  .detail-page .col-md-6 {
     width: 48%;
   }
 }
@@ -685,53 +701,57 @@ article {
 }
 
 @media only screen and (max-width: 800px) {
-  .detail-page .col-md-6{
+  .detail-page .col-md-6 {
     padding-left: 0;
     padding-right: 0;
   }
+
   .all-reviews-wrap {
     padding: 15px;
   }
-  .experience-top h4.title-experiences-reviews-area{
+
+  .experience-top h4.title-experiences-reviews-area {
     font-size: 20px;
   }
-  .detail-page{
+
+  .detail-page {
     margin: 0;
     padding: 0 15px;
   }
-  .reviews-wrap{
+
+  .reviews-wrap {
     padding: 10px 0px;
   }
-  .detail-page .company-header{
+
+  .detail-page .company-header {
     padding: 15px 0;
   }
 
-  .company-wrap .company-info{
+  .company-wrap .company-info {
     padding: 30px 0px;
     box-shadow: none;
     border-bottom: 1px solid #ccc;
   }
 
-  .content-info-experience{
+  .content-info-experience {
     margin-right: 10px;
   }
 
-  .information-experience .img-circle{
+  .information-experience .img-circle {
     width: 50px;
-    height:50px;
+    height: 50px;
   }
 
-  .rating-star{
+  .rating-star {
     margin-left: 62px;
     margin-top: 5px;
   }
-  .detail-info-experience{
+
+  .detail-info-experience {
     margin: 10px 0 20px;
   }
 
-
-
-  .company-info  p  a{
+  .company-info p a {
     width: 74%;
     float: left;
     margin-bottom: 10px;
@@ -739,13 +759,14 @@ article {
 
 }
 
-@media  only screen and (max-width: 414px)  {
-  .info-label i.sprite{display: block; float: left; margin-right: 20px;}
-  .info-label >span{display: none;}
-}
+@media only screen and (max-width: 414px) {
+  .info-label i.sprite {
+    display: block;
+    float: left;
+    margin-right: 20px;
+  }
 
-@media only screen and (max-width: 1504px) {
-  .company-header .col-lg-6{width: 100%; clear: both;}
-  .company-header .col-lg-3{width: 50%; padding-left: 0; padding-right: 0;}
-  .company-header .head-right{float: right; margin-right: -5px;}
+  .info-label > span {
+    display: none;
+  }
 }
