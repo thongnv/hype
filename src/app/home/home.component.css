@@ -680,7 +680,6 @@ ul.mentioned-item {
   height: 84px;
   font-family: Roboto, sans-serif;
   font-size: 30px;
-  font-weight: bold;
   line-height: 1.4;
   text-align: left;
   color: #ffffff;
@@ -688,6 +687,9 @@ ul.mentioned-item {
   top: 25%;
   left: 20%;
   z-index: 10;
+}
+.list-item .caption h3 {
+  margin-top: 10px;
 }
 
 .list-item .caption .list-item-link {
