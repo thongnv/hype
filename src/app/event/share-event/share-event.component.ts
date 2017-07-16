@@ -182,7 +182,8 @@ export class ShareEventComponent implements OnInit {
             };
             if (this.previewUrl.length < 4) {
               this.previewUrl.push(img);
-            } else {
+            }
+            if (this.previewUrl.length >= 4) {
               this.addImage = false;
             }
           });

@@ -181,7 +181,7 @@
 
 button.btn.btn-default.active {
   font-size: 14px;
-  height: 120%;
+  height: 118%;
   color: #fff;
   position: relative;
   bottom: 2px;
@@ -378,7 +378,7 @@ button.btn.btn-default.active {
   float: left;
   margin-top: 0;
   font-size: 14px;
-  width: 100px;
+  width: 86px;
   line-height: 40px;
   color: #3b3b3b;
 }
@@ -921,6 +921,13 @@ ul.mentioned-item {
 .home-page .left-box {
   padding: 0;
 }
+.mentioned {
+  width: 86px;
+}
+
+ul.mentioned-item {
+  padding-left: 20px;
+}
 
 @media only screen and (max-width: 1200px) {
   .home-page .left-box {
@@ -944,8 +951,8 @@ ul.mentioned-item {
     padding: 0;
   }
 
-  .btn {
-    padding: 0;
+  ul.mentioned-item {
+    padding-left: 20px;
   }
 }
 
@@ -958,8 +965,8 @@ ul.mentioned-item {
     width: 30%;
   }
 
-  .btn {
-    padding: 0;
+  ul.mentioned-item {
+    padding-left: 20px;
   }
 }
 
@@ -1090,6 +1097,10 @@ ul.mentioned-item {
 
   button.btn.btn-default.active {
     font-size: 13px;
+  }
+
+  ul.mentioned-item {
+    padding-left: 0;
   }
 }
 
