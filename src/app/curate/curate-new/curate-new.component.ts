@@ -109,7 +109,8 @@ export class CurateNewComponent implements OnInit {
               };
               if (this.previewUrl.length < 5) {
                 this.previewUrl.push(img);
-              } else {
+              }
+              if (this.previewUrl.length >= 5) {
                 this.addImage = false;
               }
             });
