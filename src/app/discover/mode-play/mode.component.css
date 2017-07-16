@@ -137,6 +137,8 @@
     font-size: 12px;
     display: inline-block;
     float: inherit;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filterCategory .btn-filter-block label.more {
