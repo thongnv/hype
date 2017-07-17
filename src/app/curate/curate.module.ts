@@ -21,16 +21,11 @@ import {CurateEditComponent} from "./curate-edit/curate-edit.component";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     TruncateModule,
     MomentModule,
     TinymceModule.withConfig({auto_focus: false}),
     ReCaptchaModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     HelperModule,
     HtmlToTextModule,
     CurateRoutingModule

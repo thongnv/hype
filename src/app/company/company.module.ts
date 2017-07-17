@@ -24,16 +24,11 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     TruncateModule,
     MomentModule,
     RatingModule,
     NgbModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     HelperModule,
     SlimScrollModule,
     CompanyRoutingModule,

@@ -172,11 +172,12 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
+        this.msgContent = item.company_name + ' has been removed from your favorites.';
         this.alertType = 'success';
       } else {
+        this.msgContent = 'Unexpected error occurred, please try again.';
         this.alertType = 'danger';
       }
-      this.msgContent = item.company_name + ' has been removed from your favorites.';
       this.smallLoader.hide();
     });
   }

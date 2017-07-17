@@ -17,14 +17,9 @@ import { ModeComponent } from './mode-play/mode.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     NouisliderModule,
     NgbModule.forRoot(),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     HtmlToTextModule,
     HelperModule,
     DiscoverRoutingModule

@@ -12,12 +12,7 @@ import { CurateDetailComponent } from './curate-detail/curate-detail.component';
 @NgModule({
   imports: [
     CommonModule,
-
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     HelperModule,
     SlimScrollModule,
     ArticleRoutingModule

@@ -20,14 +20,9 @@ import { CommentComponent } from './detail/comment.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     NgbModule.forRoot(),
     RatingModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     HelperModule,
     CarouseModule,
     EventRoutingModule

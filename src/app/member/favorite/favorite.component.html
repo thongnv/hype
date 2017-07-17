@@ -26,9 +26,12 @@
                               [isCurrentUser]="isCurrentUser"
                               (onClickDelete)="onClickDeleteEvent($event)">
           </app-favorite-event>
-          <div class="list-bottom">
-          </div>
           <app-small-loader></app-small-loader>
+          <div class="list-bottom">
+            <div class="end-of-list" *ngIf="!setEvent.loadingInProgress && !events.length">
+              You have no favorite events yet!
+            </div>
+          </div>
         </div>
         <div class="tab-content fade" *ngIf="lists" [class.in]="selectedFavoriteType === 'list'">
           <app-favorite-list *ngFor="let fav of lists"
@@ -36,9 +39,12 @@
                              [isCurrentUser]="isCurrentUser"
                              (onClickDelete)="onClickDeleteList($event)">
           </app-favorite-list>
-          <div class="list-bottom">
-          </div>
           <app-small-loader></app-small-loader>
+          <div class="list-bottom">
+            <div class="end-of-list" *ngIf="!setList.loadingInProgress && !lists.length">
+              You have no favorite lists yet!
+            </div>
+          </div>
         </div>
         <div class="tab-content fade" *ngIf="places" [class.in]="selectedFavoriteType === 'place'">
           <app-favorite-place *ngFor="let fav of places"
@@ -46,10 +52,12 @@
                               [isCurrentUser]="isCurrentUser"
                               (onClickDelete)="onClickDeletePlace($event)">
           </app-favorite-place>
-          <div class="list-bottom">
-          </div>
-
           <app-small-loader></app-small-loader>
+          <div class="list-bottom">
+            <div class="end-of-list" *ngIf="!setPlace.loadingInProgress && !places.length">
+              You have no favorite places yet!
+            </div>
+          </div>
         </div>
       </div>
 
