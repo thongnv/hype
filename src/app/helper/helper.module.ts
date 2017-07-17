@@ -29,19 +29,13 @@ import { GeocodeMarkerComponent } from '../gmap/gmap-geocode-marker/gmap-geocode
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
-      libraries: ['places', 'geometry']
-    }),
-
+    AgmCoreModule,
     TruncateModule,
     HtmlToTextModule,
     SlimScrollModule
   ],
   exports: [
     TruncateModule,
-
     BoostrapAlertComponent,
     BoostrapCarouselComponent,
     SlideCarouselComponent,
