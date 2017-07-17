@@ -22,7 +22,7 @@ import '../styles/styles.scss';
 import '../styles/headings.css';
 
 // 3rd modules
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from 'angular2-google-maps/core';
@@ -187,6 +187,7 @@ type StoreType = {
     Title,
     GoogleMapsAPIWrapper,
     NgbDropdownConfig,
+    NgbPopoverConfig,
     GmapService,
     LoaderService,
     BaseApiService,

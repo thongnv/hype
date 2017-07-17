@@ -1,68 +1,118 @@
 <div class="setting-wrap table-wrap" *ngIf="ready">
+
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation
       [user]="user" [currentUser]="currentUser">
     </app-member-navigation>
   </div>
+
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
-    <div class="fav-component">
-      <h3 class="favorites-title">Favorites</h3>
-      <div class="btn-group tab-control">
-        <button class="btn btn-default" (click)="onSelectFavoriteType('event')"
-                [class.active]="selectedFavoriteType === 'event'">Events
-        </button>
-        <button class="btn btn-default" (click)="onSelectFavoriteType('list')"
-                [class.active]="selectedFavoriteType === 'list'">Lists
-        </button>
-        <button class="btn btn-default" (click)="onSelectFavoriteType('place')"
-                [class.active]="selectedFavoriteType === 'place'">Places
-        </button>
+
+    <div class="lists-wrap">
+
+      <div class="title title-list">My Created lists</div>
+
+      <div *ngIf="latestArticles" class="row wrap-post-news">
+        <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
+          <div class="image-post-news" [routerLink]="[art.alias]">
+            <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+          </div>
+          <div class="new-info">
+            <h4 class="post-title-content text-ellipsis">
+              <a class="title-hover" [routerLink]="[art.alias]">
+                {{art.title}}
+              </a>
+            </h4>
+            <p class="post-author">
+              By: <span class="auth-name">{{art.user_post.name}}</span>
+              <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+            </p>
+            <p class="content-post-news">
+              {{art.body | myHtml2Text | truncate : 60}}
+            </p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <app-small-loader></app-small-loader>
       </div>
-      <div class="tab-wrap" slimScroll width="auto" height="calc(100vh - 185px)" size="7px"
-           (scroll)="onScrollToBottom($event)"
-           [alwaysVisible]="true"
-           [touchScrollStep]="75"
-           [railVisible]="true" [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
-        <div class="tab-content fade" *ngIf="events" [class.in]="selectedFavoriteType === 'event'">
-          <app-favorite-event *ngFor="let fav of events"
-                              [item]="fav"
-                              [isCurrentUser]="isCurrentUser"
-                              (onClickDelete)="onClickDeleteEvent($event)">
-          </app-favorite-event>
-          <app-small-loader></app-small-loader>
-          <div class="list-bottom">
-            <div class="end-of-list" *ngIf="!setEvent.loadingInProgress && !events.length">
-              {{user.name}} has no favorite events yet!
+    </div>
+
+    <div class="events-wrap">
+
+      <div class="title title-event">My Events</div>
+
+      <div class="section v-scrollable">
+        <div *ngFor="let item of events"
+             class="wrap-each-items">
+          <div class="avatar-profile">
+            <div class="cover-avatar-picture" [routerLink]="[item.alias]"></div>
+            <a class="avatar-picture" [routerLink]="[item.alias]">
+              <img [src]="item.field_images[0]" width="140" height="140">
+            </a>
+            <div class="date-month">{{item.created| amFromUnix | date:'MMM'}}</div>
+            <div class="date-number">{{item.created| amFromUnix | date:'dd'}}</div>
+          </div>
+          <div class="information-profile">
+            <div class="top-content">
+              <h4 class="information-title pointer">
+                <a class="pull-left text-ellipsis real-title title-hover"
+                   *ngIf="item.title" [routerLink]="[item.alias]">
+                  {{item.title | truncate : 45}}
+                </a>
+                <span
+                  *ngIf="item.field_event_option.field_price !='0' && (item.field_event_option.field_price|json) != 'null'"
+                  class="free-price-button text-capitalize pull-right"
+                  [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
+
+                <span
+                  *ngIf="item.field_event_option.field_price =='0' || (item.field_event_option.field_price|json) == 'null'"
+                  class="free-price-button text-capitalize pull-right"
+                  [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
+              </h4>
+              <p class="detail-information"
+                 [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
+            </div>
+            <div class="bottom-content">
+              <h5 class="mentioned" *ngIf="item.field_event_option.field_mentioned_by?.length > 0">Mentioned by</h5>
+              <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
+                <li *ngFor="let ment of item.field_event_option.field_mentioned_by | slice:0:3">
+                  <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
+                    [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28"
+                    height="28"></a>
+                </li>
+                <ng-template #popContent>
+                  <ul class="list-inline">
+                    <li *ngFor="let ment of item.field_event_option.field_mentioned_by">
+                      <a class="mentioned-item-wrap" href="{{ment}}" target="_blank">
+                        <img [src]="'https://www.google.com/s2/favicons?domain='+ment"
+                             width="28"
+                             height="28">
+                      </a>
+                    </li>
+                  </ul>
+                </ng-template>
+                <button *ngIf="item.field_event_option.field_mentioned_by?.length >3"
+                        type="button" placement="top"
+                        style="background: transparent;outline: none"
+                        class="btn btn-secondary btn-more-mentioned"
+                        [ngbPopover]="popContent"
+                        triggers="click:blur"
+                        #p="ngbPopover"
+                        (click)="p.open()"
+                        (document:mouseup)="p.close()"
+                        (document:touchend)="p.close()"
+                        popoverTitle="Mentioned by">
+                  <i class="sprite sprite-icon-add"></i>
+                </button>
+              </ul>
             </div>
           </div>
+          <div class="clear"></div>
         </div>
-        <div class="tab-content fade" *ngIf="lists" [class.in]="selectedFavoriteType === 'list'">
-          <app-favorite-list *ngFor="let fav of lists"
-                             [item]="fav"
-                             [isCurrentUser]="isCurrentUser"
-                             (onClickDelete)="onClickDeleteList($event)">
-          </app-favorite-list>
-          <app-small-loader></app-small-loader>
-          <div class="list-bottom">
-            <div class="end-of-list" *ngIf="!setList.loadingInProgress && !lists.length">
-              {{user.name}} has no favorite lists yet!
-            </div>
-          </div>
-        </div>
-        <div class="tab-content fade" *ngIf="places" [class.in]="selectedFavoriteType === 'place'">
-          <app-favorite-place *ngFor="let fav of places"
-                              [item]="fav"
-                              [isCurrentUser]="isCurrentUser"
-                              (onClickDelete)="onClickDeletePlace($event)">
-          </app-favorite-place>
-          <app-small-loader></app-small-loader>
-          <div class="list-bottom">
-            <div class="end-of-list" *ngIf="!setPlace.loadingInProgress && !places.length">
-              {{user.name}} has no favorite places yet!
-            </div>
-          </div>
-        </div>
+        <!--#sdhkas-->
+        <app-small-loader></app-small-loader>
       </div>
+
     </div>
   </div>
 </div>
