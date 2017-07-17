@@ -15,6 +15,7 @@ import { UserService } from '../services/user.service';
 export class AuthComponent implements OnInit {
   public ready = false;
   public accountDisabled = false;
+  public insufficientGrantedScope = false;
   private user = this.localStorageService.get('user');
   private initParams: InitParams = AppSetting.FACEBOOK;
 
@@ -41,37 +42,42 @@ export class AuthComponent implements OnInit {
     this.facebookService.login(loginOptions).then(
       (loginRes: LoginResponse) => {
         console.log(loginRes);
-        this.userService.login(loginRes.authResponse.accessToken).subscribe(
-          (resp: any) => {
-            let data = resp.current_user;
-            let user: User = {
-              id: data.uid,
-              firstName: data.field_first_name,
-              lastName: data.field_last_name,
-              name: data.field_first_name + ' ' + data.field_last_name,
-              contactNumber: '',
-              country: '',
-              followingNumber: 0,
-              followerNumber: 0,
-              email: '',
-              followings: [],
-              followers: [],
-              followed: false,
-              showNav: true,
-              acceptNotification: true,
-              slug: data.slug,
-              avatar: data.avatar,
-              isAnonymous: false
-            };
-            this.localStorageService.set('user', user);
-            this.localStorageService.set('csrf_token', resp.csrf_token);
-            window.location.reload();
-          },
-          (error) => {
-            console.log(error);
-            this.accountDisabled = true;
-          });
-      });
+        if (loginRes.authResponse.grantedScopes.indexOf('email') !== -1) {
+          this.userService.login(loginRes.authResponse.accessToken).subscribe(
+            (resp: any) => {
+              let data = resp.current_user;
+              let user: User = {
+                id: data.uid,
+                firstName: data.field_first_name,
+                lastName: data.field_last_name,
+                name: data.field_first_name + ' ' + data.field_last_name,
+                contactNumber: '',
+                country: '',
+                followingNumber: 0,
+                followerNumber: 0,
+                email: '',
+                followings: [],
+                followers: [],
+                followed: false,
+                showNav: true,
+                acceptNotification: true,
+                slug: data.slug,
+                avatar: data.avatar,
+                isAnonymous: false
+              };
+              this.localStorageService.set('user', user);
+              this.localStorageService.set('csrf_token', resp.csrf_token);
+              window.location.reload();
+            },
+            (error) => {
+              console.log(error);
+              this.accountDisabled = true;
+            });
+        } else {
+          this.insufficientGrantedScope = true;
+        }
+      }
+    );
   }
 
 }
