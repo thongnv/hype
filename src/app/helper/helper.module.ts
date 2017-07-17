@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TruncateModule } from 'ng2-truncate';
 import { ImageModal } from 'angular2-image-popup/directives/angular2-image-popup/image-modal-popup';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { TinymceModule } from 'angular2-tinymce';
 
 import { SlimScrollModule } from '../slim-scroll/slim-scroll.module';
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
@@ -31,6 +32,8 @@ import { GeocodeMarkerComponent } from '../gmap/gmap-geocode-marker/gmap-geocode
     ReactiveFormsModule,
     AgmCoreModule,
     TruncateModule,
+    TinymceModule.withConfig({auto_focus: false}),
+
     HtmlToTextModule,
     SlimScrollModule
   ],

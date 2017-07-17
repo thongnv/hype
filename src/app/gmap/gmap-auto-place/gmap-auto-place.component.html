@@ -84,8 +84,12 @@
     </div>
   </div>
   <div *ngIf="description" class="form-group">
-    <textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"
-              placeholder="Write your comments"></textarea>
+
+    <!--<textarea formControlName="description" class="form-control" name="" id="" cols="20" rows="3"-->
+              <!--placeholder="Write your comments"></textarea>-->
+
+    <app-tinymce formControlName="description"></app-tinymce>
+
     <small *ngIf="group.get('description').hasError('required') && group.get('description').touched" class="text-danger">
       This field is required.
     </small>
