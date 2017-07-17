@@ -48,6 +48,10 @@ export class GmapAutoPlaceComponent implements OnInit {
     // TODO
   }
 
+  public markTouchMCE() {
+    this.group.controls.description.markAsTouched();
+  }
+
   public onSubmit(event, keyword?: string) {
     this.searchToken = event.type === 'submit' ?
       this.group.value.keyword.trim() : keyword.trim();
