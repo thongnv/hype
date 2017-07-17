@@ -32,6 +32,8 @@ export class CurateNewComponent implements OnInit {
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
+  public validateSize: boolean = true;
+  public validateType: boolean = true;
 
   public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
@@ -92,9 +94,11 @@ export class CurateNewComponent implements OnInit {
   public readUrl(event) {
     let reader = [];
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 5) {
-      let typeFile = new RegExp(`^img\/\w+`);
+      let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
       for (let i = 0; i < event.target.files.length && i < 5; i++) {
-        if (true) {
+        let size = event.target.files[i].size;
+        let type = event.target.files[i].type;
+        if (size < 6291456 && typeFile.test(type)) {
           reader[i] = new FileReader();
           reader[i].onload = (e) => {
             let image = new Image();
@@ -116,6 +120,9 @@ export class CurateNewComponent implements OnInit {
             });
           };
           reader[i].readAsDataURL(event.target.files[i]);
+        } else {
+          this.validateSize = false;
+          this.validateType = false;
         }
       }
     }
