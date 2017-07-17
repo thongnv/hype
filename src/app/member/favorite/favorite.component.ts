@@ -217,7 +217,7 @@ export class FavoriteComponent implements OnInit {
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
       this.smallLoader.show();
-      this.userService.getLists(slugName, page).subscribe(
+      this.userService.getFavouriteLists(slugName, page).subscribe(
         (response) => {
           if (response.total > 0) {
             if (this.setList.offset < response.total) {
@@ -245,7 +245,7 @@ export class FavoriteComponent implements OnInit {
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
       this.smallLoader.show();
-      this.userService.getEvents(slugName, page).subscribe(
+      this.userService.getFavouriteEvents(slugName, page).subscribe(
         (response) => {
           if (this.setEvent.offset < response.total) {
             response.data.forEach((item) => {
