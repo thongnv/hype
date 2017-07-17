@@ -134,7 +134,6 @@
 }
 .result-info{
   width: calc(100% - 35px);
-  float: right;
   padding-left: 10px;
   line-height: 18px;
   margin-right: -5px;
@@ -144,6 +143,7 @@
 }
 .item-link{
   display: block;
+  overflow: hidden;
 }
 .keyword-copy{
   float: left;
