@@ -117,6 +117,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   private getArticles() {
+    this.smallLoader.show();
     this.userService.getArticles(this.slugName, this.listPageNum).subscribe(
       (response) => {
         if (response.data.length) {
@@ -128,6 +129,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   private getEvents() {
+    this.smallLoader.show();
     this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
       (response) => {
         if (response.data.length) {
@@ -139,24 +141,23 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   private getMoreEvents() {
-    if (!this.loadingMore) {
-      this.noMoreEvents = false;
-      this.loadingInProgress = true;
+    if (!this.loadingMore && !this.noMoreEvents) {
+      this.loadingMore = true;
       this.smallLoader.show();
-      this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
+      console.log(this.eventPageNum);
+      this.userService.getEvents(this.slugName, ++this.eventPageNum).subscribe(
         (response) => {
           if (this.eventIndex < response.total) {
             response.data.forEach((item) => {
               this.eventIndex++;
               this.events.push(item);
-              this.loadingMore = false;
             });
             this.eventPageNum = Math.round(this.eventIndex / 5);
           } else {
             this.noMoreEvents = true;
           }
+          this.loadingMore = false;
           this.smallLoader.hide();
-          this.loadingInProgress = false;
         }
       );
     }
