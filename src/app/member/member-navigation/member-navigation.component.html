@@ -29,18 +29,18 @@
 <div class="clear"></div>
 <div *ngIf="isCurrentUser">
   <ul class="member-nav">
-    <li [routerLink]="['/'+currentUser.slug+'/profile-edit']" routerLinkActive="active"
+    <li [routerLink]="['/'+user.slug+'/profile-edit']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}" class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">My Profile
     </li>
-    <li [routerLink]="['/'+currentUser.slug+'/setting']" routerLinkActive="active"
+    <li [routerLink]="['/'+user.slug+'/setting']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Settings
     </li>
-    <li [routerLink]="['/'+currentUser.slug+'/interest']" routerLinkActive="active"
+    <li [routerLink]="['/'+user.slug+'/interest']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Interests
     </li>
-    <li [routerLink]="['/'+currentUser.slug+'/favorite']" routerLinkActive="active"
+    <li [routerLink]="['/'+user.slug+'/favorite']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-3 col-md-12 col-lg-12 text-ellipsis">Favorites
     </li>
@@ -54,11 +54,8 @@
     <li [routerLink]="['/' + currentUser.slug]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
         class="col-xs-5 col-sm-5 col-md-12 col-lg-12 text-ellipsis">@{{currentUser.slug}}
     </li>
-    <li [routerLink]="['/curate']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-3 col-sm-3 col-md-12 col-lg-12 text-ellipsis">Lists
-    </li>
-    <li [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-4 col-sm-4 col-md-12 col-lg-12 text-ellipsis">Activities
+    <li [routerLink]="['/'+currentUser.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+        class="col-xs-3 col-sm-3 col-md-12 col-lg-12 text-ellipsis">Favourites
     </li>
   </ul>
 </div>

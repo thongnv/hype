@@ -36,7 +36,7 @@
           <div class="place-item-img">
             <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
           </div>
-          <p class="place-item-description">{{plc.field_place_comment}}</p>
+          <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
         </div>
         <div class="mobile-footer"></div>
       </div>

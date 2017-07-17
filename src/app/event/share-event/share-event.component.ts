@@ -59,7 +59,8 @@ export class ShareEventComponent implements OnInit {
   ];
   public gMapStyles: any;
   public validCaptcha = false;
-
+  public validateSize: boolean = true;
+  public validateType: boolean = true;
   public submitted: boolean = false;
 
   @ViewChild(HyperSearchComponent)
@@ -167,28 +168,36 @@ export class ShareEventComponent implements OnInit {
   public readUrl(event) {
     let reader = [];
     if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+      let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
-        reader[i] = new FileReader();
-        reader[i].onload = (e) => {
-          let image = new Image();
-          image.src = e.target.result;
+        let size = event.target.files[i].size;
+        let type = event.target.files[i].type;
+        if (size < 6291456 && typeFile.test(type)) {
+          reader[i] = new FileReader();
+          reader[i].onload = (e) => {
+            let image = new Image();
+            image.src = e.target.result;
 
-          this.resizeImage(image, 480, 330, (resizedImage) => {
-            let img = {
-              url: resizedImage,
-              value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-              filename: event.target.files[i].name,
-              filemime: event.target.files[i].type
-            };
-            if (this.previewUrl.length < 4) {
-              this.previewUrl.push(img);
-            }
-            if (this.previewUrl.length >= 4) {
-              this.addImage = false;
-            }
-          });
-        };
-        reader[i].readAsDataURL(event.target.files[i]);
+            this.resizeImage(image, 480, 330, (resizedImage) => {
+              let img = {
+                url: resizedImage,
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type
+              };
+              if (this.previewUrl.length < 4) {
+                this.previewUrl.push(img);
+              }
+              if (this.previewUrl.length >= 4) {
+                this.addImage = false;
+              }
+            });
+          };
+          reader[i].readAsDataURL(event.target.files[i]);
+        } else {
+          this.validateSize = false;
+          this.validateType = false;
+        }
       }
     }
   }

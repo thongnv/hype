@@ -46,6 +46,10 @@
           <small *ngIf="previewUrl == 0" class="text-danger">
             No file selected.
           </small>
+          <small *ngIf="!validateSize || !validateType" class="text-danger">
+            Maximum file size: 6MB. <br/>
+            Allowed file types: jpg, jpeg, png, gif, bmp.
+          </small>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
               <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
+import { HomeService } from '../../services/home.service';
 
 const PAGE_SIZE = 10;
 
@@ -25,12 +26,10 @@ export class ProfilePublicComponent implements OnInit {
   public setList: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
-  public setPlace: any = {
-    offset: 0, endOfList: false, loadingInProgress: false
-  };
   public setEvent: any = {
     offset: 0, endOfList: false, loadingInProgress: false
   };
+  public latestArticles = [];
   public sub: any;
   public slugName: any;
   public followed: boolean = false;
@@ -40,15 +39,15 @@ export class ProfilePublicComponent implements OnInit {
   public places = [];
   public lists = [];
   private listPageNum: number = 0;
-  private eventPageNum: number = 0;
-  private placePageNum: number = 0;
 
-  public constructor(private loaderService: LoaderService,
-                     private smallLoader: SmallLoaderService,
-                     private mainService: MainService,
-                     private userService: UserService,
-                     private route: ActivatedRoute,
-                     private localStorageService: LocalStorageService) {
+  constructor(private homeService: HomeService,
+              private loaderService: LoaderService,
+              private mainService: MainService,
+              private userService: UserService,
+              private smallLoader: SmallLoaderService,
+              private localStorageService: LocalStorageService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   public ngOnInit() {
@@ -65,132 +64,22 @@ export class ProfilePublicComponent implements OnInit {
         (resp) => {
           this.currentUser = resp;
           this.currentUser.showNav = false;
-          this.ready = true;
           this.loaderService.hide();
+          this.ready = true;
         },
+        (error) => console.log(error)
       );
-      this.getEvent(this.slugName, this.eventPageNum);
-    });
-  }
-
-  public onSelectFavoriteType(type: string): void {
-    this.selectedFavoriteType = type;
-    if (type === 'event' && !this.setEvent.offset) {
-      this.getEvent(this.slugName, this.eventPageNum);
-    }
-    if (type === 'list' && !this.setList.offset) {
-      this.getList(this.slugName, this.listPageNum);
-    }
-    if (type === 'place' && !this.setPlace.offset) {
-      this.getPlace(this.slugName, this.placePageNum);
-    }
-  }
-
-  public onClickLike(item: any): void {
-    this.favorite.forEach((fav, index) => {
-      if (fav.id === item.id) {
-        this.favorite[index] = item;
-      }
-    });
-  }
-
-  public onClickDeleteEvent(item: any) {
-    this.userService.unFavoriteEventList(item.slug).subscribe(
-      (response) => {
-        if (response.status) {
-          this.events.forEach((event, index) => {
-            if (item === event) {
-              delete this.events[index];
-              this.setEvent.offset--;
-              if (this.setEvent.offset === 0) {
-                this.setEvent.endOfList = true;
-              }
-            }
-          });
-        }
-      }
-    );
-  }
-
-  public onClickDeleteList(item: any) {
-    this.userService.unFavoriteEventList(item.slug).subscribe(
-      (response) => {
-        if (response.status) {
-          this.lists.forEach((list, index) => {
-            if (item === list) {
-              delete this.lists[index];
-              this.setList.offset--;
-              if (this.setList.offset === 0) {
-                this.setList.endOfList = true;
-              }
-            }
-          });
-        }
-      }
-    );
-  }
-
-  public onClickDeletePlace(item: any) {
-    this.mainService.favoritePlace(item.ids_no).subscribe((response) => {
-      if (response.error === 0) {
-        this.places.forEach((place, index) => {
-          if (item === place) {
-            delete this.places[index];
-            this.setPlace.offset--;
-            if (this.setPlace.offset === 0) {
-              this.setPlace.endOfList = true;
-            }
-          }
-        });
-      }
-    });
-  }
-
-  public onScrollToBottom(event) {
-    let elm = event.srcElement;
-    if (elm.clientHeight + elm.scrollTop + elm.clientTop === elm.scrollHeight) {
-      switch (this.selectedFavoriteType) {
-        case 'event':
-          this.getEvent(this.slugName, this.eventPageNum);
-          break;
-        case 'list':
-          this.getList(this.slugName, this.listPageNum);
-          break;
-        case 'place':
-          this.getPlace(this.slugName, this.placePageNum);
-          break;
-        default:
-          break;
-      }
-    }
-
-  }
-
-  private getPlace(slugName?: string, page?: number) {
-    if (!this.setPlace.loadingInProgress) {
-      this.smallLoader.show();
-      this.setPlace.endOfList = false;
-      this.setPlace.loadingInProgress = true;
-      this.userService.getFavoritePlaces(slugName, page).subscribe(
-        (response) => {
-          if (response.total > 0) {
-            if (this.setPlace.offset < response.total) {
-              response.results.forEach((item) => {
-                this.setPlace.offset++;
-                this.places.push(item);
-              });
-              this.placePageNum = Math.round(this.setPlace.offset / PAGE_SIZE);
-            } else {
-              this.setPlace.endOfList = true;
-            }
-          } else {
-            this.setPlace.endOfList = true;
-          }
-          this.setPlace.loadingInProgress = false;
-          this.smallLoader.hide();
+      this.getEvents();
+      this.mainService.getCurate('latest', '*', 0, 3).subscribe(
+        (response: any) => {
+          this.latestArticles = response.data;
         }
       );
-    }
+    });
+  }
+
+  public p() {
+    // TODO;
   }
 
   private getList(slugName?: string, page?: number) {
@@ -220,26 +109,32 @@ export class ProfilePublicComponent implements OnInit {
     }
   }
 
-  private getEvent(slugName?: string, page?: number) {
-    if (!this.setEvent.loadingInProgress) {
-      this.smallLoader.show();
-      this.setEvent.endOfList = false;
-      this.setEvent.loadingInProgress = true;
-      this.userService.getEvents(slugName, page).subscribe(
-        (response) => {
-          if (this.setEvent.offset < response.total) {
-            response.data.forEach((item) => {
-              this.setEvent.offset++;
-              this.events.push(item);
-            });
-            this.eventPageNum = Math.round(this.setEvent.offset / PAGE_SIZE);
-          } else {
-            this.setEvent.endOfList = true;
-          }
-          this.setEvent.loadingInProgress = false;
-          this.smallLoader.hide();
-        }
-      );
-    }
+  private getEvents() {
+    let params = {
+      date: '',
+      lat: 1.359,
+      latest: '',
+      limit: 10,
+      long: 103.818,
+      order: '',
+      page: 0,
+      price: '',
+      radius: 0,
+      start: 0,
+      tid: '',
+      weekend: '',
+      when: ''
+    };
+    this.homeService.getEvents(params).map((response) => response.json()).subscribe(
+      (response) => {
+        this.events = response.data;
+        this.loaderService.hide();
+        this.smallLoader.hide();
+      },
+      (err) => {
+        console.log(err);
+        this.loaderService.hide();
+        this.smallLoader.hide();
+      });
   }
 }
