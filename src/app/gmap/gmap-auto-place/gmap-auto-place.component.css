@@ -124,6 +124,7 @@
 .list-location-address li a img {
   width: 35px;
   height: 35px;
+  float: left;
 }
 
 /*search location end*/
@@ -138,6 +139,7 @@
   padding-left: 10px;
   line-height: 18px;
   margin-right: -5px;
+  float: left;
 }
 .result-info.map{
   float: none;
