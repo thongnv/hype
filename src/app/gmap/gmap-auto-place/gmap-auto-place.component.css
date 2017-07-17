@@ -52,6 +52,7 @@
   width: 100%;
   border: 1px solid #cacaca;
   position: relative;
+  z-index: 1;
 }
 .display-location-address {
   padding: 0 10px;
