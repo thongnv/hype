@@ -23,7 +23,7 @@
                 <img [src]="art.field_images[0]" style="margin:auto;">
                 <div class="carousel-caption">
                   <div class="carousel-content">
-                    <strong [routerLink]="[art.alias]"  class="post-title-content title-hover text-ellipsis">{{art.title}}</strong>
+                    <strong [routerLink]="[art.alias]" class="post-title-content title-hover text-ellipsis">{{art.title}}</strong>
                     <strong class="post-author">
                       <span class="auth-name">By: {{art.user_post.name}}</span>
                       <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
@@ -34,7 +34,7 @@
             </app-slide-carousel>
           </app-boostrap-carousel>
         </div>
-        <h4 class="head">What's news</h4>
+        <h4 class="head">What's new</h4>
         <div *ngIf="latestArticles" class="row wrap-post-news">
           <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
             <div class="image-post-news" [routerLink]="[art.alias]">
