@@ -576,8 +576,7 @@ export class ModeComponent implements OnInit {
     item.is_favorite = !item.is_favorite;
     this.modeService.favoritePlace(item.Ids_No).subscribe(
       (resp) => {
-        this.alertType = 'success';
-        this.msgContent = resp.message;
+        console.log(resp);
       },
       (error) => {
         console.log(error);
