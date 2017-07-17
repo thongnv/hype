@@ -192,7 +192,7 @@ export class UserService {
       });
   }
 
-  public getEvents(slugName?: string, page?: number): Observable<any> {
+  public getFavouriteEvents(slugName?: string, page?: number): Observable<any> {
     let user = this.localStorageService.get('user') as User;
     slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');
@@ -213,7 +213,45 @@ export class UserService {
       });
   }
 
-  public getLists(slugName?: string, page?: number): Observable<any> {
+  public getArticles(userSlug: string, page: number): Observable<any> {
+    let user = this.localStorageService.get('user') as User;
+    let csrfToken = this.localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/article' +
+      '?_format=json' +
+      '&user=' + userSlug +
+      '&page=' + page +
+      '&limit=3',
+      options
+    )
+      .map((resp) => resp.json())
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getEvents(userSlug: string, page: number): Observable<any> {
+    let user = this.localStorageService.get('user') as User;
+    let csrfToken = this.localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/event' +
+      '?_format=json' +
+      '&user=' + userSlug +
+      '&page=' + page +
+      '&limit=5',
+      options
+    )
+      .map((resp) => resp.json())
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getFavouriteLists(slugName?: string, page?: number): Observable<any> {
     let user = this.localStorageService.get('user') as User;
     slugName = slugName ? slugName : user.slug;
     let csrfToken = this.localStorageService.get('csrf_token');

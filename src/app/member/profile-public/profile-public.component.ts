@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MainService } from '../../services/main.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { HomeService } from '../../services/home.service';
-
-const PAGE_SIZE = 10;
+import $ from 'jquery';
 
 @Component({
   selector: 'app-profile-public',
@@ -23,31 +20,27 @@ export class ProfilePublicComponent implements OnInit {
   public favorite: any;
   public selectedFavoriteType: any;
   public isCurrentUser: boolean = false;
-  public setList: any = {
-    offset: 0, endOfList: false, loadingInProgress: false
-  };
-  public setEvent: any = {
-    offset: 0, endOfList: false, loadingInProgress: false
-  };
+  public reachedFirst = true;
+  public reachedEnd = false;
+  public noMoreEvents = false;
+  public eventIndex = 0;
   public latestArticles = [];
   public sub: any;
   public slugName: any;
   public followed: boolean = false;
   public ready = false;
-
+  public loadingInProgress = false;
+  public loadingMore = false;
   public events = [];
   public places = [];
-  public lists = [];
   private listPageNum: number = 0;
+  private eventPageNum: number = 0;
 
-  constructor(private homeService: HomeService,
-              private loaderService: LoaderService,
-              private mainService: MainService,
+  constructor(private loaderService: LoaderService,
               private userService: UserService,
               private smallLoader: SmallLoaderService,
               private localStorageService: LocalStorageService,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private route: ActivatedRoute) {
   }
 
   public ngOnInit() {
@@ -69,12 +62,16 @@ export class ProfilePublicComponent implements OnInit {
         },
         (error) => console.log(error)
       );
+      this.getArticles();
       this.getEvents();
-      this.mainService.getCurate('latest', '*', 0, 3).subscribe(
-        (response: any) => {
-          this.latestArticles = response.data;
+    });
+
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if (!this.loadingMore && !this.noMoreEvents) {
+          this.getMoreEvents();
         }
-      );
+      }
     });
   }
 
@@ -82,59 +79,86 @@ export class ProfilePublicComponent implements OnInit {
     // TODO;
   }
 
-  private getList(slugName?: string, page?: number) {
-    if (!this.setList.loadingInProgress) {
-      this.smallLoader.show();
-      this.setList.endOfList = false;
-      this.setList.loadingInProgress = true;
-      this.userService.getLists(slugName, page).subscribe(
+  public next() {
+    if (!this.loadingInProgress && !this.reachedEnd) {
+      this.loadingInProgress = true;
+      this.userService.getArticles(this.slugName, ++this.listPageNum).subscribe(
         (response) => {
-          if (response.total > 0) {
-            if (this.setList.offset < response.total) {
-              response.data.forEach((item) => {
-                this.setList.offset++;
-                this.lists.push(item);
-              });
-              this.listPageNum = Math.round(this.setList.offset / PAGE_SIZE);
-            } else {
-              this.setList.endOfList = true;
-            }
+          if (response.data.length) {
+            this.latestArticles = response.data;
+            this.reachedFirst = false;
           } else {
-            this.setList.endOfList = true;
+            this.reachedEnd = true;
           }
-          this.setList.loadingInProgress = false;
+          this.loadingInProgress = false;
           this.smallLoader.hide();
         }
       );
     }
   }
 
-  private getEvents() {
-    let params = {
-      date: '',
-      lat: 1.359,
-      latest: '',
-      limit: 10,
-      long: 103.818,
-      order: '',
-      page: 0,
-      price: '',
-      radius: 0,
-      start: 0,
-      tid: '',
-      weekend: '',
-      when: ''
-    };
-    this.homeService.getEvents(params).map((response) => response.json()).subscribe(
+  public prev() {
+    this.reachedFirst = this.listPageNum === 0;
+    if (!this.loadingInProgress && !this.reachedFirst) {
+      this.loadingInProgress = true;
+      this.userService.getArticles(this.slugName, --this.listPageNum).subscribe(
+        (response) => {
+          if (response.data.length) {
+            this.latestArticles = response.data;
+            this.reachedEnd = false;
+          } else {
+            this.reachedFirst = true;
+          }
+          this.loadingInProgress = false;
+          this.smallLoader.hide();
+        }
+      );
+    }
+  }
+
+  private getArticles() {
+    this.userService.getArticles(this.slugName, this.listPageNum).subscribe(
       (response) => {
-        this.events = response.data;
-        this.loaderService.hide();
+        if (response.data.length) {
+          this.latestArticles = response.data;
+        }
         this.smallLoader.hide();
-      },
-      (err) => {
-        console.log(err);
-        this.loaderService.hide();
+      }
+    );
+  }
+
+  private getEvents() {
+    this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
+      (response) => {
+        if (response.data.length) {
+          this.events = response.data;
+        }
         this.smallLoader.hide();
-      });
+      }
+    );
+  }
+
+  private getMoreEvents() {
+    if (!this.loadingMore) {
+      this.noMoreEvents = false;
+      this.loadingInProgress = true;
+      this.smallLoader.show();
+      this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
+        (response) => {
+          if (this.eventIndex < response.total) {
+            response.data.forEach((item) => {
+              this.eventIndex++;
+              this.events.push(item);
+              this.loadingMore = false;
+            });
+            this.eventPageNum = Math.round(this.eventIndex / 5);
+          } else {
+            this.noMoreEvents = true;
+          }
+          this.smallLoader.hide();
+          this.loadingInProgress = false;
+        }
+      );
+    }
   }
 }
