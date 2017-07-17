@@ -39,7 +39,9 @@ nav {
 .rating i.star-icon:before {
   color: #ec3d62;
 }
-
+.mce-container {
+  margin-right: 1px !important;
+}
 nav a {
   background-color: $nav-button-color;
   color: white;
