@@ -6,6 +6,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { User } from '../../app.interface';
 import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 
 const PAGE_SIZE = 10;
 
@@ -43,6 +44,7 @@ export class ProfilePublicComponent implements OnInit {
   private placePageNum: number = 0;
 
   public constructor(private loaderService: LoaderService,
+                     private smallLoader: SmallLoaderService,
                      private mainService: MainService,
                      private userService: UserService,
                      private route: ActivatedRoute,
@@ -73,24 +75,14 @@ export class ProfilePublicComponent implements OnInit {
 
   public onSelectFavoriteType(type: string): void {
     this.selectedFavoriteType = type;
-    switch (this.selectedFavoriteType) {
-      case 'event':
-        if (!this.setEvent.offset) {
-          this.getEvent(this.slugName, this.eventPageNum);
-        }
-        break;
-      case 'list':
-        if (!this.setList.offset) {
-          this.getList(this.slugName, this.listPageNum);
-        }
-        break;
-      case 'place':
-        if (!this.setPlace.offset) {
-          this.getPlace(this.slugName, this.placePageNum);
-        }
-        break;
-      default:
-        break;
+    if (type === 'event' && !this.setEvent.offset) {
+      this.getEvent(this.slugName, this.eventPageNum);
+    }
+    if (type === 'list' && !this.setList.offset) {
+      this.getList(this.slugName, this.listPageNum);
+    }
+    if (type === 'place' && !this.setPlace.offset) {
+      this.getPlace(this.slugName, this.placePageNum);
     }
   }
 
@@ -176,6 +168,7 @@ export class ProfilePublicComponent implements OnInit {
 
   private getPlace(slugName?: string, page?: number) {
     if (!this.setPlace.loadingInProgress) {
+      this.smallLoader.show();
       this.setPlace.endOfList = false;
       this.setPlace.loadingInProgress = true;
       this.userService.getFavoritePlaces(slugName, page).subscribe(
@@ -194,6 +187,7 @@ export class ProfilePublicComponent implements OnInit {
             this.setPlace.endOfList = true;
           }
           this.setPlace.loadingInProgress = false;
+          this.smallLoader.hide();
         }
       );
     }
@@ -201,6 +195,7 @@ export class ProfilePublicComponent implements OnInit {
 
   private getList(slugName?: string, page?: number) {
     if (!this.setList.loadingInProgress) {
+      this.smallLoader.show();
       this.setList.endOfList = false;
       this.setList.loadingInProgress = true;
       this.userService.getLists(slugName, page).subscribe(
@@ -219,6 +214,7 @@ export class ProfilePublicComponent implements OnInit {
             this.setList.endOfList = true;
           }
           this.setList.loadingInProgress = false;
+          this.smallLoader.hide();
         }
       );
     }
@@ -226,6 +222,7 @@ export class ProfilePublicComponent implements OnInit {
 
   private getEvent(slugName?: string, page?: number) {
     if (!this.setEvent.loadingInProgress) {
+      this.smallLoader.show();
       this.setEvent.endOfList = false;
       this.setEvent.loadingInProgress = true;
       this.userService.getEvents(slugName, page).subscribe(
@@ -240,6 +237,7 @@ export class ProfilePublicComponent implements OnInit {
             this.setEvent.endOfList = true;
           }
           this.setEvent.loadingInProgress = false;
+          this.smallLoader.hide();
         }
       );
     }
