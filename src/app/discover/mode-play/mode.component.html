@@ -42,30 +42,30 @@
         <ul class="list-inline itemSort" [class.showTab]="!showTab">
           <li>
             <a (click)="showRagePriceFind(showPrice)" class="price-range">Price Range <i
-              [ngClass]="{'fa-angle-up':showPrice,'fa-angle-down':!showPrice}" class="fa "
-              aria-hidden="true"></i></a>
+                [ngClass]="{'fa-angle-up':showPrice,'fa-angle-down':!showPrice}" class="fa "
+                aria-hidden="true"></i></a>
           </li>
           <li>
             <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
                (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
-              [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
-              aria-hidden="true"></i></a>
+                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+                aria-hidden="true"></i></a>
             <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
                class="when-button">Activities ({{totalCuisine}})<i
-              [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
-              aria-hidden="true"></i></a>
+                [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+                aria-hidden="true"></i></a>
           </li>
           <li>
             <a (click)="showRateFind(showRate)" class="when-button">Ratings <i
-              [ngClass]="{'fa-angle-up':showRate,'fa-angle-down':!showRate}"
-              class="fa"
-              aria-hidden="true"></i></a>
+                [ngClass]="{'fa-angle-up':showRate,'fa-angle-down':!showRate}"
+                class="fa"
+                aria-hidden="true"></i></a>
           </li>
           <li>
             <a (click)="showBestFind(showBest)" class="when-button">Best For ({{best?.length}})<i
-              [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
-              class="fa"
-              aria-hidden="true"></i></a>
+                [ngClass]="{'fa-angle-up':showBest,'fa-angle-down':!showBest}"
+                class="fa"
+                aria-hidden="true"></i></a>
           </li>
           <li class="type" *ngIf="!showTab">
             <a (click)="showTypeFind(showType)" class="when-button">Type ({{type?.length}})
@@ -97,32 +97,47 @@
             <div *ngFor="let item of filterData.cuisine; let in =index"
                  style="margin-left: 43px" class="filter-item col-md-3">
               <div class="checkbox">
-                <input type="checkbox"
-                       (change)="selectCheckBox($event.target.checked,item)" [checked]="item?.checked">{{item.name}}
+                <label>
+                  <input type="checkbox"
+                         (change)="selectCheckBox($event.target.checked,item)" [checked]="item?.checked">{{item.name}}
+                </label>
               </div>
               <div class="" *ngIf="item.sub" style="margin-left: 30px;">
                 <div class="checkbox"
                      *ngFor="let sb of item.sub; let i = index">
-                  <input type="checkbox"
-                         (change)="selectCheckBox($event.target.checked,item,sb)"
-                         [checked]="sb.checked">{{sb.name}}
+                  <label>
+                    <input type="checkbox"
+                           (change)="selectCheckBox($event.target.checked,item,sb)"
+                           [checked]="sb.checked">{{sb.name}}
+                  </label>
                 </div>
               </div>
             </div>
           </div>
           <div *ngIf="showRate" class="text-center">
-            <ngb-rating [(rate)]="currentRate">
-              <ng-template let-fill="fill">
-                <span class="star" [class.filled]="fill === 100">&#9733;</span>
-              </ng-template>
-            </ngb-rating>
+            <ul class="list-inline">
+              <li *ngFor="let star of [1,2,3,4,5]" style="width: 80px">
+                <div class="checkbox" *ngIf="star == 1">
+                  <label>
+                    <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)"> {{star}} star
+                  </label>
+                </div>
+                <div class="checkbox" *ngIf="star != 1">
+                  <label>
+                    <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)"> {{star}} stars
+                  </label>
+                </div>
+              </li>
+            </ul>
           </div>
           <div *ngIf="showBest" class="best-for">
             <div *ngFor="let item of filterData.best; let in =index" class="filter-item"
                  style="margin-left: 40px">
               <div class="checkbox">
-                <input type="checkbox"
-                       (change)="bestChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
+                <label>
+                  <input type="checkbox"
+                         (change)="bestChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
+                </label>
               </div>
             </div>
           </div>
@@ -130,8 +145,10 @@
             <div *ngFor="let item of filterData.type; let in =index" class="filter-item"
                  style="margin-left: 40px">
               <div class="checkbox">
-                <input type="checkbox"
-                       (change)="typeChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
+                <label>
+                  <input type="checkbox"
+                         (change)="typeChangeCheckBox($event.target.checked,item)" [checked]="item.checked">{{item.name}}
+                </label>
               </div>
             </div>
           </div>
@@ -161,16 +178,18 @@
             <div class="avatar">
               <div class="badge">#{{index +1}}</div>
               <!--<img *ngIf="item.images && item.images?.length > 0" src="{{item.images[0].thumbnail}}">-->
-              <app-place-image [routerLink]="['/company',item.Company_Slug]" [name]="item.name" [width]="100" [height]="100">
+              <app-place-image [routerLink]="['/company',item.Company_Slug]" [name]="item.name" [width]="100"
+                               [height]="100">
               </app-place-image>
               <div (click)="onLikeEmit(item)" class="heart-icon">
-                <i [class.sprite-Favourites20x20]="item.is_favorite" [class.sprite-Unfavourites20x20]="!item.is_favorite" class="sprite-icon sprite"></i>
+                <i [class.sprite-Favourites20x20]="item.is_favorite"
+                   [class.sprite-Unfavourites20x20]="!item.is_favorite" class="sprite-icon sprite"></i>
               </div>
             </div>
             <div class="item-content">
               <h3 class="name pointer">
                 <a class="title-hover" [routerLink]="['/company',item.Company_Slug]">
-                {{item.Company_Name}}</a>
+                  {{item.Company_Name}}</a>
               </h3>
               <span *ngIf="item.distance" class="distance">{{item.distance}} km</span>
               <div class="clearfix"></div>
@@ -185,7 +204,6 @@
               </ngb-rating>
               <span class="review">{{item.rating.total}} Reviews</span>
               <div class="box-content">
-                <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
                 <p *ngIf="item.Company_Profile" [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>
               </div>
             </div>
@@ -197,19 +215,25 @@
         </div>
       </div>
 
+      <div id="notFoundDiv" *ngIf="shownotfound" class="not-found">
+        <div><div class="sprite sprite-no-results-found" style="display: inline-block"></div></div>
+        <h2>No Results Found</h2>
+        <div>You can revise filters or <a (click)="clearAllFilter()" class="clear_filter">clear all filters</a>.</div>
+      </div>
+
     </div>
     <div class="col-lg-6 col-xs-12 right-box fixed-right map-right hidden-xs hidden-sm">
       <div class="box-map">
         <sebm-google-map
-          [latitude]="lat"
-          [longitude]="lng"
-          [zoom]="mapZoom"
-          [disableDefaultUI]="false"
-          [zoomControl]="false"
-          [streetViewControl]="true"
-          [styles]="gMapStyles"
-          (centerChange)="centerChange($event)"
-          (boundsChange)="boundsChange($event)"
+            [latitude]="lat"
+            [longitude]="lng"
+            [zoom]="mapZoom"
+            [disableDefaultUI]="false"
+            [zoomControl]="false"
+            [streetViewControl]="true"
+            [styles]="gMapStyles"
+            (centerChange)="centerChange($event)"
+            (boundsChange)="boundsChange($event)"
         >
           <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                                [circleDraggable]="circleDraggable"

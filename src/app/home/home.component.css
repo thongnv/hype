@@ -432,13 +432,6 @@ button.btn.btn-default.active {
   position: relative;
 }
 
-.list-item .caption .list-item-link {
-  font-size: 16px;
-  line-height: 1.5;
-  text-align: left;
-  color: #ffffff;
-}
-
 .noUi-handle:before {
   left: 10px;
   background: #ec3d62;
@@ -699,6 +692,9 @@ ul.mentioned-item {
   line-height: 1.5;
   text-align: left;
   color: #ffffff;
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 5px;
 }
 
 .list-item .caption .list-item-link i {

@@ -27,6 +27,8 @@ export class CurateComponent implements OnInit {
     public screenWidth:number = 0;
     public screenHeight:number = 0;
 
+    public shownotfound:boolean = false;
+
     public constructor(private mainService:MainService,
                        private smallLoader:SmallLoaderService,
                        private loaderService:LoaderService) {

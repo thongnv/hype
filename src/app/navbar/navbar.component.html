@@ -131,14 +131,16 @@
 
         </div>
       </li>
-      <li class="sprite sprite-line nav-indicator">
+      <li class="sprite sprite-line nav-indicator"></li>
+      <li class="nav-indicator">
         <app-search></app-search>
       </li>
       <li *ngIf="!user.isAnonymous" class="pull-right nav-item add-event-button">
         <div class="user-option map-option pull-right" ngbDropdown>
           <a class="dropdown-toggle" id="drop4" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
-            <i class="sprite sprite-icon-add"></i>
+            CREATE
+            <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop4">
             <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

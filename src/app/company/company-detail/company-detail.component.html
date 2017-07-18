@@ -7,7 +7,8 @@
         <div class="company-wrap">
           <!-- carousel start -->
           <div class="carousel">
-            <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true" [noTransition]="noTransition">
+            <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="true"
+                                   [noTransition]="noTransition">
               <app-slide-carousel *ngFor="let slide of slides; let index=index"
                                   [ngStyle]="{
                                     'background-image': 'url(' + slide.image + ')',
@@ -15,11 +16,12 @@
                                      'background-position': 'center'
                                    }">
               </app-slide-carousel>
+              <i class="sprite sprite-icon-left-white"></i>
               <i class="icon-sm"
                  [class.icon-heart]="!bookmarked"
                  [class.icon-heart-selected]="bookmarked"
                  (click)="toggleBookmark()" aria-hidden="true"
-                  *ngIf="!user.isAnonymous">
+                 *ngIf="!user.isAnonymous">
               </i>
             </app-boostrap-carousel>
           </div>
@@ -51,7 +53,6 @@
             </div>
 
 
-
             <div class="company-description-wrap" *ngIf="description">
               <div *ngIf="descTruncated">
                 <div class="company-description">{{description | truncate:200 }}</div>
@@ -73,16 +74,18 @@
               <span class="info-label"><i class="sprite sprite-location"></i><span>Location</span></span>
               <a>{{location.name}}</a>
             </p>
-            <p>
+            <p *ngIf="website">
               <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Website</span></span>
               <a [href]="website" target="_blank" title="Go to company's website">{{website}}</a>
             </p>
-            <p>
+            <p *ngIf="phone">
               <span class="info-label"><i class="sprite sprite-phone_icon"></i><span>Phone No.</span></span>
               <a href="tel:{{phone}}" title="Call now">{{phone}}</a>
             </p>
-            <p>
-              <span class="info-label"><i class="sprite sprite-time_icon_grey"></i><span>Opening Hours</span></span>
+            <p *ngIf="openingHours.length">
+              <span class="info-label"><i class="sprite sprite-time_icon_grey"></i>
+                <span>Opening Hours</span>
+              </span>
               <span class="info-value" ngbDropdown *ngIf="openingHours.length">
                 <span ngbDropdownToggle>
                   <span [innerHTML]="openingHours[0]"></span>
@@ -140,9 +143,9 @@
       <div class="mobile-footer"></div>
     </div>
     <div class="col-md-6 map-fix hidden-md hidden-xs hidden-sm">
-      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15" >
+      <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15">
         <sebm-google-map-marker [latitude]="location.lat"
-                                [longitude]="location.lng" [iconUrl]="'assets/icon/icon_pointer.png'">
+                                [longitude]="location.lng" [iconUrl]="'assets/icon/locationmarker.png'">
         </sebm-google-map-marker>
       </sebm-google-map>
     </div>

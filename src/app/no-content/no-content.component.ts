@@ -4,7 +4,11 @@ import { Component } from '@angular/core';
   selector: 'no-content',
   template: `
     <div>
-      <h1 style="text-align: center">404: Page Not Found</h1>
+      <div id="notFoundDiv" class="not-found">
+        <div><div class="sprite sprite-no-results-found-2x" style="display: inline-block"></div></div>
+        <h2>Page not Found</h2>
+        <div>Sorry the page does not existed please <a  class="clear_filter">go home</a>.</div>
+      </div>
     </div>
   `
 })

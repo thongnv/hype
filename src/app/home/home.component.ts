@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
     alwaysShowCalendars: false,
   };
 
+  public shownotfound: boolean = false;
+
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
   private loadMore: boolean = false;
@@ -65,9 +67,8 @@ export class HomeComponent implements OnInit {
     limit: 20,
     start: 0,
     tid: '',
-    date: '',
+    time: '',
     latest: '',
-    weekend: '',
     when: '',
     lat: this.lat,
     long: this.lng,
@@ -106,7 +107,9 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.smallLoader.hide();
     this.loaderService.hide();
-    this.getTrending();
+    if(this.selectedEventOrder.name == 'top 100'){
+      this.getTrending();
+    }
     this.getTrandingCategories();
 
     let width = window.innerWidth
@@ -193,11 +196,11 @@ export class HomeComponent implements OnInit {
     this.showDate = false;
     this.showPrice = false;
     this.smallLoader.show();
-    this.params.limit = 10;
+    this.params.limit = 20;
+    this.params.start = 0;
     this.params.page = 0;
     this.params.tid = '';
-    this.params.date = '';
-    this.params.weekend = '';
+    this.params.time = '';
     this.params.radius = 0;
     this.params.price = '';
     this.params.order = '';
@@ -208,19 +211,15 @@ export class HomeComponent implements OnInit {
   public onSelectEventFilter(filter: any): void {
     this.clearParam();
     this.selectedEventFilter = filter;
-    console.log(filter);
     let date = new Date();
     if (filter.name === 'today') {
-      this.params.date = moment(date).format('YYYY-MM-DD');
+      this.params.time = 'today';
     } else if (filter.name === 'tomorrow') {
-      let tomorrow = date.setDate(date.getDate() + 1);
-      this.params.date = moment(date).format('YYYY-MM-DD');
+      this.params.time = 'tomorrow';
     } else if (filter.name === 'this week') {
-      this.params.weekend = 1;
-      this.params.date = '';
+      this.params.time = 'week';
     } else if (filter.name === 'all') {
-      this.params.weekend = 0;
-      this.params.date = '';
+      this.params.time = '';
     } else {
       this.showCircle = this.selectedEventOrder.name !== 'top 100';
     }
@@ -232,13 +231,10 @@ export class HomeComponent implements OnInit {
 
   public onSelectEventOrder(order: any): void {
     this.selectedEventOrder = order;
-    this.onClearForm();
     if (order.name === 'top 100') {
-      this.showCircle = false;
+      this.params.latest = '';
     } else {
-      this.showCircle = true;
       this.params.latest = 1;
-
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
         draggable: true
@@ -251,8 +247,12 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius = Math.round(distance / 1000) -1;
     }
+    this.params.page=0;
+    this.params.price=0;
+    this.params.start=20;
+    this.params.when=0;
     this.selected = 'all';
     this.markers = [];
     this.events = [];
@@ -367,7 +367,6 @@ export class HomeComponent implements OnInit {
         draggable: true
       });
       // map change sleep call api
-      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -377,10 +376,12 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius = Math.round(distance / 1000) -1;
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
+      this.params.page=0;
+      sleep(500);
       this.getTrending();
     }
   }
@@ -394,12 +395,11 @@ export class HomeComponent implements OnInit {
     this.showDate = false;
     this.showPrice = false;
     this.smallLoader.show();
-    this.params.limit = 10;
+    this.params.limit = 20;
     this.params.page = 0;
     this.params.tid = '';
-    this.params.date = '';
+    this.params.time = '';
     this.params.weekend = '';
-    this.params.radius = '';
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
@@ -458,7 +458,6 @@ export class HomeComponent implements OnInit {
       for (let i = 0; i < geo.length; i++) {
         for (let item of geo[i]) {
           let latlng = item.split(',');
-          console.log(parseFloat(latlng[0]));
           if (i === 0) {
             this.markers.push({
               lat: parseFloat(latlng[0]),
@@ -466,7 +465,7 @@ export class HomeComponent implements OnInit {
               label: '',
               opacity: 1,
               isOpenInfo: true,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           } else {
             this.markers.push({
@@ -475,7 +474,7 @@ export class HomeComponent implements OnInit {
               label: '',
               opacity: 0.4,
               isOpenInfo: false,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           }
         }
@@ -517,7 +516,7 @@ export class HomeComponent implements OnInit {
               label: events[i].title,
               opacity: 1,
               isOpenInfo: true,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           } else {
             this.markers.push({
@@ -526,7 +525,7 @@ export class HomeComponent implements OnInit {
               label: events[i].title,
               opacity: 0.4,
               isOpenInfo: false,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           }
 
@@ -593,6 +592,13 @@ export class HomeComponent implements OnInit {
       (resp) => {
         console.log(this.events);
         this.total = resp.total;
+
+        if (resp.total === 0) {
+          this.shownotfound = true;
+        }else{
+          this.shownotfound = false;
+        }
+
         if (resp.data.length === 0) {
           this.endRecord = true;
         }
@@ -630,6 +636,13 @@ export class HomeComponent implements OnInit {
           this.endRecord = true;
         }
         this.total = response.total;
+
+        if (response.total === 0) {
+          this.shownotfound = true;
+        }else{
+          this.shownotfound = false;
+        }
+
         this.passerTrending(response.geo);
         this.loadMore = false;
         this.loaderService.hide();

@@ -39,7 +39,7 @@ export class ModeComponent implements OnInit {
   public items = [];
   public filterData: any = [];
   public currentHighlightedMarker: number = 1;
-  public currentRate = 0;
+  public currentRate:any =[];
   private cuisine: any;
   public best: any = [];
   public type: any = [];
@@ -63,6 +63,7 @@ export class ModeComponent implements OnInit {
   public screenHeight: number = 0;
   public totalCuisine: number = 0;
   private stopped: boolean = false;
+  public shownotfound: boolean = false;
   private params = {
     type: 'all',
     kind: '',
@@ -291,6 +292,13 @@ export class ModeComponent implements OnInit {
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
+
+      if (resp.total === 0) {
+        this.shownotfound = true;
+      }else{
+        this.shownotfound = false;
+      }
+
       if (resp.company.length == 0) {
         this.end_record = true;
       }
@@ -420,7 +428,7 @@ export class ModeComponent implements OnInit {
                   label: companies[i].Company_Name,
                   opacity: 1,
                   isOpenInfo: false,
-                  icon: 'assets/icon/icon_pointer.png'
+                  icon: 'assets/icon/locationmarker.png'
                 });
               } else {
                 this.markers.push({
@@ -429,7 +437,7 @@ export class ModeComponent implements OnInit {
                   label: companies[i].Company_Name,
                   opacity: 0.4,
                   isOpenInfo: false,
-                  icon: 'assets/icon/icon_pointer.png'
+                  icon: 'assets/icon/locationmarker.png'
                 });
               }
           }
@@ -522,7 +530,7 @@ export class ModeComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = this.currentRate;
+      this.params.rate = this.currentRate.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');
@@ -667,7 +675,6 @@ export class ModeComponent implements OnInit {
   public changeSort() {
 
     if (this.sortPlace == 'ratings') {
-      console.log('ád');
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
     }
@@ -701,7 +708,6 @@ export class ModeComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.params.radius = 5;
     this.sortPlace = 'all';
     this.totalCuisine = 0;
     this.smallLoader.show();
@@ -746,7 +752,7 @@ export class ModeComponent implements OnInit {
     this.type = [];
     this.totalCuisine = 0;
     this.cuisineDraw = [];
-    this.currentRate = 0;
+    this.currentRate = [];
     this.priceRange = [0, 50];
     this.params.cuisine = '';
     this.params.price = '';
@@ -852,7 +858,14 @@ export class ModeComponent implements OnInit {
       this.type.splice(this.type.length - 1, 1);
     }
   }
-
+  public rateCheckbox(event,rate){
+    if (event) {
+      this.currentRate.push(rate);
+    } else {
+      var index = this.currentRate.indexOf(rate);
+      this.currentRate.splice(index, 1);
+    }
+  }
   public centerChange(event) {
     this.lat = event.lat;
     this.lng = event.lng;

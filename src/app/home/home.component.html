@@ -9,7 +9,7 @@
                     </li>
                     <li *ngFor="let event of categories, let index = index" (click)="onSelectEventType(event)"
                         [class.active]="event.tid==selected" class="type-event-item">
-                        <img [src]="event.icon" width="30" height="30">
+                        <img [src]="event.icon" width="40" height="40">
                         <span class="type-event-name text-capitalize text-ellipsis">{{event.name}}</span>
                     </li>
                     <li *ngIf="drawCategories?.length >= 6" class="type-event-more" (click)="showAllCategory(showAll)">
@@ -19,7 +19,7 @@
             </div>
             <div class="filter-events clearfix" [class.top-100]="selectedEventOrder.name == 'top 100'">
               <div class="tab-choose">
-                <div id="timeFilter" class="btn-group tab-control" *ngIf="selectedEventOrder.name != 'top 100'">
+                <div id="timeFilter" class="btn-group tab-control">
                   <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
                           class="btn btn-default tab-control text-capitalize"
                           [class.active]="filter===selectedEventFilter">
@@ -158,6 +158,11 @@
                 <!--#sdhkas-->
                 <app-small-loader></app-small-loader>
             </div>
+          <div id="notFoundDiv" *ngIf="shownotfound" class="not-found">
+              <div><div class="sprite sprite-no-results-found" style="display: inline-block"></div></div>
+              <h2>No Results Found</h2>
+              <div>You can revise filters or <a (click)="onClearForm()" class="clear_filter">clear all filters</a>.</div>
+          </div>
         </div>
 
         <div class="col-lg-6 col-xs-12 right-box map-right fixed-right hidden-xs hidden-sm">
