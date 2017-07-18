@@ -108,7 +108,9 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.smallLoader.hide();
     this.loaderService.hide();
-    this.getTrending();
+    if(this.selectedEventOrder.name == 'top 100'){
+      this.getTrending();
+    }
     this.getTrandingCategories();
 
     let width = window.innerWidth
@@ -234,13 +236,10 @@ export class HomeComponent implements OnInit {
 
   public onSelectEventOrder(order: any): void {
     this.selectedEventOrder = order;
-    this.onClearForm();
     if (order.name === 'top 100') {
-      this.showCircle = false;
+      this.params.latest = '';
     } else {
-      this.showCircle = true;
       this.params.latest = 1;
-
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
         draggable: true
@@ -253,8 +252,14 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius = Math.round(distance / 1000) -1;
     }
+    this.params.page=0;
+    this.params.date='';
+    this.params.price=0;
+    this.params.tid = '';
+    this.params.start=20;
+    this.params.when=0;
     this.selected = 'all';
     this.markers = [];
     this.events = [];
@@ -369,7 +374,6 @@ export class HomeComponent implements OnInit {
         draggable: true
       });
       // map change sleep call api
-      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -379,10 +383,13 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius = Math.round(distance / 1000) -1;
       this.smallLoader.show();
+      console.log(this.params.radius);
       this.events = [];
       this.markers = [];
+      this.params.page=0;
+      sleep(500);
       this.getTrending();
     }
   }
@@ -460,7 +467,6 @@ export class HomeComponent implements OnInit {
       for (let i = 0; i < geo.length; i++) {
         for (let item of geo[i]) {
           let latlng = item.split(',');
-          console.log(parseFloat(latlng[0]));
           if (i === 0) {
             this.markers.push({
               lat: parseFloat(latlng[0]),
@@ -468,7 +474,7 @@ export class HomeComponent implements OnInit {
               label: '',
               opacity: 1,
               isOpenInfo: true,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           } else {
             this.markers.push({
@@ -477,7 +483,7 @@ export class HomeComponent implements OnInit {
               label: '',
               opacity: 0.4,
               isOpenInfo: false,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           }
         }
@@ -519,7 +525,7 @@ export class HomeComponent implements OnInit {
               label: events[i].title,
               opacity: 1,
               isOpenInfo: true,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           } else {
             this.markers.push({
@@ -528,7 +534,7 @@ export class HomeComponent implements OnInit {
               label: events[i].title,
               opacity: 0.4,
               isOpenInfo: false,
-              icon: 'assets/icon/icon_pointer.png'
+              icon: 'assets/icon/locationmarker.png'
             });
           }
 

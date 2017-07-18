@@ -121,7 +121,7 @@ export class CurateDetailComponent implements OnInit {
           lng: 103.851959,
           opacity: 0.4,
           isOpenInfo: false,
-          icon: 'assets/icon/icon_pointer.png'
+          icon: 'assets/icon/locationmarker.png'
         };
         if (place.field_latitude !== '0' && place.field_longitude !== '0') {
           marker.lat = Number(place.field_latitude);
