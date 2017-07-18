@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
     alwaysShowCalendars: false,
   };
 
+  public shownotfound: boolean = false;
+
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
   private loadMore: boolean = false;
@@ -593,6 +595,13 @@ export class HomeComponent implements OnInit {
       (resp) => {
         console.log(this.events);
         this.total = resp.total;
+
+        if (resp.total === 0) {
+          this.shownotfound = true;
+        }else{
+          this.shownotfound = false;
+        }
+
         if (resp.data.length === 0) {
           this.endRecord = true;
         }
@@ -630,6 +639,13 @@ export class HomeComponent implements OnInit {
           this.endRecord = true;
         }
         this.total = response.total;
+
+        if (response.total === 0) {
+          this.shownotfound = true;
+        }else{
+          this.shownotfound = false;
+        }
+
         this.passerTrending(response.geo);
         this.loadMore = false;
         this.loaderService.hide();

@@ -14,6 +14,8 @@ export class SearchComponent implements OnInit {
   public result: any = {};
   public searchToken: string = '';
 
+  public shownotfound: boolean = false;
+
   constructor(public fb: FormBuilder,
               private mainService: MainService,
               private _elRef: ElementRef) {
@@ -44,8 +46,10 @@ export class SearchComponent implements OnInit {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
           this.hideNoResult = false;
+          this.shownotfound = true;
         } else {
           this.hideNoResult = true;
+          this.shownotfound = false;
         }
       });
     } else {

@@ -158,6 +158,11 @@
                 <!--#sdhkas-->
                 <app-small-loader></app-small-loader>
             </div>
+          <div id="notFoundDiv" *ngIf="shownotfound" class="not-found">
+              <div><div class="sprite sprite-no-results-found" style="display: inline-block"></div></div>
+              <h2>No Results Found</h2>
+              <div>You can revise filters or <a (click)="onClearForm()" class="clear_filter">clear all filters</a>.</div>
+          </div>
         </div>
 
         <div class="col-lg-6 col-xs-12 right-box map-right fixed-right hidden-xs hidden-sm">

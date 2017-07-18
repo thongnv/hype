@@ -309,6 +309,21 @@ body, html {
   label {
     font-weight: 300;
   }
+
+  .not-found{
+    text-align: center;
+    margin: 30px auto;
+    width: 50%;
+  }
+  .not-found h2{
+    font-size: 18px!important;
+  }
+  .not-found .clear_filter{ color: #F81C4A}
+  .hype-header .not-found h2{
+    font-size: 16px!important;
+    margin-top: 5px;
+  }
+
   //following
   .count-follow {
     width: 640px;

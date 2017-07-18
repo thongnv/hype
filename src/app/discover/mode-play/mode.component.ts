@@ -63,6 +63,7 @@ export class ModeComponent implements OnInit {
   public screenHeight: number = 0;
   public totalCuisine: number = 0;
   private stopped: boolean = false;
+  public shownotfound: boolean = false;
   private params = {
     type: 'all',
     kind: '',
@@ -291,6 +292,13 @@ export class ModeComponent implements OnInit {
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
+
+      if (resp.total === 0) {
+        this.shownotfound = true;
+      }else{
+        this.shownotfound = false;
+      }
+
       if (resp.company.length == 0) {
         this.end_record = true;
       }
