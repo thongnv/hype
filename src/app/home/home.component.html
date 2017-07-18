@@ -9,7 +9,7 @@
                     </li>
                     <li *ngFor="let event of categories, let index = index" (click)="onSelectEventType(event)"
                         [class.active]="event.tid==selected" class="type-event-item">
-                        <img [src]="event.icon" width="30" height="30">
+                        <img [src]="event.icon" width="40" height="40">
                         <span class="type-event-name text-capitalize text-ellipsis">{{event.name}}</span>
                     </li>
                     <li *ngIf="drawCategories?.length >= 6" class="type-event-more" (click)="showAllCategory(showAll)">
