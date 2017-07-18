@@ -22,6 +22,14 @@ a:hover {
   padding-bottom: 35px;
 }
 
+.sprite-icon-left-white {
+  position: absolute;
+  top: 32px;
+  left: 20px;
+  z-index: 10;
+  cursor: pointer;
+}
+
 .icon-sm {
   position: absolute;
   top: 20px;
