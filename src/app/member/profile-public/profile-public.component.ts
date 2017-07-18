@@ -23,7 +23,6 @@ export class ProfilePublicComponent implements OnInit {
   public reachedFirst = true;
   public reachedEnd = false;
   public noMoreEvents = false;
-  public eventIndex = 0;
   public latestArticles = [];
   public sub: any;
   public slugName: any;
@@ -31,10 +30,14 @@ export class ProfilePublicComponent implements OnInit {
   public ready = false;
   public loadingInProgress = false;
   public loadingMore = false;
+  public articles = [];
   public events = [];
   public places = [];
-  private listPageNum: number = 0;
   private eventPageNum: number = 0;
+  private articlePageNum: number = 0;
+  private articleIndex = 0;
+  private totalArticles: number;
+  private eventIndex: number = 0;
 
   constructor(private loaderService: LoaderService,
               private userService: UserService,
@@ -62,8 +65,25 @@ export class ProfilePublicComponent implements OnInit {
         },
         (error) => console.log(error)
       );
-      this.getArticles();
-      this.getEvents();
+      this.smallLoader.show();
+      this.userService.getArticles(this.slugName).subscribe(
+        (response) => {
+          this.totalArticles = response.data.length;
+          if (this.totalArticles) {
+            this.articles = response.data;
+            this.latestArticles = this.articles.slice(0, 3);
+            this.reachedEnd = this.totalArticles < 4;
+          }
+          this.smallLoader.hide();
+        }
+      );
+      this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
+        (response) => {
+          if (response.data.length) {
+            this.events = response.data;
+          }
+        }
+      );
     });
 
     $(window).scroll(() => {
@@ -80,64 +100,31 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public next() {
-    if (!this.loadingInProgress && !this.reachedEnd) {
-      this.loadingInProgress = true;
-      this.userService.getArticles(this.slugName, ++this.listPageNum).subscribe(
-        (response) => {
-          if (response.data.length) {
-            this.latestArticles = response.data;
-            this.reachedFirst = false;
-          } else {
-            this.reachedEnd = true;
-          }
-          this.loadingInProgress = false;
-          this.smallLoader.hide();
-        }
-      );
+    if (!this.reachedEnd) {
+      this.articlePageNum++;
+      this.articleIndex = this.articlePageNum * 3;
+      if (this.articleIndex > this.totalArticles) {
+        this.articleIndex = this.totalArticles;
+      }
+      this.reachedFirst = false;
+      this.reachedEnd = this.articleIndex + 3 >= this.totalArticles;
+      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + 3);
+      console.log(this.articleIndex);
     }
   }
 
   public prev() {
-    this.reachedFirst = this.listPageNum === 0;
-    if (!this.loadingInProgress && !this.reachedFirst) {
-      this.loadingInProgress = true;
-      this.userService.getArticles(this.slugName, --this.listPageNum).subscribe(
-        (response) => {
-          if (response.data.length) {
-            this.latestArticles = response.data;
-            this.reachedEnd = false;
-          } else {
-            this.reachedFirst = true;
-          }
-          this.loadingInProgress = false;
-          this.smallLoader.hide();
-        }
-      );
+    if (!this.reachedFirst) {
+      this.articlePageNum--;
+      this.articleIndex = this.articlePageNum * 3;
+      this.reachedEnd = false;
+      this.reachedFirst = this.articleIndex <= 0;
+      if (this.articleIndex < 0) {
+        this.articleIndex = 0;
+      }
+      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + 3);
     }
-  }
-
-  private getArticles() {
-    this.smallLoader.show();
-    this.userService.getArticles(this.slugName, this.listPageNum).subscribe(
-      (response) => {
-        if (response.data.length) {
-          this.latestArticles = response.data;
-        }
-        this.smallLoader.hide();
-      }
-    );
-  }
-
-  private getEvents() {
-    this.smallLoader.show();
-    this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
-      (response) => {
-        if (response.data.length) {
-          this.events = response.data;
-        }
-        this.smallLoader.hide();
-      }
-    );
+    console.log(this.articleIndex);
   }
 
   private getMoreEvents() {
@@ -152,7 +139,6 @@ export class ProfilePublicComponent implements OnInit {
               this.eventIndex++;
               this.events.push(item);
             });
-            this.eventPageNum = Math.round(this.eventIndex / 5);
           } else {
             this.noMoreEvents = true;
           }

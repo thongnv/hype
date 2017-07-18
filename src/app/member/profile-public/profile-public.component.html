@@ -11,11 +11,10 @@
     <div class="lists-wrap">
 
       <div class="title title-list">My Created Lists</div>
-
       <div *ngIf="latestArticles" class="row wrap-post-news carousel slide">
         <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
           <div class="image-post-news" [routerLink]="[art.alias]">
-            <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+            <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title" width="100%">
           </div>
           <div class="new-info">
             <h4 class="post-title-content text-ellipsis">

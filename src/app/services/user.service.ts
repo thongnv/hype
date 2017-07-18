@@ -213,7 +213,7 @@ export class UserService {
       });
   }
 
-  public getArticles(userSlug: string, page: number): Observable<any> {
+  public getArticles(userSlug: string): Observable<any> {
     let user = this.localStorageService.get('user') as User;
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
@@ -221,9 +221,7 @@ export class UserService {
     return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/article' +
       '?_format=json' +
-      '&user=' + userSlug +
-      '&page=' + page +
-      '&limit=3',
+      '&user=' + userSlug,
       options
     )
       .map((resp) => resp.json())
