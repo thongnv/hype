@@ -324,6 +324,8 @@ body, html {
     margin-top: 5px;
   }
 
+  .end-of-list{text-align: center; font-size: 14px; color: #999; margin-top: 20px;}
+
   //following
   .count-follow {
     width: 640px;
@@ -1368,9 +1370,7 @@ body, html {
       display: block;
     }
   }
-  .slimScrollBar, .slimScrollRail {
-    background: transparent !important;
-  }
+  
 
   @media only screen and (min-width: 800px) {
     .new-list {
