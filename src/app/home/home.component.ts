@@ -67,9 +67,8 @@ export class HomeComponent implements OnInit {
     limit: 20,
     start: 0,
     tid: '',
-    date: '',
+    time: '',
     latest: '',
-    weekend: '',
     when: '',
     lat: this.lat,
     long: this.lng,
@@ -197,11 +196,11 @@ export class HomeComponent implements OnInit {
     this.showDate = false;
     this.showPrice = false;
     this.smallLoader.show();
-    this.params.limit = 10;
+    this.params.limit = 20;
+    this.params.start = 0;
     this.params.page = 0;
     this.params.tid = '';
-    this.params.date = '';
-    this.params.weekend = '';
+    this.params.time = '';
     this.params.radius = 0;
     this.params.price = '';
     this.params.order = '';
@@ -212,19 +211,15 @@ export class HomeComponent implements OnInit {
   public onSelectEventFilter(filter: any): void {
     this.clearParam();
     this.selectedEventFilter = filter;
-    console.log(filter);
     let date = new Date();
     if (filter.name === 'today') {
-      this.params.date = moment(date).format('YYYY-MM-DD');
+      this.params.time = 'today';
     } else if (filter.name === 'tomorrow') {
-      let tomorrow = date.setDate(date.getDate() + 1);
-      this.params.date = moment(date).format('YYYY-MM-DD');
+      this.params.time = 'tomorrow';
     } else if (filter.name === 'this week') {
-      this.params.weekend = 1;
-      this.params.date = '';
+      this.params.time = 'week';
     } else if (filter.name === 'all') {
-      this.params.weekend = 0;
-      this.params.date = '';
+      this.params.time = '';
     } else {
       this.showCircle = this.selectedEventOrder.name !== 'top 100';
     }
@@ -255,9 +250,7 @@ export class HomeComponent implements OnInit {
       this.params.radius = Math.round(distance / 1000) -1;
     }
     this.params.page=0;
-    this.params.date='';
     this.params.price=0;
-    this.params.tid = '';
     this.params.start=20;
     this.params.when=0;
     this.selected = 'all';
@@ -385,7 +378,6 @@ export class HomeComponent implements OnInit {
       this.params.long = this.lng;
       this.params.radius = Math.round(distance / 1000) -1;
       this.smallLoader.show();
-      console.log(this.params.radius);
       this.events = [];
       this.markers = [];
       this.params.page=0;
@@ -403,12 +395,11 @@ export class HomeComponent implements OnInit {
     this.showDate = false;
     this.showPrice = false;
     this.smallLoader.show();
-    this.params.limit = 10;
+    this.params.limit = 20;
     this.params.page = 0;
     this.params.tid = '';
-    this.params.date = '';
+    this.params.time = '';
     this.params.weekend = '';
-    this.params.radius = '';
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
