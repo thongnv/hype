@@ -152,7 +152,6 @@ export class ProfilePublicComponent implements OnInit {
               this.eventIndex++;
               this.events.push(item);
             });
-            this.eventPageNum = Math.round(this.eventIndex / 5);
           } else {
             this.noMoreEvents = true;
           }
