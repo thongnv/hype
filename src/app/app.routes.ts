@@ -28,6 +28,8 @@ export const ROUTES: Routes = [
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'share-event', component: ShareEventComponent},
+  {path: '404', component: NoContentComponent},
+  {path: '500', component: ServerErrorComponent},
   {path: ':slug', component: ProfilePublicComponent},
   {path: ':slug/following', component: FollowingComponent},
   {path: ':slug/follower', component: FollowerComponent},
@@ -35,9 +37,6 @@ export const ROUTES: Routes = [
   {path: ':slug/interest', component: InterestComponent},
   {path: ':slug/profile-edit', component: ProfileEditComponent},
   {path: ':slug/favorite', component: FavoriteComponent},
-
-  {path: '404', component: NoContentComponent},
-  {path: '500', component: ServerErrorComponent},
 
   {path: '**', component: NoContentComponent},
 ];
