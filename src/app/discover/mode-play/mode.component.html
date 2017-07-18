@@ -204,7 +204,6 @@
               </ngb-rating>
               <span class="review">{{item.rating.total}} Reviews</span>
               <div class="box-content">
-                <p>{{item.Email_Address}} | {{item.Tel_No}}</p>
                 <p *ngIf="item.Company_Profile" [innerHTML]="item.Company_Profile | myHtml2Text | truncate : 50"></p>
               </div>
             </div>
