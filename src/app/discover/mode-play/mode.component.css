@@ -511,10 +511,11 @@ nouislider.ng2-nouislider {
 
 .price-desc {
     float: none;
-    width: 69%;
+    width: 75%;
     margin: auto;
     display: table;
-    margin-top: 50px;
+    margin-top: -32px;
+    height:35px;
 }
 
 .price-desc span {
@@ -534,6 +535,10 @@ nouislider.ng2-nouislider {
 .price-desc span:nth-child(3) {
     text-align: right;
     width: 33%;
+}
+
+.pricePreview{
+  text-align: center; font-weight: bold; font-size: 23px;
 }
 
 .form-control-static {

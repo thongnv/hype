@@ -715,6 +715,8 @@ export class ModeComponent implements OnInit {
   }
 
   private clearParams() {
+
+
     if (this.cuisine) {
       for (let i = 0; i < this.cuisine.length; i++) {
         this.cuisine[i].checked = false;
