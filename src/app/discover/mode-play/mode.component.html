@@ -86,13 +86,13 @@
 
         </ul>
         <div class="find-content">
-          <div *ngIf="showPrice" class="pricePreview"><span>S${{priceRange[0]}}-S${{priceRange[1]}}</span></div>
+
           <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
                       [(ngModel)]="priceRange"
                       style="margin-top: 2em;" [tooltips]="[true,true]">
           </nouislider>
           <div *ngIf="showPrice" class="price-desc"><span>$0</span><span
-          ></span><span>$300</span></div>
+          >$150</span><span>$300</span></div>
           <div *ngIf="showCuisine">
             <div *ngFor="let item of filterData.cuisine; let in =index"
                  style="margin-left: 43px" class="filter-item col-md-3">

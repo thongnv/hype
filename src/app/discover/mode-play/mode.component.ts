@@ -715,8 +715,6 @@ export class ModeComponent implements OnInit {
   }
 
   private clearParams() {
-
-
     if (this.cuisine) {
       for (let i = 0; i < this.cuisine.length; i++) {
         this.cuisine[i].checked = false;
@@ -899,7 +897,7 @@ export class ModeComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius = Math.fround(distance / 1000);
       this.smallLoader.show();
       this.items = [];
       this.markers = [];
