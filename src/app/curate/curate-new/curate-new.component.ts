@@ -6,6 +6,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { UserService } from '../../services/user.service';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-curate-new',
@@ -34,6 +35,7 @@ export class CurateNewComponent implements OnInit {
   public zoom: number = 12;
   public validateSize: boolean = true;
   public validateType: boolean = true;
+  public layoutWidth: number;
 
   public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
@@ -52,13 +54,15 @@ export class CurateNewComponent implements OnInit {
               private userService: UserService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private router: Router) {
+              private router: Router,
+              private windowRef: WindowUtilService) {
     this.onAddPlace();
   }
 
   public ngOnInit() {
     this.loaderService.show();
     document.getElementById('list-name').focus();
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {
