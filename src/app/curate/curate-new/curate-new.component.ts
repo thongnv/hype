@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer } from "@angular/platform-browser";
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -40,9 +40,12 @@ export class CurateNewComponent implements OnInit {
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.required],
+    listCatTmp: ['', Validators.required],
     listImages: [''],
     listPlaces: this.formBuilder.array([])
   });
+
+  public selectedCategories = [];
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
@@ -339,5 +342,30 @@ export class CurateNewComponent implements OnInit {
       callback(dataUrl);
 
     };
+  }
+
+
+  // category select helper
+  public addToSelectedCategories(category) {
+    this.selectedCategories.push(category);
+
+    // reset text box
+    this.formData.controls['listCatTmp'].patchValue('');
+
+    // update form control value
+    this.formData.controls['listCategory'].patchValue(this.selectedCategories.join(','));
+
+    console.log(this.formData.get('listCategory'));
+  }
+
+  public removeCategoryItem(index) {
+    this.selectedCategories.splice(index, 1);
+
+    // update form control value
+    this.formData.controls['listCategory'].patchValue(this.selectedCategories.join(','));
+  }
+
+  public resetListCategory(evt) {
+    console.log(evt);
   }
 }

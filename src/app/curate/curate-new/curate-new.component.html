@@ -29,14 +29,43 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="list-category">Category</label>
-          <select aria-placeholder="abc" class="form-control" name="" id="list-category" formControlName="listCategory">
-            <option value="" selected="selected">Select a category</option>
-            <option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>
-          </select>
-          <small *ngIf="formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
-            Please select article category.
-          </small>
+
+          <div class="list-category" (click)="showAutoComplete=true">
+            <ul class="list-category-item">
+              <li class="category-item" *ngFor="let catgory of selectedCategories; let index = index">
+                <span>{{catgory.name}}</span>
+                <span class="remove-category-item" (click)="removeCategoryItem(index)">x</span>
+              </li>
+              <li>
+                <input ngui-auto-complete
+                       formControlName="listCatTmp"
+                       [source]="categories"
+                       (valueChanged)="addToSelectedCategories($event)"
+                       list-formatter="name"
+                       display-property-name="name"
+                       placeholder="Select category ..."
+                       class="form-control" id="list-category"
+
+                       (blur)="resetListCategory"
+                >
+              </li>
+            </ul>
+
+            <!--<select aria-placeholder="abc" class="form-control" name="" id="list-category" formControlName="listCategory">-->
+            <!--<option value="" selected="selected">Select a category</option>-->
+            <!--<option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>-->
+            <!--</select>-->
+
+            <small *ngIf="formData.get('listCatTmp').touched && formData.get('listCatTmp').hasError('required') ||
+            formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
+              Please select article category.
+            </small>
+          </div>
+
         </div>
+
+        <!--<div style="clear: both"></div>-->
+
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">

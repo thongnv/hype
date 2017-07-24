@@ -431,3 +431,43 @@ header ul li.pull-right {
     margin-bottom: 50px;
   }
 }
+
+
+/** category select */
+.list-category .remove-category-item {
+  color: red;
+}
+
+.list-category {
+  position: relative;
+}
+
+ul.list-category-item {
+  border: 1px solid #c0c0c0;
+  height: 40px;
+  padding-top: 5px;
+
+}
+
+ul.list-category-item li {
+  list-style-type: none;
+  float: left;
+}
+
+li.category-item {
+  border-radius: 5px;
+  border: 1px solid green;
+  background-color: #2f93b1;
+  padding: 3px;
+  margin-right: 5px;
+}
+
+input#list-category {
+  background-color: transparent;
+  box-shadow: 0 0 0;
+  height: 26px;
+}
+
+span.remove-category-item {
+  cursor: pointer;
+}
