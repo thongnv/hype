@@ -11,6 +11,7 @@ import { AppSetting } from '../../app.setting';
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
 import { UserService } from '../../services/user.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-share-event',
@@ -62,6 +63,7 @@ export class ShareEventComponent implements OnInit {
   public validateSize: boolean = true;
   public validateType: boolean = true;
   public submitted: boolean = false;
+  public layoutWidth: number;
 
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
@@ -72,7 +74,8 @@ export class ShareEventComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
               public userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -89,6 +92,7 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.gMapStyles = AppSetting.GMAP_STYLE;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
   }
 
   public onStartDateChange() {

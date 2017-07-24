@@ -1,4 +1,4 @@
-<article class="row new-list">
+<article class="new-list column col-sm-10" [style.width]="layoutWidth - 30 + 'px'">
   <!--header start-->
   <header>
     <ul>
@@ -9,7 +9,7 @@
   <!--header end-->
 
   <!--form wrap start-->
-  <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
+  <div class="form-wrap column col-xs-12 col-md-6  no-padding" [class.hide]="showPreview">
 
     <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()"
           (keydown.enter)="$event.preventDefault()">
