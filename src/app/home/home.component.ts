@@ -53,7 +53,6 @@ export class HomeComponent implements OnInit {
     locale: {format: 'YYYY-MM-DD'},
     alwaysShowCalendars: false,
   };
-
   public shownotfound: boolean = false;
 
   private stopped: boolean = false;
@@ -107,10 +106,10 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.smallLoader.hide();
     this.loaderService.hide();
-    if(this.selectedEventOrder.name == 'top 100'){
+    if (this.selectedEventOrder.name === 'top 100') {
       this.getTrending();
     }
-    this.getTrandingCategories();
+    this.getTrendingCategories();
 
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -150,26 +149,27 @@ export class HomeComponent implements OnInit {
 
     this.screenWidth = width;
     this.screenHeight = height;
+    debugger
 
     let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-    if (this.screenWidth <= 768) {
-      if (this.drawCategories.length > imageNumber) {
-        this.categories = this.drawCategories.slice(0, imageNumber - 1);
-      } else {
-        this.categories = this.drawCategories;
-      }
-    } else {
-      if (this.drawCategories.length > imageNumber) {
-        this.categories = this.drawCategories.slice(0, 6);
-      } else {
-        if (this.screenWidth <= 1024) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 6);
-
-        }
-      }
-    }
+    this.categories = this.drawCategories.slice(0, imageNumber);
+    // if (this.screenWidth <= 768) {
+    //   if (this.drawCategories.length > imageNumber) {
+    //     this.categories = this.drawCategories.slice(0, imageNumber - 1);
+    //   } else {
+    //     this.categories = this.drawCategories;
+    //   }
+    // } else {
+    //   if (this.drawCategories.length > imageNumber) {
+    //     this.categories = this.drawCategories.slice(0, 6);
+    //   } else {
+    //     if (this.screenWidth <= 1024) {
+    //       this.categories = this.drawCategories.slice(0, 6);
+    //     } else {
+    //       this.categories = this.drawCategories.slice(0, 5);
+    //     }
+    //   }
+    // }
   }
 
   public onSelectEventType(event): void {
@@ -247,12 +247,12 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.fround(distance / 1000) -1;
+      this.params.radius = Math.round(distance / 1000) - 1;
     }
-    this.params.page=0;
-    this.params.price=0;
-    this.params.start=20;
-    this.params.when=0;
+    this.params.page = 0;
+    this.params.price = 0;
+    this.params.start = 20;
+    this.params.when = 0;
     this.selected = 'all';
     this.markers = [];
     this.events = [];
@@ -376,11 +376,11 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.fround(distance / 1000) -1;
+      this.params.radius = Math.round(distance / 1000) - 1;
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
-      this.params.page=0;
+      this.params.page = 0;
       sleep(500);
       this.getTrending();
     }
@@ -413,7 +413,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private getTrandingCategories() {
+  private getTrendingCategories() {
     this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
       this.drawCategories = resp.data;
       let imageNumber = Math.floor(this.screenWidth / 55) - 1;
@@ -424,15 +424,12 @@ export class HomeComponent implements OnInit {
           this.categories = resp.data;
         }
       } else {
-
         if (this.drawCategories.length > imageNumber) {
           this.categories = this.drawCategories.slice(0, 6);
         } else {
-          this.categories = this.drawCategories.slice(0, 6);
+          this.categories = this.drawCategories.slice(0, 5);
         }
-
       }
-
     });
   }
 
@@ -593,11 +590,7 @@ export class HomeComponent implements OnInit {
         console.log(this.events);
         this.total = resp.total;
 
-        if (resp.total === 0) {
-          this.shownotfound = true;
-        }else{
-          this.shownotfound = false;
-        }
+        this.shownotfound = resp.total === 0;
 
         if (resp.data.length === 0) {
           this.endRecord = true;
@@ -637,11 +630,7 @@ export class HomeComponent implements OnInit {
         }
         this.total = response.total;
 
-        if (response.total === 0) {
-          this.shownotfound = true;
-        }else{
-          this.shownotfound = false;
-        }
+        this.shownotfound = response.total === 0;
 
         this.passerTrending(response.geo);
         this.loadMore = false;
