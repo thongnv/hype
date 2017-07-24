@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Injectable()
 @Component({
@@ -27,15 +28,18 @@ export class CurateDetailComponent implements OnInit {
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
+  public layoutWidth: number;
   public constructor(private mainService: MainService,
                      private loaderService: LoaderService,
                      private route: ActivatedRoute,
-                     private router: Router) {
+                     private router: Router,
+                     private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(
