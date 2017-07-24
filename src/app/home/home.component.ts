@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
     alwaysShowCalendars: false,
   };
   public shownotfound: boolean = false;
+  public layoutWidth: number;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -126,6 +127,8 @@ export class HomeComponent implements OnInit {
       || document.body.clientHeight;
 
     this.handleScroll();
+
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
   }
 
   public setPosition(position) {

@@ -1,6 +1,6 @@
 <section class="page-event">
-  <div class="row page-event-row" *ngIf="ready">
-    <div class="col-lg-6 col-xs-12 left-box">
+  <div class="page-event-row" *ngIf="ready">
+    <div class="column col-sm-5 no-padding col-xs-12 left-box" [style.width]="layoutWidth + 'px'">
 
       <!-- title event start -->
       <div class="title-event border-bottom">
@@ -153,8 +153,7 @@
 
       </div>
     </div>
-
-    <div class="col-lg-5 col-xs-12 gmap-box margin-bottom-25">
+    <div class="column col-sm-5 no-padding col-xs-12 gmap-box margin-bottom-25" [style.width]="layoutWidth - 30 + 'px'">
 
       <carousel
         [interval]="NextPhotoInterval"
@@ -181,3 +180,4 @@
     </div>
   </div>
 </section>
+

@@ -104,6 +104,14 @@ body, html {
   opacity: 1 !important;
 }
 
+.no-padding{
+  padding: 0;
+}
+
+#wrapper{
+  margin-top: 60px;
+}
+
 .tab-control.btn-group > .btn:last-child:not(:first-child),
 .tab-control.btn-group > .btn:first-child:not(:last-child),
 .tab-control.btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
@@ -1383,7 +1391,7 @@ body, html {
       }
     }
     .sebm-google-map-container {
-      height: calc(100vh - 60px);
+      height: 100vh;
     }
     .star-icons:before {
       color: #ec3d62;

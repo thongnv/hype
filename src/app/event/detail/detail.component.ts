@@ -7,6 +7,7 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 import { AppSetting } from '../../app.setting';
 import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User } from '../../app.interface';
@@ -47,6 +48,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public ready: boolean = false;
   public slugName = '';
   public gMapStyles: any;
+  public layoutWidth: number;
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -63,7 +65,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               private route: ActivatedRoute,
               private router: Router,
               public sanitizer: DomSanitizer,
-              private loaderService: LoaderService) {
+              private loaderService: LoaderService,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -98,6 +101,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
     this.initRating();
   }
 
