@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../app.interface';
 import { UserService } from '../services/user.service';
 import { AppSetting } from '../app.setting';
+import { WindowUtilService } from '../services/window-ultil.service';
 
 @Component({
   selector: 'app-member',
@@ -24,13 +25,15 @@ export class MemberComponent implements OnInit {
   public disabled = true;
   public acceptNotification: any;
   public ready = false;
+  public layoutWidth: number;
 
   constructor(private route: ActivatedRoute,
               public formBuilder: FormBuilder,
               public loaderService: LoaderService,
               public userService: UserService,
               private localStorageService: LocalStorageService,
-              private router: Router) {
+              private router: Router,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -40,6 +43,7 @@ export class MemberComponent implements OnInit {
     }
     this.user.showNav = true;
     this.loaderService.show();
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user.slug || this.slugName !== this.user.slug) {

@@ -7,6 +7,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import $ from 'jquery';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-favorite',
@@ -37,6 +38,7 @@ export class FavoriteComponent implements OnInit {
   public lists = [];
   public events = [];
   public ready = false;
+  public layoutWidth: number;
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -47,7 +49,8 @@ export class FavoriteComponent implements OnInit {
                      private userService: UserService,
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
-                     private smallLoader: SmallLoaderService) {
+                     private smallLoader: SmallLoaderService,
+                     private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -57,6 +60,7 @@ export class FavoriteComponent implements OnInit {
       this.user = user;
     }
     this.user.showNav = true;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.sub = this.route.params.subscribe(
       (params) => {
         this.slugName = params.slug;

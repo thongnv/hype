@@ -7,6 +7,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { ProfileService } from '../../services/profile.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -45,6 +46,7 @@ export class ProfileEditComponent implements OnInit {
   public msgContent: string;
   public slugName: any;
   public ready = false;
+  public layoutWidth: number;
 
   constructor(public fb: FormBuilder,
               private localStorageService: LocalStorageService,
@@ -53,12 +55,14 @@ export class ProfileEditComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private route: ActivatedRoute,
-              private profileService: ProfileService) {
+              private profileService: ProfileService,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
     this.loaderService.show();
     this.user = this.localStorageService.get('user') as User;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user || this.slugName !== this.user.slug) {

@@ -4,6 +4,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-interest',
@@ -19,12 +20,14 @@ export class InterestComponent implements OnInit {
   public sub: any;
   public slugName: any;
   public ready = false;
+  public layoutWidth: number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private loaderService: LoaderService,
               private localStorageService: LocalStorageService,
-              private userService: UserService) {
+              private userService: UserService,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -32,6 +35,7 @@ export class InterestComponent implements OnInit {
     if (!this.user) {
       this.router.navigate(['login']).then();
     }
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params.slug;
       if (params.slug !== this.user.slug) {
