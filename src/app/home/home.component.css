@@ -229,20 +229,11 @@ button.btn.btn-default.active {
   line-height: 1.5;
 }
 
-/*.list-item-link, .list-item-title {*/
-/*position: absolute;*/
-/*left: 15%;*/
-/*width: 70%;*/
-/*text-align: left;*/
-/*color: #ffffff;*/
-/*opacity: 1;*/
-/*margin: 0;*/
-/*}*/
-
-/*gmap*/
-.home-page {
-  width: calc(100% - 80px);
-  margin: 0;
+@media only screen and (min-width: 992px) {
+  .home-page {
+    width: calc(100% - 80px);
+    margin: 0;
+  }
 }
 
 .home-page .fixed-right {
