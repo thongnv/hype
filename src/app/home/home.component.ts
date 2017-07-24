@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 import { HomeService } from '../services/home.service';
 import { LoaderService } from '../helper/loader/loader.service';
+import { WindowUtilService } from '../services/window-ultil.service';
 
 import { AppSetting } from '../app.setting';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
@@ -81,7 +82,8 @@ export class HomeComponent implements OnInit {
               private mapsAPILoader: MapsAPILoader,
               private localStorageService: LocalStorageService,
               private route: Router,
-              private location: Location) {
+              private location: Location,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -140,6 +142,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
+    console.log('max root container width: ', this.windowRef);
     console.log(event);
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);

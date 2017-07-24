@@ -133,7 +133,6 @@ body, html {
   }
 
   .sidebar {
-    position: fixed;
     top: 60px;
     bottom: 0;
     left: 0;
@@ -1473,7 +1472,6 @@ body, html {
       bottom: 0;
       width: 100%;
       z-index: 9999;
-      position: fixed;
     }
     .sidebar .list-tap > li {
       padding: 0;

@@ -51,6 +51,7 @@ import { HomeService } from './services/home.service';
 import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
 import { ProfileService } from './services/profile.service';
+import { WindowUtilService } from './services/window-ultil.service';
 
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -197,7 +198,8 @@ type StoreType = {
     SeoService,
     ProfileService,
     UserService,
-    FollowService
+    FollowService,
+    WindowUtilService
   ],
 })
 export class AppModule {
