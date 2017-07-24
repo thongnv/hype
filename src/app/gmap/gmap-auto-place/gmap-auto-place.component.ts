@@ -30,6 +30,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   public result: any = {};
   public gmapResults: any = {};
   public searchToken: string = '';
+  public hideAddressInput = true;
 
   public constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -47,6 +48,10 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
   public ngOnInit() {
     // TODO
+  }
+
+  public showAddressInput() {
+    this.hideAddressInput = false;
   }
 
   public markTouchMCE() {
