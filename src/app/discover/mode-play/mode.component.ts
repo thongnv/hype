@@ -15,6 +15,7 @@ import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { DOCUMENT } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 declare let google: any;
 
@@ -62,6 +63,7 @@ export class ModeComponent implements OnInit {
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public totalCuisine: number = 0;
+  public layoutWidth: number;
   private stopped: boolean = false;
   public shownotfound: boolean = false;
   private params = {
@@ -97,6 +99,7 @@ export class ModeComponent implements OnInit {
                      private router: Router,
                      private location: Location,
                      private localStorageService: LocalStorageService,
+                     private windowRef: WindowUtilService,
                      @Inject(DOCUMENT) private document: Document) {
 
     this.filterFromMode = this.formBuilder.group({
@@ -240,6 +243,7 @@ export class ModeComponent implements OnInit {
         }
       });
     });
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
   }
 
   public onResize(event): void {
