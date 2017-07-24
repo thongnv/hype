@@ -92,7 +92,7 @@
       <div class="form-actions clearfix">
         <div class="wrap-full-50">
           <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
-          <button type="button" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-success" (click)="onPreview()">Preview</button>
+          <button type="button" [disabled]="formData.invalid || previewUrl.length == 0" class="btn btn-success" (click)="onPreview()">Preview</button>
         </div>
       </div>
       <div class="mobile-margin"></div>
@@ -133,10 +133,10 @@
               <strong class="place-name">{{plc.place}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
-            <div class="place-item-img">
+            <div *ngIf="plc.image.url" class="place-item-img">
               <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
             </div>
-            <p class="place-item-description">{{plc.description}}</p>
+            <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
           </ng-container>
         </div>
       </ng-container>
