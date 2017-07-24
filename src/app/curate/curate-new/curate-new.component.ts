@@ -56,10 +56,10 @@ export class CurateNewComponent implements OnInit {
               private loaderService: LoaderService,
               private router: Router,
               private windowRef: WindowUtilService) {
-    this.onAddPlace();
   }
 
   public ngOnInit() {
+    this.onAddPlace();
     this.loaderService.show();
     document.getElementById('list-name').focus();
     this.layoutWidth = (this.windowRef.rootContainer.width - 80);
@@ -80,7 +80,15 @@ export class CurateNewComponent implements OnInit {
 
   public onAddPlace() {
     const control = <FormArray> this.formData.controls['listPlaces'];
-    const placeCtrl = this.initAddress();
+    const placeCtrl = this.formBuilder.group({
+      keyword: ['', Validators.required],
+      inputAddress: [''],
+      description: ['', Validators.required],
+      lat: ['', Validators.required],
+      lng: ['', Validators.required],
+      slug: [''],
+      image: ['', Validators.required]
+    });
     control.push(placeCtrl);
   }
 
@@ -229,7 +237,6 @@ export class CurateNewComponent implements OnInit {
         let placeControl = this.formData.get('listPlaces') as FormArray;
         let place = placeControl.at(i);
         place.patchValue({
-          keyword: data.description,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng(),
           slug: '',
@@ -239,15 +246,16 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onHyloChangePlace(data, i) {
-    // let control = this.formData.get('listPlaces').controls[i] as FormGroup;
     let placeControl = this.formData.get('listPlaces') as FormArray;
     let place = placeControl.at(i);
-    place.patchValue({
-      keyword: data.Title,
-      lat: Number(data.Lat),
-      lng: Number(data.Long),
-      slug: data.Slug,
-    });
+    if (data.Title) {
+      place.patchValue({
+        keyword: data.Title,
+        lat: Number(data.Lat),
+        lng: Number(data.Long),
+        slug: data.Slug,
+      });
+    }
   }
 
   private highlightMarker(markerId: number): void {
@@ -262,17 +270,6 @@ export class CurateNewComponent implements OnInit {
         }
       });
     }
-  }
-
-  private initAddress() {
-    return this.formBuilder.group({
-      keyword: ['', Validators.required],
-      description: ['', Validators.required],
-      lat: ['', Validators.required],
-      lng: ['', Validators.required],
-      slug: [''],
-      image: ['', Validators.required]
-    });
   }
 
   // for preview
