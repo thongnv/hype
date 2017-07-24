@@ -7,6 +7,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from '../../services/user.service';
+import { WindowUtilService } from '../../services/window-ultil.service';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -41,6 +42,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public ready: boolean = false;
   public imageReady: boolean = false;
   public gMapStyles: any;
+  public layoutWidth: number;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -48,7 +50,8 @@ export class CompanyDetailComponent implements Company, OnInit {
     public companyService: CompanyService,
     private route: ActivatedRoute,
     private loaderService: LoaderService,
-    private router: Router
+    private router: Router,
+    private windowRef: WindowUtilService
   ) {}
 
   public ngOnInit() {
@@ -56,6 +59,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     if (user) {
       this.user = user;
     }
+    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
