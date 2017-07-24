@@ -109,18 +109,20 @@ export class HomeComponent implements OnInit {
     if (this.selectedEventOrder.name === 'top 100') {
       this.getTrending();
     }
-    this.getTrendingCategories();
+    this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
+      this.drawCategories = resp.data;
+      let numCategories = calculateNumCategories();
+      this.categories = this.drawCategories.slice(0, numCategories);
+    });
 
-    let width = window.innerWidth
+    this.screenWidth = window.innerWidth
       || document.documentElement.clientWidth
       || document.body.clientWidth;
 
-    let height = window.innerHeight
+    this.screenHeight = window.innerHeight
       || document.documentElement.clientHeight
       || document.body.clientHeight;
 
-    this.screenWidth = width;
-    this.screenHeight = height;
     this.handleScroll();
   }
 
@@ -134,42 +136,13 @@ export class HomeComponent implements OnInit {
   }
 
   public p() {
-    // TODO;
+    // just to get rid of the warning
   }
 
   public onResize(event): void {
     console.log(event);
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
-    debugger
-
-    let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-    this.categories = this.drawCategories.slice(0, imageNumber);
-    // if (this.screenWidth <= 768) {
-    //   if (this.drawCategories.length > imageNumber) {
-    //     this.categories = this.drawCategories.slice(0, imageNumber - 1);
-    //   } else {
-    //     this.categories = this.drawCategories;
-    //   }
-    // } else {
-    //   if (this.drawCategories.length > imageNumber) {
-    //     this.categories = this.drawCategories.slice(0, 6);
-    //   } else {
-    //     if (this.screenWidth <= 1024) {
-    //       this.categories = this.drawCategories.slice(0, 6);
-    //     } else {
-    //       this.categories = this.drawCategories.slice(0, 5);
-    //     }
-    //   }
-    // }
+    let numCategories = calculateNumCategories();
+    this.categories = this.drawCategories.slice(0, numCategories);
   }
 
   public onSelectEventType(event): void {
@@ -211,7 +184,6 @@ export class HomeComponent implements OnInit {
   public onSelectEventFilter(filter: any): void {
     this.clearParam();
     this.selectedEventFilter = filter;
-    let date = new Date();
     if (filter.name === 'today') {
       this.params.time = 'today';
     } else if (filter.name === 'tomorrow') {
@@ -310,24 +282,8 @@ export class HomeComponent implements OnInit {
       this.categories = this.drawCategories;
     } else {
       this.showAll = true;
-      let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-      if (this.screenWidth <= 768) {
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, imageNumber - 1);
-        } else {
-          this.categories = this.drawCategories;
-        }
-      } else {
-
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 6);
-
-        }
-
-      }
-      console.log(this.categories);
+      let numCategories = calculateNumCategories();
+      this.categories = this.drawCategories.slice(0, numCategories);
     }
   }
 
@@ -411,26 +367,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.getEvents(this.params);
     }
-  }
-
-  private getTrendingCategories() {
-    this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
-      this.drawCategories = resp.data;
-      let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-      if (this.screenWidth <= 768) {
-        if (resp.data.length >= imageNumber) {
-          this.categories = resp.data.slice(0, imageNumber - 1);
-        } else {
-          this.categories = resp.data;
-        }
-      } else {
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 5);
-        }
-      }
-    });
   }
 
   private highlightMarker(markerId: number): void {
@@ -661,7 +597,28 @@ function getDistance(p1, p2) {
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
 function sleep(delay) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
+  let start = new Date().getTime();
+  while (new Date().getTime() < start + delay) {
+    // sleep
+  }
+}
+
+function calculateNumCategories(): number {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let numCategories: number;
+  let containerWidth: number;
+  const categoryWidth = 76;
+  const navBarWidth = 80;
+  const borderWidth = 15;
+  const dotWidth = 43;
+  if (screenWidth > 992) {
+    const containerPercentage = 0.46;
+    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+  } else {
+    containerWidth = screenWidth - borderWidth - dotWidth;
+  }
+  numCategories = Math.floor(containerWidth / categoryWidth) - 1;
+  return numCategories;
 }
