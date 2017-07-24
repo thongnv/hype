@@ -72,9 +72,9 @@
                         <div class="information-profile">
                             <div class="top-content">
                                 <h4 class="information-title pointer">
-                                    <a class="pull-left text-ellipsis real-title title-hover"
+                                    <a class="pull-left real-title title-hover"
                                        *ngIf="item.title" [routerLink]="[item.alias]">
-                                        {{item.title | truncate : 45}}
+                                        {{item.title | truncate : 90}}
                                     </a>
                                     <span *ngIf="item.field_event_option.field_price !='0' && (item.field_event_option.field_price|json) != 'null'"
                                           class="free-price-button text-capitalize pull-right"
@@ -84,6 +84,9 @@
                                           class="free-price-button text-capitalize pull-right"
                                           [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
                                 </h4>
+                              <div class="location">
+                                {{item.field_location_place.field_location_place}}
+                              </div>
                                 <p class="detail-information"
                                    [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
                             </div>

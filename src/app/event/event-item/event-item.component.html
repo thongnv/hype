@@ -14,7 +14,7 @@
       <div class="top-content">
         <h4 class="information-title pointer" [routerLink]="[item.alias]"><p class="pull-left text-ellipsis real-title"
                                                                              *ngIf="item.title">
-          {{item.title | truncate : 45}}</p>
+          {{item.title | truncate : 90}}</p>
           <span *ngIf="item.field_event_option.field_price !='0'"
                 class="free-price-button text-capitalize pull-right"
                 [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
