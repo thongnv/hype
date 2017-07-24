@@ -33,8 +33,8 @@
               details
             </span>
           </div>
-          <div class="place-item-img">
-            <img [src]="plc.field_place_images[0]?.url" [alt]="plc.field_place_address" width="100%">
+          <div *ngIf="plc.field_place_images[0]" class="place-item-img">
+            <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
           </div>
           <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
         </div>
