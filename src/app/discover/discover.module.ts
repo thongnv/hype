@@ -11,6 +11,8 @@ import {HelperModule} from '../helper/helper.module';
 import { DiscoverRoutingModule } from './discover-routing.module';
 
 import { ModeComponent } from './mode-play/mode.component';
+import {EatComponent} from "./discover-eat/eat.component";
+import {PlayComponent} from "./discover-play/play.component";
 
 @NgModule({
   imports: [
@@ -25,7 +27,9 @@ import { ModeComponent } from './mode-play/mode.component';
     DiscoverRoutingModule
   ],
   declarations: [
-    ModeComponent
+    ModeComponent,
+    EatComponent,
+    PlayComponent
   ],
   providers: [
 
