@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, HostListener, Injectable, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -11,6 +11,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
   templateUrl: './curate-detail.component.html',
   styleUrls: ['./curate-detail.component.css'],
 })
+
 export class CurateDetailComponent implements OnInit {
   public article: any;
   public gMapStyles: any;
@@ -35,7 +36,10 @@ export class CurateDetailComponent implements OnInit {
                      private router: Router,
                      private windowRef: WindowUtilService) {
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+  }
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
