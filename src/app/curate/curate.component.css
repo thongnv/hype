@@ -259,6 +259,8 @@ ul.list-items li a img {
     .carousel-inner .slide-group{
         width: 100%;
     }
+
+
 }
 @media only screen and (min-width: 769px) {
   .primary-content h4.head{ padding: 15px; margin: 10px 0px}
@@ -360,4 +362,9 @@ ul.list-items li a img {
   .title-trending{
     font-size: 20px;
   }
+}
+
+
+@media only screen and (max-width: 1023px) {
+  .col-sm-10 {width: 100%;}
 }

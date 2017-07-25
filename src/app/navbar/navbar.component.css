@@ -133,6 +133,10 @@
         width: 340px;
         padding: 5px;
     }
+
+  .add-event-button {
+    margin-right: 20px;
+  }
 }
 @media (max-width: 991px) {
     header .navbar-brand{

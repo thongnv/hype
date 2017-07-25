@@ -1477,7 +1477,10 @@ body, html {
 
     .frame_nav, .frame_left, .frame-right{
         display: block!important;
+        width: 100%;
     }
+
+
 
     .type-events .type-event-item img{
         width: 30px!important; height: 30px!important;
