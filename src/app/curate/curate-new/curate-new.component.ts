@@ -42,12 +42,13 @@ export class CurateNewComponent implements OnInit {
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.required],
-    listCatTmp: ['', Validators.required],
+    listCatTmp: [''],
     listImages: [''],
     listPlaces: this.formBuilder.array([])
   });
 
   public selectedCategories = [];
+  public categoriesTmp = [];
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
@@ -73,6 +74,7 @@ export class CurateNewComponent implements OnInit {
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
+        this.categoriesTmp = this.categories;
         this.loaderService.hide();
       }
     );
@@ -356,13 +358,17 @@ export class CurateNewComponent implements OnInit {
     // update form control value
     let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
     this.formData.controls['listCategory'].patchValue(catIds);
+
+    // filter chosen category in categoriesTmp
+    this.categoriesTmp = this.categoriesTmp.filter(cat => cat.tid !== category.tid);
   }
 
   public removeCategoryItem(index) {
     this.selectedCategories.splice(index, 1);
 
     // update form control value
-    this.formData.controls['listCategory'].patchValue(this.selectedCategories.join(','));
+    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
   }
 
   public resetListCategory(evt) {
