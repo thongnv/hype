@@ -90,6 +90,7 @@ import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
+import {AppGlobals} from "./services/app.global";
 
 enableProdMode();
 
@@ -199,7 +200,8 @@ type StoreType = {
     ProfileService,
     UserService,
     FollowService,
-    WindowUtilService
+    WindowUtilService,
+    AppGlobals
   ],
 })
 export class AppModule {
