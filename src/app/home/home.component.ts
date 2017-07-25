@@ -424,6 +424,13 @@ export class HomeComponent implements OnInit {
 
   private passerTop100(events: any) {
     this.currentHighlightedMarker = 0;
+
+    let mapCenter = new google.maps.Marker({
+      position: new google.maps.LatLng(this.lat, this.lng),
+      draggable: true
+    });
+    let searchCenter = mapCenter.getPosition();
+
     this.mapsAPILoader.load().then(() => {
         for (let i = 0; i < events.length; i++) {
           let latitude: any;
@@ -449,6 +456,13 @@ export class HomeComponent implements OnInit {
             }
 
           }
+
+          let latLngDistance = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            draggable: true
+          });
+          let distance = getDistance(latLngDistance.getPosition(),searchCenter);
+          this.events[i].distance = (distance/1000).toFixed(1);
           if (i === 0) {
             this.markers.push({
               lat: latitude,
@@ -472,6 +486,7 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+    console.log(this.events);
   }
 
   private handleScroll() {
@@ -543,7 +558,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
-        this.passerTop100(resp.data);
+        this.passerTop100(this.events);
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
@@ -575,7 +590,7 @@ export class HomeComponent implements OnInit {
 
         this.shownotfound = response.total === 0;
 
-        this.passerTrending(response.geo);
+        this.passerTop100(this.events);
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();

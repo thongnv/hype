@@ -292,7 +292,6 @@ export class ModeComponent implements OnInit {
 
   getDataModes() {
     let params = this.params;
-    console.log(params);
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
@@ -901,7 +900,7 @@ export class ModeComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = Math.fround(distance / 1000);
+      this.params.radius = (distance / 1000).toFixed();
       this.smallLoader.show();
       this.items = [];
       this.markers = [];

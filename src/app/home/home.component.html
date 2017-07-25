@@ -17,7 +17,7 @@
   </div>
   <div class="filter-events clearfix" [class.top-100]="selectedEventOrder.name == 'top 100'">
     <div class="tab-choose">
-      <div id="timeFilter" class="btn-group tab-control" *ngIf="selectedEventOrder.name != 'top 100'">
+      <div id="timeFilter" class="btn-group tab-control">
         <button *ngFor="let filter of eventFilter" (click)="onSelectEventFilter(filter)" type="button"
                 class="btn btn-default tab-control text-capitalize"
                 [class.active]="filter===selectedEventFilter">
@@ -74,6 +74,7 @@
                  *ngIf="item.title" [routerLink]="[item.alias]">
                 {{item.title | truncate : 45}}
               </a>
+              <span class="distance" *ngIf="item.distance">{{item.distance}} km</span>
               <span
                 *ngIf="item.field_event_option.field_price !='0' && (item.field_event_option.field_price|json) != 'null'"
                 class="free-price-button text-capitalize pull-right"

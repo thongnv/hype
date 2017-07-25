@@ -287,7 +287,6 @@ export class EatComponent implements OnInit {
 
   getDataModes() {
     let params = this.params;
-    console.log(params);
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
@@ -350,7 +349,6 @@ export class EatComponent implements OnInit {
   getFilter() {
     this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
         this.filterData = resp.eat;
-        this.filterData = resp.eat;
     });
   }
 
@@ -362,19 +360,6 @@ export class EatComponent implements OnInit {
       this.lng = $event.coords.lng;
     }
   }
-
-  public markerRadiusChange(event) {
-    let radius = parseInt(event);
-    this.currentRadius = radius;
-    this.params.radius = (radius / 1000);
-    this.smallLoader.show();
-    this.markers = [];
-    this.items = [];
-    this.params.page = 0;
-    this.end_record = false;
-    this.getDataModes();
-  }
-
 
   private initMap(companies: any) {
     if (companies) {
@@ -862,7 +847,7 @@ export class EatComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = Math.fround(distance / 1000);
+      this.params.radius = (distance / 1000).toFixed(2);
       this.smallLoader.show();
       this.items = [];
       this.markers = [];

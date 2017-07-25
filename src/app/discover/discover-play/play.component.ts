@@ -297,7 +297,6 @@ export class PlayComponent implements OnInit {
       }else{
         this.shownotfound = false;
       }
-
       if (resp.company.length == 0) {
         this.end_record = true;
       }
@@ -848,8 +847,7 @@ export class PlayComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
-      //sleep change map call api
-      sleep(500);
+
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -860,10 +858,12 @@ export class PlayComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = Math.fround(distance / 1000);
+      this.params.radius = (distance / 1000).toFixed(2);
       this.smallLoader.show();
       this.items = [];
       this.markers = [];
+      //sleep change map call api
+      sleep(500);
       this.getDataModes();
     }
   }

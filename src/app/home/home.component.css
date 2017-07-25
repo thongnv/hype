@@ -338,7 +338,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  width: calc(100% - 65px);
+  /*width: calc(100% - 65px);*/
   overflow: hidden;
   line-height: 23px;
 }
@@ -464,6 +464,18 @@ button.btn.btn-default.active {
   text-align: right;
 }
 
+.top-content .distance{
+  opacity: 0.6;
+  font-family: Roboto, sans-serif;
+  font-size: 12px !important;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  margin-left: 15px;
+  color: #3b3b3b !important;
+  text-transform: uppercase;
+}
+
 /*
 ====================*/
 .wrap-each-items {
@@ -547,7 +559,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  width: calc(100% - 65px);
+  /*width: calc(100% - 65px);*/
 }
 
 .detail-information {
