@@ -70,9 +70,9 @@
         <div class="information-profile">
           <div class="top-content">
             <h4 class="information-title pointer">
-              <a class="pull-left text-ellipsis real-title title-hover"
+              <a class="pull-left real-title title-hover"
                  *ngIf="item.title" [routerLink]="[item.alias]">
-                {{item.title | truncate : 45}}
+                {{item.title}}
               </a>
               <span class="distance" *ngIf="item.distance">{{item.distance}} km</span>
               <span

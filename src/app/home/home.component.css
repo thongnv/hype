@@ -338,7 +338,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  /*width: calc(100% - 65px);*/
+  width: calc(100% - 65px);
   overflow: hidden;
   line-height: 23px;
 }
@@ -471,7 +471,7 @@ button.btn.btn-default.active {
   font-weight: 300;
   line-height: 1;
   text-align: left;
-  margin-left: 15px;
+  margin-left: 5px;
   color: #3b3b3b !important;
   text-transform: uppercase;
 }
@@ -479,6 +479,8 @@ button.btn.btn-default.active {
   color: #00b3ee;
   text-decoration: none;
   font-size: 12px;
+  float: left;
+  clear: both;
 }
 /*
 ====================*/
@@ -573,6 +575,8 @@ button.btn.btn-default.active {
   overflow: hidden;
   margin-bottom: 10px;
   margin-top: 10px;
+  float: left;
+  clear: both;
 }
 
 .mentioned {
