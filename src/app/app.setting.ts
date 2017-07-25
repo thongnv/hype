@@ -8,11 +8,11 @@ if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
   NODE_JS = 'http://52.220.246.146:8000';
 } else {
-  // API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
-  // NODE_JS = 'http://52.220.246.146:8000';
+  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+  NODE_JS = 'http://52.220.246.146:8000';
 
-  API_ENDPOINT = 'https://api-hl.iypuat.com/';
-  NODE_JS = 'https://hylo2.iypuat.com:8080';
+  // API_ENDPOINT = 'https://api-hl.iypuat.com/';
+  // NODE_JS = 'https://hylo2.iypuat.com:8080';
 }
 
 export class AppSetting {
