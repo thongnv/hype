@@ -563,7 +563,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  /*width: calc(100% - 65px);*/
+  width: calc(100% - 85px);
 }
 
 .detail-information {
