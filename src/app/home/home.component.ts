@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
   };
   public shownotfound: boolean = false;
   public layoutWidth: number;
+  public innerWidth: number;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -127,7 +128,7 @@ export class HomeComponent implements OnInit {
       || document.body.clientHeight;
 
     this.handleScroll();
-
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
@@ -145,8 +146,8 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log('max root container width: ', this.windowRef);
-    console.log(event);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);
   }
