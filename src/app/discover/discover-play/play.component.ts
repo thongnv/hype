@@ -711,7 +711,7 @@ export class PlayComponent implements OnInit {
 
     this.cuisine = [];
     this.best = [];
-    this.type = [];
+    this.type = 'play';
     this.totalCuisine = 0;
     this.cuisineDraw = [];
     this.currentRate = [];
