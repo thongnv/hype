@@ -1267,7 +1267,10 @@ body, html {
     padding: 0px;
   }
 
+  .frame_nav{position: relative; width: 180px}
   .frame_nav .sidebar{padding: 0px; margin: 0px;}
+  .frame_nav .left-nav-content{position: fixed;  height: 100%; width:inherit;}
+
 
   //responsive
   @media only screen and(max-width: 374px) {
@@ -1307,8 +1310,12 @@ body, html {
   }
   @media only screen and (min-width: 320px) and (max-width: 800px) {
 
+    .frame_nav{width: 100%; position: fixed; bottom: 0px;z-index: 9999; height: 59px;}
+    .frame_nav{width: 100%}
+
     .navbar-toggle {
       margin-right: 5px;
+      margin-left: 10px;
     }
 
     .end-of-list {
@@ -1485,13 +1492,7 @@ body, html {
       padding: 0;
     }
     .sidebar {
-      height: 50px;
-      left: 0;
-      right: 0;
-      top: inherit;
-      bottom: 0;
-      width: 100%;
-      z-index: 9999;
+
     }
     .sidebar .list-tap > li {
       padding: 0;

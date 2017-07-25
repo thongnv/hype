@@ -238,7 +238,7 @@ export class PlayComponent implements OnInit {
         }
       });
     });
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public onResize(event): void {
