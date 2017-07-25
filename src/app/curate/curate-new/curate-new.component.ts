@@ -230,33 +230,6 @@ export class CurateNewComponent implements OnInit {
     };
   }
 
-  // category select helper
-  public addToSelectedCategories(category) {
-    this.selectedCategories.push(category);
-
-    // reset text box
-    this.formData.controls['listCatTmp'].patchValue('');
-
-    // update form control value
-    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
-
-    // filter chosen category in categoriesTmp
-    this.categoriesTmp = this.categoriesTmp.filter(cat => cat.tid !== category.tid);
-  }
-
-  public removeCategoryItem(index) {
-    this.selectedCategories.splice(index, 1);
-
-    // update form control value
-    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
-  }
-
-  public resetListCategory(evt) {
-    console.log(evt);
-  }
-
   public onMapsChangePlace(data, i) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder();
@@ -287,47 +260,27 @@ export class CurateNewComponent implements OnInit {
     }
   }
 
-  private highlightMarker(markerId: number): void {
-    if (this.markers[markerId]) {
-      this.markers.forEach((marker, index) => {
-        if (index === markerId) {
-          this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
-        } else {
-          this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
-        }
-      });
-    }
+  // category select helper
+  public addToSelectedCategories(category) {
+    this.selectedCategories.push(category);
+
+    // reset text box
+    this.formData.controls['listCatTmp'].patchValue('');
+
+    // update form control value
+    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
+
+    // filter chosen category in categoriesTmp
+    this.categoriesTmp = this.categoriesTmp.filter((cat) => cat.tid !== category.tid);
   }
 
-  // for preview
-  private initMap() {
-    this.currentHighlightedMarker = 0;
-    this.slides = [];
-    this.markers = [];
-    this.showPreview = true;
-    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
-      let index = 0;
-      for (let place of this.previewData.listPlaces) {
-        if (place.lat && place.lng) {
-          if (index === 0) {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
-          } else {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
-          }
-          index++;
-        }
-      }
-    }
-    if (this.previewData.images.length) {
-      for (let img of this.previewData.images) {
-        if (img) {
-          this.slides.push({image: img.url, active: false});
-        }
-      }
+  public removeCategoryItem(index) {
+    this.selectedCategories.splice(index, 1);
 
-    }
+    // update form control value
+    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
   }
 
   // helper functions
@@ -372,5 +325,48 @@ export class CurateNewComponent implements OnInit {
       callback(dataUrl);
 
     };
+  }
+
+  // for preview
+  private initMap() {
+    this.currentHighlightedMarker = 0;
+    this.slides = [];
+    this.markers = [];
+    this.showPreview = true;
+    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
+      let index = 0;
+      for (let place of this.previewData.listPlaces) {
+        if (place.lat && place.lng) {
+          if (index === 0) {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
+          } else {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
+          }
+          index++;
+        }
+      }
+    }
+    if (this.previewData.images.length) {
+      for (let img of this.previewData.images) {
+        if (img) {
+          this.slides.push({image: img.url, active: false});
+        }
+      }
+
+    }
+  }
+
+  private highlightMarker(markerId: number): void {
+    if (this.markers[markerId]) {
+      this.markers.forEach((marker, index) => {
+        if (index === markerId) {
+          this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
+        } else {
+          this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
+        }
+      });
+    }
   }
 }

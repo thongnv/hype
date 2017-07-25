@@ -31,6 +31,7 @@ export class GmapAutoPlaceComponent implements OnInit {
   public gmapResults: any = {};
   public searchToken: string = '';
   public hideAddressInput = true;
+  public hideCustomAddress = true;
 
   public constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -78,7 +79,10 @@ export class GmapAutoPlaceComponent implements OnInit {
             },
             input: inputText
           },
-          (result, status) => this.gmapResults = result);
+          (result, status) => {
+            this.hideCustomAddress = false;
+            this.gmapResults = result;
+          });
       });
 
     }
@@ -89,7 +93,8 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
 
   public onSearchAddress(keyword: string) {
-    if (keyword.length >= 3) {
+    this.searchToken = keyword.trim();
+    if (this.searchToken.length >= 3) {
       this.hideAddressResult = false;
       this.mapsAPILoader.load().then(() => {
         let autocompleteService = new google.maps.places.AutocompleteService();
@@ -97,9 +102,11 @@ export class GmapAutoPlaceComponent implements OnInit {
             componentRestrictions: {
               country: 'sg'
             },
-            input: keyword.trim()
+            input: this.searchToken
           },
-          (result, status) => this.gmapResults = result);
+          (result, status) => {
+            this.gmapResults = result;
+          });
       });
 
     }
@@ -111,6 +118,7 @@ export class GmapAutoPlaceComponent implements OnInit {
 
   public onCloseSuggestion(data) {
     this.hideSearchResult = true;
+    this.hideCustomAddress = true;
     if (data.Title) {
       this.searchElementRef.nativeElement.value = data.Title;
     }
@@ -121,6 +129,7 @@ export class GmapAutoPlaceComponent implements OnInit {
     this.searchElementRef.nativeElement.value = data.description;
     this.onMapsChangePlace.emit(data);
     this.hideSearchResult = true;
+    this.hideCustomAddress = true;
   }
 
   public onAddressItemClick(data) {

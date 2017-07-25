@@ -30,7 +30,8 @@
     box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
 }
 .gmap-place .form-group label {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .gmap-place .form-group label i {
     color: #ec3d62;

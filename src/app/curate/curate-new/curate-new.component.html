@@ -44,17 +44,9 @@
                        list-formatter="name"
                        display-property-name="name"
                        placeholder="Select category ..."
-                       class="form-control" id="list-category"
-
-                       (blur)="resetListCategory"
-                >
+                       class="form-control" id="list-category">
               </li>
             </ul>
-
-            <!--<select aria-placeholder="abc" class="form-control" name="" id="list-category" formControlName="listCategory">-->
-            <!--<option value="" selected="selected">Select a category</option>-->
-            <!--<option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>-->
-            <!--</select>-->
 
             <small *ngIf="formData.get('listCatTmp').hasError('required') && formData.get('listCategory').hasError('required')" class="text-danger">
               Please select article category.
@@ -63,7 +55,6 @@
 
         </div>
 
-        <!--<div style="clear: both"></div>-->
 
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
@@ -71,7 +62,7 @@
             <i class="fa fa-plus"></i> &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*" imageUpload (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="previewUrl == 0" class="text-danger">
+          <small *ngIf="previewUrl.length == 0" class="text-danger">
             No file selected.
           </small>
           <small *ngIf="!validateSize || !validateType" class="text-danger">
