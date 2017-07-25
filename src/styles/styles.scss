@@ -1474,6 +1474,14 @@ body, html {
       width: 100%;
       display: block;
     }
+
+    .frame_nav, .frame_left, .frame-right{
+        display: block!important;
+    }
+
+    .type-events .type-event-item img{
+        width: 30px!important; height: 30px!important;
+    }
     .table-wrap {
       display: block;
     }
