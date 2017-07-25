@@ -354,9 +354,8 @@ export class CurateNewComponent implements OnInit {
     this.formData.controls['listCatTmp'].patchValue('');
 
     // update form control value
-    this.formData.controls['listCategory'].patchValue(this.selectedCategories.join(','));
-
-    console.log(this.formData.get('listCategory'));
+    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
   }
 
   public removeCategoryItem(index) {

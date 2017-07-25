@@ -32,8 +32,8 @@
 
           <div class="list-category" (click)="showAutoComplete=true">
             <ul class="list-category-item">
-              <li class="category-item" *ngFor="let catgory of selectedCategories; let index = index">
-                <span>{{catgory.name}}</span>
+              <li class="category-item" *ngFor="let category of selectedCategories; let index = index">
+                <span>{{category.name}}</span>
                 <span class="remove-category-item" (click)="removeCategoryItem(index)">x</span>
               </li>
               <li>
@@ -56,8 +56,7 @@
             <!--<option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>-->
             <!--</select>-->
 
-            <small *ngIf="formData.get('listCatTmp').touched && formData.get('listCatTmp').hasError('required') ||
-            formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
+            <small *ngIf="formData.get('listCatTmp').hasError('required') && formData.get('listCategory').hasError('required')" class="text-danger">
               Please select article category.
             </small>
           </div>

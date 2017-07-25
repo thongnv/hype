@@ -444,14 +444,14 @@ header ul li.pull-right {
 
 ul.list-category-item {
   border: 1px solid #c0c0c0;
-  height: 40px;
+  min-height: 40px;
   padding-top: 5px;
-
+  padding-left: 5px;
 }
 
 ul.list-category-item li {
   list-style-type: none;
-  float: left;
+  display: inline-block;
 }
 
 li.category-item {
