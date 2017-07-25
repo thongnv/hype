@@ -1,4 +1,4 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box" [style.width]="layoutWidth - 30 + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-eat" [style.width]="layoutWidth/2 + 'px'">
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
       <div id="btnHeadFilter" ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
@@ -30,11 +30,7 @@
           aria-hidden="true"></i></a>
       </li>
       <li>
-        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
-           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
-          [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
-          aria-hidden="true"></i></a>
-        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
+        <a (click)="showCuisineFind(showCuisine)"
            class="when-button">Activities ({{totalCuisine}})<i
           [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
           aria-hidden="true"></i></a>
@@ -192,7 +188,7 @@
           </ngb-rating>
           <span class="review">{{item.rating.total}} Reviews</span>
           <div class="box-content">
-            <p *ngIf="item.Hylo_Activity_Description !=''" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 60"></p>
+            <p *ngIf="item.Hylo_Activity_Description !==''" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 60"></p>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -209,9 +205,9 @@
     <div>You can revise filters or <a (click)="clearAllFilter()" class="clear_filter">clear all filters</a>.</div>
   </div>
 
-</div>
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="layoutWidth  + 'px'" id="right">
-  <div class="box-map" style="position: fixed; width:inherit; height: 500px;">
+</div >
+<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: 500px;" [style.width]="layoutWidth/2 + 'px'">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"
@@ -225,7 +221,7 @@
     >
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                            [circleDraggable]="circleDraggable"
-                           (radiusChange)="markerRadiusChange($event)" [lat]="lat"
+                           [lat]="lat"
                            (markerClick)="clickedMarker($event)"
                            [lng]="lng"></gmap-geocode-marker>
 

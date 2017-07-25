@@ -20,22 +20,21 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 declare let google: any;
 
 @Component({
-  moduleId: 'hylo-mode',
-  selector: 'app-mode',
-  templateUrl: './mode.component.html',
-  styleUrls: ['./mode.component.css'],
+  moduleId: 'hylo-play',
+  selector: 'app-play',
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.css'],
   encapsulation: ViewEncapsulation.None,
   providers: [NgbRatingConfig],
 })
 
-export class ModeComponent implements OnInit {
+export class PlayComponent implements OnInit {
   @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();
 
   public markers: any = [];
   public categories: any = [];
   public categoriesDraw: any[];
   public priceRange: number[] = [0, 50];
-  public filterFromMode: FormGroup;
   public filterCategory: FormGroup;
   public items = [];
   public filterData: any = [];
@@ -67,7 +66,7 @@ export class ModeComponent implements OnInit {
   private stopped: boolean = false;
   public shownotfound: boolean = false;
   private params = {
-    type: 'all',
+    type: 'play',
     kind: '',
     price: '',
     activity: '',
@@ -101,10 +100,6 @@ export class ModeComponent implements OnInit {
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
                      @Inject(DOCUMENT) private document: Document) {
-
-    this.filterFromMode = this.formBuilder.group({
-      filterMode: 'all'
-    });
 
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
@@ -192,7 +187,7 @@ export class ModeComponent implements OnInit {
 
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
-    this.getCategories(this.filterFromMode.value.filterMode);
+    this.getCategories('play');
     this.getFilter();
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -243,7 +238,7 @@ export class ModeComponent implements OnInit {
         }
       });
     });
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public onResize(event): void {
@@ -292,6 +287,7 @@ export class ModeComponent implements OnInit {
 
   getDataModes() {
     let params = this.params;
+    console.log(params);
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
       this.loadMore = false;
       this.total = resp.total;
@@ -301,7 +297,6 @@ export class ModeComponent implements OnInit {
       }else{
         this.shownotfound = false;
       }
-
       if (resp.company.length == 0) {
         this.end_record = true;
       }
@@ -353,22 +348,7 @@ export class ModeComponent implements OnInit {
 
   getFilter() {
     this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
-      if (this.filterFromMode.value.filterMode == 'play') {
         this.filterData = resp.play;
-      } else if (this.filterFromMode.value.filterMode == 'eat') {
-        this.filterData = resp.eat;
-      }
-      else {
-        let filterAll = resp.eat;
-        //let cuisine = resp.play.cuisine;
-        let best = resp.play.best;
-        let type = resp.play.type;
-
-        //filterAll.cuisine = filterAll.cuisine.concat(cuisine);
-        filterAll.best = filterAll.best.concat(best);
-        filterAll.type = filterAll.type.concat(type);
-        this.filterData = filterAll;
-      }
     });
   }
 
@@ -391,22 +371,6 @@ export class ModeComponent implements OnInit {
     this.params.page = 0;
     this.end_record = false;
     this.getDataModes();
-  }
-
-  public changeType() {
-
-    this.params.limit = 20;
-    this.params.page = 0;
-    this.markers = [];
-    this.items = [];
-
-    this.params.type = this.filterFromMode.value.filterMode;
-    //this.params.kind = '';
-    this.smallLoader.show();
-    this.getCategories(this.filterFromMode.value.filterMode);
-    this.getDataModes();
-    this.getFilter();
-
   }
 
   private initMap(companies: any) {
@@ -523,11 +487,7 @@ export class ModeComponent implements OnInit {
       this.params.price = this.priceRange.join(',');
     }
     if (this.showCuisine) {
-      if (this.filterFromMode.value.filterMode == 'play') {
         this.params.activity = cuisine.join(',');
-      } else {
-        this.params.cuisine = cuisine.join(',');
-      }
     }
     if (this.showBest) {
       this.params.bestfor = best.join(',');
@@ -546,7 +506,6 @@ export class ModeComponent implements OnInit {
   }
 
   public filterCancel() {
-    this.filterFromMode.value.filterMode = 'all';
     this.filterCategory.value.filterCategory = 'all';
     this.smallLoader.show();
     this.clearParams();
@@ -888,8 +847,7 @@ export class ModeComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
-      //sleep change map call api
-      sleep(500);
+
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -900,10 +858,12 @@ export class ModeComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = (distance / 1000).toFixed();
+      this.params.radius = (distance / 1000).toFixed(2);
       this.smallLoader.show();
       this.items = [];
       this.markers = [];
+      //sleep change map call api
+      sleep(500);
       this.getDataModes();
     }
   }

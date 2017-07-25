@@ -1,4 +1,4 @@
-<article class="new-list">
+<article class="new-list column" >
   <!--header start-->
   <header>
     <ul>
@@ -13,7 +13,7 @@
 
     <form [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-      <div class="input-box col-xs-12 col-md-6">
+      <div class="input-box col-xs-12 col-md-6" [style.width]="layoutWidth/2 + 'px'">
         <h3>create a list</h3>
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
@@ -29,21 +29,40 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="list-category">Category</label>
-          <select aria-placeholder="abc" class="form-control" name="" id="list-category" formControlName="listCategory">
-            <option value="" selected="selected">Select a category</option>
-            <option *ngFor="let cat of categories" [value]="cat.tid">{{cat.name}}</option>
-          </select>
-          <small *ngIf="formData.get('listCategory').touched && formData.get('listCategory').hasError('required')" class="text-danger">
-            Please select article category.
-          </small>
+
+          <div class="list-category" (click)="showAutoComplete=true">
+            <ul class="list-category-item">
+              <li class="category-item" *ngFor="let category of selectedCategories; let index = index">
+                <span>{{category.name}}</span>
+                <span class="remove-category-item" (click)="removeCategoryItem(index)">x</span>
+              </li>
+              <li>
+                <input ngui-auto-complete
+                       formControlName="listCatTmp"
+                       [source]="categoriesTmp"
+                       (valueChanged)="addToSelectedCategories($event)"
+                       list-formatter="name"
+                       display-property-name="name"
+                       placeholder="Select category ..."
+                       class="form-control" id="list-category">
+              </li>
+            </ul>
+
+            <small *ngIf="formData.get('listCatTmp').hasError('required') && formData.get('listCategory').hasError('required')" class="text-danger">
+              Please select article category.
+            </small>
+          </div>
+
         </div>
+
+
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
             <i class="fa fa-plus"></i> &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*" imageUpload (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="previewUrl == 0" class="text-danger">
+          <small *ngIf="previewUrl.length == 0" class="text-danger">
             No file selected.
           </small>
           <small *ngIf="!validateSize || !validateType" class="text-danger">
@@ -64,7 +83,7 @@
 
       </div>
 
-      <div class="image-box col-xs-12 col-md-6">
+      <div class="image-box col-xs-12 col-md-6" [style.width]="layoutWidth/2 - 20 + 'px'">
         <div formArrayName="listPlaces">
           <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">
@@ -92,7 +111,7 @@
       <div class="form-actions clearfix">
         <div class="wrap-full-50">
           <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
-          <button type="button" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-success" (click)="onPreview()">Preview</button>
+          <button type="button" [disabled]="formData.invalid || previewUrl.length == 0" class="btn btn-success" (click)="onPreview()">Preview</button>
         </div>
       </div>
       <div class="mobile-margin"></div>
@@ -103,8 +122,8 @@
   <!--form wrap end-->
 
   <!--list preview wrap start-->
-  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
-    <div class="col-xs-12 list-box" (scroll)="onScroll($event)" id="hScroll" style="height: calc(100vh - 150px); overflow: auto; margin-right: -35px;">
+  <div class="list-preview-wrap " [class.hide]="!showPreview" *ngIf="previewData">
+    <div class="col-xs-12 list-box no-padding" (scroll)="onScroll($event)" id="hScroll" [style.width]="layoutWidth/2 + 'px'">
       <div class="carousel-box" id="curate-carousel">
         <div class="carousel-header">
           <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
@@ -133,16 +152,16 @@
               <strong class="place-name">{{plc.place}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
-            <div class="place-item-img">
+            <div *ngIf="plc.image.url" class="place-item-img">
               <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
             </div>
-            <p class="place-item-description">{{plc.description}}</p>
+            <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
           </ng-container>
         </div>
       </ng-container>
       <div class="mobile-footer"></div>
     </div>
-    <div class="col-xs-12 map-box hidden-xs hidden-sm">
+    <div class="col-xs-12 map-box hidden-xs hidden-sm no-padding" [style.width]="layoutWidth/2 + 'px'">
       <sebm-google-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
         <app-custom-marker *ngFor="let marker of markers; let index=index" [marker]="marker" [index]="index" [hasLabel]="true">
         </app-custom-marker>

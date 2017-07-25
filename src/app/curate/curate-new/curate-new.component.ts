@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { UserService } from '../../services/user.service';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-curate-new',
@@ -34,28 +35,35 @@ export class CurateNewComponent implements OnInit {
   public zoom: number = 12;
   public validateSize: boolean = true;
   public validateType: boolean = true;
+  public layoutWidth: number;
 
   public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.required],
+    listCatTmp: [''],
     listImages: [''],
     listPlaces: this.formBuilder.array([])
   });
+
+  public selectedCategories = [];
+  public categoriesTmp = [];
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
               private userService: UserService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private router: Router) {
-    this.onAddPlace();
+              private router: Router,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
+    this.onAddPlace();
     this.loaderService.show();
     document.getElementById('list-name').focus();
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {
@@ -66,6 +74,7 @@ export class CurateNewComponent implements OnInit {
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
+        this.categoriesTmp = this.categories;
         this.loaderService.hide();
       }
     );
@@ -73,7 +82,15 @@ export class CurateNewComponent implements OnInit {
 
   public onAddPlace() {
     const control = <FormArray> this.formData.controls['listPlaces'];
-    const placeCtrl = this.initAddress();
+    const placeCtrl = this.formBuilder.group({
+      keyword: ['', Validators.required],
+      inputAddress: [''],
+      description: ['', Validators.required],
+      lat: ['', Validators.required],
+      lng: ['', Validators.required],
+      slug: [''],
+      image: ['', Validators.required]
+    });
     control.push(placeCtrl);
   }
 
@@ -222,7 +239,6 @@ export class CurateNewComponent implements OnInit {
         let placeControl = this.formData.get('listPlaces') as FormArray;
         let place = placeControl.at(i);
         place.patchValue({
-          keyword: data.description,
           lat: results[0].geometry.location.lat(),
           lng: results[0].geometry.location.lng(),
           slug: '',
@@ -232,69 +248,39 @@ export class CurateNewComponent implements OnInit {
   }
 
   public onHyloChangePlace(data, i) {
-    // let control = this.formData.get('listPlaces').controls[i] as FormGroup;
     let placeControl = this.formData.get('listPlaces') as FormArray;
     let place = placeControl.at(i);
-    place.patchValue({
-      keyword: data.Title,
-      lat: Number(data.Lat),
-      lng: Number(data.Long),
-      slug: data.Slug,
-    });
-  }
-
-  private highlightMarker(markerId: number): void {
-    if (this.markers[markerId]) {
-      this.markers.forEach((marker, index) => {
-        if (index === markerId) {
-          this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
-        } else {
-          this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
-        }
+    if (data.Title) {
+      place.patchValue({
+        keyword: data.Title,
+        lat: Number(data.Lat),
+        lng: Number(data.Long),
+        slug: data.Slug,
       });
     }
   }
 
-  private initAddress() {
-    return this.formBuilder.group({
-      keyword: ['', Validators.required],
-      description: ['', Validators.required],
-      lat: ['', Validators.required],
-      lng: ['', Validators.required],
-      slug: [''],
-      image: ['', Validators.required]
-    });
+  // category select helper
+  public addToSelectedCategories(category) {
+    this.selectedCategories.push(category);
+
+    // reset text box
+    this.formData.controls['listCatTmp'].patchValue('');
+
+    // update form control value
+    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
+
+    // filter chosen category in categoriesTmp
+    this.categoriesTmp = this.categoriesTmp.filter((cat) => cat.tid !== category.tid);
   }
 
-  // for preview
-  private initMap() {
-    this.currentHighlightedMarker = 0;
-    this.slides = [];
-    this.markers = [];
-    this.showPreview = true;
-    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
-      let index = 0;
-      for (let place of this.previewData.listPlaces) {
-        if (place.lat && place.lng) {
-          if (index === 0) {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
-          } else {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
-          }
-          index++;
-        }
-      }
-    }
-    if (this.previewData.images.length) {
-      for (let img of this.previewData.images) {
-        if (img) {
-          this.slides.push({image: img.url, active: false});
-        }
-      }
+  public removeCategoryItem(index) {
+    this.selectedCategories.splice(index, 1);
 
-    }
+    // update form control value
+    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
   }
 
   // helper functions
@@ -339,5 +325,48 @@ export class CurateNewComponent implements OnInit {
       callback(dataUrl);
 
     };
+  }
+
+  // for preview
+  private initMap() {
+    this.currentHighlightedMarker = 0;
+    this.slides = [];
+    this.markers = [];
+    this.showPreview = true;
+    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
+      let index = 0;
+      for (let place of this.previewData.listPlaces) {
+        if (place.lat && place.lng) {
+          if (index === 0) {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
+          } else {
+            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
+          }
+          index++;
+        }
+      }
+    }
+    if (this.previewData.images.length) {
+      for (let img of this.previewData.images) {
+        if (img) {
+          this.slides.push({image: img.url, active: false});
+        }
+      }
+
+    }
+  }
+
+  private highlightMarker(markerId: number): void {
+    if (this.markers[markerId]) {
+      this.markers.forEach((marker, index) => {
+        if (index === markerId) {
+          this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
+        } else {
+          this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
+        }
+      });
+    }
   }
 }

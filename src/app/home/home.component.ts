@@ -9,6 +9,7 @@ import $ from 'jquery';
 
 import { HomeService } from '../services/home.service';
 import { LoaderService } from '../helper/loader/loader.service';
+import { WindowUtilService } from '../services/window-ultil.service';
 
 import { AppSetting } from '../app.setting';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
@@ -53,8 +54,9 @@ export class HomeComponent implements OnInit {
     locale: {format: 'YYYY-MM-DD'},
     alwaysShowCalendars: false,
   };
-
   public shownotfound: boolean = false;
+  public layoutWidth: number;
+  public innerWidth: number;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -82,7 +84,8 @@ export class HomeComponent implements OnInit {
               private mapsAPILoader: MapsAPILoader,
               private localStorageService: LocalStorageService,
               private route: Router,
-              private location: Location) {
+              private location: Location,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -107,22 +110,26 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.smallLoader.hide();
     this.loaderService.hide();
-    if(this.selectedEventOrder.name == 'top 100'){
+    if (this.selectedEventOrder.name === 'top 100') {
       this.getTrending();
     }
-    this.getTrandingCategories();
+    this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
+      this.drawCategories = resp.data;
+      let numCategories = calculateNumCategories();
+      this.categories = this.drawCategories.slice(0, numCategories);
+    });
 
-    let width = window.innerWidth
+    this.screenWidth = window.innerWidth
       || document.documentElement.clientWidth
       || document.body.clientWidth;
 
-    let height = window.innerHeight
+    this.screenHeight = window.innerHeight
       || document.documentElement.clientHeight
       || document.body.clientHeight;
 
-    this.screenWidth = width;
-    this.screenHeight = height;
     this.handleScroll();
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public setPosition(position) {
@@ -135,41 +142,15 @@ export class HomeComponent implements OnInit {
   }
 
   public p() {
-    // TODO;
+    // just to get rid of the warning
   }
 
   public onResize(event): void {
-    console.log(event);
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
-
-    let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-    if (this.screenWidth <= 768) {
-      if (this.drawCategories.length > imageNumber) {
-        this.categories = this.drawCategories.slice(0, imageNumber - 1);
-      } else {
-        this.categories = this.drawCategories;
-      }
-    } else {
-      if (this.drawCategories.length > imageNumber) {
-        this.categories = this.drawCategories.slice(0, 6);
-      } else {
-        if (this.screenWidth <= 1024) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 6);
-
-        }
-      }
-    }
+    console.log(this.windowRef.rootContainer);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    let numCategories = calculateNumCategories();
+    this.categories = this.drawCategories.slice(0, numCategories);
   }
 
   public onSelectEventType(event): void {
@@ -211,7 +192,6 @@ export class HomeComponent implements OnInit {
   public onSelectEventFilter(filter: any): void {
     this.clearParam();
     this.selectedEventFilter = filter;
-    let date = new Date();
     if (filter.name === 'today') {
       this.params.time = 'today';
     } else if (filter.name === 'tomorrow') {
@@ -247,12 +227,12 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.fround(distance / 1000) -1;
+      this.params.radius = Math.round(distance / 1000) - 1;
     }
-    this.params.page=0;
-    this.params.price=0;
-    this.params.start=20;
-    this.params.when=0;
+    this.params.page = 0;
+    this.params.price = 0;
+    this.params.start = 20;
+    this.params.when = 0;
     this.selected = 'all';
     this.markers = [];
     this.events = [];
@@ -310,24 +290,8 @@ export class HomeComponent implements OnInit {
       this.categories = this.drawCategories;
     } else {
       this.showAll = true;
-      let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-      if (this.screenWidth <= 768) {
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, imageNumber - 1);
-        } else {
-          this.categories = this.drawCategories;
-        }
-      } else {
-
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 6);
-
-        }
-
-      }
-      console.log(this.categories);
+      let numCategories = calculateNumCategories();
+      this.categories = this.drawCategories.slice(0, numCategories);
     }
   }
 
@@ -376,11 +340,11 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.fround(distance / 1000) -1;
+      this.params.radius = Math.round(distance / 1000) - 1;
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
-      this.params.page=0;
+      this.params.page = 0;
       sleep(500);
       this.getTrending();
     }
@@ -411,29 +375,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.getEvents(this.params);
     }
-  }
-
-  private getTrandingCategories() {
-    this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
-      this.drawCategories = resp.data;
-      let imageNumber = Math.floor(this.screenWidth / 55) - 1;
-      if (this.screenWidth <= 768) {
-        if (resp.data.length >= imageNumber) {
-          this.categories = resp.data.slice(0, imageNumber - 1);
-        } else {
-          this.categories = resp.data;
-        }
-      } else {
-
-        if (this.drawCategories.length > imageNumber) {
-          this.categories = this.drawCategories.slice(0, 6);
-        } else {
-          this.categories = this.drawCategories.slice(0, 6);
-        }
-
-      }
-
-    });
   }
 
   private highlightMarker(markerId: number): void {
@@ -484,6 +425,13 @@ export class HomeComponent implements OnInit {
 
   private passerTop100(events: any) {
     this.currentHighlightedMarker = 0;
+
+    let mapCenter = new google.maps.Marker({
+      position: new google.maps.LatLng(this.lat, this.lng),
+      draggable: true
+    });
+    let searchCenter = mapCenter.getPosition();
+
     this.mapsAPILoader.load().then(() => {
         for (let i = 0; i < events.length; i++) {
           let latitude: any;
@@ -509,6 +457,13 @@ export class HomeComponent implements OnInit {
             }
 
           }
+
+          let latLngDistance = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            draggable: true
+          });
+          let distance = getDistance(latLngDistance.getPosition(),searchCenter);
+          this.events[i].distance = (distance/1000).toFixed(1);
           if (i === 0) {
             this.markers.push({
               lat: latitude,
@@ -532,6 +487,7 @@ export class HomeComponent implements OnInit {
         }
       }
     );
+    console.log(this.events);
   }
 
   private handleScroll() {
@@ -593,11 +549,7 @@ export class HomeComponent implements OnInit {
         console.log(this.events);
         this.total = resp.total;
 
-        if (resp.total === 0) {
-          this.shownotfound = true;
-        }else{
-          this.shownotfound = false;
-        }
+        this.shownotfound = resp.total === 0;
 
         if (resp.data.length === 0) {
           this.endRecord = true;
@@ -607,7 +559,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
-        this.passerTop100(resp.data);
+        this.passerTop100(this.events);
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
@@ -637,13 +589,9 @@ export class HomeComponent implements OnInit {
         }
         this.total = response.total;
 
-        if (response.total === 0) {
-          this.shownotfound = true;
-        }else{
-          this.shownotfound = false;
-        }
+        this.shownotfound = response.total === 0;
 
-        this.passerTrending(response.geo);
+        this.passerTop100(this.events);
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
@@ -672,7 +620,28 @@ function getDistance(p1, p2) {
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
 function sleep(delay) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
+  let start = new Date().getTime();
+  while (new Date().getTime() < start + delay) {
+    // sleep
+  }
+}
+
+function calculateNumCategories(): number {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let numCategories: number;
+  let containerWidth: number;
+  const categoryWidth = 76;
+  const navBarWidth = 80;
+  const borderWidth = 15;
+  const dotWidth = 43;
+  if (screenWidth > 992) {
+    const containerPercentage = 0.46;
+    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+  } else {
+    containerWidth = screenWidth - borderWidth - dotWidth;
+  }
+  numCategories = Math.floor(containerWidth / categoryWidth) - 1;
+  return numCategories;
 }

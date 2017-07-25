@@ -7,6 +7,7 @@ import { MomentModule } from 'angular2-moment';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
 import {HelperModule} from '../helper/helper.module';
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
@@ -26,6 +27,8 @@ import {CurateEditComponent} from "./curate-edit/curate-edit.component";
     TinymceModule.withConfig({auto_focus: false}),
     ReCaptchaModule,
     AgmCoreModule,
+    NguiAutoCompleteModule,
+
     HelperModule,
     HtmlToTextModule,
     CurateRoutingModule

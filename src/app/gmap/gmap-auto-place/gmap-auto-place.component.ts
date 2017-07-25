@@ -21,14 +21,17 @@ export class GmapAutoPlaceComponent implements OnInit {
   @Input('image') public image: boolean;
   @Output('onMapsChangePlace') public onMapsChangePlace = new EventEmitter<any>();
   @Output('onHyloChangePlace') public onHyloChangePlace = new EventEmitter<any>();
-  @ViewChild('keyword')
-  public searchElementRef: ElementRef;
+  @ViewChild('keyword') public searchElementRef: ElementRef;
+  @ViewChild('addressInput') public addressElementRef: ElementRef;
   public imageUrl: any;
   public hideSearchResult: boolean = true;
+  public hideAddressResult: boolean = true;
   public hideNoResult: boolean = false;
   public result: any = {};
   public gmapResults: any = {};
   public searchToken: string = '';
+  public hideAddressInput = true;
+  public hideCustomAddress = true;
 
   public constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -46,6 +49,10 @@ export class GmapAutoPlaceComponent implements OnInit {
   }
   public ngOnInit() {
     // TODO
+  }
+
+  public showAddressInput() {
+    this.hideAddressInput = false;
   }
 
   public markTouchMCE() {
@@ -72,7 +79,34 @@ export class GmapAutoPlaceComponent implements OnInit {
             },
             input: inputText
           },
-          (result, status) => this.gmapResults = result);
+          (result, status) => {
+            this.hideCustomAddress = false;
+            this.gmapResults = result;
+          });
+      });
+
+    }
+    if (this.searchToken.length === 0) {
+      this.result = {};
+      this.hideSearchResult = true;
+    }
+  }
+
+  public onSearchAddress(keyword: string) {
+    this.searchToken = keyword.trim();
+    if (this.searchToken.length >= 3) {
+      this.hideAddressResult = false;
+      this.mapsAPILoader.load().then(() => {
+        let autocompleteService = new google.maps.places.AutocompleteService();
+        autocompleteService.getPlacePredictions({
+            componentRestrictions: {
+              country: 'sg'
+            },
+            input: this.searchToken
+          },
+          (result, status) => {
+            this.gmapResults = result;
+          });
       });
 
     }
@@ -84,7 +118,10 @@ export class GmapAutoPlaceComponent implements OnInit {
 
   public onCloseSuggestion(data) {
     this.hideSearchResult = true;
-    this.searchElementRef.nativeElement.value = data.Title;
+    this.hideCustomAddress = true;
+    if (data.Title) {
+      this.searchElementRef.nativeElement.value = data.Title;
+    }
     this.onHyloChangePlace.emit(data);
   }
 
@@ -92,6 +129,13 @@ export class GmapAutoPlaceComponent implements OnInit {
     this.searchElementRef.nativeElement.value = data.description;
     this.onMapsChangePlace.emit(data);
     this.hideSearchResult = true;
+    this.hideCustomAddress = true;
+  }
+
+  public onAddressItemClick(data) {
+    this.addressElementRef.nativeElement.value = data.description;
+    this.onMapsChangePlace.emit(data);
+    this.hideAddressResult = true;
   }
 
   public readUrl(event) {

@@ -51,6 +51,7 @@ import { HomeService } from './services/home.service';
 import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
 import { ProfileService } from './services/profile.service';
+import { WindowUtilService } from './services/window-ultil.service';
 
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -89,6 +90,7 @@ import { HyperSearchComponent } from './hyper-search/hyper-search.component';
 import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
+import {AppGlobals} from "./services/app.global";
 
 enableProdMode();
 
@@ -197,7 +199,9 @@ type StoreType = {
     SeoService,
     ProfileService,
     UserService,
-    FollowService
+    FollowService,
+    WindowUtilService,
+    AppGlobals
   ],
 })
 export class AppModule {

@@ -10,9 +10,6 @@
            autocapitalize="off"
            spellcheck="off" type="text"
            (keyup)="onSubmit($event, keyword.value)">
-    <input hidden type="text" formControlName="lat">
-    <input hidden type="text" formControlName="lng">
-    <input hidden type="text" formControlName="slug">
     <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">
       Please enter an activity or place.
     </small>
@@ -23,7 +20,7 @@
         <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
         <span class="location-address">location address</span>
       </div>
-      <div class="suggestion-wrap"  slimScroll width="auto" size="7px"
+      <div class="suggestion-wrap" slimScroll width="auto" size="7px"
            [railVisible]="true"
            [railOpacity]="0.1"
            [touchScrollStep]="75"
@@ -82,12 +79,56 @@
         </ul>
       </div>
     </div>
+
+    <div class="form-group" [class.hide]="hideCustomAddress">
+      <label class="upload-image-label" (click)="showAddressInput()">
+        <i class="fa fa-plus"></i>
+        &nbsp;Add custom address
+      </label>
+
+      <input #addressInput formControlName="inputAddress"
+             class="form-control"
+             [class.hide]="hideAddressInput"
+             minlength="3"
+             id="inputAddress"
+             placeholder="Location / Address"
+             autocorrect="off"
+             autocomplete="off"
+             autocapitalize="off"
+             spellcheck="off" type="text"
+             (keyup)="onSearchAddress(addressInput.value)">
+    </div>
+
+    <div [class.hide]="hideAddressResult" class="search-location-search-area">
+      <div class="arrow-up"></div>
+      <div class="suggestion-wrap" slimScroll width="auto" size="7px"
+           [railVisible]="true"
+           [railOpacity]="0.1"
+           [touchScrollStep]="75"
+           [railColor]="'#ec3d62'"
+           [color]="'#ec3d62'">
+        <ul *ngIf="gmapResults?.length" class="list-location-address">
+          <li class="title-search-location-address">
+            <a>Results from google</a>
+          </li>
+          <li *ngFor="let item of gmapResults; let index = index">
+            <a (click)="onAddressItemClick(item)" class="item-content">
+              <div class="result-info map">{{item.description}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <input hidden type="text" formControlName="lat">
+    <input hidden type="text" formControlName="lng">
+    <input hidden type="text" formControlName="slug">
   </div>
   <div *ngIf="description" class="form-group">
 
-    <app-tinymce (click)="markTouchMCE()"  formControlName="description"></app-tinymce>
+    <app-tinymce (click)="markTouchMCE()" formControlName="description"></app-tinymce>
 
-    <small *ngIf="group.get('description').hasError('required') && group.get('description').touched" class="text-danger">
+    <small *ngIf="group.get('description').hasError('required') && group.get('description').touched"
+           class="text-danger">
       This field is required.
     </small>
   </div>

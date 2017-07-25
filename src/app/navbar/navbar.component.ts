@@ -9,6 +9,7 @@ import * as io from 'socket.io-client';
 import { AppSetting } from '../app.setting';
 import { ProfileService } from '../services/profile.service';
 import { User } from '../app.interface';
+import {AppGlobals} from "../services/app.global";
 
 @Component({
   selector: 'app-navbar',
@@ -33,7 +34,7 @@ export class NavbarComponent implements OnInit {
                      private localStorageService: LocalStorageService,
                      private router: Router,
                      private location: Location,
-                     private profileService: ProfileService) {
+                     private profileService: ProfileService,private appGlobal:AppGlobals) {
   }
 
   public ngOnInit() {
@@ -46,8 +47,45 @@ export class NavbarComponent implements OnInit {
       this.mapOptions.push({id: index + 1, name: item});
     });
     let paramsUrl = this.location.path().split('/');
-    if (paramsUrl[1] === 'discover' && paramsUrl[2]) {
-      this.selectedMapOption = {id: 0, name: paramsUrl[2].replace('%2B', ' ').replace('%20', ' ')};
+    if (paramsUrl[1] === 'discover') {
+      switch (paramsUrl[2]){
+        case 'eat':
+          console.log('paramsUrl',paramsUrl.length);
+          if(paramsUrl.length == 4){
+            this.appGlobal.isLocationAddress.subscribe((res)=>{
+              if(res !='Singapore') {
+                this.selectedMapOption = {id: 0 , name: res};
+              }else{
+                this.selectedMapOption = {id: 0, name: paramsUrl[3].replace('%2B', ' ').replace('%20', ' ')};
+              }
+            });
+          }else{
+            this.selectedMapOption = this.mapOptions[0];
+          }
+          break;
+        case 'play':
+          if(paramsUrl.length == 4 ){
+            this.appGlobal.isLocationAddress.subscribe((res)=>{
+              if(res !='Singapore') {
+                this.selectedMapOption = {id: 0 , name: res};
+              }else{
+                this.selectedMapOption = {id: 0, name: paramsUrl[3].replace('%2B', ' ').replace('%20', ' ')};
+              }
+            });
+          }else{
+            this.selectedMapOption = this.mapOptions[0];
+          }
+          break;
+        default:
+          this.appGlobal.isLocationAddress.subscribe((res)=>{
+            if(res !='Singapore') {
+              this.selectedMapOption = {id: 0 , name: res};
+            }else{
+              this.selectedMapOption = {id: 0, name: paramsUrl[2].replace('%2B', ' ').replace('%20', ' ')};
+            }
+          });
+          break
+      }
     } else {
       this.selectedMapOption = this.mapOptions[0];
     }
@@ -82,7 +120,20 @@ export class NavbarComponent implements OnInit {
 
   public onSelectMapOption(option: any): void {
     this.selectedMapOption = option;
-    this.router.navigate(['/discover/' + option.name.replace(' ', '+')]).then();
+    this.appGlobal.setLocationAddress(option.name);
+    let paramsUrl = this.location.path().split('/');
+    if (paramsUrl[1] === 'discover') {
+      switch (paramsUrl[2]){
+        case 'eat':
+          this.router.navigate (['/discover/eat/' + option.name.replace (' ' , '+')]).then ();
+          break;
+        case 'play':
+          this.router.navigate (['/discover/play/' + option.name.replace (' ' , '+')]).then ();
+          break;
+      }
+    }else {
+      this.router.navigate (['/discover/' + option.name.replace (' ' , '+')]).then ();
+    }
   }
 
   public mobile_searchState() {

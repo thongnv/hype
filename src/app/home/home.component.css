@@ -229,20 +229,11 @@ button.btn.btn-default.active {
   line-height: 1.5;
 }
 
-/*.list-item-link, .list-item-title {*/
-/*position: absolute;*/
-/*left: 15%;*/
-/*width: 70%;*/
-/*text-align: left;*/
-/*color: #ffffff;*/
-/*opacity: 1;*/
-/*margin: 0;*/
-/*}*/
-
-/*gmap*/
-.home-page {
-  width: calc(100% - 80px);
-  margin: 0;
+@media only screen and (min-width: 992px) {
+  .home-page {
+    width: calc(100% - 80px);
+    margin: 0;
+  }
 }
 
 .home-page .fixed-right {
@@ -347,7 +338,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  width: calc(100% - 65px);
+  /*width: calc(100% - 65px);*/
   overflow: hidden;
   line-height: 23px;
 }
@@ -473,6 +464,22 @@ button.btn.btn-default.active {
   text-align: right;
 }
 
+.top-content .distance{
+  opacity: 0.6;
+  font-family: Roboto, sans-serif;
+  font-size: 12px !important;
+  font-weight: 300;
+  line-height: 1;
+  text-align: left;
+  margin-left: 15px;
+  color: #3b3b3b !important;
+  text-transform: uppercase;
+}
+.top-content a{
+  color: #00b3ee;
+  text-decoration: none;
+  font-size: 12px;
+}
 /*
 ====================*/
 .wrap-each-items {
@@ -556,7 +563,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  width: calc(100% - 65px);
+  /*width: calc(100% - 65px);*/
 }
 
 .detail-information {
@@ -564,7 +571,8 @@ button.btn.btn-default.active {
   height: 40px;
   line-height: 20px;
   overflow: hidden;
-  margin-bottom: 18px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .mentioned {
@@ -669,7 +677,7 @@ ul.mentioned-item {
   z-index: 1;
 }
 .list-item .caption {
-  width: 361px;
+  width: 80%;
   height: 84px;
   font-family: Roboto, sans-serif;
   font-size: 30px;
@@ -678,7 +686,7 @@ ul.mentioned-item {
   color: #ffffff;
   position: absolute;
   top: 25%;
-  left: 20%;
+  left: 10%;
   z-index: 10;
 }
 .list-item .caption h3 {

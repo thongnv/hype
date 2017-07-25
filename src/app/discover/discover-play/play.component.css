@@ -33,7 +33,7 @@
 
 .filterFromMode {
     padding: 20px;
-  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+    box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 
 .filterFromMode .btn-block {
@@ -103,9 +103,9 @@
 }
 
 .filterCategory {
-  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+    box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
     margin-left: 15px;
-    text-align:center;
+    text-align:left;
 }
 
 .filterCategory .btn-filter-block label:focus,
@@ -163,7 +163,7 @@
 }
 
 #btnHeadFilter > label:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .left-box {
@@ -235,8 +235,8 @@ ul.itemSort li a i {
 }
 
 /*.avatar .heart-icon i {*/
-    /*color: #fff;*/
-    /*transform: scale(0.5);*/
+/*color: #fff;*/
+/*transform: scale(0.5);*/
 /*}*/
 
 .list-items {
@@ -434,8 +434,8 @@ nouislider.ng2-nouislider {
     width: 100%;
 }
 
-.discover-page #v-scrollable {
-    padding-left: 15px;
+.page-play #v-scrollable {
+    margin: 0px 15px;
 }
 
 .list-header {
@@ -538,10 +538,10 @@ nouislider.ng2-nouislider {
 }
 
 .pricePreview{
-  text-align: center; font-weight: bold; font-size: 23px;
+    text-align: center; font-weight: bold; font-size: 23px;
 }
 .filterKeyword{
-  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
+    box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
 }
 .form-control-static {
     border: none;
@@ -598,7 +598,7 @@ select.form-control-static::-ms-expand {
 .btn-filter-block .active{opacity: 1;}
 
 .discover-page .left-box {
-  padding: 0;
+    padding: 0;
 }
 
 
@@ -681,7 +681,7 @@ select.form-control-static::-ms-expand {
 
 @media only screen and (min-width: 1200px) {
     #btnHeadFilter label:first-child {
-        margin-left: -25px;
+        margin-left: -10px;
     }
     .itemSort {
         margin-left: 0px;

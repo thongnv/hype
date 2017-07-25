@@ -30,11 +30,6 @@ export class GeocodeMarkerComponent implements OnInit {
         //this.loadMapRadius();
     }
 
-    public markerRadiusChange(radius) {
-        this.currentRadius = parseInt(radius);
-        this.radiusChange.emit(this.currentRadius);
-    }
-
     public clickedMarker(index) {
         this.markerClick.emit(index);
     }

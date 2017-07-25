@@ -1,4 +1,4 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box" [style.width]="layoutWidth - 30 + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play" [style.width]="layoutWidth/2  + 'px'">
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
       <div id="btnHeadFilter" ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
@@ -30,12 +30,8 @@
           aria-hidden="true"></i></a>
       </li>
       <li>
-        <a *ngIf="filterFromMode.value.filterMode=='eat' || filterFromMode.value.filterMode=='all'"
+        <a
            (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
-          [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
-          aria-hidden="true"></i></a>
-        <a *ngIf="filterFromMode.value.filterMode=='play'" (click)="showCuisineFind(showCuisine)"
-           class="when-button">Activities ({{totalCuisine}})<i
           [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
           aria-hidden="true"></i></a>
       </li>
@@ -192,7 +188,7 @@
           </ngb-rating>
           <span class="review">{{item.rating.total}} Reviews</span>
           <div class="box-content">
-            <p *ngIf="item.Hylo_Activity_Description !=''" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 60"></p>
+            <p *ngIf="item.Hylo_Activity_Description !==''" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 60"></p>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -210,8 +206,8 @@
   </div>
 
 </div>
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="layoutWidth  + 'px'" id="right">
-  <div class="box-map" style="position: fixed; width:inherit; height: 500px;">
+<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: 500px;" [style.width]="layoutWidth/2 + 'px'">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

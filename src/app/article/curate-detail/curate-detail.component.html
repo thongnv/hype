@@ -1,12 +1,6 @@
-<section>
-  <div class="list-preview-wrap setting-wrap table-wrap" *ngIf="article">
-    <div class="col-xs-12 col-sm-12 col-md-6 list-box table-cell">
-      <div style="padding: 0px;" (scroll)="onScroll($event)"
-           id="hScroll" slimScroll width="calc(100%)"
-           height="calc(100vh - 60px)" size="7px"
-           [alwaysVisible]="true" [railVisible]="true"
-           [touchScrollStep]="75"
-           [railOpacity]="0.1" [railColor]="'#ec3d62'" [color]="'#ec3d62'">
+<section class="column no-padding" >
+  <div class="list-preview-wrap setting-wrap" *ngIf="article">
+    <div class="col-xs-12 col-sm-12 col-md-6 list-box  frame_left" [style.width]="layoutWidth/2  + 'px'">
         <div class="carousel-box" id="curate-carousel">
           <div class="carousel-header">
             <a routerLink="/curate">
@@ -33,22 +27,22 @@
               details
             </span>
           </div>
-          <div class="place-item-img">
-            <img [src]="plc.field_place_images[0]?.url" [alt]="plc.field_place_address" width="100%">
+          <div *ngIf="plc.field_place_images[0]" class="place-item-img">
+            <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
           </div>
           <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
         </div>
         <div class="mobile-footer"></div>
-      </div>
-
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm hidden-xs hidden-md table-cell" *ngIf="showMap">
-      <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
-        <app-custom-marker *ngFor="let marker of markers; let index=index"
-                           [marker]="marker" [index]="index"
-                           (onClick)="markerClick(index)">
-        </app-custom-marker>
-      </sebm-google-map>
+    <div class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm hidden-xs hidden-md frame_right" id="right" [style.width]="layoutWidth/2  + 'px'" *ngIf="showMap">
+      <div style="position: fixed; height: 100%;" [style.width]="layoutWidth/2 + 'px'">
+        <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
+          <app-custom-marker *ngFor="let marker of markers; let index=index"
+                             [marker]="marker" [index]="index"
+                             (onClick)="markerClick(index)">
+          </app-custom-marker>
+        </sebm-google-map>
+      </div>
     </div>
   </div>
 </section>

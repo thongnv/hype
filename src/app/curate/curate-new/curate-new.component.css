@@ -3,6 +3,7 @@
 .new-list {
   padding: 0;
   /*width: 100%;*/
+  display: table;
 }
 
 .clearfix {
@@ -430,4 +431,49 @@ header ul li.pull-right {
     padding: 0 10px;
     margin-bottom: 50px;
   }
+}
+
+
+/** category select */
+.list-category .remove-category-item {
+  color: #fff;
+  padding-left: 5px;
+}
+
+.list-category {
+  position: relative;
+}
+
+ul.list-category-item {
+  border: 1px solid #c0c0c0;
+  min-height: 40px;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+ul.list-category-item li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+li.category-item {
+  border-radius: 5px;
+  border: 1px solid #ec3d62;
+  background-color: #ec3d62;
+  padding: 5px;
+  margin: 5px;
+}
+li.category-item span{
+  color: #fff;
+}
+
+input#list-category {
+  background-color: transparent;
+  box-shadow: 0 0 0;
+  height: 26px;
+}
+
+span.remove-category-item {
+  cursor: pointer;
+  color: #fff;
 }
