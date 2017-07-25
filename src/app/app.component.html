@@ -7,30 +7,30 @@
         <div class="left-nav-content">
           <aside class="sidebar">
             <ul class="navbar-collapse list-tap">
-              <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
+              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Trending"></i>
-                <span>Trending Events</span>
+                <span class="hidden-xs hidden-sm">Trending Events</span>
               </li>
-              <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover/eat']" routerLinkActive="active"
+              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./discover/eat']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Food"></i>
-                <span>Discover Eat</span>
+                <span class="hidden-xs hidden-sm">Discover Eat</span>
               </li>
-              <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover/play']" routerLinkActive="active"
+              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./discover/play']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Pure-Fun"></i>
-                <span>Discover Play</span>
+                <span class="hidden-xs hidden-sm">Discover Play</span>
               </li>
-              <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
+              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Curated"></i>
-                <span>Curated</span>
+                <span class="hidden-xs hidden-sm">Curated</span>
               </li>
-              <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
+              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Favourites"></i>
-                <span>Favorites</span>
+                <span class="hidden-xs hidden-sm">Favorites</span>
               </li>
             </ul>
           </aside>
