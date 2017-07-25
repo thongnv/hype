@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
+    console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
