@@ -167,6 +167,45 @@ ul.list-items li a img {
     transform: scale(1.1);
 }
 
+.list-category li.dropdown ul.dropdown-menu li{
+    border-top: 1px solid #cccccc;
+    width: 100%;
+}
+.list-category li.dropdown ul.dropdown-menu li:first-child{
+    border-top: 0px;
+}
+.list-category li.dropdown:hover >ul.dropdown-menu{
+    display: block !important;
+    transition: all .3s;
+    transition-delay:1.3s;
+    top:20px;
+    z-index: 999;
+}
+.list-category li.dropdown:hover >ul.dropdown-menu li:hover>ul.dropdown-menu{
+    left: 100%;
+}
+.list-category .dropdown-menu>li
+{	position:relative;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    /* Rules below not implemented in browsers yet */
+    -o-user-select: none;
+    user-select: none;
+    cursor:pointer;
+    opacity: 0.8;
+}
+.list-category .dropdown-menu.sub-menu {
+    position: absolute;
+    top: 0;
+    display:none;
+    margin-top: -1px;
+    opacity: 1;
+    background: #ffffff;
+}
+.list-category .dropdown-menu.sub-menu li{
+    opacity: 1;
+}
 
 .carousel-item.active{
     -webkit-animation: fadein 1.2s;

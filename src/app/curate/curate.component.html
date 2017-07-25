@@ -4,8 +4,20 @@
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li class="title-hover" *ngFor="let cat of categories" (click)="onSelectCategory(cat.tid)"
+          <li class="title-hover dropdown" *ngFor="let cat of categories" (click)="onSelectCategory(cat.tid)"
               [class.active]="cat.tid===selectedCategory">{{cat.name}}
+            <ul class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+              <li>Akjsjhdkjas</li>
+              <li class="dropdown">Akjsjhdkjas
+                <ul class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+                  <li>Akjsjhdkjas</li>
+                  <li>Akjsjhdkjas</li>
+                  <li>Akjsjhdkjas</li>
+                  <li>Akjsjhdkjas</li>
+                </ul>
+              </li>
+              <li>Akjsjhdkjas</li>
+            </ul>
           </li>
         </ul>
         <div class="clearfix"></div>
