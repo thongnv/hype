@@ -699,7 +699,7 @@ export class EatComponent implements OnInit {
 
     this.cuisine = [];
     this.best = [];
-    this.type = [];
+    this.type = 'eat';
     this.totalCuisine = 0;
     this.cuisineDraw = [];
     this.currentRate = [];

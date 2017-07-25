@@ -340,7 +340,7 @@ export class HomeComponent implements OnInit {
       let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000) - 1;
+      this.params.radius = Math.round(distance / 1000);
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
