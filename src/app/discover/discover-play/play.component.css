@@ -105,7 +105,7 @@
 .filterCategory {
     box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
     margin-left: 15px;
-    text-align:center;
+    text-align:left;
 }
 
 .filterCategory .btn-filter-block label:focus,
@@ -681,7 +681,7 @@ select.form-control-static::-ms-expand {
 
 @media only screen and (min-width: 1200px) {
     #btnHeadFilter label:first-child {
-        margin-left: -25px;
+        margin-left: -10px;
     }
     .itemSort {
         margin-left: 0px;
