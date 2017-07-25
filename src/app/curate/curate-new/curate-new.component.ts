@@ -249,7 +249,7 @@ export class CurateNewComponent implements OnInit {
     this.selectedCategories.splice(index, 1);
 
     // update form control value
-    let catIds = this.selectedCategories.map(() => cat => cat.tid).join(',');
+    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
     this.formData.controls['listCategory'].patchValue(catIds);
   }
 
