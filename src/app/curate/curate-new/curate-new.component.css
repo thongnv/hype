@@ -435,7 +435,8 @@ header ul li.pull-right {
 
 /** category select */
 .list-category .remove-category-item {
-  color: red;
+  color: #fff;
+  padding-left: 5px;
 }
 
 .list-category {
@@ -456,10 +457,13 @@ ul.list-category-item li {
 
 li.category-item {
   border-radius: 5px;
-  border: 1px solid green;
-  background-color: #2f93b1;
-  padding: 3px;
-  margin-right: 5px;
+  border: 1px solid #ec3d62;
+  background-color: #ec3d62;
+  padding: 5px;
+  margin: 5px;
+}
+li.category-item span{
+  color: #fff;
 }
 
 input#list-category {
@@ -470,4 +474,5 @@ input#list-category {
 
 span.remove-category-item {
   cursor: pointer;
+  color: #fff;
 }

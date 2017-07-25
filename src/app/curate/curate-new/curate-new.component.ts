@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -230,6 +230,33 @@ export class CurateNewComponent implements OnInit {
     };
   }
 
+  // category select helper
+  public addToSelectedCategories(category) {
+    this.selectedCategories.push(category);
+
+    // reset text box
+    this.formData.controls['listCatTmp'].patchValue('');
+
+    // update form control value
+    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
+
+    // filter chosen category in categoriesTmp
+    this.categoriesTmp = this.categoriesTmp.filter(cat => cat.tid !== category.tid);
+  }
+
+  public removeCategoryItem(index) {
+    this.selectedCategories.splice(index, 1);
+
+    // update form control value
+    let catIds = this.selectedCategories.map(() => cat => cat.tid).join(',');
+    this.formData.controls['listCategory'].patchValue(catIds);
+  }
+
+  public resetListCategory(evt) {
+    console.log(evt);
+  }
+
   public onMapsChangePlace(data, i) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder();
@@ -345,33 +372,5 @@ export class CurateNewComponent implements OnInit {
       callback(dataUrl);
 
     };
-  }
-
-
-  // category select helper
-  public addToSelectedCategories(category) {
-    this.selectedCategories.push(category);
-
-    // reset text box
-    this.formData.controls['listCatTmp'].patchValue('');
-
-    // update form control value
-    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
-
-    // filter chosen category in categoriesTmp
-    this.categoriesTmp = this.categoriesTmp.filter(cat => cat.tid !== category.tid);
-  }
-
-  public removeCategoryItem(index) {
-    this.selectedCategories.splice(index, 1);
-
-    // update form control value
-    let catIds = this.selectedCategories.map(cat => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
-  }
-
-  public resetListCategory(evt) {
-    console.log(evt);
   }
 }
