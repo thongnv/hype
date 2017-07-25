@@ -963,6 +963,8 @@ ul.mentioned-item {
   .fixed-right {
     width: 45%;
   }
+
+
 }
 
 @media only screen and (max-width: 992px) {
@@ -1150,5 +1152,16 @@ ul.mentioned-item {
 
   #filters {
     width: 30%;
+  }
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 1025px) {
+  .wrap-search-input{
+    width: 100%!important;
+  }
+
+  .avatar-profile{
+    margin-top: 10px!important;
   }
 }

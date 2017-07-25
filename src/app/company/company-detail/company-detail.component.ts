@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import { Company, Experience, Image, Location, User } from '../../app.interface';
@@ -43,6 +43,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public imageReady: boolean = false;
   public gMapStyles: any;
   public layoutWidth: number;
+  public innerWidth: number;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -54,11 +55,19 @@ export class CompanyDetailComponent implements Company, OnInit {
     private windowRef: WindowUtilService
   ) {}
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+  }
+
   public ngOnInit() {
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
     }
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;

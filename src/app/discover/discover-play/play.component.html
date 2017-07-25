@@ -1,4 +1,4 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play" [style.width]="layoutWidth/2  + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" >
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
       <div id="btnHeadFilter" ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
@@ -206,8 +206,8 @@
   </div>
 
 </div>
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" id="right">
-  <div class="box-map" style="position: fixed; width:inherit; height: 500px;" [style.width]="layoutWidth/2 + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: inherit;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

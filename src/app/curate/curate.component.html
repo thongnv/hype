@@ -1,4 +1,4 @@
-<section class="column col-sm-10 no-padding " [style.width]="layoutWidth  + 'px'">
+<section class="column col-sm-10 no-padding " [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <div class="">
     <div class="col-lg-9 col-xs-12 left-box table-cell" (scroll)="onScrollDown($event)">
       <!-- top content start -->

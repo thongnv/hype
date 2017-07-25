@@ -63,6 +63,7 @@ export class PlayComponent implements OnInit {
   public screenHeight: number = 0;
   public totalCuisine: number = 0;
   public layoutWidth: number;
+  public innerWidth: number;
   private stopped: boolean = false;
   public shownotfound: boolean = false;
   private params = {
@@ -238,10 +239,14 @@ export class PlayComponent implements OnInit {
         }
       });
     });
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public onResize(event): void {
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
     let width = window.innerWidth
       || document.documentElement.clientWidth
       || document.body.clientWidth;
