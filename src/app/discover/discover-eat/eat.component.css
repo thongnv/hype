@@ -434,7 +434,7 @@ nouislider.ng2-nouislider {
     width: 100%;
 }
 
-#v-scrollable {
+.page-eat #v-scrollable {
    margin: 0px 15px;
 }
 
