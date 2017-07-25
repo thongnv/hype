@@ -13,10 +13,6 @@
     <small *ngIf="group.get('keyword').hasError('required') && group.get('keyword').touched" class="text-danger">
       Please enter an activity or place.
     </small>
-    <a class="upload-image-label" [class.hide]="!hideAddressInput" (click)="showAddressInput()">
-      <i class="fa fa-plus"></i>
-      &nbsp;Add address
-    </a>
     <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
       <div class="arrow-up"></div>
       <div class="display-location-address">
@@ -24,7 +20,7 @@
         <span *ngIf="searchToken.length" class="text-ellipsis keyword-copy">{{searchToken}}</span>
         <span class="location-address">location address</span>
       </div>
-      <div class="suggestion-wrap"  slimScroll width="auto" size="7px"
+      <div class="suggestion-wrap" slimScroll width="auto" size="7px"
            [railVisible]="true"
            [railOpacity]="0.1"
            [touchScrollStep]="75"
@@ -83,18 +79,26 @@
         </ul>
       </div>
     </div>
-    <br>
-    <input #addressInput formControlName="inputAddress"
-           class="form-control"
-           [class.hide]="hideAddressInput"
-           minlength="3"
-           id="inputAddress"
-           placeholder="Location / Address"
-           autocorrect="off"
-           autocomplete="off"
-           autocapitalize="off"
-           spellcheck="off" type="text"
-           (keyup)="onSearchAddress(addressInput.value)">
+
+    <div class="form-group" [class.hide]="hideCustomAddress">
+      <label class="upload-image-label" (click)="showAddressInput()">
+        <i class="fa fa-plus"></i>
+        &nbsp;Add custom address
+      </label>
+
+      <input #addressInput formControlName="inputAddress"
+             class="form-control"
+             [class.hide]="hideAddressInput"
+             minlength="3"
+             id="inputAddress"
+             placeholder="Location / Address"
+             autocorrect="off"
+             autocomplete="off"
+             autocapitalize="off"
+             spellcheck="off" type="text"
+             (keyup)="onSearchAddress(addressInput.value)">
+    </div>
+
     <div [class.hide]="hideAddressResult" class="search-location-search-area">
       <div class="arrow-up"></div>
       <div class="suggestion-wrap" slimScroll width="auto" size="7px"
@@ -121,9 +125,10 @@
   </div>
   <div *ngIf="description" class="form-group">
 
-    <app-tinymce (click)="markTouchMCE()"  formControlName="description"></app-tinymce>
+    <app-tinymce (click)="markTouchMCE()" formControlName="description"></app-tinymce>
 
-    <small *ngIf="group.get('description').hasError('required') && group.get('description').touched" class="text-danger">
+    <small *ngIf="group.get('description').hasError('required') && group.get('description').touched"
+           class="text-danger">
       This field is required.
     </small>
   </div>
