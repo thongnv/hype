@@ -716,7 +716,7 @@ export class PlayComponent implements OnInit {
 
     this.cuisine = [];
     this.best = [];
-    this.type = [];
+    this.type = 'play';
     this.totalCuisine = 0;
     this.cuisineDraw = [];
     this.currentRate = [];
@@ -859,11 +859,11 @@ export class PlayComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = (distance / 1000).toFixed(2);
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.items = [];
       this.markers = [];

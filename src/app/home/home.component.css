@@ -475,7 +475,7 @@ button.btn.btn-default.active {
   color: #3b3b3b !important;
   text-transform: uppercase;
 }
-.top-content a{
+.top-content a.location_place{
   color: #00b3ee;
   text-decoration: none;
   font-size: 12px;
@@ -563,7 +563,7 @@ button.btn.btn-default.active {
 }
 
 .information-title .real-title, .detail-information {
-  /*width: calc(100% - 65px);*/
+  width: calc(100% - 85px);
 }
 
 .detail-information {
