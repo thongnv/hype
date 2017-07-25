@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 function getWindow (): any {
   return window;
@@ -10,10 +10,15 @@ export class WindowUtilService {
   public rootContainer = {
     width: 0,
     height: 0,
+    innerWidth: 0,
   };
 
-  constructor() {
-    // TODO
+  constructor(zone: NgZone) {
+    window.addEventListener('resize', event => {
+      zone.run(() => {
+        this.rootContainer.innerWidth = window.innerWidth;
+      });
+    });
   }
 
   get nativeWindow (): any {

@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, ElementRef, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, ViewEncapsulation, ElementRef, ViewChild, AfterContentInit, NgZone } from '@angular/core';
 
 import { LocalStorageService } from 'angular-2-local-storage';
 
@@ -25,11 +25,20 @@ export class AppComponent implements AfterContentInit {
   constructor(private localStorageService: LocalStorageService,
               private seoService: SeoService,
               private userService: UserService,
+              zone: NgZone,
               private windowRef: WindowUtilService, private el: ElementRef) {
 
     this._window = this.windowRef.nativeWindow;
     console.log('root1: ', this.el.nativeElement.offsetWidth);
     console.log('root: ', this._window.innerWidth);
+
+    window.addEventListener('resize', event => {
+      zone.run(() => {
+        this.windowRef.rootContainer.innerWidth = window.innerWidth;
+        this.windowRef.rootContainer.width = this.appElementView.nativeElement.offsetWidth;
+        this.windowRef.rootContainer.height = this.appElementView.nativeElement.offsetHeight;
+      });
+    });
 
     // set meta data for seo
     this.seoService.setSEOMetaTags(
@@ -46,8 +55,6 @@ export class AppComponent implements AfterContentInit {
   }
 
   public ngAfterContentInit() {
-    console.log('root Width: ', this.appElementView.nativeElement.offsetWidth);
-
     // update global root container info
     this.windowRef.rootContainer.width = this.appElementView.nativeElement.offsetWidth;
     this.windowRef.rootContainer.height = this.appElementView.nativeElement.offsetHeight;
