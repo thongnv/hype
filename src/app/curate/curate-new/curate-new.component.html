@@ -13,7 +13,7 @@
 
     <form [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-      <div class="input-box col-xs-12 col-md-6" [style.width]="layoutWidth/2 + 'px'">
+      <div class="input-box col-xs-12 col-md-6" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
         <h3>create a list</h3>
         <small>A list is a write-up with places or activities tagged to it</small>
         <div class="form-group">
@@ -83,7 +83,7 @@
 
       </div>
 
-      <div class="image-box col-xs-12 col-md-6" [style.width]="layoutWidth/2 - 20 + 'px'">
+      <div class="image-box col-xs-12 col-md-6" [style.width]="innerWidth > 1023 ? layoutWidth/2 - 20 + 'px' : ''">
         <div formArrayName="listPlaces">
           <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
             <div class="panel-heading">

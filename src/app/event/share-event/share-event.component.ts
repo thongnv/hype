@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -64,6 +64,7 @@ export class ShareEventComponent implements OnInit {
   public validateType: boolean = true;
   public submitted: boolean = false;
   public layoutWidth: number;
+  public innerWidth: number;
 
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
@@ -76,6 +77,13 @@ export class ShareEventComponent implements OnInit {
               public userService: UserService,
               private router: Router,
               private windowRef: WindowUtilService) {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public ngOnInit() {
@@ -92,6 +100,7 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.gMapStyles = AppSetting.GMAP_STYLE;
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
