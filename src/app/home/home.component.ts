@@ -128,7 +128,7 @@ export class HomeComponent implements OnInit {
 
     this.handleScroll();
 
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public setPosition(position) {

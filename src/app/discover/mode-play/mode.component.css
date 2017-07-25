@@ -600,6 +600,9 @@ select.form-control-static::-ms-expand {
 .discover-page .left-box {
   padding: 0;
 }
+
+
+
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
         width: auto;

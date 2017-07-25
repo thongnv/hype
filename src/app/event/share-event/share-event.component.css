@@ -3,6 +3,7 @@
 .new-list {
   padding: 0;
   margin-left: 0;
+  display: table;
 }
 
 header {
@@ -554,6 +555,7 @@ span.dollar-character {
   .new-list .form-wrap {
     padding: 0;
     margin-bottom: 80px;
+
   }
 
   .new-list .input-box {

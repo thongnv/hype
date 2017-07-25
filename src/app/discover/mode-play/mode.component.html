@@ -1,4 +1,4 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box" [style.width]="layoutWidth - 30 + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left" [style.width]="layoutWidth + 'px'">
   <form [formGroup]="filterFromMode" class="filterFromMode">
     <div ngbRadioGroup class="btn-block btn-filter-block" name="radioBasic" (change)="changeType()"
          formControlName="filterMode">
@@ -224,8 +224,8 @@
   </div>
 
 </div>
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm" style="position: relative;" id="right">
-  <div class="box-map" style="position: fixed; height: 100%;" [style.width]="layoutWidth - 30 + 'px'">
+<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="layoutWidth  + 'px'" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: 500px;">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

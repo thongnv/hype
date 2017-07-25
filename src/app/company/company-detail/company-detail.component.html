@@ -1,6 +1,6 @@
-<article class="column col-sm-10 no-padding" *ngIf="ready" [style.width]="layoutWidth - 30 + 'px'">
+<article  *ngIf="ready" [style.width]="layoutWidth + 'px'">
   <div class="detail-page">
-    <div class="content col-md-6" [style.width]="layoutWidth/2 - 30 + 'px'">
+    <div class="content col-md-6 left_content frame_left" [style.width]="layoutWidth/2 + 'px'">
       <!-- wrap xx start -->
       <div class="wrap-xx" [@slideInOutAnimation]="companyStatus">
         <!-- company wrap start -->
@@ -142,8 +142,8 @@
 
       <div class="mobile-footer"></div>
     </div>
-    <div class="col-md-6 map-fix hidden-md hidden-xs hidden-sm" style="position: relative;" id="right" >
-      <div style="position: fixed; height: 100%;" [style.width]="layoutWidth/2 - 30 + 'px'">
+    <div class="col-md-6 map-fix hidden-md hidden-xs hidden-sm frame_right" [style.width]="layoutWidth/2 + 'px'" id="right" >
+      <div style="position: fixed; height: 100%;" [style.width]="layoutWidth/2 + 'px'">
         <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15">
           <sebm-google-map-marker [latitude]="location.lat"
                                   [longitude]="location.lng" [iconUrl]="'assets/icon/locationmarker.png'">

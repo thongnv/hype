@@ -1,30 +1,30 @@
 <app-navbar></app-navbar>
 <div id="wrapper" class="wrapper">
   <div id="root-container" class="box container" #rootContainer>
-    <div class="row row-offcanvas row-offcanvas-left">
+    <div class="row row-offcanvas row-offcanvas-left frame-main">
       <angular-loader></angular-loader>
-      <div class="column col-sm-2" style="position: relative; width: 80px" id="left">
+      <div class="column col-sm-2 frame_nav" style="position: relative; width: 180px" id="left">
         <div style="position: fixed;  height: 100%; width:inherit;">
           <aside class="sidebar">
             <ul class="navbar-collapse list-tap">
               <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Trending30x30"></i>
+                <i class="sprite-icon sprite sprite-Trending"></i>
                 <span>Trending Events</span>
               </li>
               <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./discover']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Discover30x30"></i>
+                <i class="sprite-icon sprite sprite-Discover"></i>
                 <span>Discover Places</span>
               </li>
               <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Curated30x30"></i>
+                <i class="sprite-icon sprite sprite-Curated"></i>
                 <span>Curated</span>
               </li>
               <li class="col-xs-3 col-sm-3 col-md-12 col-lg-12" *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-Favourites30x30"></i>
+                <i class="sprite-icon sprite sprite-Favourites"></i>
                 <span>Favorites</span>
               </li>
             </ul>

@@ -39,7 +39,7 @@ export class CurateDetailComponent implements OnInit {
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(

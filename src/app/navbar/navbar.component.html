@@ -88,20 +88,20 @@
                      [railColor]="'#ec3d62'"
                      [color]="'#ec3d62'">
 
-                  <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
-                      (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
+                <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
+                    (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
+                </li>
+              </div>
+            </ul>
+          </div>
+        </li>
+      </ul>
     </div>
-    <div class="search-mobile" [class.on-mobile]="onSearch">
-      <app-search></app-search>
-    </div>
-    <div class="row navbar-collapse collapse">
+  </div>
+  <div class="search-mobile" [class.on-mobile]="onSearch">
+    <app-search></app-search>
+  </div>
+  <div class="row navbar-collapse collapse">
     <ul class="nav navbar-nav hype-nav">
       <li id="site-name nav-item"><a id="logo" [routerLink]="['./home']" title="hylo"
                                      class="sprite sprite-hylo-final-logo-125x50"></a></li>

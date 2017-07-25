@@ -63,7 +63,7 @@ export class CurateNewComponent implements OnInit {
     this.onAddPlace();
     this.loaderService.show();
     document.getElementById('list-name').focus();
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {

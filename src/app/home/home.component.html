@@ -1,4 +1,4 @@
-<div class="column col-sm-5 no-padding" id="main" [style.width]="layoutWidth + 'px'">
+<div class="column col-sm-5 no-padding frame_left" id="main" [style.width]="layoutWidth + 'px'">
   <div class="type-events">
     <ul [class.show-all]="!showAll" (window:resize)="onResize($event)">
       <li class="type-event-item" [class.active]="'all'==selected" (click)="onSelectEventType('all')">
@@ -159,7 +159,7 @@
     <app-small-loader></app-small-loader>
   </div>
 </div>
-<div class="column col-sm-5 no-padding" style="position: relative;" id="right">
+<div class="column col-sm-5 no-padding frame_right" style="position: relative;" id="right">
   <div id="map" style="position: fixed; height: 100%;" [style.width]="layoutWidth + 'px'">
     <sebm-google-map
       [latitude]="lat"

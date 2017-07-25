@@ -3,6 +3,7 @@
 .new-list {
   padding: 0;
   /*width: 100%;*/
+  display: table;
 }
 
 .clearfix {

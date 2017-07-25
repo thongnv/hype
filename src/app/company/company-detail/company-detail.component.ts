@@ -59,7 +59,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     if (user) {
       this.user = user;
     }
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
@@ -97,6 +97,8 @@ export class CompanyDetailComponent implements Company, OnInit {
           //     console.log(error);
           //   }
           // );
+
+
           this.ready = true;
           this.loaderService.hide();
         },

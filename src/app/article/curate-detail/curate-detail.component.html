@@ -1,6 +1,6 @@
-<section class="column col-sm-10 no-padding" [style.width]="layoutWidth - 30 + 'px'">
-  <div class="list-preview-wrap setting-wrap table-wrap" *ngIf="article">
-    <div class="col-xs-12 col-sm-12 col-md-6 list-box table-cell">
+<section class="column no-padding" >
+  <div class="list-preview-wrap setting-wrap" *ngIf="article">
+    <div class="col-xs-12 col-sm-12 col-md-6 list-box  frame_left" [style.width]="layoutWidth/2  + 'px'">
         <div class="carousel-box" id="curate-carousel">
           <div class="carousel-header">
             <a routerLink="/curate">
@@ -34,7 +34,7 @@
         </div>
         <div class="mobile-footer"></div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm hidden-xs hidden-md table-cell" id="right" style="position: relative" *ngIf="showMap">
+    <div class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm hidden-xs hidden-md frame_right" id="right" [style.width]="layoutWidth/2  + 'px'" *ngIf="showMap">
       <div style="position: fixed; height: 100%;" [style.width]="layoutWidth/2 + 'px'">
         <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
           <app-custom-marker *ngFor="let marker of markers; let index=index"

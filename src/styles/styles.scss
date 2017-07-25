@@ -58,6 +58,10 @@ body, html {
   height: 100%;
 }
 
+.body{
+  padding-top: 60px!important;
+}
+
 .clear {
   clear: both;
 }
@@ -104,9 +108,6 @@ body, html {
   opacity: 1 !important;
 }
 
-.no-padding{
-  padding: 0;
-}
 
 #wrapper{
   margin-top: 60px;
@@ -144,12 +145,13 @@ body, html {
     top: 60px;
     bottom: 0;
     left: 0;
-    width: 80px;
+    width: 100%;
     background-color: #f7f7f7;
     // box-shadow: 0 2px 4px 0 rgba(171, 171, 171, 0.5);
     box-shadow: none;
     color: #000;
     font-weight: 600;
+    height: inherit;
   }
   .gm-style > div:nth-child(1)>div:nth-child(4)>div:nth-child(3)>div>div:nth-child(1){
     display: none;
@@ -1256,6 +1258,19 @@ body, html {
   .btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover{
     background: #2a6be1;
   }
+
+  .no-padding{
+    padding: 0;
+  }
+
+  .frame-main{ margin-left: 0px; margin-right: 0px;}
+  .frame_nav,.frame_left,.frame-right{
+    display: table-cell;
+    padding: 0px;
+  }
+
+  .frame_nav .sidebar{padding: 0px; margin: 0px;}
+
   //responsive
   @media only screen and(max-width: 374px) {
     .mobile-footer {
@@ -1516,6 +1531,19 @@ body, html {
     }
     .no-padding-mobile{
       padding-left: 10px;
+    }
+  }
+
+  @media only  screen and (max-width: 1559px) {
+      .container {
+        width: 100%!important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+  }
+  @media only  screen and (min-width: 1559px) {
+    .container {
+      width: 1560px!important;
     }
   }
 

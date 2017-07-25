@@ -101,7 +101,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.initRating();
   }
 

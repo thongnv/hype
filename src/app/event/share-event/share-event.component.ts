@@ -92,7 +92,7 @@ export class ShareEventComponent implements OnInit {
       }
     );
     this.gMapStyles = AppSetting.GMAP_STYLE;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 80);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public onStartDateChange() {
