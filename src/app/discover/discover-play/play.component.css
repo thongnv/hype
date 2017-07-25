@@ -231,7 +231,7 @@ ul.itemSort li a i {
 .avatar .heart-icon {
     position: absolute;
     /*top: 5px;*/
-    right: 10px;
+    right: 0px;
 }
 
 /*.avatar .heart-icon i {*/

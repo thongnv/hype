@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit} from '@angular/core';
 import { MainService } from '../services/main.service';
 import { LoaderService } from '../helper/loader/loader.service';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
@@ -37,7 +37,10 @@ export class CurateComponent implements OnInit {
                      private windowRef: WindowUtilService) {
 
   }
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+  }
   public ngOnInit() {
     this.loaderService.show();
 
