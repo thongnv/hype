@@ -1,4 +1,4 @@
-<div class="column col-sm-5 no-padding frame_left" id="main" [style.width]="innerWidth > 1200 ? layoutWidth + 'px' : ''">
+<div class="column col-sm-5 no-padding frame_left" id="main" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <div class="type-events">
     <ul [class.show-all]="!showAll" (window:resize)="onResize($event)">
       <li class="type-event-item" [class.active]="'all'==selected" (click)="onSelectEventType('all')">
@@ -70,9 +70,9 @@
         <div class="information-profile">
           <div class="top-content">
             <h4 class="information-title pointer">
-              <a class="pull-left text-ellipsis real-title title-hover"
+              <a class="pull-left real-title title-hover"
                  *ngIf="item.title" [routerLink]="[item.alias]">
-                {{item.title | truncate : 45}}
+                {{item.title}}
               </a>
               <span class="distance" *ngIf="item.distance">{{item.distance}} km</span>
               <span
@@ -160,9 +160,10 @@
     <!--#sdhkas-->
     <app-small-loader></app-small-loader>
   </div>
+  <div class="mobile-footer"></div>
 </div>
-<div class="column col-sm-5 no-padding frame_right" style="position: relative;" id="right">
-  <div id="map" style="position: fixed; height: 100%;" [style.width]="innerWidth > 1200 ? layoutWidth + 'px' : ''">
+<div class="column col-sm-5 no-padding frame_right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
+  <div id="map" style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

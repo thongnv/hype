@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -36,6 +36,7 @@ export class CurateNewComponent implements OnInit {
   public validateSize: boolean = true;
   public validateType: boolean = true;
   public layoutWidth: number;
+  public innerWidth : number;
 
   public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
@@ -59,10 +60,18 @@ export class CurateNewComponent implements OnInit {
               private windowRef: WindowUtilService) {
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+  }
+
   public ngOnInit() {
     this.onAddPlace();
     this.loaderService.show();
     document.getElementById('list-name').focus();
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.userService.checkLogin().subscribe(
       (response: any) => {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -49,6 +49,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public slugName = '';
   public gMapStyles: any;
   public layoutWidth: number;
+  public innerWidth: number;
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -67,6 +68,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private windowRef: WindowUtilService) {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    console.log(this.windowRef.rootContainer);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public ngOnInit() {
@@ -101,6 +109,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.initRating();
   }

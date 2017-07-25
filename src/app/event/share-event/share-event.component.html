@@ -180,7 +180,7 @@
   <!--form wrap end-->
 
   <!--list preview wrap start-->
-  <div class="list-preview-wrap"  [style.width]="layoutWidth + 'px'" [class.hide]="!showPreview" *ngIf="previewData">
+  <div class="list-preview-wrap"  [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
       <div class="col-md-7 left-content" >
         <div class="event-title">

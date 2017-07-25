@@ -28,6 +28,7 @@ export class CurateComponent implements OnInit {
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public layoutWidth: number;
+  public innerWidth: number;
 
   public shownotfound: boolean = false;
 
@@ -40,6 +41,10 @@ export class CurateComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     console.log(this.windowRef.rootContainer);
+
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+
   }
   public ngOnInit() {
     this.loaderService.show();
@@ -69,7 +74,10 @@ export class CurateComponent implements OnInit {
 
     this.screenWidth = width;
     this.screenHeight = height;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
