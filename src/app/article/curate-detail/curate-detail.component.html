@@ -6,7 +6,7 @@
             <a routerLink="/curate">
               <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
             </a>
-            <strong>{{article.title}}</strong>
+            <h1>{{article.title}}</h1>
           </div>
           <div *ngIf="slides" class="carousel">
             <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="noPause" [noTransition]="noTransition">

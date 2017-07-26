@@ -710,6 +710,8 @@ export class EatComponent implements OnInit {
       }
     }
 
+
+
     this.cuisine = [];
     this.best = [];
     this.type = 'eat';

@@ -103,12 +103,12 @@
           <li *ngFor="let star of [1,2,3,4,5]" style="width: 80px">
             <div class="checkbox" *ngIf="star == 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)"> {{star}} star
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)" class="rateCheckbox"> {{star}} star
               </label>
             </div>
             <div class="checkbox" *ngIf="star != 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)"> {{star}} stars
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)" class="rateCheckbox"> {{star}} stars
               </label>
             </div>
           </li>
