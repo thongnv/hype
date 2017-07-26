@@ -81,7 +81,7 @@ export class PlayComponent implements OnInit {
     long: this.lng,
     radius: 0,
     page: 1,
-    limit: 10
+    limit: 20
   };
 
   private zoomChanged: boolean = false;

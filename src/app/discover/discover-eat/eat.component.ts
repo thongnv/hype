@@ -81,7 +81,7 @@ export class EatComponent implements OnInit {
     long: this.lng,
     radius: 0,
     page: 1,
-    limit: 10
+    limit: 20
   };
 
   private zoomChanged: boolean = false;
@@ -307,7 +307,9 @@ export class EatComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
-      this.initMap(resp.company);
+      this.items = resp.company;
+      this.zoomChanged = false;
+      this.initMap();
       this.loaderService.hide();
       this.smallLoader.hide();
 
@@ -320,7 +322,6 @@ export class EatComponent implements OnInit {
       this.smallLoader.hide();
     });
   }
-
   changeCategory() {
     this.params.limit = 20;
     this.params.page = 0;
@@ -368,26 +369,31 @@ export class EatComponent implements OnInit {
     }
   }
 
-  private initMap(companies: any) {
-    if (companies) {
+  private initMap() {
+    if (this.items) {
       this.currentHighlightedMarker = 0;
       this.mapsAPILoader.load().then(() => {
-        for (let i = 0; i < companies.length; i++) {
-          if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
+        for (let i = 0; i < this.items.length; i++) {
+          if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
 
-            let lat = companies[i].YP_Address[6].split('/');
-            let lng = companies[i].YP_Address[5].split('/');
-            let distance = companies[i]._dict_;
-
-              if(distance) {
-                companies[i].distance = (distance).toFixed(1);
+            let lat = this.items[i].YP_Address[6].split('/');
+            let lng = this.items[i].YP_Address[5].split('/');
+            let distance = this.items[i]._dict_;
+              let description:string;
+              if(this.items[i].Hylo_Activity_Description.length > 0){
+                description = this.items[i].Hylo_Activity_Description;
+              }else{
+                description = this.items[i].Company_Profile;
               }
-              this.items.push(companies[i]);
+              this.items[i].description = description;
+              if(distance) {
+                this.items[i].distance = (distance).toFixed(1);
+              }
               if (i == 0) {
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
+                  label: this.items[i].Company_Name,
                   opacity: 1,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -396,7 +402,7 @@ export class EatComponent implements OnInit {
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
+                  label: this.items[i].Company_Name,
                   opacity: 0.4,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -704,6 +710,8 @@ export class EatComponent implements OnInit {
       }
     }
 
+
+
     this.cuisine = [];
     this.best = [];
     this.type = 'eat';
@@ -835,6 +843,8 @@ export class EatComponent implements OnInit {
         this.mapZoom=14;
       }
     });
+    this.items = [];
+    this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (!this.zoomChanged) {
@@ -842,8 +852,6 @@ export class EatComponent implements OnInit {
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
-      //sleep change map call api
-      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
@@ -856,8 +864,6 @@ export class EatComponent implements OnInit {
       this.params.page=0;
       this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
-      this.items = [];
-      this.markers = [];
       this.getDataModes();
     }
   }

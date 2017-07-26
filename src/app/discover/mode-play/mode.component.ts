@@ -81,7 +81,7 @@ export class ModeComponent implements OnInit {
     long: this.lng,
     radius: 0,
     page: 1,
-    limit: 10
+    limit: 20
   };
 
   private zoomChanged: boolean = false;
@@ -151,14 +151,14 @@ export class ModeComponent implements OnInit {
                       draggable: true
                     });
                     let searchCenter = mapCenter.getPosition();
-                    let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+                    let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
                     this.params.lat = this.lat;
                     this.params.long = this.lng;
                     this.params.page=0;
-                    this.params.radius = Math.round(distance / 1000);
+                    this.params.radius =parseFloat((distance / 1000).toFixed(2));
 
 
-                    this.mapZoom=15;
+                    this.mapZoom=16;
                     this.smallLoader.show();
                     this.getDataModes();
                   }
@@ -419,7 +419,13 @@ export class ModeComponent implements OnInit {
             let lat = companies[i].YP_Address[6].split('/');
             let lng = companies[i].YP_Address[5].split('/');
             let distance = companies[i]._dict_;
-
+              let description:string;
+              if(companies[i].Hylo_Activity_Description.length > 0){
+                description = companies[i].Hylo_Activity_Description;
+              }else{
+                description = companies[i].Company_Profile;
+              }
+              companies[i].description = description;
               if(distance) {
                 companies[i].distance = (distance).toFixed(1);
               }

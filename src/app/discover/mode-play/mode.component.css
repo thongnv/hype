@@ -275,6 +275,7 @@ ul.itemSort li a i {
     vertical-align: middle;
     margin-top: 10px;
     margin-left: 15px;
+    width: calc(100% - 115px);
 }
 
 .item-content .box-content {

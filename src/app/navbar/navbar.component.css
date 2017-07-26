@@ -98,10 +98,7 @@
 .map-option-dropdown-mobile{
   display: none;
 }
-.list-category li.title-hover:hover >ul.dropdown-menu{
-    display: block !important;
-    transition: all .3s;
-}
+
 /*responsive*/
 
 @media only screen and (min-width: 575px) {

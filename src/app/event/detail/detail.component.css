@@ -17,7 +17,7 @@ a {
   padding-left: 30px;
 }
 
-h3 {
+h1 {
   color: #3b3b3b;
   text-transform: capitalize;
   font-size: 30px;
@@ -58,7 +58,7 @@ h4 {
   padding: 38px 0 38px;
 }
 
-.title-event h3 {
+.title-event h1 {
   padding-left: 50px;
   padding-right: 10px;
 }
@@ -813,7 +813,7 @@ ul.list-stars-on-post {
     display: none !important;
   }
 
-  .title-event h3 {
+  .title-event h1 {
     padding-left: 15px;
   }
 
@@ -955,7 +955,7 @@ ul.list-stars-on-post {
 
   }
 
-  .title-event h3 {
+  .title-event h1 {
     padding-left: 15px;
     line-height: 1.5em;
     font-size: 24px;
