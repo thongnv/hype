@@ -790,6 +790,16 @@ body, html {
   //END CURATE
   //CURATE LIST
 
+  .notFoundDiv h2{
+    color: #767674;
+  }
+
+  .btn-danger, .btn-default, .btn-info, .btn-primary, .btn-success, .btn-warning {
+    border: 0 none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
   .carousel-control .glyphicon {
     display: none;
   }
