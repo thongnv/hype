@@ -724,7 +724,7 @@ export class PlayComponent implements OnInit {
     this.params.cuisine = '';
     this.params.price = '';
     this.params.bestfor = '';
-    this.params.type = '';
+    this.params.type = 'play';
     this.params.limit = 20;
     this.params.page = 0;
     this.params.rate = 0;
