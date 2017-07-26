@@ -13,7 +13,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT, Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
 
@@ -89,7 +89,8 @@ export class EatComponent implements OnInit {
 
   public sortBy: any;
 
-  public constructor(private formBuilder: FormBuilder,
+  public constructor(private titleService: Title,
+                     private formBuilder: FormBuilder,
                      private modeService: ModeService,
                      private rateConfig: NgbRatingConfig,
                      private mapsAPILoader: MapsAPILoader,
@@ -187,6 +188,7 @@ export class EatComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.getCategories('eat');
     this.getFilter();

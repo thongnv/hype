@@ -6,6 +6,7 @@ import { User } from '../app.interface';
 import * as moment from 'moment';
 import _date = moment.unitOfTime._date;
 import { UserService } from '../services/user.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-auth',
@@ -21,10 +22,12 @@ export class AuthComponent implements OnInit {
 
   constructor(private facebookService: FacebookService,
               private userService: UserService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              private titleService: Title) {
   }
 
   public ngOnInit() {
+    this.titleService.setTitle('Login');
     if (this.user) {
       window.location.href = '/home';
     } else {

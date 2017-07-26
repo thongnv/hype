@@ -3,6 +3,7 @@ import { MainService } from '../services/main.service';
 import { LoaderService } from '../helper/loader/loader.service';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-curate',
@@ -30,9 +31,8 @@ export class CurateComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
 
-  public shownotfound: boolean = false;
-
-  public constructor(private mainService: MainService,
+  public constructor(private titleService: Title,
+                     private mainService: MainService,
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
                      private windowRef: WindowUtilService) {
@@ -47,8 +47,8 @@ export class CurateComponent implements OnInit {
 
   }
   public ngOnInit() {
+    this.titleService.setTitle('Curated List');
     this.loaderService.show();
-
     window.onscroll = () => {
       let windowHeight = 'innerHeight' in window ? window.innerHeight
         : document.documentElement.offsetHeight;
@@ -78,15 +78,13 @@ export class CurateComponent implements OnInit {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
 
-    this.mainService.getCategoryArticle().subscribe(
+    this.mainService.getCategoryTreeArticle().subscribe(
       (response: any) => {
         let categories = response.data;
-        this.categories = Object.keys(categories).map(
-          (k) => categories[k]
-        );
+        this.categories = this.convertObject2Array(categories);
         this.categories.unshift({
-          name: 'All',
-          tid: 'all',
+          0: 'All',
+          1: 'all',
         });
       }
     );
@@ -134,7 +132,8 @@ export class CurateComponent implements OnInit {
     this.featuredArticles = featuredArticles;
   }
 
-  public onSelectCategory(cat: any) {
+  public onSelectCategory(event,  cat: any) {
+    event.stopPropagation();
     this.loaderService.show();
     this.selectedCategory = cat;
     this.currentPage = 0;
@@ -180,5 +179,17 @@ export class CurateComponent implements OnInit {
         }
       );
     }
+  }
+
+  private convertObject2Array(obj) {
+    let newObj = Object.keys(obj).map(
+      (k) => {
+        if (typeof(obj[k]) === 'object') {
+         return this.convertObject2Array(obj[k]);
+        }
+        return obj[k];
+      }
+    );
+    return newObj;
   }
 }
