@@ -65,6 +65,7 @@ export class PlayComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   private stopped: boolean = false;
+  public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   public shownotfound: boolean = false;
   private params = {
     type: 'play',
@@ -490,6 +491,12 @@ export class PlayComponent implements OnInit {
         type.push(t.name);
       }
     }
+    let rates = new Array();
+    if (this.currentRate) {
+      for (let rate of this.currentRate) {
+        rates.push(rate.star);
+      }
+    }
     if (this.showPrice) {
       this.params.price = this.priceRange.join(',');
     }
@@ -500,7 +507,7 @@ export class PlayComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = this.currentRate.join(',');
+      this.params.rate = rates.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');

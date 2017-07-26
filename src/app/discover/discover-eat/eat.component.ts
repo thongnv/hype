@@ -65,6 +65,7 @@ export class EatComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   private stopped: boolean = false;
+  public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   public shownotfound: boolean = false;
   private params = {
     type: 'eat',
@@ -148,11 +149,11 @@ export class EatComponent implements OnInit {
                       draggable: true
                     });
                     let searchCenter = mapCenter.getPosition();
-                    let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+                    let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
                     this.params.lat = this.lat;
                     this.params.long = this.lng;
                     this.params.page=0;
-                    this.params.radius = Math.round(distance / 1000);
+                    this.params.radius = parseFloat((distance / 1000).toFixed(2));
 
 
                     this.mapZoom=15;
@@ -484,6 +485,12 @@ export class EatComponent implements OnInit {
         type.push(t.name);
       }
     }
+    let rates = new Array();
+    if (this.currentRate) {
+      for (let rate of this.currentRate) {
+        rates.push(rate.star);
+      }
+    }
     if (this.showPrice) {
       this.params.price = this.priceRange.join(',');
     }
@@ -494,7 +501,7 @@ export class EatComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = this.currentRate.join(',');
+      this.params.rate = rates.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');
@@ -699,14 +706,22 @@ export class EatComponent implements OnInit {
       }
     }
 
-    if (this.type) {
+    if (this.type.length > 0) {
       for (let i = 0; i < this.type.length; i++) {
-        this.type[i].checked = false;
-        if (this.type[i].sub) {
-          for (let j = 0; j < this.type[i].sub.length; j++) {
-            this.type[i].sub[j].checked = false;
+        if(this.type[i].checked) {
+          this.type[i].checked = false;
+          if (this.type[i].sub) {
+            for (let j = 0; j < this.type[i].sub.length; j++) {
+              this.type[i].sub[j].checked = false;
+            }
           }
         }
+      }
+    }
+
+    if(this.currentRate){
+      for(let i = 0; i < this.currentRate.length; i ++){
+        this.currentRate[i].checked=false;
       }
     }
 
@@ -823,11 +838,14 @@ export class EatComponent implements OnInit {
   }
   public rateCheckbox(event,rate){
     if (event) {
+      rate.checked=true;
       this.currentRate.push(rate);
     } else {
+      rate.checked=false;
       var index = this.currentRate.indexOf(rate);
       this.currentRate.splice(index, 1);
     }
+    console.log(this.currentRate);
   }
   public centerChange(event) {
     this.lat = event.lat;
