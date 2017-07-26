@@ -7,6 +7,7 @@ import { AppSetting } from '../../app.setting';
 import { UserService } from '../../services/user.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import $ from 'jquery';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile-public',
@@ -39,7 +40,8 @@ export class ProfilePublicComponent implements OnInit {
   private totalArticles: number;
   private eventIndex: number = 0;
 
-  constructor(private loaderService: LoaderService,
+  constructor(private titleService: Title,
+              private loaderService: LoaderService,
               private userService: UserService,
               private smallLoader: SmallLoaderService,
               private localStorageService: LocalStorageService,
@@ -59,6 +61,7 @@ export class ProfilePublicComponent implements OnInit {
       this.userService.getProfile(this.slugName).subscribe(
         (resp) => {
           this.currentUser = resp;
+          this.titleService.setTitle(this.currentUser.name);
           this.currentUser.showNav = false;
           this.loaderService.hide();
           this.ready = true;

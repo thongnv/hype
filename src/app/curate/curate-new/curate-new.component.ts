@@ -1,7 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -54,6 +54,7 @@ export class CurateNewComponent implements OnInit {
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
               private userService: UserService,
+              private titleService: Title,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router,
@@ -68,6 +69,7 @@ export class CurateNewComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.titleService.setTitle('Create A New List');
     this.onAddPlace();
     this.loaderService.show();
     document.getElementById('list-name').focus();

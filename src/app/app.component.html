@@ -6,28 +6,28 @@
       <div class="column col-sm-2 frame_nav"id="left">
         <div class="left-nav-content">
           <aside class="sidebar">
-            <ul class="navbar-collapse list-tap">
-              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./home']" routerLinkActive="active"
+            <ul class="navbar-collapse list-tap" [class.userMenu]="user" >
+              <li [routerLink]="['./home']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Trending"></i>
                 <span class="hidden-xs hidden-sm">Trending Events</span>
               </li>
-              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./discover/eat']" routerLinkActive="active"
+              <li [routerLink]="['./discover/eat']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Food"></i>
                 <span class="hidden-xs hidden-sm">Discover Eat</span>
               </li>
-              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./discover/play']" routerLinkActive="active"
+              <li [routerLink]="['./discover/play']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Pure-Fun"></i>
                 <span class="hidden-xs hidden-sm">Discover Play</span>
               </li>
-              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" [routerLink]="['./curate']" routerLinkActive="active"
+              <li [routerLink]="['./curate']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Curated"></i>
                 <span class="hidden-xs hidden-sm">Curated</span>
               </li>
-              <li class="col-xs-2 col-sm-2 col-md-12 col-lg-12" *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
+              <li *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-Favourites"></i>
                 <span class="hidden-xs hidden-sm">Favorites</span>

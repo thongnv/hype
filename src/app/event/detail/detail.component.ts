@@ -1,7 +1,7 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { EventService } from '../../services/event.service';
@@ -65,14 +65,15 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public rateConfig: NgbRatingConfig,
               private route: ActivatedRoute,
               private router: Router,
+              private titleService: Title,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private windowRef: WindowUtilService) {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log(this.windowRef.rootContainer);
+  public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
   }
@@ -89,6 +90,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         (resp) => {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
+          this.titleService.setTitle(event.name);
           this.initSlide(this.images);
           this.ready = true;
         },
