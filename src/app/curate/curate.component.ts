@@ -3,6 +3,7 @@ import { MainService } from '../services/main.service';
 import { LoaderService } from '../helper/loader/loader.service';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-curate',
@@ -30,9 +31,8 @@ export class CurateComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
 
-  public shownotfound: boolean = false;
-
-  public constructor(private mainService: MainService,
+  public constructor(private titleService: Title,
+                     private mainService: MainService,
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
                      private windowRef: WindowUtilService) {
@@ -47,8 +47,8 @@ export class CurateComponent implements OnInit {
 
   }
   public ngOnInit() {
+    this.titleService.setTitle('Curated List');
     this.loaderService.show();
-
     window.onscroll = () => {
       let windowHeight = 'innerHeight' in window ? window.innerHeight
         : document.documentElement.offsetHeight;

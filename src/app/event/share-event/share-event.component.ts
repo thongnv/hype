@@ -1,6 +1,6 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment/moment';
@@ -69,7 +69,8 @@ export class ShareEventComponent implements OnInit {
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
-  constructor(public fb: FormBuilder,
+  constructor(private titleService: Title,
+              public fb: FormBuilder,
               private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
@@ -87,6 +88,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.titleService.setTitle('Share An Event');
     this.loaderService.show();
     this.user = this.localStorageService.get('user');
     document.getElementById('event-name').focus();

@@ -14,6 +14,7 @@ import { WindowUtilService } from '../services/window-ultil.service';
 import { AppSetting } from '../app.setting';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { Title } from '@angular/platform-browser';
 
 declare let google: any;
 
@@ -78,7 +79,8 @@ export class HomeComponent implements OnInit {
     price: ''
   };
 
-  constructor(private homeService: HomeService,
+  constructor(private titleService: Title,
+              private homeService: HomeService,
               private loaderService: LoaderService,
               private smallLoader: SmallLoaderService,
               private mapsAPILoader: MapsAPILoader,
@@ -89,6 +91,7 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.eventFilter = [
       {name: 'all'},
       {name: 'today'},
@@ -224,7 +227,7 @@ export class HomeComponent implements OnInit {
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
-      let distance:any = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
+      let distance: any = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.radius = parseFloat((distance / 1000).toFixed(2));
@@ -337,10 +340,10 @@ export class HomeComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance:any = getDistance(latLngNew.getPosition(), searchCenter);
+      let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius =  parseFloat((distance / 1000).toFixed(2));
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
@@ -462,8 +465,8 @@ export class HomeComponent implements OnInit {
             position: new google.maps.LatLng(latitude, longitude),
             draggable: true
           });
-          let distance = getDistance(latLngDistance.getPosition(),searchCenter);
-          this.events[i].distance = (distance/1000).toFixed(1);
+          let distance = getDistance(latLngDistance.getPosition(), searchCenter);
+          this.events[i].distance = (distance / 1000).toFixed(1);
           if (i === 0) {
             this.markers.push({
               lat: latitude,

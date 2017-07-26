@@ -4,6 +4,7 @@ import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { Title } from '@angular/platform-browser';
 
 @Injectable()
 @Component({
@@ -35,6 +36,7 @@ export class CurateDetailComponent implements OnInit {
                      private loaderService: LoaderService,
                      private route: ActivatedRoute,
                      private router: Router,
+                     private titleService: Title,
                      private windowRef: WindowUtilService) {
   }
   @HostListener('window:resize', ['$event'])
@@ -54,6 +56,7 @@ export class CurateDetailComponent implements OnInit {
         (response) => {
           this.article = response;
           this.initMap(this.article);
+          this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
           this.loaderService.hide();
         },

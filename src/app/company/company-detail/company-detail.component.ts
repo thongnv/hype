@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
 import { Company, Experience, Image, Location, User } from '../../app.interface';
@@ -8,6 +8,7 @@ import { AppSetting } from '../../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -40,23 +41,22 @@ export class CompanyDetailComponent implements Company, OnInit {
   public rated: boolean = false;
   public company: Company;
   public ready: boolean = false;
-  public imageReady: boolean = false;
   public gMapStyles: any;
   public layoutWidth: number;
   public innerWidth: number;
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    public userService: UserService,
-    public companyService: CompanyService,
-    private route: ActivatedRoute,
-    private loaderService: LoaderService,
-    private router: Router,
-    private windowRef: WindowUtilService
-  ) {}
+  constructor(private titleService: Title,
+              private localStorageService: LocalStorageService,
+              public userService: UserService,
+              public companyService: CompanyService,
+              private route: ActivatedRoute,
+              private loaderService: LoaderService,
+              private router: Router,
+              private windowRef: WindowUtilService) {
+  }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  public onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
@@ -76,6 +76,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         (resp) => {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
+          this.titleService.setTitle(this.company.name);
           // TODO: use this.instagramUrl instead
           // let instagramUsername = 'billnguyen254';
           // this.companyService.getInstagramProfile(instagramUsername).subscribe(
@@ -106,8 +107,6 @@ export class CompanyDetailComponent implements Company, OnInit {
           //     console.log(error);
           //   }
           // );
-
-
           this.ready = true;
           this.loaderService.hide();
         },
