@@ -157,6 +157,11 @@
   opacity: .5;
 }
 
+.pricePreview{
+  text-align: center; font-weight: bold; font-size: 23px;
+  clear: both; margin-bottom: 20px;
+}
+
 #filters {
   /*margin-left: 25px;*/
   float: right;
@@ -355,7 +360,7 @@ button.btn.btn-default.active {
   width: calc(100% - 156px);
   float: left;
   position: relative;
-  margin-top: 8px;
+
 }
 
 .mentioned-item-wrap img {

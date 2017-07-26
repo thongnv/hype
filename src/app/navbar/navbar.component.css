@@ -319,6 +319,10 @@
 
 }
 
+.navbar-fixed-top{
+  border: 0;
+}
+
 @media screen and (min-width: 567px) and (max-width: 990px) {
     .show .map-option-dropdown-mobile li.text-ellipsis {
       width: 33.333%;
