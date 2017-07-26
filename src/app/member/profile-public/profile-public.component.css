@@ -9,7 +9,7 @@
 }
 
 .events-wrap {
-  margin-left: 30px;
+  margin-left: 50px;
   margin-top: 20px;
   width: 70%;
 }
@@ -24,10 +24,6 @@
   line-height: 1.13;
   text-align: left;
   color: #3b3b3b;
-}
-
-.title-event {
-  margin-left: 20px;
 }
 
 .article-item img {

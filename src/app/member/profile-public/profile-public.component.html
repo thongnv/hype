@@ -8,9 +8,8 @@
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
 
     <div class="lists-wrap">
-
       <div class="title title-list">My Created Lists</div>
-      <div *ngIf="latestArticles" class="row wrap-post-news carousel slide">
+      <div *ngIf="latestArticles.length" class="row wrap-post-news carousel slide">
         <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
           <div class="image-post-news" [routerLink]="[art.alias]">
             <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title" width="100%">
@@ -38,15 +37,13 @@
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
       </div>
+      <div *ngIf="!latestArticles.length">No lists found</div>
     </div>
 
     <div class="events-wrap">
-
       <div class="title title-event">My Events</div>
-
       <div class="section v-scrollable">
-        <div *ngFor="let item of events"
-             class="wrap-each-items">
+        <div *ngFor="let item of events" class="wrap-each-items">
           <div class="avatar-profile">
             <div class="cover-avatar-picture" [routerLink]="[item.alias]"></div>
             <a class="avatar-picture" [routerLink]="[item.alias]">
@@ -112,10 +109,11 @@
           </div>
           <div class="clear"></div>
         </div>
+        <div *ngIf="!events.length">No events found</div>
         <!--#sdhkas-->
         <app-small-loader></app-small-loader>
       </div>
-
     </div>
+
   </div>
 </div>
