@@ -11,8 +11,7 @@
   <!--form wrap start-->
   <div class="form-wrap column col-xs-12 col-md-6  no-padding" [class.hide]="showPreview">
 
-    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()"
-          (keydown.enter)="$event.preventDefault()">
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
       <div class="input-box row">
         <h3 class="col-md-12 col-xs-12">Share an Event</h3>
         <small class="col-md-12 col-xs-12">An event is an activity tagged to a place</small>
@@ -59,6 +58,16 @@
                  class="text-danger">
             Please select event category.
           </small>
+        </div>
+        <div class="form-group list-tags col-md-12 col-xs-12">
+          <label>Tags</label>
+          <tag-input [(ngModel)]="eventTags" [modelAsStrings]="true"
+                     placeholder="E.g performance, liveband, concert, food"
+                     formControlName="eventTags">
+            <tag-input-dropdown [displayBy]="'name'"
+                                [identifyBy]="'name'" [autocompleteItems]="tags">
+            </tag-input-dropdown>
+          </tag-input>
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
           <label class="control-label">Images</label>

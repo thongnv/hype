@@ -123,6 +123,26 @@ export class EventService {
       });
   }
 
+  public getTagsEvent(): Observable<any> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(
+      AppSetting.API_TAGS_EVENT, options
+    )
+      .map((res: Response) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
+      });
+  }
+
   public postExperience(eventSlug: string, data): Observable<Experience> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
