@@ -34,6 +34,7 @@ import { MomentModule } from 'angular2-moment';
 import { FacebookModule } from 'ngx-facebook';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
+import { TagInputModule } from 'ngx-chips';
 
 // modules
 import { HtmlToTextModule } from './html-to-text/html-to-text.module';
@@ -158,6 +159,7 @@ type StoreType = {
     HttpModule,
     JsonpModule,
     HtmlToTextModule,
+    TagInputModule,
     TinymceModule.withConfig({auto_focus: false}),
     NgbModule,
     ReCaptchaModule,
