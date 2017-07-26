@@ -9,6 +9,8 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
+import { Location as LocationService } from '@angular/common';
+
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -52,6 +54,7 @@ export class CompanyDetailComponent implements Company, OnInit {
               private route: ActivatedRoute,
               private loaderService: LoaderService,
               private router: Router,
+              private locationService: LocationService,
               private windowRef: WindowUtilService) {
   }
 
@@ -124,6 +127,10 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
+  public goBack() {
+    this.locationService.back();
+  }
+
   public toggleBookmark() {
     this.bookmarked = !this.bookmarked;
     this.companyService.toggleBookmark(this.id).subscribe(
@@ -150,7 +157,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
   }
 
-  public goBack() {
+  public back() {
     this.commentPosition = 'out';
     this.companyStatus = 'default';
   }
