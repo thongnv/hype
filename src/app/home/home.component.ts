@@ -182,7 +182,6 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.params.tid = '';
     this.params.time = '';
-    this.params.radius = 0;
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
@@ -337,10 +336,10 @@ export class HomeComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance = getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius =  parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.events = [];
       this.markers = [];

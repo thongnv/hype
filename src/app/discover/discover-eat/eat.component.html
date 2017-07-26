@@ -218,6 +218,7 @@
       [styles]="gMapStyles"
       (centerChange)="centerChange($event)"
       (boundsChange)="boundsChange($event)"
+      [mapDraggable]="true"
     >
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                            [circleDraggable]="circleDraggable"
