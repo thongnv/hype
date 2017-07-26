@@ -182,7 +182,6 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.params.tid = '';
     this.params.time = '';
-    this.params.radius = 0;
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
@@ -211,6 +210,7 @@ export class HomeComponent implements OnInit {
 
   public onSelectEventOrder(order: any): void {
     this.selectedEventOrder = order;
+    this.mapZoom = 12;
     if (order.name === 'top 100') {
       this.params.latest = '';
     } else {
@@ -224,10 +224,10 @@ export class HomeComponent implements OnInit {
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
-      let distance = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
+      let distance:any = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000) - 1;
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
     }
     this.params.page = 0;
     this.params.price = 0;
@@ -337,15 +337,14 @@ export class HomeComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance = getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = Math.round(distance / 1000);
+      this.params.radius =  parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.events = [];
       this.markers = [];
       this.params.page = 0;
-      sleep(500);
       this.getTrending();
     }
   }
@@ -367,6 +366,7 @@ export class HomeComponent implements OnInit {
     this.params.price = '';
     this.params.order = '';
     this.selected = 'all';
+    this.mapZoom = 12;
   }
 
   private getTrending() {

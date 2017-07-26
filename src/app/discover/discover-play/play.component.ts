@@ -867,8 +867,6 @@ export class PlayComponent implements OnInit {
       this.smallLoader.show();
       this.items = [];
       this.markers = [];
-      //sleep change map call api
-      sleep(500);
       this.getDataModes();
     }
   }
