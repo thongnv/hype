@@ -66,6 +66,7 @@ export class ModeComponent implements OnInit {
   public layoutWidth: number;
   private stopped: boolean = false;
   public shownotfound: boolean = false;
+  public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   private params = {
     type: 'all',
     kind: '',
@@ -525,6 +526,14 @@ export class ModeComponent implements OnInit {
         type.push(t.name);
       }
     }
+
+    let rates = new Array();
+    if (this.currentRate) {
+      for (let rate of this.currentRate) {
+        rates.push(rate.star);
+      }
+    }
+
     if (this.showPrice) {
       this.params.price = this.priceRange.join(',');
     }
@@ -539,7 +548,7 @@ export class ModeComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = this.currentRate.join(',');
+      this.params.rate = rates.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');
