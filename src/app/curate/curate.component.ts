@@ -78,7 +78,7 @@ export class CurateComponent implements OnInit {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
 
-    this.mainService.getCategoryArticle().subscribe(
+    this.mainService.getCategoryTreeArticle().subscribe(
       (response: any) => {
         let categories = response.data;
         this.categories = Object.keys(categories).map(

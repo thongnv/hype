@@ -45,6 +45,20 @@ export class MainService {
       });
   }
 
+  public getCategoryTreeArticle(): Observable<Response> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/category/tree/?_format=json', options
+    )
+    .map((res) => {
+      return res.json();
+    })
+    .catch((error) => {
+      return Observable.throw(new Error(error));
+    });
+  }
+
   public getCurate(filter, cate, page, limit): Observable<Response> {
     let headers = this.defaultHeaders;
     let searchParams = new URLSearchParams();
