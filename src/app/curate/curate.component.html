@@ -4,21 +4,20 @@
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li class="title-hover dropdown" *ngFor="let cat of categories" (click)="onSelectCategory(cat.tid)"
-              [class.active]="cat.tid===selectedCategory">{{cat.name}}
+          <li class="title-hover dropdown" *ngFor="let cat of categories" (click)="onSelectCategory(cat[0])"
+              [class.active]="cat[0]===selectedCategory">{{cat[1]}}
 
-            <ul *ngIf="cat.items" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
-              <!--{{cat.items|json}}-->
-              <!--<li *ngFor="#sub1 of cat.items | keys" (click)="onSelectCategory(sub1.tid)"-->
-                  <!--[class.active]="sub1.tid===selectedCategory">-->
-                <!--{{sub1|json}}-->
-                <!--&lt;!&ndash;<ul *ngIf="sub1.items" class="dropdown-menu sub-menu" aria-labelledby="dLabel">&ndash;&gt;-->
-                  <!--&lt;!&ndash;<li *ngFor="let sub2 of sub1.items" (click)="onSelectCategory(sub2.tid)"&ndash;&gt;-->
-                      <!--&lt;!&ndash;[class.active]="sub2.tid===selectedCategory">&ndash;&gt;-->
-                    <!--&lt;!&ndash;{{sub2.name}}&ndash;&gt;-->
-                  <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-              <!--</li>-->
+            <ul *ngIf="cat[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+              <li *ngFor="let sub1 of cat[2]" (click)="onSelectCategory(sub1[0])" class="dropdown"
+                  [class.active]="sub1[0]===selectedCategory">
+                {{sub1[1]}}
+                <ul *ngIf="sub1[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+                  <li *ngFor="let sub2 of sub1[2]" (click)="onSelectCategory(sub2[0])"
+                      [class.active]="sub2[0]===selectedCategory">
+                    {{sub2[1]}}
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
         </ul>

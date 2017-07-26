@@ -81,12 +81,10 @@ export class CurateComponent implements OnInit {
     this.mainService.getCategoryTreeArticle().subscribe(
       (response: any) => {
         let categories = response.data;
-        this.categories = Object.keys(categories).map(
-          (k) => categories[k]
-        );
+        this.categories = this.convertObject2Array(categories);
         this.categories.unshift({
-          name: 'All',
-          tid: 'all',
+          0: 'All',
+          1: 'all',
         });
       }
     );
@@ -180,5 +178,17 @@ export class CurateComponent implements OnInit {
         }
       );
     }
+  }
+
+  private convertObject2Array(obj) {
+    let newObj = Object.keys(obj).map(
+      (k) => {
+        if (typeof(obj[k]) === 'object') {
+         return this.convertObject2Array(obj[k]);
+        }
+        return obj[k];
+      }
+    );
+    return newObj;
   }
 }
