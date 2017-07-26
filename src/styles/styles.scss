@@ -1506,15 +1506,16 @@ body, html {
 
     }
     .sidebar .list-tap{
-      display: table;
+      display: block;
       width: 100%;
       margin-top: 10px;
     }
-    .sidebar .list-tap > li {
+    .sidebar .list-tap li {
       padding: 0;
-      width: 25%;
-      display: table-cell;
+      display: inline-block;
+      width: 15%;
     }
+
     .follow-list-wrap {
       padding: 0;
     }
