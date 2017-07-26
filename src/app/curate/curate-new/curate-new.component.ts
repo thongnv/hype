@@ -64,7 +64,7 @@ export class CurateNewComponent implements OnInit {
   onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181);
   }
 
   public ngOnInit() {
@@ -72,7 +72,7 @@ export class CurateNewComponent implements OnInit {
     this.loaderService.show();
     document.getElementById('list-name').focus();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181);
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {

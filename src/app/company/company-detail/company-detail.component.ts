@@ -59,7 +59,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181);
   }
 
   public ngOnInit() {
@@ -68,7 +68,7 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.user = user;
     }
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
