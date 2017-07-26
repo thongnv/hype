@@ -30,6 +30,7 @@ ul.list-category li.active {
     text-align: left;
     color: #2a6be1;
     opacity: 1;
+    background: #fff;
 }
 .wrap-post-content {
     display: block;
@@ -207,7 +208,14 @@ ul.list-items li a img {
 .list-category .dropdown-menu.sub-menu li{
     opacity: 1;
 }
-
+.dropdown-menu>.active,
+.dropdown-menu>.active:hover,
+.dropdown-menu>.active:focus {
+  color: #fff;
+  text-decoration: none;
+  outline: 0;
+  color: #2a6be1;
+}
 .carousel-item.active{
     -webkit-animation: fadein 1.2s;
     -moz-animation: fadein 1.2s;

@@ -132,7 +132,8 @@ export class CurateComponent implements OnInit {
     this.featuredArticles = featuredArticles;
   }
 
-  public onSelectCategory(cat: any) {
+  public onSelectCategory(event,  cat: any) {
+    event.stopPropagation();
     this.loaderService.show();
     this.selectedCategory = cat;
     this.currentPage = 0;
