@@ -607,7 +607,9 @@ select.form-control-static::-ms-expand {
 .discover-page .left-box {
     padding: 0;
 }
-
+#btnHeadFilter label.btn-default input[type="checkbox"]{
+    display: none;
+}
 
 
 @media only screen and (max-width: 800px) {

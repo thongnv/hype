@@ -155,15 +155,23 @@ export class HomeComponent implements OnInit {
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);
   }
-
+  private eventCate:any[]=[];
   public onSelectEventType(event): void {
     if (event === 'all') {
       this.selected = 'all';
       this.params.tid = '';
     } else {
+      if(event.selected){
+        event.selected=false;
+        let index = this.eventCate.indexOf(event.tid);
+        this.eventCate.splice(index, 1);
+      }else{
+        event.selected=true;
+        this.eventCate.push(event.tid);
+      }
       this.selected = event.tid;
-      this.params.tid = event.tid;
     }
+    this.params.tid = this.eventCate.join(',');
     this.markers = [];
     this.events = [];
     this.params.page = 0;

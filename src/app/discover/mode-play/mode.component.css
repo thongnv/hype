@@ -381,7 +381,9 @@ nouislider.ng2-nouislider {
     text-align: left;
     color: #3b3b3b;
 }
-
+#btnHeadFilter label.btn-default input[type="checkbox"]{
+    display: none;
+}
 .list-event .list-header .pull-right {
     font-size: 12px;
     line-height: 1;

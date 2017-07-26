@@ -1,19 +1,18 @@
 <div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" >
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
-      <div id="btnHeadFilter" ngbRadioGroup class="btn-block btn-filter-block" (change)="changeCategory()"
-           (window:resize)="onResize($event)" name="radioBasic"
-           formControlName="filterCategory">
-        <label class="btn btn-default">
+      <div id="btnHeadFilter" class="btn-block btn-filter-block"
+           (window:resize)="onResize($event)" name="radioBasic">
+        <label class="btn btn-default" ngbButtonLabel (change)="changeCategory($event.target.checked,all)">
           <img src="../../../assets/img/icons/All.png" alt="All">
           <span class="clearfix">
-                                <input type="radio" value="all"> All
+                                <input type="checkbox" ngbButton value="all"> All
                             </span>
         </label>
-        <label class="btn btn-default" *ngFor="let term of categories">
+        <label class="btn btn-default" ngbButtonLabel *ngFor="let term of categories" (change)="changeCategory($event.target.checked,term)" [class.active]="term?.checked">
           <img src="{{term.icon}}" alt="{{term.name}}">
           <span class="clearfix"> </span>
-          <input type="radio" value="{{term.name}}">{{term.name}}
+          <input type="checkbox" ngbButton value="{{term.name}}">{{term.name}}
         </label>
         <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
                (click)="showAllKind(showAll)">
