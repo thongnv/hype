@@ -63,7 +63,7 @@
     border-radius: 50%;
     /*margin-top: 1%;*/
 }
-.place-item-header strong.place-name {
+.place-item-header h2.place-name {
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: keep-all;
@@ -115,7 +115,7 @@
   .carousel-header{
     padding: 20px 20px 20px 0px;
   }
-  .place-item-header[_ngcontent-c5] strong.place-name[_ngcontent-c5] {
+  .place-item-header[_ngcontent-c5] h2.place-name[_ngcontent-c5] {
     padding: 3px 0px 0px 10px;
     font-size: 24px;
 

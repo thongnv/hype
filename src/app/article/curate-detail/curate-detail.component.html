@@ -21,7 +21,7 @@
         <div *ngFor="let plc of article.field_places; let index=index" class="place-item-wrap" [id]="'place-'+index">
           <div class="place-item-header">
             <strong class="pull-left place-index">#{{index+1}}</strong>
-            <strong class="place-name">{{plc.field_place_address}}</strong>
+            <h2 class="place-name">{{plc.field_place_address}}</h2>
             <span *ngIf="plc.field_slug" [routerLink]="[plc.field_slug]" target="_blank"
                   class="pull-right place-detail-btn">
               details
