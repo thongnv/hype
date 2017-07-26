@@ -74,7 +74,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
   }
 
   public ngOnInit() {
@@ -110,7 +110,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
     this.initRating();
   }
 

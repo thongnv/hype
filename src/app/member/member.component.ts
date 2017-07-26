@@ -43,7 +43,7 @@ export class MemberComponent implements OnInit {
     }
     this.user.showNav = true;
     this.loaderService.show();
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 181);
     this.sub = this.route.params.subscribe((params) => {
       this.slugName = params['slug'];
       if (!this.user.slug || this.slugName !== this.user.slug) {

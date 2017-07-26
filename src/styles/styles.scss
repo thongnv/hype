@@ -1505,8 +1505,15 @@ body, html {
     .sidebar {
 
     }
+    .sidebar .list-tap{
+      display: table;
+      width: 100%;
+      margin-top: 10px;
+    }
     .sidebar .list-tap > li {
       padding: 0;
+      width: 25%;
+      display: table-cell;
     }
     .follow-list-wrap {
       padding: 0;
