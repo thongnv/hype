@@ -485,12 +485,6 @@ export class EatComponent implements OnInit {
         type.push(t.name);
       }
     }
-    let rates = new Array();
-    if (this.currentRate) {
-      for (let rate of this.currentRate) {
-        rates.push(rate.star);
-      }
-    }
     if (this.showPrice) {
       this.params.price = this.priceRange.join(',');
     }
@@ -501,7 +495,7 @@ export class EatComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = rates.join(',');
+      this.params.rate = this.currentRate.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');
@@ -845,7 +839,6 @@ export class EatComponent implements OnInit {
       var index = this.currentRate.indexOf(rate);
       this.currentRate.splice(index, 1);
     }
-    console.log(this.currentRate);
   }
   public centerChange(event) {
     this.lat = event.lat;

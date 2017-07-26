@@ -6,7 +6,7 @@
             <a routerLink="/curate">
               <i class="fa fa-angle-left left-arrow" aria-hidden="true"></i>
             </a>
-            <strong>{{article.title}}</strong>
+            <h1>{{article.title}}</h1>
           </div>
           <div *ngIf="slides" class="carousel">
             <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noPause]="noPause" [noTransition]="noTransition">
@@ -21,7 +21,7 @@
         <div *ngFor="let plc of article.field_places; let index=index" class="place-item-wrap" [id]="'place-'+index">
           <div class="place-item-header">
             <strong class="pull-left place-index">#{{index+1}}</strong>
-            <strong class="place-name">{{plc.field_place_address}}</strong>
+            <h2 class="place-name">{{plc.field_place_address}}</h2>
             <span *ngIf="plc.field_slug" [routerLink]="[plc.field_slug]" target="_blank"
                   class="pull-right place-detail-btn">
               details

@@ -687,16 +687,22 @@ ul.mentioned-item {
 }
 .list-item .caption {
   width: 80%;
-  height: 84px;
+  height: 80%;
   font-family: Roboto, sans-serif;
   font-size: 30px;
   line-height: 1.4;
   text-align: left;
   color: #ffffff;
   position: absolute;
-  top: 25%;
+  top: 10%;
   left: 10%;
   z-index: 10;
+  display: table;
+}
+
+.list-item .article_title_middle{
+  display: table-cell;
+  vertical-align: middle;
 }
 .list-item .caption h3 {
   margin-top: 10px;
@@ -989,7 +995,7 @@ ul.mentioned-item {
 @media only screen and (max-width: 800px) {
 
   .wrap-each-items {
-    padding: 0 15px;
+    padding: 15px;
   }
 
   .home-page {
@@ -1171,6 +1177,6 @@ ul.mentioned-item {
   }
 
   .avatar-profile{
-    margin-top: 10px!important;
+    margin-top: 5px!important;
   }
 }
