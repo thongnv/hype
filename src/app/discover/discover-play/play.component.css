@@ -287,7 +287,9 @@ ul.itemSort li a i {
     text-align: left;
     color: #3b3b3b;
 }
-
+#btnHeadFilter label.btn-default input[type="checkbox"]{
+    display: none;
+}
 .item-content span:nth-child(2n) {
     color: #ec3d62;
     font-size: 20px;

@@ -320,14 +320,27 @@ export class ModeComponent implements OnInit {
     });
   }
 
-  changeCategory() {
+  private categorySelected:any[]=[];
+  private catList:any[]=[];
+  changeCategory(event,item) {
+    if(event){
+      if(item){
+        item.checked=true;
+        this.categorySelected.push(item.name);
+
+      }
+    }else{
+      item.checked=false;
+      let index = this.categorySelected.indexOf(item.name);
+      this.categorySelected.splice(index, 1);
+    }
+
     this.params.limit = 20;
     this.params.page = 0;
     this.markers = [];
     this.items = [];
-
+    this.params.kind=this.categorySelected.join(',');
     this.smallLoader.show();
-    this.params.kind = this.filterCategory.value.filterCategory;
     this.getDataModes();
   }
 
@@ -880,7 +893,7 @@ export class ModeComponent implements OnInit {
     if (event) {
       this.currentRate.push(rate);
     } else {
-      var index = this.currentRate.indexOf(rate);
+      let index = this.currentRate.indexOf(rate);
       this.currentRate.splice(index, 1);
     }
   }
@@ -898,13 +911,13 @@ export class ModeComponent implements OnInit {
     });
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
+    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
       //sleep change map call api
-      sleep(500);
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
