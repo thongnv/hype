@@ -130,6 +130,9 @@ export class NavbarComponent implements OnInit {
         case 'play':
           this.router.navigate (['/discover/play/' + option.name.replace (' ' , '+')]).then ();
           break;
+        default:
+          this.router.navigate (['/discover/' + option.name.replace (' ' , '+')]).then ();
+          break;
       }
     }else {
       this.router.navigate (['/discover/' + option.name.replace (' ' , '+')]).then ();
