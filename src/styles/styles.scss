@@ -971,14 +971,14 @@ body, html {
   }
   .map-option li {
     line-height: 20px;
-    padding: 5px;
+    padding: 10px 15px;
     cursor: pointer;
     transition: all 0.3s;
     //text-transform: capitalize;
     clear: both;
   }
   .map-option li:hover {
-    background: rgba(236, 61, 98, 0.5);
+    background: #f5f5f5 !important;
   }
   .map-option .dropdown-menu li.active,
   .map-option .dropdown-menu li.active:hover,
