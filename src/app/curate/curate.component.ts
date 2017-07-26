@@ -76,11 +76,14 @@ export class CurateComponent implements OnInit {
     this.screenHeight = height;
 
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
 
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
-        this.categories = response.data;
+        let categories = response.data;
+        this.categories = Object.keys(categories).map(
+          (k) => categories[k]
+        );
         this.categories.unshift({
           name: 'All',
           tid: 'all',

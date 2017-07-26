@@ -35,7 +35,7 @@ export class MainService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/category/article/?_format=json', options
+      AppSetting.API_ENDPOINT + 'api/v1/category/tree/?_format=json', options
     )
       .map((res) => {
         return res.json();
