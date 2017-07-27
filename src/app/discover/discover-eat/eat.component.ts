@@ -67,6 +67,7 @@ export class EatComponent implements OnInit {
   private stopped: boolean = false;
   public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   public shownotfound: boolean = false;
+  public labelSort:string="Name";
   private params = {
     type: 'eat',
     kind: '',
@@ -109,7 +110,7 @@ export class EatComponent implements OnInit {
     });
     //console.log(this.is)
     this.sortBy = [
-      {id: 'all', name: 'Sort By'},
+      {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
       {id: 'reviews', name: 'Number of reviews'},
       {id: 'views', name: 'Popularity (Pageviews)'},
@@ -655,31 +656,31 @@ export class EatComponent implements OnInit {
     }
   }
 
-  public changeSort() {
-
-    if (this.sortPlace == 'ratings') {
+  public changeSort(id,label) {
+    this.labelSort = label;
+    if (id == 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'reviews') {
+    if (id == 'reviews') {
       this.params.order_by = 'reviews';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'favorites') {
+    if (id == 'favorites') {
       this.params.order_by = 'favorites';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'views') {
+    if (id == 'views') {
       this.params.order_by = 'views';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'distance') {
+    if (id == 'distance') {
       this.params.order_by = 'distance';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'all') {
+    if (id == 'all') {
       this.params.order_by = 'Company_Name';
-      this.params.order_dir = 'DESC';
+      this.params.order_dir = 'ASC';
     }
     this.params.page = 0;
     this.items = [];
@@ -691,7 +692,7 @@ export class EatComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.sortPlace = 'all';
+    this.labelSort = 'Name';
     this.totalCuisine = 0;
     this.smallLoader.show();
     this.getDataModes();
@@ -753,7 +754,7 @@ export class EatComponent implements OnInit {
     this.params.page = 0;
     this.params.rate = 0;
     this.params.order_by = 'Company_Name';
-    this.params.order_dir = 'DESC';
+    this.params.order_dir = 'ASC';
     this.markers = [];
     this.items = [];
   }

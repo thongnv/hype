@@ -67,6 +67,7 @@ export class PlayComponent implements OnInit {
   private stopped: boolean = false;
   public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   public shownotfound: boolean = false;
+  public labelSort:string="Name";
   private params = {
     type: 'play',
     kind: '',
@@ -660,8 +661,8 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  public changeSort() {
-
+  public changeSort(id,label) {
+    this.labelSort = label;
     if (this.sortPlace == 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
@@ -684,7 +685,7 @@ export class PlayComponent implements OnInit {
     }
     if (this.sortPlace == 'all') {
       this.params.order_by = 'Company_Name';
-      this.params.order_dir = 'DESC';
+      this.params.order_dir = 'ASC';
     }
     this.params.page = 0;
     this.items = [];
@@ -696,7 +697,7 @@ export class PlayComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.sortPlace = 'all';
+    this.labelSort = 'Name';
     this.totalCuisine = 0;
     this.smallLoader.show();
     this.getDataModes();
@@ -750,7 +751,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.params.rate = 0;
     this.params.order_by = 'Company_Name';
-    this.params.order_dir = 'DESC';
+    this.params.order_dir = 'ASC';
     this.markers = [];
     this.items = [];
   }
