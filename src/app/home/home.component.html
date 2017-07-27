@@ -129,7 +129,9 @@
             <div class="pull-right comments-item-icon">
               <ul class="list-inline">
                 <li>
-                  <span class="count_comment">Comments {{item.comment_count}}</span>
+                  <span class="count_comment">
+                    {{item.comment_count}} {{ item.comment_count > 1 ? 'Comments' : 'Comment' }}
+                  </span>
                 </li>
                 <li (click)="onLikeEmit(item)" class="heart-icon">
                   <i class="sprite" [class.sprite-Unfavourites20x20]="!item.user_bookmark"
