@@ -150,7 +150,7 @@ export class HomeComponent implements OnInit {
       this.params.tid = '';
       if (this.categories) {
         for (let i = 0; i < this.categories.length; i++) {
-            this.categories[i].selected = false;
+          this.categories[i].selected = false;
         }
       }
     } else {
@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit {
     this.params.time = '';
     this.params.price = '';
     this.params.order = '';
-    this.params.when='';
+    this.params.when = '';
     this.selected = 'all';
     this.getTrending();
   }
@@ -317,10 +317,10 @@ export class HomeComponent implements OnInit {
   }
 
   public showRagePrice(showPrice) {
-    if(showPrice){
+    if (showPrice) {
       this.showPrice = false;
       this.showDate = false;
-    }else{
+    } else {
       this.showPrice = true;
       this.showDate = false;
     }
@@ -328,10 +328,10 @@ export class HomeComponent implements OnInit {
   }
 
   public showWhen(showDate) {
-    if(showDate) {
+    if (showDate) {
       this.showDate = false;
       this.showPrice = false;
-    }else{
+    } else {
       this.showDate = true;
       this.showPrice = false;
     }
