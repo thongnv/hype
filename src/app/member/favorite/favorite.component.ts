@@ -39,11 +39,12 @@ export class FavoriteComponent implements OnInit {
   public ready = false;
   public layoutWidth: number;
   public options = {
-    timeOut: 5000,
+    timeOut: 3000,
     pauseOnHover: false,
     clickToClose: false,
     position: ['bottom', 'right'],
     icons: 'success',
+    showProgressBar: false
   };
 
   private listPageNum: number = 0;
@@ -124,7 +125,6 @@ export class FavoriteComponent implements OnInit {
   }
 
   public onClickDeleteEvent(item: any) {
-    this.smallLoader.show();
     this.userService.unFavoriteEventList(item.slug).subscribe(
       (response) => {
         if (response.status) {

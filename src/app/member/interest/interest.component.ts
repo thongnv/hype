@@ -21,11 +21,12 @@ export class InterestComponent implements OnInit {
   public ready = false;
   public layoutWidth: number;
   public options = {
-    timeOut: 5000,
+    timeOut: 3000,
     pauseOnHover: false,
     clickToClose: false,
     position: ['bottom', 'right'],
     icons: 'success',
+    showProgressBar: false
   };
 
   constructor(private route: ActivatedRoute,
