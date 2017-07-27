@@ -40,10 +40,8 @@ export class HomeComponent implements OnInit {
   public categories: any[];
   public selected: any = 'all';
   public currentHighlightedMarker: number = 1;
-  public alertType: any = '';
   public showPrice: boolean = false;
   public showDate: boolean = false;
-  public msgContent: any = '';
   public showAll: boolean = true;
   public showCircle: boolean = false;
   public circleDraggable: boolean = true;
@@ -181,7 +179,7 @@ export class HomeComponent implements OnInit {
         this.categories[i].selected = false;
       }
     }
-    this.eventCate=[];
+    this.eventCate = [];
     this.priceRange = [0, 50];
     this.selected = false;
     this.showDate = false;
@@ -493,14 +491,12 @@ export class HomeComponent implements OnInit {
               }
             }
           } else {
-            console.log(this.endRecord,this.loadMore);
+            console.log(this.endRecord, this.loadMore);
             if (this.loadMore === false && this.endRecord === false) {
-              //if (this.events.length > 10) {
-                this.loadMore = true;
-                this.smallLoader.show();
-                this.params.page++;
-                this.getTrending();
-              //}
+              this.loadMore = true;
+              this.smallLoader.show();
+              this.params.page++;
+              this.getTrending();
             }
           }
         }
