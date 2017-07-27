@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
     when: '',
     lat: this.lat,
     long: this.lng,
-    radius: any,
+    radius: '',
     price: ''
   };
   private eventCate: any[] = [];
@@ -160,6 +160,7 @@ export class HomeComponent implements OnInit {
         event.selected = true;
         this.eventCate.push(event.tid);
       }
+      console.log(this.eventCate);
       this.selected = event.tid;
       this.params.tid = this.eventCate.join(',');
     }
