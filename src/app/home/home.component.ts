@@ -200,6 +200,7 @@ export class HomeComponent implements OnInit {
     this.params.time = '';
     this.params.price = '';
     this.params.order = '';
+    this.params.when='';
     this.selected = 'all';
     this.getTrending();
   }
