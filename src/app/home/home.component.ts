@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   public drawCategories: any[];
   public date: { year: number, month: number };
   public options: any = {
-    locale: {format: 'YYYY-MM-DD'},
+    locale: {format: 'MMMM D, YYYY'},
     alwaysShowCalendars: false,
   };
   public shownotfound: boolean = false;
@@ -291,7 +291,6 @@ export class HomeComponent implements OnInit {
   }
 
   public selectedDate(value: any) {
-    this.onClearForm();
     this.markers = [];
     this.events = [];
     this.params.page = 0;
