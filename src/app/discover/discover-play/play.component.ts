@@ -110,7 +110,7 @@ export class PlayComponent implements OnInit {
     });
     //console.log(this.is)
     this.sortBy = [
-      {id: 'all', name: 'Sort By'},
+      {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
       {id: 'reviews', name: 'Number of reviews'},
       {id: 'views', name: 'Popularity (Pageviews)'},
