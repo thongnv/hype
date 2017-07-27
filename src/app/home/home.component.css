@@ -942,6 +942,8 @@ ul.mentioned-item {
 }
 .mentioned {
   width: 86px;
+  float: left;
+  clear: left;
 }
 
 ul.mentioned-item {
