@@ -475,6 +475,7 @@ export class EatComponent implements OnInit {
     let cuisine = new Array();
     let best = new Array();
     let type = new Array();
+    let rate:any;
     if (this.cuisine) {
       for (let j = 0; j < this.cuisine.length; j++) {
         cuisine.push(this.cuisine[j].name);
@@ -507,8 +508,13 @@ export class EatComponent implements OnInit {
     if (this.showBest) {
       this.params.bestfor = best.join(',');
     }
+    if (this.currentRate) {
+      for (let r of this.currentRate) {
+        rate.push(r.star);
+      }
+    }
     if (this.showRate) {
-      this.params.rate = this.currentRate.join(',');
+      this.params.rate = rate.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');

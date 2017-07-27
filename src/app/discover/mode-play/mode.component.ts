@@ -73,7 +73,7 @@ export class ModeComponent implements OnInit {
     price: '',
     activity: '',
     cuisine: '',
-    rate: 0,
+    rate: '',
     bestfor: '',
     types: '',
     order_by: 'Company_Name',
@@ -516,6 +516,7 @@ export class ModeComponent implements OnInit {
     let cuisine = new Array();
     let best = new Array();
     let type = new Array();
+    let rates = new Array();
     if (this.cuisine) {
       for (let j = 0; j < this.cuisine.length; j++) {
         cuisine.push(this.cuisine[j].name);
@@ -540,7 +541,6 @@ export class ModeComponent implements OnInit {
       }
     }
 
-    let rates = new Array();
     if (this.currentRate) {
       for (let rate of this.currentRate) {
         rates.push(rate.star);
@@ -791,7 +791,7 @@ export class ModeComponent implements OnInit {
     this.params.type = '';
     this.params.limit = 20;
     this.params.page = 0;
-    this.params.rate = 0;
+    this.params.rate = '';
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'DESC';
     this.markers = [];
