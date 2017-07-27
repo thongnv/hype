@@ -58,9 +58,9 @@
             </span>
               <div class="clear"></div>
             </li>
-            <li *ngIf="organized">
+            <li *ngIf="organizer">
               <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
-              <span class="info-value">{{organized}}
+              <span class="info-value">{{organizer}}
               </span>
               <div class="clear"></div>
             </li>
@@ -97,6 +97,10 @@
         <div class="detail-event border-bottom clearfix padding-top-30 padding-bottom-35">
           <h4 class="title-detail-event margin-bottom-25">Details</h4>
           <p class="content-detail-event" [innerHTML]="detail"></p>
+
+          <ul class="tags">
+            <li *ngFor="let tag of tags">{{tag}}</li>
+          </ul>
         </div>
         <!-- detail event end -->
 

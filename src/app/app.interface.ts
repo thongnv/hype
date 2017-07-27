@@ -32,17 +32,18 @@ export interface HyloEvent {
   name: string;
   location: Location;
   detail: string;
-  category: {'name': string, 'tid': string};
+  category: { 'name': string, 'tid': string };
   startDate: number;
   endDate: number;
   price: number;
-  organized:string,
+  organizer: string;
   call2action: Call2Action;
   mentions: Icon[];
   images: Image[];
   rating: number;
   userRated: boolean;
   experiences: Experience[];
+  tags: string[];
 }
 
 export interface Location {

@@ -99,15 +99,15 @@
       </div>
       <div *ngIf="showRate" class="text-center">
         <ul class="list-inline">
-          <li *ngFor="let star of [1,2,3,4,5]" style="width: 80px">
-            <div class="checkbox" *ngIf="star == 1">
+          <li *ngFor="let rate of rateData; let index = index" style="width: 80px">
+            <div class="checkbox" *ngIf="rate.star == 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)" class="rateCheckbox"> {{star}} star
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked"> {{rate.star}} star
               </label>
             </div>
-            <div class="checkbox" *ngIf="star != 1">
+            <div class="checkbox" *ngIf="rate.star != 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,star)" class="rateCheckbox"> {{star}} stars
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked"> {{rate.star}} stars
               </label>
             </div>
           </li>

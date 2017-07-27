@@ -31,7 +31,7 @@ export class EventService {
       detail: data.body,
       startDate: data.created * 1000,
       endDate: data.field_event_option.field_end_date_time * 1000,
-      organized: data.field_organized,
+      organizer: data.field_organized,
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
@@ -46,6 +46,7 @@ export class EventService {
       },
       mentions: extractMentions(data.field_event_option.field_mentioned_by),
       rating: data.average_rating,
+      tags: data.field_tags,
       userRated: data.user_vote,
       experiences: extractExperiences(data.comments.data)
     };

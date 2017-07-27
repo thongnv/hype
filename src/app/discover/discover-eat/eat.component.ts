@@ -65,6 +65,7 @@ export class EatComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   private stopped: boolean = false;
+  public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
   public shownotfound: boolean = false;
   private params = {
     type: 'eat',
@@ -148,11 +149,11 @@ export class EatComponent implements OnInit {
                       draggable: true
                     });
                     let searchCenter = mapCenter.getPosition();
-                    let distance = this.getDistance(latLngNew.getPosition(), searchCenter);
+                    let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
                     this.params.lat = this.lat;
                     this.params.long = this.lng;
                     this.params.page=0;
-                    this.params.radius = Math.round(distance / 1000);
+                    this.params.radius = parseFloat((distance / 1000).toFixed(2));
 
 
                     this.mapZoom=15;
@@ -322,14 +323,27 @@ export class EatComponent implements OnInit {
       this.smallLoader.hide();
     });
   }
-  changeCategory() {
+  private categorySelected:any[]=[];
+  private catList:any[]=[];
+  changeCategory(event,item) {
+    if(event){
+      if(item){
+        item.checked=true;
+        this.categorySelected.push(item.name);
+
+      }
+    }else{
+      item.checked=false;
+      let index = this.categorySelected.indexOf(item.name);
+      this.categorySelected.splice(index, 1);
+    }
+
     this.params.limit = 20;
     this.params.page = 0;
     this.markers = [];
     this.items = [];
-
+    this.params.kind=this.categorySelected.join(',');
     this.smallLoader.show();
-    this.params.kind = this.filterCategory.value.filterCategory;
     this.getDataModes();
   }
 
@@ -461,6 +475,7 @@ export class EatComponent implements OnInit {
     let cuisine = new Array();
     let best = new Array();
     let type = new Array();
+    let rate:any;
     if (this.cuisine) {
       for (let j = 0; j < this.cuisine.length; j++) {
         cuisine.push(this.cuisine[j].name);
@@ -493,8 +508,13 @@ export class EatComponent implements OnInit {
     if (this.showBest) {
       this.params.bestfor = best.join(',');
     }
+    if (this.currentRate) {
+      for (let r of this.currentRate) {
+        rate.push(r.star);
+      }
+    }
     if (this.showRate) {
-      this.params.rate = this.currentRate.join(',');
+      this.params.rate = rate.join(',');
     }
     if (this.type) {
       this.params.kind = type.join(',');
@@ -699,18 +719,24 @@ export class EatComponent implements OnInit {
       }
     }
 
-    if (this.type) {
+    if (this.type.length > 0) {
       for (let i = 0; i < this.type.length; i++) {
-        this.type[i].checked = false;
-        if (this.type[i].sub) {
-          for (let j = 0; j < this.type[i].sub.length; j++) {
-            this.type[i].sub[j].checked = false;
+        if(this.type[i].checked) {
+          this.type[i].checked = false;
+          if (this.type[i].sub) {
+            for (let j = 0; j < this.type[i].sub.length; j++) {
+              this.type[i].sub[j].checked = false;
+            }
           }
         }
       }
     }
 
-
+    if(this.currentRate){
+      for(let i = 0; i < this.currentRate.length; i ++){
+        this.currentRate[i].checked=false;
+      }
+    }
 
     this.cuisine = [];
     this.best = [];
@@ -825,9 +851,11 @@ export class EatComponent implements OnInit {
   }
   public rateCheckbox(event,rate){
     if (event) {
+      rate.checked=true;
       this.currentRate.push(rate);
     } else {
-      var index = this.currentRate.indexOf(rate);
+      rate.checked=false;
+      let index = this.currentRate.indexOf(rate);
       this.currentRate.splice(index, 1);
     }
   }
@@ -847,6 +875,7 @@ export class EatComponent implements OnInit {
     this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
+    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
