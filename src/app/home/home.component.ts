@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   public drawCategories: any[];
   public date: { year: number, month: number };
   public options: any = {
-    locale: {format: 'MMMM D, YYYY'},
+    locale: {format: 'D MMMM YYYY'},
     alwaysShowCalendars: false,
   };
   public shownotfound: boolean = false;
