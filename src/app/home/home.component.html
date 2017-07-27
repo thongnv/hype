@@ -54,7 +54,6 @@
              (selected)="selectedDate($event)">
     </div>
   </div>
-  <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
   <div class="clear"></div>
   <div id="v-scrollable" class="section v-scrollable">
     <div *ngFor="let item of events; let i = index;trackBy:item?.nid"

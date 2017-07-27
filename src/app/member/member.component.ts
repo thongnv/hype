@@ -7,7 +7,7 @@ import { User } from '../app.interface';
 import { UserService } from '../services/user.service';
 import { AppSetting } from '../app.setting';
 import { WindowUtilService } from '../services/window-ultil.service';
-import { NotificationsService } from 'angular2-notifications/dist';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-member',

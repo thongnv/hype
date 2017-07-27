@@ -5,7 +5,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
-import { NotificationsService } from 'angular2-notifications/dist';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-interest',
