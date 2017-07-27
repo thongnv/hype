@@ -20,6 +20,7 @@ export class AppSetting {
   public static NODE_SERVER = NODE_JS;
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
   public static API_CATEGORIES_EVENT = API_ENDPOINT + 'api/v1/category/event/?_format=json';
+  public static API_TAGS_EVENT = API_ENDPOINT + 'api/v1/category/tags/?_format=json';
   public static API_ENDPOINT_LIKE = API_ENDPOINT + 'api/user/flag/bookmark?_format=json';
   public static API_ENDPOINT_CAT_MODE = API_ENDPOINT + 'api/v1/category/mode?_format=json';
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';

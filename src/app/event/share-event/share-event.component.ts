@@ -24,6 +24,7 @@ export class ShareEventComponent implements OnInit {
     eventName: ['', Validators.required],
     eventDetail: ['', Validators.required],
     eventCategory: ['', Validators.required],
+    eventTags: ['', Validators.required],
     eventPlace: this.fb.group({
       place: ['', Validators.required],
       lat: ['', Validators.required],
@@ -43,6 +44,7 @@ export class ShareEventComponent implements OnInit {
   public user: any;
   public previewData: any;
   public categories: any[];
+  public tags: any[];
   public previewUrl: any[] = [];
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -65,6 +67,8 @@ export class ShareEventComponent implements OnInit {
   public submitted: boolean = false;
   public layoutWidth: number;
   public innerWidth: number;
+  public eventTags = [];
+  public checkTags = [];
 
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
@@ -98,6 +102,12 @@ export class ShareEventComponent implements OnInit {
     this.eventService.getCategoryEvent().subscribe(
       (response: any) => {
         this.categories = response.data;
+        this.loaderService.hide();
+      }
+    );
+    this.eventService.getTagsEvent().subscribe(
+      (response: any) => {
+        this.tags = response.data;
         this.loaderService.hide();
       }
     );
@@ -229,6 +239,7 @@ export class ShareEventComponent implements OnInit {
   public onSubmit(): void {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
+    event.eventTags = this.processTags(event.eventTags);
     event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
@@ -247,6 +258,7 @@ export class ShareEventComponent implements OnInit {
 
   public onPreview() {
     let event = this.eventForm.value;
+    event.eventTags = this.processTags(event.eventTags);
     event.eventImages = this.previewUrl;
     event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
@@ -307,6 +319,22 @@ export class ShareEventComponent implements OnInit {
 
     };
   }
+
+  private processTags(tags) {
+    for (let tag of tags) {
+      let addTag = this.tags.filter(
+        (term) => term.name === tag
+      );
+      if (!addTag[0]) {
+        addTag[0] = {
+          tid: -1,
+          name: tag
+        };
+      }
+      this.checkTags.push(addTag[0]);
+    }
+    return this.checkTags;
+  }
 }
 
 function mapEvent(event) {
@@ -316,6 +344,7 @@ function mapEvent(event) {
     created: event.startDate,
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
+    field_event_tags: event.eventTags,
     field_organized: event.eventOrganized,
     field_location_place: [{
       field_latitude: event.eventPlace.lat,

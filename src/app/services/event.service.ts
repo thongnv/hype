@@ -31,7 +31,7 @@ export class EventService {
       detail: data.body,
       startDate: data.created * 1000,
       endDate: data.field_event_option.field_end_date_time * 1000,
-      organized: data.field_organized,
+      organizer: data.field_organized,
       category: data.field_category,
       location: {
         name: data.field_location_place.field_location_address,
@@ -46,6 +46,7 @@ export class EventService {
       },
       mentions: extractMentions(data.field_event_option.field_mentioned_by),
       rating: data.average_rating,
+      tags: data.field_tags,
       userRated: data.user_vote,
       experiences: extractExperiences(data.comments.data)
     };
@@ -108,6 +109,26 @@ export class EventService {
     let options = new RequestOptions({headers, withCredentials: true});
     return this._http.get(
       AppSetting.API_CATEGORIES_EVENT, options
+    )
+      .map((res: Response) => {
+        return res.json();
+      })
+      .catch((error: any) => {
+        if (error.status === 404) {
+          this.router.navigate(['404'], {skipLocationChange: true}).then();
+        }
+        if (error.status === 500) {
+          this.router.navigate(['500'], {skipLocationChange: true}).then();
+        }
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getTagsEvent(): Observable<any> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.get(
+      AppSetting.API_TAGS_EVENT, options
     )
       .map((res: Response) => {
         return res.json();
