@@ -138,10 +138,10 @@
       </li>
       <li *ngIf="!user.isAnonymous" class="pull-right nav-item add-event-button">
         <div class="user-option map-option create-option pull-right" ngbDropdown>
-          <a class="dropdown-toggle" id="drop4" role="button" aria-haspopup="true" aria-expanded="false"
+          <a class="head_create_btn" id="drop4" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
             CREATE
-            <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
+            <i class="icon-down-left-navbar sprite sprite-plus-black"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop4">
             <li [routerLink]="['/curate/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

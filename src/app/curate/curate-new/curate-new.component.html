@@ -149,13 +149,13 @@
           <ng-container *ngIf="plc?.keyword">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
-              <strong class="place-name">{{plc.place}}</strong>
+              <strong class="place-name">{{plc.keyword}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
             <div *ngIf="plc.image.url" class="place-item-img">
               <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
             </div>
-            <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
+            <p class="place-item-description" [innerHtml]="plc.description"></p>
           </ng-container>
         </div>
       </ng-container>

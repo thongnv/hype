@@ -490,68 +490,74 @@
     background-position: 0 -3023px;
 }
 
+.sprite-plus-black {
+    width: 16px;
+    height: 16px;
+    background-position: 0 -3043px;
+}
+
 .sprite-r {
     width: 44px;
     height: 44px;
-    background-position: 0 -3043px;
+    background-position: 0 -3059px;
 }
 
 .sprite-r_2x {
     width: 88px;
     height: 88px;
-    background-position: 0 -3087px;
+    background-position: 0 -3103px;
 }
 
 .sprite-r_3x {
     width: 132px;
     height: 132px;
-    background-position: 0 -3175px;
+    background-position: 0 -3191px;
 }
 
 .sprite-small-star {
     width: 19px;
     height: 18px;
-    background-position: 0 -3307px;
+    background-position: 0 -3323px;
 }
 
 .sprite-small-star-selected {
     width: 19px;
     height: 18px;
-    background-position: 0 -3325px;
+    background-position: 0 -3341px;
 }
 
 .sprite-small-star-selected_2x {
     width: 38px;
     height: 36px;
-    background-position: 0 -3343px;
+    background-position: 0 -3359px;
 }
 
 .sprite-small-star-selected_3x {
     width: 57px;
     height: 54px;
-    background-position: 0 -3379px;
+    background-position: 0 -3395px;
 }
 
 .sprite-small-star_2x {
     width: 38px;
     height: 36px;
-    background-position: 0 -3433px;
+    background-position: 0 -3449px;
 }
 
 .sprite-small-star_3x {
     width: 57px;
     height: 54px;
-    background-position: 0 -3469px;
+    background-position: 0 -3485px;
 }
 
 .sprite-tag {
     width: 20px;
     height: 20px;
-    background-position: 0 -3523px;
+    background-position: 0 -3539px;
 }
 
 .sprite-time_icon_grey {
     width: 20px;
     height: 20px;
-    background-position: 0 -3543px;
+    background-position: 0 -3559px;
 }
