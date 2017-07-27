@@ -160,7 +160,7 @@
   <div class="clearfix"></div>
 
   <div id="v-scrollable" class="section v-scrollable">
-    <div class="items" *ngFor="let item of items; let index = 'index'"
+    <div class="items" *ngFor="let item of items; let index = 'index';trackBy:item?.Ids_no"
          [ngStyle]="{'transition': 'ease-in 15s'}" id="v{{index}}">
       <div class="list-items">
         <div class="avatar">
