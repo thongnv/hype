@@ -210,7 +210,7 @@ export class EatComponent implements OnInit {
       $(window).scroll(() => {
         //load more data
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.loadMore == false && this.end_record == false) {
+          if (this.loadMore == false && this.end_record == false && this.total > 10) {
             this.loadMore = true;
             this.params.page = this.params.page + 1;
             this.getDataModes();
@@ -385,7 +385,6 @@ export class EatComponent implements OnInit {
   }
 
   private initMap() {
-    if (this.items) {
       this.currentHighlightedMarker = 0;
       this.mapsAPILoader.load().then(() => {
         for (let i = 0; i < this.items.length; i++) {
@@ -426,7 +425,6 @@ export class EatComponent implements OnInit {
           }
         }
       });
-    }
   }
 
   private getDistance(p1, p2) {
@@ -888,7 +886,7 @@ export class EatComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;

@@ -882,7 +882,7 @@ export class PlayComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
