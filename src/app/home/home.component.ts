@@ -188,6 +188,12 @@ export class HomeComponent implements OnInit {
     this.selectedEventFilter = this.eventFilter[0];
     this.markers = [];
     this.events = [];
+    if (this.categories) {
+      for (let i = 0; i < this.categories.length; i++) {
+        this.categories[i].selected = false;
+      }
+    }
+    this.eventCate=[];
     this.priceRange = [0, 50];
     this.selected = false;
     this.showDate = false;
@@ -531,13 +537,14 @@ export class HomeComponent implements OnInit {
               }
             }
           } else {
+            console.log(this.endRecord,this.loadMore);
             if (this.loadMore === false && this.endRecord === false) {
-              if (this.events.length > 10) {
+              //if (this.events.length > 10) {
                 this.loadMore = true;
                 this.smallLoader.show();
                 this.params.page++;
                 this.getTrending();
-              }
+              //}
             }
 
           }
@@ -624,8 +631,8 @@ export class HomeComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.loadMore = true;
-        this.endRecord = true;
+        this.loadMore = false;
+        this.endRecord = false;
         this.loaderService.hide();
         this.smallLoader.hide();
       });
