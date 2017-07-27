@@ -76,6 +76,11 @@ body, html {
   margin-right: 0 !important;
 }
 
+.col-left {
+  height: 100vh;
+  border-right: 1px solid #eaeaea;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -165,15 +170,15 @@ body, html {
     bottom: 0;
     background: #fff;
   }
-  .list-header .label-sort{
+  .list-header .label-sort {
     float: left;
     font-weight: 300;
   }
-  .list-header .dropdown a{
+  .list-header .dropdown a {
     margin-left: 20px;
     font-weight: 300;
   }
-  .list-header .dropdown a:hover{
+  .list-header .dropdown a:hover {
     text-decoration: none;
   }
   .list-tap {
@@ -925,7 +930,7 @@ body, html {
   #notifications {
     left: unset;
     width: 360px;
-    top: 95%;
+    top: 100%;
     right: -25px;
   }
   ul#notifications li:first-child {
@@ -1372,7 +1377,6 @@ body, html {
       margin-top: 20px;
     }
 
-
     .navbar-brand {
       padding-left: 5px;
     }
@@ -1520,8 +1524,6 @@ body, html {
       width: 100%;
       display: block;
     }
-
-
 
     .frame_nav, .frame_left, .frame-right {
       display: block !important;

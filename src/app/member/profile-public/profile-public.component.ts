@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import $ from 'jquery';
 import { Title } from '@angular/platform-browser';
+import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
   selector: 'app-profile-public',
@@ -34,6 +35,8 @@ export class ProfilePublicComponent implements OnInit {
   public articles = [];
   public events = [];
   public places = [];
+  public layoutWidth: number;
+  public innerWidth: number;
   private eventPageNum: number = 0;
   private articlePageNum: number = 0;
   private articleIndex = 0;
@@ -45,7 +48,8 @@ export class ProfilePublicComponent implements OnInit {
               private userService: UserService,
               private smallLoader: SmallLoaderService,
               private localStorageService: LocalStorageService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
@@ -100,6 +104,13 @@ export class ProfilePublicComponent implements OnInit {
 
   public p() {
     // TODO;
+  }
+
+  public onResize(event): void {
+    console.log(event);
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    let navBarWidth = 181;
+    this.layoutWidth = this.windowRef.rootContainer.width - navBarWidth;
   }
 
   public next() {

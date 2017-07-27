@@ -474,7 +474,7 @@ export class EatComponent implements OnInit {
     let cuisine = new Array();
     let best = new Array();
     let type = new Array();
-    let rate:any;
+    let rate = new Array();
     if (this.cuisine) {
       for (let j = 0; j < this.cuisine.length; j++) {
         cuisine.push(this.cuisine[j].name);

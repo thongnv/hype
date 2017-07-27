@@ -181,7 +181,7 @@
         <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
           Share
         </button>
-        <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
+        <button type="button" class="btn btn-success" [disabled]="eventForm.invalid || previewUrl.length == 0" (click)="onPreview()">Preview</button>
       </div>
       <div class="mobile-footer"></div>
     </form>
