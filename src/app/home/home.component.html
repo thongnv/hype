@@ -92,9 +92,9 @@
             <p class="detail-information"
                [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
           </div>
-          <div class="bottom-content">
-            <h5 class="mentioned" *ngIf="item.field_event_option.field_mentioned_by?.length > 0">Mentioned by</h5>
-            <ul class="mentioned-item" *ngIf="item.field_event_option.field_mentioned_by">
+          <div class="mentioned-by" *ngIf="item.field_event_option.field_mentioned_by?.length">
+            <h5 class="mentioned">Mentioned by</h5>
+            <ul class="mentioned-item">
               <li *ngFor="let ment of item.field_event_option.field_mentioned_by | slice:0:3">
                 <a class="mentioned-item-wrap" href="{{ment}}" target="_blank"><img
                   [src]="'https://www.google.com/s2/favicons?domain='+ment" width="28"
@@ -126,6 +126,8 @@
                 <i class="sprite sprite-icon-add"></i>
               </button>
             </ul>
+          </div>
+          <div class="bottom-content">
             <div class="pull-right comments-item-icon">
               <ul class="list-inline">
                 <li>
@@ -139,6 +141,9 @@
                 </li>
               </ul>
             </div>
+            <ul class="tags">
+              <li *ngFor="let tag of ['Live concert', 'Big event']">{{tag}}</li>
+            </ul>
           </div>
         </div>
         <div class="clear"></div>
@@ -154,8 +159,7 @@
                height="300">
           <div class="caption">
             <div class="article_title_middle">
-            <h3 class="list-item-title" [routerLink]="[item.alias]">{{item.title | truncate :
-              120}}</h3>
+            <h3 class="list-item-title" [routerLink]="[item.alias]">{{item.title | truncate : 120}}</h3>
             <a class="text-capitalize list-item-link" [routerLink]="[item.alias]">read &nbsp;<i
               class="fa fa-angle-right"
               aria-hidden="true"></i></a>
@@ -181,10 +185,9 @@
       [styles]="gMapStyles"
       (centerChange)="centerChange($event)"
       (boundsChange)="boundsChange($event)"
-      [draggable]="true"
-    >
+      [draggable]="true">
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
-                           [circleDraggable]="circleDraggable" [currentRadius]="currentRadius"
+                           [circleDraggable]="circleDraggable"
                            [lat]="lat"
                            (markerClick)="clickedMarker($event)"
                            [lng]="lng"></gmap-geocode-marker>
