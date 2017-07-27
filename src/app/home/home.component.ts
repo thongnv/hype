@@ -322,14 +322,25 @@ export class HomeComponent implements OnInit {
     this.getTrending();
   }
 
-  public showRagePrice() {
-    this.showPrice = true;
-    this.showDate = false;
+  public showRagePrice(showPrice) {
+    if(showPrice){
+      this.showPrice = false;
+      this.showDate = false;
+    }else{
+      this.showPrice = true;
+      this.showDate = false;
+    }
+
   }
 
-  public showWhen() {
-    this.showDate = true;
-    this.showPrice = false;
+  public showWhen(showDate) {
+    if(showDate) {
+      this.showDate = false;
+      this.showPrice = false;
+    }else{
+      this.showDate = true;
+      this.showPrice = false;
+    }
   }
 
   public centerChange(event) {

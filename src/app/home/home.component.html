@@ -34,9 +34,9 @@
     </div>
     <div class="clear"></div>
     <div class="tab-choose-option" *ngIf="selectedEventOrder.name!='top 100'">
-      <a (click)="showRagePrice()" class="price-range">price range <i class="fa fa-angle-down"
+      <a (click)="showRagePrice(showPrice)" class="price-range">price range <i class="fa" [class.fa-angle-up]="showPrice" [class.fa-angle-down]="!showPrice"
                                                                       aria-hidden="true"></i></a>
-      <a (click)="showWhen()" class="when-button">when <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+      <a (click)="showWhen(showDate)" class="when-button">when <i class="fa" [class.fa-angle-up]="showDate" [class.fa-angle-down]="!showDate" aria-hidden="true"></i></a>
       <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
       <div class="clearfix"></div>
       <div *ngIf="showPrice" class="pricePreview">
