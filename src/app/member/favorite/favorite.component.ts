@@ -8,7 +8,7 @@ import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import $ from 'jquery';
 import { WindowUtilService } from '../../services/window-ultil.service';
-import { NotificationsService } from 'angular2-notifications/dist';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-favorite',
@@ -39,11 +39,12 @@ export class FavoriteComponent implements OnInit {
   public ready = false;
   public layoutWidth: number;
   public options = {
-    timeOut: 5000,
+    timeOut: 3000,
     pauseOnHover: false,
     clickToClose: false,
     position: ['bottom', 'right'],
     icons: 'success',
+    showProgressBar: false
   };
 
   private listPageNum: number = 0;
@@ -124,7 +125,6 @@ export class FavoriteComponent implements OnInit {
   }
 
   public onClickDeleteEvent(item: any) {
-    this.smallLoader.show();
     this.userService.unFavoriteEventList(item.slug).subscribe(
       (response) => {
         if (response.status) {

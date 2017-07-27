@@ -46,8 +46,6 @@ export class HomeComponent implements OnInit {
   public msgContent: any = '';
   public showAll: boolean = true;
   public showCircle: boolean = false;
-  public screenWidth: number = 0;
-  public screenHeight: number = 0;
   public circleDraggable: boolean = true;
   public drawCategories: any[];
   public date: { year: number, month: number };
@@ -75,9 +73,10 @@ export class HomeComponent implements OnInit {
     when: '',
     lat: this.lat,
     long: this.lng,
-    radius: '',
+    radius: any,
     price: ''
   };
+  private eventCate: any[] = [];
 
   constructor(private titleService: Title,
               private homeService: HomeService,
@@ -103,7 +102,6 @@ export class HomeComponent implements OnInit {
       {name: 'latest'},
     ];
 
-    this.loaderService.show();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
     }
@@ -111,8 +109,6 @@ export class HomeComponent implements OnInit {
     this.selectedEventOrder = this.eventOrder[0];
     this.selectedEventFilter = this.eventFilter[0];
     this.selected = 'all';
-    this.smallLoader.hide();
-    this.loaderService.hide();
     if (this.selectedEventOrder.name === 'top 100') {
       this.getTrending();
     }
@@ -121,14 +117,6 @@ export class HomeComponent implements OnInit {
       let numCategories = calculateNumCategories();
       this.categories = this.drawCategories.slice(0, numCategories);
     });
-
-    this.screenWidth = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    this.screenHeight = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
 
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -149,15 +137,15 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log(this.windowRef.rootContainer);
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);
   }
-  public eventCate:any[]=[];
+
   public onSelectEventType(event): void {
-    if (event == 'all') {
+    if (event === 'all') {
       this.selected = 'all';
       this.params.tid = '';
       if (this.categories) {
@@ -166,12 +154,12 @@ export class HomeComponent implements OnInit {
         }
       }
     } else {
-      if(event.selected){
-        event.selected=false;
+      if (event.selected) {
+        event.selected = false;
         let index = this.eventCate.indexOf(event.tid);
         this.eventCate.splice(index, 1);
-      }else{
-        event.selected=true;
+      } else {
+        event.selected = true;
         this.eventCate.push(event.tid);
       }
       this.selected = event.tid;
@@ -426,36 +414,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private passerTrending(geo: any) {
-    this.markers = [];
-    this.mapsAPILoader.load().then(() => {
-      for (let i = 0; i < geo.length; i++) {
-        for (let item of geo[i]) {
-          let latlng = item.split(',');
-          if (i === 0) {
-            this.markers.push({
-              lat: parseFloat(latlng[0]),
-              lng: parseFloat(latlng[1]),
-              label: '',
-              opacity: 1,
-              isOpenInfo: true,
-              icon: 'assets/icon/locationmarker.png'
-            });
-          } else {
-            this.markers.push({
-              lat: parseFloat(latlng[0]),
-              lng: parseFloat(latlng[1]),
-              label: '',
-              opacity: 0.4,
-              isOpenInfo: false,
-              icon: 'assets/icon/locationmarker.png'
-            });
-          }
-        }
-      }
-    });
-  }
-
   private passerTop100(events: any) {
     this.currentHighlightedMarker = 0;
 
@@ -465,7 +423,8 @@ export class HomeComponent implements OnInit {
     });
     let searchCenter = mapCenter.getPosition();
 
-    this.mapsAPILoader.load().then(() => {
+    this.mapsAPILoader.load().then(
+      () => {
         for (let i = 0; i < events.length; i++) {
           let latitude: any;
           let longitude: any;
@@ -473,7 +432,6 @@ export class HomeComponent implements OnInit {
             if (typeof events[i].field_location_place.field_latitude !== null) {
               latitude = events[i].field_location_place.field_latitude;
             }
-
             if (typeof events[i].field_location_place.field_longitude !== null) {
               longitude = events[i].field_location_place.field_longitude;
             }
@@ -488,7 +446,6 @@ export class HomeComponent implements OnInit {
                 longitude = events[i].field_location_place[0].field_longitude;
               }
             }
-
           }
 
           let latLngDistance = new google.maps.Marker({
@@ -516,7 +473,6 @@ export class HomeComponent implements OnInit {
               icon: 'assets/icon/locationmarker.png'
             });
           }
-
         }
       }
     );
@@ -546,7 +502,6 @@ export class HomeComponent implements OnInit {
                 this.getTrending();
               //}
             }
-
           }
         }
 
@@ -652,13 +607,6 @@ function getDistance(p1, p2) {
     Math.sin(dLong / 2) * Math.sin(dLong / 2);
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
-}
-
-function sleep(delay) {
-  let start = new Date().getTime();
-  while (new Date().getTime() < start + delay) {
-    // sleep
-  }
 }
 
 function calculateNumCategories(): number {

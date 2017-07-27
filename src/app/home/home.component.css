@@ -214,15 +214,6 @@ button.btn.btn-default.active {
   right: 0;
 }
 
-/*.list-item-title {*/
-/*top: calc(50% - 84px);*/
-/*height: 84px;*/
-/*overflow: hidden;*/
-/*font-size: 30px;*/
-/*font-weight: bold;*/
-/*line-height: 1.4;*/
-/*}*/
-
 .list-item-link * {
   color: #ffffff;
 }
@@ -658,6 +649,23 @@ ul.mentioned-item {
   font-size: 14px;
 }
 
+.tags {
+  list-style: none;
+  padding-left: 0;
+  display: block;
+  float: left;
+  margin-top: 8px;
+}
+
+.tags li {
+  background-color: #ccc;
+  padding: 5px 10px;
+  font-weight: 300;
+  float: left;
+  margin-right: 15px;
+  text-transform: capitalize;
+}
+
 .heart {
   cursor: pointer;
 }
@@ -686,7 +694,7 @@ ul.mentioned-item {
   z-index: 1;
 }
 .list-item .caption {
-  width: 80%;
+  max-width: 80%;
   height: 80%;
   font-family: Roboto, sans-serif;
   font-size: 30px;
@@ -757,6 +765,11 @@ ul.mentioned-item {
 
 .heart-selected {
   color: #ec3d62;
+}
+
+.bottom-content {
+  display: inline-block;
+  width: 100%;
 }
 
 .bottom-content .pull-right .list-inline {
@@ -916,7 +929,9 @@ ul.mentioned-item {
   opacity: 0.4 !important;
 }
 
-.avatar-profile:hover > .avatar-picture img, .article .list-item-overlay:hover + img {
+.avatar-profile:hover > .avatar-picture img,
+.article .list-item-overlay:hover + img,
+.article .caption:hover + img {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);

@@ -7,7 +7,7 @@ import { User } from '../app.interface';
 import { UserService } from '../services/user.service';
 import { AppSetting } from '../app.setting';
 import { WindowUtilService } from '../services/window-ultil.service';
-import { NotificationsService } from 'angular2-notifications/dist';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-member',
@@ -26,11 +26,12 @@ export class MemberComponent implements OnInit {
   public ready = false;
   public layoutWidth: number;
   public options = {
-    timeOut: 5000,
+    timeOut: 3000,
     pauseOnHover: false,
     clickToClose: false,
     position: ['bottom', 'right'],
     icons: 'success',
+    showProgressBar: false
   };
 
   constructor(private route: ActivatedRoute,
