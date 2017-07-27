@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
@@ -36,7 +36,7 @@ export class CurateNewComponent implements OnInit {
   public validateSize: boolean = true;
   public validateType: boolean = true;
   public layoutWidth: number;
-  public innerWidth : number;
+  public innerWidth: number;
 
   public currentHighlightedMarker: number = null;
   public formData = this.formBuilder.group({
@@ -62,8 +62,7 @@ export class CurateNewComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log(this.windowRef.rootContainer);
+  public onResize(event) {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
   }
@@ -100,7 +99,7 @@ export class CurateNewComponent implements OnInit {
       lat: ['', Validators.required],
       lng: ['', Validators.required],
       slug: [''],
-      image: ['', Validators.required]
+      image: ['']
     });
     control.push(placeCtrl);
   }
@@ -194,6 +193,7 @@ export class CurateNewComponent implements OnInit {
   public onPreview() {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrl;
+    console.log(this.previewData); debugger
     this.initMap();
   }
 
@@ -349,9 +349,21 @@ export class CurateNewComponent implements OnInit {
       for (let place of this.previewData.listPlaces) {
         if (place.lat && place.lng) {
           if (index === 0) {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 1, isOpenInfo: true});
+            this.markers.push({
+              lat: place.lat,
+              lng: place.lng,
+              opacity: 1,
+              isOpenInfo: true,
+              icon: 'assets/icon/locationmarker.png'
+            });
           } else {
-            this.markers.push({lat: place.lat, lng: place.lng, opacity: 0.4, isOpenInfo: false});
+            this.markers.push({
+              lat: place.lat,
+              lng: place.lng,
+              opacity: 0.4,
+              isOpenInfo: false,
+              icon: 'assets/icon/locationmarker.png'
+            });
           }
           index++;
         }
