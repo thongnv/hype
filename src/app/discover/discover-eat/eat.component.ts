@@ -74,7 +74,7 @@ export class EatComponent implements OnInit {
     price: '',
     activity: '',
     cuisine: '',
-    rate: 0,
+    rate: '',
     bestfor: '',
     types: '',
     order_by: 'Company_Name',
@@ -82,7 +82,7 @@ export class EatComponent implements OnInit {
     lat: this.lat,
     long: this.lng,
     radius: 0,
-    page: 1,
+    page: 0,
     limit: 20
   };
 
@@ -750,7 +750,7 @@ export class EatComponent implements OnInit {
     this.params.type = 'eat';
     this.params.limit = 20;
     this.params.page = 0;
-    this.params.rate = 0;
+    this.params.rate = '';
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'ASC';
     this.markers = [];
@@ -889,7 +889,7 @@ export class EatComponent implements OnInit {
       let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.page=0;
+      this.params.page = 0;
       this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.getDataModes();

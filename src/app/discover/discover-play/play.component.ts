@@ -74,7 +74,7 @@ export class PlayComponent implements OnInit {
     price: '',
     activity: '',
     cuisine: '',
-    rate: 0,
+    rate: '',
     bestfor: '',
     types: '',
     order_by: 'Company_Name',
@@ -749,7 +749,7 @@ export class PlayComponent implements OnInit {
     this.params.type = 'play';
     this.params.limit = 20;
     this.params.page = 0;
-    this.params.rate = 0;
+    this.params.rate = '0';
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'ASC';
     this.markers = [];
