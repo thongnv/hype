@@ -113,7 +113,7 @@ export class ModeComponent implements OnInit {
     });
     //console.log(this.is)
     this.sortBy = [
-      {id: 'all', name: 'name'},
+      {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
       {id: 'reviews', name: 'Number of reviews'},
       {id: 'views', name: 'Popularity (Pageviews)'},
