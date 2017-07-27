@@ -233,6 +233,22 @@ p.avg-rating {
   font-size: 13px;
 }
 
+.tags {
+  list-style: none;
+  padding-left: 0;
+  display: block;
+  float: left;
+  margin-top: 8px;
+}
+
+.tags li {
+  background-color: #ccc;
+  padding: 5px 10px;
+  font-weight: 300;
+  float: left;
+  margin-right: 15px;
+  text-transform: capitalize;
+}
 /*detail event end*/
 
 /*experience area start*/
