@@ -46,6 +46,7 @@
   cursor: pointer;
   transition: opacity .3s;
   margin: 10px 8px 10px;
+  height: 70px;
 }
 
 .type-events .type-event-item:hover {
@@ -948,6 +949,19 @@ ul.mentioned-item {
 
 ul.mentioned-item {
   padding-left: 20px;
+}
+
+.type-event-name {
+  text-overflow: ellipsis;
+}
+
+.no-result-found {
+  text-align: center;
+  margin: 30px;
+}
+
+.no-result-found a {
+  color: #ec3d62;
 }
 
 @media only screen and (max-width: 1200px) {
