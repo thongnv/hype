@@ -1,4 +1,4 @@
-<article class="new-list column">
+<article class="new-list column" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <!--header start-->
   <header>
     <ul>
@@ -189,9 +189,9 @@
   <!--form wrap end-->
 
   <!--list preview wrap start-->
-  <div class="list-preview-wrap"  [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" [class.hide]="!showPreview" *ngIf="previewData">
+  <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
-      <div class="col-md-7 left-content" >
+      <div class="col-md-7 left-content frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" >
         <div class="event-title">
           <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
@@ -291,7 +291,7 @@
         <div class="mobile-footer"></div>
       </div>
 
-      <div class="col-md-5 right-content">
+      <div class="col-md-5 right-content frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" >
 
         <div class="row">
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
