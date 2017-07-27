@@ -951,6 +951,10 @@ ul.mentioned-item {
   padding-left: 20px;
 }
 
+.type-event-name {
+  text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 1200px) {
   .home-page .left-box {
     padding: 0;
