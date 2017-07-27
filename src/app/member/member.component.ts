@@ -7,6 +7,7 @@ import { User } from '../app.interface';
 import { UserService } from '../services/user.service';
 import { AppSetting } from '../app.setting';
 import { WindowUtilService } from '../services/window-ultil.service';
+import { NotificationsService } from 'angular2-notifications/dist';
 
 @Component({
   selector: 'app-member',
@@ -18,14 +19,19 @@ export class MemberComponent implements OnInit {
   public user = AppSetting.defaultUser;
   public currentUser: User;
   public settingForm = this.formBuilder.group({receiveEmail: true});
-  public alertType = 'danger';
-  public msgContent: string;
   public sub: any;
   public slugName: string;
   public disabled = true;
   public acceptNotification: any;
   public ready = false;
   public layoutWidth: number;
+  public options = {
+    timeOut: 5000,
+    pauseOnHover: false,
+    clickToClose: false,
+    position: ['bottom', 'right'],
+    icons: 'success',
+  };
 
   constructor(private route: ActivatedRoute,
               public formBuilder: FormBuilder,
@@ -33,6 +39,7 @@ export class MemberComponent implements OnInit {
               public userService: UserService,
               private localStorageService: LocalStorageService,
               private router: Router,
+              private notificationsService: NotificationsService,
               private windowRef: WindowUtilService) {
   }
 
@@ -69,7 +76,6 @@ export class MemberComponent implements OnInit {
   }
 
   public onChange(event) {
-    this.msgContent = '';
     if (this.acceptNotification !== this.settingForm.value.receiveEmail) {
       this.acceptNotification = this.settingForm.value.receiveEmail;
       this.disabled = false;
@@ -81,17 +87,25 @@ export class MemberComponent implements OnInit {
     let data = {
       field_notify_email: this.settingForm.value.receiveEmail
     };
+
     this.userService.setProfile(this.user, data).subscribe(
       (resp) => {
         if (resp.status) {
-          this.msgContent = 'Your profile has been successfully updated.';
-          this.alertType = 'success';
+          this.notificationsService.success(
+            'Update Profile',
+            'Your profile has been successfully updated.',
+          );
           this.settingForm.patchValue({
             receiveEmail: data.field_notify_email
           });
         } else {
-          this.alertType = 'danger';
-          this.msgContent = resp.message;
+          this.notificationsService.error(
+            'Update Profile',
+            resp.message,
+            {
+              icons: 'error'
+            }
+          );
         }
       },
       (error) => console.log(error)

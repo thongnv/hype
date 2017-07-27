@@ -35,6 +35,7 @@ import { FacebookModule } from 'ngx-facebook';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { TagInputModule } from 'ngx-chips';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 // modules
 import { HtmlToTextModule } from './html-to-text/html-to-text.module';
@@ -167,6 +168,7 @@ type StoreType = {
     HelperModule,
     Routing,
     NguiDatetimePickerModule,
+    SimpleNotificationsModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAkysiDbFxbIPSuVN4XM4R2YpbGUNzk0CY',
       libraries: ['places', 'geometry']

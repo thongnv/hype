@@ -8,6 +8,7 @@ import { ProfileService } from '../../services/profile.service';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { NotificationsService } from 'angular2-notifications/dist';
 
 @Component({
   selector: 'app-profile-edit',
@@ -42,11 +43,16 @@ export class ProfileEditComponent implements OnInit {
       official: 'Country'
     }
   };
-  public alertType = 'danger';
-  public msgContent: string;
   public slugName: any;
   public ready = false;
   public layoutWidth: number;
+  public options = {
+    timeOut: 5000,
+    pauseOnHover: false,
+    clickToClose: false,
+    position: ['bottom', 'right'],
+    icons: 'success',
+  };
 
   constructor(public fb: FormBuilder,
               private localStorageService: LocalStorageService,
@@ -56,6 +62,7 @@ export class ProfileEditComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private profileService: ProfileService,
+              private notificationsService: NotificationsService,
               private windowRef: WindowUtilService) {
   }
 
@@ -97,7 +104,6 @@ export class ProfileEditComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.msgContent = '';
     if (this.profileForm.valid) {
       let data = {
         field_first_name: this.profileForm.value.firstName,
@@ -121,11 +127,18 @@ export class ProfileEditComponent implements OnInit {
           this.localStorageService.set('user', this.user);
           this.profileService.change(this.user);
           if (resp.status) {
-            this.msgContent = 'Your profile has been successfully updated.';
-            this.alertType = 'success';
+            this.notificationsService.success(
+              'Update Profile',
+              'Your profile has been successfully updated.',
+            );
           } else {
-            this.msgContent = resp.message;
-            this.alertType = 'danger';
+            this.notificationsService.error(
+              'Update Profile',
+              resp.message,
+              {
+                icons: 'error'
+              }
+            );
           }
         },
         (error) => {
