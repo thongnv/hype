@@ -10,15 +10,15 @@ export enum Direction {UNKNOWN, NEXT, PREV}
       <div class="carousel-inner">
         <ng-content></ng-content>
       </div>
-      <a class="left carousel-control" (click)="prev()" [hidden]="!slides.length">
+      <a class="left carousel-control" (click)="prev()" *ngIf="slides.length > 1">
         <span class="glyphicon glyphicon-chevron-left"></span>
       </a>
-      <a class="right carousel-control" (click)="next()" [hidden]="!slides.length">
+      <a class="right carousel-control" (click)="next()" *ngIf="slides.length > 1">
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
     </div>
 
-    <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0" *ngIf="!noThumbnail">
+    <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0" *ngIf="!noThumbnail && slides.length > 1">
       <div class="carousel-inner carousel-indicators" [hidden]="slides.length <= 1">
         <div *ngFor="let s of slides" [class.active]="s.active === true" (click)="select(s)"
              [ngStyle]="{'background-image': 'url(' + carouselSlides[s.index].image + ')'}">

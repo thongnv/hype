@@ -16,9 +16,9 @@
     <div slimScroll (scroll)="onScrollDown($event)" width="auto" height="290px" size="7px"
          [railVisible]="true"
          [touchScrollStep]="75"
-         [railOpacity]="0.1"
-         [railColor]="'#ec3d62'"
-         [color]="'#ec3d62'">
+         [railOpacity]="0.4"
+         [railColor]="'#ddd'"
+         [color]="'#000'">
       <li *ngFor="let notif of notifications.results" [class.has_read]="notif.viewed !== null"
           class="notification-item"
           (click)="onClickItem(notif)">
