@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
     when: '',
     lat: this.lat,
     long: this.lng,
-    radius: any,
+    radius: '',
     price: ''
   };
 
@@ -155,11 +155,16 @@ export class HomeComponent implements OnInit {
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);
   }
-  private eventCate:any[]=[];
+  public eventCate:any[]=[];
   public onSelectEventType(event): void {
-    if (event === 'all') {
+    if (event == 'all') {
       this.selected = 'all';
       this.params.tid = '';
+      if (this.categories) {
+        for (let i = 0; i < this.categories.length; i++) {
+            this.categories[i].selected = false;
+        }
+      }
     } else {
       if(event.selected){
         event.selected=false;
@@ -170,8 +175,8 @@ export class HomeComponent implements OnInit {
         this.eventCate.push(event.tid);
       }
       this.selected = event.tid;
+      this.params.tid = this.eventCate.join(',');
     }
-    this.params.tid = this.eventCate.join(',');
     this.markers = [];
     this.events = [];
     this.params.page = 0;
@@ -317,14 +322,25 @@ export class HomeComponent implements OnInit {
     this.getTrending();
   }
 
-  public showRagePrice() {
-    this.showPrice = true;
-    this.showDate = false;
+  public showRagePrice(showPrice) {
+    if(showPrice){
+      this.showPrice = false;
+      this.showDate = false;
+    }else{
+      this.showPrice = true;
+      this.showDate = false;
+    }
+
   }
 
-  public showWhen() {
-    this.showDate = true;
-    this.showPrice = false;
+  public showWhen(showDate) {
+    if(showDate) {
+      this.showDate = false;
+      this.showPrice = false;
+    }else{
+      this.showDate = true;
+      this.showPrice = false;
+    }
   }
 
   public centerChange(event) {
@@ -498,7 +514,6 @@ export class HomeComponent implements OnInit {
         }
       }
     );
-    console.log(this.events);
   }
 
   private handleScroll() {
@@ -555,9 +570,9 @@ export class HomeComponent implements OnInit {
   }
 
   private getTop100(params) {
+    console.log(params);
     this.homeService.getTop100(params).map((resp) => resp.json()).subscribe(
       (resp) => {
-        console.log(this.events);
         this.total = resp.total;
 
         this.shownotfound = resp.total === 0;

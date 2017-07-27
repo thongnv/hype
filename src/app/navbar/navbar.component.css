@@ -29,9 +29,19 @@
     border: none;
 }
 .map-option .icon-down-left-navbar {
-    margin-left: 10px;
     display: inline-block;
 }
+
+.head_create_btn[_ngcontent-c1] {
+  background: #e6e6e6;
+  border-radius: 5px!important;
+  padding: 5px 10px!important;
+  color: black!important;
+  display: inline-block;
+  height: 33px!important;
+  line-height: 25px!important;
+}
+
 .create-option li{line-height: 25px;}
 .create-option li:hover{
   background: #f5f5f5 !important;}

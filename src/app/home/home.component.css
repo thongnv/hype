@@ -836,8 +836,8 @@ ul.mentioned-item {
 
   .list-item .caption {
     width: auto;
-    top: 1em;
-    left: 1em;
+    top: 10%;
+    left: 10%;
     font-size: 24px;
 
   }
@@ -1023,8 +1023,8 @@ ul.mentioned-item {
 
   .list-item .caption {
     width: auto;
-    top: 2em;
-    left: 2em;
+    top: 10%;
+    left: 10%;
   }
 
   .type-events {
