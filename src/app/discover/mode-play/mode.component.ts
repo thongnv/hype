@@ -67,6 +67,7 @@ export class ModeComponent implements OnInit {
   private stopped: boolean = false;
   public shownotfound: boolean = false;
   public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
+  public labelSort:string="Name";
   private params = {
     type: 'all',
     kind: '',
@@ -112,7 +113,7 @@ export class ModeComponent implements OnInit {
     });
     //console.log(this.is)
     this.sortBy = [
-      {id: 'all', name: 'Sort By'},
+      {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
       {id: 'reviews', name: 'Number of reviews'},
       {id: 'views', name: 'Popularity (Pageviews)'},
@@ -703,8 +704,8 @@ export class ModeComponent implements OnInit {
     }
   }
 
-  public changeSort() {
-
+  public changeSort(id,label) {
+    this.labelSort = label;
     if (this.sortPlace == 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
@@ -727,7 +728,7 @@ export class ModeComponent implements OnInit {
     }
     if (this.sortPlace == 'all') {
       this.params.order_by = 'Company_Name';
-      this.params.order_dir = 'DESC';
+      this.params.order_dir = 'ASC';
     }
     this.params.page = 0;
     this.items = [];
@@ -739,7 +740,7 @@ export class ModeComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.sortPlace = 'all';
+    this.labelSort = 'Name';
     this.totalCuisine = 0;
     this.smallLoader.show();
     this.getDataModes();
@@ -793,7 +794,7 @@ export class ModeComponent implements OnInit {
     this.params.page = 0;
     this.params.rate = '';
     this.params.order_by = 'Company_Name';
-    this.params.order_dir = 'DESC';
+    this.params.order_dir = 'ASC';
     this.markers = [];
     this.items = [];
   }

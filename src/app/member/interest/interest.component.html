@@ -1,3 +1,4 @@
+<simple-notifications [options]="options"></simple-notifications>
 <div class="setting-wrap table-wrap" *ngIf="ready" >
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation [user]="user" [currentUser]="user"></app-member-navigation>
@@ -5,9 +6,6 @@
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
     <section class="form-wrap">
       <h3 class="col-xs-12 setting-title">Your Interests</h3>
-      <div class="col-xs-12">
-        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
-      </div>
       <div *ngIf="interests" class="col-xs-12 no-padding-mobile">
         <div *ngFor="let interest of interests" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 interest-item-wrap">
           <app-interest-item [item] = "interest" ></app-interest-item>

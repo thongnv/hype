@@ -1,3 +1,4 @@
+<simple-notifications [options]="options"></simple-notifications>
 <div class="setting-wrap table-wrap">
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation [user]="user" [currentUser]="currentUser" *ngIf="ready"></app-member-navigation>
@@ -5,9 +6,6 @@
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
     <div class="fav-component">
       <h3 class="favorites-title">Favorites</h3>
-      <div class="col-xs-12 alert-box">
-        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
-      </div>
       <div class="btn-group tab-control">
         <button class="btn btn-default" (click)="onSelectFavoriteType('event')"
                 [class.active]="selectedFavoriteType === 'event'">Events

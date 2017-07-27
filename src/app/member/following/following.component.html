@@ -9,9 +9,6 @@
   <div class="col-xs-12 col-md-8 col-lg-9 col-right table-cell">
     <section *ngIf="currentUser.followings" class="follow-list-wrap">
       <h3 class="col-xs-12 count-follow">{{currentUser.followingNumber}} Following</h3>
-      <div class="col-xs-12">
-        <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
-      </div>
       <div class="infinite-list"
            (scroll)="onFollowScrollDown($event)"
            width="100%"

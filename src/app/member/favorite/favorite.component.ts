@@ -8,6 +8,7 @@ import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import $ from 'jquery';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-favorite',
@@ -16,8 +17,6 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 })
 
 export class FavoriteComponent implements OnInit {
-  public msgContent: any;
-  public alertType: string;
   public user = AppSetting.defaultUser;
   public currentUser: User;
   public favorite: any;
@@ -39,6 +38,15 @@ export class FavoriteComponent implements OnInit {
   public events = [];
   public ready = false;
   public layoutWidth: number;
+  public options = {
+    timeOut: 3000,
+    pauseOnHover: false,
+    clickToClose: false,
+    position: ['bottom', 'right'],
+    icons: 'success',
+    showProgressBar: false
+  };
+
   private listPageNum: number = 0;
   private eventPageNum: number = 0;
   private placePageNum: number = 0;
@@ -50,6 +58,7 @@ export class FavoriteComponent implements OnInit {
                      private route: ActivatedRoute,
                      private localStorageService: LocalStorageService,
                      private smallLoader: SmallLoaderService,
+                     private notificationsService: NotificationsService,
                      private windowRef: WindowUtilService) {
   }
 
@@ -116,7 +125,6 @@ export class FavoriteComponent implements OnInit {
   }
 
   public onClickDeleteEvent(item: any) {
-    this.smallLoader.show();
     this.userService.unFavoriteEventList(item.slug).subscribe(
       (response) => {
         if (response.status) {
@@ -129,12 +137,16 @@ export class FavoriteComponent implements OnInit {
               }
             }
           });
-          this.alertType = 'success';
+          this.notificationsService.success(
+            'Remove favorite',
+            item.title + ' has been removed from your favorites',
+          );
         } else {
-          this.alertType = 'danger';
+          this.notificationsService.error(
+            'Remove favorite',
+            'Can\'nt be removed' + item.title  + 'from your favorites',
+          );
         }
-        this.msgContent = item.title + ' has been removed from your favorites';
-        this.smallLoader.hide();
       }
     );
   }
@@ -153,11 +165,16 @@ export class FavoriteComponent implements OnInit {
               }
             }
           });
-          this.alertType = 'success';
+          this.notificationsService.success(
+            'Remove favorite',
+            item.title + ' has been removed from your favorites',
+          );
         } else {
-          this.alertType = 'danger';
+          this.notificationsService.error(
+            'Remove favorite',
+            'Can\'nt be removed' + item.title  + 'from your favorites',
+          );
         }
-        this.msgContent = item.title + ' has been removed from your favorites';
         this.smallLoader.hide();
       }
     );
@@ -176,11 +193,15 @@ export class FavoriteComponent implements OnInit {
             }
           }
         });
-        this.msgContent = item.company_name + ' has been removed from your favorites.';
-        this.alertType = 'success';
+        this.notificationsService.success(
+          'Remove favorite',
+          item.company_name + ' has been removed from your favorites',
+        );
       } else {
-        this.msgContent = 'Unexpected error occurred, please try again.';
-        this.alertType = 'danger';
+        this.notificationsService.error(
+          'Remove favorite',
+          'Can\'nt be removed' + item.company_name  + 'from your favorites',
+        );
       }
       this.smallLoader.hide();
     });

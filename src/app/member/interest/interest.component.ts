@@ -5,6 +5,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-interest',
@@ -13,20 +14,27 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 })
 
 export class InterestComponent implements OnInit {
-  public msgContent: string;
-  public alertType: string;
   public user: User;
   public interests: any[] = [];
   public sub: any;
   public slugName: any;
   public ready = false;
   public layoutWidth: number;
+  public options = {
+    timeOut: 3000,
+    pauseOnHover: false,
+    clickToClose: false,
+    position: ['bottom', 'right'],
+    icons: 'success',
+    showProgressBar: false
+  };
 
   constructor(private route: ActivatedRoute,
               private router: Router,
               private loaderService: LoaderService,
               private localStorageService: LocalStorageService,
               private userService: UserService,
+              private notificationsService: NotificationsService,
               private windowRef: WindowUtilService) {
   }
 
@@ -64,10 +72,18 @@ export class InterestComponent implements OnInit {
     this.userService.updateInterests(null, this.interests).subscribe(
       (resp) => {
         if (resp.status) {
-          this.alertType = 'success';
-          this.msgContent = 'Your interests has been updated successfully.';
+          this.notificationsService.success(
+            'Update interests',
+            'Your interests has been updated successfully.',
+          );
         } else {
-          this.alertType = 'danger';
+          this.notificationsService.error(
+            'Update interests',
+            resp.message,
+            {
+              icons: 'error'
+            }
+          );
         }
         this.loaderService.hide();
       }

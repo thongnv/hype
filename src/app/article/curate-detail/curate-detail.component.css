@@ -67,13 +67,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: keep-all;
-    padding: 6px 20px 0px;
+    padding: 6px 20px 0;
     font-size: 26px;
     font-weight: bold;
     line-height: 35px;
     text-align: left;
     color: #3b3b3b;
     float: left;
+  width: 81%;
 }
 .place-item-header span.place-detail-btn {
     border: none;

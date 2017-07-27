@@ -144,14 +144,19 @@
   <div class="clearfix"></div>
   <div class="list-header list-header-table">
     <div class="table-cell text-left">
-      <select class="form-control-static" [(ngModel)]="sortPlace" (change)="changeSort()">
-        <option *ngFor="let or of sortBy" [ngValue]="or.id">{{or.name}}</option>
-      </select>
+      <span class="label-sort">Sort by:</span>
+      <div class="dropdown">
+        <div ngbDropdown class="d-inline-block">
+          <a href="javascript:;" id="dropdownSort" ngbDropdownToggle>{{labelSort}} <i class="caret" style="margin-left: 10px"></i></a>
+          <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownSort">
+            <button class="dropdown-item" *ngFor="let or of sortBy" (click)="changeSort(or.id,or.name)">{{or.name}}</button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="table-cell text-right"><span (click)="clearAllFilter()">Clear Filters</span></div>
     <div class="clearfix"></div>
   </div>
-  <app-boostrap-alert *ngIf="msgContent" [type]="alertType" [content]="msgContent"></app-boostrap-alert>
   <div class="clearfix"></div>
 
   <div id="v-scrollable" class="section v-scrollable">

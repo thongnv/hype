@@ -165,7 +165,17 @@ body, html {
     bottom: 0;
     background: #fff;
   }
-
+  .list-header .label-sort{
+    float: left;
+    font-weight: 300;
+  }
+  .list-header .dropdown a{
+    margin-left: 20px;
+    font-weight: 300;
+  }
+  .list-header .dropdown a:hover{
+    text-decoration: none;
+  }
   .list-tap {
     list-style: none;
     padding: 0;
