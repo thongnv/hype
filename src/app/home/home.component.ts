@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit {
   public shownotfound: boolean = false;
   public layoutWidth: number;
   public innerWidth: number;
+  public loading = true;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -71,7 +72,7 @@ export class HomeComponent implements OnInit {
     when: '',
     lat: this.lat,
     long: this.lng,
-    radius: any,
+    radius: '',
     price: ''
   };
   private eventCate: any[] = [];
@@ -160,6 +161,7 @@ export class HomeComponent implements OnInit {
         event.selected = true;
         this.eventCate.push(event.tid);
       }
+      console.log(this.eventCate);
       this.selected = event.tid;
       this.params.tid = this.eventCate.join(',');
     }
@@ -529,6 +531,7 @@ export class HomeComponent implements OnInit {
 
   private getTop100(params) {
     console.log(params);
+    this.loading = true;
     this.homeService.getTop100(params).map((resp) => resp.json()).subscribe(
       (resp) => {
         this.total = resp.total;
@@ -548,6 +551,7 @@ export class HomeComponent implements OnInit {
         this.loaderService.hide();
         this.smallLoader.hide();
         this.zoomChanged = false;
+        this.loading = false;
       },
       (err) => {
         console.log(err);
@@ -557,10 +561,12 @@ export class HomeComponent implements OnInit {
         this.total = 0;
         this.loaderService.hide();
         this.smallLoader.hide();
+        this.loading = false;
       });
   }
 
   private getEvents(params) {
+    this.loading = true;
     this.homeService.getEvents(params).map((response) => response.json()).subscribe(
       (response) => {
         if (this.loadMore) {
@@ -579,6 +585,7 @@ export class HomeComponent implements OnInit {
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
+        this.loading = false;
       },
       (err) => {
         console.log(err);
@@ -586,6 +593,7 @@ export class HomeComponent implements OnInit {
         this.endRecord = false;
         this.loaderService.hide();
         this.smallLoader.hide();
+        this.loading = false;
       });
   }
 }
