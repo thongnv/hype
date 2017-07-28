@@ -94,8 +94,7 @@
                 [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
             </h4>
             <a href="javascript:;" class="location_place" *ngIf="item.field_location_place.field_location_address">{{item.field_location_place.field_location_address}}</a>
-            <p class="detail-information"
-               [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
+            <p class="detail-information" [innerHTML]="item.body | myHtml2Text"></p>
           </div>
           <div class="mentioned-by" *ngIf="item.field_event_option.field_mentioned_by?.length">
             <h5 class="mentioned">Mentioned by</h5>
