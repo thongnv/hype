@@ -338,7 +338,9 @@ input#event-start-date, #event-end-date {
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
   padding: 14px;
 }
-
+.detail-event img{
+  max-width: 100%;
+}
 .list-preview-wrap .col-md-5 .row {
   float: left;
   margin: 20px -10px;
