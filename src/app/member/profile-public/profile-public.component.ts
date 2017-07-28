@@ -26,6 +26,7 @@ export class ProfilePublicComponent implements OnInit {
   public reachedEnd = false;
   public noMoreEvents = false;
   public latestArticles = [];
+  public loading = false;
   public sub: any;
   public slugName: any;
   public followed: boolean = false;
@@ -73,6 +74,7 @@ export class ProfilePublicComponent implements OnInit {
         (error) => console.log(error)
       );
       this.smallLoader.show();
+      this.loading = true;
       this.userService.getArticles(this.slugName).subscribe(
         (response) => {
           this.totalArticles = response.data.length;
@@ -82,6 +84,7 @@ export class ProfilePublicComponent implements OnInit {
             this.reachedEnd = this.totalArticles < 4;
           }
           this.smallLoader.hide();
+          this.loading = false;
         }
       );
       this.userService.getEvents(this.slugName, this.eventPageNum).subscribe(
