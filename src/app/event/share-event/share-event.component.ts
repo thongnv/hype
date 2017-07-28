@@ -240,8 +240,8 @@ export class ShareEventComponent implements OnInit {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
     event.eventTags = this.processTags(event.eventTags);
-    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
-    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
     this.loaderService.show();
     if (!this.submitted) {
@@ -260,8 +260,8 @@ export class ShareEventComponent implements OnInit {
     let event = this.eventForm.value;
     event.eventTags = this.processTags(event.eventTags);
     event.eventImages = this.previewUrl;
-    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
-    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     this.previewData = event;
     this.initPreview();
   }
