@@ -718,7 +718,7 @@ export class EatComponent implements OnInit {
       }
     }
 
-    if (this.type.length > 0) {
+    if (this.type.length) {
       for (let i = 0; i < this.type.length; i++) {
         if(this.type[i].checked) {
           this.type[i].checked = false;
@@ -739,7 +739,7 @@ export class EatComponent implements OnInit {
 
     this.cuisine = [];
     this.best = [];
-    this.type = 'eat';
+    this.type = [];
     this.totalCuisine = 0;
     this.cuisineDraw = [];
     this.currentRate = [];

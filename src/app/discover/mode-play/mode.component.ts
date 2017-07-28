@@ -778,7 +778,11 @@ export class ModeComponent implements OnInit {
         }
       }
     }
-
+    if(this.currentRate){
+      for(let i = 0; i < this.currentRate.length; i ++){
+        this.currentRate[i].checked=false;
+      }
+    }
     this.cuisine = [];
     this.best = [];
     this.type = [];
