@@ -959,6 +959,10 @@ ul.mentioned-item {
   margin: 30px;
 }
 
+.no-result-found h3 {
+  color: gray;
+}
+
 .no-result-found a {
   color: #ec3d62;
 }
