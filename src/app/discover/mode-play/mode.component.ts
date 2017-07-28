@@ -916,7 +916,6 @@ export class ModeComponent implements OnInit {
     });
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
