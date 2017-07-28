@@ -107,6 +107,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               window.clearInterval(interval);
               document.getElementById('createComment').removeAttribute('id');
             }, 200);
+          }else{
+            window.scrollTo(0,0);
           }
         }
       );

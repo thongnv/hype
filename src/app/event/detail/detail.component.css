@@ -200,9 +200,7 @@ p.content-detail-event {
   text-align: left;
   color: #3b3b3b;
 }
-.content-detail-event img{
-  max-width: 100%;
-}
+
 p.name-creator {
   margin: 10px 0;
   font-family: Roboto, sans-serif;
