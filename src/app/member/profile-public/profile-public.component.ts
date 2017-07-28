@@ -43,6 +43,7 @@ export class ProfilePublicComponent implements OnInit {
   private articleIndex = 0;
   private totalArticles: number;
   private eventIndex: number = 0;
+  private articlesPerPage = 3;
 
   constructor(private titleService: Title,
               private loaderService: LoaderService,
@@ -80,8 +81,8 @@ export class ProfilePublicComponent implements OnInit {
           this.totalArticles = response.data.length;
           if (this.totalArticles) {
             this.articles = response.data;
-            this.latestArticles = this.articles.slice(0, 3);
-            this.reachedEnd = this.totalArticles < 4;
+            this.latestArticles = this.articles.slice(0, this.articlesPerPage);
+            this.reachedEnd = this.totalArticles <= this.articlesPerPage;
           }
           this.smallLoader.hide();
           this.loading = false;
@@ -94,6 +95,7 @@ export class ProfilePublicComponent implements OnInit {
           }
         }
       );
+      this.articlesPerPage = calculateArticlesPerPage();
     });
 
     $(window).scroll(() => {
@@ -119,13 +121,13 @@ export class ProfilePublicComponent implements OnInit {
   public next() {
     if (!this.reachedEnd) {
       this.articlePageNum++;
-      this.articleIndex = this.articlePageNum * 3;
+      this.articleIndex = this.articlePageNum * this.articlesPerPage;
       if (this.articleIndex > this.totalArticles) {
         this.articleIndex = this.totalArticles;
       }
       this.reachedFirst = false;
-      this.reachedEnd = this.articleIndex + 3 >= this.totalArticles;
-      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + 3);
+      this.reachedEnd = this.articleIndex + this.articlesPerPage >= this.totalArticles;
+      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + this.articlesPerPage);
       console.log(this.articleIndex);
     }
   }
@@ -133,13 +135,13 @@ export class ProfilePublicComponent implements OnInit {
   public prev() {
     if (!this.reachedFirst) {
       this.articlePageNum--;
-      this.articleIndex = this.articlePageNum * 3;
+      this.articleIndex = this.articlePageNum * this.articlesPerPage;
       this.reachedEnd = false;
       this.reachedFirst = this.articleIndex <= 0;
       if (this.articleIndex < 0) {
         this.articleIndex = 0;
       }
-      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + 3);
+      this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + this.articlesPerPage);
     }
     console.log(this.articleIndex);
   }
@@ -165,4 +167,23 @@ export class ProfilePublicComponent implements OnInit {
       );
     }
   }
+}
+
+function calculateArticlesPerPage(): number {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let numArticles: number;
+  let containerWidth: number;
+  let articleWidth = 225;
+  const navBarWidth = 180;
+  const memberNavWith = 320;
+  const borderWidth = 15;
+  const carouselControlWidth = 40;
+  if (screenWidth > 992) {
+    containerWidth = screenWidth - navBarWidth - memberNavWith - borderWidth - carouselControlWidth;
+  } else {
+    articleWidth = 153;
+    containerWidth = screenWidth - carouselControlWidth;
+  }
+  numArticles = Math.floor(containerWidth / articleWidth);
+  return numArticles;
 }

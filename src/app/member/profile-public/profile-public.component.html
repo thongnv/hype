@@ -29,8 +29,8 @@
                 By: <span class="auth-name">{{art.user_post.name}}</span>
                 <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
               </p>
-              <p class="content-post-news">
-                {{art.body | myHtml2Text | truncate : 60}}
+              <p class="content-post-news detail-information">
+                {{art.body | myHtml2Text}}
               </p>
             </div>
             <div class="clear"></div>
