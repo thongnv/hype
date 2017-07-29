@@ -309,6 +309,7 @@ export class PlayComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
+      this.zoomChanged = false;
       this.initMap(resp.company);
       this.loaderService.hide();
       this.smallLoader.hide();
@@ -375,7 +376,6 @@ export class PlayComponent implements OnInit {
 
   public markerDragEnd($event) {
     if ($event.coords) {
-      console.log('dragEnd', $event);
       //Update center map
       this.lat = $event.coords.lat;
       this.lng = $event.coords.lng;
@@ -874,7 +874,6 @@ export class PlayComponent implements OnInit {
     });
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),

@@ -914,6 +914,8 @@ export class ModeComponent implements OnInit {
         this.mapZoom=14;
       }
     });
+    this.items = [];
+    this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (!this.zoomChanged) {
@@ -928,14 +930,13 @@ export class ModeComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
       this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
-      this.items = [];
-      this.markers = [];
+      this.shownotfound=false;
       this.getDataModes();
     }
   }

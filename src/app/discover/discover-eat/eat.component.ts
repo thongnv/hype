@@ -377,7 +377,6 @@ export class EatComponent implements OnInit {
 
   public markerDragEnd($event) {
     if ($event.coords) {
-      console.log('dragEnd', $event);
       //Update center map
       this.lat = $event.coords.lat;
       this.lng = $event.coords.lng;
@@ -889,8 +888,13 @@ export class EatComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      if(this.params.radius < 0.25){
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      }else{
+        this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+      }
       this.smallLoader.show();
+      this.shownotfound=false;
       this.getDataModes();
     }
   }

@@ -585,6 +585,7 @@ export class HomeComponent implements OnInit {
         this.shownotfound = response.total === 0;
 
         this.passerTop100(this.events);
+        this.zoomChanged=false;
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
