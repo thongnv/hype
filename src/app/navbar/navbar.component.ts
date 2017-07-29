@@ -99,8 +99,14 @@ export class NavbarComponent implements OnInit {
     if (!this.user.isAnonymous) {
       this.socket = io(AppSetting.NODE_SERVER);
       this.socket.on('notification', (data) => {
-        if (data.uid.indexOf(this.user.id)) {
-          this.notifications = data.notifications;
+        let check: boolean = false;
+        for (let receiver of data.data.receivers) {
+          if (this.user.id === receiver.uid) {
+            check = true;
+          }
+        }
+        if (check) {
+          this.notifications.unshift(data.data);
         }
       });
 
@@ -149,35 +155,33 @@ export class NavbarComponent implements OnInit {
   }
 
   public getNotifications() {
-    this.mainService.getNotifications(this.notificationPage).subscribe((resp) => {
+    this.mainService.getNotifications(this.user.id, this.notificationPage).subscribe((resp) => {
       this.notifications = resp.data;
     });
   }
 
   public onMarkAllRead() {
-    this.notifications.results.forEach((notif) => {
-      notif.viewed = 'true';
-    });
-    this.notifications.unread = 0;
-    if (this.notifications.unread > 0) {
-      this.set.loadingInProgress = true;
-    }
-    this.mainService.updateNotifications('all', null).subscribe((resp) => {
-      console.log('resp', resp);
+    // this.notifications.results.forEach((notif) => {
+    //   notif.viewed = 'true';
+    // });
+    // this.notifications.unread = 0;
+    // if (this.notifications.unread > 0) {
+    //   this.set.loadingInProgress = true;
+    // }
+    this.mainService.updateNotifications(this.user.id, null).subscribe((resp) => {
       this.set.loadingInProgress = false;
     });
   }
 
   public onMarkOneRead(item) {
-    item.viewed = true;
-    if (parseInt(this.notifications.unread, 10) > 0) {
-      this.notifications.unread = this.notifications.unread - 1;
-    } else {
-      this.notifications.unread = 0;
-    }
-    this.mainService.updateNotifications('any', item.mid).subscribe((resp) => {
-
-      this.router.navigate([item.link, {notification: item.code}]).then();
+    // item.viewed = true;
+    // if (parseInt(this.notifications.unread, 10) > 0) {
+    //   this.notifications.unread = this.notifications.unread - 1;
+    // } else {
+    //   this.notifications.unread = 0;
+    // }
+    this.mainService.updateNotifications(this.user.id, item._id).subscribe((resp) => {
+      this.router.navigate([item.metadata.link]).then();
     });
   }
 
@@ -186,7 +190,7 @@ export class NavbarComponent implements OnInit {
       this.set.endOfList = false;
       this.set.loadingInProgress = true;
       let count = 0;
-      this.mainService.getNotifications(++this.notificationPage).subscribe((response) => {
+      this.mainService.getNotifications(this.user.id, ++this.notificationPage).subscribe((response) => {
         if (response.data.results.length) {
           response.data.results.forEach((item) => {
             count++;
