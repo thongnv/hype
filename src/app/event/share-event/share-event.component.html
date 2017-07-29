@@ -203,36 +203,36 @@
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
-              <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span>
-              <span class="info-value">{{previewData.eventPlace.place}}</span>
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-location"></i><span>location</span></span>
+              <span class="info-value col-md-7 no-padding-left">{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value">{{previewData.startDate*1000 | date:'dd MMMM y, hh:mm a'}}</span>
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
+              <span class="info-value col-md-7 no-padding-left">{{previewData.startDate*1000 | date:'dd MMMM y, hh:mm a'}}</span>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
               <span class="info-value">{{previewData.endDate*1000 | date:'dd MMMM y, hh:mm a'}}</span>
             </li>
             <li *ngIf="previewData.eventPrice !== ''">
-              <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-tag"></i><span>price range</span></span>
+              <span class="info-value col-md-7 no-padding-left">
                 <span *ngIf="previewData.eventPrice">${{previewData.eventPrice}}</span>
                 <span *ngIf="!previewData.eventPrice">Free</span>
               </span>
             </li>
             <li *ngIf="previewData.call2action?.eventLink">
-              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
               </span>
-              <span class="info-value">
+              <span class="info-value col-md-7 no-padding-left">
               <a href="{{previewData.call2action.eventLink}}" target="_blank" class="mention_link">
                 <span class="action">{{previewData.call2action.eventType == '1' ? 'Buy Tickets' : 'More Detail'}}</span>
               </a>
             </span>
             </li>
             <li *ngIf="previewData.eventOrganized">
-              <span class="info-label"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
-              <span class="info-value">{{previewData.eventOrganized}}
+              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
+              <span class="info-value col-md-7 no-padding-left">{{previewData.eventOrganized}}
               </span>
             </li>
             <li *ngIf="previewData.eventMentions?.length > 1">

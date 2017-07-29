@@ -217,20 +217,19 @@
 <div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="layoutWidth  + 'px'" id="right">
   <div class="box-map" style="position: fixed; width:inherit; height: 500px;">
     <sebm-google-map
-      [latitude]="lat"
-      [longitude]="lng"
-      [zoom]="mapZoom"
-      [disableDefaultUI]="false"
-      [zoomControl]="false"
-      [streetViewControl]="true"
-      [styles]="gMapStyles"
-      (centerChange)="centerChange($event)"
-      (boundsChange)="boundsChange($event)"
-      [mapDraggable]="true"
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="mapZoom"
+        [disableDefaultUI]="false"
+        [zoomControl]="true"
+        [streetViewControl]="true"
+        [styles]="gMapStyles"
+        (centerChange)="centerChange($event)"
+        (boundsChange)="boundsChange($event)"
+        [mapDraggable]="true"
     >
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
-                           [circleDraggable]="circleDraggable"
-                           (radiusChange)="markerRadiusChange($event)" [lat]="lat"
+                           [lat]="lat"
                            (markerClick)="clickedMarker($event)"
                            [lng]="lng"></gmap-geocode-marker>
 

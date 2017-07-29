@@ -63,6 +63,7 @@ import { Num2Array } from './shared/num-to-array.pipe';
 import { CurateListPipe } from './shared/curate-list.pipe';
 import { TripleSlidePipe } from './shared/triple-slide.pipe';
 import { FavoritePipe } from './shared/favorite.pipe';
+import { StringTimeStamp } from './shared/string-2-timestamp.pie';
 
 // components
 import { GmapComponent } from './gmap/gmap.component';
@@ -144,6 +145,7 @@ type StoreType = {
     FavoritePlaceComponent,
     FavoriteEventComponent,
     FavoritePipe,
+    StringTimeStamp,
     NotificationComponent,
     StarVoteComponent,
     LoaderComponent,
