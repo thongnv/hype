@@ -9,7 +9,7 @@ import * as io from 'socket.io-client';
 import { AppSetting } from '../app.setting';
 import { ProfileService } from '../services/profile.service';
 import { User } from '../app.interface';
-import {AppGlobals} from "../services/app.global";
+import { AppGlobals } from '../services/app.global';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +34,8 @@ export class NavbarComponent implements OnInit {
                      private localStorageService: LocalStorageService,
                      private router: Router,
                      private location: Location,
-                     private profileService: ProfileService,private appGlobal:AppGlobals) {
+                     private profileService: ProfileService,
+                     private appGlobal: AppGlobals) {
   }
 
   public ngOnInit() {
@@ -48,43 +49,43 @@ export class NavbarComponent implements OnInit {
     });
     let paramsUrl = this.location.path().split('/');
     if (paramsUrl[1] === 'discover') {
-      switch (paramsUrl[2]){
+      switch (paramsUrl[2]) {
         case 'eat':
-          console.log('paramsUrl',paramsUrl.length);
-          if(paramsUrl.length == 4){
-            this.appGlobal.isLocationAddress.subscribe((res)=>{
-              if(res !='Singapore') {
-                this.selectedMapOption = {id: 0 , name: res};
-              }else{
+          console.log('paramsUrl', paramsUrl.length);
+          if (paramsUrl.length === 4) {
+            this.appGlobal.isLocationAddress.subscribe((res) => {
+              if (res !== 'Singapore') {
+                this.selectedMapOption = {id: 0, name: res};
+              } else {
                 this.selectedMapOption = {id: 0, name: paramsUrl[3].replace('%2B', ' ').replace('%20', ' ')};
               }
             });
-          }else{
+          } else {
             this.selectedMapOption = this.mapOptions[0];
           }
           break;
         case 'play':
-          if(paramsUrl.length == 4 ){
-            this.appGlobal.isLocationAddress.subscribe((res)=>{
-              if(res !='Singapore') {
-                this.selectedMapOption = {id: 0 , name: res};
-              }else{
+          if (paramsUrl.length === 4) {
+            this.appGlobal.isLocationAddress.subscribe((res) => {
+              if (res !== 'Singapore') {
+                this.selectedMapOption = {id: 0, name: res};
+              } else {
                 this.selectedMapOption = {id: 0, name: paramsUrl[3].replace('%2B', ' ').replace('%20', ' ')};
               }
             });
-          }else{
+          } else {
             this.selectedMapOption = this.mapOptions[0];
           }
           break;
         default:
-          this.appGlobal.isLocationAddress.subscribe((res)=>{
-            if(res !='Singapore') {
-              this.selectedMapOption = {id: 0 , name: res};
-            }else{
+          this.appGlobal.isLocationAddress.subscribe((res) => {
+            if (res !== 'Singapore') {
+              this.selectedMapOption = {id: 0, name: res};
+            } else {
               this.selectedMapOption = {id: 0, name: paramsUrl[2].replace('%2B', ' ').replace('%20', ' ')};
             }
           });
-          break
+          break;
       }
     } else {
       this.selectedMapOption = this.mapOptions[0];
@@ -123,19 +124,19 @@ export class NavbarComponent implements OnInit {
     this.appGlobal.setLocationAddress(option.name);
     let paramsUrl = this.location.path().split('/');
     if (paramsUrl[1] === 'discover') {
-      switch (paramsUrl[2]){
+      switch (paramsUrl[2]) {
         case 'eat':
-          this.router.navigate (['/discover/eat/' + option.name.replace (' ' , '+')]).then ();
+          this.router.navigate(['/discover/eat/' + option.name.replace(' ', '+')]).then();
           break;
         case 'play':
-          this.router.navigate (['/discover/play/' + option.name.replace (' ' , '+')]).then ();
+          this.router.navigate(['/discover/play/' + option.name.replace(' ', '+')]).then();
           break;
         default:
-          this.router.navigate (['/discover/' + option.name.replace (' ' , '+')]).then ();
+          this.router.navigate(['/discover/' + option.name.replace(' ', '+')]).then();
           break;
       }
-    }else {
-      this.router.navigate (['/discover/' + option.name.replace (' ' , '+')]).then ();
+    } else {
+      this.router.navigate(['/discover/' + option.name.replace(' ', '+')]).then();
     }
   }
 
@@ -158,12 +159,12 @@ export class NavbarComponent implements OnInit {
       notif.viewed = 'true';
     });
     this.notifications.unread = 0;
-    if(this.notifications.unread > 0){
-      this.set.loadingInProgress =true;
+    if (this.notifications.unread > 0) {
+      this.set.loadingInProgress = true;
     }
     this.mainService.updateNotifications('all', null).subscribe((resp) => {
       console.log('resp', resp);
-      this.set.loadingInProgress =false;
+      this.set.loadingInProgress = false;
     });
   }
 
@@ -176,7 +177,7 @@ export class NavbarComponent implements OnInit {
     }
     this.mainService.updateNotifications('any', item.mid).subscribe((resp) => {
 
-      this.router.navigate([item.link,{notification:item.code}]).then();
+      this.router.navigate([item.link, {notification: item.code}]).then();
     });
   }
 

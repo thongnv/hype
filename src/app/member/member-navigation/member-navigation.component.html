@@ -52,10 +52,10 @@
 <div *ngIf="!isCurrentUser">
   <ul class="member-nav">
     <li [routerLink]="['/' + currentUser.slug]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-5 col-sm-5 col-md-12 col-lg-12 text-ellipsis">@{{currentUser.slug}}
+        class="col-xs-6 col-sm-6 col-md-12 col-lg-12 text-ellipsis">@{{currentUser.slug}}
     </li>
     <li [routerLink]="['/'+currentUser.slug+'/favorite']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-        class="col-xs-3 col-sm-3 col-md-12 col-lg-12 text-ellipsis">Favourites
+        class="col-xs-6 col-sm-6 col-md-12 col-lg-12 text-ellipsis">Favourites
     </li>
   </ul>
 </div>
