@@ -82,8 +82,8 @@ export class PlayComponent implements OnInit {
     lat: this.lat,
     long: this.lng,
     radius: 0,
-    page: 1,
-    limit: 20
+    page: 0,
+    limit: 10
   };
 
   private zoomChanged: boolean = false;
@@ -119,12 +119,12 @@ export class PlayComponent implements OnInit {
     ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-
     this.route.params.subscribe((param) => {
       if (param.location) {
         this.items = [];
         this.markers = [];
         this.mapsAPILoader.load().then(() => {
+          console.log('asdasda');
           if (param.location.replace('+', ' ') != 'Singapore') {
             let geocoder = new google.maps.Geocoder();
             if (geocoder) {
@@ -187,6 +187,7 @@ export class PlayComponent implements OnInit {
 
       }
     });
+    window.scroll(0,0);
   }
 
   public ngOnInit() {
@@ -213,6 +214,7 @@ export class PlayComponent implements OnInit {
           if (this.loadMore == false && this.end_record == false) {
             this.loadMore = true;
             this.params.page = this.params.page + 1;
+            console.log('ccvxvx');
             this.getDataModes();
           }
 
@@ -289,18 +291,20 @@ export class PlayComponent implements OnInit {
       this.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.getDataModes();
+      //this.getDataModes();
     }
 
   }
 
   getDataModes() {
     let params = this.params;
-    console.log(params);
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.loadMore = false;
       this.total = resp.total;
-
+      if(this.loadMore){
+        this.items = this.items.concat(resp.company);
+      }else{
+        this.items = resp.company;
+      }
       if (resp.total === 0) {
         this.shownotfound = true;
       }else{
@@ -309,8 +313,8 @@ export class PlayComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
-      this.zoomChanged = false;
-      this.initMap(resp.company);
+      this.loadMore = false;
+      this.initMap();
       this.loaderService.hide();
       this.smallLoader.hide();
 
@@ -394,44 +398,34 @@ export class PlayComponent implements OnInit {
     this.getDataModes();
   }
 
-  private initMap(companies: any) {
-    if (companies) {
+  private initMap() {
       this.currentHighlightedMarker = 0;
+      if(this.items.length){
       this.mapsAPILoader.load().then(() => {
-        for (let i = 0; i < companies.length; i++) {
-          if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
+        for (let i = 0; i < this.items.length; i++) {
+          if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
 
-            let lat = companies[i].YP_Address[6].split('/');
-            let lng = companies[i].YP_Address[5].split('/');
-            let distance = companies[i]._dict_;
+            let lat = this.items[i].YP_Address[6].split('/');
+            let lng = this.items[i].YP_Address[5].split('/');
+            let distance = this.items[i]._dict_;
 
               if(distance) {
-                companies[i].distance = (distance).toFixed(1);
+                this.items[i].distance = (distance).toFixed(1);
               }
-              this.items.push(companies[i]);
-              if (i == 0) {
-                this.markers.push({
-                  lat: parseFloat(lat[1]),
-                  lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
-                  opacity: 1,
-                  isOpenInfo: false,
-                  icon: 'assets/icon/locationmarker.png'
-                });
-              } else {
-                this.markers.push({
-                  lat: parseFloat(lat[1]),
-                  lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
-                  opacity: 0.4,
-                  isOpenInfo: false,
-                  icon: 'assets/icon/locationmarker.png'
-                });
-              }
+              this.markers.push({
+                lat: parseFloat(lat[1]),
+                lng: parseFloat(lng[1]),
+                label: this.items[i].Company_Name,
+                opacity: 0.4,
+                isOpenInfo: false,
+                icon: 'assets/icon/locationmarker.png'
+              });
           }
         }
+        sleep(50);
+        this.zoomChanged = false;
       });
-    }
+      }
   }
 
   private getDistance(p1, p2) {
@@ -894,6 +888,7 @@ export class PlayComponent implements OnInit {
       this.smallLoader.show();
       this.items = [];
       this.markers = [];
+      this.shownotfound=false;
       this.getDataModes();
     }
   }

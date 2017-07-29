@@ -119,7 +119,7 @@ export class EatComponent implements OnInit {
     ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-
+    window.scroll(0,0);
     this.route.params.subscribe((param) => {
       if (param.location) {
         this.items = [];
@@ -297,9 +297,13 @@ export class EatComponent implements OnInit {
   getDataModes() {
     let params = this.params;
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.loadMore = false;
-      this.total = resp.total;
 
+      this.total = resp.total;
+      if(this.loadMore){
+        this.items = this.items.concat(resp.company);
+      }else{
+        this.items = resp.company;
+      }
       if (resp.total === 0) {
         this.shownotfound = true;
       }else{
@@ -309,8 +313,7 @@ export class EatComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
-      this.items = resp.company;
-      this.zoomChanged = false;
+      this.loadMore = false;
       this.initMap();
       this.loaderService.hide();
       this.smallLoader.hide();
@@ -402,16 +405,7 @@ export class EatComponent implements OnInit {
               if(distance) {
                 this.items[i].distance = (distance).toFixed(1);
               }
-              if (i == 0) {
-                this.markers.push({
-                  lat: parseFloat(lat[1]),
-                  lng: parseFloat(lng[1]),
-                  label: this.items[i].Company_Name,
-                  opacity: 1,
-                  isOpenInfo: false,
-                  icon: 'assets/icon/locationmarker.png'
-                });
-              } else {
+
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
@@ -420,9 +414,11 @@ export class EatComponent implements OnInit {
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
                 });
-              }
+
           }
         }
+        sleep(50);
+        this.zoomChanged=false;
       });
   }
 

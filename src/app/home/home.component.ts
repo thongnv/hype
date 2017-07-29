@@ -87,6 +87,7 @@ export class HomeComponent implements OnInit {
               private route: Router,
               private location: Location,
               private windowRef: WindowUtilService) {
+    window.scroll(0,0);
   }
 
   public ngOnInit() {
@@ -417,7 +418,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private passerTop100(events: any) {
+  private passerTop100() {
     this.currentHighlightedMarker = 0;
 
     let mapCenter = new google.maps.Marker({
@@ -428,25 +429,25 @@ export class HomeComponent implements OnInit {
 
     this.mapsAPILoader.load().then(
       () => {
-        for (let i = 0; i < events.length; i++) {
+        for (let i = 0; i < this.events.length; i++) {
           let latitude: any;
           let longitude: any;
-          if (events[i].type === 'event') {
-            if (typeof events[i].field_location_place.field_latitude !== null) {
-              latitude = events[i].field_location_place.field_latitude;
+          if (this.events[i].type === 'event') {
+            if (typeof this.events[i].field_location_place.field_latitude !== null) {
+              latitude = this.events[i].field_location_place.field_latitude;
             }
-            if (typeof events[i].field_location_place.field_longitude !== null) {
-              longitude = events[i].field_location_place.field_longitude;
+            if (typeof this.events[i].field_location_place.field_longitude !== null) {
+              longitude = this.events[i].field_location_place.field_longitude;
             }
           }
-          if (events[i].type === 'article') {
-            if (events[i].field_location_place.length > 0) {
+          if (this.events[i].type === 'article') {
+            if (this.events[i].field_location_place.length > 0) {
 
-              if (typeof events[i].field_location_place[0].field_latitude !== null) {
-                latitude = events[i].field_location_place[0].field_latitude;
+              if (typeof this.events[i].field_location_place[0].field_latitude !== null) {
+                latitude = this.events[i].field_location_place[0].field_latitude;
               }
-              if (typeof events[i].field_location_place[0].field_longitude !== null) {
-                longitude = events[i].field_location_place[0].field_longitude;
+              if (typeof this.events[i].field_location_place[0].field_longitude !== null) {
+                longitude = this.events[i].field_location_place[0].field_longitude;
               }
             }
           }
@@ -461,7 +462,7 @@ export class HomeComponent implements OnInit {
             this.markers.push({
               lat: latitude,
               lng: longitude,
-              label: events[i].title,
+              label: this.events[i].title,
               opacity: 1,
               isOpenInfo: true,
               icon: 'assets/icon/locationmarker.png'
@@ -470,13 +471,15 @@ export class HomeComponent implements OnInit {
             this.markers.push({
               lat: latitude,
               lng: longitude,
-              label: events[i].title,
+              label: this.events[i].title,
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png'
             });
           }
         }
+        sleep(50);
+        this.zoomChanged = false;
       }
     );
   }
@@ -549,11 +552,10 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
-        this.passerTop100(this.events);
+        this.passerTop100();
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
-        this.zoomChanged = false;
         this.loading = false;
       },
       (err) => {
@@ -584,8 +586,7 @@ export class HomeComponent implements OnInit {
 
         this.shownotfound = response.total === 0;
 
-        this.passerTop100(this.events);
-        this.zoomChanged=false;
+        this.passerTop100();
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
