@@ -383,7 +383,7 @@ input#event-start-date, #event-end-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  margin-right: 40px;
+  /*margin-right: 40px;*/
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -404,7 +404,9 @@ input#event-start-date, #event-end-date {
   text-align: left;
   color: #3b3b3b;
   display: block;
-  padding-left: 40%;
+}
+.no-padding-left{
+  padding-left: 0px !important;
 }
 
 /*.left-content-information-event > li > span {*/
@@ -631,6 +633,7 @@ span.dollar-character {
 
   .left-content-information-event {
     padding-left: 15px;
+    width: 100%;
   }
 
   .left-content-information-event > li > span {
