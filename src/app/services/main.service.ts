@@ -115,16 +115,14 @@ export class MainService {
       });
   }
 
-  public getNotifications(page: number): Observable<any> {
+  public getNotifications(user: number, page: number): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
+    // let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let headers = new Headers({'Content-Type': 'application/json'});
+    // let options = new RequestOptions({headers, withCredentials: true});
+    let options = new RequestOptions({headers});
     return this.http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/notify' +
-      '?_format=json' +
-      '&limit=10' +
-      '&page=' + page,
-      options
+      AppSetting.NODE_SERVER + '/api/v1/notification/' + user
     )
       .map((resp) => resp.json())
       .catch((error) => {
@@ -132,14 +130,15 @@ export class MainService {
       });
   }
 
-  public updateNotifications(type: string, mid?: string): Observable<any> {
-    let csrfToken = this.localStorageService.get('csrf_token');
-    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.post(AppSetting.API_ENDPOINT + 'api/v1/notify?_format=json',
-      JSON.stringify({type, mid}), options
-    )
-      .map((resp) => resp.json())
+  public updateNotifications(uid: number, notificationId?: number): Observable<any> {
+    // let csrfToken = this.localStorageService.get('csrf_token');
+    // let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    // let options = new RequestOptions({headers, withCredentials: true});
+    let uri = AppSetting.NODE_SERVER + '/api/v1/notification/' + uid;
+    if (notificationId) {
+      uri = AppSetting.NODE_SERVER + '/api/v1/notification/' + notificationId + '/' + uid;
+    }
+    return this.http.post(uri, '').map((resp) => resp.json())
       .catch((error) => {
         return Observable.throw(new Error(error));
       });
