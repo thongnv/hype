@@ -179,11 +179,20 @@ function calculateArticlesPerPage(): number {
   const borderWidth = 15;
   const carouselControlWidth = 40;
   if (screenWidth > 992) {
+    if (screenWidth <= 1024) {
+      articleWidth = 175;
+    }
     containerWidth = screenWidth - navBarWidth - memberNavWith - borderWidth - carouselControlWidth;
   } else {
-    articleWidth = 153;
+    if (screenWidth <= 320) {
+      articleWidth = 135;
+    }
+    if (screenWidth <= 768) {
+      articleWidth = 165;
+    }
+
     containerWidth = screenWidth - carouselControlWidth;
   }
-  numArticles = Math.floor(containerWidth / articleWidth);
+  numArticles = Math.round(containerWidth / articleWidth);
   return numArticles;
 }

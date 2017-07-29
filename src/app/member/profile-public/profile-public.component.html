@@ -4,18 +4,18 @@
 
   <div class="row">
 
-    <div class="col-sm-2 col-xs-12 col-md-4 col-lg-3 col-left">
+    <div class="col-sm-2 col-xs-12 col-md-3 col-lg-3 col-left">
       <app-member-navigation
         [user]="user" [currentUser]="currentUser">
       </app-member-navigation>
     </div>
 
-    <div class="col-sm-10 col-xs-12 col-md-8 col-lg-9 col-right">
+    <div class="col-sm-10 col-xs-12 col-md-9 col-lg-9 col-right">
       <div class="lists-wrap">
         <div class="title title-list">My Created Lists</div>
         <app-small-loader *ngIf="loading"></app-small-loader>
         <div *ngIf="latestArticles.length" class="row wrap-post-news carousel slide">
-          <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
+          <div *ngFor="let art of latestArticles" class="col-sm-3 col-md-4 col-xs-6 col-lg-4 post-news article-item">
             <div class="image-post-news" [routerLink]="[art.alias]">
               <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title" width="100%">
             </div>
@@ -42,7 +42,7 @@
             <span class="glyphicon glyphicon-chevron-right"></span>
           </a>
         </div>
-        <div *ngIf="!loading && !latestArticles.length">No lists found</div>
+        <div *ngIf="!loading && !latestArticles.length" class="no-result">No lists found</div>
       </div>
       <div class="events-wrap">
         <div class="title title-event">My Events</div>
@@ -113,7 +113,7 @@
             </div>
             <div class="clear"></div>
           </div>
-          <div *ngIf="!events.length">No events found</div>
+          <div *ngIf="!events.length" class="no-result">No events found</div>
           <!--#sdhkas-->
           <app-small-loader></app-small-loader>
         </div>
