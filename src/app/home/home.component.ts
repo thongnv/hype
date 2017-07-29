@@ -364,11 +364,16 @@ export class HomeComponent implements OnInit {
         let distance: any = getDistance(searchCenter,latLngNew.getPosition());
         this.params.lat = this.lat;
         this.params.long = this.lng;
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        if(this.params.radius < 0.25){
+          this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        }else{
+          this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+        }
         this.smallLoader.show();
         this.events = [];
         this.markers = [];
         this.params.page = 0;
+        this.shownotfound=false;
         this.getTrending();
       }
     }
