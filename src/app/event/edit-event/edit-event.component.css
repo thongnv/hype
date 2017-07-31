@@ -376,7 +376,6 @@ input#event-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  width: 25%;
   margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
