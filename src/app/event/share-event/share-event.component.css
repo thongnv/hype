@@ -2,13 +2,14 @@
 
 .new-list {
   padding: 0;
-  margin-left: 0;
-  display: table;
+  margin-left: 180px;
 }
 
 header {
+  width: 50%;
+  border-right: 1px solid #eaeaea;
   background: transparent;
-  border-bottom: 1px solid #eaeaea;
+  box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
   padding: 6px 0;
 }
 
@@ -24,6 +25,7 @@ header ul li {
   min-width: 70px;
   opacity: 0.5;
   line-height: 40px;
+  text-align: center;
   color: #3b3b3b;
   text-transform: capitalize;
 }
@@ -38,8 +40,8 @@ header ul li.active {
 
 /*form wrap start*/
 .form-wrap {
+  padding-bottom: 30px;
   border-right: 1px solid #eaeaea;
-  padding: 5px 10px 5px 15px;
 }
 
 .form-wrap form .row {
@@ -60,28 +62,24 @@ header ul li.active {
 }
 
 .input-box .form-group {
+  /*width: 90%;*/
   margin-left: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .input-box .form-group label {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .input-box .form-group label#list-img-label {
   font-weight: normal;
-  margin-bottom: 0px;
 }
 
 .input-box .form-group label#list-img-label i {
   color: #ec3d62;
   font-size: 12px;
-}
-
-.list-img-label .preview-wrap {
-  margin-top: 10px !important;
 }
 
 .input-box .field-group {
@@ -101,19 +99,18 @@ header ul li.active {
   border-radius: 4px;
   background-color: #e8e8e8;
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
-  color: #a29d9d;
   font-size: 14px;
   margin-bottom: 20px;
   float: left;
   margin-right: 15px;
-  text-indent: 10px;
+  padding-left: 10px;
   width: 25%;
 }
 
 .input-box > .field-group > .form-group > input {
   width: 65%;
   float: left;
-  text-indent: 10px;
+  padding-left: 35px;
 }
 
 .input-box > .field-group > .form-group > i.fa-link {
@@ -171,10 +168,8 @@ header ul li.active {
   border-radius: 4px;
   background-color: #e8e8e8;
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
-  color: #a29d9d;
   font-size: 14px;
   border: none;
-  text-indent: 10px;
 }
 
 .option-info {
@@ -182,7 +177,7 @@ header ul li.active {
   margin-bottom: 15px;
 }
 
-input#event-start-date, #event-end-date {
+input#event-date {
   padding: 10px;
 }
 
@@ -200,6 +195,7 @@ input#event-start-date, #event-end-date {
 .form-actions {
   margin-left: 25px;
   margin-right: 25px;
+  padding-top: 40px;
 }
 
 .form-actions button {
@@ -297,7 +293,7 @@ input#event-start-date, #event-end-date {
 .list-preview-wrap .post-experience h4 {
   position: absolute;
   top: 1%;
-  /*left: 1%;*/
+  left: 1%;
   font-size: 18px;
   font-weight: 500;
   line-height: 1;
@@ -338,9 +334,7 @@ input#event-start-date, #event-end-date {
   box-shadow: inset 1px 1px 3px 0 rgba(183, 183, 183, 0.5);
   padding: 14px;
 }
-.detail-event img{
-  max-width: 100%;
-}
+
 .list-preview-wrap .col-md-5 .row {
   float: left;
   margin: 20px -10px;
@@ -364,7 +358,6 @@ input#event-start-date, #event-end-date {
   list-style: none;
   float: left;
   width: 70%;
-  padding-left: 25px;
 }
 
 .left-content-information-event > li {
@@ -383,18 +376,14 @@ input#event-start-date, #event-end-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  /*margin-right: 40px;*/
+  width: 25%;
+  margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 20px;
   text-align: left;
   color: #3b3b3b;
-}
-
-.left-content-information-event .info-label span {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
 }
 
 .left-content-information-event .info-value {
@@ -404,9 +393,7 @@ input#event-start-date, #event-end-date {
   text-align: left;
   color: #3b3b3b;
   display: block;
-}
-.no-padding-left{
-  padding-left: 0px !important;
+  padding-left: 40%;
 }
 
 /*.left-content-information-event > li > span {*/
@@ -418,11 +405,6 @@ input#event-start-date, #event-end-date {
 /*text-align: left;*/
 /*color: #3b3b3b;*/
 /*}*/
-.left-content-information-event .action {
-  font-size: 16px;
-  color: #ec3d62;
-  font-weight: 500;
-}
 
 .left-content-information-event > li > span > b {
   position: relative;
@@ -478,17 +460,8 @@ span.dollar-character {
   margin-right: 15px;
 }
 
-.input-box h3 {
-  margin-top: 15px;
-  margin-bottom: 0;
-}
-.input-box small {
-  margin-top: 10px;
-  margin-bottom: 30px;
-}
-
 .input-box small.text-danger {
-  margin: 0;
+  margin: 10px 0;
 }
 
 .carousel-indicators div {
@@ -513,12 +486,8 @@ span.dollar-character {
   width: calc(60% - 10px);
 }
 
-.mention-by-group input {
-  margin-top: 10px !important;
-}
+.mention-by-group .form-group input {
 
-.mention-by-group input:first-child {
-  margin-top: 0px;
 }
 
 .form-wrap .option-info-content {
@@ -540,16 +509,6 @@ span.dollar-character {
   padding-right: 25px;
 }
 
-#eventPriceErr {
-  clear: both;
-  padding-top: 10px;
-  margin: 0;
-}
-
-.information-event .name-creator {
-  font-size: 16px;
-}
-
 @media only screen and (min-width: 320px) and (max-width: 374px) {
 
   .input-box h3 {
@@ -559,7 +518,6 @@ span.dollar-character {
   .new-list .form-wrap {
     padding: 0;
     margin-bottom: 80px;
-
   }
 
   .new-list .input-box {
@@ -633,7 +591,6 @@ span.dollar-character {
 
   .left-content-information-event {
     padding-left: 15px;
-    width: 100%;
   }
 
   .left-content-information-event > li > span {
@@ -673,26 +630,6 @@ span.dollar-character {
     text-align: left;
   }
 
-  p.name-creator {
-    margin: 10px 0;
-    font-family: Roboto, sans-serif;
-    font-size: 16px;
-    line-height: 1;
-    text-align: center;
-    color: #3b3b3b;
-    text-transform: capitalize;
-  }
-
-  p.name-creator a {
-    color: #3b3b3b;
-  }
-
-  p.avg-rating {
-    color: #3b3b3b;
-    font-weight: bold;
-    font-size: 24px;
-  }
-
   .list-preview-wrap .event-title img {
     float: left;
     margin-top: 8px;
@@ -726,6 +663,7 @@ span.dollar-character {
   }
 
   .left-content-information-event .info-label {
+    width: 35px;
     margin-right: 0;
     padding-left: 0;
     float: left;
@@ -748,10 +686,6 @@ span.dollar-character {
     padding: 0 15px;
   }
 
-  .list-preview-wrap .event-title {
-    margin: 10px;
-  }
-
   .option-info {
     margin-left: 15px;
   }
@@ -763,6 +697,10 @@ span.dollar-character {
 
   .input-box .call-action-group .form-group input {
     width: calc(60% - 10px);
+  }
+
+  .mention-by-group .form-group input {
+
   }
 
   .form-wrap .option-info-content {
@@ -825,7 +763,7 @@ span.dollar-character {
 
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap {
-    padding: 5px 10px 5px 15px
+    padding: 5px 10px;
   }
 
   .list-preview-wrap .left-content {

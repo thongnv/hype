@@ -71,7 +71,7 @@
           </small>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)" />
+              <img src="{{img.url}}" />
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
@@ -153,7 +153,7 @@
               <span class="pull-right place-detail-btn">details</span>
             </div>
             <div *ngIf="plc.image.url" class="place-item-img">
-              <img [src]="sanitizer.bypassSecurityTrustUrl(plc.image.url)" [alt]="plc.place" width="100%">
+              <img src="{{plc.image.url}}" [alt]="plc.place" width="100%">
             </div>
             <p class="place-item-description" [innerHtml]="plc.description"></p>
           </ng-container>
