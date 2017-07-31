@@ -38,7 +38,6 @@ export class ShareEventComponent implements OnInit {
       eventType: ['1'],
       eventLink: [''],
     }),
-    eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
   public user: any;
@@ -85,7 +84,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  public onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
