@@ -67,7 +67,7 @@
     <div class="find-content">
 
       <div *ngIf="showPrice" class="pricePreview">
-        S${{priceRange[0]}}-$S{{priceRange[1]}}
+        $ {{priceRange[0]}} - {{priceRange[1]}}
       </div>
 
       <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
