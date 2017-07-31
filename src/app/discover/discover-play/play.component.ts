@@ -656,28 +656,29 @@ export class PlayComponent implements OnInit {
   }
 
   public changeSort(id,label) {
+
     this.labelSort = label;
-    if (this.sortPlace == 'ratings') {
+    if (id == 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'reviews') {
+    if (id == 'reviews') {
       this.params.order_by = 'reviews';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'favorites') {
+    if (id == 'favorites') {
       this.params.order_by = 'favorites';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'views') {
+    if (id == 'views') {
       this.params.order_by = 'views';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'distance') {
+    if (id == 'distance') {
       this.params.order_by = 'distance';
       this.params.order_dir = 'DESC';
     }
-    if (this.sortPlace == 'all') {
+    if (id == 'all') {
       this.params.order_by = 'Company_Name';
       this.params.order_dir = 'ASC';
     }

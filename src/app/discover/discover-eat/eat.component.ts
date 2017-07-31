@@ -650,6 +650,7 @@ export class EatComponent implements OnInit {
   }
 
   public changeSort(id,label) {
+    console.log(id);
     this.labelSort = label;
     if (id == 'ratings') {
       this.params.order_by = 'ratings';
