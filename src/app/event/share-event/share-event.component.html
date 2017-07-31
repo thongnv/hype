@@ -79,7 +79,7 @@
           <small *ngIf="!previewUrl.length" class="text-danger">
             Event images is required
           </small>
-          <small *ngIf="!validateSize || !validateType" class="text-danger">
+          <small *ngIf="!validSize || !validType" class="text-danger">
             Maximum file size: 6MB. <br/>
             Allowed file types: jpg, jpeg, png, gif, bmp.
           </small>
@@ -119,19 +119,22 @@
                    formControlName="eventEndDate"
                    ngui-datetime-picker/>
           </div>
-          <div class="form-group">
-            <label for="event-price">Price</label>
-            <input formControlName="eventPrice" id="event-price"
-                   class="form-control"
+          <div class="form-group" formArrayName="eventPrices">
+            <label>Price ($)</label>
+            <input *ngFor="let price of eventForm.controls.eventPrices.controls; let i=index"
+                   [formControlName]="i"
+                   class="form-control form-item"
                    min="0"
                    max="300"
                    value="0"
                    type="number"
-                   (change)="onEventPriceChange($event)"
-            >
-            <span class="dollar-character">$</span>
+                   (change)="onEventPriceChange($event)">
             <small id="eventPriceErr" class="text-danger"></small>
+            <button type="button" class="btn btn-success add-mention-btn" (click)="addPrice()">
+              <i class="fa fa-plus"></i>&nbsp;Add Price
+            </button>
           </div>
+
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
@@ -149,8 +152,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Event Organized</label>
-            <div >
+            <label>Organized by</label>
+            <div>
               <input formControlName="eventOrganized" id="event-organized"
                      class="form-control"
                      type="text"
@@ -160,9 +163,9 @@
           <div class="form-group  mention-by-group">
             <label>Mentioned by</label>
             <div formArrayName="eventMentions">
-              <div  *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
+              <div *ngFor="let mention of eventForm.controls.eventMentions.controls; let i=index">
                 <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
-                       class="form-control" [formControlName]="i">
+                       class="form-control form-item" [formControlName]="i">
               </div>
             </div>
           </div>
@@ -178,10 +181,12 @@
         </re-captcha>
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
+        <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha"
+                class="btn btn-primary">
           Share
         </button>
-        <button type="button" class="btn btn-success" [disabled]="eventForm.invalid || previewUrl.length == 0" (click)="onPreview()">Preview</button>
+        <button type="button" class="btn btn-success" (click)="onPreview()">Preview
+        </button>
       </div>
       <div class="mobile-footer"></div>
     </form>
@@ -191,7 +196,7 @@
   <!--list preview wrap start-->
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
-      <div class="col-md-7 left-content frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" >
+      <div class="col-md-7 left-content frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
         <div class="event-title">
           <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
@@ -203,35 +208,48 @@
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-location"></i><span>location</span></span>
-              <span class="info-value col-md-7 no-padding-left">{{previewData.eventPlace.place}}</span>
+              <span class="info-label"><i
+                class="sprite sprite-location"></i><span>location</span></span>
+              <span class="info-value">{{previewData.eventPlace.place}}</span>
             </li>
             <li>
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-icon-calendar"></i><span>start date / time</span></span>
-              <span class="info-value col-md-7 no-padding-left">{{previewData.startDate*1000 | date:'dd MMMM y, hh:mm a'}}</span>
+              <span class="info-label">
+                <i class="sprite sprite-icon-calendar"></i>
+                <span>start date / time</span>
+              </span>
+              <span class="info-value">{{startDate | date:'dd MMMM y, hh:mm a'}}</span>
+              <div class="clear"></div>
             </li>
             <li>
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-icon-calendar"></i><span>end date / time</span></span>
-              <span class="info-value">{{previewData.endDate*1000 | date:'dd MMMM y, hh:mm a'}}</span>
+              <span class="info-label"><i
+                class="sprite sprite-icon-calendar"></i>
+                <span>end date / time</span>
+              </span>
+              <span class="info-value">{{endDate | date:'dd MMMM y, hh:mm a'}}</span>
+              <div class="clear"></div>
             </li>
             <li *ngIf="previewData.eventPrice !== ''">
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value col-md-7 no-padding-left">
-                <span *ngIf="previewData.eventPrice">${{previewData.eventPrice}}</span>
-                <span *ngIf="!previewData.eventPrice">Free</span>
+              <span class="info-label"><i
+                class="sprite sprite-tag"></i><span>price range</span></span>
+              <span class="info-value">
+                <span *ngFor="let price of prices; let i = index">
+                  ${{price}}<span *ngIf="i != prices.length - 1">, </span>
+                </span>
+                <span *ngIf="!prices.length">Free</span>
               </span>
             </li>
             <li *ngIf="previewData.call2action?.eventLink">
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
               </span>
-              <span class="info-value col-md-7 no-padding-left">
+              <span class="info-value">
               <a href="{{previewData.call2action.eventLink}}" target="_blank" class="mention_link">
                 <span class="action">{{previewData.call2action.eventType == '1' ? 'Buy Tickets' : 'More Detail'}}</span>
               </a>
             </span>
             </li>
             <li *ngIf="previewData.eventOrganized">
-              <span class="info-label col-md-5 no-padding-left"><i class="sprite sprite-tag"></i><span>Event Organized</span></span>
+              <span class="info-label"><i
+                class="sprite sprite-tag"></i><span>Organized by</span></span>
               <span class="info-value col-md-7 no-padding-left">{{previewData.eventOrganized}}
               </span>
             </li>
@@ -291,7 +309,7 @@
         <div class="mobile-footer"></div>
       </div>
 
-      <div class="col-md-5 right-content frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" >
+      <div class="col-md-5 right-content frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
 
         <div class="row">
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
@@ -309,7 +327,8 @@
           <p>Location</p>
           <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
                            [zoom]="13" [styles]="gMapStyles">
-            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng" [iconUrl]="'assets/icon/locationmarker.png'">
+            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
+                                    [iconUrl]="'assets/icon/locationmarker.png'">
             </sebm-google-map-marker>
           </sebm-google-map>
         </div>

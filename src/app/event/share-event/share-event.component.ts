@@ -32,7 +32,7 @@ export class ShareEventComponent implements OnInit {
     }),
     eventStartDate: [''],
     eventEndDate: [''],
-    eventPrice: [''],
+    eventPrices: this.fb.array(['']),
     eventOrganized: [''],
     call2action: this.fb.group({
       eventType: ['1'],
@@ -61,11 +61,12 @@ export class ShareEventComponent implements OnInit {
   ];
   public gMapStyles: any;
   public validCaptcha = false;
-  public validateSize: boolean = true;
-  public validateType: boolean = true;
-  public submitted: boolean = false;
+  public validSize = true;
+  public validType = true;
+  public submitted = false;
   public layoutWidth: number;
   public innerWidth: number;
+  public prices = [];
   public eventTags = [];
   public checkTags = [];
 
@@ -219,11 +220,16 @@ export class ShareEventComponent implements OnInit {
           };
           reader[i].readAsDataURL(event.target.files[i]);
         } else {
-          this.validateSize = false;
-          this.validateType = false;
+          this.validSize = false;
+          this.validType = false;
         }
       }
     }
+  }
+
+  public addPrice() {
+    const prices = this.eventForm.get('eventPrices') as FormArray;
+    prices.push(new FormControl());
   }
 
   public addMention() {
@@ -261,6 +267,11 @@ export class ShareEventComponent implements OnInit {
     event.eventImages = this.previewUrl;
     event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
+    for (let price of event.eventPrices) {
+      if (price) {
+        this.prices.push(price);
+      }
+    }
     this.previewData = event;
     this.initPreview();
   }

@@ -145,6 +145,10 @@ header ul li.active {
   text-align: left;
 }
 
+.form-item {
+  margin-bottom: 10px;
+}
+
 .form-group button {
   padding: 5px 30px;
   border-radius: 20px;
@@ -376,8 +380,6 @@ input#event-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  width: 25%;
-  margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -395,16 +397,6 @@ input#event-date {
   display: block;
   padding-left: 40%;
 }
-
-/*.left-content-information-event > li > span {*/
-/*padding-left: 32%;*/
-/*display: block;*/
-/*font-size: 14px;*/
-/*font-weight: 300;*/
-/*line-height: 1.43;*/
-/*text-align: left;*/
-/*color: #3b3b3b;*/
-/*}*/
 
 .left-content-information-event > li > span > b {
   position: relative;
