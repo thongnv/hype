@@ -42,7 +42,16 @@ i#notif {
 .show>.notify-content li{
   list-style: none;
 }
-
+.user-option>a>.arrow-up{
+    position: relative;
+    top: -14px;
+    right: -10px;
+    z-index: 9;
+    display: none;
+}
+.user-option.show>a>.arrow-up{
+    display: block;
+}
 #notifications .arrow-up {
   top: -12px;
   right: 7%;

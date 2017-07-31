@@ -4,12 +4,10 @@
     <i id="notif" fa [name]="'bell-o'" [size]=2></i>
     <!--<span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>-->
     <span id="count-notif" [title]="0">0</span>
+    <div class="arrow-up"></div>
   </a>
 
   <ul class="notify-content" id="notifications">
-    <li>
-      <div class="arrow-up"></div>
-    </li>
     <li>
       <span class="notify-left">Notifications</span>
       <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>
