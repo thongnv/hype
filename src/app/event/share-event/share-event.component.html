@@ -73,7 +73,7 @@
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
             <i class="fa fa-plus"></i>&nbsp;Add images
-            <input class="form-control col-xs-12" id="listImg" formControlName="eventImages" type='file' accept="image/*"
+            <input class="form-control col-xs-12" id="listImg"  type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
           <small *ngIf="!previewUrl.length" class="text-danger">
@@ -85,7 +85,7 @@
           </small>
           <div class="list-img-wrap">
             <div *ngFor="let img of previewUrl" class="preview-wrap">
-              <img [src]="sanitizer.bypassSecurityTrustUrl(img.url)"/>
+              <img src="{{img.url}}"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
