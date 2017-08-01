@@ -110,6 +110,7 @@ export class NavbarComponent implements OnInit {
           }
         }
         if (check) {
+          this.totalUnread = this.totalUnread + 1;
           this.notifications.unshift(data.data);
         }
       });
