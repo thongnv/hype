@@ -34,6 +34,8 @@
   font-family: Roboto, sans-serif;
   font-weight: 300;
 }
+
+
 .description p {
     font-size: 14px;
     font-weight: 300;
@@ -100,6 +102,8 @@
   height: 100vh;
   position: relative;
 }
+
+.description img{max-width: 100%;}
 
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {

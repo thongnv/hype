@@ -267,6 +267,7 @@ export class ShareEventComponent implements OnInit {
     event.eventImages = this.previewUrl;
     event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
+    this.prices = [];
     for (let price of event.eventPrices) {
       if (price) {
         this.prices.push(price);

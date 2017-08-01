@@ -122,7 +122,7 @@ export class MainService {
     // let options = new RequestOptions({headers, withCredentials: true});
     let options = new RequestOptions({headers});
     return this.http.get(
-      AppSetting.NODE_SERVER + '/api/v1/notification/' + user
+      AppSetting.NODE_SERVER + '/api/v1/notification/' + user + '/' + page
     )
       .map((resp) => resp.json())
       .catch((error) => {

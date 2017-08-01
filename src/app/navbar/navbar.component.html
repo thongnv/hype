@@ -62,6 +62,7 @@
                               [notifications]="notifications"
                               [loadingInProgress]="set.loadingInProgress"
                               [endOfList]="set.endOfList"
+                              [totalUnread]="totalUnread"
                               (onScrollToBottom)="onScrollToBottom()"
                               (onMarkAllRead)="onMarkAllRead()"
                               (onMarkOneRead)="onMarkOneRead($event)">
@@ -158,6 +159,7 @@
                           [notifications]="notifications"
                           [loadingInProgress]="set.loadingInProgress"
                           [endOfList]="set.endOfList"
+                          [totalUnread]="totalUnread"
                           (onScrollToBottom)="onScrollToBottom()"
                           (onMarkAllRead)="onMarkAllRead()"
                           (onMarkOneRead)="onMarkOneRead($event)">
