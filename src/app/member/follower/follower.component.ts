@@ -43,9 +43,6 @@ export class FollowerComponent implements OnInit {
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
-      this.userService.getProfile().subscribe(
-        (resp) => this.user = resp
-      );
     }
     this.appState.set('followerPage', this.followerPage);
     let followerPage = this.appState.state.followerPaging;
