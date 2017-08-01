@@ -229,7 +229,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.website = data.website;
     this.reviews = data.reviews;
     this.name = data.name;
-    this.description = data.description;
+    this.description = this.htmlEntities(data.description);
     this.rating = data.rating;
     this.rated = data.rated;
     this.bookmarked = data.bookmarked;
@@ -244,6 +244,17 @@ export class CompanyDetailComponent implements Company, OnInit {
     for (let image of images) {
       this.slides.push({image: image.url});
     }
+  }
+
+  private htmlEntities(str) {
+      return String(str)
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/\ufffd/g, '')
+        .replace(/\ufffdI/g, '')
+        .replace(/\ufffds/g, '');
   }
 
 }
