@@ -114,7 +114,7 @@ export class ProfilePublicComponent implements OnInit {
   public onResize(event): void {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    let navBarWidth = 181;
+    let navBarWidth = 180;
     this.layoutWidth = this.windowRef.rootContainer.width - navBarWidth;
   }
 

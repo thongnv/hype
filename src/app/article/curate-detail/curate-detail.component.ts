@@ -43,13 +43,13 @@ export class CurateDetailComponent implements OnInit {
   onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
   }
   public ngOnInit() {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(

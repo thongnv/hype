@@ -245,7 +245,7 @@ export class ModeComponent implements OnInit {
         }
       });
     });
-    this.layoutWidth = (this.windowRef.rootContainer.width - 181) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
   }
 
   public onResize(event): void {
