@@ -35,7 +35,7 @@ export interface HyloEvent {
   category: { 'name': string, 'tid': string };
   startDate: number;
   endDate: number;
-  price: number;
+  prices: string[];
   organizer: string;
   call2action: Call2Action;
   mentions: Icon[];

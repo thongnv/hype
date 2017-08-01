@@ -29,7 +29,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public category: any;
   public startDate: number = 0;
   public endDate: number = 0;
-  public price: number = 0;
+  public prices: string[] = [];
   public call2action: Call2Action = {action: '', link: ''};
   public mentions: Icon[] = [];
   public images: Image[] = [];
@@ -107,8 +107,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               window.clearInterval(interval);
               document.getElementById('createComment').removeAttribute('id');
             }, 200);
-          }else{
-            window.scrollTo(0,0);
+          }else {
+            window.scrollTo(0, 0);
           }
         }
       );
@@ -189,7 +189,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.category = event.category;
     this.startDate = event.startDate;
     this.endDate = event.endDate;
-    this.price = event.price;
+    this.prices = event.prices;
     this.call2action = event.call2action;
     this.mentions = event.mentions;
     this.images = event.images;
