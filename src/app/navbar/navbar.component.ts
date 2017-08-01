@@ -22,9 +22,13 @@ export class NavbarComponent implements OnInit {
   public mapOptions: any[] = [];
   public notifications: any;
   public selectedMapOption: any;
-  public notificationPage: number = 0;
+  public notificationPage: number = 1;
+  public totalUnread: number = 0;
+  public totalPages: number = 0;
   public set: any = {
-    offset: 0, endOfList: false, loadingInProgress: false
+    offset: 0,
+    endOfList: false,
+    loadingInProgress: false
   };
   public user = AppSetting.defaultUser;
   @ViewChild(NotificationComponent) public NotificationComponent: NotificationComponent;
@@ -156,51 +160,39 @@ export class NavbarComponent implements OnInit {
 
   public getNotifications() {
     this.mainService.getNotifications(this.user.id, this.notificationPage).subscribe((resp) => {
-      this.notifications = resp.data;
+      this.totalUnread = resp.data.totalUnread;
+      this.totalPages = resp.data.data.pages;
+      this.notifications = resp.data.data.docs;
     });
   }
 
   public onMarkAllRead() {
-    // this.notifications.results.forEach((notif) => {
-    //   notif.viewed = 'true';
-    // });
-    // this.notifications.unread = 0;
-    // if (this.notifications.unread > 0) {
-    //   this.set.loadingInProgress = true;
-    // }
+    this.totalUnread = 0;
     this.mainService.updateNotifications(this.user.id, null).subscribe((resp) => {
       this.set.loadingInProgress = false;
     });
   }
 
   public onMarkOneRead(item) {
-    // item.viewed = true;
-    // if (parseInt(this.notifications.unread, 10) > 0) {
-    //   this.notifications.unread = this.notifications.unread - 1;
-    // } else {
-    //   this.notifications.unread = 0;
-    // }
+    if (this.totalUnread > 0) {
+      this.totalUnread = this.totalUnread - 1;
+    }
     this.mainService.updateNotifications(this.user.id, item._id).subscribe((resp) => {
       this.router.navigate([item.metadata.link]).then();
     });
   }
 
   public onScrollToBottom() {
-    if (!this.set.loadingInProgress) {
+    if (!this.set.loadingInProgress && this.notificationPage < this.totalPages) {
       this.set.endOfList = false;
       this.set.loadingInProgress = true;
-      let count = 0;
       this.mainService.getNotifications(this.user.id, ++this.notificationPage).subscribe((response) => {
-        if (response.data.results.length) {
-          response.data.results.forEach((item) => {
-            count++;
-            this.notifications.results.push(item);
+        if (response.data.data.docs.length) {
+          response.data.data.docs.forEach((item) => {
+            this.notifications.push(item);
           });
-          if (count === 0) {
-            this.set.endOfList = true;
-            this.notificationPage--;
-          }
-        } else {
+        }
+        if (this.notificationPage >= this.totalPages) {
           this.set.endOfList = true;
         }
         this.set.loadingInProgress = false;
