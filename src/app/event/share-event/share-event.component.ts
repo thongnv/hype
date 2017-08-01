@@ -364,7 +364,7 @@ function mapEvent(event) {
     field_event_option: [{
       field_call_to_action_group: event.call2action.eventType,
       field_call_to_action_link: event.call2action.eventLink,
-      field_price: event.eventPrice,
+      field_price: event.eventPrices,
       field_mentioned_by: event.eventMentions,
       field_end_date_time: event.endDate
     }]
