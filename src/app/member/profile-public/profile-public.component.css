@@ -831,8 +831,8 @@ and (max-device-width: 480px) {
   }
 
   .wrap-post-news {
-    width: 85%;
-    margin-left: auto;
+    width: 95%;
+    margin-left: 0;
     margin-right: auto;
   }
 
