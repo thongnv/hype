@@ -15,6 +15,7 @@ import { AppSetting } from '../app.setting';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Title } from '@angular/platform-browser';
+import {delay} from "rxjs/operator/delay";
 
 declare let google: any;
 
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit {
               private route: Router,
               private location: Location,
               private windowRef: WindowUtilService) {
+    window.scroll(0,0);
   }
 
   public ngOnInit() {
@@ -346,27 +348,34 @@ export class HomeComponent implements OnInit {
   public boundsChange(event) {
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    if (!this.zoomChanged && this.selectedEventOrder.name !== 'top 100') {
-      let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
-        draggable: true
-      });
-      // map change sleep call api
-      this.zoomChanged = true;
-      let mapCenter = new google.maps.Marker({
-        position: new google.maps.LatLng(this.lat, this.lng),
-        draggable: true
-      });
-      let searchCenter = mapCenter.getPosition();
-      let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
-      this.params.lat = this.lat;
-      this.params.long = this.lng;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      this.smallLoader.show();
-      this.events = [];
-      this.markers = [];
-      this.params.page = 0;
-      this.getTrending();
+    if (this.selectedEventOrder.name !== 'top 100') {
+      if(!this.zoomChanged){
+        let latLngNew = new google.maps.Marker({
+          position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+          draggable: true
+        });
+        // map change sleep call api
+        let mapCenter = new google.maps.Marker({
+          position: new google.maps.LatLng(this.lat, this.lng),
+          draggable: true
+        });
+        this.zoomChanged=true;
+        let searchCenter = mapCenter.getPosition();
+        let distance: any = getDistance(searchCenter,latLngNew.getPosition());
+        this.params.lat = this.lat;
+        this.params.long = this.lng;
+        if(this.params.radius < 0.25){
+          this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        }else{
+          this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+        }
+        this.smallLoader.show();
+        this.events = [];
+        this.markers = [];
+        this.params.page = 0;
+        this.shownotfound=false;
+        this.getTrending();
+      }
     }
   }
 
@@ -414,7 +423,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private passerTop100(events: any) {
+  private passerTop100() {
     this.currentHighlightedMarker = 0;
 
     let mapCenter = new google.maps.Marker({
@@ -425,25 +434,25 @@ export class HomeComponent implements OnInit {
 
     this.mapsAPILoader.load().then(
       () => {
-        for (let i = 0; i < events.length; i++) {
+        for (let i = 0; i < this.events.length; i++) {
           let latitude: any;
           let longitude: any;
-          if (events[i].type === 'event') {
-            if (typeof events[i].field_location_place.field_latitude !== null) {
-              latitude = events[i].field_location_place.field_latitude;
+          if (this.events[i].type === 'event') {
+            if (typeof this.events[i].field_location_place.field_latitude !== null) {
+              latitude = this.events[i].field_location_place.field_latitude;
             }
-            if (typeof events[i].field_location_place.field_longitude !== null) {
-              longitude = events[i].field_location_place.field_longitude;
+            if (typeof this.events[i].field_location_place.field_longitude !== null) {
+              longitude = this.events[i].field_location_place.field_longitude;
             }
           }
-          if (events[i].type === 'article') {
-            if (events[i].field_location_place.length > 0) {
+          if (this.events[i].type === 'article') {
+            if (this.events[i].field_location_place.length > 0) {
 
-              if (typeof events[i].field_location_place[0].field_latitude !== null) {
-                latitude = events[i].field_location_place[0].field_latitude;
+              if (typeof this.events[i].field_location_place[0].field_latitude !== null) {
+                latitude = this.events[i].field_location_place[0].field_latitude;
               }
-              if (typeof events[i].field_location_place[0].field_longitude !== null) {
-                longitude = events[i].field_location_place[0].field_longitude;
+              if (typeof this.events[i].field_location_place[0].field_longitude !== null) {
+                longitude = this.events[i].field_location_place[0].field_longitude;
               }
             }
           }
@@ -458,7 +467,7 @@ export class HomeComponent implements OnInit {
             this.markers.push({
               lat: latitude,
               lng: longitude,
-              label: events[i].title,
+              label: this.events[i].title,
               opacity: 1,
               isOpenInfo: true,
               icon: 'assets/icon/locationmarker.png'
@@ -467,13 +476,15 @@ export class HomeComponent implements OnInit {
             this.markers.push({
               lat: latitude,
               lng: longitude,
-              label: events[i].title,
+              label: this.events[i].title,
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png'
             });
           }
         }
+        sleep(50);
+        this.zoomChanged = false;
       }
     );
   }
@@ -546,11 +557,10 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
-        this.passerTop100(this.events);
+        this.passerTop100();
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
-        this.zoomChanged = false;
         this.loading = false;
       },
       (err) => {
@@ -581,7 +591,7 @@ export class HomeComponent implements OnInit {
 
         this.shownotfound = response.total === 0;
 
-        this.passerTop100(this.events);
+        this.passerTop100();
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
@@ -629,4 +639,8 @@ function calculateNumCategories(): number {
   }
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
+}
+function sleep(delay) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
 }

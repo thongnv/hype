@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import _date = moment.unitOfTime._date;
 import { UserService } from '../services/user.service';
 import { Title } from '@angular/platform-browser';
+import { LoaderService } from '../helper/loader/loader.service';
 
 @Component({
   selector: 'app-auth',
@@ -19,10 +20,12 @@ export class AuthComponent implements OnInit {
   public insufficientGrantedScope = false;
   private user = this.localStorageService.get('user');
   private initParams: InitParams = AppSetting.FACEBOOK;
+  private loading = false;
 
   constructor(private facebookService: FacebookService,
               private userService: UserService,
               private localStorageService: LocalStorageService,
+              private loaderService: LoaderService,
               private titleService: Title) {
   }
 
@@ -37,6 +40,11 @@ export class AuthComponent implements OnInit {
   }
 
   public onClickLogin() {
+    if (this.loading) {
+      return;
+    }
+    this.loading = true;
+    this.loaderService.show();
     const loginOptions: LoginOptions = {
       enable_profile_selector: true,
       return_scopes: true,
@@ -70,13 +78,18 @@ export class AuthComponent implements OnInit {
               };
               this.localStorageService.set('user', user);
               this.localStorageService.set('csrf_token', resp.csrf_token);
+              this.loading = false;
               window.location.reload();
             },
             (error) => {
               console.log(error);
+              this.loading = false;
               this.accountDisabled = true;
+              this.loaderService.hide();
             });
         } else {
+          this.loading = false;
+          this.loaderService.hide();
           this.insufficientGrantedScope = true;
         }
       }

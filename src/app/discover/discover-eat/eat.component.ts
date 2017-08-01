@@ -119,7 +119,7 @@ export class EatComponent implements OnInit {
     ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-
+    window.scroll(0,0);
     this.route.params.subscribe((param) => {
       if (param.location) {
         this.items = [];
@@ -297,9 +297,13 @@ export class EatComponent implements OnInit {
   getDataModes() {
     let params = this.params;
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.loadMore = false;
-      this.total = resp.total;
 
+      this.total = resp.total;
+      if(this.loadMore){
+        this.items = this.items.concat(resp.company);
+      }else{
+        this.items = resp.company;
+      }
       if (resp.total === 0) {
         this.shownotfound = true;
       }else{
@@ -309,8 +313,7 @@ export class EatComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
-      this.items = resp.company;
-      this.zoomChanged = false;
+      this.loadMore = false;
       this.initMap();
       this.loaderService.hide();
       this.smallLoader.hide();
@@ -377,7 +380,6 @@ export class EatComponent implements OnInit {
 
   public markerDragEnd($event) {
     if ($event.coords) {
-      console.log('dragEnd', $event);
       //Update center map
       this.lat = $event.coords.lat;
       this.lng = $event.coords.lng;
@@ -403,16 +405,7 @@ export class EatComponent implements OnInit {
               if(distance) {
                 this.items[i].distance = (distance).toFixed(1);
               }
-              if (i == 0) {
-                this.markers.push({
-                  lat: parseFloat(lat[1]),
-                  lng: parseFloat(lng[1]),
-                  label: this.items[i].Company_Name,
-                  opacity: 1,
-                  isOpenInfo: false,
-                  icon: 'assets/icon/locationmarker.png'
-                });
-              } else {
+
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
@@ -421,9 +414,11 @@ export class EatComponent implements OnInit {
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
                 });
-              }
+
           }
         }
+        sleep(50);
+        this.zoomChanged=false;
       });
   }
 
@@ -655,6 +650,7 @@ export class EatComponent implements OnInit {
   }
 
   public changeSort(id,label) {
+    console.log(id);
     this.labelSort = label;
     if (id == 'ratings') {
       this.params.order_by = 'ratings';
@@ -718,7 +714,7 @@ export class EatComponent implements OnInit {
       }
     }
 
-    if (this.type.length > 0) {
+    if (this.type.length) {
       for (let i = 0; i < this.type.length; i++) {
         if(this.type[i].checked) {
           this.type[i].checked = false;
@@ -739,7 +735,7 @@ export class EatComponent implements OnInit {
 
     this.cuisine = [];
     this.best = [];
-    this.type = 'eat';
+    this.type = [];
     this.totalCuisine = 0;
     this.cuisineDraw = [];
     this.currentRate = [];
@@ -874,7 +870,6 @@ export class EatComponent implements OnInit {
     this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
@@ -890,8 +885,13 @@ export class EatComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      if(this.params.radius < 0.25){
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      }else{
+        this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+      }
       this.smallLoader.show();
+      this.shownotfound=false;
       this.getDataModes();
     }
   }

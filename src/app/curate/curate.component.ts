@@ -36,7 +36,6 @@ export class CurateComponent implements OnInit {
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
                      private windowRef: WindowUtilService) {
-
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -47,6 +46,7 @@ export class CurateComponent implements OnInit {
 
   }
   public ngOnInit() {
+    window.scroll(0, 0);
     this.titleService.setTitle('Curated List');
     this.loaderService.show();
     window.onscroll = () => {

@@ -122,7 +122,7 @@ export class ModeComponent implements OnInit {
     ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-
+    window.scroll(0,0);
     this.route.params.subscribe((param) => {
       if (param.location) {
         this.items = [];
@@ -295,9 +295,13 @@ export class ModeComponent implements OnInit {
   getDataModes() {
     let params = this.params;
     this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.loadMore = false;
-      this.total = resp.total;
 
+      this.total = resp.total;
+      if(this.loadMore){
+        this.items= this.items.concat(resp.company);
+      }else{
+        this.items=resp.company;
+      }
       if (resp.total === 0) {
         this.shownotfound = true;
       }else{
@@ -307,7 +311,8 @@ export class ModeComponent implements OnInit {
       if (resp.company.length == 0) {
         this.end_record = true;
       }
-      this.initMap(resp.company);
+      this.loadMore = false;
+      this.initMap();
       this.loaderService.hide();
       this.smallLoader.hide();
 
@@ -424,32 +429,30 @@ export class ModeComponent implements OnInit {
 
   }
 
-  private initMap(companies: any) {
-    if (companies) {
+  private initMap() {
       this.currentHighlightedMarker = 0;
       this.mapsAPILoader.load().then(() => {
-        for (let i = 0; i < companies.length; i++) {
-          if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
+        for (let i = 0; i < this.items.length; i++) {
+          if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
 
-            let lat = companies[i].YP_Address[6].split('/');
-            let lng = companies[i].YP_Address[5].split('/');
-            let distance = companies[i]._dict_;
+            let lat = this.items[i].YP_Address[6].split('/');
+            let lng = this.items[i].YP_Address[5].split('/');
+            let distance = this.items[i]._dict_;
               let description:string;
-              if(companies[i].Hylo_Activity_Description.length > 0){
-                description = companies[i].Hylo_Activity_Description;
+              if(this.items[i].Hylo_Activity_Description.length > 0){
+                description = this.items[i].Hylo_Activity_Description;
               }else{
-                description = companies[i].Company_Profile;
+                description = this.items[i].Company_Profile;
               }
-              companies[i].description = description;
+            this.items[i].description = description;
               if(distance) {
-                companies[i].distance = (distance).toFixed(1);
+                this.items[i].distance = (distance).toFixed(1);
               }
-              this.items.push(companies[i]);
               if (i == 0) {
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
+                  label: this.items[i].Company_Name,
                   opacity: 1,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -458,7 +461,7 @@ export class ModeComponent implements OnInit {
                 this.markers.push({
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
-                  label: companies[i].Company_Name,
+                  label: this.items[i].Company_Name,
                   opacity: 0.4,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -466,8 +469,10 @@ export class ModeComponent implements OnInit {
               }
           }
         }
+        sleep(50);
+        this.zoomChanged=false;
       });
-    }
+
   }
 
   private getDistance(p1, p2) {
@@ -778,7 +783,11 @@ export class ModeComponent implements OnInit {
         }
       }
     }
-
+    if(this.currentRate){
+      for(let i = 0; i < this.currentRate.length; i ++){
+        this.currentRate[i].checked=false;
+      }
+    }
     this.cuisine = [];
     this.best = [];
     this.type = [];
@@ -910,9 +919,10 @@ export class ModeComponent implements OnInit {
         this.mapZoom=14;
       }
     });
+    this.items = [];
+    this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    sleep(200);
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
@@ -925,14 +935,17 @@ export class ModeComponent implements OnInit {
         draggable: true
       });
       let searchCenter = mapCenter.getPosition();
-      let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
+      let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page=0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      if(this.params.radius < 0.25){
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      }else{
+        this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+      }
       this.smallLoader.show();
-      this.items = [];
-      this.markers = [];
+      this.shownotfound=false;
       this.getDataModes();
     }
   }

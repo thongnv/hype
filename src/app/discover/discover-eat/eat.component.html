@@ -1,4 +1,5 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-eat" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" >
+<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-eat"
+     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
       <div id="btnHeadFilter" class="btn-block btn-filter-block"
@@ -6,13 +7,14 @@
         <label class="btn btn-default" ngbButtonLabel (change)="changeCategory($event.target.checked,all)">
           <img src="../../../assets/img/icons/All.png" alt="All">
           <span class="clearfix">
-                                <input type="checkbox" ngbButton value="all"> All
-                            </span>
+            <input type="checkbox" ngbButton value="all"> All
+          </span>
         </label>
-        <label class="btn btn-default" ngbButtonLabel *ngFor="let term of categories" (change)="changeCategory($event.target.checked,term)" [class.active]="term?.checked">
-          <img src="{{term.icon}}" alt="{{term.name}}">
+        <label class="btn btn-default" ngbButtonLabel *ngFor="let category of categories"
+               (change)="changeCategory($event.target.checked,category)" [class.active]="category?.checked">
+          <img src="{{category.icon}}" title="{{category.name}}">
           <span class="clearfix"> </span>
-          <input type="checkbox" ngbButton value="{{term.name}}">{{term.name}}
+          <input type="checkbox" ngbButton value="{{category.name}}">{{category.name}}
         </label>
         <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
                (click)="showAllKind(showAll)">
@@ -52,13 +54,6 @@
              aria-hidden="true"></i></a>
       </li>
 
-      <!-- <span class="showMoreType" (click)="showAllType(showTab)">
-          <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
-      </span> -->
-      <!-- <li class="showMoreType" (click)="showAllType(showTab)">
-          <b></b><b></b><b></b>
-      </li> -->
-
       <li class="showMoreType" (click)="showAllType(showTab)">
         <i class="sprite-icon sprite sprite-icon-add-light"></i>
       </li>
@@ -67,7 +62,7 @@
     <div class="find-content">
 
       <div *ngIf="showPrice" class="pricePreview">
-        S${{priceRange[0]}}-$S{{priceRange[1]}}
+        $ {{priceRange[0]}} - {{priceRange[1]}}
       </div>
 
       <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10" [keyboard]="true"
@@ -102,12 +97,14 @@
           <li *ngFor="let rate of rateData; let index = index" style="width: 80px">
             <div class="checkbox" *ngIf="rate.star == 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked"> {{rate.star}} star
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked">
+                {{rate.star}} star
               </label>
             </div>
             <div class="checkbox" *ngIf="rate.star != 1">
               <label>
-                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked"> {{rate.star}} stars
+                <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked">
+                {{rate.star}} stars
               </label>
             </div>
           </li>
@@ -147,9 +144,11 @@
       <span class="label-sort">Sort by:</span>
       <div class="dropdown">
         <div ngbDropdown class="d-inline-block">
-          <a href="javascript:;" id="dropdownSort" ngbDropdownToggle>{{labelSort}} <i class="caret" style="margin-left: 10px"></i></a>
+          <a href="javascript:;" id="dropdownSort" ngbDropdownToggle>{{labelSort}} <i class="caret"
+                                                                                      style="margin-left: 10px"></i></a>
           <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownSort">
-            <button class="dropdown-item" *ngFor="let or of sortBy" (click)="changeSort(or.id,or.name)">{{or.name}}</button>
+            <button class="dropdown-item" *ngFor="let or of sortBy" (click)="changeSort(or.id,or.name)">{{or.name}}
+            </button>
           </div>
         </div>
       </div>
@@ -204,14 +203,18 @@
   </div>
 
   <div id="notFoundDiv" *ngIf="shownotfound" class="not-found">
-    <div><div class="sprite sprite-no-results-found" style="display: inline-block"></div></div>
+    <div>
+      <div class="sprite sprite-no-results-found" style="display: inline-block"></div>
+    </div>
     <h2>No Results Found</h2>
     <div>You can revise filters or <a (click)="clearAllFilter()" class="clear_filter">clear all filters</a>.</div>
   </div>
 
-</div >
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
-  <div class="box-map" style="position: fixed; width:inherit; height: inherit;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+</div>
+<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right"
+     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: inherit;"
+       [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"
@@ -225,7 +228,6 @@
       [mapDraggable]="true"
     >
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
-                           [circleDraggable]="circleDraggable"
                            [lat]="lat"
                            (markerClick)="clickedMarker($event)"
                            [lng]="lng"></gmap-geocode-marker>

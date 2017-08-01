@@ -59,6 +59,7 @@ export class CurateDetailComponent implements OnInit {
           this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
           this.loaderService.hide();
+          window.scrollTo(0,0);
         },
         (error) => {
           console.log(error);

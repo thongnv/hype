@@ -32,13 +32,12 @@ export class ShareEventComponent implements OnInit {
     }),
     eventStartDate: [''],
     eventEndDate: [''],
-    eventPrice: [''],
+    eventPrices: this.fb.array(['']),
     eventOrganized: [''],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
     }),
-    eventImages: [''],
     eventMentions: this.fb.array(['']),
   });
   public user: any;
@@ -62,11 +61,12 @@ export class ShareEventComponent implements OnInit {
   ];
   public gMapStyles: any;
   public validCaptcha = false;
-  public validateSize: boolean = true;
-  public validateType: boolean = true;
-  public submitted: boolean = false;
+  public validSize = true;
+  public validType = true;
+  public submitted = false;
   public layoutWidth: number;
   public innerWidth: number;
+  public prices = [];
   public eventTags = [];
   public checkTags = [];
 
@@ -85,7 +85,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  public onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 181);
@@ -220,11 +220,16 @@ export class ShareEventComponent implements OnInit {
           };
           reader[i].readAsDataURL(event.target.files[i]);
         } else {
-          this.validateSize = false;
-          this.validateType = false;
+          this.validSize = false;
+          this.validType = false;
         }
       }
     }
+  }
+
+  public addPrice() {
+    const prices = this.eventForm.get('eventPrices') as FormArray;
+    prices.push(new FormControl());
   }
 
   public addMention() {
@@ -240,8 +245,8 @@ export class ShareEventComponent implements OnInit {
     let event = this.eventForm.value;
     event.eventImages = this.previewUrl;
     event.eventTags = this.processTags(event.eventTags);
-    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
-    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
     this.loaderService.show();
     if (!this.submitted) {
@@ -260,8 +265,13 @@ export class ShareEventComponent implements OnInit {
     let event = this.eventForm.value;
     event.eventTags = this.processTags(event.eventTags);
     event.eventImages = this.previewUrl;
-    event.startDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
-    event.endDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
+    event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
+    for (let price of event.eventPrices) {
+      if (price) {
+        this.prices.push(price);
+      }
+    }
     this.previewData = event;
     this.initPreview();
   }

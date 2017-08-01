@@ -2,13 +2,12 @@
   <a id="notify-drop" class="notif-bag dropdown-toggle" role="button" aria-haspopup="true"
      aria-expanded="false" ngbDropdownToggle>
     <i id="notif" fa [name]="'bell-o'" [size]=2></i>
-    <span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>
+    <!--<span id="count-notif" [title]="notifications.unread">{{notifications.unread}}</span>-->
+    <span id="count-notif" [title]="0">0</span>
+    <div class="arrow-up"></div>
   </a>
 
   <ul class="notify-content" id="notifications">
-    <li>
-      <div class="arrow-up"></div>
-    </li>
     <li>
       <span class="notify-left">Notifications</span>
       <span class="mark-all-right" (click)="onClickMarkAll()">Mark all as read</span>
@@ -19,15 +18,15 @@
          [railOpacity]="0.4"
          [railColor]="'#ddd'"
          [color]="'#000'">
-      <li *ngFor="let notif of notifications.results" [class.has_read]="notif.viewed !== null"
+      <li *ngFor="let notif of notifications" [class.has_read]="notif.viewed !== null"
           class="notification-item"
           (click)="onClickItem(notif)">
-        <div class="icon-notification"><img [src]="notif.sender.field_image" width="30" height="30"></div>
+        <div class="icon-notification"><img [src]="notif.actor.avatarUrl" width="30" height="30"></div>
         <div class="content-notification">
           <p class="title-notifications">
-            <strong>{{notif.sender.first_name | truncate: 10}}&nbsp;{{notif.sender.last_name | truncate: 10}}</strong>
-            {{notif.message | truncate: 75}}</p>
-          <p class="time-ago text-lowercase">{{notif.created | amFromUnix | amTimeAgo}}</p>
+            <strong>{{notif.actor.name | truncate: 10}}</strong>
+            {{notif.metadata.message | truncate: 75}}</p>
+          <p class="time-ago text-lowercase">{{ notif.metadata.createdTime | myTimeStamp | amFromUnix  | amTimeAgo}}</p>
         </div>
       </li>
       <div class="list-bottom">

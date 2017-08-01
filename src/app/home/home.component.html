@@ -7,6 +7,7 @@
         <span class="type-event-name text-capitalize text-ellipsis">All</span>
       </li>
       <li *ngFor="let event of categories, let index = index" (click)="onSelectEventType(event)"
+          [title]="event.name"
           [class.active]="event.selected" class="type-event-item">
         <img [src]="event.icon" width="30" height="30">
         <span class="type-event-name text-capitalize">{{event.name}}</span>
@@ -45,7 +46,7 @@
       <a (click)="onClearForm()" class="clear-filters-button">clear filters</a>
       <div class="clearfix"></div>
       <div *ngIf="showPrice" class="pricePreview">
-        S${{priceRange[0]}}-$S{{priceRange[1]}}
+        $ {{priceRange[0]}} - {{priceRange[1]}}
       </div>
       <nouislider *ngIf="showPrice" [connect]="true" [min]="0" [max]="300" [step]="10"
                   [tooltips]="[true,true]"
@@ -93,8 +94,7 @@
                 [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
             </h4>
             <a href="javascript:;" class="location_place" *ngIf="item.field_location_place.field_location_address">{{item.field_location_place.field_location_address}}</a>
-            <p class="detail-information"
-               [innerHTML]="item.body | myHtml2Text | truncate : 80"></p>
+            <p class="detail-information" [innerHTML]="item.body | myHtml2Text"></p>
           </div>
           <div class="mentioned-by" *ngIf="item.field_event_option.field_mentioned_by?.length">
             <h5 class="mentioned">Mentioned by</h5>
@@ -195,9 +195,8 @@
       [styles]="gMapStyles"
       (centerChange)="centerChange($event)"
       (boundsChange)="boundsChange($event)"
-      [draggable]="true">
+      [mapDraggable]="true">
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
-                           [circleDraggable]="circleDraggable"
                            [lat]="lat"
                            (markerClick)="clickedMarker($event)"
                            [lng]="lng"></gmap-geocode-marker>
