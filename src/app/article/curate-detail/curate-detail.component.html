@@ -19,7 +19,7 @@
           </div>
         </div>
         <div *ngFor="let plc of article.field_places; let index=index" class="place-item-wrap" [id]="'place-'+index">
-          <ng-template *ngIf="!plc.field_place_address || field_place_address.field_place_comment">
+          <ng-template *ngIf="!plc.field_place_address || !plc.field_place_comment">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
               <h2 class="place-name">{{plc.field_place_address}}</h2>
