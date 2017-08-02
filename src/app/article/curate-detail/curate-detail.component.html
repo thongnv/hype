@@ -18,8 +18,8 @@
           <div class="description text-justify" [innerHtml]="article.body">
           </div>
         </div>
-        <div *ngFor="let plc of article.field_places; let index=index" class="place-item-wrap" [id]="'place-'+index">
-          <ng-template *ngIf="!plc.field_place_address || !plc.field_place_comment">
+        <div *ngFor="let plc of article.field_places; let index=index">
+          <div *ngIf="plc.field_place_address && plc.field_place_comment" class="place-item-wrap" [id]="'place-'+index">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
               <h2 class="place-name">{{plc.field_place_address}}</h2>
@@ -32,7 +32,7 @@
               <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
             </div>
             <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
-          </ng-template>
+          </div>
         </div>
         <div class="mobile-footer"></div>
     </div>
