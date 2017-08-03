@@ -90,16 +90,8 @@ export class EventService {
       data,
       options
     )
-      .map((res: Response) => {
-        return res.json();
-      })
-      .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
+      .map((res: Response) => res.json())
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
