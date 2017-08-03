@@ -34,7 +34,7 @@ export class ShareEventComponent implements OnInit {
     eventStartDate: [''],
     eventEndDate: [''],
     eventPrices: this.fb.array(['']),
-    eventOrganized: [''],
+    eventOrganizer: [''],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
@@ -53,9 +53,11 @@ export class ShareEventComponent implements OnInit {
   public showPreview: boolean = false;
   public slides: any[] = [];
   public addImage: boolean = true;
+
   public startDate = new Date();
   public endDate = new Date();
   public today = new Date();
+
   public types = [
     {value: '1', display: 'Buy Tix'},
     {value: '2', display: 'More Info'}
@@ -87,7 +89,6 @@ export class ShareEventComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185);
   }
@@ -362,7 +363,7 @@ function mapEvent(event) {
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
     field_event_tags: event.eventTags,
-    field_organized: event.eventOrganized,
+    field_organized: event.organizer,
     field_location_place: [{
       field_latitude: event.eventPlace.lat,
       field_longitude: event.eventPlace.lng,

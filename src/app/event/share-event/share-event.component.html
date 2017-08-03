@@ -154,7 +154,7 @@
           <div class="form-group">
             <label>Organized by</label>
             <div>
-              <input formControlName="eventOrganized" id="event-organized"
+              <input formControlName="eventOrganizer" id="event-organized"
                      class="form-control"
                      type="text"
               >
@@ -247,10 +247,10 @@
               </a>
             </span>
             </li>
-            <li *ngIf="previewData.eventOrganized">
+            <li *ngIf="previewData.organizer">
               <span class="info-label"><i
                 class="sprite sprite-tag"></i><span>Organized by</span></span>
-              <span class="info-value col-md-7 no-padding-left">{{previewData.eventOrganized}}
+              <span class="info-value col-md-7 no-padding-left">{{previewData.organizer}}
               </span>
             </li>
             <li *ngIf="previewData.eventMentions?.length > 1">
