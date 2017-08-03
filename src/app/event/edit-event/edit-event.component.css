@@ -62,9 +62,16 @@ header ul li.active {
 }
 
 .input-box .form-group {
-  /*width: 90%;*/
   margin-left: 10px;
   margin-bottom: 30px;
+}
+
+.form-item {
+  margin-bottom: 10px;
+}
+
+.input-box .mention-by-group {
+  margin: 0;
 }
 
 .input-box .form-group label {
@@ -486,7 +493,7 @@ span.dollar-character {
 }
 
 .mention-by-group .form-group input {
-
+  margin: 0;
 }
 
 .form-wrap .option-info-content {
@@ -750,7 +757,6 @@ span.dollar-character {
 
   .mention-by-group .form-group {
     margin: 5px 0;
-
   }
 
   .list-preview-wrap > .row {

@@ -29,7 +29,7 @@ export class EventService {
       },
       images: extractImages(data.field_image),
       detail: data.body,
-      startDate: data.created * 1000,
+      startDate: data.field_event_option.field_start_date_time * 1000,
       endDate: data.field_event_option.field_end_date_time * 1000,
       organizer: data.field_organized,
       category: data.field_category,
@@ -230,6 +230,7 @@ function extractImages(data): Image[] {
         filename: '',
         filemime: '',
         filesize: '',
+        fid: item.fid
       }
     );
   }

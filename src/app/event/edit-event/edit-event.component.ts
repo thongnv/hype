@@ -10,7 +10,7 @@ import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { HyloEvent, User } from '../../app.interface';
+import { HyloEvent, Image, User } from '../../app.interface';
 
 @Component({
   selector: 'app-edit-event',
@@ -19,31 +19,43 @@ import { HyloEvent, User } from '../../app.interface';
 })
 export class EditEventComponent implements OnInit {
 
-  public eventForm: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    detail: ['', Validators.required],
-    category: ['', Validators.required],
-    place: this.formBuilder.group({
+  public eventForm: FormGroup = this.formBuilder.group(
+    {
       name: ['', Validators.required],
-      lat: [''],
-      lng: [''],
-    }),
-    date: [''],
-    price: [''],
-    call2action: this.formBuilder.group({
-      action: [''],
-      link: [''],
-    }),
-    images: [''],
-    mentions: this.formBuilder.array([]),
-  });
+      detail: ['', Validators.required],
+      category: ['', Validators.required],
+      tags: this.formBuilder.array(['']),
+      place: this.formBuilder.group(
+        {
+          name: ['', Validators.required],
+          lat: [''],
+          lng: [''],
+        }
+      ),
+      startDate: [''],
+      endDate: [''],
+      prices: this.formBuilder.array(['']),
+      call2action: this.formBuilder.group(
+        {
+          action: [''],
+          link: ['', Validators.maxLength(255)],
+        }
+      ),
+      images: [''],
+      organizer: [''],
+      mentions: this.formBuilder.array([]),
+    }
+  );
 
   public event: HyloEvent;
   public user: User;
 
   public previewData: any;
   public categories: any[];
-  public previewUrl: any[] = [];
+  public previewUrls: Image[] = [];
+
+  public canAddMoreImages = true;
+
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -53,7 +65,13 @@ export class EditEventComponent implements OnInit {
   public actions = [];
   public gMapStyles: any;
   public validCaptcha = false;
-  public displayDate: Date;
+
+  public startDate: Date;
+  public endDate: Date;
+  public today = new Date();
+
+  public prices = [];
+  public tags = [];
 
   public submitted: boolean = false;
   public ready = false;
@@ -81,15 +99,19 @@ export class EditEventComponent implements OnInit {
       this.eventService.getEventDetail(e.slug).subscribe(
         (resp) => {
           this.event = EventService.extractEventDetail(resp);
-          this.eventForm.controls.place.patchValue({
-            place: this.event.location.name,
-            lat: this.event.location.lat,
-            lng: this.event.location.lng,
-          });
-          this.displayDate = new Date(this.event.startDate);
-          this.previewUrl = this.event.images;
+          this.eventForm.controls.place.patchValue(
+            {
+              name: this.event.location.name,
+              lat: this.event.location.lat,
+              lng: this.event.location.lng,
+            }
+          );
+          this.startDate = new Date(this.event.startDate);
+          this.endDate = new Date(this.event.endDate);
+          this.previewUrls = this.event.images;
           this.actions = [this.event.call2action];
           this.eventForm.controls.mentions = this.formBuilder.array(this.event.mentions);
+          this.eventForm.controls.tags = this.formBuilder.array(this.event.tags);
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
@@ -102,6 +124,37 @@ export class EditEventComponent implements OnInit {
       );
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
+  }
+
+  public onSubmit(): void {
+    if (!this.submitted) {
+      this.submitted = true;
+      let event = this.eventForm.value;
+      event.images = this.previewUrls;
+      event.created = moment(event.date).unix();
+      let data = mapEvent(event);
+      this.loaderService.show();
+      this.eventService.postEvent(data).subscribe(
+        (response: any) => {
+          if (response.status) {
+            this.loaderService.hide();
+            this.submitted = false;
+            this.router.navigate([response.data.slug]).then();
+          }
+        },
+        (error) => {
+          console.log(error);
+          this.submitted = false;
+          this.loaderService.hide();
+        }
+      );
+    }
+  }
+
+  public onStartDateChange() {
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
   }
 
   public onPriceChange(evt) {
@@ -118,18 +171,17 @@ export class EditEventComponent implements OnInit {
 
   public onMapsChangePlace(data) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+    let geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
-        // set lat long for place
-        this.eventForm.controls.place.patchValue({
-          place: data.structured_formatting.main_text,
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        });
+        this.eventForm.controls.place.patchValue(
+          {
+            place: data.structured_formatting.main_text,
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          }
+        );
       }
-
-      // hide result
       this.hyperSearchComponent.hideSearchResult = true;
     });
   }
@@ -144,9 +196,9 @@ export class EditEventComponent implements OnInit {
   }
 
   public onRemovePreview(imageUrl) {
-    let imageId = this.previewUrl.indexOf(imageUrl);
-    delete this.previewUrl[imageId];
-    this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
+    let imageId = this.previewUrls.indexOf(imageUrl);
+    delete this.previewUrls[imageId];
+    this.previewUrls = this.previewUrls.filter((img) => img !== imageUrl);
   }
 
   public checkCaptcha(captcha) {
@@ -157,25 +209,43 @@ export class EditEventComponent implements OnInit {
 
   public readUrl(event) {
     let reader = [];
-    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+    if (event.target.files && event.target.files[0] && this.previewUrls.length < 4) {
+      let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
-        reader[i] = new FileReader();
-        reader[i].onload = (e) => {
-          let image = new Image();
-          image.src = e.target.result;
-          this.resizeImage(image, 480, 330, (resizedImage) => {
-            let img = {
-              url: resizedImage,
-              value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-              filename: event.target.files[i].name,
-              filemime: event.target.files[i].type
-            };
-            this.previewUrl.push(img);
-          });
-        };
-        reader[i].readAsDataURL(event.target.files[i]);
+        let size = event.target.files[i].size;
+        let type = event.target.files[i].type;
+        if (size < 6291456 && typeFile.test(type)) {
+          reader[i] = new FileReader();
+          reader[i].onload = (e) => {
+            let image = new Image();
+            image.src = e.target.result;
+
+            this.resizeImage(image, 480, 330, (resizedImage) => {
+              let img: Image = {
+                url: resizedImage,
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type,
+                filesize: event.target.files[i].size,
+                fid: null
+              };
+              if (this.previewUrls.length < 4) {
+                this.previewUrls.push(img);
+              }
+              if (this.previewUrls.length >= 4) {
+                this.canAddMoreImages = false;
+              }
+            });
+          };
+          reader[i].readAsDataURL(event.target.files[i]);
+        }
       }
     }
+  }
+
+  public addPrice() {
+    const prices = this.eventForm.get('prices') as FormArray;
+    prices.push(new FormControl());
   }
 
   public addMention() {
@@ -187,27 +257,9 @@ export class EditEventComponent implements OnInit {
     this.showPreview = !this.showPreview;
   }
 
-  public onSubmit(): void {
-    if (!this.submitted) {
-      this.submitted = true;
-      let event = this.eventForm.value;
-      event.images = this.previewUrl;
-      event.created = moment(event.date).unix();
-      let data = mapEvent(event);
-      this.loaderService.show();
-      this.eventService.postEvent(data).subscribe((response: any) => {
-        if (response.status) {
-          this.loaderService.hide();
-          this.submitted = false;
-          this.router.navigate([response.data.slug]).then();
-        }
-      });
-    }
-  }
-
   public onPreview() {
     let event = this.eventForm.value;
-    event.images = this.previewUrl;
+    event.images = this.previewUrls;
     event.Date = moment(event.date).unix();
     this.previewData = event;
     this.initPreview();
@@ -216,7 +268,7 @@ export class EditEventComponent implements OnInit {
   public initPreview() {
     this.showPreview = true;
     this.slides = [];
-    for (let img of this.previewUrl) {
+    for (let img of this.previewUrls) {
       if (img) {
         this.slides.push({image: img.url, active: false});
       }
@@ -268,7 +320,7 @@ export class EditEventComponent implements OnInit {
   }
 }
 
-function  mapEvent(event) {
+function mapEvent(event) {
   return {
     title: event.name,
     body: event.detail,

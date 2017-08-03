@@ -59,22 +59,23 @@
         </div>
         <div class="form-group list-img-box col-md-12 col-xs-12">
           <label class="control-label">Images</label>
-          <label class="control-label" id="list-img-label" for="listImg" *ngIf="previewUrl.length < 4">
+          <label class="control-label" id="list-img-label" for="listImg" *ngIf="previewUrls.length < 4">
             <i class="fa fa-plus"></i>&nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="images" type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="!previewUrl" class="text-danger">
+          <small *ngIf="!previewUrls" class="text-danger">
             Event images is required
           </small>
           <div class="list-img-wrap">
-            <div *ngFor="let img of previewUrl" class="preview-wrap">
+            <div *ngFor="let img of previewUrls" class="preview-wrap">
               <img [src]="img.url"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
           </div>
         </div>
       </div>
+
       <div class="option-info">
         <a (click)="showMore = !showMore">
           <i class="fa" [class.fa-plus]="!showMore" [class.fa-minus]="showMore" aria-hidden="true"></i> Optional info
@@ -83,23 +84,42 @@
       <div *ngIf="showMore" class="row option-info-content">
         <div class="input-box">
           <div class="form-group">
-            <label for="event-date">Date & Time</label>
-            <input [(ngModel)]="displayDate" id="event-date" required formControlName="date" ngui-datetime-picker/>
+            <label for="event-start-date">Start Date / Time</label>
+            <input id="event-start-date"
+                   readonly
+                   required
+                   [(ngModel)]="startDate"
+                   [min-date]="today"
+                   (valueChanged)="onStartDateChange()"
+                   formControlName="startDate"
+                   ngui-datetime-picker/>
           </div>
           <div class="form-group">
-            <label for="event-price">Price</label>
-            <input formControlName="price" id="event-price"
-                   class="form-control"
+            <label for="event-end-date">End Date / Time</label>
+            <input id="event-end-date"
+                   readonly
+                   required
+                   [min-date]="startDate"
+                   [(ngModel)]="endDate"
+                   formControlName="endDate"
+                   ngui-datetime-picker/>
+          </div>
+          <div class="form-group" formArrayName="prices">
+            <label>Price ($)</label>
+            <input *ngFor="let price of eventForm.controls.prices.controls; let i=index"
+                   [formControlName]="i"
+                   class="form-control form-item"
                    min="0"
                    max="300"
-                   [value]="event.price"
+                   value="0"
                    type="number"
                    (change)="onPriceChange($event)">
-            <span class="dollar-character">$</span>
-            <small id="priceErr"
-                   class="text-danger">
-            </small>
+            <small id="eventPriceErr" class="text-danger"></small>
+            <button type="button" class="btn btn-success add-mention-btn" (click)="addPrice()">
+              <i class="fa fa-plus"></i>&nbsp;Add Price
+            </button>
           </div>
+
           <div class="form-group field-group call-action-group row">
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
@@ -111,12 +131,20 @@
               <i class="fa fa-link" aria-hidden="true"></i>
             </div>
           </div>
+          <div class="form-group">
+            <label>Organized by</label>
+            <div>
+              <input formControlName="organizer" id="event-organized"
+                     class="form-control"
+                     type="text">
+            </div>
+          </div>
           <div class="form-group  mention-by-group">
-            <label>Mentioned By</label>
+            <label>Mentioned by</label>
             <div formArrayName="mentions">
-              <div class="form-group" *ngFor="let mention of eventForm.controls.mentions.controls; let i=index">
-                <input type="text" *ngIf="mention.value" [value]="mention.value.url" class="form-control" [formControlName]="i">
-                <input type="text" *ngIf="!mention.value" class="form-control" [formControlName]="i">
+              <div *ngFor="let mention of eventForm.controls.mentions.controls; let i=index">
+                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
+                       class="form-control form-item" [formControlName]="i">
               </div>
             </div>
           </div>
@@ -133,7 +161,7 @@
       </div>
       <div class="form-actions">
         <button type="submit"
-                [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">
+                [disabled]="eventForm.invalid || previewUrls.length == 0 || !validCaptcha" class="btn btn-primary">
           Update
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
@@ -158,33 +186,61 @@
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
-              <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span>
-              <span class="info-value">{{previewData.place.place}}</span>
+              <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span><span
+              class="info-value">{{previewData.place.place}}</span>
+              <div class="clear"></div>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-icon-calendar"></i><span>date / time</span></span>
-              <span class="info-value">{{previewData.Date*1000 | date:'d MMMM y / HH:mm'}}</span>
-            </li>
-            <li>
-              <span class="info-label"><i class="sprite sprite-tag"></i><span>price range</span></span>
-              <span class="info-value">
-                <span *ngIf="previewData.price">{{previewData.price}}$</span>
-                <span *ngIf="!previewData.price">Free</span>
-                <b>.</b>
-                <a href="{{previewData.call2action.link}}">
-                  <strong>{{previewData.call2action.action}}</strong>
-                </a>
+              <span class="info-label">
+                <i class="sprite sprite-icon-calendar"></i>
+                <span>start date / time</span>
               </span>
+              <span class="info-value">{{startDate | date:'dd MMMM y, hh:mm a'}}</span>
+              <div class="clear"></div>
             </li>
             <li>
+              <span class="info-label"><i
+                class="sprite sprite-icon-calendar"></i>
+                <span>end date / time</span>
+              </span>
+              <span class="info-value">{{endDate | date:'dd MMMM y, hh:mm a'}}</span>
+              <div class="clear"></div>
+            </li>
+            <li>
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Prices</span></span>
+              <span class="info-value">
+                <span *ngIf="prices">
+                  <span *ngFor="let price of prices">${{price}}, </span>
+                </span>
+                <span *ngIf="!prices">Free</span>
+              </span>
+              <div class="clear"></div>
+            </li>
+            <li>
+              <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
+              </span>
+              <span class="info-value">
+              <a href="{{previewData.call2action.link}}" target="_blank" class="mention_link">
+                <span class="action">{{previewData.call2action.action}}</span>
+              </a>
+            </span>
+              <div class="clear"></div>
+            </li>
+            <li *ngIf="previewData.organizer">
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Organized by</span></span>
+              <span class="info-value">{{previewData.organizer}}
+              </span>
+              <div class="clear"></div>
+            </li>
+            <li *ngIf="previewData.mentions.length">
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
-                <li *ngFor="let mention of previewData.mentions">
-                  <a [href]="mention" target="_blank" *ngIf="mention !==''">
-                    <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
-                  </a>
+                <li class="mention" *ngFor="let mention of previewData.mentions">
+                  <a [href]="mention.url" target="_blank">
+                    <img [src]="mention.iconUrl" alt="mention"></a>
                 </li>
               </ul>
+              <div class="clear"></div>
             </li>
           </ul>
           <div class="right-creator-share-event text-center pull-right">
@@ -260,6 +316,7 @@
   <!--list preview wrap end-->
 
   <!--Hacking to display correct date format-->
-  <input [(ngModel)]="displayDate" ngui-datetime-picker date-only="true" style="display: none">
+  <input [(ngModel)]="startDate" ngui-datetime-picker date-only="true" style="display: none">
+  <input [(ngModel)]="endDate" ngui-datetime-picker time-only="true" style="display: none">
 
 </article>
