@@ -29,7 +29,8 @@
     border: none;
 }
 .map-option .icon-down-left-navbar {
-    display: inline-block;
+  display: inline-block;
+  margin-left: 5px;
 }
 
 .head_create_btn[_ngcontent-c1] {
