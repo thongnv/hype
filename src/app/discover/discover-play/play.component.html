@@ -191,8 +191,10 @@
             </ng-template>
           </ngb-rating>
           <span class="review">{{item.rating.total}} Reviews</span>
-          <div class="box-content">
-            <p *ngIf="item.Hylo_Activity_Description !==''" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 60"></p>
+          <div class="box-content"
+               *ngIf="item.Hylo_Activity_Description !==''"
+               [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 200">
+
           </div>
         </div>
         <div class="clearfix"></div>
