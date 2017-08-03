@@ -76,7 +76,7 @@
             <input class="form-control col-xs-12" id="listImg"  type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="!previewUrl.length" class="text-danger">
+          <small *ngIf="!previewUrls.length" class="text-danger">
             Event images is required
           </small>
           <small *ngIf="!validSize || !validType" class="text-danger">
@@ -84,7 +84,7 @@
             Allowed file types: jpg, jpeg, png, gif, bmp.
           </small>
           <div class="list-img-wrap">
-            <div *ngFor="let img of previewUrl" class="preview-wrap">
+            <div *ngFor="let img of previewUrls" class="preview-wrap">
               <img src="{{img.url}}"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
@@ -181,7 +181,7 @@
         </re-captcha>
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha"
+        <button type="submit" [disabled]="eventForm.invalid || previewUrls.length == 0 || !validCaptcha"
                 class="btn btn-primary">
           Share
         </button>

@@ -101,6 +101,7 @@ export interface FileReaderEvent extends Event {
 }
 
 export interface Image {
+  fid: number;
   url: string;
   value: string;
   filename: string;
