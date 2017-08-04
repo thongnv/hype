@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
-import {HelperModule} from '../helper/helper.module';
-import {SlimScrollModule} from '../slim-scroll/slim-scroll.module';
+import { HelperModule } from '../helper/helper.module';
+import { SlimScrollModule } from '../slim-scroll/slim-scroll.module';
 import { ArticleRoutingModule } from './article-routing.module';
 
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
 
 @NgModule({
   imports: [
@@ -18,10 +19,10 @@ import { CurateDetailComponent } from './curate-detail/curate-detail.component';
     ArticleRoutingModule
   ],
   declarations: [
-    CurateDetailComponent
+    CurateDetailComponent,
+    EditArticleComponent
   ],
-  providers: [
-
-  ]
+  providers: []
 })
-export class ArticleModule { }
+export class ArticleModule {
+}
