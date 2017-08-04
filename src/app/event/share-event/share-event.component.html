@@ -18,7 +18,7 @@
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
           <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control"
-                 type="text">
+                 type="text" autofocus>
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
             Please enter event name.

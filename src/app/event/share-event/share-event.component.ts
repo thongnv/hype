@@ -99,7 +99,6 @@ export class ShareEventComponent implements OnInit {
     this.titleService.setTitle('Share An Event');
     this.loaderService.show();
     this.user = this.localStorageService.get('user');
-    document.getElementById('event-name').focus();
     if (!this.user) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
@@ -152,8 +151,8 @@ export class ShareEventComponent implements OnInit {
 
   public onMapsChangePlace(data) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+    let geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
         this.eventForm.controls.eventPlace.patchValue({
@@ -359,7 +358,6 @@ export class ShareEventComponent implements OnInit {
 
 function mapEvent(event) {
   return {
-    nid: event.id,
     title: event.eventName,
     body: event.eventDetail,
     created: event.startDate,
@@ -378,6 +376,7 @@ function mapEvent(event) {
       field_call_to_action_link: event.call2action.eventLink,
       field_price: event.eventPrices,
       field_mentioned_by: event.eventMentions,
+      field_start_date_time: event.startDate,
       field_end_date_time: event.endDate
     }]
   };
