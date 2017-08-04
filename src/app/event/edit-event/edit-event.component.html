@@ -11,8 +11,7 @@
   <!--form wrap start-->
   <div class="form-wrap col-xs-12 col-md-6" [class.hide]="showPreview">
 
-    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()"
-          (keydown.enter)="$event.preventDefault()">
+    <form class="form-horizontal" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
       <div class="input-box row">
         <h3 class="col-md-12 col-xs-12">Share an Event</h3>
         <small class="col-md-12 col-xs-12">An event is an activity tagged to a place</small>
@@ -179,7 +178,7 @@
       </div>
       <div class="form-actions">
         <button type="submit"
-                [disabled]="eventForm.invalid || previewUrls.length == 0" class="btn btn-primary">
+                [disabled]="eventForm.invalid || previewUrls.length == 0 || !validCaptcha" class="btn btn-primary">
           Update
         </button>
         <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment/moment';
@@ -45,13 +45,13 @@ export class EditEventComponent implements OnInit {
       ),
       images: [''],
       organizer: [''],
-      mentions: this.formBuilder.array([]),
+      mentions: this.formBuilder.array(['']),
     }
   );
 
   public actionTypes = [
-    {value: '1', display: 'Buy Tix'},
-    {value: '2', display: 'More Info'}
+    {value: '1', display: 'Buy tix'},
+    {value: '2', display: 'More info'}
   ];
 
   public event: HyloEvent;
@@ -87,6 +87,7 @@ export class EditEventComponent implements OnInit {
   private hyperSearchComponent: HyperSearchComponent;
 
   constructor(public formBuilder: FormBuilder,
+              private titleService: Title,
               private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
@@ -103,36 +104,14 @@ export class EditEventComponent implements OnInit {
     }
     this.route.params.subscribe((e) => {
       this.loaderService.show();
+      this.gMapStyles = AppSetting.GMAP_STYLE;
       this.eventService.getEventDetail(e.slug).subscribe(
         (resp) => {
           this.event = EventService.extractEventDetail(resp);
-          this.eventForm.controls.place.patchValue(
-            {
-              id: this.event.location.id,
-              name: this.event.location.name,
-              lat: this.event.location.lat,
-              lng: this.event.location.lng,
-            }
-          );
+          this.titleService.setTitle(this.event.name);
           this.startDate = new Date(this.event.startDate);
-          if (!this.event.startDate) {
-            this.startDate = this.today;
-          }
           this.endDate = new Date(this.event.endDate);
           this.previewUrls = this.event.images;
-          let actionValue = 1;
-          if (this.event.call2action.action === 'More Info') {
-            actionValue = 2;
-          }
-          this.eventForm.controls.call2action.patchValue(
-            {
-              id: this.event.call2action.id,
-              type: actionValue,
-              link: this.event.call2action.link,
-            }
-          );
-          this.eventForm.controls.mentions = this.formBuilder.array(this.event.mentions);
-          this.eventForm.controls.prices = this.formBuilder.array(this.event.prices);
           this.tags = this.event.tags;
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
@@ -147,11 +126,11 @@ export class EditEventComponent implements OnInit {
               this.loaderService.hide();
             }
           );
+          this.loadDataIntoForm();
         },
         (error) => console.log(error)
       );
     });
-    this.gMapStyles = AppSetting.GMAP_STYLE;
   }
 
   public onSubmit(): void {
@@ -167,11 +146,8 @@ export class EditEventComponent implements OnInit {
       this.loaderService.show();
       this.eventService.updateEvent(data).subscribe(
         (response: any) => {
-          if (response.status) {
-            this.loaderService.hide();
-            this.submitted = false;
-            this.router.navigate([response.data.slug]).then();
-          }
+          this.loaderService.hide();
+          this.router.navigate([response.data.slug]).then();
         },
         (error) => {
           console.log(error);
@@ -219,7 +195,7 @@ export class EditEventComponent implements OnInit {
 
   public onHyloChangePlace(data) {
     this.eventForm.controls.place.patchValue({
-      place: data.Title,
+      name: data.Title,
       lat: Number(data.Lat),
       lng: Number(data.Long),
     });
@@ -306,6 +282,42 @@ export class EditEventComponent implements OnInit {
     }
   }
 
+  private loadDataIntoForm() {
+    this.eventForm.controls.place.patchValue(
+      {
+        id: this.event.location.id,
+        name: this.event.location.name,
+        lat: this.event.location.lat,
+        lng: this.event.location.lng,
+      }
+    );
+    if (!this.event.startDate) {
+      this.startDate = this.today;
+    }
+    let actionValue = 1;
+    if (this.event.call2action.action === 'More info') {
+      actionValue = 2;
+    }
+    this.eventForm.controls.call2action.patchValue(
+      {
+        id: this.event.call2action.id,
+        type: actionValue,
+        link: this.event.call2action.link,
+      }
+    );
+    this.eventForm.controls.organizer.patchValue(this.event.organizer);
+    if (this.event.mentions.length) {
+      let mentions = [];
+      for (let mention of this.event.mentions) {
+        mentions.push(mention.url);
+      }
+      this.eventForm.controls.mentions = this.formBuilder.array(mentions);
+    }
+    if (this.event.prices.length) {
+      this.eventForm.controls.prices = this.formBuilder.array(this.event.prices);
+    }
+  }
+
   private processTags(inputTags) {
     let tags = [];
     for (let tag of inputTags) {
@@ -375,6 +387,7 @@ function mapEvent(event) {
     field_images: event.images,
     field_event_category: event.category,
     field_event_tags: event.tags,
+    field_organized: event.organizer,
     field_location_place: [{
       fcl_id: event.place.id,
       field_latitude: event.place.lat,
