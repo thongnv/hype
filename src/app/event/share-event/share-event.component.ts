@@ -41,6 +41,12 @@ export class ShareEventComponent implements OnInit {
     }),
     eventMentions: this.fb.array(['']),
   });
+
+  public actionTypes = [
+    {value: '1', display: 'Buy Tix'},
+    {value: '2', display: 'More Info'}
+  ];
+
   public user: any;
   public previewData: any;
   public categories: any[];
@@ -58,10 +64,6 @@ export class ShareEventComponent implements OnInit {
   public endDate = new Date();
   public today = new Date();
 
-  public types = [
-    {value: '1', display: 'Buy Tix'},
-    {value: '2', display: 'More Info'}
-  ];
   public gMapStyles: any;
   public validCaptcha = false;
   public validSize = true;
@@ -357,6 +359,7 @@ export class ShareEventComponent implements OnInit {
 
 function mapEvent(event) {
   return {
+    nid: event.id,
     title: event.eventName,
     body: event.eventDetail,
     created: event.startDate,
@@ -365,6 +368,7 @@ function mapEvent(event) {
     field_event_tags: event.eventTags,
     field_organized: event.organizer,
     field_location_place: [{
+      fcl_id: event.call2action.fcl_id,
       field_latitude: event.eventPlace.lat,
       field_longitude: event.eventPlace.lng,
       field_location_address: event.eventPlace.place

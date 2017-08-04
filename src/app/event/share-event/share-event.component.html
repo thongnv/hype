@@ -139,7 +139,7 @@
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
               <select name="" id="event-type" formControlName="eventType">
-                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+                <option *ngFor="let type of actionTypes" [value]="type.value">{{type.display}}</option>
               </select>
               <input placeholder="http://www.sistic.com.sg"
                      formControlName="eventLink"
