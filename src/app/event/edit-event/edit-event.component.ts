@@ -24,9 +24,10 @@ export class EditEventComponent implements OnInit {
       name: ['', Validators.required],
       detail: ['', Validators.required],
       category: ['', Validators.required],
-      tags: this.formBuilder.array(['']),
+      tags: ['', Validators.required],
       place: this.formBuilder.group(
         {
+          id: ['', Validators.required],
           name: ['', Validators.required],
           lat: [''],
           lng: [''],
@@ -37,7 +38,8 @@ export class EditEventComponent implements OnInit {
       prices: this.formBuilder.array(['']),
       call2action: this.formBuilder.group(
         {
-          action: [''],
+          id: [''],
+          type: [''],
           link: ['', Validators.maxLength(255)],
         }
       ),
@@ -46,6 +48,11 @@ export class EditEventComponent implements OnInit {
       mentions: this.formBuilder.array([]),
     }
   );
+
+  public actionTypes = [
+    {value: '1', display: 'Buy Tix'},
+    {value: '2', display: 'More Info'}
+  ];
 
   public event: HyloEvent;
   public user: User;
@@ -62,7 +69,6 @@ export class EditEventComponent implements OnInit {
   public showMore: boolean = true;
   public showPreview: boolean = false;
   public slides = [];
-  public actions = [];
   public gMapStyles: any;
   public validCaptcha = false;
 
@@ -72,6 +78,7 @@ export class EditEventComponent implements OnInit {
 
   public prices = [];
   public tags = [];
+  public allTags = [];
 
   public submitted: boolean = false;
   public ready = false;
@@ -101,21 +108,42 @@ export class EditEventComponent implements OnInit {
           this.event = EventService.extractEventDetail(resp);
           this.eventForm.controls.place.patchValue(
             {
+              id: this.event.location.id,
               name: this.event.location.name,
               lat: this.event.location.lat,
               lng: this.event.location.lng,
             }
           );
           this.startDate = new Date(this.event.startDate);
+          if (!this.event.startDate) {
+            this.startDate = this.today;
+          }
           this.endDate = new Date(this.event.endDate);
           this.previewUrls = this.event.images;
-          this.actions = [this.event.call2action];
+          let actionValue = 1;
+          if (this.event.call2action.action === 'More Info') {
+            actionValue = 2;
+          }
+          this.eventForm.controls.call2action.patchValue(
+            {
+              id: this.event.call2action.id,
+              type: actionValue,
+              link: this.event.call2action.link,
+            }
+          );
           this.eventForm.controls.mentions = this.formBuilder.array(this.event.mentions);
-          this.eventForm.controls.tags = this.formBuilder.array(this.event.tags);
+          this.eventForm.controls.prices = this.formBuilder.array(this.event.prices);
+          this.tags = this.event.tags;
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
               this.ready = true;
+              this.loaderService.hide();
+            }
+          );
+          this.eventService.getTagsEvent().subscribe(
+            (response: any) => {
+              this.allTags = response.data;
               this.loaderService.hide();
             }
           );
@@ -130,11 +158,14 @@ export class EditEventComponent implements OnInit {
     if (!this.submitted) {
       this.submitted = true;
       let event = this.eventForm.value;
+      event.id = this.event.id;
       event.images = this.previewUrls;
-      event.created = moment(event.date).unix();
+      event.startDate = moment(event.startDate).unix();
+      event.endDate = moment(event.endDate).unix();
+      event.tags = this.processTags(event.tags);
       let data = mapEvent(event);
       this.loaderService.show();
-      this.eventService.postEvent(data).subscribe(
+      this.eventService.updateEvent(data).subscribe(
         (response: any) => {
           if (response.status) {
             this.loaderService.hide();
@@ -275,7 +306,23 @@ export class EditEventComponent implements OnInit {
     }
   }
 
-  // helper functions
+  private processTags(inputTags) {
+    let tags = [];
+    for (let tag of inputTags) {
+      let addTag = this.allTags.filter(
+        (term) => term.name === tag
+      );
+      if (!addTag[0]) {
+        addTag[0] = {
+          tid: null,
+          name: tag
+        };
+      }
+      tags.push(addTag[0]);
+    }
+    return tags;
+  }
+
   private resizeImage(img, maxWidth, maxHeight, callback) {
     return img.onload = () => {
       // get image dimension
@@ -322,21 +369,26 @@ export class EditEventComponent implements OnInit {
 
 function mapEvent(event) {
   return {
+    nid: event.id,
     title: event.name,
     body: event.detail,
-    created: event.created,
     field_images: event.images,
     field_event_category: event.category,
+    field_event_tags: event.tags,
     field_location_place: [{
+      fcl_id: event.place.id,
       field_latitude: event.place.lat,
       field_longitude: event.place.lng,
-      field_location_address: event.place.place
+      field_location_address: event.place.name
     }],
     field_event_option: [{
-      field_call_to_action_group: event.call2action.action,
+      fcl_id: event.call2action.id,
+      field_call_to_action_group: event.call2action.type,
       field_call_to_action_link: event.call2action.link,
-      field_price: event.price,
-      field_mentioned_by: event.mentions
+      field_price: event.prices,
+      field_mentioned_by: event.mentions,
+      field_start_date_time: event.startDate,
+      field_end_date_time: event.endDate,
     }]
   };
 }

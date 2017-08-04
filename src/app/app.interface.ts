@@ -47,6 +47,7 @@ export interface HyloEvent {
 }
 
 export interface Location {
+  id: number;
   name: string;
   lat: number;
   lng: number;
@@ -58,6 +59,7 @@ export interface Icon {
 }
 
 export interface Call2Action {
+  id: number;
   action: string;
   link: string;
 }
