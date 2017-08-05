@@ -18,7 +18,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 export class CurateEditComponent implements OnInit {
   public favorite: any;
   public categories: any[];
-  public selectedCategories: any[];
+  public selectedCategories = [];
   public listPlaces: any[] = [];
   public markers: any[] = [];
   public showPreview: boolean = false;
@@ -317,7 +317,9 @@ export class CurateEditComponent implements OnInit {
   private loadDataIntoForm(res) {
     this.article = res;
     this.contentControl = res.body;
-    this.selectedCategories = [res.field_category.name];
+    for (let category of res.field_category) {
+      this.selectedCategories.push(category.name);
+    }
     for (let img of res.field_images) {
       this.previewUrls.push({
         fid: img.fid,
