@@ -69,7 +69,6 @@ export class CurateNewComponent implements OnInit {
   public ngOnInit() {
     this.titleService.setTitle('Create A New List');
     this.onAddPlace();
-    this.loaderService.show();
     document.getElementById('list-name').focus();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185);
@@ -83,7 +82,6 @@ export class CurateNewComponent implements OnInit {
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
-        this.loaderService.hide();
       }
     );
   }
@@ -134,7 +132,8 @@ export class CurateNewComponent implements OnInit {
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,
-                filemime: event.target.files[i].type
+                filemime: event.target.files[i].type,
+                filesize: event.target.files[i].size,
               };
               if (this.previewUrl.length < 5) {
                 this.previewUrl.push(img);

@@ -8,7 +8,6 @@ import { SlimScrollModule } from '../slim-scroll/slim-scroll.module';
 import { ArticleRoutingModule } from './article-routing.module';
 
 import { CurateDetailComponent } from './curate-detail/curate-detail.component';
-import { EditArticleComponent } from './edit-article/edit-article.component';
 
 @NgModule({
   imports: [
@@ -19,10 +18,8 @@ import { EditArticleComponent } from './edit-article/edit-article.component';
     ArticleRoutingModule
   ],
   declarations: [
-    CurateDetailComponent,
-    EditArticleComponent
+    CurateDetailComponent
   ],
-  providers: []
-})
+  providers: []})
 export class ArticleModule {
 }

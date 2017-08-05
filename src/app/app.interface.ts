@@ -136,6 +136,8 @@ export interface Company {
 }
 
 export interface Article {
+  id: number;
+  title: string;
   body: string;
   created: number;
   field_category: any[];
