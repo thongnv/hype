@@ -1,16 +1,19 @@
 <section class="page-event">
   <div class="page-event-row" *ngIf="ready">
-    <div class="column col-sm-5 no-padding col-xs-12 left-box frame_left" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+    <div class="column col-sm-5 no-padding col-xs-12 left-box frame_left"
+         [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
 
       <!-- title event start -->
       <div class="title-event border-bottom">
         <a class="left-arrow" routerLink="/home">
           <i class="sprite sprite-icon-left"></i>
         </a>
-        <h1>{{name}}</h1>
-        <a class="icon-edit" routerLink="edit" style="display: none">
-          <i class="sprite sprite-icon-edit"></i>
-        </a>
+        <h1>{{name}}
+          <a class="icon-edit" routerLink="edit" title="Edit">
+            <i class="sprite sprite-edit-icon"></i>
+          </a>
+        </h1>
+
       </div>
       <!-- title event end -->
 
@@ -160,7 +163,8 @@
 
       </div>
     </div>
-    <div class="column col-sm-5 no-padding col-xs-12 gmap-box margin-bottom-25 frame_right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+    <div class="column col-sm-5 no-padding col-xs-12 gmap-box margin-bottom-25 frame_right"
+         [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
 
       <carousel
         [interval]="NextPhotoInterval"
