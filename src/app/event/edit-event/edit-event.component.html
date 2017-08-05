@@ -108,7 +108,7 @@
             <input id="event-end-date"
                    readonly
                    required
-                   [min-date]="startDate"
+                   [min-date]="today"
                    [(ngModel)]="endDate"
                    formControlName="endDate"
                    ngui-datetime-picker/>
@@ -160,8 +160,12 @@
             <label>Mentioned by</label>
             <div formArrayName="mentions">
               <div *ngFor="let mention of eventForm.controls.mentions.controls; let i=index">
-                <input placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in" type="text"
-                       class="form-control form-item" [formControlName]="i">
+                <input
+                  [formControlName]="i"
+                  placeholder="https://wwww.thesmartlocal.com/top-10-things-to-do-in"
+                  type="text"
+                  class="form-control form-item"
+                  (change)="onMentionChange($event)">
               </div>
             </div>
           </div>

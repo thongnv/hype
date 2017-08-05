@@ -164,15 +164,19 @@ export class EditEventComponent implements OnInit {
     }
   }
 
+  public onMentionChange(evt) {
+    this.eventForm.patchValue({mention: evt.target.value});
+  }
+
   public onPriceChange(evt) {
     if (evt.target.valueAsNumber > 300 || evt.target.valueAsNumber < 0) {
       document.getElementById('eventPriceErr').innerText = 'Price($) is a number between 0-300';
     } else if (evt.target.value.length === 0) {
       this.eventForm.patchValue({price: 0});
       document.getElementById('eventPriceErr').innerText = '';
-    }
-    if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
+    } else {
       document.getElementById('eventPriceErr').innerText = '';
+      this.eventForm.patchValue({price: evt.target.value});
     }
   }
 
@@ -183,7 +187,7 @@ export class EditEventComponent implements OnInit {
       if (status.toString() === 'OK') {
         this.eventForm.controls.place.patchValue(
           {
-            place: data.structured_formatting.main_text,
+            name: data.structured_formatting.main_text,
             lat: results[0].geometry.location.lat(),
             lng: results[0].geometry.location.lng()
           }
@@ -229,12 +233,12 @@ export class EditEventComponent implements OnInit {
 
             this.resizeImage(image, 480, 330, (resizedImage) => {
               let img: Image = {
+                fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,
                 filemime: event.target.files[i].type,
-                filesize: event.target.files[i].size,
-                fid: null
+                filesize: event.target.files[i].size
               };
               if (this.previewUrls.length < 4) {
                 this.previewUrls.push(img);
