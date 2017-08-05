@@ -129,6 +129,7 @@ export class CurateNewComponent implements OnInit {
 
             this.resizeImage(image, 680, 360, (resizedImage) => {
               let img = {
+                fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,

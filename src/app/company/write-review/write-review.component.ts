@@ -52,10 +52,12 @@ export class WriteReviewComponent implements OnInit {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
+            fid: null,
             url: URL.createObjectURL(event.target.files[i]),
             value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
             filename: event.target.files[i].name,
-            filemime: event.target.files[i].type
+            filemime: event.target.files[i].type,
+            filesize: event.target.files[i].size
           };
           this.previewUrl.push(img);
         };

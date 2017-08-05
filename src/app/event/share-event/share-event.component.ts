@@ -208,12 +208,12 @@ export class ShareEventComponent implements OnInit {
 
             this.resizeImage(image, 480, 330, (resizedImage) => {
               let img: Image = {
+                fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,
                 filemime: event.target.files[i].type,
                 filesize: event.target.files[i].size,
-                fid: -1
               };
               if (this.previewUrls.length < 4) {
                 this.previewUrls.push(img);
