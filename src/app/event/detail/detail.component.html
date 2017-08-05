@@ -9,7 +9,7 @@
           <i class="sprite sprite-icon-left"></i>
         </a>
         <h1>{{name}}
-          <a class="icon-edit" routerLink="edit" title="Edit">
+          <a *ngIf="isCurrentUser" class="icon-edit" routerLink="edit" title="Edit">
             <i class="sprite sprite-edit-icon"></i>
           </a>
         </h1>
