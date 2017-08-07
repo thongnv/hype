@@ -10,11 +10,11 @@ import { AppSetting } from '../app.setting';
 import { ProfileService } from '../services/profile.service';
 import { User } from '../app.interface';
 import { AppGlobals } from '../services/app.global';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
@@ -31,10 +31,14 @@ export class NavbarComponent implements OnInit {
     loadingInProgress: false
   };
   public user = AppSetting.defaultUser;
-  @ViewChild(NotificationComponent) public NotificationComponent: NotificationComponent;
+  @ViewChild(NotificationComponent)
+  public NotificationComponent: NotificationComponent;
+
   private socket;
 
-  public constructor(public appState: AppState, private mainService: MainService,
+  public constructor(public appState: AppState,
+                     private mainService: MainService,
+                     private userService: UserService,
                      private localStorageService: LocalStorageService,
                      private router: Router,
                      private location: Location,
@@ -114,9 +118,11 @@ export class NavbarComponent implements OnInit {
           this.notifications.unshift(data.data);
         }
       });
-
       this.getNotifications();
     }
+    this.userService.getEmittedUser().subscribe(
+      (data) => this.user = data
+    );
     this.profileService.getEmittedValue().subscribe(
       (data) => {
         this.user.name = data.name;

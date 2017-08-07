@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-logout',
@@ -20,12 +21,21 @@ export class LogoutComponent implements OnInit {
     this.userService.logout().subscribe(
       (res) => {
         console.log(res);
-        this.localStorageService.clearAll();
-        this.router.navigate(['home']).then();
-        window.location.reload();
+        this.goHome();
       },
       (error) => {
         console.log(error);
+        this.goHome();
+      }
+    );
+  }
+
+  private goHome() {
+    this.localStorageService.clearAll();
+    this.router.navigate(['home']).then(
+      (response) => {
+        console.log(response);
+        this.userService.emitUser(AppSetting.defaultUser);
       }
     );
   }

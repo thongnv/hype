@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AppSetting } from '../app.setting';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
+
+  @Output() public userEmitter: EventEmitter<any> = new EventEmitter();
+
   private defaultHeaders = new Headers({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -19,6 +22,14 @@ export class UserService {
   public constructor(private localStorageService: LocalStorageService,
                      private router: Router,
                      private http: Http) {
+  }
+
+  public emitUser(user: User) {
+    this.userEmitter.emit(user);
+  }
+
+  public getEmittedUser() {
+    return this.userEmitter;
   }
 
   public getCsrfToken(): Observable<any> {
@@ -53,9 +64,6 @@ export class UserService {
       AppSetting.API_ENDPOINT + 'user/logout', options
     )
       .catch((error) => {
-        if (error.status === 403) {
-          this.router.navigate(['login']).then();
-        }
         return Observable.throw(new Error(error));
       });
   }

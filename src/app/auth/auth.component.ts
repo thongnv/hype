@@ -8,6 +8,7 @@ import _date = moment.unitOfTime._date;
 import { UserService } from '../services/user.service';
 import { Title } from '@angular/platform-browser';
 import { LoaderService } from '../helper/loader/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -23,6 +24,7 @@ export class AuthComponent implements OnInit {
   private loading = false;
 
   constructor(private facebookService: FacebookService,
+              private router: Router,
               private userService: UserService,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
@@ -78,8 +80,9 @@ export class AuthComponent implements OnInit {
               };
               this.localStorageService.set('user', user);
               this.localStorageService.set('csrf_token', resp.csrf_token);
+              this.userService.emitUser(user);
               this.loading = false;
-              window.location.reload();
+              this.router.navigate(['home']).then();
             },
             (error) => {
               console.log(error);
