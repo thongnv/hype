@@ -583,12 +583,7 @@ export class HomeComponent implements OnInit {
   private getEvents(params) {
     this.loading = true;
 
-    if (this.requestings.length > 0) {
-      this.requestings.forEach(req => {
-        req.unsubscribe();
-      })
-    }
-
+    this.requestings.forEach(req => req.unsubscribe());
     const req = this.homeService.getLatestEvents(this.params)
       .subscribe(
         data => {

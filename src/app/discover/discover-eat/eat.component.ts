@@ -46,19 +46,14 @@ export class EatComponent implements OnInit {
   public mapZoom: number = 12;
   public lat: number = 1.359;
   public lng: number = 103.818;
-  public currentRadius: any = 5000;
   private catParam = {mode_type: ''};
   private total: number = 0;
   public showAll: boolean = true;
   public showTab: boolean = true;
-  public alertType: any = '';
-  public msgContent: any = '';
   public showCircle: boolean = true;
   public gMapStyles: any;
-  public sortPlace: string = 'all';
   private loadMore: boolean = false;
   private end_record: boolean = false;
-  public circleDraggable: boolean = false;
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public totalCuisine: number = 0;
@@ -90,6 +85,8 @@ export class EatComponent implements OnInit {
   private boundsChangeDefault = {lat:'', lng:''};
 
   public sortBy: any;
+
+  private requestings = [];
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -295,40 +292,37 @@ export class EatComponent implements OnInit {
   }
 
   getDataModes() {
-    let params = this.params;
-    this.modeService.getModes(params).map((resp) => resp.json()).subscribe((resp) => {
+    this.requestings.forEach(req => req.unsubscribe());
+    const req = this.modeService.getModeData(this.params)
+      .subscribe(
+        data => {
+          this.total = data.total;
+          this.items = this.loadMore ? this.items.concat(data.company) : data.company;
+          this.shownotfound = data.total === 0;
+          this.end_record = data.company.length === 0;
 
-      this.total = resp.total;
-      if(this.loadMore){
-        this.items = this.items.concat(resp.company);
-      }else{
-        this.items = resp.company;
-      }
-      if (resp.total === 0) {
-        this.shownotfound = true;
-      }else{
-        this.shownotfound = false;
-      }
+          this.loadMore = false;
+          this.initMap();
+          this.loaderService.hide();
+          this.smallLoader.hide();
+        },
+        error => {
+          console.error('getModeData error: ', error);
+          req.unsubscribe();
 
-      if (resp.company.length == 0) {
-        this.end_record = true;
-      }
-      this.loadMore = false;
-      this.initMap();
-      this.loaderService.hide();
-      this.smallLoader.hide();
+          this.loadMore = false;
+          this.end_record = false;
+          this.items = [];
+          this.markers = [];
+          this.loaderService.hide();
+          this.smallLoader.hide();
+        },
+        () => req.unsubscribe());
 
-    }, (err) => {
-      this.loadMore = false;
-      this.end_record = false;
-      this.items = [];
-      this.markers = [];
-      this.loaderService.hide();
-      this.smallLoader.hide();
-    });
+    this.requestings.push(req);
+
   }
   private categorySelected:any[]=[];
-  private catList:any[]=[];
   changeCategory(event,item) {
     if(event){
       if(item){
@@ -376,14 +370,6 @@ export class EatComponent implements OnInit {
     this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
         this.filterData = resp.eat;
     });
-  }
-
-  public markerDragEnd($event) {
-    if ($event.coords) {
-      //Update center map
-      this.lat = $event.coords.lat;
-      this.lng = $event.coords.lng;
-    }
   }
 
   private initMap() {
@@ -447,8 +433,6 @@ export class EatComponent implements OnInit {
     }, 'slow');
 
   }
-
-  public navIsFixed: boolean = false;
 
   private highlightMarker(markerId: number): void {
     if (this.markers[markerId]) {

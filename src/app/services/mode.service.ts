@@ -44,6 +44,12 @@ export class ModeService {
     return seq;
   }
 
+  public getModeData(params: any) {
+    return this.api.get(AppSetting.API_ENDPOINT_MODE, params)
+      .share()
+      .map(res => res.json());
+  }
+
   public getFilterMode() {
     let seq = this.api.get(this.LOCAL_HOST + '/assets/mock-data/cuisine.json').share();
     seq
