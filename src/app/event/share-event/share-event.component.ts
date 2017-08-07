@@ -347,7 +347,7 @@ export class ShareEventComponent implements OnInit {
       );
       if (!addTag[0]) {
         addTag[0] = {
-          tid: -1,
+          tid: null,
           name: tag
         };
       }
