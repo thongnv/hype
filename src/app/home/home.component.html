@@ -83,19 +83,22 @@
                 {{item.title}}
               </a>
               <span class="distance" *ngIf="item.distance">{{item.distance}} km</span>
-              <span
-                *ngIf="item.field_event_option.field_price !='0' && (item.field_event_option.field_price|json) != 'null'"
-                class="free-price-button text-capitalize pull-right"
-                [class.free-price]="item.field_event_option.field_price == 'free'">${{item.field_event_option.field_price}}</span>
+              <span *ngIf="item.field_event_option.field_price.length"
+                class="free-price-button text-capitalize pull-right">
+                ${{item.field_event_option.field_price[0]}}
+              </span>
 
-              <span
-                *ngIf="item.field_event_option.field_price =='0' || (item.field_event_option.field_price|json) == 'null'"
-                class="free-price-button text-capitalize pull-right"
-                [class.free-price]="item.field_event_option.field_price == '0' || (item.field_event_option.field_price|json) == 'null'">Free</span>
+              <span *ngIf="!item.field_event_option.field_price.length"
+                class="free-price-button text-capitalize pull-right free-price">Free</span>
             </h4>
-            <a href="javascript:;" class="location_place" *ngIf="item.field_location_place.field_location_address">{{item.field_location_place.field_location_address}}</a>
+
+            <a *ngIf="item.field_location_place.field_location_address"
+               href="javascript:;" class="location_place" >
+              {{item.field_location_place.field_location_address}}
+            </a>
             <p class="detail-information" [innerHTML]="item.body | myHtml2Text"></p>
           </div>
+
           <div class="mentioned-by" *ngIf="item.field_event_option.field_mentioned_by?.length">
             <h5 class="mentioned">Mentioned by</h5>
             <ul class="mentioned-item">
@@ -135,7 +138,7 @@
             <div class="pull-right comments-item-icon">
               <ul class="list-inline">
                 <li>
-                  <span class="count_comment">
+                  <span class="count_comment" [routerLink]="[item.alias]" fragment="createComment">
                     {{item.comment_count}} {{ item.comment_count > 1 ? 'Comments' : 'Comment' }}
                   </span>
                 </li>

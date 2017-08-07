@@ -53,7 +53,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public innerWidth: number;
   public isCurrentUser: boolean;
   public isFree: boolean;
-
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
@@ -61,6 +60,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     images: ['', Validators.required],
     listPlaces: this.formBuilder.array([])
   });
+
+  private minPrice: number;
 
   constructor(public localStorageService: LocalStorageService,
               public eventService: EventService,
@@ -102,7 +103,12 @@ export class EventDetailComponent implements HyloEvent, OnInit {
             },
             0
           );
-          this.isFree = sumPrices === 0;
+          if (sumPrices === 0) {
+            this.isFree = true;
+          } else {
+            this.minPrice = Math.min.apply(Math, this.prices);
+            this.isFree = this.minPrice === 0;
+          }
           this.ready = true;
         },
         (error) => {
