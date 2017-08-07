@@ -598,6 +598,7 @@ export class HomeComponent implements OnInit {
           this.passerTop100();
           this.loadMore = false;
           this.loaderService.hide();
+          this.smallLoader.hide();
           this.loading = false;
         },
         (error) => {
