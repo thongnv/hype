@@ -25,6 +25,13 @@ export class HomeService {
     return seq;
   }
 
+  public getLatestEvents(params: any) {
+    return this.api.get(AppSetting.API_TRENDING, params)
+      .share()
+      .map(resp => resp.json());
+
+  }
+
   public getTop100(params: any) {
     let seq = this.api.get(AppSetting.API_ENDPOINT_TOP, params).share();
     seq.map((res) => res.json())
