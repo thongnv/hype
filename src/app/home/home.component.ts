@@ -282,14 +282,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  public clickedMarker(markerId, horizontal) {
-    console.log(horizontal);
-    $('html, body').animate({
-      scrollTop: $('#v' + markerId).offset().top - 80
-    });
+  public clickedMarker(marker) {
+    if ($('#v' + marker.nid).length) {
+      $('html, body').animate({
+        scrollTop: $('#v' + marker.nid).offset().top - 80
+      });
+    }
     this.stopped = true;
-    this.currentHighlightedMarker = markerId;
-    this.highlightMarker(markerId);
+    this.currentHighlightedMarker = marker.nid;
+    this.highlightMarker(marker.nid);
+    console.log('here');
   }
 
   public selectedDate(value: any) {
@@ -413,19 +415,15 @@ export class HomeComponent implements OnInit {
   }
 
   private highlightMarker(markerId: number): void {
-    if (this.markers[markerId]) {
-      this.markers[markerId].opacity = 1;
-      this.markers.forEach((marker, index) => {
-        if (index === markerId) {
-          console.log('markerId', markerId);
-          this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
-        } else {
-          this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
-        }
-      });
-    }
+    this.markers.forEach((marker, index) => {
+      if (marker.nid === markerId) {
+        this.markers[index].opacity = 1;
+        this.markers[index].isOpenInfo = true;
+      } else {
+        this.markers[index].opacity = 0.4;
+        this.markers[index].isOpenInfo = false;
+      }
+    });
   }
 
   private passerTop100() {
@@ -475,6 +473,7 @@ export class HomeComponent implements OnInit {
               label: this.events[i].title,
               opacity: 1,
               isOpenInfo: true,
+              nid: this.events[i].nid,
               icon: 'assets/icon/locationmarker.png'
             });
           } else {
@@ -484,6 +483,7 @@ export class HomeComponent implements OnInit {
               label: this.events[i].title,
               opacity: 0.4,
               isOpenInfo: false,
+              nid: this.events[i].nid,
               icon: 'assets/icon/locationmarker.png'
             });
           }

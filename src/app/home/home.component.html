@@ -65,7 +65,7 @@
     <div *ngFor="let item of events; let i = index;trackBy:item?.nid"
          class="wrap-each-items"
          [class.article]="item.type=='article'"
-         id="v{{i}}">
+         id="v{{item.nid}}">
       <div *ngIf="item.type=='event'">
         <div class="avatar-profile">
           <div class="cover-avatar-picture" [routerLink]="[item.alias]"></div>
