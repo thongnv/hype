@@ -54,7 +54,7 @@
                   (change)="onChangePrice($event)"
                   class="price-slider">
       </nouislider>
-      <div *ngIf="showPrice" class="price-desc"><span>$0</span><span>$150</span><span>$300</span></div>
+      <div *ngIf="showPrice" class="price-desc"><span></span><span></span><span></span></div>
       <input *ngIf="showDate" style="margin-top: 1em; margin-bottom: 1em" class="form-control"
              [options]="options" daterangepicker
              (selected)="selectedDate($event)">
