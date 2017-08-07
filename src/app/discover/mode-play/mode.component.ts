@@ -453,6 +453,7 @@ export class ModeComponent implements OnInit {
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
                   label: this.items[i].Company_Name,
+                  index: i,
                   opacity: 1,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -463,6 +464,7 @@ export class ModeComponent implements OnInit {
                   lng: parseFloat(lng[1]),
                   label: this.items[i].Company_Name,
                   opacity: 0.4,
+                  index: i,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
                 });
@@ -491,12 +493,12 @@ export class ModeComponent implements OnInit {
     return x * Math.PI / 180;
   }
 
-  public clickedMarker(markerId, horizontal) {
-    this.currentHighlightedMarker = markerId;
-    this.highlightMarker(markerId);
+  public clickedMarker(marker) {
+    this.currentHighlightedMarker = marker.index;
+    this.highlightMarker(marker.index);
     this.stopped = true;
     $('html, body').animate({
-      scrollTop: $('#v' + markerId).offset().top - 80
+      scrollTop: $('#v' + marker.index).offset().top - 80
     }, 'slow');
 
   }
