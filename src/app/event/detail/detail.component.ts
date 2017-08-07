@@ -52,6 +52,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public isCurrentUser: boolean;
+  public isFree: boolean;
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -95,6 +96,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.titleService.setTitle(event.name);
           this.initSlide(this.images);
           this.isCurrentUser = event.creator.slug === this.user.slug;
+          let sumPrices = this.prices.reduce(
+            (sum, value) => {
+              return sum + Number(value);
+            },
+            0
+          );
+          this.isFree = sumPrices === 0;
           this.ready = true;
         },
         (error) => {
