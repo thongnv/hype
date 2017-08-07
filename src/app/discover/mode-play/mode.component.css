@@ -223,7 +223,6 @@ ul.itemSort li a i {
     width: 100px;
     height: 100px;
     float: left;
-    margin-top: 5px;
     position: relative;
     border-radius: 4px;
 }
@@ -588,6 +587,10 @@ select.form-control-static::-ms-expand {
 }
 .list-items .avatar{
     cursor: pointer;
+    overflow: hidden;
+    float: left;
+    margin-top: 0;
+    border-radius: 4px;
 }
 .list-items .avatar img{
     -moz-transition: all 0.3s;
@@ -595,9 +598,9 @@ select.form-control-static::-ms-expand {
     transition: all 0.3s;
 }
 .list-items .avatar:hover img {
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
 }
 .btn-filter-block .btn{color: #3b3b3b; opacity: 0.5; font-size: 16px;}
 .btn-filter-block .active{opacity: 1;}
