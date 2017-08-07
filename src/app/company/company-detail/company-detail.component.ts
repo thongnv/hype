@@ -10,6 +10,8 @@ import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
 import { Location as LocationService } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-company-detail',
@@ -29,11 +31,14 @@ export class CompanyDetailComponent implements Company, OnInit {
   public reviews: Experience[] = [];
   public images: Image[];
   public instagramUrl = '';
+  public CTC = '';
   public slugName: string;
   public user = AppSetting.defaultUser;
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;
+  public showBooking = false;
+
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -47,15 +52,22 @@ export class CompanyDetailComponent implements Company, OnInit {
   public layoutWidth: number;
   public innerWidth: number;
 
+  public  bookingUrl  = '';
+
   constructor(private titleService: Title,
               private localStorageService: LocalStorageService,
               public userService: UserService,
               public companyService: CompanyService,
+              public sanitizer: DomSanitizer,
               private route: ActivatedRoute,
               private loaderService: LoaderService,
               private router: Router,
               private locationService: LocationService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService
+
+              ) {
+
+            this.sanitizer = sanitizer;
   }
 
   @HostListener('window:resize', ['$event'])
@@ -157,6 +169,16 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
   }
 
+  public showBookingModal() {
+    this.showBooking = true;
+
+  }
+
+
+  public closeBookingModal(){
+    this.showBooking = false;
+  }
+
   public back() {
     this.commentPosition = 'out';
     this.companyStatus = 'default';
@@ -237,6 +259,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.openingHours = data.openingHours;
     this.location = data.location;
     this.instagramUrl = data.instagramUrl;
+    this.CTC = '200304719G';//data.CTC;
   }
 
   private initSlide(images) {
