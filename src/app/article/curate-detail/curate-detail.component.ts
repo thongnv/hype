@@ -5,6 +5,8 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
+import { User } from '../../app.interface';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Injectable()
 @Component({
@@ -32,20 +34,30 @@ export class CurateDetailComponent implements OnInit {
   public zoom: number = 12;
   public layoutWidth: number;
   public innerWidth: number;
-  public constructor(private mainService: MainService,
+  public user: User;
+  public isCurrentUser: boolean;
+
+  public constructor(private localStorageService: LocalStorageService,
+                     private mainService: MainService,
                      private loaderService: LoaderService,
                      private route: ActivatedRoute,
                      private router: Router,
                      private titleService: Title,
                      private windowRef: WindowUtilService) {
   }
+
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log(this.windowRef.rootContainer);
+  public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
   }
+
   public ngOnInit() {
+    let user = this.localStorageService.get('user') as User;
+    if (user) {
+      this.user = user;
+    }
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -55,11 +67,12 @@ export class CurateDetailComponent implements OnInit {
       this.mainService.getArticle(this.slugName).subscribe(
         (response) => {
           this.article = response;
+          this.isCurrentUser = this.article.user_post.slug === '/user/' + this.user.slug;
           this.initMap(this.article);
           this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
           this.loaderService.hide();
-          window.scrollTo(0,0);
+          window.scrollTo(0, 0);
         },
         (error) => {
           console.log(error);
@@ -74,7 +87,7 @@ export class CurateDetailComponent implements OnInit {
     let lat: number = 0;
     let lng: number = 0;
 
-    this.markers.forEach( (marker) => {
+    this.markers.forEach((marker) => {
       lat += marker.lat;
       lng += marker.lng;
     });
@@ -83,31 +96,12 @@ export class CurateDetailComponent implements OnInit {
     this.lng = lng / this.markers.length;
   }
 
-  public onScroll(event) {
-    let baseHeight = event.target.clientHeight;
-    let realScrollTop = event.target.scrollTop + baseHeight;
-    let currentHeight: number = baseHeight;
-
-    if (event.target.children.length > 1) {
-      for (let i = 0; i < event.target.children.length; i++) {
-        let currentClientH = event.target.children[i].clientHeight;
-        currentHeight += currentClientH;
-        if (currentHeight - currentClientH <= realScrollTop && realScrollTop <= currentHeight) {
-          if (this.currentHighlightedMarker !== i) {
-            this.currentHighlightedMarker = i;
-            this.highlightMarker(i);
-          }
-        }
-      }
-    }
-  }
-
   public markerClick(markerId) {
     this.currentHighlightedMarker = markerId;
     this.highlightMarker(markerId);
 
     const element = document.querySelector('#place-' + markerId);
-    element.scrollIntoView({block: 'end',  behavior: 'smooth'});
+    element.scrollIntoView({block: 'end', behavior: 'smooth'});
 
     // TODO: fix highlight right marker and make scroll smoothly
   }
@@ -125,6 +119,7 @@ export class CurateDetailComponent implements OnInit {
       });
     }
   }
+
   private initMap(article: any) {
     this.currentHighlightedMarker = 0;
     this.slides = [];
