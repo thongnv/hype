@@ -1,6 +1,6 @@
 <sebm-google-map-marker
         *ngFor="let m of markers; let i = index"
-        (markerClick)="clickedMarker(i)"
+        (markerClick)="clickedMarker(m)"
         [latitude]="m.lat"
         [longitude]="m.lng"
         [iconUrl]="m.icon"
