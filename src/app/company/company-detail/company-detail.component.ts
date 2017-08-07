@@ -12,7 +12,6 @@ import { Title } from '@angular/platform-browser';
 import { Location as LocationService } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-company-detail',
   templateUrl: './company-detail.component.html',
@@ -52,8 +51,6 @@ export class CompanyDetailComponent implements Company, OnInit {
   public layoutWidth: number;
   public innerWidth: number;
 
-  public  bookingUrl  = '';
-
   constructor(private titleService: Title,
               private localStorageService: LocalStorageService,
               public userService: UserService,
@@ -63,11 +60,7 @@ export class CompanyDetailComponent implements Company, OnInit {
               private loaderService: LoaderService,
               private router: Router,
               private locationService: LocationService,
-              private windowRef: WindowUtilService
-
-              ) {
-
-            this.sanitizer = sanitizer;
+              private windowRef: WindowUtilService) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -174,8 +167,7 @@ export class CompanyDetailComponent implements Company, OnInit {
 
   }
 
-
-  public closeBookingModal(){
+  public closeBookingModal() {
     this.showBooking = false;
   }
 
@@ -259,7 +251,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.openingHours = data.openingHours;
     this.location = data.location;
     this.instagramUrl = data.instagramUrl;
-    this.CTC = '200304719G';//data.CTC;
+    this.CTC = data.CTC;
   }
 
   private initSlide(images) {
@@ -270,14 +262,14 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   private htmlEntities(str) {
-      return String(str)
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/\ufffd/g, '')
-        .replace(/\ufffdI/g, '')
-        .replace(/\ufffds/g, '');
+    return String(str)
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/\ufffd/g, '')
+      .replace(/\ufffdI/g, '')
+      .replace(/\ufffds/g, '');
   }
 
 }

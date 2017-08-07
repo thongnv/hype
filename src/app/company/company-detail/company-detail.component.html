@@ -145,9 +145,14 @@
       <div class="mobile-footer"></div>
     </div>
 
-    <div class="overlay" (click)="closeBookingModal()" [class.active]="showBooking">
+    <div *ngIf="CTC" class="overlay" (click)="closeBookingModal()" [class.active]="showBooking">
         <div class="popupBooking">
-          <iframe frameborder="0" src="https://widget.timify.com/partner/58b53389-92da-4fef-84af-5ca61014a382-1597TRCC4" style="width:100%;height:100%;overflow:auto;" allowtransparency="true"></iframe>
+          <iframe frameborder="0"
+                  [attr.src]="'https://widget.timify.com/partner/58b53389-92da-4fef-84af-5ca61014a382-' + CTC | mySafeUrl"
+                  style="width:100%;height:100%;overflow:auto;"
+                  allowtransparency="true">
+
+          </iframe>
         </div>
     </div>
 
