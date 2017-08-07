@@ -471,6 +471,7 @@ button.btn.btn-default.active {
 .top-content a.location_place {
   color: #00b3ee;
   text-decoration: none;
+  text-transform: uppercase;
   font-size: 12px;
   float: left;
   clear: both;
@@ -556,10 +557,8 @@ button.btn.btn-default.active {
 
 .information-title .real-title {
   font-size: 18px;
-}
-
-.information-title .real-title {
   width: calc(100% - 85px);
+  margin-bottom: 14px;
 }
 
 .detail-information {
