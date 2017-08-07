@@ -87,6 +87,18 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     if (user) {
       this.user = user;
     }
+    this.route.fragment.subscribe((fragment: string) => {
+      if (fragment === 'createComment') {
+        let interval = window.setInterval(() => {
+          let element = document.getElementById('createComment');
+          if (element) {
+            element.scrollIntoView();
+            window.clearInterval(interval);
+            document.getElementById('createComment').removeAttribute('id');
+          }
+        }, 200);
+      }
+    });
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();

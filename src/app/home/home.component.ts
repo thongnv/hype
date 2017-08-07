@@ -291,7 +291,6 @@ export class HomeComponent implements OnInit {
     this.stopped = true;
     this.currentHighlightedMarker = marker.nid;
     this.highlightMarker(marker.nid);
-    console.log('here');
   }
 
   public selectedDate(value: any) {
