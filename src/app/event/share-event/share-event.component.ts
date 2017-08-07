@@ -274,7 +274,7 @@ export class ShareEventComponent implements OnInit {
 
   public onPreview() {
     let event = this.eventForm.value;
-    event.eventTags = this.processTags(event.eventTags);
+    // event.eventTags = this.processTags(event.eventTags);
     event.eventImages = this.previewUrls;
     event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
@@ -341,6 +341,7 @@ export class ShareEventComponent implements OnInit {
   }
 
   private processTags(tags) {
+    this.checkTags = [];
     for (let tag of tags) {
       let addTag = this.tags.filter(
         (term) => term.name === tag
