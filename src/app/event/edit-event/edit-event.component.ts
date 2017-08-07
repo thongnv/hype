@@ -97,17 +97,21 @@ export class EditEventComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.loaderService.show();
     this.user = this.localStorageService.get('user') as User;
-    if (!this.user) {
-      this.router.navigate(['/login'], {skipLocationChange: true}).then();
+    if (!this.user || this.user.isAnonymous) {
+      this.router.navigate(['/login']).then();
+      return;
     }
+    this.loaderService.show();
     this.route.params.subscribe((e) => {
       this.loaderService.show();
       this.gMapStyles = AppSetting.GMAP_STYLE;
       this.eventService.getEventDetail(e.slug).subscribe(
         (resp) => {
           this.event = EventService.extractEventDetail(resp);
+          if (this.event.creator.slug !== this.user.slug) {
+            this.router.navigate(['event', e.slug]).then();
+          }
           this.titleService.setTitle(this.event.name);
           this.startDate = new Date(this.event.startDate);
           this.endDate = new Date(this.event.endDate);
