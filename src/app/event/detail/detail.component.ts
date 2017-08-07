@@ -52,7 +52,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public isCurrentUser: boolean;
-
+  public isFree: boolean;
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
     listDescription: ['', Validators.required],
@@ -60,6 +60,8 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     images: ['', Validators.required],
     listPlaces: this.formBuilder.array([])
   });
+
+  private minPrice: number;
 
   constructor(public localStorageService: LocalStorageService,
               public eventService: EventService,
@@ -77,7 +79,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public onResize(event) {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public ngOnInit() {
@@ -85,6 +87,18 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     if (user) {
       this.user = user;
     }
+    this.route.fragment.subscribe((fragment: string) => {
+      if (fragment === 'createComment') {
+        let interval = window.setInterval(() => {
+          let element = document.getElementById('createComment');
+          if (element) {
+            element.scrollIntoView();
+            window.clearInterval(interval);
+            document.getElementById('createComment').removeAttribute('id');
+          }
+        }, 200);
+      }
+    });
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
@@ -95,6 +109,18 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.titleService.setTitle(event.name);
           this.initSlide(this.images);
           this.isCurrentUser = event.creator.slug === this.user.slug;
+          let sumPrices = this.prices.reduce(
+            (sum, value) => {
+              return sum + Number(value);
+            },
+            0
+          );
+          if (sumPrices === 0) {
+            this.isFree = true;
+          } else {
+            this.minPrice = Math.min.apply(Math, this.prices);
+            this.isFree = this.minPrice === 0;
+          }
           this.ready = true;
         },
         (error) => {
@@ -117,7 +143,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.initRating();
   }
 

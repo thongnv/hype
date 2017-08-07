@@ -1,125 +1,141 @@
 .slimScrollDiv > div {
-	padding: 0px;
+  padding: 0px;
 }
+
 .carousel-box {
-    border-bottom: 1px solid rgba(205, 205, 205, 0.5);
+  border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
+
 .carousel-header {
-    margin: 0px;
-    padding-left: 20px;
-    position: relative;
-    padding: 20px;
+  margin: 0px;
+  position: relative;
+  padding: 20px;
 }
+
 .carousel-header i {
-    cursor: pointer;
-    font-size: 25px;
-    float: left;
-    text-transform: capitalize;
-    position: absolute;
-    top: 32%;
+  cursor: pointer;
+  font-size: 25px;
+  float: left;
+  text-transform: capitalize;
+  position: absolute;
+  top: 32%;
 }
+
 .carousel-header h1 {
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 1.3;
-    text-align: left;
-    color: #3b3b3b;
-    display: block;
-    padding-left: 8%;
-    cursor: pointer;
-    margin-top: 5px;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 1.3;
+  text-align: left;
+  color: #3b3b3b;
+  display: block;
+  padding-left: 8%;
+  margin-top: 5px;
 }
+
+.carousel-header i.sprite-edit-icon {
+  position: relative;
+  float: none;
+  transform: scale(0.6);
+  display: inline-block;
+  margin-bottom: -3px;
+  top: auto;
+}
+
 .description {
-    margin: 20px 40px;
+  margin: 20px 40px;
   font-family: Roboto, sans-serif;
   font-weight: 300;
 }
 
-
 .description p {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 25px;
-    text-align: left;
-    color: #3b3b3b;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 25px;
+  text-align: left;
+  color: #3b3b3b;
 }
-
 
 .place-item-wrap {
-	border-bottom: 1px solid rgba(205, 205, 205, 0.5);
-}
-.place-item-header {
-    padding: 20px;
-    height: auto;
-}
-.place-item-header strong.place-index {
-    height: 50px;
-    width: 50px;
-    background: #5052ea;
-    line-height: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    /*margin-top: 1%;*/
-}
-.place-item-header h2.place-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: keep-all;
-    padding: 6px 20px 0;
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 35px;
-    text-align: left;
-    color: #3b3b3b;
-    float: left;
-  width: 81%;
-}
-.place-item-header span.place-detail-btn {
-    border: none;
-    text-transform: capitalize;
-    text-align: right;
-    padding: 8px 0px;
-    font-size: 16px;
-    line-height: 30px;
-    display: block;
-    cursor: pointer;
-}
-.place-item-description  {
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.43;
-    text-align: left;
-    color: #3b3b3b;
-    margin: 20px 40px;
+  border-bottom: 1px solid rgba(205, 205, 205, 0.5);
 }
 
+.place-item-header {
+  padding: 20px;
+  height: auto;
+}
+
+.place-item-header strong.place-index {
+  height: 50px;
+  width: 50px;
+  background: #5052ea;
+  line-height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  /*margin-top: 1%;*/
+}
+
+.place-item-header h2.place-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  padding: 6px 20px 0;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 35px;
+  text-align: left;
+  color: #3b3b3b;
+  float: left;
+  width: 81%;
+}
+
+.place-item-header span.place-detail-btn {
+  border: none;
+  text-transform: capitalize;
+  text-align: right;
+  padding: 8px 0px;
+  font-size: 16px;
+  line-height: 30px;
+  display: block;
+  cursor: pointer;
+}
+
+.place-item-description {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.43;
+  text-align: left;
+  color: #3b3b3b;
+  margin: 20px 40px;
+}
 
 .scrollable {
   height: 100vh;
   position: relative;
 }
 
-.description img{max-width: 100%;}
-
+.description img {
+  max-width: 100%;
+}
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
- .hype .list-box {
+  .hype .list-box {
     float: left;
-    width: 100%!important;
+    width: 100% !important;
   }
 
-  .carousel-item{
-    height: 280px!important;
+  .carousel-item {
+    height: 280px !important;
     background-position: center center;
   }
 
-  .carousel-header{
+  .carousel-header {
     padding: 20px 20px 20px 0px;
   }
+
   .place-item-header[_ngcontent-c5] h2.place-name[_ngcontent-c5] {
     padding: 3px 0px 0px 10px;
     font-size: 24px;
@@ -129,15 +145,14 @@
 }
 
 @media only screen and (max-width: 574px) {
-  .place-item-header{
+  .place-item-header {
     padding: 20px 10px 20px 0;
     height: auto;
   }
 }
 
-
 @media only screen and (max-width: 900px) {
-  .list-preview-wrap{
+  .list-preview-wrap {
     padding-left: 10px;
     padding-right: 10px;
   }

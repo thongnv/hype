@@ -57,9 +57,8 @@
               </ul>
             </div>
           </li>
-          <li *ngIf="!user.isAnonymous" class="pull-right nav-item notification-area">
-            <app-notification *ngIf="notifications"
-                              [notifications]="notifications"
+          <li *ngIf="user && !user.isAnonymous" class="pull-right nav-item notification-area">
+            <app-notification [notifications]="notifications"
                               [loadingInProgress]="set.loadingInProgress"
                               [endOfList]="set.endOfList"
                               [totalUnread]="totalUnread"
@@ -154,9 +153,8 @@
           </ul>
         </div>
       </li>
-      <li class="pull-right nav-item notification-area" *ngIf="user">
-        <app-notification *ngIf="notifications"
-                          [notifications]="notifications"
+      <li class="pull-right nav-item notification-area" *ngIf="user && !user.isAnonymous">
+        <app-notification [notifications]="notifications"
                           [loadingInProgress]="set.loadingInProgress"
                           [endOfList]="set.endOfList"
                           [totalUnread]="totalUnread"

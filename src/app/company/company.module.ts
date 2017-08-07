@@ -18,6 +18,7 @@ import { CompanyService } from '../services/company.service';
 import { CompanyDetailComponent } from './company-detail/company-detail.component';
 import { ReviewComponent } from './company-detail/review.component';
 import { WriteReviewComponent } from './write-review/write-review.component';
+import { SafeUrlPipe } from '../shared/safe-url.pipe';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { WriteReviewComponent } from './write-review/write-review.component';
     CompanyDetailComponent,
     WriteReviewComponent,
     ReviewComponent,
+    SafeUrlPipe
   ],
   providers: [
     NgbRatingConfig,

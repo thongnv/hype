@@ -10,6 +10,7 @@ import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
 import { Location as LocationService } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-company-detail',
@@ -29,11 +30,14 @@ export class CompanyDetailComponent implements Company, OnInit {
   public reviews: Experience[] = [];
   public images: Image[];
   public instagramUrl = '';
+  public CTC = '';
   public slugName: string;
   public user = AppSetting.defaultUser;
   public commentPosition = 'out';
   public companyStatus = 'default';
   public showForm = false;
+  public showBooking = false;
+
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -51,6 +55,7 @@ export class CompanyDetailComponent implements Company, OnInit {
               private localStorageService: LocalStorageService,
               public userService: UserService,
               public companyService: CompanyService,
+              public sanitizer: DomSanitizer,
               private route: ActivatedRoute,
               private loaderService: LoaderService,
               private router: Router,
@@ -62,7 +67,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public onResize(event) {
     console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public ngOnInit() {
@@ -71,7 +76,7 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.user = user;
     }
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();
@@ -157,6 +162,15 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
   }
 
+  public showBookingModal() {
+    this.showBooking = true;
+
+  }
+
+  public closeBookingModal() {
+    this.showBooking = false;
+  }
+
   public back() {
     this.commentPosition = 'out';
     this.companyStatus = 'default';
@@ -237,6 +251,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.openingHours = data.openingHours;
     this.location = data.location;
     this.instagramUrl = data.instagramUrl;
+    this.CTC = data.CTC;
   }
 
   private initSlide(images) {
@@ -247,14 +262,14 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   private htmlEntities(str) {
-      return String(str)
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/\ufffd/g, '')
-        .replace(/\ufffdI/g, '')
-        .replace(/\ufffds/g, '');
+    return String(str)
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/\ufffd/g, '')
+      .replace(/\ufffdI/g, '')
+      .replace(/\ufffds/g, '');
   }
 
 }

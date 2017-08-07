@@ -11,6 +11,7 @@ export class NotificationComponent {
   @Input('loadingInProgress') public loadingInProgress: boolean;
   @Input('endOfList') public endOfList: boolean;
   @Input('totalUnread') public totalUnread: number;
+
   @Output('onMarkAllRead') public onMarkAllRead = new EventEmitter<any>();
   @Output('onMarkOneRead') public onMarkOneRead = new EventEmitter<any>();
   @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();

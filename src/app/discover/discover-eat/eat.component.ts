@@ -241,12 +241,12 @@ export class EatComponent implements OnInit {
       });
     });
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public onResize(event): void {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -396,6 +396,7 @@ export class EatComponent implements OnInit {
                   lat: parseFloat(lat[1]),
                   lng: parseFloat(lng[1]),
                   label: this.items[i].Company_Name,
+                  index: i,
                   opacity: 0.4,
                   isOpenInfo: false,
                   icon: 'assets/icon/locationmarker.png'
@@ -424,12 +425,12 @@ export class EatComponent implements OnInit {
     return x * Math.PI / 180;
   }
 
-  public clickedMarker(markerId, horizontal) {
-    this.currentHighlightedMarker = markerId;
-    this.highlightMarker(markerId);
+  public clickedMarker(marker) {
+    this.currentHighlightedMarker = marker.index;
+    this.highlightMarker(marker.index);
     this.stopped = true;
     $('html, body').animate({
-      scrollTop: $('#v' + markerId).offset().top - 80
+      scrollTop: $('#v' + marker.index).offset().top - 80
     }, 'slow');
 
   }

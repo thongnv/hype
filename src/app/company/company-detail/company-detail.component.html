@@ -24,7 +24,11 @@
                  *ngIf="!user.isAnonymous">
               </i>
             </app-boostrap-carousel>
+            <div *ngIf="CTC" (click)="showBookingModal()" class="company_booking">
+              Book now
+            </div>
           </div>
+
           <!-- carousel end -->
           <!-- company header start -->
           <div class="company-header">
@@ -140,6 +144,18 @@
 
       <div class="mobile-footer"></div>
     </div>
+
+    <div *ngIf="CTC" class="overlay" (click)="closeBookingModal()" [class.active]="showBooking">
+        <div class="popupBooking">
+          <iframe frameborder="0"
+                  [attr.src]="'https://widget.timify.com/partner/58b53389-92da-4fef-84af-5ca61014a382-' + CTC | mySafeUrl"
+                  style="width:100%;height:100%;overflow:auto;"
+                  allowtransparency="true">
+
+          </iframe>
+        </div>
+    </div>
+
     <div class="col-md-6 map-fix hidden-md hidden-xs hidden-sm frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''" id="right" >
       <div style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth / 2  + 'px' : ''">
         <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15">
@@ -151,3 +167,6 @@
     </div>
   </div>
 </article>
+
+
+

@@ -45,12 +45,12 @@
               <div class="clear"></div>
             </li>
             <li>
-              <span class="info-label"><i class="sprite sprite-tag"></i><span>Prices</span></span>
+              <span class="info-label"><i class="sprite sprite-tag"></i><span>Price</span></span>
               <span class="info-value">
-                <span *ngIf="prices">
+                <span *ngIf="!isFree">
                   <span *ngFor="let price of prices">${{price}}, </span>
                 </span>
-                <span *ngIf="!prices">Free</span>
+                <span *ngIf="isFree">Free</span>
               </span>
               <div class="clear"></div>
             </li>

@@ -189,7 +189,6 @@ body, html {
 
   .list-tap > li > i {
     float: left;
-    transform: scale(0.8);
   }
 
   .list-tap li, .hype .list-tap li img {
@@ -197,8 +196,8 @@ body, html {
   }
 
   .list-tap li img {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     -moz-transform: scale(1);
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -1581,6 +1580,7 @@ body, html {
       display: block;
       width: 100%;
       margin-top: 10px;
+      padding-top: 10px;
     }
     .sidebar .list-tap li {
       padding: 0;
@@ -1632,7 +1632,7 @@ body, html {
   }
   @media only screen and (min-width: 1559px) {
     .container {
-      width: 1560px !important;
+      width: 1582px !important;
       padding: 0px;
     }
   }
