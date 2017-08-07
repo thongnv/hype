@@ -91,6 +91,7 @@ export class ShareEventComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185);
   }
@@ -364,7 +365,7 @@ function mapEvent(event) {
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
     field_event_tags: event.eventTags,
-    field_organized: event.organizer,
+    field_organized: event.eventOrganizer,
     field_location_place: [{
       fcl_id: event.call2action.fcl_id,
       field_latitude: event.eventPlace.lat,
