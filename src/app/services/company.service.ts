@@ -156,6 +156,7 @@ function extractLocation(location): Location {
   let lat = location[6];
   let lng = location[5];
   return {
+    id: null,
     name: address.replace('Address/Fax ', ''),
     lat: Number(lat.replace('Lat/', '')),
     lng: Number(lng.replace('Long/', ''))
