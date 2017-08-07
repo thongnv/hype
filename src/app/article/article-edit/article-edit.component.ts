@@ -71,12 +71,12 @@ export class ArticleEditComponent implements OnInit {
   public onResize(event) {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public ngOnInit() {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     this.userService.checkLogin().subscribe(
       (response: any) => {
         if (response === 0) {

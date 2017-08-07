@@ -93,7 +93,7 @@ export class ShareEventComponent implements OnInit {
   public onResize(event) {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public ngOnInit() {
@@ -117,7 +117,7 @@ export class ShareEventComponent implements OnInit {
     );
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 185);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
   public onStartDateChange() {
