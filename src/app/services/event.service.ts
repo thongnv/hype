@@ -29,11 +29,12 @@ export class EventService {
       },
       images: extractImages(data.field_image),
       detail: data.body,
-      startDate: data.created * 1000,
+      startDate: data.field_event_option.field_start_date_time * 1000,
       endDate: data.field_event_option.field_end_date_time * 1000,
       organizer: data.field_organized,
       category: data.field_category,
       location: {
+        id: data.field_location_place.fcl_id,
         name: data.field_location_place.field_location_address,
         lat: Number(data.field_location_place.field_latitude),
         lng: Number(data.field_location_place.field_longitude)
@@ -41,6 +42,7 @@ export class EventService {
       name: data.title,
       prices: data.field_event_option.field_price,
       call2action: {
+        id: data.field_event_option.fcl_id,
         link: data.field_event_option.field_call_to_action_link,
         action: MOCK_ACTIONS[data.field_event_option.field_call_to_action_group - 1]
       },
@@ -90,16 +92,22 @@ export class EventService {
       data,
       options
     )
-      .map((res: Response) => {
-        return res.json();
-      })
-      .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
+      .map((res: Response) => res.json())
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public updateEvent(data): Observable<Response> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this._http.patch(
+      AppSetting.API_ENDPOINT + 'api/v1/event?_format=json',
+      data,
+      options
+    )
+      .map((res: Response) => res.json())
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -238,6 +246,7 @@ function extractImages(data): Image[] {
         filename: '',
         filemime: '',
         filesize: '',
+        fid: item.fid
       }
     );
   }

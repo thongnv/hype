@@ -12,6 +12,10 @@ a {
   clear: both;
 }
 
+.sprite-edit-icon {
+  transform: scale(0.6);
+}
+
 .gmap-box {
   padding-top: 30px;
   padding-left: 30px;
@@ -249,6 +253,7 @@ p.avg-rating {
   margin-right: 15px;
   text-transform: capitalize;
 }
+
 /*detail event end*/
 
 /*experience area start*/
@@ -494,7 +499,7 @@ a.more:hover {
   color: #ec3d62;
 }
 
-.carousel-item.active{
+.carousel-item.active {
   -webkit-animation: fadein 1.2s;
   -moz-animation: fadein 1.2s;
   -ms-animation: fadein 1.2s;
@@ -502,48 +507,71 @@ a.more:hover {
   animation: fadein 1.2s;
 }
 
-.carousel-item img,.carousel-indicators div{
+.carousel-item img, .carousel-indicators div {
   cursor: pointer;
 }
-.carousel-item img,.carousel-indicators div{
+
+.carousel-item img, .carousel-indicators div {
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.carousel-item:hover img{
+
+.carousel-item:hover img {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Firefox < 16 */
 @-moz-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Safari, Chrome and Opera > 12.1 */
 @-webkit-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Internet Explorer */
 @-ms-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Opera < 12.1 */
 @-o-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
+
 /*write your comment end*/
 
 #likes-comments-experience-second {

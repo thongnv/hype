@@ -24,13 +24,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public id: number;
   public creator: BaseUser;
   public name: string = '';
-  public location: Location = {name: '', lat: 0, lng: 0};
+  public location: Location;
   public detail: string = '';
   public category: any;
   public startDate: number = 0;
   public endDate: number = 0;
   public prices: string[] = [];
-  public call2action: Call2Action = {action: '', link: ''};
+  public call2action: Call2Action;
   public mentions: Icon[] = [];
   public images: Image[] = [];
   public rating: number = 0;
@@ -51,6 +51,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public gMapStyles: any;
   public layoutWidth: number;
   public innerWidth: number;
+  public isCurrentUser: boolean;
 
   public experienceForm: FormGroup = this.formBuilder.group({
     listName: ['', Validators.required],
@@ -93,6 +94,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
           this.loadData(event);
           this.titleService.setTitle(event.name);
           this.initSlide(this.images);
+          this.isCurrentUser = event.creator.slug === this.user.slug;
           this.ready = true;
         },
         (error) => {
@@ -167,6 +169,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         reader[i] = new FileReader();
         reader[i].onload = (e) => {
           let img = {
+            fid: null,
             url: URL.createObjectURL(event.target.files[i]),
             value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
             filename: event.target.files[i].name,

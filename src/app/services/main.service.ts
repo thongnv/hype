@@ -115,6 +115,20 @@ export class MainService {
       });
   }
 
+  public updateArticle(data): Observable<any> {
+    let csrfToken = this.localStorageService.get('csrf_token');
+    let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.patch(
+      AppSetting.API_ENDPOINT + 'api/v1/article?_format=json',
+      data, options
+    )
+      .map((resp) => resp.json())
+      .catch((error) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
   public getNotifications(user: number, page: number): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     // let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});

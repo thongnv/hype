@@ -285,6 +285,8 @@ ul.itemSort li a i {
     line-height: 1.13;
     text-align: left;
     color: #3b3b3b;
+    height: 30px;
+    overflow: hidden;
 }
 
 .item-content span:nth-child(2n) {

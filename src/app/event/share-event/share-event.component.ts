@@ -12,6 +12,7 @@ import { HyperSearchComponent } from '../../hyper-search/hyper-search.component'
 import { UserService } from '../../services/user.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { Image } from '../../app.interface';
 
 @Component({
   selector: 'app-share-event',
@@ -33,18 +34,24 @@ export class ShareEventComponent implements OnInit {
     eventStartDate: [''],
     eventEndDate: [''],
     eventPrices: this.fb.array(['']),
-    eventOrganized: [''],
+    eventOrganizer: [''],
     call2action: this.fb.group({
       eventType: ['1'],
       eventLink: [''],
     }),
     eventMentions: this.fb.array(['']),
   });
+
+  public actionTypes = [
+    {value: '1', display: 'Buy Tix'},
+    {value: '2', display: 'More Info'}
+  ];
+
   public user: any;
   public previewData: any;
   public categories: any[];
   public tags: any[];
-  public previewUrl: any[] = [];
+  public previewUrls: any[] = [];
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
@@ -52,13 +59,11 @@ export class ShareEventComponent implements OnInit {
   public showPreview: boolean = false;
   public slides: any[] = [];
   public addImage: boolean = true;
+
   public startDate = new Date();
   public endDate = new Date();
   public today = new Date();
-  public types = [
-    {value: '1', display: 'Buy Tix'},
-    {value: '2', display: 'More Info'}
-  ];
+
   public gMapStyles: any;
   public validCaptcha = false;
   public validSize = true;
@@ -86,7 +91,6 @@ export class ShareEventComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    console.log(this.windowRef.rootContainer);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185);
   }
@@ -95,7 +99,6 @@ export class ShareEventComponent implements OnInit {
     this.titleService.setTitle('Share An Event');
     this.loaderService.show();
     this.user = this.localStorageService.get('user');
-    document.getElementById('event-name').focus();
     if (!this.user) {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
@@ -148,8 +151,8 @@ export class ShareEventComponent implements OnInit {
 
   public onMapsChangePlace(data) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+    let geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
         this.eventForm.controls.eventPlace.patchValue({
@@ -176,10 +179,10 @@ export class ShareEventComponent implements OnInit {
   }
 
   public onRemovePreview(imageUrl) {
-    let imageId = this.previewUrl.indexOf(imageUrl);
-    delete this.previewUrl[imageId];
-    this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
-    if (this.previewUrl.length < 4) {
+    let imageId = this.previewUrls.indexOf(imageUrl);
+    delete this.previewUrls[imageId];
+    this.previewUrls = this.previewUrls.filter((img) => img !== imageUrl);
+    if (this.previewUrls.length < 4) {
       this.addImage = true;
     }
   }
@@ -192,7 +195,7 @@ export class ShareEventComponent implements OnInit {
 
   public readUrl(event) {
     let reader = [];
-    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+    if (event.target.files && event.target.files[0] && this.previewUrls.length < 4) {
       let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
         let size = event.target.files[i].size;
@@ -204,16 +207,18 @@ export class ShareEventComponent implements OnInit {
             image.src = e.target.result;
 
             this.resizeImage(image, 480, 330, (resizedImage) => {
-              let img = {
+              let img: Image = {
+                fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,
-                filemime: event.target.files[i].type
+                filemime: event.target.files[i].type,
+                filesize: event.target.files[i].size,
               };
-              if (this.previewUrl.length < 4) {
-                this.previewUrl.push(img);
+              if (this.previewUrls.length < 4) {
+                this.previewUrls.push(img);
               }
-              if (this.previewUrl.length >= 4) {
+              if (this.previewUrls.length >= 4) {
                 this.addImage = false;
               }
             });
@@ -242,29 +247,34 @@ export class ShareEventComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    if (this.submitted) {
+      return;
+    }
+    this.submitted = true;
     let event = this.eventForm.value;
-    event.eventImages = this.previewUrl;
+    event.eventImages = this.previewUrls;
     event.eventTags = this.processTags(event.eventTags);
     event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     let data = mapEvent(event);
     this.loaderService.show();
-    if (!this.submitted) {
-      this.submitted = true;
-      this.eventService.postEvent(data).subscribe((response: any) => {
-        if (response.status) {
-          this.loaderService.hide();
-          this.submitted = false;
-          this.router.navigate([response.data.slug]).then();
-        }
-      });
-    }
+    this.eventService.postEvent(data).subscribe(
+      (response: any) => {
+        this.loaderService.hide();
+        this.submitted = false;
+        this.router.navigate([response.data.slug]).then();
+      },
+      (error) => {
+        console.log(error);
+        this.loaderService.hide();
+      }
+    );
   }
 
   public onPreview() {
     let event = this.eventForm.value;
     event.eventTags = this.processTags(event.eventTags);
-    event.eventImages = this.previewUrl;
+    event.eventImages = this.previewUrls;
     event.startDate = (event.eventStartDate) ? moment(event.eventStartDate).unix() : moment(new Date()).unix();
     event.endDate = (event.eventEndDate) ? moment(event.eventEndDate).unix() : moment(new Date()).unix();
     this.prices = [];
@@ -280,14 +290,13 @@ export class ShareEventComponent implements OnInit {
   public initPreview() {
     this.showPreview = true;
     this.slides = [];
-    for (let img of this.previewUrl) {
+    for (let img of this.previewUrls) {
       if (img) {
         this.slides.push({image: img.url, active: false});
       }
     }
   }
 
-  // helper functions
   private resizeImage(img, maxWidth, maxHeight, callback) {
     return img.onload = () => {
       // get image dimension
@@ -327,7 +336,6 @@ export class ShareEventComponent implements OnInit {
 
       // run callback with result
       callback(dataUrl);
-
     };
   }
 
@@ -356,8 +364,9 @@ function mapEvent(event) {
     field_images: event.eventImages,
     field_event_category: event.eventCategory,
     field_event_tags: event.eventTags,
-    field_organized: event.eventOrganized,
+    field_organized: event.organizer,
     field_location_place: [{
+      fcl_id: event.call2action.fcl_id,
       field_latitude: event.eventPlace.lat,
       field_longitude: event.eventPlace.lng,
       field_location_address: event.eventPlace.place
@@ -367,6 +376,7 @@ function mapEvent(event) {
       field_call_to_action_link: event.call2action.eventLink,
       field_price: event.eventPrices,
       field_mentioned_by: event.eventMentions,
+      field_start_date_time: event.startDate,
       field_end_date_time: event.endDate
     }]
   };

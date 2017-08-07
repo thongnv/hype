@@ -47,6 +47,7 @@ export interface HyloEvent {
 }
 
 export interface Location {
+  id: number;
   name: string;
   lat: number;
   lng: number;
@@ -58,6 +59,7 @@ export interface Icon {
 }
 
 export interface Call2Action {
+  id: number;
   action: string;
   link: string;
 }
@@ -101,6 +103,7 @@ export interface FileReaderEvent extends Event {
 }
 
 export interface Image {
+  fid: number;
   url: string;
   value: string;
   filename: string;
@@ -133,6 +136,8 @@ export interface Company {
 }
 
 export interface Article {
+  id: number;
+  title: string;
   body: string;
   created: number;
   field_category: any[];

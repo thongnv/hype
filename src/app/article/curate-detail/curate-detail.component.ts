@@ -155,7 +155,7 @@ export class CurateDetailComponent implements OnInit {
     if (article.field_images && article.field_images.length) {
       for (let img of article.field_images) {
         if (img) {
-          this.slides.push({image: img, active: false});
+          this.slides.push({image: img.url, active: false});
         }
       }
 

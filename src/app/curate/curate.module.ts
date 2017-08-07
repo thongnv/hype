@@ -7,15 +7,15 @@ import { MomentModule } from 'angular2-moment';
 import { TinymceModule } from 'angular2-tinymce';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { AgmCoreModule } from 'angular2-google-maps/core';
-import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { TagInputModule } from 'ngx-chips';
 
-import {HelperModule} from '../helper/helper.module';
+import { HelperModule } from '../helper/helper.module';
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import { CurateRoutingModule } from './curate-routing.module';
 
 import { CurateComponent } from './curate.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
-import {CurateEditComponent} from "./curate-edit/curate-edit.component";
+import { CurateEditComponent } from './curate-edit/curate-edit.component';
 
 @NgModule({
   imports: [
@@ -27,8 +27,7 @@ import {CurateEditComponent} from "./curate-edit/curate-edit.component";
     TinymceModule.withConfig({auto_focus: false}),
     ReCaptchaModule,
     AgmCoreModule,
-    NguiAutoCompleteModule,
-
+    TagInputModule,
     HelperModule,
     HtmlToTextModule,
     CurateRoutingModule

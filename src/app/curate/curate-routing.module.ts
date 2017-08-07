@@ -8,7 +8,7 @@ import { CurateEditComponent } from './curate-edit/curate-edit.component';
 const routes: Routes = [
   {path: '', component: CurateComponent},
   {path: 'new', component: CurateNewComponent},
-  {path: 'edit/:slug', component: CurateEditComponent},
+  {path: ':slug/edit', component: CurateEditComponent},
 ];
 
 @NgModule({

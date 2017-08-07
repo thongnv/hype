@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 import * as moment from 'moment/moment';
@@ -10,7 +10,7 @@ import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { HyloEvent, User } from '../../app.interface';
+import { HyloEvent, Image, User } from '../../app.interface';
 
 @Component({
   selector: 'app-edit-event',
@@ -19,41 +19,66 @@ import { HyloEvent, User } from '../../app.interface';
 })
 export class EditEventComponent implements OnInit {
 
-  public eventForm: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    detail: ['', Validators.required],
-    category: ['', Validators.required],
-    place: this.formBuilder.group({
+  public eventForm: FormGroup = this.formBuilder.group(
+    {
       name: ['', Validators.required],
-      lat: [''],
-      lng: [''],
-    }),
-    date: [''],
-    price: [''],
-    call2action: this.formBuilder.group({
-      action: [''],
-      link: [''],
-    }),
-    images: [''],
-    mentions: this.formBuilder.array([]),
-  });
+      detail: ['', Validators.required],
+      category: ['', Validators.required],
+      tags: ['', Validators.required],
+      place: this.formBuilder.group(
+        {
+          id: ['', Validators.required],
+          name: ['', Validators.required],
+          lat: [''],
+          lng: [''],
+        }
+      ),
+      startDate: [''],
+      endDate: [''],
+      prices: this.formBuilder.array(['']),
+      call2action: this.formBuilder.group(
+        {
+          id: [''],
+          type: [''],
+          link: ['', Validators.maxLength(255)],
+        }
+      ),
+      images: [''],
+      organizer: [''],
+      mentions: this.formBuilder.array(['']),
+    }
+  );
+
+  public actionTypes = [
+    {value: '1', display: 'Buy tix'},
+    {value: '2', display: 'More info'}
+  ];
 
   public event: HyloEvent;
   public user: User;
 
   public previewData: any;
   public categories: any[];
-  public previewUrl: any[] = [];
+  public previewUrls: Image[] = [];
+
+  public canAddMoreImages = true;
+
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public showMore: boolean = true;
   public showPreview: boolean = false;
   public slides = [];
-  public actions = [];
   public gMapStyles: any;
   public validCaptcha = false;
-  public displayDate: Date;
+
+  public startDate: Date;
+  public endDate: Date;
+  public today = new Date();
+
+  public prices = [];
+  public tags = [];
+  public allTags = [];
 
   public submitted: boolean = false;
   public ready = false;
@@ -62,6 +87,7 @@ export class EditEventComponent implements OnInit {
   private hyperSearchComponent: HyperSearchComponent;
 
   constructor(public formBuilder: FormBuilder,
+              private titleService: Title,
               private eventService: EventService,
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
@@ -78,18 +104,15 @@ export class EditEventComponent implements OnInit {
     }
     this.route.params.subscribe((e) => {
       this.loaderService.show();
+      this.gMapStyles = AppSetting.GMAP_STYLE;
       this.eventService.getEventDetail(e.slug).subscribe(
         (resp) => {
           this.event = EventService.extractEventDetail(resp);
-          this.eventForm.controls.place.patchValue({
-            place: this.event.location.name,
-            lat: this.event.location.lat,
-            lng: this.event.location.lng,
-          });
-          this.displayDate = new Date(this.event.startDate);
-          this.previewUrl = this.event.images;
-          this.actions = [this.event.call2action];
-          this.eventForm.controls.mentions = this.formBuilder.array(this.event.mentions);
+          this.titleService.setTitle(this.event.name);
+          this.startDate = new Date(this.event.startDate);
+          this.endDate = new Date(this.event.endDate);
+          this.previewUrls = this.event.images;
+          this.tags = this.event.tags;
           this.eventService.getCategoryEvent().subscribe(
             (response) => {
               this.categories = response.data;
@@ -97,11 +120,52 @@ export class EditEventComponent implements OnInit {
               this.loaderService.hide();
             }
           );
+          this.eventService.getTagsEvent().subscribe(
+            (response: any) => {
+              this.allTags = response.data;
+              this.loaderService.hide();
+            }
+          );
+          this.loadDataIntoForm();
         },
         (error) => console.log(error)
       );
     });
-    this.gMapStyles = AppSetting.GMAP_STYLE;
+  }
+
+  public onSubmit(): void {
+    if (!this.submitted) {
+      this.submitted = true;
+      let event = this.eventForm.value;
+      event.id = this.event.id;
+      event.images = this.previewUrls;
+      event.startDate = moment(event.startDate).unix();
+      event.endDate = moment(event.endDate).unix();
+      event.tags = this.processTags(event.tags);
+      let data = mapEvent(event);
+      this.loaderService.show();
+      this.eventService.updateEvent(data).subscribe(
+        (response: any) => {
+          this.loaderService.hide();
+          this.router.navigate([response.data.slug]).then();
+        },
+        (error) => {
+          console.log(error);
+          this.submitted = false;
+          this.loaderService.hide();
+        }
+      );
+    }
+  }
+
+  public onStartDateChange() {
+    if (this.startDate > this.endDate) {
+      this.endDate = this.startDate;
+    }
+  }
+
+  public onMentionChange(evt) {
+    this.eventForm.patchValue({mention: evt.target.value});
   }
 
   public onPriceChange(evt) {
@@ -110,33 +174,32 @@ export class EditEventComponent implements OnInit {
     } else if (evt.target.value.length === 0) {
       this.eventForm.patchValue({price: 0});
       document.getElementById('eventPriceErr').innerText = '';
-    }
-    if (evt.target.valueAsNumber <= 300 && evt.target.valueAsNumber > 0) {
+    } else {
       document.getElementById('eventPriceErr').innerText = '';
+      this.eventForm.patchValue({price: evt.target.value});
     }
   }
 
   public onMapsChangePlace(data) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+    let geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
-        // set lat long for place
-        this.eventForm.controls.place.patchValue({
-          place: data.structured_formatting.main_text,
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        });
+        this.eventForm.controls.place.patchValue(
+          {
+            name: data.structured_formatting.main_text,
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng()
+          }
+        );
       }
-
-      // hide result
       this.hyperSearchComponent.hideSearchResult = true;
     });
   }
 
   public onHyloChangePlace(data) {
     this.eventForm.controls.place.patchValue({
-      place: data.Title,
+      name: data.Title,
       lat: Number(data.Lat),
       lng: Number(data.Long),
     });
@@ -144,9 +207,9 @@ export class EditEventComponent implements OnInit {
   }
 
   public onRemovePreview(imageUrl) {
-    let imageId = this.previewUrl.indexOf(imageUrl);
-    delete this.previewUrl[imageId];
-    this.previewUrl = this.previewUrl.filter((img) => img !== imageUrl);
+    let imageId = this.previewUrls.indexOf(imageUrl);
+    delete this.previewUrls[imageId];
+    this.previewUrls = this.previewUrls.filter((img) => img !== imageUrl);
   }
 
   public checkCaptcha(captcha) {
@@ -157,25 +220,43 @@ export class EditEventComponent implements OnInit {
 
   public readUrl(event) {
     let reader = [];
-    if (event.target.files && event.target.files[0] && this.previewUrl.length < 4) {
+    if (event.target.files && event.target.files[0] && this.previewUrls.length < 4) {
+      let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
       for (let i = 0; i < event.target.files.length && i < 4; i++) {
-        reader[i] = new FileReader();
-        reader[i].onload = (e) => {
-          let image = new Image();
-          image.src = e.target.result;
-          this.resizeImage(image, 480, 330, (resizedImage) => {
-            let img = {
-              url: resizedImage,
-              value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-              filename: event.target.files[i].name,
-              filemime: event.target.files[i].type
-            };
-            this.previewUrl.push(img);
-          });
-        };
-        reader[i].readAsDataURL(event.target.files[i]);
+        let size = event.target.files[i].size;
+        let type = event.target.files[i].type;
+        if (size < 6291456 && typeFile.test(type)) {
+          reader[i] = new FileReader();
+          reader[i].onload = (e) => {
+            let image = new Image();
+            image.src = e.target.result;
+
+            this.resizeImage(image, 480, 330, (resizedImage) => {
+              let img: Image = {
+                fid: null,
+                url: resizedImage,
+                value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
+                filename: event.target.files[i].name,
+                filemime: event.target.files[i].type,
+                filesize: event.target.files[i].size
+              };
+              if (this.previewUrls.length < 4) {
+                this.previewUrls.push(img);
+              }
+              if (this.previewUrls.length >= 4) {
+                this.canAddMoreImages = false;
+              }
+            });
+          };
+          reader[i].readAsDataURL(event.target.files[i]);
+        }
       }
     }
+  }
+
+  public addPrice() {
+    const prices = this.eventForm.get('prices') as FormArray;
+    prices.push(new FormControl());
   }
 
   public addMention() {
@@ -187,27 +268,9 @@ export class EditEventComponent implements OnInit {
     this.showPreview = !this.showPreview;
   }
 
-  public onSubmit(): void {
-    if (!this.submitted) {
-      this.submitted = true;
-      let event = this.eventForm.value;
-      event.images = this.previewUrl;
-      event.created = moment(event.date).unix();
-      let data = mapEvent(event);
-      this.loaderService.show();
-      this.eventService.postEvent(data).subscribe((response: any) => {
-        if (response.status) {
-          this.loaderService.hide();
-          this.submitted = false;
-          this.router.navigate([response.data.slug]).then();
-        }
-      });
-    }
-  }
-
   public onPreview() {
     let event = this.eventForm.value;
-    event.images = this.previewUrl;
+    event.images = this.previewUrls;
     event.Date = moment(event.date).unix();
     this.previewData = event;
     this.initPreview();
@@ -216,14 +279,66 @@ export class EditEventComponent implements OnInit {
   public initPreview() {
     this.showPreview = true;
     this.slides = [];
-    for (let img of this.previewUrl) {
+    for (let img of this.previewUrls) {
       if (img) {
         this.slides.push({image: img.url, active: false});
       }
     }
   }
 
-  // helper functions
+  private loadDataIntoForm() {
+    this.eventForm.controls.place.patchValue(
+      {
+        id: this.event.location.id,
+        name: this.event.location.name,
+        lat: this.event.location.lat,
+        lng: this.event.location.lng,
+      }
+    );
+    if (!this.event.startDate) {
+      this.startDate = this.today;
+    }
+    let actionValue = 1;
+    if (this.event.call2action.action === 'More info') {
+      actionValue = 2;
+    }
+    this.eventForm.controls.call2action.patchValue(
+      {
+        id: this.event.call2action.id,
+        type: actionValue,
+        link: this.event.call2action.link,
+      }
+    );
+    this.eventForm.controls.organizer.patchValue(this.event.organizer);
+    if (this.event.mentions.length) {
+      let mentions = [];
+      for (let mention of this.event.mentions) {
+        mentions.push(mention.url);
+      }
+      this.eventForm.controls.mentions = this.formBuilder.array(mentions);
+    }
+    if (this.event.prices.length) {
+      this.eventForm.controls.prices = this.formBuilder.array(this.event.prices);
+    }
+  }
+
+  private processTags(inputTags) {
+    let tags = [];
+    for (let tag of inputTags) {
+      let addTag = this.allTags.filter(
+        (term) => term.name === tag
+      );
+      if (!addTag[0]) {
+        addTag[0] = {
+          tid: null,
+          name: tag
+        };
+      }
+      tags.push(addTag[0]);
+    }
+    return tags;
+  }
+
   private resizeImage(img, maxWidth, maxHeight, callback) {
     return img.onload = () => {
       // get image dimension
@@ -268,23 +383,29 @@ export class EditEventComponent implements OnInit {
   }
 }
 
-function  mapEvent(event) {
+function mapEvent(event) {
   return {
+    nid: event.id,
     title: event.name,
     body: event.detail,
-    created: event.created,
     field_images: event.images,
     field_event_category: event.category,
+    field_event_tags: event.tags,
+    field_organized: event.organizer,
     field_location_place: [{
+      fcl_id: event.place.id,
       field_latitude: event.place.lat,
       field_longitude: event.place.lng,
-      field_location_address: event.place.place
+      field_location_address: event.place.name
     }],
     field_event_option: [{
-      field_call_to_action_group: event.call2action.action,
+      fcl_id: event.call2action.id,
+      field_call_to_action_group: event.call2action.type,
       field_call_to_action_link: event.call2action.link,
-      field_price: event.price,
-      field_mentioned_by: event.mentions
+      field_price: event.prices,
+      field_mentioned_by: event.mentions,
+      field_start_date_time: event.startDate,
+      field_end_date_time: event.endDate,
     }]
   };
 }

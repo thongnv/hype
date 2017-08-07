@@ -18,7 +18,7 @@
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
           <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control"
-                 type="text">
+                 type="text" autofocus>
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
             Please enter event name.
@@ -76,7 +76,7 @@
             <input class="form-control col-xs-12" id="listImg"  type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="!previewUrl.length" class="text-danger">
+          <small *ngIf="!previewUrls.length" class="text-danger">
             Event images is required
           </small>
           <small *ngIf="!validSize || !validType" class="text-danger">
@@ -84,7 +84,7 @@
             Allowed file types: jpg, jpeg, png, gif, bmp.
           </small>
           <div class="list-img-wrap">
-            <div *ngFor="let img of previewUrl" class="preview-wrap">
+            <div *ngFor="let img of previewUrls" class="preview-wrap">
               <img src="{{img.url}}"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
@@ -139,7 +139,7 @@
             <label>Call to Action</label>
             <div class="form-group" formGroupName="call2action">
               <select name="" id="event-type" formControlName="eventType">
-                <option *ngFor="let type of types" [value]="type.value">{{type.display}}</option>
+                <option *ngFor="let type of actionTypes" [value]="type.value">{{type.display}}</option>
               </select>
               <input placeholder="http://www.sistic.com.sg"
                      formControlName="eventLink"
@@ -154,7 +154,7 @@
           <div class="form-group">
             <label>Organized by</label>
             <div>
-              <input formControlName="eventOrganized" id="event-organized"
+              <input formControlName="eventOrganizer" id="event-organized"
                      class="form-control"
                      type="text"
               >
@@ -181,7 +181,7 @@
         </re-captcha>
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="eventForm.invalid || previewUrl.length == 0 || !validCaptcha"
+        <button type="submit" [disabled]="eventForm.invalid || previewUrls.length == 0 || !validCaptcha"
                 class="btn btn-primary">
           Share
         </button>
@@ -247,10 +247,10 @@
               </a>
             </span>
             </li>
-            <li *ngIf="previewData.eventOrganized">
+            <li *ngIf="previewData.organizer">
               <span class="info-label"><i
                 class="sprite sprite-tag"></i><span>Organized by</span></span>
-              <span class="info-value col-md-7 no-padding-left">{{previewData.eventOrganized}}
+              <span class="info-value col-md-7 no-padding-left">{{previewData.organizer}}
               </span>
             </li>
             <li *ngIf="previewData.eventMentions?.length > 1">

@@ -1,3 +1,6 @@
+.name.pointer a{
+  font-size: 18px;
+}
 .noUi-horizontal .noUi-handle {
     border-radius: 50%;
 }
@@ -206,7 +209,7 @@ ul.itemSort li a {
     border: none;
     background: transparent;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1;
     text-align: right;
     color: #3b3b3b;
@@ -288,6 +291,8 @@ ul.itemSort li a i {
     line-height: 1.13;
     text-align: left;
     color: #3b3b3b;
+    height: 30px;
+    overflow: hidden;
 }
 
 .item-content span:nth-child(2n) {

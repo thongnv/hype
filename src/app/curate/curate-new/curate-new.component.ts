@@ -17,6 +17,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 export class CurateNewComponent implements OnInit {
   public favorite: any;
   public categories: any[];
+  public defaultCategories: any[];
   public previewUrl: any[] = [];
   public listPlaces: any[] = [];
   public markers: any[] = [];
@@ -24,6 +25,7 @@ export class CurateNewComponent implements OnInit {
   public addImage: boolean = true;
   public submitted: boolean = false;
   public validCaptcha: boolean = false;
+  public chooseCategories: any[] = [];
 
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -48,9 +50,6 @@ export class CurateNewComponent implements OnInit {
     listPlaces: this.formBuilder.array([])
   });
 
-  public selectedCategories = [];
-  public categoriesTmp = [];
-
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
               private userService: UserService,
@@ -70,7 +69,6 @@ export class CurateNewComponent implements OnInit {
   public ngOnInit() {
     this.titleService.setTitle('Create A New List');
     this.onAddPlace();
-    this.loaderService.show();
     document.getElementById('list-name').focus();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185);
@@ -84,8 +82,6 @@ export class CurateNewComponent implements OnInit {
     this.mainService.getCategoryArticle().subscribe(
       (response: any) => {
         this.categories = response.data;
-        this.categoriesTmp = this.categories;
-        this.loaderService.hide();
       }
     );
   }
@@ -133,10 +129,12 @@ export class CurateNewComponent implements OnInit {
 
             this.resizeImage(image, 680, 360, (resizedImage) => {
               let img = {
+                fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
                 filename: event.target.files[i].name,
-                filemime: event.target.files[i].type
+                filemime: event.target.files[i].type,
+                filesize: event.target.files[i].size,
               };
               if (this.previewUrl.length < 5) {
                 this.previewUrl.push(img);
@@ -172,6 +170,7 @@ export class CurateNewComponent implements OnInit {
       }
       article.listPlaces = this.listPlaces;
       article.listImages = this.previewUrl;
+      article.listCategory = this.processCategories(article.listCategory);
       let  data = this.mapArticle(article);
       this.loaderService.show();
       if (!this.submitted) {
@@ -193,7 +192,6 @@ export class CurateNewComponent implements OnInit {
   public onPreview() {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrl;
-    console.log(this.previewData); debugger
     this.initMap();
   }
 
@@ -269,29 +267,6 @@ export class CurateNewComponent implements OnInit {
         slug: data.Slug,
       });
     }
-  }
-
-  // category select helper
-  public addToSelectedCategories(category) {
-    this.selectedCategories.push(category);
-
-    // reset text box
-    this.formData.controls['listCatTmp'].patchValue('');
-
-    // update form control value
-    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
-
-    // filter chosen category in categoriesTmp
-    this.categoriesTmp = this.categoriesTmp.filter((cat) => cat.tid !== category.tid);
-  }
-
-  public removeCategoryItem(index) {
-    this.selectedCategories.splice(index, 1);
-
-    // update form control value
-    let catIds = this.selectedCategories.map((cat) => cat.tid).join(',');
-    this.formData.controls['listCategory'].patchValue(catIds);
   }
 
   // helper functions
@@ -377,6 +352,18 @@ export class CurateNewComponent implements OnInit {
       }
 
     }
+  }
+
+  private processCategories(category) {
+    for (let name of category) {
+      let addCategory = this.categories.filter(
+        (term) => term.name === name
+      );
+      if (addCategory[0].tid) {
+        this.chooseCategories.push(addCategory[0].tid);
+      }
+    }
+    return this.chooseCategories;
   }
 
   private highlightMarker(markerId: number): void {

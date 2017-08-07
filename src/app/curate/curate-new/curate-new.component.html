@@ -28,31 +28,20 @@
           <app-tinymce formControlName='listDescription'></app-tinymce>
         </div>
         <div class="form-group">
-          <label class="control-label" for="list-category">Category</label>
-
-          <div class="list-category" (click)="showAutoComplete=true">
-            <ul class="list-category-item">
-              <li class="category-item" *ngFor="let category of selectedCategories; let index = index">
-                <span>{{category.name}}</span>
-                <span class="remove-category-item" (click)="removeCategoryItem(index)">x</span>
-              </li>
-              <li>
-                <input ngui-auto-complete
-                       formControlName="listCatTmp"
-                       [source]="categoriesTmp"
-                       (valueChanged)="addToSelectedCategories($event)"
-                       list-formatter="name"
-                       display-property-name="name"
-                       placeholder="Select category ..."
-                       class="form-control" id="list-category">
-              </li>
-            </ul>
-
-            <small *ngIf="formData.get('listCatTmp').hasError('required') && formData.get('listCategory').hasError('required')" class="text-danger">
-              Please select article category.
-            </small>
-          </div>
-
+          <label class="control-label">Category</label>
+          <tag-input [(ngModel)]="defaultCategories" [modelAsStrings]="true"
+                     [onlyFromAutocomplete]="true"
+                     placeholder="Choose categories your list"
+                     formControlName="listCategory">
+            <tag-input-dropdown [displayBy]="'name'"
+                                [showDropdownIfEmpty]="true"
+                                [focusFirstElement]="true"
+                                [identifyBy]="'name'" [autocompleteItems]="categories">
+              <ng-template let-item="item" let-index="index" let-last="last">
+                {{ item.name }}
+              </ng-template>
+            </tag-input-dropdown>
+          </tag-input>
         </div>
 
 
