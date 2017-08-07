@@ -10,12 +10,12 @@ import { Article, Image } from '../../app.interface';
 import { WindowUtilService } from '../../services/window-ultil.service';
 
 @Component({
-  selector: 'app-curate-edit',
-  templateUrl: './curate-edit.component.html',
-  styleUrls: ['./curate-edit.component.css']
+  selector: 'app-article-edit',
+  templateUrl: './article-edit.component.html',
+  styleUrls: ['./article-edit.component.css']
 })
 
-export class CurateEditComponent implements OnInit {
+export class ArticleEditComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public selectedCategories = [];

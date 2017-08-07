@@ -15,7 +15,6 @@ import { CurateRoutingModule } from './curate-routing.module';
 
 import { CurateComponent } from './curate.component';
 import { CurateNewComponent } from './curate-new/curate-new.component';
-import { CurateEditComponent } from './curate-edit/curate-edit.component';
 
 @NgModule({
   imports: [
@@ -35,7 +34,6 @@ import { CurateEditComponent } from './curate-edit/curate-edit.component';
   declarations: [
     CurateComponent,
     CurateNewComponent,
-    CurateEditComponent
   ],
   providers: [
 
