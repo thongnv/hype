@@ -9,27 +9,27 @@
             <ul class="navbar-collapse list-tap" [class.userMenu]="user" >
               <li [routerLink]="['./home']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-left-nav-trending-events"></i>
+                <i class="left-nav-trending-events"><img src="/assets/icon/left-nav-trending-events.png"/> </i>
                 <span class="hidden-xs hidden-sm">Trending Events</span>
               </li>
               <li [routerLink]="['./discover/eat']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-left-nav-eat"></i>
+                <i class="left-nav-eat"><img src="/assets/icon/left-nav-eat.png"/></i>
                 <span class="hidden-xs hidden-sm">Eat</span>
               </li>
               <li [routerLink]="['./discover/play']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-left-nav-play"></i>
+                <i class="left-nav-play"><img src="/assets/icon/left-nav-play.png"/></i>
                 <span class="hidden-xs hidden-sm">Play</span>
               </li>
               <li [routerLink]="['./curate']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-left-nav-curated"></i>
+                <i class="left-nav-curated"><img src="/assets/icon/left-nav-curated.png"/></i>
                 <span class="hidden-xs hidden-sm">Curated</span>
               </li>
               <li *ngIf="user && !user.isAnonymous" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <i class="sprite-icon sprite sprite-left-nav-favorites"></i>
+                <i class="left-nav-favorites"><img src="/assets/icon/left-nav-favorites.png"/></i>
                 <span class="hidden-xs hidden-sm">Favorites</span>
               </li>
             </ul>

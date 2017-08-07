@@ -843,7 +843,7 @@ ul.mentioned-item {
 
   .wrap-each-items {
     height: auto;
-    margin-top: 10px;
+    margin-top: 0px;
   }
 
   .list-item .caption {
@@ -881,7 +881,7 @@ ul.mentioned-item {
   }
 
   .wrap-each-items.article {
-    height: 230px;
+    height: auto;
   }
 }
 
@@ -1049,6 +1049,24 @@ ul.mentioned-item {
 @media only screen and (max-width: 767px) {
   .avatar-profile {
     width: 100px;
+  }
+
+  .information-title{
+    height: auto;
+  }
+  .information-title .real-title {
+    width: 100%!important;
+  }
+
+  .information-title span{
+    display: block;
+    clear: both;
+    margin-left: 0px!important;
+  }
+
+  .information-title span.pull-right{
+    float: none!important;
+    text-align: left;
   }
 
   .information-profile {
