@@ -29,8 +29,8 @@ export class EventService {
       },
       images: extractImages(data.field_image),
       detail: data.body,
-      startDate: data.field_event_option.field_start_date_time * 1000,
-      endDate: data.field_event_option.field_end_date_time * 1000,
+      startDate: data.field_event_option.field_start_date_time,
+      endDate: data.field_event_option.field_end_date_time,
       organizer: data.field_organized,
       category: data.field_category,
       location: {
@@ -279,7 +279,7 @@ function extractExperiences(data): Experience[] {
           isAnonymous: false
         },
         rating: item.rating,
-        date: item.created * 1000,
+        date: item.created,
         text: item.comment_body,
         images: extractImages(item.comment_images),
         comments: extractComments(item.children),
