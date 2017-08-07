@@ -20,8 +20,6 @@ export class FollowerComponent implements OnInit {
   public currentUser: User;
   public user = AppSetting.defaultUser;
   public followerPage: number = 0;
-  public msgContent: string;
-  public alertType: string;
   public isCurrentUser: boolean = false;
   public set: any = {
     offset: 0, endOfList: false, loadingInProgress: false

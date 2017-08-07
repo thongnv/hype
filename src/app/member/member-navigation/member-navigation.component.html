@@ -6,7 +6,7 @@
         <span class="user-name text-ellipsis" [routerLink]="['/'+currentUser.slug]">
           {{currentUser.name | truncate: 17}}
         </span>
-        <div class="follow-btn-wrap">
+        <div class="follow-btn-wrap" *ngIf="!isCurrentUser">
           <a class="follow-btn unfollow-btn follow" *ngIf="!currentUser.followed" (click)="toggleFollow()">Follow</a>
           <a class="follow-btn unfollow-btn" *ngIf="currentUser.followed" (click)="toggleFollow()">Unfollow</a>
         </div>
