@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Observable class extensions
+import 'rxjs/add/observable/of';
+
+// Observable operators
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+import {} from '@types/googlemaps';
 import * as moment from 'moment/moment';
 import { Location } from '@angular/common';
 import { any } from 'codelyzer/util/function';
@@ -15,7 +24,6 @@ import { AppSetting } from '../app.setting';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Title } from '@angular/platform-browser';
-import {delay} from "rxjs/operator/delay";
 
 declare let google: any;
 
@@ -45,7 +53,6 @@ export class HomeComponent implements OnInit {
   public showDate: boolean = false;
   public showAll: boolean = true;
   public showCircle: boolean = false;
-  public circleDraggable: boolean = true;
   public drawCategories: any[];
   public date: { year: number, month: number };
   public options: any = {
@@ -77,6 +84,8 @@ export class HomeComponent implements OnInit {
     price: ''
   };
   private eventCate: any[] = [];
+
+  private requestings = [];
 
   constructor(private titleService: Title,
               private homeService: HomeService,
@@ -133,12 +142,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public p() {
-    // just to get rid of the warning
-  }
-
   public onResize(event): void {
-    console.log(event);
+    // console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
     let numCategories = calculateNumCategories();
@@ -577,34 +582,38 @@ export class HomeComponent implements OnInit {
 
   private getEvents(params) {
     this.loading = true;
-    this.homeService.getEvents(params).map((response) => response.json()).subscribe(
-      (response) => {
-        if (this.loadMore) {
-          this.events = this.events.concat(response.data);
-        } else {
-          this.events = response.data;
-        }
-        if (response.data.length === 0) {
-          this.endRecord = true;
-        }
-        this.total = response.total;
 
-        this.shownotfound = response.total === 0;
+    this.requestings.forEach(req => req.unsubscribe());
+    const req = this.homeService.getLatestEvents(this.params)
+      .subscribe(
+        data => {
+          this.events = this.loadMore ? this.events.concat(data.data) : data.data;
+          this.endRecord = data.data.length === 0;
+          this.total = data.total;
+          this.shownotfound = data.total === 0;
 
-        this.passerTop100();
-        this.loadMore = false;
-        this.loaderService.hide();
-        this.smallLoader.hide();
-        this.loading = false;
-      },
-      (err) => {
-        console.log(err);
-        this.loadMore = false;
-        this.endRecord = false;
-        this.loaderService.hide();
-        this.smallLoader.hide();
-        this.loading = false;
-      });
+          this.passerTop100();
+          this.loadMore = false;
+          this.loaderService.hide();
+          this.loading = false;
+        },
+        error => {
+          console.error(error);
+          req.unsubscribe();
+
+          this.loadMore = false;
+          this.endRecord = false;
+          this.loaderService.hide();
+          this.smallLoader.hide();
+          this.loading = false;
+        },
+        () => {
+          req.unsubscribe();
+        }
+      );
+
+    this.requestings.push(req);
+
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+import { User } from '../../app.interface';
 
 @Component({
   selector: 'app-follow-item',
@@ -10,8 +11,11 @@ import { FollowService } from '../../services/follow.service';
 export class FollowItemComponent implements OnInit {
 
   @Input() public item: any;
+  @Input() public user: User;
 
   @Output() public onUpdate = new EventEmitter<any>();
+
+  public isCurrentUser: boolean;
 
   constructor(
     private userService: UserService,
@@ -19,6 +23,7 @@ export class FollowItemComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.isCurrentUser = this.user.id === this.item.id;
     this.followService.getEmittedValue().subscribe(
       (data) => {
         if (this.item.id === data.user.id) {
