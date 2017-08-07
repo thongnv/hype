@@ -108,7 +108,7 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public p() {
-    // TODO;
+    // hack to get rid of warning
   }
 
   public onResize(event): void {

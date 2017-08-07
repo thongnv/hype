@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {} from '@types/googlemaps';
+import {  } from '@types/googlemaps';
 import * as moment from 'moment/moment';
 import { Location } from '@angular/common';
 import { any } from 'codelyzer/util/function';
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
               private route: Router,
               private location: Location,
               private windowRef: WindowUtilService) {
-    window.scroll(0,0);
+    window.scroll(0, 0);
   }
 
   public ngOnInit() {
@@ -142,8 +142,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  public p() {
+    // hack to get rid of warning
+  }
+
   public onResize(event): void {
-    // console.log(event);
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 185) / 2;
     let numCategories = calculateNumCategories();
@@ -154,11 +158,9 @@ export class HomeComponent implements OnInit {
     if (event === 'all') {
       this.selected = 'all';
       this.params.tid = '';
-      if (this.categories) {
-        for (let i = 0; i < this.categories.length; i++) {
-          this.categories[i].selected = false;
-        }
-      }
+      this.categories.forEach((category, index) => {
+        this.categories[index].selected = false;
+      });
     } else {
       if (event.selected) {
         event.selected = false;
@@ -183,11 +185,9 @@ export class HomeComponent implements OnInit {
     this.selectedEventFilter = this.eventFilter[0];
     this.markers = [];
     this.events = [];
-    if (this.categories) {
-      for (let i = 0; i < this.categories.length; i++) {
-        this.categories[i].selected = false;
-      }
-    }
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
     this.eventCate = [];
     this.priceRange = [0, 50];
     this.selected = false;
@@ -354,7 +354,7 @@ export class HomeComponent implements OnInit {
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (this.selectedEventOrder.name !== 'top 100') {
-      if(!this.zoomChanged){
+      if (!this.zoomChanged) {
         let latLngNew = new google.maps.Marker({
           position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
           draggable: true
@@ -364,21 +364,21 @@ export class HomeComponent implements OnInit {
           position: new google.maps.LatLng(this.lat, this.lng),
           draggable: true
         });
-        this.zoomChanged=true;
+        this.zoomChanged = true;
         let searchCenter = mapCenter.getPosition();
-        let distance: any = getDistance(searchCenter,latLngNew.getPosition());
+        let distance: any = getDistance(searchCenter, latLngNew.getPosition());
         this.params.lat = this.lat;
         this.params.long = this.lng;
-        if(this.params.radius < 0.25){
+        if (this.params.radius < 0.25) {
           this.params.radius = parseFloat((distance / 1000).toFixed(2));
-        }else{
-          this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+        } else {
+          this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
         }
         this.smallLoader.show();
         this.events = [];
         this.markers = [];
         this.params.page = 0;
-        this.shownotfound=false;
+        this.shownotfound = false;
         this.getTrending();
       }
     }
@@ -408,7 +408,7 @@ export class HomeComponent implements OnInit {
     if (this.selectedEventOrder.name === 'top 100') {
       this.getTop100(this.params);
     } else {
-      this.getEvents(this.params);
+      this.getEvents();
     }
   }
 
@@ -546,7 +546,6 @@ export class HomeComponent implements OnInit {
   }
 
   private getTop100(params) {
-    console.log(params);
     this.loading = true;
     this.homeService.getTop100(params).map((resp) => resp.json()).subscribe(
       (resp) => {
@@ -580,13 +579,17 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  private getEvents(params) {
+  private getEvents() {
     this.loading = true;
+    if (this.requestings.length > 0) {
+      this.requestings.forEach((req) => {
+        req.unsubscribe();
+      });
+    }
 
-    this.requestings.forEach(req => req.unsubscribe());
     const req = this.homeService.getLatestEvents(this.params)
       .subscribe(
-        data => {
+        (data) => {
           this.events = this.loadMore ? this.events.concat(data.data) : data.data;
           this.endRecord = data.data.length === 0;
           this.total = data.total;
@@ -597,7 +600,7 @@ export class HomeComponent implements OnInit {
           this.loaderService.hide();
           this.loading = false;
         },
-        error => {
+        (error) => {
           console.error(error);
           req.unsubscribe();
 
@@ -650,6 +653,8 @@ function calculateNumCategories(): number {
   return numCategories;
 }
 function sleep(delay) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
+  let start = new Date().getTime();
+  while (new Date().getTime() < start + delay) {
+    // Sleep
+  }
 }
