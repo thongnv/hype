@@ -20,8 +20,7 @@
               <i class="icon-sm"
                  [class.icon-heart]="!bookmarked"
                  [class.icon-heart-selected]="bookmarked"
-                 (click)="toggleBookmark()" aria-hidden="true"
-                 *ngIf="!user.isAnonymous">
+                 (click)="toggleBookmark()" aria-hidden="true">
               </i>
             </app-boostrap-carousel>
             <div *ngIf="CTC" (click)="showBookingModal()" class="company_booking">
