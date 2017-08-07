@@ -27,7 +27,7 @@
                 <i class="sprite-icon sprite sprite-left-nav-curated"></i>
                 <span class="hidden-xs hidden-sm">Curated</span>
               </li>
-              <li *ngIf="user" [routerLink]="['/'+user.slug+'/favorite']"
+              <li *ngIf="user && !user.isAnonymous" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <i class="sprite-icon sprite sprite-left-nav-favorites"></i>
                 <span class="hidden-xs hidden-sm">Favorites</span>
