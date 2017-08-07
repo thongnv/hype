@@ -5,9 +5,9 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
-import { UserService } from '../../services/user.service';
-import { Article, Image } from '../../app.interface';
+import { Article, Image, User } from '../../app.interface';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
   selector: 'app-article-edit',
@@ -43,6 +43,7 @@ export class ArticleEditComponent implements OnInit {
   public article: Article;
   public contentControl: any;
   public slugName: any;
+  public user: User;
 
   public ready = false;
 
@@ -58,8 +59,8 @@ export class ArticleEditComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private mainService: MainService,
-              private userService: UserService,
               private titleService: Title,
+              private localStorageService: LocalStorageService,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router,
@@ -75,26 +76,28 @@ export class ArticleEditComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
-    this.userService.checkLogin().subscribe(
-      (response: any) => {
-        if (response === 0) {
-          this.router.navigate(['/login'], {skipLocationChange: true}).then();
-        }
-      }
-    );
-    this.mainService.getCategoryArticle().subscribe(
-      (response: any) => {
-        this.categories = response.data;
-      }
-    );
+    this.user = this.localStorageService.get('user') as User;
+    if (!this.user || this.user.isAnonymous) {
+      this.router.navigate(['/login']).then();
+      return;
+    }
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe((res) => {
+        if (res.user_post.name !== this.user.slug) {
+          this.router.navigate(['article', e.slug]).then();
+          return;
+        }
         this.titleService.setTitle(res.title);
         this.loadDataIntoForm(res);
         this.article.id = res.nid;
+        this.mainService.getCategoryArticle().subscribe(
+          (response: any) => {
+            this.categories = response.data;
+          }
+        );
+        this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+        this.layoutWidth = (this.windowRef.rootContainer.width - 180);
         this.ready = true;
       });
     });
@@ -243,8 +246,8 @@ export class ArticleEditComponent implements OnInit {
 
   public onMapsChangePlace(data, i) {
     // get lat long from place id
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({placeId: data.place_id}, (results, status) => {
+    let geoCoder = new google.maps.Geocoder();
+    geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
         let placeControl = this.formData.get('listPlaces') as FormArray;
