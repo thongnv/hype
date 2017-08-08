@@ -63,9 +63,9 @@
                      *ngIf="item.title" [routerLink]="[item.alias]">
                     {{item.title | truncate : 45}}
                   </a>
-                  <span *ngIf="!item.field_event_option.field_price.length"
+                  <span *ngIf="item.field_event_option.field_price.length"
                       class="free-price-button text-capitalize pull-right">
-                    ${{item.field_event_option.field_price}}</span>
+                    ${{item.field_event_option.field_price[0]}}</span>
 
                   <span
                     *ngIf="!item.field_event_option.field_price.length"
