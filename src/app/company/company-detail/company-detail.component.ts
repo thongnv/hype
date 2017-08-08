@@ -84,6 +84,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         (resp) => {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
+          this.location.name = this.location.name.replace(/Address\//i, '');
           this.titleService.setTitle(this.company.name);
           // TODO: use this.instagramUrl instead
           // let instagramUsername = 'billnguyen254';
