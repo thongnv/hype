@@ -18,7 +18,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
         <div class="content-info-experience">
           <h4>{{author.name}}</h4>
           <p class="info-date-experience">
-            {{date | date:'d MMMM y'}}
+            {{date | amFromUnix | date:'d MMMM y'}}
           </p>
         </div>
           <div class="clear"></div>

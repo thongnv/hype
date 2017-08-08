@@ -14,7 +14,7 @@
         </a>
       </h4>
       <app-star-vote [stars]="item.rate_value" (onVote)="onVoteEvent($event)"></app-star-vote>
-      <p *ngIf="item.Hylo_Activity_Description" class="detail-information" [innerHTML]="item.Hylo_Activity_Description | myHtml2Text | truncate : 150"></p>
+      <p *ngIf="item.company_profile" class="detail-information" [innerHTML]="item.company_profile | myHtml2Text | truncate : 150"></p>
     </div>
   </div>
 </div>

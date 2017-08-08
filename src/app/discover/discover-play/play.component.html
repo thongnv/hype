@@ -29,10 +29,11 @@
           aria-hidden="true"></i></a>
       </li>
       <li>
-        <a
-           (click)="showCuisineFind(showCuisine)" class="when-button">Cuisine ({{totalCuisine}})<i
-          [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
-          aria-hidden="true"></i></a>
+        <a (click)="showCuisineFind(showCuisine)" class="when-button">
+          Activities ({{totalCuisine}})
+          <i [ngClass]="{'fa-angle-up':showCuisine,'fa-angle-down':!showCuisine}" class="fa "
+          aria-hidden="true"></i>
+        </a>
       </li>
       <li>
         <a (click)="showRateFind(showRate)" class="when-button">Ratings <i

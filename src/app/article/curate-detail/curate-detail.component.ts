@@ -1,12 +1,12 @@
-import { Component, HostListener, Injectable, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MainService } from '../../services/main.service';
-import { LoaderService } from '../../helper/loader/loader.service';
-import { AppSetting } from '../../app.setting';
-import { WindowUtilService } from '../../services/window-ultil.service';
-import { Title } from '@angular/platform-browser';
-import { User } from '../../app.interface';
-import { LocalStorageService } from 'angular-2-local-storage';
+import {Component, HostListener, Injectable, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MainService} from '../../services/main.service';
+import {LoaderService} from '../../helper/loader/loader.service';
+import {AppSetting} from '../../app.setting';
+import {WindowUtilService} from '../../services/window-ultil.service';
+import {Title} from '@angular/platform-browser';
+import {User} from '../../app.interface';
+import {LocalStorageService} from 'angular-2-local-storage';
 
 @Injectable()
 @Component({
@@ -55,9 +55,11 @@ export class CurateDetailComponent implements OnInit {
 
   public ngOnInit() {
     let user = this.localStorageService.get('user') as User;
+
     if (user) {
       this.user = user;
     }
+
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -124,8 +126,10 @@ export class CurateDetailComponent implements OnInit {
     this.currentHighlightedMarker = 0;
     this.slides = [];
     this.markers = [];
+
     if (article.field_places && article.field_places.length) {
       let index = 0;
+
       for (let place of article.field_places) {
         let marker = {
           lat: 1.290270,
@@ -134,19 +138,25 @@ export class CurateDetailComponent implements OnInit {
           isOpenInfo: false,
           icon: 'assets/icon/locationmarker.png'
         };
+
         if (place.field_latitude !== '0' && place.field_longitude !== '0') {
           marker.lat = Number(place.field_latitude);
           marker.lng = Number(place.field_longitude);
+
           if (index === 0) {
             marker.opacity = 1;
             marker.isOpenInfo = true;
           }
         }
+
         index++;
         this.markers.push(marker);
       }
+
+      this.need2Zoom();
       this.showMap = true;
     }
+
     if (article.field_images && article.field_images.length) {
       for (let img of article.field_images) {
         if (img) {
@@ -155,5 +165,47 @@ export class CurateDetailComponent implements OnInit {
       }
 
     }
+  }
+
+
+  // decide to zoom map if necessary
+  private need2Zoom() {
+    let distances = [];
+    this.markers.forEach(marker => {
+      this.markers.forEach(otherMarker => {
+        if (otherMarker !== marker) {
+          distances.push(this.getDistance(marker, otherMarker));
+        }
+      })
+    });
+
+    distances.sort((a, b) => a - b);
+
+    let averageDistance = (distances[0] + distances[distances.length - 1]) / 2;
+    let centerMarker = distances[Math.floor(distances.length/2)];
+
+    // 19 is zoom value of map should first fit to view every markers that nearest markers pair about 30m
+    if (averageDistance < 40) {
+      this.lat = centerMarker.lat;
+      this.lng = centerMarker.lng;
+      this.zoom = 19;
+    }
+
+  }
+
+
+  private rad(x) {
+    return x * Math.PI / 180;
+  }
+
+  private getDistance(p1, p2) {
+    let R = 6378137; // Earth’s mean radius in meter
+    let dLat = this.rad(p2.lat - p1.lat);
+    let dLong = this.rad(p2.lng - p1.lng);
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.rad(p1.lat)) * Math.cos(this.rad(p2.lat)) *
+      Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
   }
 }

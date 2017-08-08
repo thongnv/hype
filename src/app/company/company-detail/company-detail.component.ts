@@ -137,6 +137,10 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public toggleBookmark() {
+    if (!this.user || this.user.isAnonymous) {
+      this.router.navigate(['/login']).then();
+      return;
+    }
     this.bookmarked = !this.bookmarked;
     this.companyService.toggleBookmark(this.id).subscribe(
       (resp) => {

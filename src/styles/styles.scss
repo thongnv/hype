@@ -484,7 +484,7 @@ body, html {
       border: 1px solid #ccc;
     }
     .tab-content {
-      margin-left: 30px;
+      padding-left: 30px;
     }
     .nav-tabs li a {
       border: 0;
@@ -1325,6 +1325,7 @@ body, html {
   .frame_nav, .frame_left, .frame-right {
     display: table-cell;
     padding: 0px;
+    overflow: hidden;
   }
 
   .frame_nav {
@@ -1649,6 +1650,29 @@ body, html {
   .left {
     margin-left: -30px;
   }
+}
+
+/** Marker Info **/
+
+.marker-info {
+  min-width: 150px;
+  max-width: 230px;
+}
+.marker-info img{
+  width: 80px;
+  height: 80px;
+  padding-right: 10px;
+  float: left;
+}
+
+.marker-info h4{
+  font-size: 16px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 1.38;
+  text-align: left;
+  max-height: 45px;
+  overflow: hidden;
 }
 
 /* Smartphones (portrait and landscape) ----------- */

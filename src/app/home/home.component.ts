@@ -147,7 +147,6 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
@@ -170,7 +169,6 @@ export class HomeComponent implements OnInit {
         event.selected = true;
         this.eventCate.push(event.tid);
       }
-      console.log(this.eventCate);
       this.selected = event.tid;
       this.params.tid = this.eventCate.join(',');
     }
@@ -270,7 +268,6 @@ export class HomeComponent implements OnInit {
     };
     this.smallLoader.show();
     this.homeService.likeEvent(param).map((res) => res.json()).subscribe((res) => {
-      console.log(res);
       this.loaderService.hide();
     }, (err) => {
       if (err.status === 403) {
@@ -465,27 +462,29 @@ export class HomeComponent implements OnInit {
           });
           let distance = getDistance(latLngDistance.getPosition(), searchCenter);
           this.events[i].distance = (distance / 1000).toFixed(1);
+
+          let marker = {
+            lat: latitude,
+            lng: longitude,
+            label: this.events[i].title,
+            isOpenInfo: true,
+            nid: this.events[i].nid,
+            avatar: this.events[i].field_images[0],
+            link: this.events[i].alias,
+            icon: 'assets/icon/locationmarker.png',
+            opacity: 0.4,
+            price: [],
+          };
+
           if (i === 0) {
-            this.markers.push({
-              lat: latitude,
-              lng: longitude,
-              label: this.events[i].title,
-              opacity: 1,
-              isOpenInfo: true,
-              nid: this.events[i].nid,
-              icon: 'assets/icon/locationmarker.png'
-            });
-          } else {
-            this.markers.push({
-              lat: latitude,
-              lng: longitude,
-              label: this.events[i].title,
-              opacity: 0.4,
-              isOpenInfo: false,
-              nid: this.events[i].nid,
-              icon: 'assets/icon/locationmarker.png'
-            });
+            marker.opacity = 1;
           }
+
+          if (this.events[i].field_event_option.field_price) {
+            marker.price = this.events[i].field_event_option.field_price;
+          }
+
+          this.markers.push(marker);
         }
         sleep(50);
         this.zoomChanged = false;
@@ -508,7 +507,6 @@ export class HomeComponent implements OnInit {
               }
             }
           } else {
-            console.log(this.endRecord, this.loadMore);
             if (this.loadMore === false && this.endRecord === false) {
               this.loadMore = true;
               this.smallLoader.show();
@@ -567,7 +565,6 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        console.log(err);
         this.loadMore = true;
         this.endRecord = true;
         this.events = [];
@@ -601,7 +598,6 @@ export class HomeComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
-          console.error(error);
           req.unsubscribe();
 
           this.loadMore = false;

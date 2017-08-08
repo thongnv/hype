@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { RatingModule } from 'ng2-rating';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { MomentModule } from 'angular2-moment';
 
 import { HelperModule } from '../helper/helper.module';
 import { CarouseModule } from '../carouse/carouse.module';
@@ -24,6 +25,7 @@ import { CommentComponent } from './detail/comment.component';
     RatingModule,
     AgmCoreModule,
     HelperModule,
+    MomentModule,
     CarouseModule,
     EventRoutingModule
   ],
