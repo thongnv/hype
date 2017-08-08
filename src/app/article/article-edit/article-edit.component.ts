@@ -84,7 +84,7 @@ export class ArticleEditComponent implements OnInit {
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe((res) => {
-        if (res.user_post.name !== this.user.slug) {
+        if (res.user_post.slug !== '/user/' + this.user.slug) {
           this.router.navigate(['article', e.slug]).then();
           return;
         }
