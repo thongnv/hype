@@ -69,7 +69,9 @@ export class CurateDetailComponent implements OnInit {
       this.mainService.getArticle(this.slugName).subscribe(
         (response) => {
           this.article = response;
-          this.isCurrentUser = this.article.user_post.slug === '/user/' + this.user.slug;
+          if (this.user) {
+            this.isCurrentUser = this.article.user_post.slug === '/user/' + this.user.slug;
+          }
           this.initMap(this.article);
           this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
