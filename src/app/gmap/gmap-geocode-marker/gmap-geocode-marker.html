@@ -7,7 +7,13 @@
         [opacity]="m.opacity"
 >
     <sebm-google-map-info-window *ngIf="m.label">
-        <strong>{{m.label}}</strong>
+        <div class="marker-info">
+          <img src="{{m.avatar}}">
+          <h4><a [href]="m.link">{{m.label}}</a></h4>
+          <p *ngIf="m.price">
+            <span *ngFor="let p of m.price">$ {{p}}</span>
+          </p>
+        </div>
     </sebm-google-map-info-window>
 </sebm-google-map-marker>
 
