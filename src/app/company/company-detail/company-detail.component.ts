@@ -139,7 +139,7 @@ export class CompanyDetailComponent implements Company, OnInit {
 
   public toggleBookmark() {
     if (!this.user || this.user.isAnonymous) {
-      this.router.navigate(['/login']).then();
+      this.router.navigate(['/login'], {skipLocationChange: true}).then();
       return;
     }
     this.bookmarked = !this.bookmarked;
