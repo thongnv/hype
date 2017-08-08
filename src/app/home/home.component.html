@@ -185,9 +185,9 @@
   </div>
   <div class="mobile-footer"></div>
 </div>
-<div class="column col-sm-5 no-padding frame_right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''"
+<div class="column col-sm-5 no-padding frame_right" [style.width]="innerWidth > 1023 ? layoutWidth-1 + 'px' : ''"
      id="right">
-  <div id="map" style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+  <div id="map" style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth-1 + 'px' : ''">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

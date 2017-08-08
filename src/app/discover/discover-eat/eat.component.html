@@ -212,9 +212,9 @@
 
 </div>
 <div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right"
-     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
+     [style.width]="innerWidth > 1023 ? layoutWidth - 1 + 'px' : ''" id="right">
   <div class="box-map" style="position: fixed; width:inherit; height: inherit;"
-       [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+       [style.width]="innerWidth > 1023 ? layoutWidth -1 + 'px' : ''">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"
