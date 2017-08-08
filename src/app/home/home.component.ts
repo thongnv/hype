@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
 
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 182) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
   public setPosition(position) {
@@ -149,7 +149,7 @@ export class HomeComponent implements OnInit {
   public onResize(event): void {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 182) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
     this.categories = this.drawCategories.slice(0, numCategories);
   }
