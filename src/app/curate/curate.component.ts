@@ -42,7 +42,7 @@ export class CurateComponent implements OnInit {
     console.log(this.windowRef.rootContainer);
 
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 182);
 
   }
   public ngOnInit() {
@@ -76,7 +76,7 @@ export class CurateComponent implements OnInit {
     this.screenHeight = height;
 
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+    this.layoutWidth = (this.windowRef.rootContainer.width - 182);
 
     this.mainService.getCategoryTreeArticle().subscribe(
       (response: any) => {

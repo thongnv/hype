@@ -241,12 +241,12 @@ export class EatComponent implements OnInit {
       });
     });
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 182) / 2;
   }
 
   public onResize(event): void {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 182) / 2;
 
     let width = window.innerWidth
       || document.documentElement.clientWidth
