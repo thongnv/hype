@@ -113,8 +113,8 @@ export class EditEventComponent implements OnInit {
             this.router.navigate(['event', e.slug]).then();
           }
           this.titleService.setTitle(this.event.name);
-          this.startDate = new Date(this.event.startDate);
-          this.endDate = new Date(this.event.endDate);
+          this.startDate = new Date(this.event.startDate * 1000);
+          this.endDate = new Date(this.event.endDate * 1000);
           this.previewUrls = this.event.images;
           this.tags = this.event.tags;
           this.eventService.getCategoryEvent().subscribe(
