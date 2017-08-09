@@ -67,10 +67,10 @@ export class CurateDetailComponent implements OnInit {
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-    if(this.innerWidth <= 900){
+    if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
-    }else{
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
@@ -89,12 +89,15 @@ export class CurateDetailComponent implements OnInit {
               {name: 'keywords', content: metaTags.keywords}
             );
             if (metaTags.canonical_url) {
-              this.meta.addTag({ rel: 'canonical', href: metaTags.canonical_url});
+              this.meta.addTag({rel: 'canonical', href: metaTags.canonical_url});
             }
           } else {
             console.log('here');
             this.titleService.setTitle(response.title);
-            this.meta.updateTag({name: 'description', content: response.body.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)});
+            this.meta.updateTag({
+              name: 'description',
+              content: response.body.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)
+            });
           }
 
           if (this.user) {
