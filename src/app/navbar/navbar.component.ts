@@ -142,15 +142,19 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  public doTogleMap(){
+  public doToggleMap(){
     if(this.appGlobal.isShowLeft){
       this.appGlobal.isShowLeft = false;
       this.appGlobal.isShowRight = true;
+
     }else{
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
     }
 
+    setTimeout(function(){
+      window.dispatchEvent(new Event("resize"));
+    }, 1);
   }
 
 
