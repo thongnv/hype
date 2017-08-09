@@ -113,8 +113,8 @@ export class EditEventComponent implements OnInit {
             this.router.navigate(['event', e.slug]).then();
           }
           this.titleService.setTitle(this.event.name);
-          this.startDate = new Date(this.event.startDate);
-          this.endDate = new Date(this.event.endDate);
+          this.startDate = new Date(this.event.startDate * 1000);
+          this.endDate = new Date(this.event.endDate * 1000);
           this.previewUrls = this.event.images;
           this.tags = this.event.tags;
           this.eventService.getCategoryEvent().subscribe(
@@ -240,7 +240,7 @@ export class EditEventComponent implements OnInit {
                 fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-                filename: event.target.files[i].name,
+                filename: event.target.files[i].name.substr(0, 50),
                 filemime: event.target.files[i].type,
                 filesize: event.target.files[i].size
               };

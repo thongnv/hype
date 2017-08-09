@@ -30,7 +30,7 @@
             These events similar your
             <ul class="exist-events">
               <li class="event-title" *ngFor="let eventItem of existEvents">
-                <a [routerLink]="eventItem.Slug">{{eventItem.Title}}</a>
+                <a [routerLink]="eventItem.Slug" target="_blank">{{eventItem.Title}}</a>
               </li>
             </ul>
           </div>

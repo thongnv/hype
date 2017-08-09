@@ -350,7 +350,7 @@ ul.list-items li a img {
 
   .post-news{ min-height: inherit; margin-bottom: 20px;}
   .post-news .image-post-news{display: table-cell; width: 120px; vertical-align: top}
-  .post-news .new-info{display: table-cell; vertical-align: top; padding: 0;}
+  .post-news .new-info{display: table-cell; vertical-align: top; padding: 0 10px; width: 70%;}
   .post-news .new-info h4{ margin-top: 0}
 
 }

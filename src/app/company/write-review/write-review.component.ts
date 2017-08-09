@@ -55,7 +55,7 @@ export class WriteReviewComponent implements OnInit {
             fid: null,
             url: URL.createObjectURL(event.target.files[i]),
             value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-            filename: event.target.files[i].name,
+            filename: event.target.files[i].name.substr(0, 50),
             filemime: event.target.files[i].type,
             filesize: event.target.files[i].size
           };

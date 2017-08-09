@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
+  public markerLength: number = 0;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -103,9 +104,6 @@ export class HomeComponent implements OnInit {
   }
 
   public ngOnInit() {
-
-
-
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.eventFilter = [
       {name: 'all'},
@@ -137,10 +135,10 @@ export class HomeComponent implements OnInit {
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-    if(this.innerWidth <= 900){
+    if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
-    }else{
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
@@ -435,7 +433,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private passerTop100() {
+  private passerTop100(events) {
     this.currentHighlightedMarker = 0;
 
     let mapCenter = new google.maps.Marker({
@@ -446,29 +444,29 @@ export class HomeComponent implements OnInit {
 
     this.mapsAPILoader.load().then(
       () => {
-        for (let i = 0; i < this.events.length; i++) {
+        for (let i = 0; i < events.length; i++) {
           let latitude: any;
           let longitude: any;
 
-          if (this.events[i].type === 'event') {
-            if (typeof this.events[i].field_location_place.field_latitude !== null) {
-              latitude = this.events[i].field_location_place.field_latitude;
+          if (events[i].type === 'event') {
+            if (typeof events[i].field_location_place.field_latitude !== null) {
+              latitude = events[i].field_location_place.field_latitude;
             }
 
-            if (typeof this.events[i].field_location_place.field_longitude !== null) {
-              longitude = this.events[i].field_location_place.field_longitude;
+            if (typeof events[i].field_location_place.field_longitude !== null) {
+              longitude = events[i].field_location_place.field_longitude;
             }
           }
 
-          if (this.events[i].type === 'article') {
-            if (this.events[i].field_location_place.length > 0) {
+          if (events[i].type === 'article') {
+            if (events[i].field_location_place.length > 0) {
 
-              if (typeof this.events[i].field_location_place[0].field_latitude !== null) {
-                latitude = this.events[i].field_location_place[0].field_latitude;
+              if (typeof events[i].field_location_place[0].field_latitude !== null) {
+                latitude = events[i].field_location_place[0].field_latitude;
               }
 
-              if (typeof this.events[i].field_location_place[0].field_longitude !== null) {
-                longitude = this.events[i].field_location_place[0].field_longitude;
+              if (typeof events[i].field_location_place[0].field_longitude !== null) {
+                longitude = events[i].field_location_place[0].field_longitude;
               }
             }
           }
@@ -483,14 +481,15 @@ export class HomeComponent implements OnInit {
           let marker = {
             lat: latitude,
             lng: longitude,
-            label: this.events[i].title,
+            label: events[i].title,
             isOpenInfo: true,
-            nid: this.events[i].nid,
-            avatar: this.events[i].field_images[0],
-            link: this.events[i].alias,
+            nid: events[i].nid,
+            avatar: events[i].field_images[0],
+            link: events[i].alias,
             icon: 'assets/icon/locationmarker.png',
             opacity: 0.4,
             price: [],
+            nids: [],
             events: []
           };
 
@@ -498,8 +497,8 @@ export class HomeComponent implements OnInit {
             marker.opacity = 1;
           }
 
-          if (this.events[i].field_event_option.field_price) {
-            marker.price = this.events[i].field_event_option.field_price;
+          if (events[i].field_event_option.field_price) {
+            marker.price = events[i].field_event_option.field_price;
           }
 
           this.markers.push(marker);
@@ -513,18 +512,17 @@ export class HomeComponent implements OnInit {
             const markerJ = this.markers[j];
 
             if (markerI && markerJ) {
-              const cond = markerI.lat === markerJ.lat && markerI.lng === markerJ.lng;
+              const cond = markerI.lat === markerJ.lat && markerI.lng === markerJ.lng && markerI.nids.indexOf(markerJ.nid);
 
               if (cond) {
                 this.markers[i].events.push(this.markers[j]);
+                this.markers[i].nids.push(this.markers[j].nid);
                 this.markers.splice(j, 1);
               }
             }
 
           }
         }
-
-        // console.log('remove duplicate markers: ', this.markers);
 
         sleep(50);
         this.zoomChanged = false;
@@ -598,7 +596,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
-        this.passerTop100();
+        this.passerTop100(resp.data);
         this.loadMore = false;
         this.loaderService.hide();
         this.smallLoader.hide();
@@ -631,7 +629,7 @@ export class HomeComponent implements OnInit {
           this.total = data.total;
           this.shownotfound = data.total === 0;
 
-          this.passerTop100();
+          this.passerTop100(data.data);
           this.loadMore = false;
           this.loaderService.hide();
           this.smallLoader.hide();
