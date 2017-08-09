@@ -157,7 +157,7 @@ export class CurateNewComponent implements OnInit {
     if (this.formData.valid) {
       let article = this.formData.value;
       this.listPlaces = [];
-      let address = article.listPlaces;
+      let address = article.places;
       for (let add of address) {
         this.listPlaces.push({
           field_place_comment: add.description,
@@ -235,7 +235,7 @@ export class CurateNewComponent implements OnInit {
       body: article.listDescription,
       field_images: article.listImages,
       category: article.listCategory,
-      field_places: article.listPlaces
+      field_places: article.places
     };
   }
 
@@ -319,9 +319,9 @@ export class CurateNewComponent implements OnInit {
     this.slides = [];
     this.markers = [];
     this.showPreview = true;
-    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
+    if (this.previewData.places && this.previewData.places.length) {
       let index = 0;
-      for (let place of this.previewData.listPlaces) {
+      for (let place of this.previewData.places) {
         if (place.lat && place.lng) {
           if (index === 0) {
             this.markers.push({

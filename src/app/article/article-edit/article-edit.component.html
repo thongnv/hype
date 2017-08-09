@@ -51,7 +51,7 @@
 
         <div class="form-group list-img-box">
           <label class="control-label">Images</label>
-          <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
+          <label class="control-label " id="list-img-label" for="listImg" *ngIf="canAddMoreImages">
             <i class="fa fa-plus"></i> &nbsp;Add images
             <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*"
                    imageUpload (change)="readUrl($event)" multiple="multiple">
@@ -147,8 +147,8 @@
         <div class="description text-justify" [innerHTML]="previewData.listDescription">
         </div>
       </div>
-      <ng-container *ngIf="previewData.listPlaces">
-        <div *ngFor="let place of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
+      <ng-container *ngIf="previewData.places">
+        <div *ngFor="let place of previewData.places; let index=index" class="place-item-wrap" [id]="'place-'+index">
           <ng-container *ngIf="place?.keyword">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>

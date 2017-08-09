@@ -135,8 +135,8 @@
         <div class="description text-justify" [innerHTML]="previewData.listDescription">
         </div>
       </div>
-      <ng-container *ngIf="previewData.listPlaces">
-        <div *ngFor="let place of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
+      <ng-container *ngIf="previewData.places">
+        <div *ngFor="let place of previewData.places; let index=index" class="place-item-wrap" [id]="'place-'+index">
           <ng-container *ngIf="place?.keyword">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
