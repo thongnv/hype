@@ -3,16 +3,16 @@
     <div>
       <div id="btnHeadFilter" class="btn-block btn-filter-block"
            (window:resize)="onResize($event)" name="radioBasic">
-        <label class="btn btn-default" ngbButtonLabel (change)="changeCategory($event.target.checked,all)">
+        <label class="btn btn-default" [class.active]="selected=='all'" (click)="changeCategory('all')">
           <img src="../../../assets/img/icons/All.png" alt="All">
-          <span class="clearfix">
-                                <input type="checkbox" ngbButton value="all"> All
-                            </span>
+          <span class="clearfix"></span>
+          <div>All</div>
         </label>
-        <label class="btn btn-default" ngbButtonLabel *ngFor="let term of categories" (change)="changeCategory($event.target.checked,term)" [class.active]="term?.checked">
-          <img src="{{term.icon}}" alt="{{term.name}}">
+        <label class="btn btn-default" *ngFor="let category of categories"
+               (click)="changeCategory(category)" [class.active]="category?.selected">
+          <img src="{{category.icon}}" title="{{category.name}}">
           <span class="clearfix"> </span>
-          <input type="checkbox" ngbButton value="{{term.name}}">{{term.name}}
+          <div>{{category.name}}</div>
         </label>
         <label *ngIf="categoriesDraw?.length > 6" class="btn btn-default more"
                (click)="showAllKind(showAll)">
