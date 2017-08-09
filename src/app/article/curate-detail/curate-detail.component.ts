@@ -101,7 +101,6 @@ export class CurateDetailComponent implements OnInit {
             this.isCurrentUser = this.article.user_post.slug === '/user/' + this.user.slug;
           }
           this.initMap(this.article);
-          this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
           this.loaderService.hide();
           window.scrollTo(0, 0);
