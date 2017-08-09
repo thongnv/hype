@@ -3,12 +3,10 @@
 }
 i#notif {
     margin-top: 15px;
-    color: #9b1935;
-    background: transparent;
 }
 #count-notif{
     position: absolute;
-    top: -12px;
+    top: -20px;
     right: -3px;
     border-radius: 3px;
     min-width: 18px;
