@@ -35,7 +35,9 @@
 <!-- Webpack Dev Server reload -->
 <script src="/webpack-dev-server.js"></script>
 <% } %>
-
+<script type="text/javascript">
+  window.dispatchEvent(new Event('resize'));
+</script>
 <script type="text/javascript" src="https://connect.facebook.net/en_US/sdk.js" async defer></script>
 </body>
 </html>
