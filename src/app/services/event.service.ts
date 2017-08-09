@@ -49,6 +49,7 @@ export class EventService {
       mentions: extractMentions(data.field_event_option.field_mentioned_by),
       rating: data.average_rating,
       tags: data.field_tags,
+      metaTags: data.meta_tags,
       userRated: data.user_vote,
       experiences: extractExperiences(data.comments.data)
     };

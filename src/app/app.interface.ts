@@ -44,6 +44,7 @@ export interface HyloEvent {
   userRated: boolean;
   experiences: Experience[];
   tags: string[];
+  metaTags: MetaTags;
 }
 
 export interface Location {
@@ -51,6 +52,13 @@ export interface Location {
   name: string;
   lat: number;
   lng: number;
+}
+
+export interface MetaTags {
+  title: string;
+  description: string;
+  keywords: string;
+  canonical_url: string;
 }
 
 export interface Icon {
