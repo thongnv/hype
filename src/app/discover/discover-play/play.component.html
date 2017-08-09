@@ -213,8 +213,8 @@
   </div>
 
 </div>
-<div [class.frameHidden]="!appGlobal.isShowRight" class="column col-lg-5 col-xs-12 no-padding right-box fixed-right frame-right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : '100%'" id="right">
-  <div class="box-map" style="position: fixed; width:inherit; height: inherit;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+<div [class.frameHidden]="!appGlobal.isShowRight" class="column col-lg-5 col-xs-12 no-padding right-box fixed-right frame-right" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" id="right">
+  <div class="box-map" style="position: fixed; width:inherit; height: inherit;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : '100%'">
     <sebm-google-map
         [latitude]="lat"
         [longitude]="lng"
