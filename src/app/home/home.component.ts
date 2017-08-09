@@ -247,7 +247,7 @@ export class HomeComponent implements OnInit {
     }
     this.params.page = 0;
     this.params.price = 0;
-    this.params.start = 20;
+    this.params.start = 0;
     this.params.when = 0;
     this.selected = 'all';
     this.markers = [];
