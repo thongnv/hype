@@ -146,17 +146,17 @@
         </div>
       </div>
       <ng-container *ngIf="previewData.listPlaces">
-        <div *ngFor="let plc of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
-          <ng-container *ngIf="plc?.keyword">
+        <div *ngFor="let place of previewData.listPlaces; let index=index" class="place-item-wrap" [id]="'place-'+index">
+          <ng-container *ngIf="place?.keyword">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
-              <strong class="place-name">{{plc.keyword}}</strong>
+              <strong class="place-name">{{place.keyword}}</strong>
               <span class="pull-right place-detail-btn">details</span>
             </div>
-            <div *ngIf="plc.image.url" class="place-item-img">
-              <img src="{{plc.image.url}}" [alt]="plc.place" width="100%">
+            <div *ngIf="place.image?.url" class="place-item-img">
+              <img src="{{place.image?.url}}" [alt]="place.place" width="100%">
             </div>
-            <p class="place-item-description" [innerHtml]="plc.description"></p>
+            <p class="place-item-description" [innerHtml]="place.description"></p>
           </ng-container>
         </div>
       </ng-container>

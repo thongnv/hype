@@ -67,8 +67,7 @@ export class ArticleEditComponent implements OnInit {
               private router: Router,
               private windowRef: WindowUtilService,
               private route: ActivatedRoute,
-              private appGlobal: AppGlobals,
-          ) {
+              public appGlobal: AppGlobals) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -101,10 +100,10 @@ export class ArticleEditComponent implements OnInit {
         );
         this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-        if(this.innerWidth <= 900){
+        if (this.innerWidth <= 900) {
           this.appGlobal.isShowLeft = true;
           this.appGlobal.isShowRight = false;
-        }else{
+        } else {
           this.appGlobal.isShowLeft = true;
           this.appGlobal.isShowRight = true;
         }
@@ -219,6 +218,7 @@ export class ArticleEditComponent implements OnInit {
 
   public onPreview() {
     this.previewData = this.formData.value;
+    debugger
     this.previewData.images = this.previewUrls;
     this.initMap();
   }
