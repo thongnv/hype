@@ -12,7 +12,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class CurateComponent implements OnInit {
   public data: any;
-  public articles: any[];
   public featuredArticles: any[] = [];
   public latestArticles: any[] = [];
   public categories: any[];
@@ -163,22 +162,24 @@ export class CurateComponent implements OnInit {
   }
 
   public loadMore() {
-    if (!this.endList && !this.loading) {
+    if (!this.endList) {
       this.smallLoader.show();
       this.loading = true;
-      this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
-        (response: any) => {
-          this.latestArticles = this.latestArticles.concat(response.data);
-          if (this.currentPage * 9 > response.total) {
-            this.endList = true;
+      if (this.currentPage >= 1) {
+        this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
+          (response: any) => {
+            this.latestArticles = this.latestArticles.concat(response.data);
+            if (this.currentPage * 9 > response.total) {
+              this.endList = true;
+            }
+            this.currentPage = this.currentPage + 1;
+            this.smallLoader.hide();
+            this.loading = false;
           }
-          this.currentPage = this.currentPage + 1;
-          this.loading = true;
-          this.smallLoader.hide();
-          this.loading = false;
-        }
-      );
+        );
+      }
     }
+
   }
 
   private convertObject2Array(obj) {
