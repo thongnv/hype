@@ -115,14 +115,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
             this.titleService.setTitle(event.metaTags.title);
             this.meta.updateTag({name: 'description', content: event.metaTags.description});
             this.meta.addTag(
-              {name: 'keywords', content: event.metaTags.description}
+              {name: 'keywords', content: event.metaTags.keywords}
             );
             if (event.metaTags.canonical_url) {
               this.meta.addTag({ rel: 'canonical', href: event.metaTags.canonical_url});
             }
           } else {
             this.titleService.setTitle(event.name);
-            this.meta.updateTag({name: 'description', content: event.detail.substring(0, 200).replace(/<\/?[^>]+(>|$)/g, '')});
+            this.meta.updateTag({name: 'description', content: event.detail.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)});
           }
 
           this.initSlide(this.images);
