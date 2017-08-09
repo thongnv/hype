@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
   public notificationPage: number = 1;
   public totalUnread: number = 0;
   public totalPages: number = 0;
-  public togleMap:boolean = false;
+  public togleMap: boolean = false;
   public set: any = {
     offset: 0,
     endOfList: false,
@@ -60,10 +60,7 @@ export class NavbarComponent implements OnInit {
     });
     let paramsUrl = this.location.path().split('/');
 
-    //check show togle map
-    if(paramsUrl[1] == '' || paramsUrl[1] == 'home' || paramsUrl[1]== 'discover' || paramsUrl[1] == 'company' || paramsUrl[1] == 'article' || paramsUrl[1] == 'event'){
-      this.togleMap = true;
-    }
+    // check show toggle map
 
     if (paramsUrl[1] === 'discover') {
       switch (paramsUrl[2]) {
@@ -145,18 +142,20 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  public doTogleMap(){
-    if(this.appGlobal.isShowLeft){
+  public doToggleMap() {
+    if (this.appGlobal.isShowLeft) {
       this.appGlobal.isShowLeft = false;
       this.appGlobal.isShowRight = true;
-    }else{
+
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
     }
 
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1);
   }
-
-
 
   public onSelectMapOption(option: any): void {
     this.selectedMapOption = option;

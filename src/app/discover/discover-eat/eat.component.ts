@@ -253,6 +253,8 @@ export class EatComponent implements OnInit {
     }
 
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
+    this.appGlobal.toggleMap = true;
   }
 
   public onResize(event): void {

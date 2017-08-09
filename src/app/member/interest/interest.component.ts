@@ -6,6 +6,7 @@ import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { NotificationsService } from 'angular2-notifications';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-interest',
@@ -35,10 +36,13 @@ export class InterestComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private userService: UserService,
               private notificationsService: NotificationsService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     this.user = this.localStorageService.get('user') as User;
     if (!this.user) {
       this.router.navigate(['login']).then();

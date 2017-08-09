@@ -9,6 +9,7 @@ import { UserService } from '../../services/user.service';
 import $ from 'jquery';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { NotificationsService } from 'angular2-notifications';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-favorite',
@@ -59,10 +60,13 @@ export class FavoriteComponent implements OnInit {
                      private localStorageService: LocalStorageService,
                      private smallLoader: SmallLoaderService,
                      private notificationsService: NotificationsService,
-                     private windowRef: WindowUtilService) {
+                     private windowRef: WindowUtilService,
+                     private appGlobal: AppGlobals,
+  ) {
   }
 
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     this.selectedFavoriteType = 'event';
     let user = this.localStorageService.get('user') as User;
     if (user) {

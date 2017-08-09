@@ -89,6 +89,9 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
 
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+
+    this.appGlobal.toggleMap = true;
+
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();

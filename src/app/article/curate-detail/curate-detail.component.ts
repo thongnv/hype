@@ -75,6 +75,9 @@ export class CurateDetailComponent implements OnInit {
       this.appGlobal.isShowRight = true;
     }
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
+    this.appGlobal.toggleMap = true;
+
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(

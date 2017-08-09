@@ -55,6 +55,7 @@ export class AppComponent implements OnInit, AfterContentInit {
         }
       );
     }
+
   }
 
   public ngAfterContentInit() {
