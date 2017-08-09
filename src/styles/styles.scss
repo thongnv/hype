@@ -1653,14 +1653,16 @@ body, html {
 }
 
 /** Marker Info **/
-
+.sebm-google-map-info-window-content{
+  max-width: 200px;
+}
 .marker-info {
   overflow: hidden;
   border-bottom: 1px solid #ccc;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
-.marker-info:last-child{
+.sebm-google-map-info-window-content > .marker-info{
   border-bottom: 0;
   padding-bottom: 0;
 }
