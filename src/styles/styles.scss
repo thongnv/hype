@@ -1655,14 +1655,22 @@ body, html {
 /** Marker Info **/
 
 .marker-info {
-  min-width: 150px;
-  max-width: 230px;
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  padding: 12px 0;
 }
+
+.marker-info:last-child{
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
 .marker-info img{
   width: 80px;
   height: 80px;
-  padding-right: 10px;
+  margin-right: 10px;
   float: left;
+  border-radius: 4px;
 }
 
 .marker-info h4{
