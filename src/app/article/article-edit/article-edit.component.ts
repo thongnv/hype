@@ -218,7 +218,6 @@ export class ArticleEditComponent implements OnInit {
 
   public onPreview() {
     this.previewData = this.formData.value;
-    debugger
     this.previewData.images = this.previewUrls;
     this.initMap();
   }
@@ -348,12 +347,19 @@ export class ArticleEditComponent implements OnInit {
     }
     this.formData.controls.listName.patchValue(res.title);
     this.formData.controls.listDescription.patchValue(res.body);
-    const control = <FormArray> this.formData.controls['listPlaces'];
+    const control = <FormArray> this.formData.controls.listPlaces;
     for (let place of res.field_places) {
       if (place.field_latitude) {
-        let img: string;
+        let img = null;
         if (place.field_place_images.length) {
-          img = place.field_place_images[0].url;
+          img = {
+            fid: place.field_place_images[0].fid,
+            url: place.field_place_images[0].url,
+            value: '',
+            filename: '',
+            filemime: '',
+            filesize: 0
+          };
         }
         const placeControl = this.formBuilder.group(
           {
