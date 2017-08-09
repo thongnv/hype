@@ -6,7 +6,7 @@ import { MapsAPILoader } from 'angular2-google-maps/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {  } from '@types/googlemaps';
 import { FormGroup } from '@angular/forms';
-import { FileReaderEvent } from '../../app.interface';
+import { FileReaderEvent, Image } from '../../app.interface';
 import { MainService } from '../../services/main.service';
 
 @Component({
@@ -16,14 +16,15 @@ import { MainService } from '../../services/main.service';
   styleUrls: ['./gmap-auto-place.component.css']
 })
 export class GmapAutoPlaceComponent implements OnInit {
-  @Input('group') public group: FormGroup;
-  @Input('description') public description: boolean;
-  @Input('image') public image: boolean;
-  @Output('onMapsChangePlace') public onMapsChangePlace = new EventEmitter<any>();
-  @Output('onHyloChangePlace') public onHyloChangePlace = new EventEmitter<any>();
+  @Input() public group: FormGroup;
+  @Input() public description: boolean;
+  @Input() public hasImage: boolean;
+  @Input() public image: Image;
+
+  @Output() public onMapsChangePlace = new EventEmitter<any>();
+  @Output() public onHyloChangePlace = new EventEmitter<any>();
   @ViewChild('keyword') public searchElementRef: ElementRef;
   @ViewChild('addressInput') public addressElementRef: ElementRef;
-  public imageUrl: any;
   public hideSearchResult: boolean = true;
   public hideAddressResult: boolean = true;
   public hideNoResult: boolean = false;
@@ -35,20 +36,20 @@ export class GmapAutoPlaceComponent implements OnInit {
 
   public constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    private mainservice: MainService,
+    private mainService: MainService,
     public sanitizer: DomSanitizer) {
   }
 
   @HostListener('document:click', ['$event'])
-
   public onClick(event) {
     if (!this.searchElementRef.nativeElement.contains(event.target)) {
       this.hideSearchResult = true;
     }
   }
   public ngOnInit() {
-    // TODO
+    if (this.hasImage && this.image) {
+      this.group.get('image').patchValue(this.image);
+    }
   }
 
   public showAddressInput() {
@@ -64,7 +65,7 @@ export class GmapAutoPlaceComponent implements OnInit {
       this.group.value.keyword.trim() : keyword.trim();
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
-      this.mainservice.search(this.searchToken).subscribe((resp) => {
+      this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         this.hideNoResult = resp.event.length + resp.article.length !== 0;
       });
@@ -72,8 +73,8 @@ export class GmapAutoPlaceComponent implements OnInit {
       // get data from google map autocomplete
       this.mapsAPILoader.load().then(() => {
         let inputText = this.searchElementRef.nativeElement.value;
-        let autocompleteService = new google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({
+        let autoCompleteService = new google.maps.places.AutocompleteService();
+        autoCompleteService.getPlacePredictions({
             componentRestrictions: {
               country: 'sg'
             },
@@ -142,7 +143,7 @@ export class GmapAutoPlaceComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (e: FileReaderEvent) => {
-        this.imageUrl = {
+        this.image = {
           fid: null,
           url: URL.createObjectURL(event.target.files[0]),
           value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
@@ -150,7 +151,7 @@ export class GmapAutoPlaceComponent implements OnInit {
           filemime: event.target.files[0].type,
           filesize: event.target.files[0].size
         };
-        this.group.get('image').patchValue(this.imageUrl);
+        this.group.get('image').patchValue(this.image);
       };
       reader.readAsDataURL(event.target.files[0]);
     }

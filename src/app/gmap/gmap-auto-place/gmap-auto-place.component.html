@@ -132,11 +132,11 @@
       This field is required.
     </small>
   </div>
-  <div class="form-group" *ngIf="image">
+  <div class="form-group" *ngIf="hasImage">
     <label class="upload-image-label"> <i class="fa fa-plus"></i>&nbsp;Add Images
       <input type='file' accept="image/*" (change)="readUrl($event)">
     </label>
     <input [hidden]="true" formControlName="image" type='text'>
-    <img *ngIf="imageUrl" [src]="sanitizer.bypassSecurityTrustUrl(imageUrl.url)" width="100%"/>
+    <img *ngIf="image" [src]="sanitizer.bypassSecurityTrustUrl(image.url)" width="100%"/>
   </div>
 </div>

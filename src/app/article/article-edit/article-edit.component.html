@@ -87,10 +87,12 @@
             </div>
             <div class="panel-body" [formGroupName]="i">
               <app-gmap-auto-place
-                [group]="formData.controls.listPlaces.controls[i]"
+                [group]="place"
                 (onMapsChangePlace)="onMapsChangePlace($event, i)"
                 (onHyloChangePlace)="onHyloChangePlace($event, i)"
-                [description]="true" [image]="true">
+                [description]="true"
+                [hasImage]="true"
+                [image]="place.controls.image.value">
               </app-gmap-auto-place>
             </div>
           </div>
