@@ -61,9 +61,6 @@ export class NavbarComponent implements OnInit {
     let paramsUrl = this.location.path().split('/');
 
     //check show togle map
-    if(paramsUrl[1] == '' || paramsUrl[1] == 'home' || paramsUrl[1]== 'discover' || paramsUrl[1] == 'company' || paramsUrl[1] == 'article' || paramsUrl[1] == 'event'){
-      this.togleMap = true;
-    }
 
     if (paramsUrl[1] === 'discover') {
       switch (paramsUrl[2]) {

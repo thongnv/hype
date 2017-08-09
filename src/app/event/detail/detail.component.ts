@@ -177,6 +177,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     }
 
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.appGlobal.toggleMap = true;
     this.initRating();
   }
 

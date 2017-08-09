@@ -110,6 +110,7 @@ export class ArticleEditComponent implements OnInit {
         }
 
         this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+        this.appGlobal.toggleMap = true;
         this.ready = true;
       });
     });

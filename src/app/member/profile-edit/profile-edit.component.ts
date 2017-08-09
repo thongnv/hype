@@ -9,6 +9,7 @@ import { User } from '../../app.interface';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { NotificationsService } from 'angular2-notifications';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-profile-edit',
@@ -64,10 +65,13 @@ export class ProfileEditComponent implements OnInit {
               private route: ActivatedRoute,
               private profileService: ProfileService,
               private notificationsService: NotificationsService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     this.loaderService.show();
     this.user = this.localStorageService.get('user') as User;
     this.layoutWidth = (this.windowRef.rootContainer.width - 80);

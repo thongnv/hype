@@ -714,10 +714,18 @@ span.dollar-character {
     padding-left: 15px;
     padding-right: 15px;
   }
+  .new-list{
+    margin-left: 0;
+  }
+  .new-list header,
+  .new-list header ul{
+    width: 100%
+  }
 
   .new-list .form-wrap {
     padding: 0;
     margin-bottom: 50px;
+
   }
 
   .row {

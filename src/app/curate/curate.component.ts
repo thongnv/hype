@@ -4,6 +4,7 @@ import { LoaderService } from '../helper/loader/loader.service';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
+import { AppGlobals } from '../services/app.global';
 
 @Component({
   selector: 'app-curate',
@@ -34,7 +35,9 @@ export class CurateComponent implements OnInit {
                      private mainService: MainService,
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
-                     private windowRef: WindowUtilService) {
+                     private windowRef: WindowUtilService,
+                     private appGlobal: AppGlobals,
+  ) {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -45,6 +48,7 @@ export class CurateComponent implements OnInit {
 
   }
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     window.scroll(0, 0);
     this.titleService.setTitle('Curated List');
     this.loaderService.show();

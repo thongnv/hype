@@ -146,6 +146,8 @@ export class HomeComponent implements OnInit {
     }
 
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
+    this.appGlobal.toggleMap = true;
   }
 
   public setPosition(position) {
