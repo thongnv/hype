@@ -1342,6 +1342,8 @@ body, html {
     width: inherit;
   }
 
+  .frameHidden{display: none!important;}
+
   //responsive
   @media only screen and(max-width: 374px) {
     .mobile-footer {
@@ -1549,7 +1551,7 @@ body, html {
     }
 
     .frame_nav, .frame_left, .frame-right {
-      display: block !important;
+      display: block;
       width: 100%;
     }
 
@@ -1653,16 +1655,26 @@ body, html {
 }
 
 /** Marker Info **/
-
-.marker-info {
-  min-width: 150px;
-  max-width: 230px;
+.sebm-google-map-info-window-content{
+  max-width: 200px;
 }
+.marker-info {
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.sebm-google-map-info-window-content > .marker-info{
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
 .marker-info img{
   width: 80px;
   height: 80px;
-  padding-right: 10px;
+  margin-right: 10px;
   float: left;
+  border-radius: 4px;
 }
 
 .marker-info h4{

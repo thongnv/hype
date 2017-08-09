@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, Title } from '@angular/platform-browser';
+import { DomSanitizer, Title, Meta } from '@angular/platform-browser';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { EventService } from '../../services/event.service';
@@ -10,7 +10,14 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
 
 import { AppSetting } from '../../app.setting';
-import { Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User } from '../../app.interface';
+
+import {
+  Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User,
+  MetaTags
+} from '../../app.interface';
+
+import { AppGlobals } from '../../services/app.global';
+
 
 @Component({
   selector: 'app-detail',
@@ -37,6 +44,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public organizer: string = '';
   public experiences: Experience[] = [];
   public tags: string[];
+  public metaTags: MetaTags;
   public user = AppSetting.defaultUser;
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -65,6 +73,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   constructor(public localStorageService: LocalStorageService,
               public eventService: EventService,
+              private meta: Meta,
               public formBuilder: FormBuilder,
               public rateConfig: NgbRatingConfig,
               private route: ActivatedRoute,
@@ -72,12 +81,13 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               private titleService: Title,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
@@ -106,7 +116,21 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         (resp) => {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
-          this.titleService.setTitle(event.name);
+
+          if (event.metaTags) {
+            this.titleService.setTitle(event.metaTags.title);
+            this.meta.updateTag({name: 'description', content: event.metaTags.description});
+            this.meta.addTag(
+              {name: 'keywords', content: event.metaTags.keywords}
+            );
+            if (event.metaTags.canonical_url) {
+              this.meta.addTag({ rel: 'canonical', href: event.metaTags.canonical_url});
+            }
+          } else {
+            this.titleService.setTitle(event.name);
+            this.meta.updateTag({name: 'description', content: event.detail.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)});
+          }
+
           this.initSlide(this.images);
           this.isCurrentUser = event.creator.slug === this.user.slug;
           let sumPrices = this.prices.reduce(
@@ -143,6 +167,15 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.initRating();
   }
@@ -225,6 +258,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.rating = event.rating;
     this.organizer = event.organizer;
     this.tags = event.tags;
+    this.metaTags = event.metaTags;
     this.userRated = event.userRated;
     this.experiences = event.experiences;
   }

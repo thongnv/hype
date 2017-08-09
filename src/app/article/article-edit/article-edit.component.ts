@@ -8,6 +8,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { Article, Image, User } from '../../app.interface';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-article-edit',
@@ -65,7 +66,9 @@ export class ArticleEditComponent implements OnInit {
               private loaderService: LoaderService,
               private router: Router,
               private windowRef: WindowUtilService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private appGlobal: AppGlobals,
+          ) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -97,6 +100,15 @@ export class ArticleEditComponent implements OnInit {
           }
         );
         this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+        if(this.innerWidth <= 900){
+          this.appGlobal.isShowLeft = true;
+          this.appGlobal.isShowRight = false;
+        }else{
+          this.appGlobal.isShowLeft = true;
+          this.appGlobal.isShowRight = true;
+        }
+
         this.layoutWidth = (this.windowRef.rootContainer.width - 180);
         this.ready = true;
       });

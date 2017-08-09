@@ -12,6 +12,7 @@ import { MapsAPILoader } from 'angular2-google-maps/core/services/maps-api-loade
 import { LoaderService } from '../../helper/loader/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppSetting } from '../../app.setting';
+import { AppGlobals } from '../../services/app.global';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { DOCUMENT, Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -101,6 +102,7 @@ export class PlayComponent implements OnInit {
                      private location: Location,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
+                     private appGlobal: AppGlobals,
                      @Inject(DOCUMENT) private document: Document) {
 
     this.filterCategory = this.formBuilder.group({
@@ -244,6 +246,15 @@ export class PlayComponent implements OnInit {
       });
     });
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
@@ -281,6 +292,7 @@ export class PlayComponent implements OnInit {
         this.categories = this.categoriesDraw.slice(0, 6);
       }
     }
+    this.categories.unshift({tid:0,name:"All",icon:'../../../assets/img/icons/All.png',selected:true});
   }
 
   setPosition(position) {
@@ -325,24 +337,34 @@ export class PlayComponent implements OnInit {
     this.requestings.push(req);
   }
   private categorySelected:any[]=[];
-  changeCategory(event,item) {
-    if(event){
-      if(item){
-        item.checked=true;
-        this.categorySelected.push(item.name);
-
-      }
-    }else{
-      item.checked=false;
-      let index = this.categorySelected.indexOf(item.name);
-      this.categorySelected.splice(index, 1);
+  public selected='all';
+  changeCategory(item) {
+    switch (item){
+      case 'all':
+        this.categories.forEach((category, index) => {
+          this.categories[index].selected = false;
+        });
+        this.selected ='all';
+        this.params.kind='';
+        this.categorySelected=[];
+        break;
+      default:
+        this.selected ='';
+        if(item.selected){
+          item.selected =false;
+          let index = this.categorySelected.indexOf(item.name);
+          this.categorySelected.splice(index, 1);
+        }else{
+          item.selected = true;
+          this.categorySelected.push(item.name);
+        }
+        this.params.kind=this.categorySelected.join(',');
+        break;
     }
-
     this.params.limit = 20;
     this.params.page = 0;
     this.markers = [];
     this.items = [];
-    this.params.kind=this.categorySelected.join(',');
     this.smallLoader.show();
     this.getDataModes();
   }
@@ -357,12 +379,11 @@ export class PlayComponent implements OnInit {
     this.modeService.getCategories(params).map((resp) => resp.json()).subscribe((resp) => {
       this.categoriesDraw = resp.data;
       let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-
       let number = Math.floor(menuWidth / 55) - 1;
       if (this.categoriesDraw.length > number) {
         this.categories = this.categoriesDraw.slice(0, number - 1);
       } else {
-        this.categories = this.categoriesDraw.slice(0, 6);
+        this.categories = this.categoriesDraw.slice(0, 7);
       }
     });
 
@@ -706,9 +727,9 @@ export class PlayComponent implements OnInit {
       }
     }
 
-    if(this.currentRate){
-      for(let i = 0; i < this.currentRate.length; i ++){
-        this.currentRate[i].checked=false;
+    if(this.currentRate) {
+      for (let i = 0; i < this.currentRate.length; i++) {
+        this.currentRate[i].checked = false;
       }
     }
     this.cuisine = [];
@@ -764,9 +785,11 @@ export class PlayComponent implements OnInit {
           this.cuisineDraw.push(parent);
       }
       if(!event && parent && !sub){
-          for(let i = 0 ;i < parent.sub.length; i ++){
-              parent.sub[i].checked=0;
+        if(parent.sub) {
+          for (let i = 0; i < parent.sub.length; i++) {
+            parent.sub[i].checked = 0;
           }
+        }
           parent.checked =0;
           this.cuisineDraw = this.cuisineDraw.filter((el)=>{
               return el.name !== parent.name;

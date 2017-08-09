@@ -21,6 +21,7 @@ import { LoaderService } from '../helper/loader/loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
 
 import { AppSetting } from '../app.setting';
+import { AppGlobals } from '../services/app.global';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Title } from '@angular/platform-browser';
@@ -95,11 +96,16 @@ export class HomeComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private route: Router,
               private location: Location,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals
+  ) {
     window.scroll(0, 0);
   }
 
   public ngOnInit() {
+
+
+
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.eventFilter = [
       {name: 'all'},
@@ -130,6 +136,15 @@ export class HomeComponent implements OnInit {
 
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 
@@ -140,10 +155,6 @@ export class HomeComponent implements OnInit {
       this.params.lat = this.lat;
       this.params.long = this.lng;
     }
-  }
-
-  public p() {
-    // hack to get rid of warning
   }
 
   public onResize(event): void {
@@ -436,20 +447,24 @@ export class HomeComponent implements OnInit {
         for (let i = 0; i < this.events.length; i++) {
           let latitude: any;
           let longitude: any;
+
           if (this.events[i].type === 'event') {
             if (typeof this.events[i].field_location_place.field_latitude !== null) {
               latitude = this.events[i].field_location_place.field_latitude;
             }
+
             if (typeof this.events[i].field_location_place.field_longitude !== null) {
               longitude = this.events[i].field_location_place.field_longitude;
             }
           }
+
           if (this.events[i].type === 'article') {
             if (this.events[i].field_location_place.length > 0) {
 
               if (typeof this.events[i].field_location_place[0].field_latitude !== null) {
                 latitude = this.events[i].field_location_place[0].field_latitude;
               }
+
               if (typeof this.events[i].field_location_place[0].field_longitude !== null) {
                 longitude = this.events[i].field_location_place[0].field_longitude;
               }
@@ -474,6 +489,7 @@ export class HomeComponent implements OnInit {
             icon: 'assets/icon/locationmarker.png',
             opacity: 0.4,
             price: [],
+            events: []
           };
 
           if (i === 0) {
@@ -486,6 +502,28 @@ export class HomeComponent implements OnInit {
 
           this.markers.push(marker);
         }
+
+        // console.log('markers: ', this.markers);
+        // put all events has the same location together in one marker
+        for (let i = 0, len = this.markers.length; i < len; i++) {
+          for (let j = i + 1, length = this.markers.length; j < length; j++) {
+            const markerI = this.markers[i];
+            const markerJ = this.markers[j];
+
+            if (markerI && markerJ) {
+              const cond = markerI.lat === markerJ.lat && markerI.lng === markerJ.lng;
+
+              if (cond) {
+                this.markers[i].events.push(this.markers[j]);
+                this.markers.splice(j, 1);
+              }
+            }
+
+          }
+        }
+
+        // console.log('remove duplicate markers: ', this.markers);
+
         sleep(50);
         this.zoomChanged = false;
       }

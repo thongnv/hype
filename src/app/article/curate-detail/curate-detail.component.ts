@@ -4,9 +4,10 @@ import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
 import { WindowUtilService } from '../../services/window-ultil.service';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { User } from '../../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { AppGlobals } from '../../services/app.global';
 
 @Injectable()
 @Component({
@@ -43,6 +44,8 @@ export class CurateDetailComponent implements OnInit {
                      private route: ActivatedRoute,
                      private router: Router,
                      private titleService: Title,
+                     private meta: Meta,
+                     private appGlobal: AppGlobals,
                      private windowRef: WindowUtilService) {
   }
 
@@ -63,17 +66,44 @@ export class CurateDetailComponent implements OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if (this.innerWidth <= 900) {
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    } else {
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.mainService.getArticle(this.slugName).subscribe(
         (response) => {
           this.article = response;
+          let metaTags = response.meta_tags;
+          // Seo meta tags
+          if (metaTags) {
+            this.titleService.setTitle(metaTags.title);
+            this.meta.updateTag({name: 'description', content: metaTags.description});
+            this.meta.addTag(
+              {name: 'keywords', content: metaTags.keywords}
+            );
+            if (metaTags.canonical_url) {
+              this.meta.addTag({rel: 'canonical', href: metaTags.canonical_url});
+            }
+          } else {
+            console.log('here');
+            this.titleService.setTitle(response.title);
+            this.meta.updateTag({
+              name: 'description',
+              content: response.body.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)
+            });
+          }
+
           if (this.user) {
             this.isCurrentUser = this.article.user_post.slug === '/user/' + this.user.slug;
           }
           this.initMap(this.article);
-          this.titleService.setTitle(this.article.title);
           this.getCenterMarkers();
           this.loaderService.hide();
           window.scrollTo(0, 0);
