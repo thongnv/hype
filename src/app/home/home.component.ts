@@ -21,6 +21,7 @@ import { LoaderService } from '../helper/loader/loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
 
 import { AppSetting } from '../app.setting';
+import { AppGlobals } from '../services/app.global';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Title } from '@angular/platform-browser';
@@ -95,11 +96,16 @@ export class HomeComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private route: Router,
               private location: Location,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals
+  ) {
     window.scroll(0, 0);
   }
 
   public ngOnInit() {
+
+
+
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.eventFilter = [
       {name: 'all'},
@@ -130,6 +136,15 @@ export class HomeComponent implements OnInit {
 
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 

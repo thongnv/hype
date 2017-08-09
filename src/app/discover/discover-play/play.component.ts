@@ -12,6 +12,7 @@ import { MapsAPILoader } from 'angular2-google-maps/core/services/maps-api-loade
 import { LoaderService } from '../../helper/loader/loader.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppSetting } from '../../app.setting';
+import { AppGlobals } from '../../services/app.global';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { DOCUMENT, Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -101,6 +102,7 @@ export class PlayComponent implements OnInit {
                      private location: Location,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
+                     private appGlobal: AppGlobals,
                      @Inject(DOCUMENT) private document: Document) {
 
     this.filterCategory = this.formBuilder.group({
@@ -244,6 +246,15 @@ export class PlayComponent implements OnInit {
       });
     });
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
 

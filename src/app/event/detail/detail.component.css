@@ -839,9 +839,7 @@ ul.list-stars-on-post {
     margin-top: 0;
   }
 
-  .page-event .map-location-area {
-    display: none !important;
-  }
+
 
   .title-event a.left-arrow {
     float: left;
@@ -1061,9 +1059,7 @@ ul.list-stars-on-post {
     flex-direction: column-reverse;
   }
 
-  .gmap-box .map-location-area {
-    display: none;
-  }
+
 }
 
 @media only screen and (min-width: 1200px) {

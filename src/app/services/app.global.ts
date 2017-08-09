@@ -11,4 +11,8 @@ export class AppGlobals {
   public setLocationAddress(isLocation) {
     this.isLocationAddress.next(isLocation);
   }
+
+  // a isShowLeft data
+  public isShowLeft = true;
+  public isShowRight = true;
 }

@@ -10,10 +10,14 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
 
 import { AppSetting } from '../../app.setting';
+
 import {
   Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User,
   MetaTags
 } from '../../app.interface';
+
+import { AppGlobals } from '../../services/app.global';
+
 
 @Component({
   selector: 'app-detail',
@@ -77,7 +81,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               private titleService: Title,
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -161,6 +167,15 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     });
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.initRating();
   }

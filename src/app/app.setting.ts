@@ -32,6 +32,8 @@ export class AppSetting {
     xfbml: true,
     version: 'v2.9'
   };
+
+
   public static PAGE_SIZE: number = PAGE_SIZE;
   public static GMAP_STYLE = [
     {

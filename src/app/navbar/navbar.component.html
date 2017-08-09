@@ -74,8 +74,9 @@
             <i class="glyphicon glyphicon-search text-white glyphicon-2x"></i>
           </li>
           <li class="mobile-location-icon pull-right nav-item" ngbDropdown>
-            <div id="mobile-location" class="mobile-location" ngbDropdownToggle>
+            <div *ngIf="togleMap" (click)="doTogleMap()"  id="mobile-location" class="mobile-location" ngbDropdownToggle>
               <i class="glyphicon glyphicon-map-marker text-white glyphicon-2x"></i>
+              <!--
               <ul *ngIf="mapOptions" class="map-option-dropdown-mobile" aria-labelledby="drop1"
                   id="map-option-dropdown-mobile">
                 <div slimScroll
@@ -93,6 +94,7 @@
                 </li>
               </div>
             </ul>
+            -->
           </div>
         </li>
       </ul>

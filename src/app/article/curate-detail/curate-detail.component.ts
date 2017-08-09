@@ -7,6 +7,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { User } from '../../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { AppGlobals } from '../../services/app.global';
 
 @Injectable()
 @Component({
@@ -44,11 +45,13 @@ export class CurateDetailComponent implements OnInit {
                      private router: Router,
                      private titleService: Title,
                      private meta: Meta,
+                     private appGlobal: AppGlobals,
                      private windowRef: WindowUtilService) {
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
@@ -63,6 +66,14 @@ export class CurateDetailComponent implements OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
