@@ -1,31 +1,41 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { MainService } from '../services/main.service';
-import { LoaderService } from '../helper/loader/loader.service';
-import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
-import { WindowUtilService } from '../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
-import { AppGlobals } from '../services/app.global';
+
+import { MainService } from '../../services/main.service';
+import { AppGlobals } from '../../services/app.global';
+import { WindowUtilService } from '../../services/window-ultil.service';
+import { LoaderService } from '../../helper/loader/loader.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
+import { Article } from '../../app.interface';
 
 @Component({
-  selector: 'app-curate',
-  templateUrl: './curate.component.html',
-  styleUrls: ['./curate.component.css']
+  selector: 'app-curated-category',
+  templateUrl: './curated-category.component.html',
+  styleUrls: ['./curated-category.component.css']
 })
-export class CurateComponent implements OnInit {
-  public data: any;
-  public featuredArticles: any[] = [];
-  public latestArticles: any[] = [];
+export class CuratedCategoryComponent implements OnInit {
+
+  public featuredArticles: Article[];
+  public editorsPickArticles: Article[];
+  public trendingArticles: Article[];
+  public trendingEvents: Article[];
+  public trendingPlaces: Article[];
+  public communityArticles: Article[];
+
   public categories: any[];
-  public trending: any[];
+
   public slides: any[] = [];
   public selectedCategory: any = 'all';
-  public NextPhotoInterval: number = 3000;
+
+  public NextPhotoInterval: number = 10000;
   public noLoopSlides: boolean = false;
   public noPause: boolean = true;
-  public noTransition: boolean = false;
+  public noTransition: boolean = true;
+
   public currentPage: number = 0;
   public endList: boolean = false;
   public loading: boolean = false;
+
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public layoutWidth: number;
@@ -85,14 +95,14 @@ export class CurateComponent implements OnInit {
 
     this.mainService.getCurate('latest', '*', 0, 9).subscribe(
       (response: any) => {
-        this.latestArticles = response.data;
+        this.editorsPickArticles = response.data;
         this.currentPage = 1;
       }
     );
 
     this.mainService.getCurateTrending().subscribe(
       (response) => {
-        this.trending = response.data;
+        this.trendingArticles = response.data;
       }
     );
 
@@ -136,14 +146,14 @@ export class CurateComponent implements OnInit {
 
     this.mainService.getCurate('latest', cat, 0, 9).subscribe(
       (response: any) => {
-        this.latestArticles = response.data;
+        this.editorsPickArticles = response.data;
         this.currentPage = this.currentPage + 1;
       }
     );
 
     this.mainService.getCurateTrending().subscribe(
       (response) => {
-        this.trending = response.data;
+        this.trendingArticles = response.data;
       }
     );
 
@@ -163,7 +173,7 @@ export class CurateComponent implements OnInit {
       if (this.currentPage >= 1) {
         this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
           (response: any) => {
-            this.latestArticles = this.latestArticles.concat(response.data);
+            this.editorsPickArticles = this.editorsPickArticles.concat(response.data);
             if (this.currentPage * 9 > response.total) {
               this.endList = true;
             }
@@ -187,4 +197,5 @@ export class CurateComponent implements OnInit {
       }
     );
   }
+
 }

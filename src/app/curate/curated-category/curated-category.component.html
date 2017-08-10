@@ -1,6 +1,6 @@
 <section class="column col-sm-10 no-padding " [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <div class="">
-    <div class="col-lg-9 col-xs-12 left-box table-cell">
+    <div class="col-lg-12 col-xs-12 left-box table-cell">
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
@@ -27,9 +27,13 @@
       <!--primary content start-->
       <div class="primary-content">
         <div *ngIf="featuredArticles" class="row wrap-post-content">
-          <app-boostrap-carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [id]="'curate-carousel'"
-                                 [noPause]="noPause" [indicators]="false"
-                                 [noTransition]="noTransition" class="col-xs-12 col-lg-12">
+          <app-boostrap-carousel [interval]="NextPhotoInterval"
+                                 [noWrap]="noLoopSlides"
+                                 [id]="'curate-carousel'"
+                                 [noPause]="noPause"
+                                 [indicators]="false"
+                                 [noTransition]="noTransition"
+                                 class="custom-carousel col-xs-12 col-lg-12">
             <app-slide-carousel *ngFor="let slideGroup of featuredArticles">
 
               <div class="slide-group" *ngFor="let art of slideGroup">
@@ -47,9 +51,64 @@
             </app-slide-carousel>
           </app-boostrap-carousel>
         </div>
-        <h4 class="head">What's new</h4>
-        <div *ngIf="latestArticles" class="row wrap-post-news">
-          <div *ngFor="let art of latestArticles" class=" col-xs-6 col-lg-4 post-news article-item">
+
+        <h4 class="head">Editors Pick</h4>
+        <div *ngIf="editorsPickArticles" class="row col-md-10 wrap-post-news">
+          <div *ngFor="let art of editorsPickArticles.slice(0, 4)" class=" col-xs-6 col-lg-3 post-news article-item">
+            <div style="overflow: hidden">
+              <div class="image-post-news" [routerLink]="[art.alias]">
+                <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+              </div>
+            </div>
+            <div class="new-info">
+              <h4 class="post-title-content text-ellipsis">
+                <a class="title-hover" [routerLink]="[art.alias]">
+                  {{art.title}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{art.user_post.name}}</span>
+                <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{art.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <app-small-loader></app-small-loader>
+        </div>
+
+        <h4 class="head">Trending This Week</h4>
+        <div *ngIf="editorsPickArticles" class="row col-md-10 wrap-post-news">
+          <div *ngFor="let art of editorsPickArticles.slice(0, 4)" class=" col-xs-6 col-lg-3 post-news article-item">
+            <div style="overflow: hidden">
+              <div class="image-post-news" [routerLink]="[art.alias]">
+                <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+              </div>
+            </div>
+            <div class="new-info">
+              <h4 class="post-title-content text-ellipsis">
+                <a class="title-hover" [routerLink]="[art.alias]">
+                  {{art.title}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{art.user_post.name}}</span>
+                <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{art.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <app-small-loader></app-small-loader>
+        </div>
+
+        <h4 class="head">Curated By Community</h4>
+        <div *ngIf="editorsPickArticles" class="row col-md-10 wrap-post-news">
+          <div *ngFor="let art of editorsPickArticles" class=" col-xs-6 col-lg-3 post-news article-item">
             <div style="overflow: hidden">
               <div class="image-post-news" [routerLink]="[art.alias]">
                 <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
@@ -79,19 +138,6 @@
     </div>
     <!--left box end-->
 
-    <!--right box start-->
-    <div class="col-lg-3 col-xs-12 right-box table-cell">
-      <h3 class="title-trending">Trending this week</h3>
-      <ul *ngIf="trending" class="list-items">
-        <li *ngFor="let art of trending">
-          <a [title]="art.title" [routerLink]="[art.alias]">
-            <img [src]="art.field_images[0]" [alt]="art.title" width="60" height="60">
-            <p class="title-trending title-hover">{{art.title | myHtml2Text | truncate : 48}}</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <!--right box end-->
   </div>
 
 </section>
