@@ -17,13 +17,18 @@ export class SearchResultComponent implements OnInit {
   public innerWidth: number;
 
   // fake data
+  public currentType = 'events';
   public items = [];
+  private events = [];
+  private lists = [];
+  private places = [];
+
   private keywords = '';
 
   constructor(private appGlobal: AppGlobals,
               private route: ActivatedRoute,
               private windowRef: WindowUtilService,
-              private mainService: MainService
+              private dataService: MainService
               ) { }
 
   // lifecycle
@@ -54,10 +59,33 @@ export class SearchResultComponent implements OnInit {
   private fetchData(keywords: string) {
     // TODO: need a particular api for this feature
     // TODO: currently use the search in main service
-    this.mainService.search(keywords)
+    // this.dataService.search(keywords)
+    //   .subscribe(resp => {
+    //     console.info('data: ', resp);
+    //     this.events = resp.event; this.lists = resp.article; this.places = resp.company;
+    //
+    //   });
+
+    this.dataService.searchResult(keywords)
       .subscribe(resp => {
-        console.log('data: ', resp);
+        console.info('data: ', resp);
+        this.events = resp.event; this.lists = resp.article; this.places = resp.company; this.items = this.events;
+
       })
+  }
+
+  public changeTab(type: string) {
+    this.currentType = type;
+    switch (this.currentType) {
+      case 'events':
+        this.items = this.events; break;
+      case 'lists':
+        this.items = this.lists; break;
+      case 'places':
+        this.items = this.places; break;
+      default:
+        this.currentType = 'events'; break;
+    }
   }
 
   public onResize(event): void {
