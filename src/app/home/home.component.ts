@@ -504,7 +504,7 @@ export class HomeComponent implements OnInit {
           this.markers.push(marker);
         }
 
-        // console.log('markers: ', this.markers);
+        // TODO: start bad code
         // put all events has the same location together in one marker
         for (let i = 0, len = this.markers.length; i < len; i++) {
           for (let j = i + 1, length = this.markers.length; j < length; j++) {
@@ -521,7 +521,14 @@ export class HomeComponent implements OnInit {
               }
             }
 
-          }
+            }
+          });
+        });
+
+        this.markers.forEach(marker => {
+          // marker.events = marker.events.map((value, index, arr) => arr.indexOf(value) === index);
+          // marker.events = Array.from(new Set(marker.events.map(JSON.stringify))).map(JSON.parse);
+
         }
 
         sleep(50);
@@ -652,6 +659,13 @@ export class HomeComponent implements OnInit {
     this.requestings.push(req);
 
   }
+
+
+  private uniqueArray(arrArg) {
+    return arrArg.filter((elem, pos, arr) => {
+      return arr.indexOf(elem) == pos;
+    });
+  }
 }
 
 function rad(x) {
@@ -686,9 +700,17 @@ function calculateNumCategories(): number {
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
 }
+
 function sleep(delay) {
   let start = new Date().getTime();
   while (new Date().getTime() < start + delay) {
     // Sleep
   }
+}
+
+
+function removeDuplicates(myArr, prop) {
+  return myArr.filter((obj, pos, arr) => {
+    return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
+  });
 }
