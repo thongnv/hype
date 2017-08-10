@@ -742,6 +742,7 @@ export class EatComponent implements OnInit {
     this.params.limit = 20;
     this.params.page = 0;
     this.params.rate = '';
+    this.params.types = '';
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'ASC';
     this.markers = [];
