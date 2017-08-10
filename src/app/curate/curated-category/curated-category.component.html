@@ -76,39 +76,50 @@
             </div>
             <div class="clear"></div>
           </div>
-          <app-small-loader></app-small-loader>
+
+          <div class="align-center padding-15px">
+            <button class="btn btn-primary">Show More</button>
+          </div>
+
         </div>
 
         <h4 class="head">Trending This Week</h4>
-        <div *ngIf="editorsPickArticles" class="row col-md-10 wrap-post-news">
-          <div *ngFor="let art of editorsPickArticles.slice(0, 4)" class=" col-xs-6 col-lg-3 post-news article-item">
-            <div style="overflow: hidden">
-              <div class="image-post-news" [routerLink]="[art.alias]">
-                <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+        <div *ngIf="editorsPickArticles" class="width-80-percent align-self-center">
+          <div id="exTab2" class="container">
+            <ul class="nav nav-tabs align-center">
+              <li class="active">
+                <a href="#1" data-toggle="tab">Events</a>
+              </li>
+              <li><a href="#2" data-toggle="tab">Lists</a>
+              </li>
+              <li><a href="#3" data-toggle="tab">Places</a>
+              </li>
+            </ul>
+
+            <div class="tab-content ">
+              <div class="tab-pane active" id="1">
+                <ul *ngIf="trendingArticles" class="list-items">
+                  <li class="col-lg-6 col-xs-12" *ngFor="let art of trendingArticles">
+                    <a [title]="art.title" [routerLink]="[art.alias]">
+                      <img [src]="art.field_images[0]" [alt]="art.title" width="60" height="60">
+                      <p class="title-trending title-hover">{{art.title | myHtml2Text | truncate : 48}}</p>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="2">
+                <h3>Notice the gap between the content and tab after applying a background color</h3>
+              </div>
+              <div class="tab-pane" id="3">
+                <h3>add clearfix to tab-content (see the css)</h3>
               </div>
             </div>
-            <div class="new-info">
-              <h4 class="post-title-content text-ellipsis">
-                <a class="title-hover" [routerLink]="[art.alias]">
-                  {{art.title}}
-                </a>
-              </h4>
-              <p class="post-author">
-                By: <span class="auth-name">{{art.user_post.name}}</span>
-                <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
-              </p>
-              <p class="content-post-news">
-                {{art.body | myHtml2Text | truncate : 60}}
-              </p>
-            </div>
-            <div class="clear"></div>
           </div>
-          <app-small-loader></app-small-loader>
         </div>
 
-        <h4 class="head">Curated By Community</h4>
+        <h4 class="head border-top-solid">Curated By Community</h4>
         <div *ngIf="editorsPickArticles" class="row col-md-10 wrap-post-news">
-          <div *ngFor="let art of editorsPickArticles" class=" col-xs-6 col-lg-3 post-news article-item">
+          <div *ngFor="let art of editorsPickArticles.slice(0, 8)" class=" col-xs-6 col-lg-3 post-news article-item">
             <div style="overflow: hidden">
               <div class="image-post-news" [routerLink]="[art.alias]">
                 <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
@@ -130,7 +141,9 @@
             </div>
             <div class="clear"></div>
           </div>
-          <app-small-loader></app-small-loader>
+          <div class="align-center padding-15px">
+            <button class="btn btn-primary">Show More</button>
+          </div>
         </div>
 
       </div>
