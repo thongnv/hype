@@ -48,7 +48,6 @@ export class SearchComponent implements OnInit {
     if (this.searchToken.length >= 3) {
       this.hideSearchResult = false;
       this.mainService.search(this.searchToken).subscribe((resp) => {
-        console.log('resp: ', resp);
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
           this.hideNoResult = false;

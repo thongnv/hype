@@ -2,18 +2,18 @@
 <div id="main">
   <h1>Showing results for "{{keywords}}"</h1>
   <div class="tab-control">
-    <button class="btn btn-default active" [class.active]="currentType === 'events'" (click)="changeTab('events')">Events({{events.length}})</button>
-    <button class="btn btn-default" [class.active]="currentType === 'lists'" (click)="changeTab('lists')">Lists({{lists.length}})</button>
-    <button class="btn btn-default" [class.active]="currentType === 'places'" (click)="changeTab('places')">Places({{places.length}})</button>
+    <button class="btn btn-default active" [class.active]="currentType === 'events'" (click)="changeTab('events')">Events({{events.total}})</button>
+    <button class="btn btn-default" [class.active]="currentType === 'lists'" (click)="changeTab('lists')">Lists({{lists.total}})</button>
+    <button class="btn btn-default" [class.active]="currentType === 'places'" (click)="changeTab('places')">Places({{places.total}})</button>
   </div>
 
   <div class="tab-wrap">
-    <div class="item-content" *ngFor="let item of items">
-      <div class="wrap-each-items" *ngIf="item" [id]="item.id">
-        <div class="avatar-profile" [routerLink]="[item.Slug]">
+    <div class="item-content" *ngFor="let item of items.data">
+      <div class="wrap-each-items" *ngIf="item" [id]="item.nid">
+        <div class="avatar-profile" [routerLink]="[item.alias]">
           <div class="img-layer"></div>
           <div class="fav-item-image">
-            <img [src]="item.images" width="100" height="100">
+            <img [src]="currentType === 'places' ? item.images[0] : item.field_images" width="100" height="100">
           </div>
           <div class="month" *ngIf="item.created">{{item.created | amFromUnix | date:'MMM'}}</div>
           <div class="date-number" *ngIf="item.created">{{item.created | amFromUnix | date:'dd '}}</div>
@@ -21,12 +21,13 @@
         <div class="information-profile">
           <div class="top-content">
             <h4 class="information-title text-ellipsis">
-              <a class="title-hover" [routerLink]="[item.Slug]">
-                {{item.Title}}
+              <a class="title-hover" [routerLink]="[item.alias]">
+                {{currentType === 'places' ? item.Company_Name : item.title}}
               </a>
             </h4>
-            <app-star-vote [stars]="item.av_vote" (onVote)="onVoteEvent($event)"></app-star-vote>
-            <p class="detail-information" [innerHTML]="item.body | myHtml2Text | truncate : 150"></p>
+            <app-star-vote *ngIf="item.average_rating" [stars]="item.average_rating" (onVote)="onVoteEvent($event)"></app-star-vote>
+            <p class="detail-information"
+               [innerHTML]="currentType === 'places' ? item.Hylo_Activity_Description : item.body | myHtml2Text | truncate : 150"></p>
           </div>
         </div>
       </div>

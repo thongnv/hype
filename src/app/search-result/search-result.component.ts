@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 // services
@@ -12,16 +12,18 @@ import {MainService} from '../services/main.service';
   styleUrls: ['./search-result.component.css']
 })
 export class SearchResultComponent implements OnInit {
+  @Output('onClickVote') public onClickVote = new EventEmitter<any>();
+
   // properties
   public layoutWidth: number;
   public innerWidth: number;
 
   // fake data
   public currentType = 'events';
-  public items = [];
-  private events = [];
-  private lists = [];
-  private places = [];
+  public items = {data: []};
+  private events = {total: 0, data: []};
+  private lists = {total: 0, data: []};
+  private places = {total: 0, data: []};
 
   private keywords = '';
 
@@ -57,21 +59,14 @@ export class SearchResultComponent implements OnInit {
 
   // methods
   private fetchData(keywords: string) {
-    // TODO: need a particular api for this feature
-    // TODO: currently use the search in main service
-    // this.dataService.search(keywords)
-    //   .subscribe(resp => {
-    //     console.info('data: ', resp);
-    //     this.events = resp.event; this.lists = resp.article; this.places = resp.company;
-    //
-    //   });
-
     this.dataService.searchResult(keywords)
       .subscribe(resp => {
-        console.info('data: ', resp);
-        this.events = resp.event; this.lists = resp.article; this.places = resp.company; this.items = this.events;
+        this.events = {total: resp.event.total, data: resp.event.items};
+        this.lists = {total: resp.list.total, data: resp.list.items};
+        this.places = {total: resp.place.total, data: resp.place.items};
+        this.items = this.events;
 
-      })
+      });
   }
 
   public changeTab(type: string) {
@@ -80,12 +75,19 @@ export class SearchResultComponent implements OnInit {
       case 'events':
         this.items = this.events; break;
       case 'lists':
-        this.items = this.lists; break;
+        this.items = this.lists;
+        break;
       case 'places':
         this.items = this.places; break;
       default:
-        this.currentType = 'events'; break;
+        this.items = this.events;
+        this.currentType = 'events';
+        break;
     }
+  }
+
+  public onVoteEvent(item: number): void {
+    this.onClickVote.emit(item);
   }
 
   public onResize(event): void {
