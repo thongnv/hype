@@ -14,6 +14,7 @@ import { ProfilePublicComponent } from './member/profile-public/profile-public.c
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
+import { SearchResultComponent } from "./search-result/search-result.component"
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -28,6 +29,7 @@ export const ROUTES: Routes = [
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'share-event', component: ShareEventComponent},
+  {path: 'search-result/:keywords', component: SearchResultComponent},
   {path: '404', component: NoContentComponent},
   {path: '500', component: ServerErrorComponent},
   {path: ':slug', component: ProfilePublicComponent},
@@ -37,6 +39,7 @@ export const ROUTES: Routes = [
   {path: ':slug/interest', component: InterestComponent},
   {path: ':slug/profile-edit', component: ProfileEditComponent},
   {path: ':slug/favorite', component: FavoriteComponent},
+
 
   {path: '**', component: NoContentComponent},
 ];

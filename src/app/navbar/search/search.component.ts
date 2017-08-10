@@ -1,5 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { MainService } from '../../services/main.service';
 
 @Component({
@@ -8,6 +10,8 @@ import { MainService } from '../../services/main.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('keyword') keywords: ElementRef;
+
   public searchForm: FormGroup;
   public hideSearchResult: boolean = true;
   public hideNoResult: boolean = false;
@@ -18,7 +22,8 @@ export class SearchComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private mainService: MainService,
-              private _elRef: ElementRef) {
+              private _elRef: ElementRef,
+              private router: Router) {
   }
 
   @HostListener('document:click', ['$event'])
@@ -56,6 +61,13 @@ export class SearchComponent implements OnInit {
       this.result = {};
       this.hideNoResult = false;
     }
+  }
+
+  onKeyDown(event) {
+    const keywords = this.keywords.nativeElement.value;
+    const keyCode = event.which || event.keyCode;
+    
+    if (keyCode === 13) this.router.navigate(['/search-result', keywords]);
   }
 
   public onOpenSuggestion() {

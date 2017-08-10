@@ -1,0 +1,23 @@
+<!-- data -->
+<div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-sm-5 no-padding frame_left" id="main"
+     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+  <h1>Showing results for "{{keywords}}"</h1>
+  <div class="tab-control">
+    <button class="btn btn-default active">Events(50)</button>
+    <button class="btn btn-default">Lists(22)</button>
+    <button class="btn btn-default">Places(3)</button>
+  </div>
+
+  <div class="tab-wrap">
+    <div class="item-content" *ngFor="let item of items">
+
+    </div>
+  </div>
+
+</div>
+
+<!-- map -->
+<div [class.frameHidden]="!appGlobal.isShowRight" class="column col-sm-5 no-padding frame_right" [style.width]="innerWidth > 1023 ? layoutWidth-1 + 'px' : ''"
+     id="right">
+
+</div>

@@ -1,0 +1,38 @@
+#main div.tab-control {
+  margin-left: 30px;
+  border: 1px solid #d8d8d8;
+  box-shadow: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  height: 28px;
+  text-align: center;
+}
+
+#main div.tab-control button.btn.active {
+  height: 32px;
+  position: relative;
+  top: -3px;
+  opacity: 1;
+  border: none;
+  background: #2a6be1;
+  box-shadow: 0 2px 3px 0 rgba(148, 148, 148, 0.5);
+  color: #ffffff;
+  z-index: 10;
+  text-shadow: none;
+}
+
+#main div.tab-control button.btn {
+  width: 100px;
+  height: 26px;
+  /*background: #f6f6f6;*/
+  background: #FFFFFF;
+  color: #000000;
+  border-radius: 4px;
+  outline: none;
+  line-height: 16px;
+  border: none;
+  z-index: 5;
+  opacity: .5;
+  position: relative;
+  top: -2.7px;
+}

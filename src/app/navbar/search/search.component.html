@@ -1,7 +1,10 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
     <div class="input-group wrap-search-input">
         <button [disabled]="searchForm.invalid" class="btn sprite sprite-icon-search search-icon" type="submit"></button>
-        <input #keyword formControlName="keyword" class="form-control input-keyword" minlength="3" placeholder="Search..." (keyup)="onSubmit($event, keyword.value)" (click)="onOpenSuggestion()">
+        <input #keyword formControlName="keyword"
+               class="form-control input-keyword" minlength="3" placeholder="Search..."
+               (keyup)="onSubmit($event, keyword.value)"
+               (click)="onOpenSuggestion()" (keydown)="onKeyDown($event)">
         <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
             <div class="arrow-up"></div>
             <div class="display-location-address">
