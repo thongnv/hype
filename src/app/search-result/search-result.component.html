@@ -9,12 +9,11 @@
 
   <div class="tab-wrap">
     <div class="item-content" *ngFor="let item of items">
-      {{item}}
-      <div class="wrap-each-items" *ngIf="item" [id]="item.nid">
-        <div class="avatar-profile" [routerLink]="[item.slug]">
+      <div class="wrap-each-items" *ngIf="item" [id]="item.id">
+        <div class="avatar-profile" [routerLink]="[item.Slug]">
           <div class="img-layer"></div>
           <div class="fav-item-image">
-            <img [src]="item.field_image" width="100" height="100">
+            <img [src]="item.images" width="100" height="100">
           </div>
           <div class="month" *ngIf="item.created">{{item.created | amFromUnix | date:'MMM'}}</div>
           <div class="date-number" *ngIf="item.created">{{item.created | amFromUnix | date:'dd '}}</div>
@@ -22,8 +21,8 @@
         <div class="information-profile">
           <div class="top-content">
             <h4 class="information-title text-ellipsis">
-              <a class="title-hover" [routerLink]="[item.slug]">
-                {{item.title}}
+              <a class="title-hover" [routerLink]="[item.Slug]">
+                {{item.Title}}
               </a>
             </h4>
             <app-star-vote [stars]="item.av_vote" (onVote)="onVoteEvent($event)"></app-star-vote>
