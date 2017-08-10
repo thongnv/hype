@@ -1128,6 +1128,10 @@ ul.mentioned-item {
     width: auto;
   }
 
+  ul.mentioned-item{
+    clear: both;
+  }
+
   .filter-events.top-100 {
     padding: 15px;
   }
@@ -1226,6 +1230,8 @@ ul.mentioned-item {
   .wrap-search-input {
     width: 100% !important;
   }
+
+  .tags{ clear: both;}
 
   .avatar-profile {
     margin-top: 5px !important;

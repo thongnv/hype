@@ -17,12 +17,24 @@
         <small class="col-md-12 col-xs-12">An event is an activity tagged to a place</small>
         <div class="form-group col-md-12 col-xs-12">
           <label for="event-name">Name</label>
-          <input placeholder="E.g Prawing in Punggol" formControlName="eventName" id="event-name" class="form-control"
+          <input placeholder="E.g Prawing in Punggol"
+                 formControlName="eventName"
+                 (input)="onInputEventName($event)"
+                 id="event-name" class="form-control"
                  type="text" autofocus>
           <small *ngIf="eventForm.get('eventName').touched && eventForm.get('eventName').hasError('required')"
                  class="text-danger">
             Please enter event name.
           </small>
+          <div class="dupplicate-event" *ngIf="existEvents.length > 0">
+            These events similar your
+            <ul class="exist-events">
+              <li class="event-title" *ngFor="let eventItem of existEvents">
+                <a [routerLink]="eventItem.Slug" target="_blank">{{eventItem.Title}}</a>
+              </li>
+            </ul>
+          </div>
+
         </div>
         <div class="form-group col-md-12 col-xs-12">
           <label>Details</label>
@@ -62,6 +74,8 @@
         <div class="form-group list-tags col-md-12 col-xs-12">
           <label>Tags</label>
           <tag-input [(ngModel)]="eventTags" [modelAsStrings]="true"
+                     [separatorKeyCodes]="[13, 32]"
+                     [separatorKeyCodes]="['RET', 'SPACE']"
                      placeholder="E.g performance, liveband, concert, food"
                      formControlName="eventTags">
             <tag-input-dropdown [displayBy]="'name'"

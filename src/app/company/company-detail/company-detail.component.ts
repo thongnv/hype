@@ -5,6 +5,7 @@ import { Company, Experience, Image, Location, User } from '../../app.interface'
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
+import { AppGlobals } from '../../services/app.global';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
@@ -60,7 +61,9 @@ export class CompanyDetailComponent implements Company, OnInit {
               private loaderService: LoaderService,
               private router: Router,
               private locationService: LocationService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -76,7 +79,19 @@ export class CompanyDetailComponent implements Company, OnInit {
       this.user = user;
     }
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
+    if(this.innerWidth <= 900){
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }else{
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
+
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+
+    this.appGlobal.toggleMap = true;
+
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
       this.loaderService.show();

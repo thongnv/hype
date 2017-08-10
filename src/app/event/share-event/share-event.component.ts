@@ -6,6 +6,7 @@ import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@ang
 import * as moment from 'moment/moment';
 import { EventService } from '../../services/event.service';
 import { LoaderService } from '../../helper/loader/loader.service';
+import { MainService } from '../../services/main.service';
 import { AppSetting } from '../../app.setting';
 
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
@@ -75,6 +76,8 @@ export class ShareEventComponent implements OnInit {
   public eventTags = [];
   public checkTags = [];
 
+  public existEvents = [];
+
   @ViewChild(HyperSearchComponent)
   private hyperSearchComponent: HyperSearchComponent;
 
@@ -86,7 +89,8 @@ export class ShareEventComponent implements OnInit {
               private loaderService: LoaderService,
               public userService: UserService,
               private router: Router,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private mainService: MainService) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -212,7 +216,7 @@ export class ShareEventComponent implements OnInit {
                 fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-                filename: event.target.files[i].name,
+                filename: event.target.files[i].name.substr(0, 50),
                 filemime: event.target.files[i].type,
                 filesize: event.target.files[i].size,
               };
@@ -355,6 +359,23 @@ export class ShareEventComponent implements OnInit {
       this.checkTags.push(addTag[0]);
     }
     return this.checkTags;
+  }
+
+  // events
+  public onInputEventName(event) {
+    this.existEvents = [];
+
+    const eventName = event.target.value.trim();
+
+    if (eventName.length > 3) {
+      // fetch events from server
+      this.mainService.search(eventName)
+        .subscribe(data => {
+          this.existEvents = data.event;
+        })
+    } else {
+      console.log('let create new event');
+    }
   }
 }
 

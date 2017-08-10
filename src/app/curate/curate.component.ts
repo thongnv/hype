@@ -4,6 +4,7 @@ import { LoaderService } from '../helper/loader/loader.service';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
+import { AppGlobals } from '../services/app.global';
 
 @Component({
   selector: 'app-curate',
@@ -12,7 +13,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class CurateComponent implements OnInit {
   public data: any;
-  public articles: any[];
   public featuredArticles: any[] = [];
   public latestArticles: any[] = [];
   public categories: any[];
@@ -35,7 +35,9 @@ export class CurateComponent implements OnInit {
                      private mainService: MainService,
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
-                     private windowRef: WindowUtilService) {
+                     private windowRef: WindowUtilService,
+                     private appGlobal: AppGlobals,
+  ) {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -46,6 +48,7 @@ export class CurateComponent implements OnInit {
 
   }
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     window.scroll(0, 0);
     this.titleService.setTitle('Curated List');
     this.loaderService.show();
@@ -163,22 +166,24 @@ export class CurateComponent implements OnInit {
   }
 
   public loadMore() {
-    if (!this.endList && !this.loading) {
+    if (!this.endList) {
       this.smallLoader.show();
       this.loading = true;
-      this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
-        (response: any) => {
-          this.latestArticles = this.latestArticles.concat(response.data);
-          if (this.currentPage * 9 > response.total) {
-            this.endList = true;
+      if (this.currentPage >= 1) {
+        this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
+          (response: any) => {
+            this.latestArticles = this.latestArticles.concat(response.data);
+            if (this.currentPage * 9 > response.total) {
+              this.endList = true;
+            }
+            this.currentPage = this.currentPage + 1;
+            this.smallLoader.hide();
+            this.loading = false;
           }
-          this.currentPage = this.currentPage + 1;
-          this.loading = true;
-          this.smallLoader.hide();
-          this.loading = false;
-        }
-      );
+        );
+      }
     }
+
   }
 
   private convertObject2Array(obj) {

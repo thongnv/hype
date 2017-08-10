@@ -1,6 +1,6 @@
 <section class="page-event">
   <div class="page-event-row" *ngIf="ready">
-    <div class="column col-sm-5 no-padding col-xs-12 left-box frame_left"
+    <div [class.frameHidden]="!appGlobal.isShowLeft"  class="column col-sm-5 no-padding col-xs-12 left-box frame_left"
          [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
 
       <!-- title event start -->
@@ -163,7 +163,7 @@
 
       </div>
     </div>
-    <div class="column col-sm-5 no-padding col-xs-12 gmap-box margin-bottom-25 frame_right"
+    <div [class.frameHidden]="!appGlobal.isShowRight"  class="column col-sm-5 no-padding col-xs-12 gmap-box margin-bottom-25 frame_right"
          [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
 
       <carousel

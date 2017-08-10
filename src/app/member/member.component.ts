@@ -8,6 +8,7 @@ import { UserService } from '../services/user.service';
 import { AppSetting } from '../app.setting';
 import { WindowUtilService } from '../services/window-ultil.service';
 import { NotificationsService } from 'angular2-notifications';
+import { AppGlobals } from '../services/app.global';
 
 @Component({
   selector: 'app-member',
@@ -41,10 +42,13 @@ export class MemberComponent implements OnInit {
               private localStorageService: LocalStorageService,
               private router: Router,
               private notificationsService: NotificationsService,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private appGlobal: AppGlobals,
+  ) {
   }
 
   public ngOnInit() {
+    this.appGlobal.toggleMap = false;
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;

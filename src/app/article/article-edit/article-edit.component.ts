@@ -8,6 +8,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { Article, Image, User } from '../../app.interface';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-article-edit',
@@ -19,10 +20,10 @@ export class ArticleEditComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public selectedCategories = [];
-  public listPlaces: any[] = [];
+  public places: any[] = [];
   public markers: any[] = [];
   public showPreview: boolean = false;
-  public addImage: boolean = true;
+  public canAddMoreImages: boolean = true;
   public submitted: boolean = false;
   public validCaptcha: boolean = false;
   public previewUrls: Image[] = [];
@@ -31,19 +32,23 @@ export class ArticleEditComponent implements OnInit {
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
   public slides: any[] = [];
-  public previewData: any;
+
   public lat: number = 1.290270;
   public lng: number = 103.851959;
   public zoom: number = 12;
   public validateSize: boolean = true;
   public validateType: boolean = true;
+
   public layoutWidth: number;
   public innerWidth: number;
 
-  public article: Article;
   public contentControl: any;
+
   public slugName: any;
   public user: User;
+
+  public article: Article;
+  public previewData: any;
 
   public ready = false;
 
@@ -65,7 +70,8 @@ export class ArticleEditComponent implements OnInit {
               private loaderService: LoaderService,
               private router: Router,
               private windowRef: WindowUtilService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public appGlobal: AppGlobals) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -96,8 +102,18 @@ export class ArticleEditComponent implements OnInit {
             this.categories = response.data;
           }
         );
+
         this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+        if (this.innerWidth <= 900) {
+          this.appGlobal.isShowLeft = true;
+          this.appGlobal.isShowRight = false;
+        } else {
+          this.appGlobal.isShowLeft = true;
+          this.appGlobal.isShowRight = true;
+        }
         this.layoutWidth = (this.windowRef.rootContainer.width - 180);
+        this.appGlobal.toggleMap = true;
+
         this.ready = true;
       });
     });
@@ -113,12 +129,12 @@ export class ArticleEditComponent implements OnInit {
       slug: [''],
       image: ['']
     });
-    const placeControl = this.formData.get('listPlaces') as FormArray;
+    const placeControl = this.formData.get('places') as FormArray;
     placeControl.push(placeCtrl);
   }
 
   public removeAddress(i: number) {
-    const control = <FormArray> this.formData.controls['listPlaces'];
+    const control = <FormArray> this.formData.controls['places'];
     control.removeAt(i);
   }
 
@@ -127,21 +143,23 @@ export class ArticleEditComponent implements OnInit {
     delete this.previewUrls[imageId];
     this.previewUrls = this.previewUrls.filter((img) => img !== imageUrl);
     if (this.previewUrls.length < 5) {
-      this.addImage = true;
+      this.canAddMoreImages = true;
     }
   }
 
   public readUrl(event) {
-    let reader = [];
+    const reader = [];
     if (event.target.files && event.target.files[0] && this.previewUrls.length < 5) {
-      let typeFile = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
-      for (let i = 0; i < event.target.files.length && i < 5; i++) {
+      const fileTypesRegex = new RegExp(/\/(jpe?g|png|gif|bmp)$/, 'i');
+      const maxNumImages = 5;
+      const maxImageSize = 6291456;
+      for (let i = 0; i < event.target.files.length && i < maxNumImages; i++) {
         let size = event.target.files[i].size;
         let type = event.target.files[i].type;
-        if (size < 6291456 && typeFile.test(type)) {
+        if (size < maxImageSize && fileTypesRegex.test(type)) {
           reader[i] = new FileReader();
           reader[i].onload = (e) => {
-            let image = new Image();
+            const image = new Image();
             image.src = e.target.result;
 
             this.resizeImage(image, 680, 360, (resizedImage) => {
@@ -149,15 +167,15 @@ export class ArticleEditComponent implements OnInit {
                 fid: null,
                 url: resizedImage,
                 value: e.target.result.replace(/^data:image\/\S+;base64,/, ''),
-                filename: event.target.files[i].name,
+                filename: event.target.files[i].name.substr(0, 50),
                 filemime: event.target.files[i].type,
                 filesize: event.target.files[i].size,
               };
-              if (this.previewUrls.length < 5) {
+              if (this.previewUrls.length < maxNumImages) {
                 this.previewUrls.push(img);
               }
-              if (this.previewUrls.length >= 5) {
-                this.addImage = false;
+              if (this.previewUrls.length >= maxNumImages) {
+                this.canAddMoreImages = false;
               }
             });
           };
@@ -172,10 +190,10 @@ export class ArticleEditComponent implements OnInit {
 
   public onSubmit() {
     let article = this.formData.value;
-    this.listPlaces = [];
-    let address = article.listPlaces;
+    this.places = [];
+    let address = article.places;
     for (let add of address) {
-      this.listPlaces.push({
+      this.places.push({
         field_place_comment: add.description,
         field_latitude: add.lat,
         field_longitude: add.lng,
@@ -185,7 +203,7 @@ export class ArticleEditComponent implements OnInit {
       });
     }
     article.id = this.article.id;
-    article.listPlaces = this.listPlaces;
+    article.listPlaces = this.places;
     article.listImages = this.previewUrls;
     article.listCategory = this.processCategories(article.listCategory);
     let data = mapArticle(article);
@@ -207,7 +225,7 @@ export class ArticleEditComponent implements OnInit {
   public onPreview() {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrls;
-    this.initMap();
+    this.initPreview();
   }
 
   public checkCaptcha(captcha) {
@@ -221,7 +239,7 @@ export class ArticleEditComponent implements OnInit {
     if (status) {
       this.previewData = this.formData.value;
       this.previewData.images = this.previewUrls;
-      this.initMap();
+      this.initPreview();
     }
   }
 
@@ -250,7 +268,7 @@ export class ArticleEditComponent implements OnInit {
     geoCoder.geocode({placeId: data.place_id}, (results, status) => {
       if (status.toString() === 'OK') {
         // set lat long for eventPlace
-        let placeControl = this.formData.get('listPlaces') as FormArray;
+        let placeControl = this.formData.get('places') as FormArray;
         let place = placeControl.at(i);
         place.patchValue({
           lat: results[0].geometry.location.lat(),
@@ -262,7 +280,7 @@ export class ArticleEditComponent implements OnInit {
   }
 
   public onHyloChangePlace(data, i) {
-    let placeControl = this.formData.get('listPlaces') as FormArray;
+    let placeControl = this.formData.get('places') as FormArray;
     let place = placeControl.at(i);
     if (data.Title) {
       place.patchValue({
@@ -335,12 +353,19 @@ export class ArticleEditComponent implements OnInit {
     }
     this.formData.controls.listName.patchValue(res.title);
     this.formData.controls.listDescription.patchValue(res.body);
-    const control = <FormArray> this.formData.controls['listPlaces'];
+    const control = <FormArray> this.formData.controls.listPlaces;
     for (let place of res.field_places) {
       if (place.field_latitude) {
-        let img: string;
+        let img = null;
         if (place.field_place_images.length) {
-          img = place.field_place_images[0].url;
+          img = {
+            fid: place.field_place_images[0].fid,
+            url: place.field_place_images[0].url,
+            value: '',
+            filename: '',
+            filemime: '',
+            filesize: 0
+          };
         }
         const placeControl = this.formBuilder.group(
           {
@@ -359,15 +384,14 @@ export class ArticleEditComponent implements OnInit {
     }
   }
 
-  // for preview
-  private initMap() {
+  private initPreview() {
     this.currentHighlightedMarker = 0;
     this.slides = [];
     this.markers = [];
     this.showPreview = true;
-    if (this.previewData.listPlaces && this.previewData.listPlaces.length) {
+    if (this.previewData.places && this.previewData.places.length) {
       let index = 0;
-      for (let place of this.previewData.listPlaces) {
+      for (let place of this.previewData.places) {
         if (place.lat && place.lng) {
           if (index === 0) {
             this.markers.push({
@@ -435,6 +459,6 @@ function mapArticle(article) {
     body: article.listDescription,
     field_images: article.listImages,
     category: article.listCategory,
-    field_places: article.listPlaces
+    field_places: article.places
   };
 }

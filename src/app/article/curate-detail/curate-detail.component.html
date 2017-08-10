@@ -1,6 +1,6 @@
 <section class="column no-padding">
   <div class="list-preview-wrap setting-wrap" *ngIf="article">
-    <div class="col-xs-12 col-sm-12 col-md-6 list-box  frame_left" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+    <div [class.frameHidden]="!appGlobal.isShowLeft" class="col-xs-12 col-sm-12 col-md-6 list-box  frame_left" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
         <div class="carousel-box" id="curate-carousel">
           <div class="carousel-header">
             <a routerLink="/curate">
@@ -22,25 +22,25 @@
           <div class="description text-justify" [innerHtml]="article.body">
           </div>
         </div>
-        <div *ngFor="let plc of article.field_places; let index=index">
-          <div *ngIf="plc.field_place_address && plc.field_place_comment" class="place-item-wrap" [id]="'place-'+index">
+        <div *ngFor="let place of article.field_places; let index=index">
+          <div *ngIf="place.field_place_address && place.field_place_comment" class="place-item-wrap" [id]="'place-'+index">
             <div class="place-item-header">
               <strong class="pull-left place-index">#{{index+1}}</strong>
-              <h2 class="place-name">{{plc.field_place_address}}</h2>
-              <span *ngIf="plc.field_slug" [routerLink]="[plc.field_slug]" target="_blank"
+              <h2 class="place-name">{{place.field_place_address}}</h2>
+              <span *ngIf="place.field_slug" [routerLink]="[place.field_slug]" target="_blank"
                     class="pull-right place-detail-btn">
                 details
               </span>
             </div>
-            <div *ngIf="plc.field_place_images[0]" class="place-item-img">
-              <img [src]="plc.field_place_images[0].url" [alt]="plc.field_place_address" width="100%">
+            <div *ngIf="place.field_place_images[0]" class="place-item-img">
+              <img [src]="place.field_place_images[0].url" [alt]="place.field_place_address" width="100%">
             </div>
-            <p class="place-item-description" [innerHtml]="plc.field_place_comment"></p>
+            <p class="place-item-description" [innerHtml]="place.field_place_comment"></p>
           </div>
         </div>
         <div class="mobile-footer"></div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm hidden-xs hidden-md frame_right" id="right" [style.width]="layoutWidth/2  + 'px'" *ngIf="showMap">
+    <div [class.frameHidden]="!appGlobal.isShowRight" class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm" id="right" [style.width]="layoutWidth/2  + 'px'" *ngIf="showMap">
       <div style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
         <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
           <app-custom-marker *ngFor="let marker of markers; let index=index"

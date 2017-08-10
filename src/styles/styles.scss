@@ -126,6 +126,16 @@ body, html {
 
 .hype {
 
+  .bell_notify{
+    display: inline-block;
+    background: url("../assets/img/bell_black.png") no-repeat;
+    width: 26px; height: 31px;
+  }
+
+  .sebm-google-map-container{
+    height: 100vh;
+  }
+
   a {
     cursor: pointer;
     color: #3b3b3b;
@@ -1046,7 +1056,7 @@ body, html {
     color: #fff;
   }
   header .nav > li {
-    margin-left: 20px;
+    margin-left: 19px;
   }
   [role=button] {
     color: #fff;
@@ -1342,6 +1352,8 @@ body, html {
     width: inherit;
   }
 
+  .frameHidden{display: none!important;}
+
   //responsive
   @media only screen and(max-width: 374px) {
     .mobile-footer {
@@ -1379,6 +1391,12 @@ body, html {
     }
   }
   @media only screen and (min-width: 320px) and (max-width: 800px) {
+
+    .bell_notify{
+      display: inline-block;
+      background: url("../assets/img/bell_white.png") no-repeat;
+      width: 26px; height: 31px;
+    }
 
     .frame_nav {
       width: 100%;
@@ -1451,6 +1469,7 @@ body, html {
     }
     .fav-component .tab-content {
       margin: 0;
+      padding: 0;
     }
     .fav-component .information-profile {
       width: calc(100% - 100px);
@@ -1482,9 +1501,9 @@ body, html {
         height: calc(100vh - 160px);
       }
     }
-    .sebm-google-map-container {
-      height: 90vh;
-    }
+
+
+
     .star-icons:before {
       color: #ec3d62;
     }
@@ -1549,7 +1568,7 @@ body, html {
     }
 
     .frame_nav, .frame_left, .frame-right {
-      display: block !important;
+      display: block;
       width: 100%;
     }
 
@@ -1653,16 +1672,26 @@ body, html {
 }
 
 /** Marker Info **/
-
-.marker-info {
-  min-width: 150px;
-  max-width: 230px;
+.sebm-google-map-info-window-content{
+  max-width: 200px;
 }
+.marker-info {
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.sebm-google-map-info-window-content > .marker-info{
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
 .marker-info img{
   width: 80px;
   height: 80px;
-  padding-right: 10px;
+  margin-right: 10px;
   float: left;
+  border-radius: 4px;
 }
 
 .marker-info h4{

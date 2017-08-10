@@ -47,11 +47,7 @@ export class AppComponent implements OnInit, AfterContentInit {
     this.userService.getEmittedUser().subscribe(
       (data) => this.user = data
     );
-    // set meta data for seo
-    this.seoService.setSEOMetaTags(
-      'Hylo - Discover things to do in Singapore today', 'Hylo corp',
-      'hylo, food, hylo food, promote events', 'Description'
-    );
+
     if (!this.localStorageService.get('csrf_token')) {
       this.userService.getCsrfToken().subscribe(
         (resp) => {
@@ -59,6 +55,7 @@ export class AppComponent implements OnInit, AfterContentInit {
         }
       );
     }
+
   }
 
   public ngAfterContentInit() {

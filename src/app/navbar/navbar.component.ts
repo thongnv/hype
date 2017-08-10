@@ -25,12 +25,14 @@ export class NavbarComponent implements OnInit {
   public notificationPage: number = 1;
   public totalUnread: number = 0;
   public totalPages: number = 0;
+  public togleMap: boolean = false;
   public set: any = {
     offset: 0,
     endOfList: false,
     loadingInProgress: false
   };
   public user = AppSetting.defaultUser;
+
   @ViewChild(NotificationComponent)
   public NotificationComponent: NotificationComponent;
 
@@ -47,6 +49,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public ngOnInit() {
+
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
@@ -56,6 +59,9 @@ export class NavbarComponent implements OnInit {
       this.mapOptions.push({id: index + 1, name: item});
     });
     let paramsUrl = this.location.path().split('/');
+
+    // check show toggle map
+
     if (paramsUrl[1] === 'discover') {
       switch (paramsUrl[2]) {
         case 'eat':
@@ -134,6 +140,21 @@ export class NavbarComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  public doToggleMap() {
+    if (this.appGlobal.isShowLeft) {
+      this.appGlobal.isShowLeft = false;
+      this.appGlobal.isShowRight = true;
+
+    } else {
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = false;
+    }
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1);
   }
 
   public onSelectMapOption(option: any): void {

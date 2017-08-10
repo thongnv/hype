@@ -1,4 +1,4 @@
-<div class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-eat"
+<div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-eat"
      [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
@@ -210,10 +210,10 @@
   </div>
 
 </div>
-<div class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right hidden-xs hidden-sm frame-right"
+<div [class.frameHidden]="!appGlobal.isShowRight" class="column col-lg-5 col-xs-12 no-padding right-box fixed-right map-right frame-right"
      [style.width]="innerWidth > 1023 ? layoutWidth - 1 + 'px' : ''" id="right">
   <div class="box-map" style="position: fixed; width:inherit; height: inherit;"
-       [style.width]="innerWidth > 1023 ? layoutWidth -1 + 'px' : ''">
+       [style.width]="innerWidth > 1023 ? layoutWidth -1 + 'px' : '100%'">
     <sebm-google-map
       [latitude]="lat"
       [longitude]="lng"

@@ -5,6 +5,7 @@ declare let google: any;
 @Component({
   selector: 'gmap-geocode-marker',
   templateUrl: './gmap-geocode-marker.html',
+  styleUrls: ['./gmap-geocode-marker.css']
 })
 export class GeocodeMarkerComponent implements OnInit {
   @Input('markers') public markers: any;
