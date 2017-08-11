@@ -10,13 +10,58 @@
   border-bottom: 1px solid #eaeaea;
 }
 
+.avatar-picture img {
+  width: 100%;
+}
+
+.light-colored-text {
+  color: rgba(0,0,0,0.6);
+}
+
 .head {
   text-align: center;
 }
 
-.border-top-solid {
+.custom-btn {
+  font-size: 10px;
+  padding: 5px;
+  background-image: none;
+  border: solid 1px;
+  min-width: 55px;
+}
+
+.box-wrap {
+  width: 48%;
+}
+
+.margin-bottom-5px {
+  margin-bottom: 5px;
+}
+
+.margin-right-8px {
+  margin-right: 8px;
+}
+
+.box-shadow {
+  box-shadow: 1px 1px 3px 0 #d8d8d8;
+}
+
+.border-box {
+  border: 1px solid #eaeaea;
+}
+
+.border-top {
   border-top: 1px solid #eaeaea;
 }
+
+.border-bottom {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
 .align-center {
   display: flex;
   justify-content: center;
@@ -26,8 +71,44 @@
   margin: 0 auto;
 }
 
+.margin-0 {
+  margin: 0;
+}
+
+.margin-top-30px {
+  margin-top: 30px;
+}
+
+.margin-left-15px {
+  margin-left: 15px;
+}
+
+.margin-bottom-30px {
+  margin-bottom: 30px;
+}
+
 .padding-15px {
   padding: 15px;
+}
+
+.padding-10px {
+  padding: 10px;
+}
+
+.padding-top-20px {
+  padding-top: 20px;
+}
+
+.font-size-17px {
+  font-size: 17px;
+}
+
+.font-size-15px {
+  font-size: 15px;
+}
+
+.font-size-12px {
+  font-size: 12px;
 }
 
 .width-80-percent {
@@ -77,20 +158,6 @@ ul.list-category li.active {
   font-weight: bold;
   margin: 40px 0 20px 0;
   clear: both;
-}
-
-p.author {
-  float: left;
-  margin-right: 20px;
-  position: absolute;
-  bottom: 1%;
-  left: 4%;
-  color: #fff;
-  font-size: 12px;
-}
-
-p.author a {
-  color: #fff;
 }
 
 .post-content {
@@ -151,7 +218,6 @@ span.time-posts {
 }
 
 .custom-text-ellipsis-title {
-  height: 40px;
   line-height: 20px;
   overflow: hidden;
   display: -webkit-box;
@@ -424,6 +490,16 @@ ul.list-items li a img {
     padding: 15px 0;
   }
 
+  .content-wrap {
+    padding: 0;
+  }
+
+  .box-wrap {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
   h4.text-ellipsis {
     white-space: inherit
   }
@@ -500,8 +576,3 @@ ul.list-items li a img {
   }
 }
 
-@media only screen and (max-width: 1023px) {
-  .col-sm-10 {
-    width: 100%;
-  }
-}
