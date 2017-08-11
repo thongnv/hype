@@ -60,7 +60,7 @@ export class SearchResultComponent implements OnInit {
       this.appGlobal.isShowRight = true;
     }
 
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
 
     this.appGlobal.toggleMap = true;
   }
@@ -145,7 +145,7 @@ export class SearchResultComponent implements OnInit {
 
   public onResize(): void {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
 
 }
