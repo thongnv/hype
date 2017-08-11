@@ -193,12 +193,28 @@ export class MainService {
       });
   }
 
+  // search result page
   public searchResult(keywords: string): Observable<any> {
     // request header
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers});
 
     return this.http.get(AppSetting.API_SEARCH_RESULT + keywords, options)
+      .map(resp => resp.json())
+      .catch(error => Observable.throw(new Error(error)));
+  }
+
+  public searchResultLoadMore(keywords: string, params: object): Observable<any> {
+    // query params
+    let queryParams: URLSearchParams = new URLSearchParams();
+    queryParams.set('type', params['type']);
+    queryParams.set('page', params['page']);
+
+    // request header
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers, params: queryParams});
+
+    return this.http.get(AppSetting.API_SEARCH_RESULT_LOAD_MORE + keywords, options)
       .map(resp => resp.json())
       .catch(error => Observable.throw(new Error(error)));
   }

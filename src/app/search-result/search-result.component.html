@@ -2,9 +2,9 @@
 <div id="main" class="fav-component">
   <h1>Showing results for "{{keywords}}"</h1>
   <div class="tab-control">
-    <button class="btn btn-default active" [class.active]="currentType === 'events'" (click)="changeTab('events')">Events({{events.total}})</button>
-    <button class="btn btn-default" [class.active]="currentType === 'lists'" (click)="changeTab('lists')">Lists({{lists.total}})</button>
-    <button class="btn btn-default" [class.active]="currentType === 'places'" (click)="changeTab('places')">Places({{places.total}})</button>
+    <button class="btn btn-default active" [class.active]="currentType === 'event'" (click)="changeTab('event')">Events({{events.total}})</button>
+    <button class="btn btn-default" [class.active]="currentType === 'list'" (click)="changeTab('list')">Lists({{lists.total}})</button>
+    <button class="btn btn-default" [class.active]="currentType === 'place'" (click)="changeTab('place')">Places({{places.total}})</button>
   </div>
 
   <div class="tab-wrap">
@@ -22,12 +22,12 @@
           <div class="top-content">
             <h4 class="information-title text-ellipsis">
               <a class="title-hover" [routerLink]="[item.alias]">
-                {{currentType === 'places' ? item.Company_Name : item.title}}
+                {{currentType === 'place' ? item.Company_Name : item.title}}
               </a>
             </h4>
             <app-star-vote *ngIf="item.average_rating" [stars]="item.average_rating" (onVote)="onVoteEvent($event)"></app-star-vote>
             <p class="detail-information"
-               [innerHTML]="currentType === 'places' ? item.Hylo_Activity_Description : item.body | myHtml2Text | truncate : 150"></p>
+               [innerHTML]="currentType === 'place' ? item.Hylo_Activity_Description : item.body | myHtml2Text | truncate : 150"></p>
           </div>
         </div>
       </div>

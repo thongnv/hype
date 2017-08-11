@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 // services
@@ -19,13 +19,17 @@ export class SearchResultComponent implements OnInit {
   public innerWidth: number;
 
   // fake data
-  public currentType = 'events';
+  public currentType = 'event';
   public items = {data: []};
   private events = {total: 0, data: []};
   private lists = {total: 0, data: []};
   private places = {total: 0, data: []};
 
   private keywords = '';
+  private loadMoreParams = {
+    page: 1,
+    type: 'event',
+  };
 
   constructor(private appGlobal: AppGlobals,
               private route: ActivatedRoute,
@@ -69,21 +73,50 @@ export class SearchResultComponent implements OnInit {
       });
   }
 
+  private loadMore() {
+    this.loadMoreParams.type = this.currentType;
+
+    console.log('start loadmore data: ', this.loadMoreParams);
+    
+    this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
+      .subscribe(
+        data => {
+          console.log('data: ', data);
+          this[this.loadMoreParams.type] = this[this.loadMoreParams.type].concat(data[this.loadMoreParams.type].items);
+          this.loadMoreParams.page++;
+        },
+        error => console.error('load more search result error: ', error),
+        () => console.log('load more completed'));
+  }
+
   public changeTab(type: string) {
     this.currentType = type;
     switch (this.currentType) {
-      case 'events':
+      case 'event':
         this.items = this.events; break;
-      case 'lists':
+      case 'list':
         this.items = this.lists;
         break;
-      case 'places':
+      case 'place':
         this.items = this.places; break;
       default:
         this.items = this.events;
-        this.currentType = 'events';
+        this.currentType = 'event';
         break;
     }
+  }
+
+  // events handler
+  @HostListener('window:scroll', ['$event'])
+  public onScrollWindow() {
+    const currentPosition = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
+    const maxHeight = document.documentElement.scrollHeight;
+
+    if (currentPosition === maxHeight) {
+     console.log('start load data');
+     this.loadMore();
+    }
+
   }
 
   public onVoteEvent(item: number): void {
