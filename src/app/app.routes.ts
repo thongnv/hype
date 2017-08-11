@@ -14,12 +14,12 @@ import { ProfilePublicComponent } from './member/profile-public/profile-public.c
 import { AuthComponent } from './auth/auth.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
-import { SearchResultComponent } from "./search-result/search-result.component"
+import { SearchResultComponent } from './search-result/search-result.component';
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', loadChildren: 'app/home/home.module#HomeModule'},
-  {path: 'curate', loadChildren: 'app/curate/curate.module#CurateModule'},
+  {path: 'guides', loadChildren: 'app/curate/curate.module#CurateModule'},
   {path: 'article', loadChildren: 'app/article/article.module#ArticleModule'},
   {path: 'company', loadChildren: 'app/company/company.module#CompanyModule'},
   {path: 'discover', loadChildren: 'app/discover/discover.module#DiscoverModule'},
@@ -39,7 +39,5 @@ export const ROUTES: Routes = [
   {path: ':slug/interest', component: InterestComponent},
   {path: ':slug/profile-edit', component: ProfileEditComponent},
   {path: ':slug/favorite', component: FavoriteComponent},
-
-
   {path: '**', component: NoContentComponent},
 ];
