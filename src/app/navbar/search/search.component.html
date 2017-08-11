@@ -19,7 +19,7 @@
                         <a>Lists</a>
                     </li>
                     <li *ngFor="let item of result.article;trackBy:item?.id">
-                        <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
+                        <a [routerLink]="[item.Slug]" class="item-link" (click)="onCloseSuggestion()">
                             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
@@ -33,7 +33,7 @@
                         <a>Events</a>
                     </li>
                     <li *ngFor="let item of result.event;trackBy:item?.id">
-                        <a [routerLink]="[item.alias]" class="item-link" (click)="onCloseSuggestion()">
+                        <a [routerLink]="[item.Slug]" class="item-link" (click)="onCloseSuggestion()">
                             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
