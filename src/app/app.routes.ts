@@ -24,12 +24,14 @@ export const ROUTES: Routes = [
   {path: 'company', loadChildren: 'app/company/company.module#CompanyModule'},
   {path: 'discover', loadChildren: 'app/discover/discover.module#DiscoverModule'},
   {path: 'event', loadChildren: 'app/event/event.module#EventModule'},
-  {path: 'event/:slug/edit', component: EditEventComponent},
-  {path: 'member/favorite', component: FavoriteComponent},
+
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'share-event', component: ShareEventComponent},
   {path: 'search-result/:keywords', component: SearchResultComponent},
+  {path: 'event/:slug/edit', component: EditEventComponent},
+  {path: 'member/favorite', component: FavoriteComponent},
+
   {path: '404', component: NoContentComponent},
   {path: '500', component: ServerErrorComponent},
   {path: ':slug', component: ProfilePublicComponent},

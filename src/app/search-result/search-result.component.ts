@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../services/app.global';
 import { WindowUtilService } from '../services/window-ultil.service';
 import {MainService} from '../services/main.service';
+import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
+
 
 @Component({
   selector: 'app-search-result',
@@ -35,6 +37,7 @@ export class SearchResultComponent implements OnInit {
   constructor(private appGlobal: AppGlobals,
               private route: ActivatedRoute,
               private windowRef: WindowUtilService,
+              private smallLoader: SmallLoaderService,
               private dataService: MainService
               ) { }
 
@@ -88,6 +91,7 @@ export class SearchResultComponent implements OnInit {
     }
 
     if (cond) {
+      this.smallLoader.show();
       this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
         .subscribe(
           function(data) {
@@ -96,10 +100,12 @@ export class SearchResultComponent implements OnInit {
 
             self[myDataType].data = self[myDataType].data.concat(data[serverDataType].items);
             self[myDataType].page += 1;
+
+            self.smallLoader.hide();
           }
         );
     } else {
-      console.log('EOD');
+      // console.log('EOD');
     }
 
   }
@@ -137,7 +143,7 @@ export class SearchResultComponent implements OnInit {
     this.onClickVote.emit(item);
   }
 
-  public onResize(event): void {
+  public onResize(): void {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
