@@ -69,6 +69,7 @@ export class SearchResultComponent implements OnInit {
   private fetchData(keywords: string) {
     this.dataService.searchResult(keywords)
       .subscribe(resp => {
+        console.log('resp1: ', resp);
         this.events = {total: resp.event.total, page: 0, data: resp.event.items};
         this.lists = {total: resp.list.total, page: 0, data: resp.list.items};
         this.places = {total: resp.place.total, page: 0, data: resp.place.items};
@@ -95,6 +96,7 @@ export class SearchResultComponent implements OnInit {
       this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
         .subscribe(
           function(data) {
+            console.log('resp: ', data);
             const myDataType = self.loadMoreParams.type + 's';
             const serverDataType = self.loadMoreParams.type;
 
