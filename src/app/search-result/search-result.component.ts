@@ -20,10 +20,11 @@ export class SearchResultComponent implements OnInit {
 
   // fake data
   public currentType = 'event';
-  public items = {data: []};
-  private events = {total: 0, data: []};
-  private lists = {total: 0, data: []};
-  private places = {total: 0, data: []};
+  public items = {total: 0, page: 0, data: []};
+
+  private events = {total: 0, page: 0, data: []};
+  private lists = {total: 0, page: 0, data: []};
+  private places = {total: 0, page: 0, data: []};
 
   private keywords = '';
   private loadMoreParams = {
@@ -65,28 +66,42 @@ export class SearchResultComponent implements OnInit {
   private fetchData(keywords: string) {
     this.dataService.searchResult(keywords)
       .subscribe(resp => {
-        this.events = {total: resp.event.total, data: resp.event.items};
-        this.lists = {total: resp.list.total, data: resp.list.items};
-        this.places = {total: resp.place.total, data: resp.place.items};
+        this.events = {total: resp.event.total, page: 0, data: resp.event.items};
+        this.lists = {total: resp.list.total, page: 0, data: resp.list.items};
+        this.places = {total: resp.place.total, page: 0, data: resp.place.items};
         this.items = this.events;
 
       });
   }
 
   private loadMore() {
+    let self = this;
     this.loadMoreParams.type = this.currentType;
+    this.loadMoreParams.page = this[this.currentType + 's'].page;
 
-    console.log('start loadmore data: ', this.loadMoreParams);
-    
-    this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
-      .subscribe(
-        data => {
-          console.log('data: ', data);
-          this[this.loadMoreParams.type] = this[this.loadMoreParams.type].concat(data[this.loadMoreParams.type].items);
-          this.loadMoreParams.page++;
-        },
-        error => console.error('load more search result error: ', error),
-        () => console.log('load more completed'));
+    // only send request if not EOD
+    const totalItem = this[this.currentType + 's'].total;
+    let cond = false;
+
+    if (totalItem > 10) {
+      cond = this.loadMoreParams.page * 10 < this[this.currentType + 's'].total;
+    }
+
+    if (cond) {
+      this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
+        .subscribe(
+          function(data) {
+            const myDataType = self.loadMoreParams.type + 's';
+            const serverDataType = self.loadMoreParams.type;
+
+            self[myDataType].data = self[myDataType].data.concat(data[serverDataType].items);
+            self[myDataType].page += 1;
+          }
+        );
+    } else {
+      console.log('EOD');
+    }
+
   }
 
   public changeTab(type: string) {
@@ -113,7 +128,6 @@ export class SearchResultComponent implements OnInit {
     const maxHeight = document.documentElement.scrollHeight;
 
     if (currentPosition === maxHeight) {
-     console.log('start load data');
      this.loadMore();
     }
 

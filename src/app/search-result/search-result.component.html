@@ -13,7 +13,7 @@
         <div class="avatar-profile" [routerLink]="[item.alias]">
           <div class="img-layer"></div>
           <div class="fav-item-image">
-            <img [src]="currentType === 'places' ? item.images[0] : item.field_images" width="100" height="100">
+            <img [src]="currentType === 'place' ? item.images[0] : item.field_images" width="100" height="100">
           </div>
           <div class="month" *ngIf="item.created">{{item.created | amFromUnix | date:'MMM'}}</div>
           <div class="date-number" *ngIf="item.created">{{item.created | amFromUnix | date:'dd '}}</div>
