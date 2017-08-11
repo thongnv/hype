@@ -5,7 +5,7 @@
                class="form-control input-keyword" minlength="3" placeholder="Search..."
                (keyup)="onSubmit($event, keyword.value)"
                (click)="onOpenSuggestion()" (keydown)="onKeyDown($event)">
-        <div [class.hide]="hideSearchResult" class="search-location-search-area" id="global-search">
+        <div *ngIf="!hideSearchResult" class="search-location-search-area" id="global-search">
             <div class="arrow-up"></div>
             <div class="display-location-address">
                 <i class="sprite sprite-icon-pointer"></i>

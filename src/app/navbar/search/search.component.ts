@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   @ViewChild('keyword') keywords: ElementRef;
 
   public searchForm: FormGroup;
-  public hideSearchResult: boolean = true;
+  public hideSearchResult: boolean = false;
   public hideNoResult: boolean = false;
   public result: any = {};
   public searchToken: string = '';
@@ -46,7 +46,14 @@ export class SearchComponent implements OnInit {
       this.searchForm.value.keyword.trim() : keyword.trim();
 
     if (this.searchToken.length >= 3) {
-      this.hideSearchResult = false;
+      const isSearchResultPage = this.router.url.startsWith('/search-result');
+      if (isSearchResultPage) {
+        this.hideSearchResult = true;
+      } else {
+        this.hideSearchResult = false;
+      }
+
+
       this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
@@ -66,12 +73,14 @@ export class SearchComponent implements OnInit {
   onKeyDown(event) {
     const keywords = this.keywords.nativeElement.value;
     const keyCode = event.which || event.keyCode;
+    const isSearchResultPage = this.router.url.startsWith('/search-result');
 
     if (keyCode === 13) {
-      if (this.router.url.startsWith('/search-result')) {
+      if (isSearchResultPage) {
         this.router.navigate(['/search-result', keywords]);
         location.reload();
       } else {
+        this.hideSearchResult = true;
         this.router.navigate(['/search-result', keywords]);
       }
     }
