@@ -898,6 +898,12 @@ export class PlayComponent implements OnInit {
       this.getDataModes();
     }
   }
+
+  // event handler
+  onSelectedChange(value) {
+    console.log('select: ', value);
+  }
+
 }
 function sleep(delay) {
   var start = new Date().getTime();

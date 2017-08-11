@@ -510,8 +510,6 @@ export class HomeComponent implements OnInit {
             marker.price = events[i].field_event_option.field_price;
           }
 
-          console.log(events[i]);
-
           this.markers.push(marker);
         }
 

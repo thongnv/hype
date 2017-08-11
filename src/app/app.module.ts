@@ -36,6 +36,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { TagInputModule } from 'ngx-chips';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TreeviewModule } from 'ngx-treeview';
 
 // modules
 import { HtmlToTextModule } from './html-to-text/html-to-text.module';
@@ -189,7 +190,8 @@ type StoreType = {
     Angular2FontawesomeModule,
     MomentModule,
     FacebookModule.forRoot(),
-    SlimScrollModule
+    SlimScrollModule,
+    TreeviewModule.forRoot()
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

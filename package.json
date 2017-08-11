@@ -112,6 +112,7 @@
     "ngx-chips": "^1.4.6",
     "ngx-facebook": "^2.4.0",
     "ngx-rating": "0.0.9",
+    "ngx-treeview": "^1.0.10",
     "nouislider": "^10.0.0",
     "reflect-metadata": "^0.1.10",
     "rxjs": "5.0.2",
