@@ -148,3 +148,48 @@ h1{
   float: left;
   position: relative;
 }
+
+@media only screen and (max-width: 800px) {
+  .tab-control{
+    padding-left: 10px;
+  }
+  .tab-wrap,
+  .search_Content{padding-left: 10px; margin-top: 10px; padding-right: 10px;}
+
+  .information-title{
+    height: auto;
+  }
+  .information-title .real-title {
+    width: 100%!important;
+  }
+
+  .information-title span{
+    display: block;
+    clear: both;
+    margin-left: 0px!important;
+  }
+
+  .information-title span.pull-right{
+    float: none!important;
+    text-align: left;
+  }
+
+
+
+  .list-item .caption {
+    width: auto;
+    top: 10%;
+    left: 10%;
+  }
+
+}
+
+
+@media only screen and (max-width: 500px) {
+  .avatar-profile {
+    width: 100px;
+  }
+  .information-profile {
+    width: calc(100% - 120px);
+  }
+}
