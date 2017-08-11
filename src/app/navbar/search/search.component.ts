@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
   @ViewChild('keyword') keywords: ElementRef;
 
   public searchForm: FormGroup;
-  public hideSearchResult: boolean = false;
+  public hideSearchResult: boolean = true;
   public hideNoResult: boolean = false;
   public result: any = {};
   public searchToken: string = '';
