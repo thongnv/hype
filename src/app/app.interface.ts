@@ -94,13 +94,6 @@ export interface HyloComment {
   liked: boolean;
 }
 
-export interface EventType {
-  id: number;
-  name: string;
-  iconUrl: string;
-  selected: boolean;
-}
-
 export interface FileReaderEventTarget extends EventTarget {
   result: string;
 }

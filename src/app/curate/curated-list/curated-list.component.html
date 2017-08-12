@@ -1,0 +1,159 @@
+<section class="column col-sm-10 no-padding " [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+  <div class="">
+    <div class="col-lg-12 col-xs-12 left-box table-cell">
+      <!-- top content start -->
+      <div class="top-content">
+        <ul *ngIf="categories" class="list-category">
+          <li class="title-hover dropdown" *ngFor="let cat of categories" (click)="onSelectCategory($event, cat[0])"
+              [class.active]="cat[0]===selectedCategory">{{cat[1]}}
+
+            <ul *ngIf="cat[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+              <li *ngFor="let sub1 of cat[2]" (click)="onSelectCategory($event, sub1[0])" class="dropdown"
+                  [class.active]="sub1[0]===selectedCategory">
+                {{sub1[1]}}
+                <ul *ngIf="sub1[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+                  <li *ngFor="let sub2 of sub1[2]" (click)="onSelectCategory($event, sub2[0])"
+                      [class.active]="sub2[0]===selectedCategory">
+                    {{sub2[1]}}
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <!--top content end-->
+      <!--primary content start-->
+      <div class="primary-content">
+        <div *ngIf="featuredArticles" class="row wrap-post-content">
+          <app-boostrap-carousel [interval]="NextPhotoInterval"
+                                 [noWrap]="noLoopSlides"
+                                 [id]="'curate-carousel'"
+                                 [noPause]="noPause"
+                                 [indicators]="false"
+                                 [noTransition]="noTransition"
+                                 class="custom-carousel col-xs-12 col-lg-12">
+            <app-slide-carousel *ngFor="let slideGroup of featuredArticles">
+
+              <div class="slide-group" *ngFor="let art of slideGroup">
+                <img [src]="art.field_images[0]" style="margin:auto;">
+                <div class="carousel-caption">
+                  <div class="carousel-content">
+                    <strong [routerLink]="[art.alias]"
+                            class="post-title-content title-hover text-ellipsis">
+                      {{art.title | truncate : 60}}</strong>
+                    <strong class="post-author">
+                      <span class="auth-name">By: {{art.user_post.name}}</span>
+                      <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </app-slide-carousel>
+          </app-boostrap-carousel>
+        </div>
+
+        <h4 class="head">Editors Pick</h4>
+        <div *ngIf="editorsPickArticles" class="row col-md-10 padding-0">
+          <div *ngFor="let art of editorsPickArticles.slice(0, 4)" class=" col-xs-6 col-md-6 col-lg-3 post-news article-item">
+            <div style="overflow: hidden">
+              <div class="image-post-news" [routerLink]="[art.alias]">
+                <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+              </div>
+            </div>
+            <div class="new-info">
+              <h4 class="post-title-content">
+                <a class="title-hover" [routerLink]="[art.alias]">
+                  {{art.title | truncate : 60}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{art.user_post.name}}</span>
+                <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{art.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="align-center padding-15px row">
+            <button class="btn btn-primary">Show More</button>
+          </div>
+
+        </div>
+
+        <h4 class="head">Trending This Week</h4>
+        <div *ngIf="editorsPickArticles" class="width-80-percent align-self-center">
+          <div id="exTab2" class="container">
+            <ul class="nav nav-tabs align-center">
+              <li class="active">
+                <a href="#1" data-toggle="tab">Events</a>
+              </li>
+              <li><a href="#2" data-toggle="tab">Lists</a>
+              </li>
+              <li><a href="#3" data-toggle="tab">Places</a>
+              </li>
+            </ul>
+
+            <div class="tab-content ">
+              <div class="tab-pane active" id="1">
+                <ul *ngIf="trendingArticles" class="list-items">
+                  <li class="col-lg-6 col-xs-12" *ngFor="let art of trendingArticles">
+                    <a class="title-hover" [title]="art.title" [routerLink]="[art.alias]">
+                      <img [src]="art.field_images[0]" [alt]="art.title" width="60" height="60">
+                      <p class="title-hover custom-text-ellipsis">{{art.title | myHtml2Text}}</p>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="2">
+                <h3>Notice the gap between the content and tab after applying a background color</h3>
+              </div>
+              <div class="tab-pane" id="3">
+                <h3>add clearfix to tab-content (see the css)</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="head border-top-solid">Curated By Community</h4>
+        <div *ngIf="editorsPickArticles" class="row col-md-10 padding-0">
+          <div *ngFor="let art of editorsPickArticles.slice(0, 8)"
+               class="col-xs-12 col-md-6 col-lg-3 height-420px">
+            <div style="overflow: hidden; text-align: center">
+              <div class="image-post-news" [routerLink]="[art.alias]">
+                <img class="post-content-img" [src]="art.field_images[0]" [alt]="art.title">
+              </div>
+            </div>
+            <div class="new-info">
+              <h4 class="post-title-content">
+                <a class="title-hover" [routerLink]="[art.alias]">
+                  {{art.title | truncate : 60}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{art.user_post.name}}</span>
+                <span class="time-post">{{art.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{art.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="align-center padding-15px">
+            <button class="btn btn-primary">Show More</button>
+          </div>
+          <div class="mobile-footer"></div>
+
+        </div>
+
+      </div>
+      <!--primary content end-->
+    </div>
+  </div>
+
+</section>

@@ -27,7 +27,7 @@
             Please enter event name.
           </small>
           <div class="dupplicate-event" *ngIf="existEvents.length > 0">
-            These events similar your
+            <b>These events similar your</b>
             <ul class="exist-events">
               <li class="event-title" *ngFor="let eventItem of existEvents">
                 <a [routerLink]="eventItem.Slug" target="_blank">{{eventItem.Title}}</a>
@@ -74,7 +74,8 @@
         <div class="form-group list-tags col-md-12 col-xs-12">
           <label>Tags</label>
           <tag-input [(ngModel)]="eventTags" [modelAsStrings]="true"
-                     [separatorKeyCodes]="[32, 13]"
+                     [separatorKeyCodes]="[13, 32]"
+                     [separatorKeyCodes]="['RET', 'SPACE']"
                      placeholder="E.g performance, liveband, concert, food"
                      formControlName="eventTags">
             <tag-input-dropdown [displayBy]="'name'"

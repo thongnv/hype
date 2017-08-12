@@ -1,5 +1,5 @@
 import {
-  Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnInit, Output, ViewChild
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild
 }
   from '@angular/core';
 import { MapsAPILoader } from 'angular2-google-maps/core';
@@ -23,14 +23,16 @@ export class GmapAutoPlaceComponent implements OnInit {
 
   @Output() public onMapsChangePlace = new EventEmitter<any>();
   @Output() public onHyloChangePlace = new EventEmitter<any>();
+
   @ViewChild('keyword') public searchElementRef: ElementRef;
   @ViewChild('addressInput') public addressElementRef: ElementRef;
+
   public hideSearchResult: boolean = true;
   public hideAddressResult: boolean = true;
   public hideNoResult: boolean = false;
-  public result: any = {};
-  public gmapResults: any = {};
-  public searchToken: string = '';
+  public result = {};
+  public gmapResults = [];
+  public searchToken = '';
   public hideAddressInput = true;
   public hideCustomAddress = true;
 
@@ -40,12 +42,6 @@ export class GmapAutoPlaceComponent implements OnInit {
     public sanitizer: DomSanitizer) {
   }
 
-  @HostListener('document:click', ['$event'])
-  public onClick(event) {
-    if (!this.searchElementRef.nativeElement.contains(event.target)) {
-      this.hideSearchResult = true;
-    }
-  }
   public ngOnInit() {
     if (this.hasImage && this.image) {
       this.group.get('image').patchValue(this.image);
@@ -70,7 +66,6 @@ export class GmapAutoPlaceComponent implements OnInit {
         this.hideNoResult = resp.event.length + resp.article.length !== 0;
       });
 
-      // get data from google map autocomplete
       this.mapsAPILoader.load().then(() => {
         let inputText = this.searchElementRef.nativeElement.value;
         let autoCompleteService = new google.maps.places.AutocompleteService();
@@ -81,8 +76,12 @@ export class GmapAutoPlaceComponent implements OnInit {
             input: inputText
           },
           (result, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              this.gmapResults = result;
+            } else {
+              this.gmapResults = [];
+            }
             this.hideCustomAddress = false;
-            this.gmapResults = result;
           });
       });
 
@@ -98,15 +97,19 @@ export class GmapAutoPlaceComponent implements OnInit {
     if (this.searchToken.length >= 3) {
       this.hideAddressResult = false;
       this.mapsAPILoader.load().then(() => {
-        let autocompleteService = new google.maps.places.AutocompleteService();
-        autocompleteService.getPlacePredictions({
+        let autoCompleteService = new google.maps.places.AutocompleteService();
+        autoCompleteService.getPlacePredictions({
             componentRestrictions: {
               country: 'sg'
             },
             input: this.searchToken
           },
           (result, status) => {
-            this.gmapResults = result;
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              this.gmapResults = result;
+            } else {
+              this.gmapResults = [];
+            }
           });
       });
 

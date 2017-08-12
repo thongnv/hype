@@ -1,5 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { MainService } from '../../services/main.service';
 
 @Component({
@@ -8,6 +10,8 @@ import { MainService } from '../../services/main.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('keyword') keywords: ElementRef;
+
   public searchForm: FormGroup;
   public hideSearchResult: boolean = true;
   public hideNoResult: boolean = false;
@@ -18,7 +22,8 @@ export class SearchComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private mainService: MainService,
-              private _elRef: ElementRef) {
+              private _elRef: ElementRef,
+              private router: Router) {
   }
 
   @HostListener('document:click', ['$event'])
@@ -41,7 +46,14 @@ export class SearchComponent implements OnInit {
       this.searchForm.value.keyword.trim() : keyword.trim();
 
     if (this.searchToken.length >= 3) {
-      this.hideSearchResult = false;
+      const isSearchResultPage = this.router.url.startsWith('/search-result');
+      if (isSearchResultPage) {
+        this.hideSearchResult = true;
+      } else {
+        this.hideSearchResult = false;
+      }
+
+
       this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
@@ -56,6 +68,23 @@ export class SearchComponent implements OnInit {
       this.result = {};
       this.hideNoResult = false;
     }
+  }
+
+  onKeyDown(event) {
+    const keywords = this.keywords.nativeElement.value;
+    const keyCode = event.which || event.keyCode;
+    const isSearchResultPage = this.router.url.startsWith('/search-result');
+
+    if (keyCode === 13) {
+      if (isSearchResultPage) {
+        this.router.navigate(['/search-result', keywords]);
+        location.reload();
+      } else {
+        this.hideSearchResult = true;
+        this.router.navigate(['/search-result', keywords]);
+      }
+    }
+
   }
 
   public onOpenSuggestion() {

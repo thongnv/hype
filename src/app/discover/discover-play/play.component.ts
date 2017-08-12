@@ -748,6 +748,7 @@ export class PlayComponent implements OnInit {
     this.params.limit = 20;
     this.params.page = 0;
     this.params.rate = '0';
+    this.params.types = '';
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'ASC';
     this.markers = [];
@@ -897,6 +898,12 @@ export class PlayComponent implements OnInit {
       this.getDataModes();
     }
   }
+
+  // event handler
+  onSelectedChange(value) {
+    console.log('select: ', value);
+  }
+
 }
 function sleep(delay) {
   var start = new Date().getTime();

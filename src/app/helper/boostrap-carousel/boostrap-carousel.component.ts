@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core'
-import { SlideCarouselComponent } from '../slide-carousel/slide-carousel.component'
+import { Component, Input } from '@angular/core';
+import { SlideCarouselComponent } from '../slide-carousel/slide-carousel.component';
 
 export enum Direction {UNKNOWN, NEXT, PREV}
 
@@ -25,16 +25,12 @@ export class BoostrapCarouselComponent {
     this.restartTimer();
   }
 
-  private slides: Array<SlideCarouselComponent> = [];
+  public slides: SlideCarouselComponent[] = [];
   private currentInterval: any;
   private isPlaying: boolean;
   private destroyed: boolean = false;
   private currentSlide: SlideCarouselComponent;
   private _interval: number;
-
-  public ngOnDestroy() {
-    this.destroyed = true;
-  }
 
   public select(nextSlide: SlideCarouselComponent, direction: Direction = Direction.UNKNOWN) {
     let nextIndex = nextSlide.index;
@@ -48,80 +44,22 @@ export class BoostrapCarouselComponent {
     }
   }
 
-  private goNext(slide: SlideCarouselComponent, direction: Direction) {
-    if (this.destroyed) {
-      return;
-    }
-
-    slide.direction = direction;
-    slide.active = true;
-
-    if (this.currentSlide) {
-      this.currentSlide.direction = direction;
-      this.currentSlide.active = false;
-    }
-
-    this.currentSlide = slide;
-
-    // every time you change slides, reset the timer
-    this.restartTimer();
-  }
-
-  private getSlideByIndex(index: number) {
-    let len = this.slides.length;
-    for (let i = 0; i < len; ++i) {
-      if (this.slides[i].index === index) {
-        return this.slides[i];
-      }
-    }
-  }
-
-  private getCurrentIndex() {
-    return !this.currentSlide ? 0 : this.currentSlide.index;
-  }
-
-  private next() {
+  public next() {
     let newIndex = (this.getCurrentIndex() + 1) % this.slides.length;
-
     if (newIndex === 0 && this.noWrap) {
       this.pause();
       return;
     }
-
     return this.select(this.getSlideByIndex(newIndex), Direction.NEXT);
   }
 
-  private prev() {
+  public prev() {
     let newIndex = this.getCurrentIndex() - 1 < 0 ? this.slides.length - 1 : this.getCurrentIndex() - 1;
-
     if (this.noWrap && newIndex === this.slides.length - 1) {
       this.pause();
       return;
     }
-
     return this.select(this.getSlideByIndex(newIndex), Direction.PREV);
-  }
-
-  private restartTimer() {
-    this.resetTimer();
-    let interval = +this.interval;
-    if (!isNaN(interval) && interval > 0) {
-      this.currentInterval = setInterval(() => {
-        let nInterval = +this.interval;
-        if (this.isPlaying && !isNaN(this.interval) && nInterval > 0 && this.slides.length) {
-          this.next();
-        } else {
-          this.pause();
-        }
-      }, interval);
-    }
-  }
-
-  private resetTimer() {
-    if (this.currentInterval) {
-      clearInterval(this.currentInterval);
-      this.currentInterval = null;
-    }
   }
 
   public play() {
@@ -161,6 +99,60 @@ export class BoostrapCarouselComponent {
 
     for (let i = 0; i < this.slides.length; i++) {
       this.slides[i].index = i;
+    }
+  }
+
+  private goNext(slide: SlideCarouselComponent, direction: Direction) {
+    if (this.destroyed) {
+      return;
+    }
+
+    slide.direction = direction;
+    slide.active = true;
+
+    if (this.currentSlide) {
+      this.currentSlide.direction = direction;
+      this.currentSlide.active = false;
+    }
+
+    this.currentSlide = slide;
+
+    // every time you change slides, reset the timer
+    this.restartTimer();
+  }
+
+  private getSlideByIndex(index: number) {
+    let len = this.slides.length;
+    for (let i = 0; i < len; ++i) {
+      if (this.slides[i].index === index) {
+        return this.slides[i];
+      }
+    }
+  }
+
+  private getCurrentIndex() {
+    return !this.currentSlide ? 0 : this.currentSlide.index;
+  }
+
+  private restartTimer() {
+    this.resetTimer();
+    let interval = +this.interval;
+    if (!isNaN(interval) && interval > 0) {
+      this.currentInterval = setInterval(() => {
+        let nInterval = +this.interval;
+        if (this.isPlaying && !isNaN(this.interval) && nInterval > 0 && this.slides.length) {
+          this.next();
+        } else {
+          this.pause();
+        }
+      }, interval);
+    }
+  }
+
+  private resetTimer() {
+    if (this.currentInterval) {
+      clearInterval(this.currentInterval);
+      this.currentInterval = null;
     }
   }
 }

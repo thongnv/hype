@@ -36,6 +36,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { TagInputModule } from 'ngx-chips';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { TreeviewModule } from 'ngx-treeview';
 
 // modules
 import { HtmlToTextModule } from './html-to-text/html-to-text.module';
@@ -94,6 +95,7 @@ import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { AppGlobals } from './services/app.global';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 enableProdMode();
 
@@ -153,6 +155,7 @@ type StoreType = {
     LogoutComponent,
     SearchComponent,
     HyperSearchComponent,
+    SearchResultComponent,
   ],
   imports: [ // import Angular's modules
     BrowserAnimationsModule,
@@ -187,7 +190,8 @@ type StoreType = {
     Angular2FontawesomeModule,
     MomentModule,
     FacebookModule.forRoot(),
-    SlimScrollModule
+    SlimScrollModule,
+    TreeviewModule.forRoot()
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,

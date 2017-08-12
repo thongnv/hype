@@ -1,31 +1,41 @@
-import { Component, HostListener, OnInit} from '@angular/core';
-import { MainService } from '../services/main.service';
-import { LoaderService } from '../helper/loader/loader.service';
-import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
-import { WindowUtilService } from '../services/window-ultil.service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { AppGlobals } from '../services/app.global';
+
+import { MainService } from '../../services/main.service';
+import { AppGlobals } from '../../services/app.global';
+import { WindowUtilService } from '../../services/window-ultil.service';
+import { LoaderService } from '../../helper/loader/loader.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
+import { Article } from '../../app.interface';
 
 @Component({
-  selector: 'app-curate',
-  templateUrl: './curate.component.html',
-  styleUrls: ['./curate.component.css']
+  selector: 'app-curated-category',
+  templateUrl: './curated-category.component.html',
+  styleUrls: ['./curated-category.component.css']
 })
-export class CurateComponent implements OnInit {
-  public data: any;
-  public featuredArticles: any[] = [];
-  public latestArticles: any[] = [];
+export class CuratedCategoryComponent implements OnInit {
+
+  public featuredArticles: Article[];
+  public editorsPickArticles: Article[];
+  public trendingArticles: Article[];
+  public trendingEvents: Article[];
+  public trendingPlaces: Article[];
+  public communityArticles: Article[];
+
   public categories: any[];
-  public trending: any[];
+
   public slides: any[] = [];
   public selectedCategory: any = 'all';
-  public NextPhotoInterval: number = 3000;
+
+  public NextPhotoInterval: number = 10000;
   public noLoopSlides: boolean = false;
   public noPause: boolean = true;
-  public noTransition: boolean = false;
+  public noTransition: boolean = true;
+
   public currentPage: number = 0;
   public endList: boolean = false;
   public loading: boolean = false;
+
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public layoutWidth: number;
@@ -36,17 +46,16 @@ export class CurateComponent implements OnInit {
                      private smallLoader: SmallLoaderService,
                      private loaderService: LoaderService,
                      private windowRef: WindowUtilService,
-                     private appGlobal: AppGlobals,
-  ) {
+                     private appGlobal: AppGlobals) {
   }
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log(this.windowRef.rootContainer);
 
+  @HostListener('window:resize', ['$event'])
+  public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
-
   }
+
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
     window.scroll(0, 0);
@@ -67,16 +76,8 @@ export class CurateComponent implements OnInit {
       }
     };
 
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
+    this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
@@ -94,14 +95,14 @@ export class CurateComponent implements OnInit {
 
     this.mainService.getCurate('latest', '*', 0, 9).subscribe(
       (response: any) => {
-        this.latestArticles = response.data;
+        this.editorsPickArticles = response.data;
         this.currentPage = 1;
       }
     );
 
     this.mainService.getCurateTrending().subscribe(
       (response) => {
-        this.trending = response.data;
+        this.trendingArticles = response.data;
       }
     );
 
@@ -135,7 +136,7 @@ export class CurateComponent implements OnInit {
     this.featuredArticles = featuredArticles;
   }
 
-  public onSelectCategory(event,  cat: any) {
+  public onSelectCategory(event, cat: any) {
     event.stopPropagation();
     this.loaderService.show();
     this.selectedCategory = cat;
@@ -145,14 +146,14 @@ export class CurateComponent implements OnInit {
 
     this.mainService.getCurate('latest', cat, 0, 9).subscribe(
       (response: any) => {
-        this.latestArticles = response.data;
+        this.editorsPickArticles = response.data;
         this.currentPage = this.currentPage + 1;
       }
     );
 
     this.mainService.getCurateTrending().subscribe(
       (response) => {
-        this.trending = response.data;
+        this.trendingArticles = response.data;
       }
     );
 
@@ -172,7 +173,7 @@ export class CurateComponent implements OnInit {
       if (this.currentPage >= 1) {
         this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
           (response: any) => {
-            this.latestArticles = this.latestArticles.concat(response.data);
+            this.editorsPickArticles = this.editorsPickArticles.concat(response.data);
             if (this.currentPage * 9 > response.total) {
               this.endList = true;
             }
@@ -187,14 +188,14 @@ export class CurateComponent implements OnInit {
   }
 
   private convertObject2Array(obj) {
-    let newObj = Object.keys(obj).map(
+    return Object.keys(obj).map(
       (k) => {
         if (typeof(obj[k]) === 'object') {
-         return this.convertObject2Array(obj[k]);
+          return this.convertObject2Array(obj[k]);
         }
         return obj[k];
       }
     );
-    return newObj;
   }
+
 }

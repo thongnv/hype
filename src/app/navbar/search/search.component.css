@@ -91,6 +91,9 @@
 }
 
 #global-search { position: absolute; top: 32px;}
+#global-search.hide {
+  display: none;
+}
 
 /*search location end*/
 .result-info .keyword-search-input, .result-info .text-ellipsis{

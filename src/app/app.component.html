@@ -22,10 +22,10 @@
                 <i class="left-nav-play"><img src="/assets/icon/left-nav-play.png"/></i>
                 <span class="hidden-xs hidden-sm">Play</span>
               </li>
-              <li [routerLink]="['./curate']" routerLinkActive="active"
+              <li [routerLink]="['/guides']" routerLinkActive="active"
                   [routerLinkActiveOptions]="{exact: true}">
                 <i class="left-nav-curated"><img src="/assets/icon/left-nav-curated.png"/></i>
-                <span class="hidden-xs hidden-sm">Curated</span>
+                <span class="hidden-xs hidden-sm">Guides</span>
               </li>
               <li *ngIf="user && !user.isAnonymous" [routerLink]="['/'+user.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">

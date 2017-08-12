@@ -478,6 +478,15 @@ export class HomeComponent implements OnInit {
           let distance = getDistance(latLngDistance.getPosition(), searchCenter);
           this.events[i].distance = (distance / 1000).toFixed(1);
 
+          // set icon for marker based on event type
+          let eventMarkerIcon = 'assets/icon/locationmarker.png';
+          this.appGlobal.eventIcon.forEach(icon => {
+            if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
+              eventMarkerIcon = icon.url;
+            }
+          });
+
+
           let marker = {
             lat: latitude,
             lng: longitude,
@@ -486,7 +495,7 @@ export class HomeComponent implements OnInit {
             nid: events[i].nid,
             avatar: events[i].field_images[0],
             link: events[i].alias,
-            icon: 'assets/icon/locationmarker.png',
+            icon: eventMarkerIcon,
             opacity: 0.4,
             price: [],
             nids: [],

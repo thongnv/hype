@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgmCoreModule } from 'angular2-google-maps/core';
+import { TreeviewModule } from 'ngx-treeview';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
 import {HelperModule} from '../helper/helper.module';
@@ -22,6 +23,8 @@ import {PlayComponent} from "./discover-play/play.component";
     NouisliderModule,
     NgbModule.forRoot(),
     AgmCoreModule,
+    TreeviewModule.forRoot(),
+
     HtmlToTextModule,
     HelperModule,
     DiscoverRoutingModule
