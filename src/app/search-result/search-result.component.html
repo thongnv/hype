@@ -11,7 +11,7 @@
   <div class="tab-wrap" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
     <div class="item-content" *ngFor="let item of items.data">
       <div class="wrap-each-items" *ngIf="item" [id]="currentType === 'place' ? item.Ids_No : item.nid">
-        <div class="avatar-profile" [routerLink]="currentType === 'place' ? item.Company_Slug : item.alias">
+        <div class="avatar-profile" [routerLink]="currentType === 'place' ? '/company/' + item.Company_Slug : item.alias">
           <div class="img-layer"></div>
           <div class="fav-item-image">
             <img [src]="currentType === 'place' ? '/assets/img/company/default_140x140.jpg' : item.field_images" width="100" height="100">
@@ -22,7 +22,7 @@
         <div class="information-profile">
           <div class="top-content">
             <h4 class="information-title text-ellipsis">
-              <a class="title-hover" [routerLink]="currentType === 'place' ? item.Company_Slug : item.alias">
+              <a class="title-hover" [routerLink]="currentType === 'place' ? '/company/' + item.Company_Slug : item.alias">
                 {{currentType === 'place' ? item.Company_Name : item.title}}
               </a>
             </h4>
