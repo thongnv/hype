@@ -6,12 +6,12 @@
           <li class="title-hover dropdown" *ngFor="let cat of categories" (click)="onSelectCategory($event, cat[0])"
               [class.active]="cat[0]===selectedCategory">{{cat[1]}}
 
-            <ul *ngIf="cat[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
-              <li *ngFor="let sub1 of cat[2]" (click)="onSelectCategory($event, sub1[0])" class="dropdown"
+            <ul *ngIf="cat[3]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+              <li *ngFor="let sub1 of cat[3]" (click)="onSelectCategory($event, sub1[0])" class="dropdown"
                   [class.active]="sub1[0]===selectedCategory">
                 {{sub1[1]}}
                 <ul *ngIf="sub1[2]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
-                  <li *ngFor="let sub2 of sub1[2]" (click)="onSelectCategory($event, sub2[0])"
+                  <li *ngFor="let sub2 of sub1[3]" (click)="onSelectCategory($event, sub2[0])"
                       [class.active]="sub2[0]===selectedCategory">
                     {{sub2[1]}}
                   </li>
