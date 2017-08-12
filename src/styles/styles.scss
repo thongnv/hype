@@ -104,7 +104,7 @@ body, html {
   cursor: pointer;
 }
 
-.title-hover:hover {
+.title-hover:focus, .title-hover:hover {
   color: #ec3d62 !important;
   text-decoration: none;
   opacity: 1 !important;

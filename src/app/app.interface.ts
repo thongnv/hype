@@ -145,3 +145,10 @@ export interface Article {
   field_images: string[];
   field_places: any[];
 }
+
+export interface Category {
+  id: number;
+  name: string;
+  alias: string;
+  children: Category[];
+}

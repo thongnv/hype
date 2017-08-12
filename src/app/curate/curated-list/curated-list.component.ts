@@ -6,7 +6,7 @@ import { AppGlobals } from '../../services/app.global';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { Article } from '../../app.interface';
+import { Article, Category, Company, HyloEvent } from '../../app.interface';
 
 @Component({
   selector: 'app-curated-list',
@@ -18,15 +18,13 @@ export class CuratedListComponent implements OnInit {
   public featuredArticles: Article[];
   public editorsPickArticles: Article[];
   public trendingArticles: Article[];
-  public trendingEvents: Article[];
-  public trendingPlaces: Article[];
+  public trendingEvents: HyloEvent[];
+  public trendingPlaces: Company[];
   public communityArticles: Article[];
 
-  public categories: any[];
+  public categories: Category[];
 
   public slides: any[] = [];
-  public selectedCategory: any = 'all';
-
   public NextPhotoInterval: number = 10000;
   public noLoopSlides: boolean = false;
   public noPause: boolean = true;
@@ -60,10 +58,8 @@ export class CuratedListComponent implements OnInit {
     this.appGlobal.toggleMap = false;
     window.scroll(0, 0);
     this.titleService.setTitle('Curated List');
-    this.loaderService.show();
     window.onscroll = () => {
-      let windowHeight = 'innerHeight' in window ? window.innerHeight
-        : document.documentElement.offsetHeight;
+      let windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
       let body = document.body;
       let html = document.documentElement;
       let docHeight = Math.max(body.scrollHeight,
@@ -82,13 +78,16 @@ export class CuratedListComponent implements OnInit {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
 
+    this.loaderService.show();
     this.mainService.getCategoryTreeArticle().subscribe(
       (response: any) => {
         let categories = response.data;
-        this.categories = this.convertObject2Array(categories);
+        this.categories = extractCategories(categories);
         this.categories.unshift({
-          0: 'All',
-          1: 'all',
+          id: null,
+          name: 'all',
+          alias: '/guides',
+          children: []
         });
       }
     );
@@ -139,7 +138,6 @@ export class CuratedListComponent implements OnInit {
   public onSelectCategory(event, cat: any) {
     event.stopPropagation();
     this.loaderService.show();
-    this.selectedCategory = cat;
     this.currentPage = 0;
     this.loading = false;
     this.endList = false;
@@ -171,7 +169,7 @@ export class CuratedListComponent implements OnInit {
       this.smallLoader.show();
       this.loading = true;
       if (this.currentPage >= 1) {
-        this.mainService.getCurate('latest', this.selectedCategory, this.currentPage, 9).subscribe(
+        this.mainService.getCurate('latest', 'all', this.currentPage, 9).subscribe(
           (response: any) => {
             this.editorsPickArticles = this.editorsPickArticles.concat(response.data);
             if (this.currentPage * 9 > response.total) {
@@ -186,16 +184,18 @@ export class CuratedListComponent implements OnInit {
     }
 
   }
+}
 
-  private convertObject2Array(obj) {
-    return Object.keys(obj).map(
-      (k) => {
-        if (typeof(obj[k]) === 'object') {
-          return this.convertObject2Array(obj[k]);
-        }
-        return obj[k];
+function extractCategories(obj): Category[] {
+  const categories = [];
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const category = obj[key];
+      if (!category.hasOwnProperty('children')) {
+        category.children = [];
       }
-    );
+      categories.push(obj[key]);
+    }
   }
-
+  return categories;
 }

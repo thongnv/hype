@@ -4,16 +4,24 @@
       <!-- top content start -->
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
-          <li class="title-hover dropdown" *ngFor="let cat of categories" [class.active]="cat[0]===selectedCategory">
-            <a [routerLink]="cat[1] === 'All' ? '/guides' : cat[2]">{{cat[1]}}</a>
-            <ul *ngIf="cat[3]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
-              <li *ngFor="let sub1 of cat[3]" class="dropdown" [class.active]="sub1[0]===selectedCategory">
-                <a routerLink="{{sub1[2]}}">{{sub1[1]}}</a>
-                <ul *ngIf="sub1[3]" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
-                  <li *ngFor="let sub2 of sub1[3]" [class.active]="sub2[0]===selectedCategory">
-                    <a routerLink="{{sub2[2]}}">{{sub2[1]}}</a>
+
+          <li class="title-hover dropdown"
+              *ngFor="let category of categories"
+              [class.active]="category.name === 'all'">
+
+            <a [routerLink]="category.alias">{{category.name}}</a>
+
+            <ul *ngIf="category.children.length" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+              <li *ngFor="let child_category of category.children" class="dropdown">
+
+                <a [routerLink]="child_category.alias">{{child_category.name}}</a>
+
+                <ul *ngIf="child_category.children.length" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
+                  <li *ngFor="let grand_child_category of child_category.children">
+                    <a [routerLink]="grand_child_category.alias">{{grand_child_category.name}}</a>
                   </li>
                 </ul>
+
               </li>
             </ul>
           </li>
