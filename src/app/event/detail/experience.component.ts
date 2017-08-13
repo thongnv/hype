@@ -168,7 +168,7 @@ export class ExperienceComponent implements Experience, OnInit {
       this.router.navigate(['/login'], {skipLocationChange: true}).then();
     }
     if (msgInput.value.trim()) {
-      let eventSlugName = this.event.slugName;
+      let eventSlugName = this.event.slug;
       let data = {
         pid: this.id,
         message: msgInput.value,

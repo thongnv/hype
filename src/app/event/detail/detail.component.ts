@@ -18,7 +18,6 @@ import {
 
 import { AppGlobals } from '../../services/app.global';
 
-
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -45,6 +44,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public experiences: Experience[] = [];
   public tags: string[];
   public metaTags: MetaTags;
+  public slug = '';
   public user = AppSetting.defaultUser;
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
@@ -55,7 +55,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public userRating: number = 0;
   public userRated: boolean = false;
   public ready: boolean = false;
-  public slugName = '';
   public gMapStyles: any;
   public layoutWidth: number;
   public innerWidth: number;
@@ -82,8 +81,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals,
-  ) {
+              public appGlobal: AppGlobals) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -110,9 +108,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       }
     });
     this.route.params.subscribe((e) => {
-      this.slugName = e.slug;
+      this.slug = e.slug;
       this.loaderService.show();
-      this.eventService.getEventDetail(this.slugName).subscribe(
+      this.eventService.getEventDetail(this.slug).subscribe(
         (resp) => {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
@@ -124,11 +122,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               {name: 'keywords', content: event.metaTags.keywords}
             );
             if (event.metaTags.canonical_url) {
-              this.meta.addTag({ rel: 'canonical', href: event.metaTags.canonical_url});
+              this.meta.addTag({rel: 'canonical', href: event.metaTags.canonical_url});
             }
           } else {
             this.titleService.setTitle(event.name);
-            this.meta.updateTag({name: 'description', content: event.detail.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)});
+            this.meta.updateTag({
+              name: 'description',
+              content: event.detail.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)
+            });
           }
 
           this.initSlide(this.images);
@@ -159,7 +160,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               window.clearInterval(interval);
               document.getElementById('createComment').removeAttribute('id');
             }, 200);
-          }else {
+          } else {
             window.scrollTo(0, 0);
           }
         }
@@ -168,10 +169,10 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-    if(this.innerWidth <= 900){
+    if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
-    }else{
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
@@ -195,7 +196,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
     if (!this.userRated && msgInput.value.trim()) {
       this.loaderService.show();
       this.userRated = true;
-      let slugName = this.slugName;
+      let slugName = this.slug;
       let data = {
         rate: this.userRating,
         message: msgInput.value,
