@@ -40,6 +40,9 @@ export class CuratedListComponent implements OnInit {
   public endList = false;
   public loading = false;
 
+  public loadingEditorsPickArticles = false;
+  public loadingCommunityArticles = false;
+
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public layoutWidth: number;
@@ -152,6 +155,34 @@ export class CuratedListComponent implements OnInit {
     this.showingArticlesTab = false;
     this.showingEventsTab = false;
     this.showingPlacesTab = true;
+  }
+
+  public showMoreEditorsPickArticles() {
+    if (!this.loadingEditorsPickArticles) {
+      this.loadingEditorsPickArticles = true;
+      this.smallLoader.show();
+      this.curateService.getEditorsPickArticles(++this.currentEditorsPickPage).subscribe(
+        (response: Article[]) => {
+          this.editorsPickArticles = this.editorsPickArticles.concat(response);
+          this.loadingEditorsPickArticles = false;
+          this.smallLoader.hide();
+        }
+      );
+    }
+  }
+
+  public showMoreCommunityArticles() {
+    if (!this.loadingCommunityArticles) {
+      this.loadingCommunityArticles = true;
+      this.smallLoader.show();
+      this.curateService.getCommunityArticles(++this.currentCommunityPage).subscribe(
+        (response: Article[]) => {
+          this.communityArticles = this.communityArticles.concat(response);
+          this.loadingCommunityArticles = false;
+          this.smallLoader.hide();
+        }
+      );
+    }
   }
 }
 

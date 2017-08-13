@@ -61,36 +61,34 @@
 
         <h4 class="head">Editors Pick</h4>
         <div *ngIf="editorsPickArticles" class="row col-md-10 padding-0">
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-              <div *ngFor="let article of editorsPickArticles" class=" col-xs-6 col-md-6 col-lg-3 post-news article-item">
-                <div style="overflow: hidden">
-                  <div class="image-post-news" [routerLink]="[article.slug]">
-                    <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
-                  </div>
-                </div>
-                <div class="new-info">
-                  <h4 class="post-title-content">
-                    <a class="title-hover" [routerLink]="[article.slug]">
-                      {{article.title | truncate : 60}}
-                    </a>
-                  </h4>
-                  <p class="post-author">
-                    By: <span class="auth-name">{{article.author.name}}</span>
-                    <span class="time-post">{{article.created | amFromUnix | amTimeAgo}}</span>
-                  </p>
-                  <p class="content-post-news">
-                    {{article.body | myHtml2Text | truncate : 60}}
-                  </p>
-                </div>
-                <div class="clear"></div>
-              </div>
-
-              <div class="align-center padding-15px row">
-                <button class="btn btn-primary">Show More</button>
+          <div *ngFor="let article of editorsPickArticles" class=" col-xs-6 col-md-6 col-lg-3 post-news article-item">
+            <div style="overflow: hidden">
+              <div class="image-post-news" [routerLink]="[article.slug]">
+                <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
               </div>
             </div>
+            <div class="new-info">
+              <h4 class="post-title-content">
+                <a class="title-hover" [routerLink]="[article.slug]">
+                  {{article.title | truncate : 60}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{article.author.name}}</span>
+                <span class="time-post">{{article.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{article.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
           </div>
+
+          <div class="align-center padding-15px row" *ngIf="!loadingEditorsPickArticles">
+            <button class="btn btn-primary" (click)="showMoreEditorsPickArticles()">Show More</button>
+          </div>
+          <app-small-loader></app-small-loader>
+
         </div>
 
         <h4 class="head">Trending This Week</h4>
@@ -149,37 +147,37 @@
 
         <h4 class="head border-top-solid">Curated By Community</h4>
         <div *ngIf="communityArticles" class="row col-md-10 padding-0">
-          <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-              <div *ngFor="let article of communityArticles"
-                   class="col-xs-12 col-md-6 col-lg-3 height-420px">
-                <div style="overflow: hidden; text-align: center">
-                  <div class="image-post-news" [routerLink]="[article.slug]">
-                    <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
-                  </div>
-                </div>
-                <div class="new-info">
-                  <h4 class="post-title-content">
-                    <a class="title-hover" [routerLink]="[article.slug]">
-                      {{article.title | truncate : 60}}
-                    </a>
-                  </h4>
-                  <p class="post-author">
-                    By: <span class="auth-name">{{article.author.name}}</span>
-                    <span class="time-post">{{article.created | amFromUnix | amTimeAgo}}</span>
-                  </p>
-                  <p class="content-post-news">
-                    {{article.body | myHtml2Text | truncate : 60}}
-                  </p>
-                </div>
-                <div class="clear"></div>
+          <div *ngFor="let article of communityArticles"
+               class="col-xs-12 col-md-6 col-lg-3 height-420px">
+            <div style="overflow: hidden; text-align: center">
+              <div class="image-post-news" [routerLink]="[article.slug]">
+                <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
               </div>
-              <div class="align-center padding-15px">
-                <button class="btn btn-primary">Show More</button>
-              </div>
-              <div class="mobile-footer"></div>
             </div>
+            <div class="new-info">
+              <h4 class="post-title-content">
+                <a class="title-hover" [routerLink]="[article.slug]">
+                  {{article.title | truncate : 60}}
+                </a>
+              </h4>
+              <p class="post-author">
+                By: <span class="auth-name">{{article.author.name}}</span>
+                <span class="time-post">{{article.created | amFromUnix | amTimeAgo}}</span>
+              </p>
+              <p class="content-post-news">
+                {{article.body | myHtml2Text | truncate : 60}}
+              </p>
+            </div>
+            <div class="clear"></div>
           </div>
+          <div class="align-center padding-15px" *ngIf="!loadingCommunityArticles">
+            <button class="btn btn-primary" (click)="showMoreCommunityArticles()">
+              Show More
+            </button>
+          </div>
+          <app-small-loader></app-small-loader>
+          <div class="mobile-footer"></div>
+
         </div>
 
       </div>
