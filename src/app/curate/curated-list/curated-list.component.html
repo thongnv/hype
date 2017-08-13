@@ -42,7 +42,7 @@
             <app-slide-carousel *ngFor="let slideGroup of featuredArticlesSlides">
 
               <div class="slide-group" *ngFor="let article of slideGroup">
-                <img [src]="article.author.avatar" style="margin:auto;">
+                <img [src]="article.field_images" style="margin:auto;">
                 <div class="carousel-caption">
                   <div class="carousel-content">
                     <strong [routerLink]="[article.slug]"
