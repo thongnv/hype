@@ -48,7 +48,7 @@
               <span class="info-label"><i class="sprite sprite-tag"></i><span>Price</span></span>
               <span class="info-value">
                 <span *ngIf="!isFree">
-                  <span *ngFor="let price of prices">${{price}}, </span>
+                  <span *ngFor="let price of prices; let i = last">${{price}}{{i ? '' : ','}} </span>
                 </span>
                 <span *ngIf="isFree">Free</span>
               </span>
