@@ -80,6 +80,10 @@ ul.list-category li.active {
   clear: both;
 }
 
+.article-item {
+  min-height: 420px;
+}
+
 p.author {
   float: left;
   margin-right: 20px;
