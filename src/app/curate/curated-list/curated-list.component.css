@@ -293,6 +293,10 @@ ul.list-items li a img {
   animation: fadein 1.2s;
 }
 
+#exTab2{
+  overflow: hidden;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
