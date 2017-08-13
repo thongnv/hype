@@ -155,3 +155,9 @@ export interface Category {
   alias: string;
   children: Category[];
 }
+
+export interface ArticlesCategory {
+  image: string;
+  description: string;
+  articles: Article[];
+}

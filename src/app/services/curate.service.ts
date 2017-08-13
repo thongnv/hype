@@ -8,9 +8,14 @@ import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 
 import {
-  Article, BaseUser, Category, Company, HyloEvent, Image
+  Article, ArticlesCategory, BaseUser, Category, Company, HyloEvent, Image
 } from '../app.interface';
 import { AppSetting } from '../app.setting';
+
+const MOCK_ACTIONS = [
+  'Buy Tickets',
+  'More info'
+];
 
 @Injectable()
 export class CurateService {
@@ -109,6 +114,46 @@ export class CurateService {
       });
   }
 
+  public getArticlesCategory(categorySlug, pageNum): Observable<ArticlesCategory> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/article/category/' + categorySlug +
+      '?_format=json' +
+      '&limit=8' +
+      '&page=' + pageNum,
+      options
+    )
+      .map((res) => extractArticlesCategory(res.json()))
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getRandomPlaces(): Observable<Company[]> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/place_interest/eat-guides', options
+    )
+      .map((res) => extractPlaces(res.json()))
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
+  public getRandomEvents(): Observable<HyloEvent[]> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/event/random?_format=json', options
+    )
+      .map((res) => extractEvents(res.json()))
+      .catch((error: any) => {
+        return Observable.throw(new Error(error));
+      });
+  }
+
 }
 
 function extractCategories(response): Category[] {
@@ -163,13 +208,17 @@ function extractEvents(response): HyloEvent[] {
       name: item.title,
       slug: item.alias,
       creator: null,
-      detail: null,
+      detail: item.body,
       category: item.field_categories,
-      startDate: null,
+      startDate: item.field_event_option.field_start_date_time,
       endDate: null,
       prices: null,
       organizer: null,
-      call2action: null,
+      call2action: {
+        id: null,
+        link: item.field_event_option.field_call_to_action_link,
+        action: MOCK_ACTIONS[item.field_event_option.field_call_to_action_group - 1]
+      },
       mentions: null,
       images: item.field_images,
       location: null,
@@ -191,7 +240,7 @@ function extractPlaces(response): Company[] {
     const place: Company = {
       id: null,
       name: item.Company_Name,
-      description: null,
+      description: item.Hylo_Activity_Description,
       rating: null,
       location: null,
       website: null,
@@ -222,4 +271,31 @@ function extractCompanyImages(data): Image[] {
     images.push(image);
   }
   return images;
+}
+
+function extractArticlesCategory(data): ArticlesCategory {
+  return {
+    image: data.cat_image,
+    description: data.cat_description,
+    articles: extractCategoryArticles(data.data)
+  };
+}
+
+function extractCategoryArticles(data): Article[] {
+  const articles = [];
+  for (const item of data) {
+    const article: Article = {
+      id: item.nid,
+      title: item.title,
+      slug: item.alias,
+      body: item.body,
+      created: item.created,
+      field_category: null,
+      field_images: item.field_images,
+      field_places: null,
+      author: {avatar: null, name: item.user_post.name, slug: null}
+    };
+    articles.push(article);
+  }
+  return articles;
 }
