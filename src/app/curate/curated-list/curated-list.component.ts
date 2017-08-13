@@ -1,12 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { MainService } from '../../services/main.service';
 import { AppGlobals } from '../../services/app.global';
 import { WindowUtilService } from '../../services/window-ultil.service';
-import { LoaderService } from '../../helper/loader/loader.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 import { Article, Category, Company, HyloEvent } from '../../app.interface';
+import { CurateService } from '../../services/curate.service';
 
 @Component({
   selector: 'app-curated-list',
@@ -15,14 +14,20 @@ import { Article, Category, Company, HyloEvent } from '../../app.interface';
 })
 export class CuratedListComponent implements OnInit {
 
+  public categories: Category[];
+
   public featuredArticles: Article[];
   public editorsPickArticles: Article[];
   public trendingArticles: Article[];
   public trendingEvents: HyloEvent[];
   public trendingPlaces: Company[];
-  public communityArticles: Article[];
 
-  public categories: Category[];
+  public communityArticles: Article[];
+  public showingArticlesTab = true;
+  public showingEventsTab = false;
+  public showingPlacesTab = false;
+
+  public featuredArticlesSlides = [];
 
   public slides: any[] = [];
   public NextPhotoInterval: number = 10000;
@@ -30,19 +35,21 @@ export class CuratedListComponent implements OnInit {
   public noPause: boolean = true;
   public noTransition: boolean = true;
 
-  public currentPage: number = 0;
-  public endList: boolean = false;
-  public loading: boolean = false;
+  public currentEditorsPickPage = 0;
+  public currentCommunityPage = 0;
+  public endList = false;
+  public loading = false;
 
   public screenWidth: number = 0;
   public screenHeight: number = 0;
   public layoutWidth: number;
   public innerWidth: number;
 
+  public ready = false;
+
   public constructor(private titleService: Title,
-                     private mainService: MainService,
+                     private curateService: CurateService,
                      private smallLoader: SmallLoaderService,
-                     private loaderService: LoaderService,
                      private windowRef: WindowUtilService,
                      private appGlobal: AppGlobals) {
   }
@@ -68,7 +75,7 @@ export class CuratedListComponent implements OnInit {
       let windowBottom = windowHeight + window.pageYOffset;
 
       if (windowBottom >= docHeight) {
-        this.loadMore();
+        // this.loadMore();
       }
     };
 
@@ -78,11 +85,9 @@ export class CuratedListComponent implements OnInit {
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
 
-    this.loaderService.show();
-    this.mainService.getCategoryTreeArticle().subscribe(
-      (response: any) => {
-        let categories = response.data;
-        this.categories = extractCategories(categories);
+    this.curateService.getArticleCategories().subscribe(
+      (response: Category[]) => {
+        this.categories = response;
         this.categories.unshift({
           id: null,
           name: 'all',
@@ -92,110 +97,76 @@ export class CuratedListComponent implements OnInit {
       }
     );
 
-    this.mainService.getCurate('latest', '*', 0, 9).subscribe(
-      (response: any) => {
-        this.editorsPickArticles = response.data;
-        this.currentPage = 1;
+    this.curateService.getFeaturedArticles().subscribe(
+      (response: Article[]) => {
+        this.featuredArticles = response;
+        this.featuredArticlesSlides = calculateFeaturedArticlesSlides(this.featuredArticles, this.screenWidth);
+        this.ready = true;
       }
     );
 
-    this.mainService.getCurateTrending().subscribe(
-      (response) => {
-        this.trendingArticles = response.data;
+    this.curateService.getEditorsPickArticles(this.currentEditorsPickPage).subscribe(
+      (response: Article[]) => {
+        this.editorsPickArticles = response;
       }
     );
 
-    this.mainService.getCurate('feature', '*', 0, 9).subscribe(
-      (response: any) => {
-        this.featuredArticles = response.data;
-        this.processFeature(this.featuredArticles);
-        this.loaderService.hide();
+    this.showArticlesTab();
+
+    this.curateService.getCommunityArticles(this.currentCommunityPage).subscribe(
+      (response: Article[]) => {
+        this.communityArticles = response;
       }
     );
+
   }
 
-  public processFeature(feature) {
-    let numberPost = 3;
-    let featuredArticles = [];
-    if (this.screenWidth < 992) {
-      if (this.screenWidth < 767) {
-        numberPost = 1;
-      } else {
-        if (this.screenWidth > 767 && this.screenWidth < 992) {
-          console.log(234, this.screenWidth);
-          numberPost = 2;
-        }
+  public showArticlesTab() {
+    this.curateService.getTrendingArticles().subscribe(
+      (response: Article[]) => {
+        this.trendingArticles = response;
       }
-    } else {
-      numberPost = 3;
-    }
-    while (feature.length > 0) {
-      featuredArticles.push(feature.splice(0, numberPost));
-    }
-    this.featuredArticles = featuredArticles;
+    );
+    this.showingArticlesTab = true;
+    this.showingEventsTab = false;
+    this.showingPlacesTab = false;
   }
 
-  public onSelectCategory(event, cat: any) {
-    event.stopPropagation();
-    this.loaderService.show();
-    this.currentPage = 0;
-    this.loading = false;
-    this.endList = false;
-
-    this.mainService.getCurate('latest', cat, 0, 9).subscribe(
-      (response: any) => {
-        this.editorsPickArticles = response.data;
-        this.currentPage = this.currentPage + 1;
+  public showEventsTab() {
+    this.curateService.getTrendingEvents().subscribe(
+      (response: HyloEvent[]) => {
+        this.trendingEvents = response;
       }
     );
-
-    this.mainService.getCurateTrending().subscribe(
-      (response) => {
-        this.trendingArticles = response.data;
-      }
-    );
-
-    this.mainService.getCurate('feature', cat, 0, 9).subscribe(
-      (response: any) => {
-        this.featuredArticles = response.data;
-        this.processFeature(this.featuredArticles);
-        this.loaderService.hide();
-      }
-    );
+    this.showingArticlesTab = false;
+    this.showingEventsTab = true;
+    this.showingPlacesTab = false;
   }
 
-  public loadMore() {
-    if (!this.endList) {
-      this.smallLoader.show();
-      this.loading = true;
-      if (this.currentPage >= 1) {
-        this.mainService.getCurate('latest', 'all', this.currentPage, 9).subscribe(
-          (response: any) => {
-            this.editorsPickArticles = this.editorsPickArticles.concat(response.data);
-            if (this.currentPage * 9 > response.total) {
-              this.endList = true;
-            }
-            this.currentPage = this.currentPage + 1;
-            this.smallLoader.hide();
-            this.loading = false;
-          }
-        );
+  public showPlacesTab() {
+    this.curateService.getTrendingPlaces().subscribe(
+      (response: Company[]) => {
+        this.trendingPlaces = response;
       }
-    }
-
+    );
+    this.showingArticlesTab = false;
+    this.showingEventsTab = false;
+    this.showingPlacesTab = true;
   }
 }
 
-function extractCategories(obj): Category[] {
-  const categories = [];
-  for (let key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      const category = obj[key];
-      if (!category.hasOwnProperty('children')) {
-        category.children = [];
-      }
-      categories.push(obj[key]);
-    }
+function calculateFeaturedArticlesSlides(featuredArticles, screenWidth): Article[] {
+  const results = [];
+  let numberPost: number;
+  if (screenWidth < 767) {
+    numberPost = 1;
+  } else if (screenWidth < 992) {
+    numberPost = 2;
+  } else {
+    numberPost = 3;
   }
-  return categories;
+  while (featuredArticles.length > 0) {
+    results.push(featuredArticles.splice(0, numberPost));
+  }
+  return results;
 }

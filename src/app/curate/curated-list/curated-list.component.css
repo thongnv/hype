@@ -17,6 +17,7 @@
 .border-top-solid {
   border-top: 1px solid #eaeaea;
 }
+
 .align-center {
   display: flex;
   justify-content: center;
@@ -173,6 +174,10 @@ span.time-posts {
   line-height: 50px;
   font-size: 30px;
   text-transform: capitalize;
+}
+
+.tab-content {
+  min-height: 100px;
 }
 
 ul.list-items {
