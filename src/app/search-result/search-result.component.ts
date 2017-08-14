@@ -49,7 +49,7 @@ export class SearchResultComponent implements OnInit {
     this.router.queryParams.subscribe(params => this.keywords = params['keywords']);
 
     // sanitize keywords
-    this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
+    // this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
 
     console.log('got keywords: ', this.keywords);
 

@@ -1,6 +1,5 @@
 <!-- data -->
-
-  <div [class.frameHidden]="!appGlobal.isShowLeft" class="frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
+  <div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-lg-5 col-xs-12 no-padding left-box frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
   <div class="search_Content"><h1>Showing results for "{{keywords}}"</h1></div>
   <div class="tab-control" >
     <button class="btn btn-default active" [class.active]="currentType === 'event'" (click)="changeTab('event')">Events({{events.total}})</button>
@@ -34,11 +33,17 @@
       </div>
 
     </div>
+
+    <div *ngIf="!loading && !items.data.length" class="no-result-found" style="text-align: center; margin-top: 50px;">
+      <div class="sprite sprite-no-results-found" style="display: inline-block"></div>
+      <h3>No Results Found</h3>
+      <div>You can revise filters or <a (click)="onClearForm()" class="clear_filter">clear all filters</a>.</div>
+    </div>
   </div>
 
   <app-small-loader></app-small-loader>
   </div>
-  <div [class.frameHidden]="!appGlobal.isShowRight" class="frame-right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
+  <div [class.frameHidden]="!appGlobal.isShowRight" class="column col-lg-5 col-xs-12 no-padding right-box fixed-right frame-right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
     <!-- MAP -->
   </div>
 

@@ -50,15 +50,21 @@ h1{
 
 }
 
+.wrap-each-items .fav-item-image{
+  overflow: hidden;
+}
+
 .wrap-each-items .fav-item-image img{
   cursor: pointer;
   filter: brightness(50%);
+
 }
 .wrap-each-items .fav-item-image:hover img,
 .article .caption:hover + img {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+  transition-duration: 0.3s;
 }
 
 .avatar-profile {

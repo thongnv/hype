@@ -665,6 +665,7 @@ ul.mentioned-item {
   float: left;
   margin-right: 15px;
   text-transform: capitalize;
+  margin-top: 8px;
 }
 
 .heart {
@@ -867,7 +868,7 @@ ul.mentioned-item {
   }
 
   .list-item-title {
-    font-size: 24px;
+    font-size: 18px;
   }
 }
 
@@ -937,7 +938,7 @@ ul.mentioned-item {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-  transition-duration: 3s;
+  transition-duration: 0.3s;
 }
 
 .home-page .left-box {

@@ -522,7 +522,7 @@ export class EatComponent implements OnInit {
       this.params.rate = rate.join(',');
     }
     if (this.type) {
-      this.params.kind = type.join(',');
+      this.params.types = type.join(',');
     }
     this.markers = [];
     this.items = [];
