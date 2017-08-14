@@ -186,19 +186,13 @@
     }*/
 }
 @media screen and (min-width: 480px) {
-    ul#list-events-location-address {
-        min-height: 270px;
-    }
+
 }
 @media screen and (min-width: 667px) {
-    ul#list-events-location-address {
-        min-height: 220px;
-    }
+
 }
 @media screen and (min-width: 736px) {
-    ul#list-events-location-address {
-        min-height: 180px;
-    }
+
 }
 
 @media screen and (min-width: 736px) and (max-width: 1025px) {

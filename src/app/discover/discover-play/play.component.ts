@@ -363,6 +363,9 @@ export class PlayComponent implements OnInit {
         this.params.kind=this.categorySelected.join(',');
         break;
     }
+    if(this.categorySelected.length == 0){
+      this.selected ='all';
+    }
     this.params.limit = 20;
     this.params.page = 0;
     this.markers = [];
@@ -692,6 +695,11 @@ export class PlayComponent implements OnInit {
     this.clearParams();
     this.labelSort = 'Name';
     this.totalCuisine = 0;
+    this.showCuisine=false;
+    this.showPrice = false;
+    this.showRate = false;
+    this.showBest = false;
+    this.showType = false;
     this.smallLoader.show();
     this.getDataModes();
   }
