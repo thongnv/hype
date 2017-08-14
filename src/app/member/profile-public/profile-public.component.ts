@@ -96,6 +96,8 @@ export class ProfilePublicComponent implements OnInit {
         }
       );
       this.articlesPerPage = calculateArticlesPerPage();
+      this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+      this.layoutWidth = (this.windowRef.rootContainer.width - 180);
     });
 
     $(window).scroll(() => {
@@ -179,7 +181,7 @@ function calculateArticlesPerPage(): number {
   const borderWidth = 15;
   const carouselControlWidth = 40;
   if (screenWidth > 992) {
-    if (screenWidth <= 1024) {
+    if (screenWidth < 1024) {
       articleWidth = 175;
     }
     containerWidth = screenWidth - navBarWidth - memberNavWith - borderWidth - carouselControlWidth;

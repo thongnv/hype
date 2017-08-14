@@ -36,7 +36,7 @@ export class SearchResultComponent implements OnInit {
   };
 
   constructor(private appGlobal: AppGlobals,
-              private route: ActivatedRoute,
+              private router: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private windowRef: WindowUtilService,
               private smallLoader: SmallLoaderService,
@@ -46,7 +46,7 @@ export class SearchResultComponent implements OnInit {
   // lifecycle
   ngOnInit() {
     // get keyword
-    this.route.params.subscribe(params => this.keywords = params['keywords']);
+    this.router.queryParams.subscribe(params => this.keywords = params['keywords']);
 
     // sanitize keywords
     this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
