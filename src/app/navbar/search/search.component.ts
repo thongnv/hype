@@ -2,7 +2,6 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild, SecurityContext}
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import {Location} from '@angular/common';
 
 import { MainService } from '../../services/main.service';
 
@@ -21,10 +20,10 @@ export class SearchComponent implements OnInit {
   public searchToken: string = '';
 
   public shownotfound: boolean = false;
+  private searchRoute = '/search';
 
   constructor(public fb: FormBuilder,
               private sanitizer: DomSanitizer,
-              private location: Location,
               private mainService: MainService,
               private _elRef: ElementRef,
               private router: Router) {
@@ -53,7 +52,7 @@ export class SearchComponent implements OnInit {
     this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
 
     if (this.searchToken.length >= 3) {
-      const isSearchResultPage = this.router.url.startsWith('/search/search-result');
+      const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
 
       this.hideSearchResult = isSearchResultPage;
       this.mainService.search(this.searchToken).subscribe((resp) => {
@@ -75,16 +74,17 @@ export class SearchComponent implements OnInit {
   onKeyDown(event) {
     const keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
     const keyCode = event.which || event.keyCode;
-    const isSearchResultPage = this.router.url.startsWith('/search/search-result');
+    const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
 
     if (keyCode === 13 && keywords.trim() !== '') {
       if (isSearchResultPage) {
-        console.log('at search page');
-        this.router.navigate(['/search/search-result', keywords]);
-        location.reload();
+        // this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
+
+        // TODO: this for fix component does not reload when route change
+        window.location = `/search?keywords=${keywords}`;
       } else {
         this.hideSearchResult = true;
-        this.router.navigate(['/search/search-result', keywords]);
+        this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
       }
     }
 
