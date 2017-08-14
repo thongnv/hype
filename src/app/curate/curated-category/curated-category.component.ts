@@ -22,9 +22,9 @@ export class CuratedCategoryComponent implements OnInit {
 
   public slugName: string;
 
-  public currentPage: number = 0;
-  public noMoreArticles = false;
-  public loadingArticles = false;
+  public currentPage: number;
+  public noMoreArticles: boolean;
+  public loadingArticles: boolean;
 
   public events: HyloEvent[];
   public places: Company[];
@@ -63,11 +63,10 @@ export class CuratedCategoryComponent implements OnInit {
 
     this.route.params.subscribe((e) => {
       this.slugName = e.slug;
-    });
-
-    this.loaderService.show();
-    this.route.params.subscribe((e) => {
-      this.slugName = e.slug;
+      this.currentPage = 0;
+      this.noMoreArticles = false;
+      this.loadingArticles = false;
+      this.loaderService.show();
       this.curateService.getArticlesCategory(this.slugName, this.currentPage).subscribe(
         (response: ArticlesCategory) => {
           this.articlesCategory = response;
