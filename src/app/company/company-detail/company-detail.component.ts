@@ -63,8 +63,7 @@ export class CompanyDetailComponent implements Company, OnInit {
               private router: Router,
               private locationService: LocationService,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals,
-  ) {
+              private appGlobal: AppGlobals) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -81,10 +80,10 @@ export class CompanyDetailComponent implements Company, OnInit {
     }
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-    if(this.innerWidth <= 900){
+    if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
-    }else{
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
@@ -105,9 +104,10 @@ export class CompanyDetailComponent implements Company, OnInit {
           // TODO: use this.instagramUrl instead
           this.companyService.getInstagramProfile(this.company.licenseNumber).subscribe(
             (images) => {
-              this.images = images;
-              this.initSlide(this.images);
-              // this.imageReady = true;
+              if (images.length) {
+                this.images = images;
+                this.initSlide(this.images);
+              }
             },
             (error) => {
               console.log(error);
