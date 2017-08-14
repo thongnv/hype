@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <div [class.frameHidden]="!appGlobal.isShowRight"  class="col-md-6 map-fix hidden-md hidden-xs hidden-sm frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 - 1 + 'px' : ''" id="right" >
+    <div [class.frameHidden]="!appGlobal.isShowRight"  class="col-md-6 map-fix frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 - 1 + 'px' : ''" id="right" >
       <div style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth / 2 - 1 + 'px' : ''">
         <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15">
           <sebm-google-map-marker [latitude]="location.lat"
