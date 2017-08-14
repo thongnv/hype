@@ -75,7 +75,7 @@ export class SearchComponent implements OnInit {
     const keyCode = event.which || event.keyCode;
     const isSearchResultPage = this.router.url.startsWith('/search-result');
 
-    if (keyCode === 13) {
+    if (keyCode === 13 && keywords.trim() !== '') {
       if (isSearchResultPage) {
         this.router.navigate(['/search-result', keywords]);
         location.reload();
