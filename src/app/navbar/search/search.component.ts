@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
+import { WindowRefService } from "../../services/window-ref.service"
 
 @Component({
   selector: 'app-search',
@@ -25,6 +26,7 @@ export class SearchComponent implements OnInit {
   constructor(public fb: FormBuilder,
               private sanitizer: DomSanitizer,
               private mainService: MainService,
+              private windowRefService: WindowRefService,
               private _elRef: ElementRef,
               private router: Router) {
   }
@@ -81,7 +83,8 @@ export class SearchComponent implements OnInit {
         // this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
 
         // TODO: this for fix component does not reload when route change
-        window.location = `/search?keywords=${keywords}`;
+        // window.location = `/search?keywords=${keywords}`;
+        this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
       } else {
         this.hideSearchResult = true;
         this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
