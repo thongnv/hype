@@ -142,6 +142,7 @@
     float: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.5em;
 }
 
 .filterCategory .btn-filter-block label.more {
