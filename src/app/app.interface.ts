@@ -132,6 +132,7 @@ export interface Company {
   openingHours: string[];
   images: Image[];
   instagramUrl: string;
+  licenseNumber: string;
   reviews: Experience[];
   bookmarked: boolean;
   rated: boolean;

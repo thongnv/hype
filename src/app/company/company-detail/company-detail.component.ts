@@ -31,6 +31,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public reviews: Experience[] = [];
   public images: Image[];
   public instagramUrl = '';
+  public licenseNumber = '';
   public CTC = '';
   public slugName: string;
   public user = AppSetting.defaultUser;
@@ -102,35 +103,16 @@ export class CompanyDetailComponent implements Company, OnInit {
           this.location.name = this.location.name.replace(/Address\//i, '');
           this.titleService.setTitle(this.company.name);
           // TODO: use this.instagramUrl instead
-          // let instagramUsername = 'billnguyen254';
-          // this.companyService.getInstagramProfile(instagramUsername).subscribe(
-          //   (profile) => {
-          //     let userId = profile.data[0].id;
-          //     this.companyService.getInstagramImages(userId).subscribe(
-          //       (res) => {
-          //         let images = [];
-          //         for (let item of res.data) {
-          //           images.push({
-          //             url: item.images.standard_resolution.url,
-          //             value: '',
-          //             filename: '',
-          //             filemime: '',
-          //             filesize: 0
-          //           });
-          //         }
-          //         this.images = images;
-          //         this.initSlide(this.images);
-          //         this.imageReady = true;
-          //       },
-          //       (error) => {
-          //         console.log(error);
-          //       }
-          //     );
-          //   },
-          //   (error) => {
-          //     console.log(error);
-          //   }
-          // );
+          this.companyService.getInstagramProfile(this.company.licenseNumber).subscribe(
+            (images) => {
+              this.images = images;
+              this.initSlide(this.images);
+              // this.imageReady = true;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
           this.ready = true;
           this.loaderService.hide();
         },
@@ -276,8 +258,8 @@ export class CompanyDetailComponent implements Company, OnInit {
 
   private initSlide(images) {
     this.slides = [];
-    for (let image of images) {
-      this.slides.push({image: image.url});
+    for (let img of images) {
+      this.slides.push({image: img});
     }
   }
 
