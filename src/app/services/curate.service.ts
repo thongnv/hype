@@ -58,7 +58,7 @@ export class CurateService {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/article/feature?_format=json', options
+      AppSetting.API_ENDPOINT + 'api/v1/article/trending?_format=json&type=article', options
     )
       .map((res) => extractArticles(res.json()))
       .catch((error: any) => {
@@ -184,7 +184,7 @@ function extractArticles(response): Article[] {
       field_category: item.field_categories,
       field_images: item.field_images,
       field_places: item.field_places,
-      author: extractAuthor(item.user_post)
+      author: item.user_post ?  extractAuthor(item.user_post) : null,
     };
     articles.push(article);
   }
