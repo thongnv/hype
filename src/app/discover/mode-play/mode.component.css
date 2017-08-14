@@ -292,6 +292,11 @@ ul.itemSort li a i {
     font-size: 20px;
 }
 
+.item-content span.review {
+  color: #333;
+  font-size: 12px;
+}
+
 .justify-content-start .text-center {
     padding-top: 30px;
     padding-bottom: 30px;
