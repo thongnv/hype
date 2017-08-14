@@ -50,9 +50,14 @@ h1{
 
 }
 
+.wrap-each-items .fav-item-image{
+  overflow: hidden;
+}
+
 .wrap-each-items .fav-item-image img{
   cursor: pointer;
   filter: brightness(50%);
+
 }
 .wrap-each-items .fav-item-image:hover img,
 .article .caption:hover + img {
