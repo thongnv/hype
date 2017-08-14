@@ -136,7 +136,7 @@ export interface Company {
   bookmarked: boolean;
   rated: boolean;
   CTC: string;
-  Company_Slug: string;
+  slugName: string;
 }
 
 export interface Article {
