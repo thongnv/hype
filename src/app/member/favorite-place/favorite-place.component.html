@@ -2,7 +2,7 @@
   <div *ngIf="isCurrentUser" class="close-button text-right icon-times" (click)="onDeleteEmit(item)">&times;</div>
   <div class="avatar-profile" [routerLink]="['/company/'+item.company_slug]">
     <div class="fav-item-image">
-      <app-place-image [name]="item.name" [width]="100" [height]="100">
+      <app-place-image [name]="item.name" [width]="100" [height]="100" [licenseNumber]="item.License_Number">
       </app-place-image>
     </div>
   </div>
