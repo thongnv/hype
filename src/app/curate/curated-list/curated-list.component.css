@@ -301,6 +301,12 @@ ul.list-items li a img {
   overflow: hidden;
 }
 
+app-place-image{
+  float: left;
+  margin-right: 10px;
+}
+
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -395,8 +401,6 @@ ul.list-items li a img {
   ul.list-items li a img {
     margin-right: 10px;
     float: left;
-    width: 60px;
-    height: 60px;
     border-radius: 2px;
   }
 }

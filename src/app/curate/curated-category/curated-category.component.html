@@ -92,9 +92,9 @@
             <!--place item-->
             <div *ngFor="let place of places" class="row margin-0 padding-10px border-bottom">
               <div class="col-xs-3 col-md-3 padding-0">
-                <a class="avatar-picture">
-                  <img [src]="place.images[0].url">
-                </a>
+                <app-place-image [routerLink]="['/company', place.slugName]" [name]="place.name" [width]="129"
+                                 [height]="129" [licenseNumber]="place.licenseNumber">
+                </app-place-image>
               </div>
               <div class="col-xs-7 col-md-7">
                 <div>
