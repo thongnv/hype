@@ -204,6 +204,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
       };
       this.eventService.postExperience(slugName, data).subscribe(
         (resp: Experience) => {
+          resp.date /= 1000;
           this.experiences.push(resp);
           this.experienceForm.reset();
           this.loaderService.hide();

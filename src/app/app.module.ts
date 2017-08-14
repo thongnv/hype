@@ -55,6 +55,7 @@ import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
 import { ProfileService } from './services/profile.service';
 import { WindowUtilService } from './services/window-ultil.service';
+import { WindowRefService } from "./services/window-ref.service"
 
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -213,6 +214,7 @@ type StoreType = {
     UserService,
     FollowService,
     WindowUtilService,
+    WindowRefService,
     AppGlobals
   ],
 })
