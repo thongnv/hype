@@ -210,15 +210,15 @@ function extractEvents(response): HyloEvent[] {
       creator: null,
       detail: item.body,
       category: item.field_categories,
-      startDate: item.field_event_option.field_start_date_time,
+      startDate: item.field_event_option ? item.field_event_option.field_start_date_time : null,
       endDate: null,
       prices: null,
       organizer: null,
-      call2action: {
+      call2action: item.field_event_option ? {
         id: null,
         link: item.field_event_option.field_call_to_action_link,
         action: MOCK_ACTIONS[item.field_event_option.field_call_to_action_group - 1]
-      },
+      } : null,
       mentions: null,
       images: item.field_images,
       location: null,
