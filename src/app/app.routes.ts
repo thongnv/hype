@@ -28,7 +28,7 @@ export const ROUTES: Routes = [
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'share-event', component: ShareEventComponent},
-  {path: 'search-result/:keywords', component: SearchResultComponent},
+  {path: 'search/search-result/:keywords', component: SearchResultComponent},
   {path: 'event/:slug/edit', component: EditEventComponent},
   {path: 'member/favorite', component: FavoriteComponent},
 

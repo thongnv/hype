@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, HostListener, SecurityContext } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 // services
 import { AppGlobals } from '../services/app.global';
@@ -36,6 +37,7 @@ export class SearchResultComponent implements OnInit {
 
   constructor(private appGlobal: AppGlobals,
               private route: ActivatedRoute,
+              private sanitizer: DomSanitizer,
               private windowRef: WindowUtilService,
               private smallLoader: SmallLoaderService,
               private dataService: MainService
@@ -46,8 +48,13 @@ export class SearchResultComponent implements OnInit {
     // get keyword
     this.route.params.subscribe(params => this.keywords = params['keywords']);
 
+    // sanitize keywords
+    this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
+
+    console.log('got params: ', this.keywords);
+
     // fetch data from server
-    this.fetchData(this.keywords);
+    // this.fetchData(this.keywords);
 
     // handle frame dimension
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -69,7 +76,6 @@ export class SearchResultComponent implements OnInit {
   private fetchData(keywords: string) {
     this.dataService.searchResult(keywords)
       .subscribe(resp => {
-        console.log('resp1: ', resp);
         this.events = {total: resp.event.total, page: 0, data: resp.event.items};
         this.lists = {total: resp.list.total, page: 0, data: resp.list.items};
         this.places = {total: resp.place.total, page: 0, data: resp.place.items};
@@ -96,7 +102,6 @@ export class SearchResultComponent implements OnInit {
       this.dataService.searchResultLoadMore(this.keywords, this.loadMoreParams)
         .subscribe(
           function(data) {
-            console.log('resp: ', data);
             const myDataType = self.loadMoreParams.type + 's';
             const serverDataType = self.loadMoreParams.type;
 
