@@ -2,6 +2,7 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild, SecurityContext}
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import {Location} from '@angular/common';
 
 import { MainService } from '../../services/main.service';
 
@@ -23,6 +24,7 @@ export class SearchComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private sanitizer: DomSanitizer,
+              private location: Location,
               private mainService: MainService,
               private _elRef: ElementRef,
               private router: Router) {
@@ -73,10 +75,11 @@ export class SearchComponent implements OnInit {
   onKeyDown(event) {
     const keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
     const keyCode = event.which || event.keyCode;
-    const isSearchResultPage = this.router.url.startsWith('/search-result');
+    const isSearchResultPage = this.router.url.startsWith('/search/search-result');
 
     if (keyCode === 13 && keywords.trim() !== '') {
       if (isSearchResultPage) {
+        console.log('at search page');
         this.router.navigate(['/search/search-result', keywords]);
         location.reload();
       } else {
