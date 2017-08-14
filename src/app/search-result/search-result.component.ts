@@ -51,10 +51,10 @@ export class SearchResultComponent implements OnInit {
     // sanitize keywords
     this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
 
-    console.log('got params: ', this.keywords);
+    console.log('got keywords: ', this.keywords);
 
     // fetch data from server
-    // this.fetchData(this.keywords);
+    this.fetchData(this.keywords);
 
     // handle frame dimension
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
