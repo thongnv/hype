@@ -135,6 +135,8 @@ export interface Company {
   reviews: Experience[];
   bookmarked: boolean;
   rated: boolean;
+  CTC: string;
+  Company_Slug: string;
 }
 
 export interface Article {

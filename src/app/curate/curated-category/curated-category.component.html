@@ -100,7 +100,7 @@
               </div>
               <div class="col-xs-7 col-md-7">
                 <div>
-                  <a class="title-hover">
+                  <a class="title-hover" [routerLink]="place.Company_Slug">
                     <h5 class="margin-0 custom-text-ellipsis-title">{{place.name}}</h5>
                   </a>
                 </div>
@@ -111,7 +111,7 @@
                   <rating [ngModel]="place.rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
                 </div>
               </div>
-              <div class="col-xs-2 col-md-2 padding-0">
+              <div *ngIf="CTC" class="col-xs-2 col-md-2 padding-0">
                 <button class="btn btn-default custom-btn">Book Now</button>
               </div>
             </div>
@@ -135,7 +135,7 @@
               </div>
               <div class="col-xs-7 col-md-7">
                 <div>
-                  <a class="title-hover">
+                  <a class="title-hover" [routerLink]="event.slug">
                     <h5 class="margin-0 custom-text-ellipsis-title">{{event.name}}</h5>
                   </a>
                 </div>
@@ -147,7 +147,7 @@
                 </div>
               </div>
               <div class="col-xs-2 col-md-2 padding-0" *ngIf="event.call2action.link">
-                <a class="btn btn-default custom-btn" [href]="event.call2action.link">{{event.call2action.action}}</a>
+                <a class="btn btn-default custom-btn" target="_blank" [href]="event.call2action.link">{{event.call2action.action}}</a>
               </div>
             </div>
             <!--event-item end-->

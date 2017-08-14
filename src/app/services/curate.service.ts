@@ -250,7 +250,9 @@ function extractPlaces(response): Company[] {
       instagramUrl: null,
       reviews: null,
       bookmarked: null,
-      rated: null
+      rated: null,
+      CTC: item.CTC,
+      Company_Slug: '/company/' + item.Company_Slug,
     };
     places.push(place);
   }
