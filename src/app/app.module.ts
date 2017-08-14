@@ -96,6 +96,7 @@ import { FollowService } from './services/follow.service';
 import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { AppGlobals } from './services/app.global';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { CurateService } from './services/curate.service';
 
 enableProdMode();
 
@@ -205,6 +206,7 @@ type StoreType = {
     BaseApiService,
     HomeService,
     EventService,
+    CurateService,
     ModeService,
     SeoService,
     ProfileService,

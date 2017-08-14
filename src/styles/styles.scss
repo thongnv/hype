@@ -104,7 +104,7 @@ body, html {
   cursor: pointer;
 }
 
-.title-hover:hover {
+.title-hover:focus, .title-hover:hover {
   color: #ec3d62 !important;
   text-decoration: none;
   opacity: 1 !important;
@@ -376,7 +376,6 @@ body, html {
 
   //following
   .count-follow {
-    width: 640px;
     height: 34px;
     font-family: Roboto, sans-serif;
     font-size: 30px;

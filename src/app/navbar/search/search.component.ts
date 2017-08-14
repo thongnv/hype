@@ -1,6 +1,7 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild, SecurityContext} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
 
@@ -21,6 +22,7 @@ export class SearchComponent implements OnInit {
   public shownotfound: boolean = false;
 
   constructor(public fb: FormBuilder,
+              private sanitizer: DomSanitizer,
               private mainService: MainService,
               private _elRef: ElementRef,
               private router: Router) {
@@ -45,15 +47,13 @@ export class SearchComponent implements OnInit {
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
 
+    // sanitize keywords
+    this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
+
     if (this.searchToken.length >= 3) {
-      const isSearchResultPage = this.router.url.startsWith('/search-result');
-      if (isSearchResultPage) {
-        this.hideSearchResult = true;
-      } else {
-        this.hideSearchResult = false;
-      }
+      const isSearchResultPage = this.router.url.startsWith('/search/search-result');
 
-
+      this.hideSearchResult = isSearchResultPage;
       this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
@@ -71,17 +71,17 @@ export class SearchComponent implements OnInit {
   }
 
   onKeyDown(event) {
-    const keywords = this.keywords.nativeElement.value;
+    const keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
     const keyCode = event.which || event.keyCode;
     const isSearchResultPage = this.router.url.startsWith('/search-result');
 
-    if (keyCode === 13) {
+    if (keyCode === 13 && keywords.trim() !== '') {
       if (isSearchResultPage) {
-        this.router.navigate(['/search-result', keywords]);
+        this.router.navigate(['/search/search-result', keywords]);
         location.reload();
       } else {
         this.hideSearchResult = true;
-        this.router.navigate(['/search-result', keywords]);
+        this.router.navigate(['/search/search-result', keywords]);
       }
     }
 

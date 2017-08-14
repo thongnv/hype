@@ -17,6 +17,11 @@
   border-left: none;
 }
 
+.setting-wrap {
+  margin: 0;
+  padding: 0;
+}
+
 .lists-wrap {
   margin-left: 50px;
   margin-top: 20px;
@@ -785,10 +790,6 @@ ul.mentioned-item {
 @media only screen
 and (min-device-width: 320px)
 and (max-device-width: 480px) {
-  .setting-wrap {
-    margin: 0;
-    padding: 0;
-  }
 
   .col-left {
     position: relative;
@@ -922,7 +923,7 @@ and (max-device-width: 1024px)
 and (orientation: portrait) {
   .setting-wrap {
     margin: 0;
-    padding: 0;
+    padding: 10px;
     width: 100%;
   }
 
@@ -1013,8 +1014,8 @@ and (min-device-width: 1024px)
 and (max-device-width: 1366px)
 and (orientation: portrait) {
   .setting-wrap {
-    margin-left: 180px;
     padding: 0;
+    margin: 0;
     width: auto;
   }
 

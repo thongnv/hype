@@ -16,12 +16,14 @@ import { CurateRoutingModule } from './curate-routing.module';
 import { CurateNewComponent } from './curate-new/curate-new.component';
 import { CuratedCategoryComponent } from './curated-category/curated-category.component';
 import { CuratedListComponent } from './curated-list/curated-list.component';
+import { RatingModule } from 'ng2-rating';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RatingModule,
     TruncateModule,
     MomentModule,
     TinymceModule.withConfig({auto_focus: false}),

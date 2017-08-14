@@ -17,6 +17,7 @@
 .border-top-solid {
   border-top: 1px solid #eaeaea;
 }
+
 .align-center {
   display: flex;
   justify-content: center;
@@ -77,6 +78,10 @@ ul.list-category li.active {
   font-weight: bold;
   margin: 40px 0 20px 0;
   clear: both;
+}
+
+.article-item {
+  min-height: 420px;
 }
 
 p.author {
@@ -173,6 +178,10 @@ span.time-posts {
   line-height: 50px;
   font-size: 30px;
   text-transform: capitalize;
+}
+
+.tab-content {
+  min-height: 100px;
 }
 
 ul.list-items {
@@ -286,6 +295,10 @@ ul.list-items li a img {
   -ms-animation: fadein 1.2s;
   -o-animation: fadein 1.2s;
   animation: fadein 1.2s;
+}
+
+#exTab2{
+  overflow: hidden;
 }
 
 @keyframes fadein {

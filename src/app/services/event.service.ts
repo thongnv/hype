@@ -22,6 +22,7 @@ export class EventService {
   public static extractEventDetail(data): HyloEvent {
     return {
       id: data.nid,
+      slug: '',
       creator: {
         name: data.user_post.name,
         avatar: data.user_post.user_picture,

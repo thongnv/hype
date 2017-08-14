@@ -28,6 +28,7 @@ export interface Follower extends BaseUser {
 
 export interface HyloEvent {
   id: number;
+  slug: string;
   creator: BaseUser;
   name: string;
   location: Location;
@@ -134,14 +135,31 @@ export interface Company {
   reviews: Experience[];
   bookmarked: boolean;
   rated: boolean;
+  CTC: string;
+  Company_Slug: string;
 }
 
 export interface Article {
   id: number;
   title: string;
+  slug: string;
   body: string;
   created: number;
   field_category: any[];
   field_images: string[];
   field_places: any[];
+  author: BaseUser;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  alias: string;
+  children: Category[];
+}
+
+export interface ArticlesCategory {
+  image: string;
+  description: string;
+  articles: Article[];
 }
