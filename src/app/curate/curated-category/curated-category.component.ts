@@ -72,6 +72,9 @@ export class CuratedCategoryComponent implements OnInit {
           this.articlesCategory = response;
           this.ready = true;
           this.loaderService.hide();
+          if ((this.currentPage + 1) * 8 >= response.total) {
+            this.noMoreArticles = true;
+          }
         }
       );
     });
@@ -110,7 +113,9 @@ export class CuratedCategoryComponent implements OnInit {
           this.articlesCategory.articles = this.articlesCategory.articles.concat(response.articles);
           this.smallLoader.hide();
           this.loadingArticles = false;
-          this.noMoreArticles = response.articles.length === 0;
+          if ((this.currentPage + 1) * 8 >= response.total) {
+            this.noMoreArticles = true;
+          }
         }
       );
     }

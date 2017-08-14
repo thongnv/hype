@@ -277,6 +277,7 @@ function extractCompanyImages(data): Image[] {
 
 function extractArticlesCategory(data): ArticlesCategory {
   return {
+    total: data.total,
     image: data.cat_image,
     description: data.cat_description,
     articles: extractCategoryArticles(data.data)

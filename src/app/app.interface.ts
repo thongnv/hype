@@ -159,6 +159,7 @@ export interface Category {
 }
 
 export interface ArticlesCategory {
+  total: number;
   image: string;
   description: string;
   articles: Article[];
