@@ -241,7 +241,7 @@ function extractPlaces(response): Company[] {
       id: null,
       name: item.Company_Name,
       description: item.Hylo_Activity_Description,
-      rating: null,
+      rating: item.rating.average,
       location: null,
       website: null,
       phone: null,
