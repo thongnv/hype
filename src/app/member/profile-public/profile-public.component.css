@@ -19,7 +19,6 @@
 
 .setting-wrap {
   margin: 0;
-  padding: 0;
 }
 
 .lists-wrap {
@@ -1015,8 +1014,7 @@ and (max-device-width: 1366px)
 and (orientation: portrait) {
   .setting-wrap {
     padding: 0;
-    margin: 0;
-    width: auto;
+    margin: 0 0 0 180px;
   }
 
   .col-left {
