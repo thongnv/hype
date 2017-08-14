@@ -23,6 +23,7 @@ export class CompanyService {
       openingHours: [],
       images: [],
       instagramUrl: data.Hylo_Instagram,
+      licenseNumber: data.License_Number,
       reviews: getReviews(data.review),
       CTC: data.CTC,
       slugName: data.slugName
@@ -63,13 +64,10 @@ export class CompanyService {
       });
   }
 
-  public getInstagramProfile(username) {
-    return this.jsonp.get(
-      'https://api.instagram.com/v1/users/search' +
-      '?q=' + username +
-      '&access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
-      '&callback=JSONP_CALLBACK')
-      .map((res) => res.json())
+  public getInstagramProfile(licenseNumber) {
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/company/images/' + licenseNumber
+      ).map((res) => res.json())
       .catch((error: any) => {
         return Observable.throw(new Error(error));
       });

@@ -248,6 +248,7 @@ function extractPlaces(response): Company[] {
       openingHours: null,
       images: extractCompanyImages(item.images),
       instagramUrl: null,
+      licenseNumber: item.License_Number,
       reviews: null,
       bookmarked: null,
       rated: null,
