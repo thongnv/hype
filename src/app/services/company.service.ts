@@ -23,7 +23,9 @@ export class CompanyService {
       openingHours: [],
       images: [],
       instagramUrl: data.Hylo_Instagram,
-      reviews: getReviews(data.review)
+      reviews: getReviews(data.review),
+      CTC: data.CTC,
+      slugName: data.slugName
     };
   }
 

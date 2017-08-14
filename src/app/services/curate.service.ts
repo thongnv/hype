@@ -252,7 +252,7 @@ function extractPlaces(response): Company[] {
       bookmarked: null,
       rated: null,
       CTC: item.CTC,
-      Company_Slug: '/company/' + item.Company_Slug,
+      slugName: '/company/' + item.Company_Slug,
     };
     places.push(place);
   }
