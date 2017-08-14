@@ -54,9 +54,7 @@ export class SearchComponent implements OnInit {
     this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
 
     if (this.searchToken.length >= 3) {
-      const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
-
-      this.hideSearchResult = isSearchResultPage;
+      // this.hideSearchResult = this.router.url.startsWith(this.searchRoute);
       this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
