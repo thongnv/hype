@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
       this.searchForm.value.keyword.trim() : keyword.trim();
 
     // sanitize keywords
-    this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
+    // this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
 
     if (this.searchToken.length >= 3) {
       // this.hideSearchResult = this.router.url.startsWith(this.searchRoute);
@@ -72,7 +72,8 @@ export class SearchComponent implements OnInit {
   }
 
   onKeyDown(event) {
-    const keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
+    let keywords = this.keywords.nativeElement.value;
+    // keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
     const keyCode = event.which || event.keyCode;
     const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
 
@@ -81,7 +82,6 @@ export class SearchComponent implements OnInit {
         // this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
 
         // TODO: this for fix component does not reload when route change
-        // window.location = `/search?keywords=${keywords}`;
         this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
       } else {
         this.hideSearchResult = true;
