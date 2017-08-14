@@ -143,8 +143,8 @@
                   {{event.startDate | amFromUnix | date:'dd MMMM y hh:mma'}}
                 </div>
               </div>
-              <div class="col-xs-2 col-md-2 padding-0">
-                <button class="btn btn-default custom-btn">{{event.call2action.action}}</button>
+              <div class="col-xs-2 col-md-2 padding-0" *ngIf="event.call2action.link">
+                <a class="btn btn-default custom-btn" [href]="event.call2action.link">{{event.call2action.action}}</a>
               </div>
             </div>
             <!--event-item end-->
