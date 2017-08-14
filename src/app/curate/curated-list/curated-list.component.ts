@@ -37,7 +37,8 @@ export class CuratedListComponent implements OnInit {
 
   public currentEditorsPickPage = 0;
   public currentCommunityPage = 0;
-  public endList = false;
+  public noMoreCommunityArticles = false;
+  public noMoreEditorsPickArticles = false;
   public loading = false;
 
   public loadingEditorsPickArticles = false;
@@ -165,6 +166,7 @@ export class CuratedListComponent implements OnInit {
           this.editorsPickArticles = this.editorsPickArticles.concat(response);
           this.loadingEditorsPickArticles = false;
           this.smallLoader.hide();
+          this.noMoreEditorsPickArticles = response.length === 0;
         }
       );
     }
@@ -179,6 +181,7 @@ export class CuratedListComponent implements OnInit {
           this.communityArticles = this.communityArticles.concat(response);
           this.loadingCommunityArticles = false;
           this.smallLoader.hide();
+          this.noMoreCommunityArticles = response.length === 0;
         }
       );
     }
