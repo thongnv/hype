@@ -908,7 +908,7 @@ export class EatComponent implements OnInit {
       if(this.params.radius < 0.25){
         this.params.radius = parseFloat((distance / 1000).toFixed(2));
       }else{
-        this.params.radius = parseFloat((distance / 1000).toFixed(2))-0.25;
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
       }
       this.smallLoader.show();
       this.shownotfound=false;
