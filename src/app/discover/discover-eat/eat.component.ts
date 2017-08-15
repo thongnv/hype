@@ -107,7 +107,7 @@ export class EatComponent implements OnInit {
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
     });
-    //console.log(this.is)
+
     this.sortBy = [
       {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
@@ -116,16 +116,22 @@ export class EatComponent implements OnInit {
       {id: 'favorites', name: 'Number of favorites'},
       {id: 'distance', name: 'Distance (KM)'}
     ];
+
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
     window.scroll(0,0);
+
+    // get route params
     this.route.params.subscribe((param) => {
       if (param.location) {
+        console.log('got param: ', param);
         this.items = [];
         this.markers = [];
+
         this.mapsAPILoader.load().then(() => {
           if (param.location.replace('+', ' ') != 'Singapore') {
             let geocoder = new google.maps.Geocoder();
+
             if (geocoder) {
               geocoder.geocode({
                 address: param.location.replace('+', ' ') + ' Xinh-ga-po',
@@ -152,9 +158,9 @@ export class EatComponent implements OnInit {
                     let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
                     this.params.lat = this.lat;
                     this.params.long = this.lng;
-                    this.params.page=0;
+                    this.params.page = 0;
                     this.params.radius = parseFloat((distance / 1000).toFixed(2));
-
+                    console.log('radius: ', this.params.radius);
 
                     this.mapZoom=15;
                     this.smallLoader.show();
@@ -185,7 +191,7 @@ export class EatComponent implements OnInit {
         }
 
       }
-    });
+    });// end geocode
   }
 
   public ngOnInit() {
@@ -255,6 +261,7 @@ export class EatComponent implements OnInit {
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
+
   }
 
   public onResize(event): void {
@@ -864,6 +871,7 @@ export class EatComponent implements OnInit {
       this.type.splice(this.type.length - 1, 1);
     }
   }
+
   public rateCheckbox(event,rate){
     if (event) {
       rate.checked=true;
@@ -874,6 +882,7 @@ export class EatComponent implements OnInit {
       this.currentRate.splice(index, 1);
     }
   }
+
   public centerChange(event) {
     this.lat = event.lat;
     this.lng = event.lng;
@@ -886,36 +895,43 @@ export class EatComponent implements OnInit {
         this.mapZoom=14;
       }
     });
+
     this.items = [];
     this.markers = [];
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
+
     if (!this.zoomChanged) {
       let latLngNew = new google.maps.Marker({
         position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
         draggable: true
       });
+
       this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
+
       let searchCenter = mapCenter.getPosition();
-      let distance:any = this.getDistance(searchCenter,latLngNew.getPosition());
+      let distance = this.getDistance(searchCenter, latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      if(this.params.radius < 0.25){
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      }else{
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+
+      // TODO: temporary fix just fixed code, need this more properly
+      if (this.innerWidth <= 900) {
+        distance = 18335.70326024872;
       }
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.smallLoader.show();
       this.shownotfound=false;
       this.getDataModes();
     }
+
   }
 }
+
 function sleep(delay) {
   var start = new Date().getTime();
   while (new Date().getTime() < start + delay);
