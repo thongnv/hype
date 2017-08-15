@@ -6,6 +6,14 @@ a:hover {
   clear: both;
 }
 
+#wrapper,
+#root-container
+{
+  height: 100%;
+}
+
+
+
 .border-bottom {
   border-bottom: 1px solid #f7f7f7;
 }

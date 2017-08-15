@@ -47,6 +47,7 @@ export class SearchComponent implements OnInit {
 
   public onSubmit(event, keyword?: string) {
     this.hideSearchResult = false;
+    const keyCode = event.which || event.keyCode;
     this.searchToken = event.type === 'submit' ?
       this.searchForm.value.keyword.trim() : keyword.trim();
 
@@ -54,6 +55,9 @@ export class SearchComponent implements OnInit {
     // this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
 
     if (this.searchToken.length >= 3) {
+      if (keyCode == 13) {
+        this.hideSearchResult = true;
+      }
       // this.hideSearchResult = this.router.url.startsWith(this.searchRoute);
       this.mainService.search(this.searchToken).subscribe((resp) => {
         this.result = resp;
