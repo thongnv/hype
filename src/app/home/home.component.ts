@@ -481,7 +481,8 @@ export class HomeComponent implements OnInit {
           // set icon for marker based on event type
           let eventMarkerIcon = 'assets/icon/locationmarker.png';
           this.appGlobal.eventIcon.forEach(icon => {
-            if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
+            const eventItemCategoryName = events[i].field_categories.name;
+            if (eventItemCategoryName && eventItemCategoryName.toLowerCase() === icon.name) {
               eventMarkerIcon = icon.url;
             }
           });
