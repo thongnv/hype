@@ -1,68 +1,116 @@
 import { Injectable } from '@angular/core';
-import { BaseApiService } from './service_base.service';
 import { AppSetting } from '../app.setting';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+
+import 'rxjs/Rx';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import { map } from 'rxjs/operator/map';
-import { $SQ } from 'codelyzer/angular/styles/chars';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
+
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Injectable()
 
 export class HomeService {
 
-  constructor(private api: BaseApiService) {
-    console.log('home api');
+  private defaultHeaders = new Headers({
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'X-CSRF-Token': this.localStorageService.get('csrf_token')
+  });
+
+  constructor(private localStorageService: LocalStorageService,
+              private http: Http) {
   }
 
-  public getEvents(params: any) {
-    let seq = this.api.get(AppSetting.API_TRENDING, params).share();
-    seq.map((res) => res.json())
-      .subscribe((res) => {
-        //
-      }, (err) => {
-        console.log('err', err);
-      });
-    return seq;
+  public getLatestEvents(params): Observable<Response> {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({
+      headers,
+      withCredentials: true
+    });
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/home/search' +
+      '?page=' + params.page +
+      '&limit=20' +
+      '&start=' + params.start +
+      '&tid=' + params.tid +
+      '&time=' + params.time +
+      '&latest=' + params.latest +
+      '&when=' + params.when +
+      '&lat=' + params.lat +
+      '&long=' + params.long +
+      '&radius=' + params.radius +
+      '&price=' + params.price +
+      '&weekend=' + params.weekend +
+      '&order=' + params.order +
+      '&type=' + params.type,
+      options
+    )
+      .map(
+        (res: Response) => res.json()
+      )
+      .catch(
+        (error) => Observable.throw(new Error(error))
+      );
   }
 
-  public getLatestEvents(params: any) {
-    return this.api.get(AppSetting.API_TRENDING, params)
-      .share()
-      .map(resp => resp.json());
-
+  public getTop100(params) {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({
+      headers,
+      withCredentials: true
+    });
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/top' +
+      '?_format=json' +
+      '&page=' + params.page +
+      '&limit=20' +
+      '&start=' + params.start +
+      '&tid=' + params.tid +
+      '&time=' + params.time +
+      '&latest=' + params.latest +
+      '&when=' + params.when +
+      '&lat=' + params.lat +
+      '&long=' + params.lng +
+      '&radius=' + params.radius +
+      '&price=' + params.price +
+      '&weekend=' + params.weekend +
+      '&order=' + params.order,
+      options
+    )
+      .map(
+        (res: Response) => res.json()
+      )
+      .catch(
+        (error) => Observable.throw(new Error(error))
+      );
   }
 
-  public getTop100(params: any) {
-    let seq = this.api.get(AppSetting.API_ENDPOINT_TOP, params).share();
-    seq.map((res) => res.json())
-      .subscribe((res) => {
-        //
-      }, (err) => {
-        console.log('err', err);
-      });
-    return seq;
-  }
-
-  public getCategories(type: any) {
-    let seq = this.api.get(AppSetting.API_CATEGORIES_EVENT).share();
-    seq.map((res) => res.json())
-      .subscribe((res) => {
-        //
-      }, (err) => {
-        //
-      });
-    return seq;
+  public getCategories() {
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.get(
+      AppSetting.API_ENDPOINT + 'api/v1/category/event/?_format=json', options
+    )
+      .map(
+        (res: Response) => res.json()
+      )
+      .catch(
+        (error) => Observable.throw(new Error(error))
+      );
   }
 
   public likeEvent(body: any) {
-
-    let seq = this.api.post(AppSetting.API_ENDPOINT_LIKE + '&slug=' + body.slug, body).share();
-    seq.map((res) => res.json())
-      .subscribe((res) => {
-        //
-      }, (err) => {
-        //
-      });
-    return seq;
+    let headers = this.defaultHeaders;
+    let options = new RequestOptions({headers, withCredentials: true});
+    return this.http.post(
+      AppSetting.API_ENDPOINT + 'api/user/flag/bookmark?_format=json&slug=' + body.slug,
+      body, options
+    )
+      .map((res: Response) => res.json())
+      .catch(
+        (error) => Observable.throw(new Error(error))
+      );
   }
 }

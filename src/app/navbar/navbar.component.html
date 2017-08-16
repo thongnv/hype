@@ -8,22 +8,22 @@
           <span class="user-name-info text-ellipsis">{{user.name}}</span>
         </div>
         <ul class="user-menu-mobile" aria-labelledby="drop-0">
-          <li [routerLink]="['/' + user.slug + '/profile-edit']" routerLinkActive="active"
+          <li [routerLink]="[user.slug, '/profile-edit']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
           </li>
-          <li [routerLink]="['/' + user.slug + '/setting']" routerLinkActive="active"
+          <li [routerLink]="[user.slug, '/setting']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Settings
           </li>
-          <li [routerLink]="['/' + user.slug + '/interest']" routerLinkActive="active"
+          <li [routerLink]="[user.slug, 'interest']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Interests
           </li>
-          <li [routerLink]="['/' + user.slug + '/favorite']" routerLinkActive="active"
+          <li [routerLink]="[user.slug, '/favorite']" routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Favorites
           </li>
-          <li [routerLink]="['/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+          <li [routerLink]="['logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
               class="text-ellipsis">Logout
           </li>
         </ul>
@@ -76,25 +76,6 @@
           <li class="mobile-location-icon pull-right nav-item" ngbDropdown>
             <div *ngIf="appGlobal.toggleMap" (click)="doToggleMap()"  id="mobile-location" class="mobile-location" ngbDropdownToggle>
               <i class="glyphicon glyphicon-map-marker text-white glyphicon-2x"></i>
-              <!--
-              <ul *ngIf="mapOptions" class="map-option-dropdown-mobile" aria-labelledby="drop1"
-                  id="map-option-dropdown-mobile">
-                <div slimScroll
-                     width="100vw"
-                     height="50vh"
-                     size="7px"
-                     [railVisible]="true"
-                     [touchScrollStep]="75"
-                     [railOpacity]="0.1"
-                     [railColor]="'#ec3d62'"
-                     [color]="'#ec3d62'">
-
-                <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
-                    (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
-                </li>
-              </div>
-            </ul>
-            -->
           </div>
         </li>
       </ul>
@@ -111,15 +92,15 @@
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
-            {{selectedMapOption.name}}
+            {{selectedNeighbourhood}}
             <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
 
-          <ul *ngIf="mapOptions" class="dropdown-menu" aria-labelledby="drop1" id="map-option-dropdown">
+          <ul *ngIf="neighbourhoods" class="dropdown-menu" aria-labelledby="drop1" id="map-option-dropdown">
             <div>
 
-              <li *ngFor="let option of mapOptions" [class.active]="option.name === selectedMapOption.name"
-                  (click)="onSelectMapOption(option)" class="text-ellipsis">{{option.name}}
+              <li *ngFor="let neighbourhood of neighbourhoods" [class.active]="neighbourhood === selectedNeighbourhood"
+                  (click)="onSelectNeighbourhood(neighbourhood)" class="text-ellipsis">{{neighbourhood}}
               </li>
             </div>
           </ul>
@@ -168,28 +149,28 @@
             <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="drop2">
-            <li [routerLink]="['/' + user.slug + '/profile-edit']" routerLinkActive="active"
+            <li [routerLink]="[user.slug, 'profile-edit']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}" class="text-ellipsis">My Profile
             </li>
-            <li [routerLink]="['/' + user.slug + '/setting']" routerLinkActive="active"
+            <li [routerLink]="[user.slug, 'setting']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Settings
             </li>
-            <li [routerLink]="['/' + user.slug + '/interest']" routerLinkActive="active"
+            <li [routerLink]="[user.slug, 'interest']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Interests
             </li>
-            <li [routerLink]="['/' + user.slug + '/favorite']" routerLinkActive="active"
+            <li [routerLink]="[user.slug, 'favorite']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Favorites
             </li>
-            <li [routerLink]="['/logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+            <li [routerLink]="['logout']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
                 class="text-ellipsis">Logout
             </li>
           </ul>
         </div>
         <div *ngIf="user.isAnonymous">
-          <span [routerLink]="['/login']" class="btn btn-success btn-login">Login</span>
+          <span [routerLink]="['login']" class="btn btn-success btn-login">Login</span>
         </div>
       </li>
     </ul>

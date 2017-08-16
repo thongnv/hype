@@ -95,12 +95,6 @@ export class CompanyService {
       return <Experience> res.json();
     })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
       });
   }
@@ -116,12 +110,6 @@ export class CompanyService {
         return res.json().comment.results[0];
       })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
       });
   }
@@ -140,12 +128,6 @@ export class CompanyService {
         return Boolean(res.json().is_liked);
       })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
       });
   }

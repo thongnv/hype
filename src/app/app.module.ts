@@ -55,7 +55,7 @@ import { LoaderService } from './helper/loader/loader.service';
 import { SeoService } from './services/seo.service';
 import { ProfileService } from './services/profile.service';
 import { WindowUtilService } from './services/window-ultil.service';
-import { WindowRefService } from "./services/window-ref.service"
+import { WindowRefService } from './services/window-ref.service';
 
 // directives
 import { GmapClustererDirective } from './gmap/custom-gmap.directive';
@@ -69,7 +69,6 @@ import { StringTimeStamp } from './shared/string-2-timestamp.pie';
 
 // components
 import { GmapComponent } from './gmap/gmap.component';
-import { DiscoverComponent } from './discover/discover.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ShareEventComponent } from './event/share-event/share-event.component';
 import { FollowingComponent } from './member/following/following.component';
@@ -125,7 +124,6 @@ type StoreType = {
     NoContentComponent,
     ServerErrorComponent,
     GmapComponent,
-    DiscoverComponent,
     NavbarComponent,
     GmapClustererDirective,
     ShareEventComponent,
