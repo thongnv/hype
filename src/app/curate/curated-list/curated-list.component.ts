@@ -67,7 +67,7 @@ export class CuratedListComponent implements OnInit {
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
-    this.titleService.setTitle('Curated List');
+    this.titleService.setTitle('Hylo | Guides');
     window.onscroll = () => {
       let windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight;
       let body = document.body;
