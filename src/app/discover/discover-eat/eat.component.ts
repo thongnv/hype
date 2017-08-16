@@ -95,7 +95,6 @@ export class EatComponent implements OnInit {
 
   private boundsChangeDefault = {lat: '', lng: ''};
 
-  private requestings = [];
   private cuisineDraw = [];
 
   public constructor(private titleService: Title,
@@ -767,39 +766,20 @@ export class EatComponent implements OnInit {
       this.params.long = this.lng;
       this.getDataModes();
     }
-
   }
 
   private getDataModes() {
-    this.requestings.forEach((req) => req.unsubscribe());
-    const req = this.modeService.getModeData(this.params)
-      .subscribe(
-        (data) => {
-          this.total = data.total;
-          this.items = this.loadMore ? this.items.concat(data.company) : data.company;
-          this.shownotfound = data.total === 0;
-          this.endRecord = data.company.length === 0;
-
-          this.loadMore = false;
-          this.initMap();
-          this.loaderService.hide();
-          this.smallLoader.hide();
-        },
-        (error) => {
-          console.error('getModeData error: ', error);
-          req.unsubscribe();
-
-          this.loadMore = false;
-          this.endRecord = false;
-          this.items = [];
-          this.markers = [];
-          this.loaderService.hide();
-          this.smallLoader.hide();
-        },
-        () => req.unsubscribe());
-
-    this.requestings.push(req);
-
+    this.modeService.getModeData(this.params).subscribe(
+      (data) => {
+        this.total = data.total;
+        this.items = this.loadMore ? this.items.concat(data.company) : data.company;
+        this.shownotfound = data.total === 0;
+        this.endRecord = data.company.length === 0;
+        this.loadMore = false;
+        this.initMap();
+        this.loaderService.hide();
+        this.smallLoader.hide();
+      });
   }
 
   private initMap() {

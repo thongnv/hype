@@ -8,12 +8,11 @@ import { AgmCoreModule } from 'angular2-google-maps/core';
 import { TreeviewModule } from 'ngx-treeview';
 
 import { HtmlToTextModule } from '../html-to-text/html-to-text.module';
-import {HelperModule} from '../helper/helper.module';
+import { HelperModule } from '../helper/helper.module';
 import { DiscoverRoutingModule } from './discover-routing.module';
 
-import { ModeComponent } from './mode-play/mode.component';
-import {EatComponent} from "./discover-eat/eat.component";
-import {PlayComponent} from "./discover-play/play.component";
+import { EatComponent } from './discover-eat/eat.component';
+import { PlayComponent } from './discover-play/play.component';
 
 @NgModule({
   imports: [
@@ -30,12 +29,10 @@ import {PlayComponent} from "./discover-play/play.component";
     DiscoverRoutingModule
   ],
   declarations: [
-    ModeComponent,
     EatComponent,
     PlayComponent
   ],
-  providers: [
-
-  ],
+  providers: [],
 })
-export class DiscoverModule { }
+export class DiscoverModule {
+}
