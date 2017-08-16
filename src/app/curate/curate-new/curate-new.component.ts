@@ -41,8 +41,7 @@ export class CurateNewComponent implements OnInit {
   public innerWidth: number;
 
   public currentHighlightedMarker: number = null;
-  public formData = this.formBuilder.group({
-    listName: ['', Validators.required],
+  public formData = this.formBuilder.group({listName: ['', Validators.required],
     listDescription: ['', Validators.required],
     listCategory: ['', Validators.required],
     listCatTmp: [''],
@@ -157,7 +156,7 @@ export class CurateNewComponent implements OnInit {
     if (this.formData.valid) {
       let article = this.formData.value;
       this.listPlaces = [];
-      let address = article.places;
+      let address = article.listPlaces;
       for (let add of address) {
         this.listPlaces.push({
           field_place_comment: add.description,
@@ -235,7 +234,7 @@ export class CurateNewComponent implements OnInit {
       body: article.listDescription,
       field_images: article.listImages,
       category: article.listCategory,
-      field_places: article.places
+      field_places: article.listPlaces
     };
   }
 
