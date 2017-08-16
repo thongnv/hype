@@ -129,61 +129,7 @@ export class EatComponent implements OnInit {
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
     window.scroll(0, 0);
-    this.route.params.subscribe((param) => {
-      if (param.location) {
-        this.items = [];
-        this.markers = [];
-        this.mapsAPILoader.load().then(() => {
-          if (param.location.replace('+', ' ') !== 'Singapore') {
-            let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({
-                address: param.location.replace('+', ' ') + ' Xinh-ga-po',
-                region: 'sg'
-              },
-              (response, status) => {
-                if (status === google.maps.GeocoderStatus.OK) {
-                  if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    this.lat = response[0].geometry.location.lat();
-                    this.lng = response[0].geometry.location.lng();
-                    this.params.lat = response[0].geometry.location.lat();
-                    this.params.long = response[0].geometry.location.lng();
-                    let latLngNew = new google.maps.Marker({
-                      position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-                      draggable: true
-                    });
-                    this.zoomChanged = true;
-                    let mapCenter = new google.maps.Marker({
-                      position: new google.maps.LatLng(this.lat, this.lng),
-                      draggable: true
-                    });
-                    let searchCenter = mapCenter.getPosition();
-                    let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
-                    this.params.lat = this.lat;
-                    this.params.long = this.lng;
-                    this.params.page = 0;
-                    this.params.radius = parseFloat((distance / 1000).toFixed(2));
 
-                    this.mapZoom = 15;
-                    this.smallLoader.show();
-                    this.getDataModes();
-                  }
-                } else {
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-                  }
-                }
-              });
-          }
-
-        });
-
-      } else {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-        }
-
-      }
-    });
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.getCategories('eat');
     this.getFilter();
@@ -248,6 +194,9 @@ export class EatComponent implements OnInit {
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
+    this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
+      this.getPlaces(neighbourhood);
+    });
   }
 
   public onResize(event): void {
@@ -528,6 +477,7 @@ export class EatComponent implements OnInit {
     this.smallLoader.show();
     this.getDataModes();
   }
+
   public selectCheckBox(event, parent, sub) {
     if (sub && event) {
       if (parent.sub.length > 0) {
@@ -669,6 +619,55 @@ export class EatComponent implements OnInit {
       this.shownotfound = false;
       this.getDataModes();
     }
+  }
+
+  private getPlaces(neighbourhood) {
+    this.items = [];
+    this.markers = [];
+    if (neighbourhood !== 'Singapore') {
+      this.mapZoom = 15;
+    } else {
+      this.mapZoom = 12;
+    }
+    this.mapsAPILoader.load().then(() => {
+      let geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+          address: neighbourhood + ' Xinh-ga-po',
+          region: 'sg'
+        },
+        (response, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
+              this.lat = response[0].geometry.location.lat();
+              this.lng = response[0].geometry.location.lng();
+              this.params.lat = response[0].geometry.location.lat();
+              this.params.long = response[0].geometry.location.lng();
+              let latLngNew = new google.maps.Marker({
+                position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
+                draggable: true
+              });
+              this.zoomChanged = true;
+              let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+              });
+              let searchCenter = mapCenter.getPosition();
+              let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
+              this.params.lat = this.lat;
+              this.params.long = this.lng;
+              this.params.page = 0;
+              this.params.radius = parseFloat((distance / 1000).toFixed(2));
+              this.smallLoader.show();
+              this.getDataModes();
+            }
+          } else {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+            }
+          }
+        });
+    });
+
   }
 
   private clearParams() {
@@ -854,6 +853,7 @@ export class EatComponent implements OnInit {
     }
 
   }
+
 }
 
 function sleep(delay) {
