@@ -139,7 +139,7 @@ export class HomeComponent implements OnInit {
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
       if (this.params.latest) {
-        this.updateNeighbourhood(this.neighbourhood);
+        this.getEvents(this.neighbourhood);
       }
     });
   }
@@ -192,7 +192,6 @@ export class HomeComponent implements OnInit {
   }
 
   public showLatestEvents() {
-    this.mapZoom = 12;
     this.selectedEventOrder = 'latest';
     this.params.time = '';
     this.params.latest = '1';
@@ -216,7 +215,7 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.markers = [];
     this.events = [];
-    this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public setPosition(position) {
@@ -541,7 +540,12 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  private updateNeighbourhood(neighbourhood) {
+  private getEvents(neighbourhood) {
+    if (neighbourhood !== 'Singapore') {
+      this.mapZoom = 15;
+    } else {
+      this.mapZoom = 12;
+    }
     let geocoder = new google.maps.Geocoder();
     geocoder.geocode({
         address: neighbourhood + ' Xinh-ga-po',
@@ -567,11 +571,6 @@ export class HomeComponent implements OnInit {
             this.params.long = this.lng;
             this.params.page = 0;
             this.params.radius = parseFloat((distance / 1000).toFixed(2));
-            if (neighbourhood !== 'Singapore') {
-              this.mapZoom = 15;
-            } else {
-              this.mapZoom = 12;
-            }
             this.loadMore = false;
             this.getLatestEvents(this.params);
           }
