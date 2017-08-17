@@ -273,6 +273,7 @@ export class EditEventComponent implements OnInit {
   }
 
   public onPreview() {
+    window.scroll(0, 0);
     let event = this.eventForm.value;
     event.images = this.previewUrls;
     event.Date = moment(event.date).unix();

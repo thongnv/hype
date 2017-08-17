@@ -195,20 +195,18 @@
   <!--list preview wrap start-->
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
     <div class="row">
-      <div class="col-md-7 left-content">
-        <div class="event-title">
+      <div class="col-md-7 left-content padding-0">
+        <div class="event-title border-bottom">
           <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
           <span class="One-Direction-Concer" [innerHTML]="previewData.name"></span>
         </div>
 
-        <hr>
-
         <div class="row information-event">
           <ul class="left-content-information-event">
             <li>
               <span class="info-label"><i class="sprite sprite-location"></i><span>location</span></span><span
-              class="info-value">{{previewData.place.place}}</span>
+              class="info-value">{{previewData.place.name}}</span>
               <div class="clear"></div>
             </li>
             <li>
@@ -230,19 +228,19 @@
             <li>
               <span class="info-label"><i class="sprite sprite-tag"></i><span>Prices</span></span>
               <span class="info-value">
-                <span *ngIf="prices">
-                  <span *ngFor="let price of prices">${{price}}, </span>
+                <span *ngIf="previewData.prices.length">
+                  <span *ngFor="let price of previewData.prices; let last=last">${{price}}{{last? '' : ', '}}</span>
                 </span>
-                <span *ngIf="!prices">Free</span>
+                <span *ngIf="!previewData.prices.length">Free</span>
               </span>
               <div class="clear"></div>
             </li>
-            <li>
+            <li *ngIf="previewData.call2action.link">
               <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
               </span>
               <span class="info-value">
               <a href="{{previewData.call2action.link}}" target="_blank" class="mention_link">
-                <span class="action">{{previewData.call2action.action}}</span>
+                <span class="action">{{previewData.call2action.type == 1 ? 'Buy Tix' : 'More Info'}}</span>
               </a>
             </span>
               <div class="clear"></div>
@@ -257,8 +255,8 @@
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li class="mention" *ngFor="let mention of previewData.mentions">
-                  <a [href]="mention.url" target="_blank">
-                    <img [src]="mention.iconUrl" alt="mention"></a>
+                  <a [href]="mention.url" target="_blank" *ngIf="mention">
+                    <img [src]="'https://www.google.com/s2/favicons?domain=' + mention" alt=""></a>
                 </li>
               </ul>
               <div class="clear"></div>
@@ -284,6 +282,9 @@
           <h5 class="bold">Details</h5>
           <p [innerHTML]="previewData.detail">
           </p>
+          <ul class="tags">
+            <li *ngFor="let tag of previewData.tags">{{tag}}</li>
+          </ul>
         </div>
 
         <hr>
@@ -311,7 +312,7 @@
 
       <div class="col-md-5 right-content">
 
-        <div class="row">
+        <div>
           <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
                     [carouselSlides]="slides">
             <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"

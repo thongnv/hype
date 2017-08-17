@@ -8,7 +8,6 @@
 }
 
 header {
-  width: 50%;
   border-right: 1px solid #eaeaea;
   background: transparent;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
@@ -39,6 +38,14 @@ header ul li.active {
 }
 
 /*header end*/
+
+.border-bottom {
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.padding-0 {
+  padding: 0;
+}
 
 /*form wrap start*/
 .form-wrap {
@@ -242,12 +249,13 @@ input#event-date {
 }
 
 .list-preview-wrap .right-content {
-  padding-left: 30px;
+  padding-top: 30px;
   padding-right: 0;
+  padding-left: 30px;
 }
 
 .list-preview-wrap .event-title {
-  margin: 24px;
+  padding: 24px;
   font-weight: bold;
 }
 
@@ -385,7 +393,6 @@ input#event-date {
 .left-content-information-event .info-label {
   float: left;
   text-transform: capitalize;
-  margin-right: 40px;
   font-family: Roboto, sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -454,6 +461,23 @@ span.dollar-character {
 .list-mention > li > a > img {
   width: 16px;
   height: 16px;
+}
+
+.tags {
+  list-style: none;
+  padding-left: 0;
+  display: block;
+  float: left;
+  margin-top: 8px;
+}
+
+.tags li {
+  background-color: #ccc;
+  padding: 5px 10px;
+  font-weight: 300;
+  float: left;
+  margin-right: 15px;
+  text-transform: capitalize;
 }
 
 .share-event {
@@ -645,10 +669,6 @@ span.dollar-character {
     padding-left: 0;
   }
 
-  .list-preview-wrap .left-content {
-    border-right: 0;
-  }
-
   .new-list .recaptcha {
     margin-left: 0;
     clear: both;
@@ -773,10 +793,6 @@ span.dollar-character {
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap {
     padding: 5px 10px;
-  }
-
-  .list-preview-wrap .left-content {
-    border-right: 0;
   }
 
 }
