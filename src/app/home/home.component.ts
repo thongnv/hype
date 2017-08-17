@@ -181,7 +181,7 @@ export class HomeComponent implements OnInit {
   public showTop100Events() {
     this.mapZoom = 12;
     this.selectedEventOrder = 'top 100';
-    this.params.time = 'today';
+    this.params.time = '';
     this.params.latest = '';
     this.params.page = 0;
     this.params.price = 0;
@@ -197,19 +197,6 @@ export class HomeComponent implements OnInit {
     this.selectedEventOrder = 'latest';
     this.params.time = '';
     this.params.latest = '1';
-    let latLngNew = new google.maps.Marker({
-      position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-      draggable: true
-    });
-    this.zoomChanged = true;
-    let mapCenter = new google.maps.Marker({
-      position: new google.maps.LatLng(this.lat, this.lng),
-      draggable: true
-    });
-    let distance: any = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
-    this.params.lat = this.lat;
-    this.params.long = this.lng;
-    this.params.radius = parseFloat((distance / 1000).toFixed(2));
     this.params.page = 0;
     this.params.price = 0;
     this.params.start = 0;
@@ -402,12 +389,11 @@ export class HomeComponent implements OnInit {
         } else {
           this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
         }
-        this.smallLoader.show();
         this.events = [];
         this.markers = [];
         this.params.page = 0;
         this.shownotfound = false;
-        this.getTrendingEvents();
+        this.getLatestEvents(this.params);
       }
     }
   }
@@ -539,21 +525,19 @@ export class HomeComponent implements OnInit {
       });
       this.requests = [];
     }
-    if (!this.requests.length) {
-      const request = this.homeService.getLatestEvents(params).subscribe(
-        (data: any) => {
-          this.events = this.loadMore ? this.events.concat(data.data) : data.data;
-          this.endRecord = data.data.length === 0;
-          this.total = data.total;
-          this.shownotfound = data.total === 0;
-          this.initMap(data.data);
-          this.loadMore = false;
-          this.smallLoader.hide();
-          this.loading = false;
-        }
-      );
-      this.requests.push(request);
-    }
+    const request = this.homeService.getLatestEvents(params).subscribe(
+      (data: any) => {
+        this.events = this.loadMore ? this.events.concat(data.data) : data.data;
+        this.endRecord = data.data.length === 0;
+        this.total = data.total;
+        this.shownotfound = data.total === 0;
+        this.initMap(data.data);
+        this.loadMore = false;
+        this.smallLoader.hide();
+        this.loading = false;
+      }
+    );
+    this.requests.push(request);
   }
 
   private getEvents(neighbourhood) {
@@ -677,7 +661,6 @@ export class HomeComponent implements OnInit {
             marker.price = events[i].field_event_option.field_price;
           }
 
-          // console.log('event: ', this.events[i]);
           this.markers.push(marker);
         }
 
@@ -700,7 +683,6 @@ export class HomeComponent implements OnInit {
           }
         }
 
-        sleep(50);
         this.zoomChanged = false;
       }
     );
@@ -738,11 +720,4 @@ function calculateNumCategories(): number {
   }
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
-}
-
-function sleep(delay) {
-  let start = new Date().getTime();
-  while (new Date().getTime() < start + delay) {
-    // Sleep
-  }
 }

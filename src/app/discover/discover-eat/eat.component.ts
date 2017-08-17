@@ -73,6 +73,7 @@ export class EatComponent implements OnInit {
   private total: number = 0;
   private stopped: boolean = false;
   private categorySelected: any[] = [];
+  private requests = [];
 
   private params = {
     type: 'eat',
@@ -274,7 +275,6 @@ export class EatComponent implements OnInit {
     this.params.page = 0;
     this.markers = [];
     this.items = [];
-    this.smallLoader.show();
     this.getDataModes();
   }
 
@@ -329,13 +329,11 @@ export class EatComponent implements OnInit {
     this.markers = [];
     this.items = [];
     this.params.page = 0;
-    this.smallLoader.show();
     this.getDataModes();
   }
 
   public filterCancel() {
     this.filterCategory.value.filterCategory = 'all';
-    this.smallLoader.show();
     this.clearParams();
     this.getDataModes();
 
@@ -459,7 +457,6 @@ export class EatComponent implements OnInit {
     this.params.page = 0;
     this.items = [];
     this.markers = [];
-    this.smallLoader.show();
     this.getDataModes();
 
   }
@@ -473,7 +470,6 @@ export class EatComponent implements OnInit {
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.smallLoader.show();
     this.getDataModes();
   }
 
@@ -614,7 +610,6 @@ export class EatComponent implements OnInit {
         this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
       }
       this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      this.smallLoader.show();
       this.shownotfound = false;
       this.getDataModes();
     }
@@ -656,7 +651,6 @@ export class EatComponent implements OnInit {
               this.params.long = this.lng;
               this.params.page = 0;
               this.params.radius = parseFloat((distance / 1000).toFixed(2));
-              this.smallLoader.show();
               this.getDataModes();
             }
           } else {
@@ -769,7 +763,14 @@ export class EatComponent implements OnInit {
   }
 
   private getDataModes() {
-    this.modeService.getModeData(this.params).subscribe(
+    if (this.requests.length) {
+      this.requests.forEach((req) => {
+        req.unsubscribe();
+      });
+      this.requests = [];
+    }
+    this.smallLoader.show();
+    const request = this.modeService.getModeData(this.params).subscribe(
       (data) => {
         this.total = data.total;
         this.items = this.loadMore ? this.items.concat(data.company) : data.company;
@@ -780,6 +781,7 @@ export class EatComponent implements OnInit {
         this.loaderService.hide();
         this.smallLoader.hide();
       });
+    this.requests.push(request);
   }
 
   private initMap() {
@@ -814,7 +816,6 @@ export class EatComponent implements OnInit {
 
         }
       }
-      sleep(50);
       this.zoomChanged = false;
     });
   }
@@ -834,13 +835,6 @@ export class EatComponent implements OnInit {
 
   }
 
-}
-
-function sleep(delay) {
-  let start = new Date().getTime();
-  while (new Date().getTime() < start + delay) {
-    //
-  }
 }
 
 function rad(x) {

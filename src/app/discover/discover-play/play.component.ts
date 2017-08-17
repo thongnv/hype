@@ -75,6 +75,7 @@ export class PlayComponent implements OnInit {
   private stopped: boolean = false;
   private catParam = {mode_type: ''};
   private total: number = 0;
+  private requests = [];
 
   private params = {
     type: 'play',
@@ -683,8 +684,14 @@ export class PlayComponent implements OnInit {
   }
 
   private getDataModes() {
+    if (this.requests.length) {
+      this.requests.forEach((req) => {
+        req.unsubscribe();
+      });
+      this.requests = [];
+    }
     this.smallLoader.show();
-    this.modeService.getModeData(this.params).subscribe(
+    const request = this.modeService.getModeData(this.params).subscribe(
       (data) => {
         this.total = data.total;
         this.items = this.loadMore ? this.items.concat(data.company) : data.company;
@@ -695,6 +702,7 @@ export class PlayComponent implements OnInit {
         this.loaderService.hide();
         this.smallLoader.hide();
       });
+    this.requests.push(request);
   }
 
   private initMap() {
@@ -722,7 +730,6 @@ export class PlayComponent implements OnInit {
             });
           }
         }
-        sleep(50);
         this.zoomChanged = false;
       });
     }
@@ -802,13 +809,6 @@ export class PlayComponent implements OnInit {
     this.items = [];
   }
 
-}
-
-function sleep(delay) {
-  let start = new Date().getTime();
-  while (new Date().getTime() < start + delay) {
-    //
-  }
 }
 
 function rad(x) {
