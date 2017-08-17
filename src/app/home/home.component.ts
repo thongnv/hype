@@ -412,6 +412,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  public zoomChange(event) {
+    // DEBUG 
+    // console.log('zoom: ', event);
+  }
+
   private clearParam() {
     this.selectedEventFilter = this.eventFilters[0];
     this.markers = [];

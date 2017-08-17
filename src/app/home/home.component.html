@@ -225,7 +225,10 @@
       [styles]="gMapStyles"
       (centerChange)="centerChange($event)"
       (boundsChange)="boundsChange($event)"
-      [mapDraggable]="true">
+      (zoomChange)="zoomChange($event)"
+      [mapDraggable]="true"
+      [maxZoom]="15"
+    >
       <gmap-geocode-marker [markers]="markers"
                            [lat]="lat"
                            (markerClick)="clickedMarker($event)"
