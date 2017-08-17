@@ -87,6 +87,7 @@ export class HomeComponent implements OnInit {
     price: 0
   };
   private eventCate: any[] = [];
+  private requests = [];
 
   constructor(private titleService: Title,
               private homeService: HomeService,
@@ -380,7 +381,7 @@ export class HomeComponent implements OnInit {
   public boundsChange(event) {
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    if (this.selectedEventOrder.name !== 'top 100') {
+    if (this.selectedEventOrder === 'latest') {
       if (!this.zoomChanged) {
         let latLngNew = new google.maps.Marker({
           position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
@@ -455,7 +456,7 @@ export class HomeComponent implements OnInit {
     $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
       $(window).scroll(() => {
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.selectedEventOrder.name === 'top 100') {
+          if (this.selectedEventOrder === 'top 100') {
             if (this.loadMore === false && this.endRecord === false) {
               if (this.events.length > 10) {
                 this.loadMore = true;
@@ -527,18 +528,27 @@ export class HomeComponent implements OnInit {
   private getLatestEvents(params) {
     this.loading = true;
     this.smallLoader.show();
-    this.homeService.getLatestEvents(params).subscribe(
-      (data: any) => {
-        this.events = this.loadMore ? this.events.concat(data.data) : data.data;
-        this.endRecord = data.data.length === 0;
-        this.total = data.total;
-        this.shownotfound = data.total === 0;
-        this.initMap(data.data);
-        this.loadMore = false;
-        this.smallLoader.hide();
-        this.loading = false;
-      }
-    );
+    if (this.requests.length) {
+      this.requests.forEach((req) => {
+        req.unsubscribe();
+      });
+      this.requests = [];
+    }
+    if (!this.requests.length) {
+      const request = this.homeService.getLatestEvents(params).subscribe(
+        (data: any) => {
+          this.events = this.loadMore ? this.events.concat(data.data) : data.data;
+          this.endRecord = data.data.length === 0;
+          this.total = data.total;
+          this.shownotfound = data.total === 0;
+          this.initMap(data.data);
+          this.loadMore = false;
+          this.smallLoader.hide();
+          this.loading = false;
+        }
+      );
+      this.requests.push(request);
+    }
   }
 
   private getEvents(neighbourhood) {
