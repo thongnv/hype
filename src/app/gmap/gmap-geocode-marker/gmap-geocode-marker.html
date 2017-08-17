@@ -15,6 +15,9 @@
           <p *ngIf="event.price">
             <span *ngFor="let p of event.price; let i = last">${{p}}{{i ? '' : ','}} </span>
           </p>
+          <p *ngIf="event.created">
+            <span>{{event.created | amFromUnix | amDateFormat: 'YYYY-MM-DD'}}</span>
+          </p>
         </div>
       </div>
 

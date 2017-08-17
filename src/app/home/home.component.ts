@@ -650,6 +650,7 @@ export class HomeComponent implements OnInit {
             opacity: 0.4,
             price: [],
             nids: [],
+            created: events[i].created || 0,
             events: []
           };
 
@@ -661,6 +662,7 @@ export class HomeComponent implements OnInit {
             marker.price = events[i].field_event_option.field_price;
           }
 
+          // console.log('event: ', this.events[i]);
           this.markers.push(marker);
         }
 
