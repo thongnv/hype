@@ -189,6 +189,7 @@ export class PlayComponent implements OnInit {
     this.appGlobal.toggleMap = true;
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.neighbourhood = neighbourhood;
+      window.scroll(0, 0);
       this.getPlaces();
     });
   }
@@ -623,8 +624,10 @@ export class PlayComponent implements OnInit {
   }
 
   private getPlaces() {
-    this.items = [];
-    this.markers = [];
+    if (!this.loadMore) {
+      this.items = [];
+      this.markers = [];
+    }
     if (this.neighbourhood !== 'Singapore') {
       this.mapZoom = 15;
     } else {
@@ -658,7 +661,6 @@ export class PlayComponent implements OnInit {
               this.params.long = this.lng;
               this.params.page = 0;
               this.params.radius = parseFloat((distance / 1000).toFixed(2));
-              this.smallLoader.show();
               this.getDataModes();
             }
           } else {
@@ -681,6 +683,7 @@ export class PlayComponent implements OnInit {
   }
 
   private getDataModes() {
+    this.smallLoader.show();
     this.modeService.getModeData(this.params).subscribe(
       (data) => {
         this.total = data.total;

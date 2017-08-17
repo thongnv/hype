@@ -98,11 +98,11 @@ export class HomeComponent implements OnInit {
               private location: Location,
               private windowRef: WindowUtilService,
               public appGlobal: AppGlobals) {
-    window.scroll(0, 0);
   }
 
   public ngOnInit() {
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
+    window.scroll(0, 0);
     this.eventFilters = ['all', 'today', 'tomorrow', 'this week'];
     this.eventOrders = ['top 100', 'latest'];
 
@@ -139,6 +139,7 @@ export class HomeComponent implements OnInit {
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
       if (this.params.latest) {
+        window.scroll(0, 0);
         this.getEvents(this.neighbourhood);
       }
     });
