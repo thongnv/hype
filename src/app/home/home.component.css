@@ -743,7 +743,7 @@ ul.mentioned-item {
 }
 
 .count_comment {
-  color: #ec3d62;
+  opacity: 0.6;
   font-size: 12px;
   text-transform: capitalize;
   margin: 20px 0;
