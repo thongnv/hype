@@ -1,5 +1,9 @@
+* {
+  font-size: 15px;
+  color: red;
+}
 .slimScrollDiv > div {
-  padding: 0px;
+  padding: 0;
 }
 
 .carousel-box {
@@ -7,9 +11,9 @@
 }
 
 .carousel-header {
-  margin: 0px;
+  margin: 0;
   position: relative;
-  padding: 20px;
+  padding: 10px;
 }
 
 .carousel-header i {
@@ -22,7 +26,7 @@
 }
 
 .carousel-header h1 {
-  font-size: 26px;
+  font-size: 35px;
   font-weight: bold;
   line-height: 1.3;
   text-align: left;
@@ -47,8 +51,9 @@
   font-weight: 300;
 }
 
-.description p {
-  font-size: 14px;
+.place-item-description /deep/ p,
+.description /deep/ p {
+  font-size: 15px;
   font-weight: 300;
   line-height: 25px;
   text-align: left;
@@ -75,7 +80,6 @@
   color: #fff;
   border: none;
   border-radius: 50%;
-  /*margin-top: 1%;*/
 }
 
 .place-item-header h2.place-name {
@@ -83,7 +87,7 @@
   text-overflow: ellipsis;
   word-break: keep-all;
   padding: 6px 20px 0;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
   line-height: 35px;
   text-align: left;
@@ -96,7 +100,7 @@
   border: none;
   text-transform: capitalize;
   text-align: right;
-  padding: 8px 0px;
+  padding: 8px 0;
   font-size: 16px;
   line-height: 30px;
   display: block;
@@ -104,7 +108,7 @@
 }
 
 .place-item-description {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 300;
   line-height: 1.43;
   text-align: left;
@@ -133,13 +137,12 @@
   }
 
   .carousel-header {
-    padding: 20px 20px 20px 0px;
+    padding: 20px 20px 20px 0;
   }
 
   .place-item-header[_ngcontent-c5] h2.place-name[_ngcontent-c5] {
-    padding: 3px 0px 0px 10px;
+    padding: 3px 0 0 10px;
     font-size: 24px;
-
   }
 
 }
