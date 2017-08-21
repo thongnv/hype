@@ -83,6 +83,7 @@ export class AuthComponent implements OnInit {
               this.userService.emitUser(user);
               this.loading = false;
               this.router.navigate(['home']).then();
+              this.loaderService.hide();
             },
             (error) => {
               console.log(error);
