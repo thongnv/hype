@@ -20,8 +20,8 @@ export class ArticleEditComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public selectedCategories = [];
-  public places: any[] = [];
-  public markers: any[] = [];
+  public places = [];
+  public markers = [];
   public showPreview: boolean = false;
   public canAddMoreImages: boolean = true;
   public submitted: boolean = false;
@@ -31,7 +31,7 @@ export class ArticleEditComponent implements OnInit {
   public NextPhotoInterval: number = 5000;
   public noLoopSlides: boolean = false;
   public noTransition: boolean = false;
-  public slides: any[] = [];
+  public slides = [];
 
   public lat: number = 1.290270;
   public lng: number = 103.851959;
@@ -59,7 +59,7 @@ export class ArticleEditComponent implements OnInit {
     listCategory: ['', Validators.required],
     listCatTmp: [''],
     listImages: [''],
-    listPlaces: this.formBuilder.array([])
+    places: this.formBuilder.array([])
   });
 
   constructor(public formBuilder: FormBuilder,
@@ -203,7 +203,7 @@ export class ArticleEditComponent implements OnInit {
       });
     }
     article.id = this.article.id;
-    article.listPlaces = this.places;
+    article.places = this.places;
     article.listImages = this.previewUrls;
     article.listCategory = this.processCategories(article.listCategory);
     let data = mapArticle(article);
@@ -226,6 +226,7 @@ export class ArticleEditComponent implements OnInit {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrls;
     this.initPreview();
+    window.scroll(0, 0);
   }
 
   public checkCaptcha(captcha) {
@@ -234,12 +235,10 @@ export class ArticleEditComponent implements OnInit {
     }
   }
 
-  public switchView(status: boolean) {
-    this.showPreview = status;
-    if (status) {
-      this.previewData = this.formData.value;
-      this.previewData.images = this.previewUrls;
-      this.initPreview();
+  public switchView(showPreview: boolean) {
+    this.showPreview = showPreview;
+    if (showPreview) {
+      this.onPreview();
     }
   }
 
@@ -247,7 +246,6 @@ export class ArticleEditComponent implements OnInit {
     let baseHeight = event.target.clientHeight;
     let realScrollTop = event.target.scrollTop + baseHeight;
     let currentHeight: number = baseHeight;
-
     if (event.target.children.length > 1) {
       for (let i = 0; i < event.target.children.length; i++) {
         let currentClientH = event.target.children[i].clientHeight;
@@ -285,8 +283,8 @@ export class ArticleEditComponent implements OnInit {
     if (data.Title) {
       place.patchValue({
         keyword: data.Title,
-        lat: Number(data.Lat),
-        lng: Number(data.Long),
+        lat: +data.Lat || 1.290270,
+        lng: +data.Long || 103.851959,
         slug: data.Slug,
       });
     }
@@ -353,7 +351,7 @@ export class ArticleEditComponent implements OnInit {
     }
     this.formData.controls.listName.patchValue(res.title);
     this.formData.controls.listDescription.patchValue(res.body);
-    const control = <FormArray> this.formData.controls.listPlaces;
+    const control = <FormArray> this.formData.controls.places;
     for (let place of res.field_places) {
       if (place.field_latitude) {
         let img = null;
@@ -393,23 +391,13 @@ export class ArticleEditComponent implements OnInit {
       let index = 0;
       for (let place of this.previewData.places) {
         if (place.lat && place.lng) {
-          if (index === 0) {
-            this.markers.push({
-              lat: place.lat,
-              lng: place.lng,
-              opacity: 1,
-              isOpenInfo: true,
-              icon: 'assets/icon/locationmarker.png'
-            });
-          } else {
-            this.markers.push({
-              lat: place.lat,
-              lng: place.lng,
-              opacity: 0.4,
-              isOpenInfo: false,
-              icon: 'assets/icon/locationmarker.png'
-            });
-          }
+          this.markers.push({
+            lat: +place.lat,
+            lng: +place.lng,
+            opacity: index === 0 ? 1 : 0.4,
+            isOpenInfo: true,
+            icon: 'assets/icon/locationmarker.png'
+          });
           index++;
         }
       }
