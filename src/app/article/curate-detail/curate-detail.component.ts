@@ -1,4 +1,4 @@
-import { Component, HostListener, Injectable, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -9,7 +9,6 @@ import { User } from '../../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppGlobals } from '../../services/app.global';
 
-@Injectable()
 @Component({
   selector: 'app-curate-detail',
   templateUrl: './curate-detail.component.html',
