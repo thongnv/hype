@@ -399,7 +399,7 @@ export class HomeComponent implements OnInit {
   }
 
   public zoomChange(event) {
-    // DEBUG 
+    // DEBUG
     // console.log('zoom: ', event);
   }
 
@@ -641,7 +641,7 @@ export class HomeComponent implements OnInit {
             lat: latitude,
             lng: longitude,
             label: events[i].title,
-            isOpenInfo: true,
+            isOpenInfo: false,
             nid: events[i].nid,
             avatar: events[i].field_images[0],
             link: events[i].alias,
