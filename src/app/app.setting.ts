@@ -21,11 +21,8 @@ export class AppSetting {
   public static API_LOGIN = API_ENDPOINT + 'hylo/fblogin?_format=json';
   public static API_CATEGORIES_EVENT = API_ENDPOINT + 'api/v1/category/event/?_format=json';
   public static API_TAGS_EVENT = API_ENDPOINT + 'api/v1/category/tags/?_format=json';
-  public static API_ENDPOINT_LIKE = API_ENDPOINT + 'api/user/flag/bookmark?_format=json';
   public static API_ENDPOINT_CAT_MODE = API_ENDPOINT + 'api/v1/category/mode?_format=json';
   public static API_ENDPOINT_MODE = API_ENDPOINT + 'api/v1/place/search';
-  public static API_ENDPOINT_TOP = API_ENDPOINT + 'api/v1/top?_format=json';
-  public static API_TRENDING = API_ENDPOINT + 'api/v1/home/search';
   public static API_SEARCH_RESULT = API_ENDPOINT + 'api/v1/pagesearch/';
   public static API_SEARCH_RESULT_LOAD_MORE = API_ENDPOINT + 'api/v1/searchmore/';
   public static INSTAGRAM_ACCESS_TOKEN = '5544202380.58b5f2c.fa60c5d58b8443e6a654f966753ad5ba';
@@ -35,30 +32,19 @@ export class AppSetting {
     version: 'v2.9'
   };
 
-
   public static PAGE_SIZE: number = PAGE_SIZE;
   public static GMAP_STYLE = [
     {
-      featureType: 'all',
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'off'
-        }
-      ]
-    },
-    {
       featureType: 'administrative',
-      elementType: 'all',
       stylers: [
-        {
-          visibility: 'simplified'
-        },
         {
           color: '#5b6571'
         },
         {
           lightness: '35'
+        },
+        {
+          visibility: 'simplified'
         }
       ]
     },
@@ -88,13 +74,13 @@ export class AppSetting {
       elementType: 'labels',
       stylers: [
         {
+          lightness: '15'
+        },
+        {
           visibility: 'off'
         },
         {
           weight: '0.01'
-        },
-        {
-          lightness: '15'
         }
       ]
     },
@@ -108,8 +94,15 @@ export class AppSetting {
       ]
     },
     {
+      featureType: 'administrative.land_parcel',
+      stylers: [
+        {
+          visibility: 'off'
+        }
+      ]
+    },
+    {
       featureType: 'administrative.neighborhood',
-      elementType: 'all',
       stylers: [
         {
           visibility: 'off'
@@ -139,22 +132,21 @@ export class AppSetting {
       elementType: 'labels.text.fill',
       stylers: [
         {
-          visibility: 'simplified'
+          color: '#a46c00'
         },
         {
-          color: '#a46c00'
+          visibility: 'simplified'
         }
       ]
     },
     {
       featureType: 'landscape',
-      elementType: 'all',
       stylers: [
         {
-          visibility: 'on'
+          color: '#f3f4f4'
         },
         {
-          color: '#f3f4f4'
+          visibility: 'on'
         }
       ]
     },
@@ -172,10 +164,10 @@ export class AppSetting {
       elementType: 'geometry',
       stylers: [
         {
-          weight: 0.9
+          visibility: 'off'
         },
         {
-          visibility: 'off'
+          weight: 0.9
         }
       ]
     },
@@ -189,26 +181,42 @@ export class AppSetting {
       ]
     },
     {
+      featureType: 'poi',
+      elementType: 'labels.text',
+      stylers: [
+        {
+          visibility: 'off'
+        }
+      ]
+    },
+    {
+      featureType: 'poi.business',
+      stylers: [
+        {
+          visibility: 'off'
+        }
+      ]
+    },
+    {
       featureType: 'poi.park',
       elementType: 'geometry.fill',
       stylers: [
         {
-          visibility: 'on'
+          color: '#83cead'
         },
         {
-          color: '#83cead'
+          visibility: 'on'
         }
       ]
     },
     {
       featureType: 'road',
-      elementType: 'all',
       stylers: [
         {
-          visibility: 'on'
+          color: '#ffffff'
         },
         {
-          color: '#ffffff'
+          visibility: 'on'
         }
       ]
     },
@@ -217,19 +225,56 @@ export class AppSetting {
       elementType: 'labels',
       stylers: [
         {
-          visibility: 'on'
+          visibility: 'off'
+        }
+      ]
+    },
+    {
+      featureType: 'road',
+      elementType: 'labels.icon',
+      stylers: [
+        {
+          visibility: 'off'
+        }
+      ]
+    },
+    {
+      featureType: 'road.arterial',
+      stylers: [
+        {
+          color: '#ffffff'
+        },
+        {
+          visibility: 'simplified'
+        }
+      ]
+    },
+    {
+      featureType: 'road.arterial',
+      elementType: 'labels',
+      stylers: [
+        {
+          visibility: 'off'
+        }
+      ]
+    },
+    {
+      featureType: 'road.arterial',
+      elementType: 'labels.icon',
+      stylers: [
+        {
+          visibility: 'off'
         }
       ]
     },
     {
       featureType: 'road.highway',
-      elementType: 'all',
       stylers: [
         {
-          visibility: 'on'
+          color: '#fee379'
         },
         {
-          color: '#fee379'
+          visibility: 'on'
         }
       ]
     },
@@ -270,50 +315,19 @@ export class AppSetting {
       ]
     },
     {
-      featureType: 'road.arterial',
-      elementType: 'all',
-      stylers: [
-        {
-          visibility: 'simplified'
-        },
-        {
-          color: '#ffffff'
-        }
-      ]
-    },
-    {
-      featureType: 'road.arterial',
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'off'
-        }
-      ]
-    },
-    {
-      featureType: 'road.arterial',
-      elementType: 'labels.icon',
-      stylers: [
-        {
-          visibility: 'off'
-        }
-      ]
-    },
-    {
-      featureType: 'road.local',
-      elementType: 'labels',
-      stylers: [
-        {
-          visibility: 'on'
-        }
-      ]
-    },
-    {
       featureType: 'road.local',
       elementType: 'labels.text',
       stylers: [
         {
           visibility: 'on'
+        }
+      ]
+    },
+    {
+      featureType: 'transit',
+      stylers: [
+        {
+          visibility: 'off'
         }
       ]
     },
@@ -328,13 +342,21 @@ export class AppSetting {
     },
     {
       featureType: 'water',
-      elementType: 'all',
       stylers: [
         {
-          visibility: 'on'
+          color: '#7fc8ed'
         },
         {
-          color: '#7fc8ed'
+          visibility: 'on'
+        }
+      ]
+    },
+    {
+      featureType: 'water',
+      elementType: 'labels.text',
+      stylers: [
+        {
+          visibility: 'off'
         }
       ]
     }
