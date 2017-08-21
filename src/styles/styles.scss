@@ -1726,7 +1726,6 @@ and (max-device-width: 480px) {
   width: 30px;
   height: 30px;
   transform: scale(1);
-  border-radius: 50px;
   text-align: center;
   -webkit-transition-duration: 0.4s;
   text-decoration: none;
@@ -1763,29 +1762,4 @@ and (max-device-width: 480px) {
 
 .cbutton i {
   top: 15px !important;
-}
-
-.cbutton-small:active:after {
-  top: 10px;
-  left: 0;
-}
-
-.cbutton-small:after {
-  top: -5px;
-  left: -15px;
-}
-
-.cbutton-large {
-  width: 35px;
-  height: 35px;
-}
-
-.cbutton-large:after {
-  top: -18px;
-  left: -18px;
-}
-
-.cbutton-large:active:after {
-  top: 0;
-  left: 0;
 }
