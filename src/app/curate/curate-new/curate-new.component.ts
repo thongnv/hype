@@ -18,25 +18,25 @@ export class CurateNewComponent implements OnInit {
   public favorite: any;
   public categories: any[];
   public defaultCategories: any[];
-  public previewUrl: any[] = [];
-  public listPlaces: any[] = [];
+  public previewUrl = [];
+  public listPlaces = [];
   public markers: any[] = [];
-  public showPreview: boolean = false;
-  public addImage: boolean = true;
-  public submitted: boolean = false;
-  public validCaptcha: boolean = false;
-  public chooseCategories: any[] = [];
+  public showPreview = false;
+  public addImage = true;
+  public submitted = false;
+  public validCaptcha = false;
+  public chooseCategories = [];
 
-  public NextPhotoInterval: number = 5000;
-  public noLoopSlides: boolean = false;
-  public noTransition: boolean = false;
+  public NextPhotoInterval = 5000;
+  public noLoopSlides = false;
+  public noTransition = false;
   public slides: any[] = [];
   public previewData: any;
-  public lat: number = 1.290270;
-  public lng: number = 103.851959;
-  public zoom: number = 12;
-  public validateSize: boolean = true;
-  public validateType: boolean = true;
+  public lat = 1.290270;
+  public lng = 103.851959;
+  public zoom = 12;
+  public validateSize = true;
+  public validateType = true;
   public layoutWidth: number;
   public innerWidth: number;
 
@@ -170,7 +170,13 @@ export class CurateNewComponent implements OnInit {
       article.listPlaces = this.listPlaces;
       article.listImages = this.previewUrl;
       article.listCategory = this.processCategories(article.listCategory);
-      let  data = this.mapArticle(article);
+      let data = {
+        title: article.listName,
+        body: article.listDescription,
+        field_images: article.listImages,
+        category: article.listCategory,
+        field_places: article.listPlaces
+      };
       this.loaderService.show();
       if (!this.submitted) {
         this.mainService.postArticle(data).subscribe(
@@ -178,7 +184,7 @@ export class CurateNewComponent implements OnInit {
             if (response.status) {
               this.loaderService.hide();
               this.submitted = false;
-              this.router.navigate([response.data.slug]);
+              this.router.navigate([response.data.slug]).then();
             }
           }
         );
@@ -228,16 +234,6 @@ export class CurateNewComponent implements OnInit {
     }
   }
 
-  public mapArticle(article) {
-    return {
-      title: article.listName,
-      body: article.listDescription,
-      field_images: article.listImages,
-      category: article.listCategory,
-      field_places: article.listPlaces
-    };
-  }
-
   public onMapsChangePlace(data, i) {
     // get lat long from place id
     let geocoder = new google.maps.Geocoder();
@@ -261,8 +257,8 @@ export class CurateNewComponent implements OnInit {
     if (data.Title) {
       place.patchValue({
         keyword: data.Title,
-        lat: Number(data.Lat),
-        lng: Number(data.Long),
+        lat: +data.Lat || 1.290270,
+        lng: +data.Long || 103.851959,
         slug: data.Slug,
       });
     }

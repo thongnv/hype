@@ -52,14 +52,6 @@
           <i [ngClass]="{'fa-angle-up':showType,'fa-angle-down':!showType}" class="fa"
              aria-hidden="true"></i></a>
       </li>
-
-      <!-- <span class="showMoreType" (click)="showAllType(showTab)">
-          <i fa [class.fa-minus]="!showTab" class="fa-plus"></i>
-      </span> -->
-      <!-- <li class="showMoreType" (click)="showAllType(showTab)">
-          <b></b><b></b><b></b>
-      </li> -->
-
       <li class="showMoreType" (click)="showAllType(showTab)">
         <i class="sprite-icon sprite sprite-icon-add-light"></i>
       </li>
@@ -78,7 +70,7 @@
       <div *ngIf="showPrice" class="price-desc"><span></span><span
       ></span><span></span></div>
       <div *ngIf="showCuisine">
-        <div *ngFor="let item of filterData.cuisine; let in =index"
+        <div *ngFor="let item of filterData.cuisine"
              style="margin-left: 43px" class="filter-item col-md-3">
           <div class="checkbox">
             <label>
@@ -88,7 +80,7 @@
           </div>
           <div class="" *ngIf="item.sub" style="margin-left: 30px;">
             <div class="checkbox"
-                 *ngFor="let sb of item.sub; let i = index">
+                 *ngFor="let sb of item.sub">
               <label>
                 <input type="checkbox"
                        (change)="selectCheckBox($event.target.checked,item,sb)"
@@ -100,7 +92,7 @@
       </div>
       <div *ngIf="showRate" class="text-center">
         <ul class="list-inline">
-          <li *ngFor="let rate of rateData; let index = index" style="width: 80px">
+          <li *ngFor="let rate of rateData" style="width: 80px">
             <div class="checkbox" *ngIf="rate.star == 1">
               <label>
                 <input type="checkbox" (change)="rateCheckbox($event.target.checked,rate)" [checked]="rate?.checked"> {{rate.star}} star
@@ -115,7 +107,7 @@
         </ul>
       </div>
       <div *ngIf="showBest" class="best-for">
-        <div *ngFor="let item of filterData.best; let in =index" class="filter-item"
+        <div *ngFor="let item of filterData.best" class="filter-item"
              style="margin-left: 40px">
           <div class="checkbox">
             <label>
@@ -126,7 +118,7 @@
         </div>
       </div>
       <div *ngIf="showType && !showTab">
-        <div *ngFor="let item of filterData.type; let in =index" class="filter-item"
+        <div *ngFor="let item of filterData.type" class="filter-item"
              style="margin-left: 40px">
           <div class="checkbox">
             <label>
@@ -225,8 +217,7 @@
         [styles]="gMapStyles"
         (centerChange)="centerChange($event)"
         (boundsChange)="boundsChange($event)"
-        [mapDraggable]="true"
-    >
+        [mapDraggable]="true">
       <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
                            [lat]="lat"
                            (markerClick)="clickedMarker($event)"

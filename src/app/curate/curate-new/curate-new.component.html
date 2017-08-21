@@ -49,7 +49,8 @@
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
             <i class="fa fa-plus"></i> &nbsp;Add images
-            <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*" imageUpload (change)="readUrl($event)" multiple="multiple">
+            <input class="form-control col-xs-12" id="listImg" formControlName="listImages" type='file' accept="image/*"
+                   imageUpload (change)="readUrl($event)" multiple="multiple">
           </label>
           <small *ngIf="previewUrl.length == 0" class="text-danger">
             No file selected.
@@ -102,7 +103,7 @@
       <div class="form-actions clearfix">
         <div class="wrap-full-50">
           <button type="submit" [disabled]="formData.invalid || previewUrl.length == 0 || !validCaptcha" class="btn btn-primary">Create</button>
-          <button type="button" [disabled]="formData.invalid || previewUrl.length == 0" class="btn btn-success" (click)="onPreview()">Preview</button>
+          <button type="button" class="btn btn-success" (click)="onPreview()">Preview</button>
         </div>
       </div>
       <div class="mobile-margin"></div>

@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ViewEncapsulation,
-  EventEmitter, Output, Inject
+  EventEmitter, Output
 } from '@angular/core';
 
 import $ from 'jquery';
@@ -14,9 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppSetting } from '../../app.setting';
 import { AppGlobals } from '../../services/app.global';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { DOCUMENT, Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { Title } from '@angular/platform-browser';
 
 declare let google: any;
 
@@ -40,30 +40,41 @@ export class EatComponent implements OnInit {
   public items = [];
   public filterData: any = [];
   public currentHighlightedMarker: number = 1;
-  public currentRate:any =[];
-  private cuisine: any;
+  public currentRate: any = [];
   public best: any = [];
   public type: any = [];
   public mapZoom: number = 12;
   public lat: number = 1.359;
   public lng: number = 103.818;
-  private catParam = {mode_type: ''};
-  private total: number = 0;
   public showAll: boolean = true;
   public showTab: boolean = true;
   public showCircle: boolean = true;
   public gMapStyles: any;
-  private loadMore: boolean = false;
-  private end_record: boolean = false;
   public screenWidth: number = 0;
-  public screenHeight: number = 0;
-  public totalCuisine: number = 0;
-  public layoutWidth: number;
   public innerWidth: number;
-  private stopped: boolean = false;
-  public rateData:any=[{star:1},{star:2},{star:3},{star:4},{star:5}];
+  public screenHeight: number = 0;
+  public layoutWidth: number;
+  public rateData: any = [{star: 1}, {star: 2}, {star: 3}, {star: 4}, {star: 5}];
   public shownotfound: boolean = false;
-  public labelSort:string="Name";
+  public sortBy: any;
+  public labelSort: string = 'Name';
+  public totalCuisine: number = 0;
+  public selected = 'all';
+  public showPrice: boolean = false;
+  public showCuisine: boolean = false;
+  public showRate: boolean = false;
+  public showBest: boolean = false;
+  public showType: boolean = false;
+
+  private loadMore: boolean = false;
+  private catParam = {mode_type: ''};
+  private endRecord: boolean = false;
+  private cuisine: any;
+  private total: number = 0;
+  private stopped: boolean = false;
+  private categorySelected: any[] = [];
+  private requests = [];
+
   private params = {
     type: 'eat',
     kind: '',
@@ -81,13 +92,11 @@ export class EatComponent implements OnInit {
     page: 0,
     limit: 20
   };
-
   private zoomChanged: boolean = false;
-  private boundsChangeDefault = {lat:'', lng:''};
 
-  public sortBy: any;
+  private boundsChangeDefault = {lat: '', lng: ''};
 
-  private requestings = [];
+  private cuisineDraw = [];
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -101,13 +110,14 @@ export class EatComponent implements OnInit {
                      private location: Location,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
-                     private appGlobal: AppGlobals,
-                     @Inject(DOCUMENT) private document: Document) {
+                     public appGlobal: AppGlobals) {
+  }
 
+  public ngOnInit() {
+    this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
     });
-
     this.sortBy = [
       {id: 'all', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
@@ -116,86 +126,10 @@ export class EatComponent implements OnInit {
       {id: 'favorites', name: 'Number of favorites'},
       {id: 'distance', name: 'Distance (KM)'}
     ];
-
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-    window.scroll(0,0);
+    window.scroll(0, 0);
 
-    // get route params
-    this.route.params.subscribe((param) => {
-      if (param.location) {
-        console.log('got param: ', param);
-        this.items = [];
-        this.markers = [];
-
-        this.mapsAPILoader.load().then(() => {
-          if (param.location.replace('+', ' ') != 'Singapore') {
-            let geocoder = new google.maps.Geocoder();
-
-            if (geocoder) {
-              geocoder.geocode({
-                address: param.location.replace('+', ' ') + ' Xinh-ga-po',
-                region: 'sg'
-              }, (response, status) => {
-                if (status == google.maps.GeocoderStatus.OK) {
-                  if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-                    this.lat = response[0].geometry.location.lat();
-                    this.lng = response[0].geometry.location.lng();
-                    this.params.lat = response[0].geometry.location.lat();
-                    this.params.long = response[0].geometry.location.lng();
-                    //ddd
-                    let latLngNew = new google.maps.Marker({
-                      position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-                      draggable: true
-                    });
-                    //sleep change map call api
-                    this.zoomChanged = true;
-                    let mapCenter = new google.maps.Marker({
-                      position: new google.maps.LatLng(this.lat, this.lng),
-                      draggable: true
-                    });
-                    let searchCenter = mapCenter.getPosition();
-                    let distance:any = this.getDistance(latLngNew.getPosition(), searchCenter);
-                    this.params.lat = this.lat;
-                    this.params.long = this.lng;
-                    this.params.page = 0;
-                    this.params.radius = parseFloat((distance / 1000).toFixed(2));
-                    console.log('radius: ', this.params.radius);
-
-                    this.mapZoom=15;
-                    this.smallLoader.show();
-                    this.getDataModes();
-                  }
-                } else {
-
-                  if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-                  }
-                }
-              });
-            }
-          } else {
-            this.lat = 1.359;
-            this.lng = 103.818;
-            this.params.lat = this.lat;
-            this.params.long = this.lng;
-            this.smallLoader.show();
-            this.getDataModes();
-          }
-
-        });
-
-      } else {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-        }
-
-      }
-    });// end geocode
-  }
-
-  public ngOnInit() {
-    this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.getCategories('eat');
     this.getFilter();
@@ -213,29 +147,28 @@ export class EatComponent implements OnInit {
     let paramsUrl = this.location.path().split('/');
     $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
       $(window).scroll(() => {
-        //load more data
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.loadMore == false && this.end_record == false && this.total > 10) {
+          if (this.loadMore === false && this.endRecord === false && this.total > 10) {
             this.loadMore = true;
             this.params.page = this.params.page + 1;
             this.getDataModes();
           }
-
         }
 
         if (this.stopped) {
           return true;
         }
-        //index marker Highlight
-        if (paramsUrl[1] == 'discover' && $('#v-scrollable').length) {
+        // index marker Highlight
+        const contentSelector = $('#v-scrollable');
+        if (paramsUrl[1] === 'discover' && contentSelector.length) {
 
-          let baseHeight = $('#v-scrollable')[0].clientHeight;
+          let baseHeight = contentSelector[0].clientHeight;
           let realScrollTop = $(window).scrollTop() + baseHeight;
           let currentHeight: number = baseHeight;
-          let content_element = $('#v-scrollable')[0].children;
-          if (content_element.length > 1) {
-            for (let i = 0; i < content_element.length; i++) {
-              let currentClientH = content_element[i].clientHeight;
+          let contentElement = contentSelector[0].children;
+          if (contentElement.length > 1) {
+            for (let i = 0; i < contentElement.length; i++) {
+              let currentClientH = contentElement[i].clientHeight;
               currentHeight += currentClientH;
               if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
                 if (this.currentHighlightedMarker !== i) {
@@ -250,10 +183,10 @@ export class EatComponent implements OnInit {
     });
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
 
-    if(this.innerWidth <= 900){
+    if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
-    }else{
+    } else {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
@@ -261,10 +194,13 @@ export class EatComponent implements OnInit {
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
-
+    this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
+      this.getPlaces(neighbourhood);
+    });
   }
 
   public onResize(event): void {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
@@ -281,181 +217,23 @@ export class EatComponent implements OnInit {
 
     let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
 
-    let number = Math.floor(menuWidth / 55) - 1;
+    let numCategories = Math.floor(menuWidth / 55) - 1;
     if (this.screenWidth <= 768) {
-      if (this.categoriesDraw.length > number) {
+      if (this.categoriesDraw.length > numCategories) {
 
-        this.categories = this.categoriesDraw.slice(0, number - 1);
+        this.categories = this.categoriesDraw.slice(0, numCategories - 1);
       } else {
 
         this.categories = this.categoriesDraw;
       }
     } else {
-      if (this.categoriesDraw.length > number) {
+      if (this.categoriesDraw.length > numCategories) {
         this.categories = this.categoriesDraw.slice(0, 6);
       } else {
         this.categories = this.categoriesDraw.slice(0, 6);
       }
     }
 
-  }
-
-  setPosition(position) {
-    if (position.coords) {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
-      this.params.lat = this.lat;
-      this.params.long = this.lng;
-      this.getDataModes();
-    }
-
-  }
-
-  getDataModes() {
-    this.requestings.forEach(req => req.unsubscribe());
-    const req = this.modeService.getModeData(this.params)
-      .subscribe(
-        data => {
-          this.total = data.total;
-          this.items = this.loadMore ? this.items.concat(data.company) : data.company;
-          this.shownotfound = data.total === 0;
-          this.end_record = data.company.length === 0;
-
-          this.loadMore = false;
-          this.initMap();
-          this.loaderService.hide();
-          this.smallLoader.hide();
-        },
-        error => {
-          console.error('getModeData error: ', error);
-          req.unsubscribe();
-
-          this.loadMore = false;
-          this.end_record = false;
-          this.items = [];
-          this.markers = [];
-          this.loaderService.hide();
-          this.smallLoader.hide();
-        },
-        () => req.unsubscribe());
-
-    this.requestings.push(req);
-
-  }
-  private categorySelected:any[]=[];
-  public selected = 'all';
-  changeCategory(item) {
-      switch (item){
-        case 'all':
-          this.categories.forEach((category, index) => {
-              this.categories[index].selected = false;
-          });
-          this.selected ='all';
-          this.params.kind='';
-          this.categorySelected=[];
-          break;
-        default:
-          this.selected ='';
-            if(item.selected){
-              item.selected =false;
-              let index = this.categorySelected.indexOf(item.name);
-              this.categorySelected.splice(index, 1);
-            }else{
-              item.selected = true;
-              this.categorySelected.push(item.name);
-            }
-          this.params.kind=this.categorySelected.join(',');
-          break;
-      }
-    if(this.categorySelected.length == 0){
-      this.selected ='all';
-    }
-    this.params.limit = 20;
-    this.params.page = 0;
-    this.markers = [];
-    this.items = [];
-    this.smallLoader.show();
-    this.getDataModes();
-  }
-
-  getCategories(value) {
-    if (value == 'play' || value == 'eat') {
-      this.catParam.mode_type = 'mode_' + value;
-    } else {
-      this.catParam.mode_type = '';
-    }
-    let params = this.catParam;
-    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.categoriesDraw = resp.data;
-      let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-
-      let number = Math.floor(menuWidth / 55) - 1;
-      if (this.categoriesDraw.length > number) {
-        this.categories = this.categoriesDraw.slice(0, number - 1);
-      } else {
-        this.categories = this.categoriesDraw.slice(0, 6);
-      }
-    });
-
-  }
-
-  getFilter() {
-    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
-        this.filterData = resp.eat;
-    });
-  }
-
-  private initMap() {
-      this.currentHighlightedMarker = 0;
-      this.mapsAPILoader.load().then(() => {
-        for (let i = 0; i < this.items.length; i++) {
-          if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
-
-            let lat = this.items[i].YP_Address[6].split('/');
-            let lng = this.items[i].YP_Address[5].split('/');
-            let distance = this.items[i]._dict_;
-              let description:string;
-              if(this.items[i].Hylo_Activity_Description.length > 0){
-                description = this.items[i].Hylo_Activity_Description;
-              }else{
-                description = this.items[i].Company_Profile;
-              }
-              this.items[i].description = description;
-              if(distance) {
-                this.items[i].distance = (distance).toFixed(1);
-              }
-
-                this.markers.push({
-                  lat: parseFloat(lat[1]),
-                  lng: parseFloat(lng[1]),
-                  label: this.items[i].Company_Name,
-                  index: i,
-                  opacity: 0.4,
-                  isOpenInfo: false,
-                  icon: 'assets/icon/locationmarker.png'
-                });
-
-          }
-        }
-        sleep(50);
-        this.zoomChanged=false;
-      });
-  }
-
-  private getDistance(p1, p2) {
-    let R = 6378137; // Earth’s mean radius in meter
-    let dLat = this.rad(p2.lat() - p1.lat());
-    let dLong = this.rad(p2.lng() - p1.lng());
-    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.rad(p1.lat())) * Math.cos(this.rad(p2.lat())) *
-      Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    let d = R * c;
-    return d;
-  }
-
-  private rad(x) {
-    return x * Math.PI / 180;
   }
 
   public clickedMarker(marker) {
@@ -465,40 +243,57 @@ export class EatComponent implements OnInit {
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
     }, 'slow');
-
   }
 
-  private highlightMarker(markerId: number): void {
-    if (this.markers[markerId]) {
-      this.markers.forEach((marker, index) => {
-        if (index === markerId) {
-          this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
+  public changeCategory(item) {
+    switch (item) {
+      case 'all':
+        this.categories.forEach((category, index) => {
+          this.categories[index].selected = false;
+        });
+        this.selected = 'all';
+        this.params.kind = '';
+        this.categorySelected = [];
+        break;
+      default:
+        this.selected = '';
+        if (item.selected) {
+          item.selected = false;
+          let index = this.categorySelected.indexOf(item.name);
+          this.categorySelected.splice(index, 1);
         } else {
-          this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
+          item.selected = true;
+          this.categorySelected.push(item.name);
         }
-      });
+        this.params.kind = this.categorySelected.join(',');
+        break;
     }
-
+    if (this.categorySelected.length === 0) {
+      this.selected = 'all';
+    }
+    this.params.limit = 20;
+    this.params.page = 0;
+    this.markers = [];
+    this.items = [];
+    this.getDataModes();
   }
 
   public filterSubmit() {
-    let cuisine = new Array();
-    let best = new Array();
-    let type = new Array();
-    let rate = new Array();
+    const cuisine = [];
+    const best = [];
+    const type = [];
+    const rate = [];
     if (this.cuisine) {
-      for (let j = 0; j < this.cuisine.length; j++) {
+      this.cuisine.forEach((item, j) => {
         cuisine.push(this.cuisine[j].name);
         if (this.cuisine[j].sub) {
-          for (let i = 0; i < this.cuisine[j].sub.length; i++) {
+          this.cuisine[j].sub.forEach((subItem, i) => {
             if (this.cuisine[j].sub[i].checked) {
               cuisine.push(this.cuisine[j].sub[i].name);
             }
-          }
+          });
         }
-      }
+      });
     }
     if (this.best) {
       for (let b of this.best) {
@@ -515,7 +310,7 @@ export class EatComponent implements OnInit {
       this.params.price = this.priceRange.join(',');
     }
     if (this.showCuisine) {
-       this.params.cuisine = cuisine.join(',');
+      this.params.cuisine = cuisine.join(',');
     }
     if (this.showBest) {
       this.params.bestfor = best.join(',');
@@ -534,13 +329,11 @@ export class EatComponent implements OnInit {
     this.markers = [];
     this.items = [];
     this.params.page = 0;
-    this.smallLoader.show();
     this.getDataModes();
   }
 
   public filterCancel() {
     this.filterCategory.value.filterCategory = 'all';
-    this.smallLoader.show();
     this.clearParams();
     this.getDataModes();
 
@@ -553,15 +346,15 @@ export class EatComponent implements OnInit {
     } else {
       let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
 
-      let number = Math.floor(menuWidth / 55) - 1;
+      let numCategories = Math.floor(menuWidth / 55) - 1;
       if (this.screenWidth <= 768) {
-        if (this.categoriesDraw.length > number) {
-          this.categories = this.categoriesDraw.slice(0, number - 1);
+        if (this.categoriesDraw.length > numCategories) {
+          this.categories = this.categoriesDraw.slice(0, numCategories - 1);
         } else {
           this.categories = this.categoriesDraw;
         }
       } else {
-        if (this.categoriesDraw.length > number) {
+        if (this.categoriesDraw.length > numCategories) {
           this.categories = this.categoriesDraw.slice(0, 6);
         } else {
           this.categories = this.categoriesDraw.slice(0, 6);
@@ -591,18 +384,8 @@ export class EatComponent implements OnInit {
     this.showTab = !e;
   }
 
-  public showPrice: boolean = false;
-  public showCuisine: boolean = false;
-  public showRate: boolean = false;
-  public showBest: boolean = false;
-  public showType: boolean = false;
-
   public showRagePriceFind(e) {
-    if (e) {
-      this.showPrice = false;
-    } else {
-      this.showPrice = true;
-    }
+    this.showPrice = !e;
     this.showCuisine = false;
     this.showRate = false;
     this.showBest = false;
@@ -610,11 +393,7 @@ export class EatComponent implements OnInit {
   }
 
   public showCuisineFind(e) {
-    if (e) {
-      this.showCuisine = false;
-    } else {
-      this.showCuisine = true;
-    }
+    this.showCuisine = !e;
     this.showPrice = false;
     this.showRate = false;
     this.showBest = false;
@@ -622,11 +401,7 @@ export class EatComponent implements OnInit {
   }
 
   public showRateFind(e) {
-    if (e) {
-      this.showRate = false;
-    } else {
-      this.showRate = true;
-    }
+    this.showRate = !e;
 
     this.showPrice = false;
     this.showCuisine = false;
@@ -635,11 +410,7 @@ export class EatComponent implements OnInit {
   }
 
   public showBestFind(e) {
-    if (e) {
-      this.showBest = false;
-    } else {
-      this.showBest = true;
-    }
+    this.showBest = !e;
 
     this.showPrice = false;
     this.showCuisine = false;
@@ -649,55 +420,43 @@ export class EatComponent implements OnInit {
   }
 
   public showTypeFind(e) {
-    if (e) {
-      this.showType = false;
-    } else {
-      this.showType = true;
-    }
+    this.showType = !e;
     this.showPrice = false;
     this.showCuisine = false;
     this.showRate = false;
     this.showBest = false;
   }
 
-  public onScrollDown(event) {
-    let elm = event.srcElement;
-    if (elm.clientHeight + elm.scrollTop === elm.scrollHeight) {
-      this.onScrollToBottom.emit(null);
-    }
-  }
-
-  public changeSort(id,label) {
+  public changeSort(id, label) {
     console.log(id);
     this.labelSort = label;
-    if (id == 'ratings') {
+    if (id === 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
     }
-    if (id == 'reviews') {
+    if (id === 'reviews') {
       this.params.order_by = 'reviews';
       this.params.order_dir = 'DESC';
     }
-    if (id == 'favorites') {
+    if (id === 'favorites') {
       this.params.order_by = 'favorites';
       this.params.order_dir = 'DESC';
     }
-    if (id == 'views') {
+    if (id === 'views') {
       this.params.order_by = 'views';
       this.params.order_dir = 'DESC';
     }
-    if (id == 'distance') {
+    if (id === 'distance') {
       this.params.order_by = 'distance';
       this.params.order_dir = 'DESC';
     }
-    if (id == 'all') {
+    if (id === 'all') {
       this.params.order_by = 'Company_Name';
       this.params.order_dir = 'ASC';
     }
     this.params.page = 0;
     this.items = [];
     this.markers = [];
-    this.smallLoader.show();
     this.getDataModes();
 
   }
@@ -706,54 +465,243 @@ export class EatComponent implements OnInit {
     this.clearParams();
     this.labelSort = 'Name';
     this.totalCuisine = 0;
-    this.showCuisine=false;
+    this.showCuisine = false;
     this.showPrice = false;
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.smallLoader.show();
     this.getDataModes();
+  }
+
+  public selectCheckBox(event, parent, sub) {
+    if (sub && event) {
+      if (parent.sub.length > 0) {
+        parent.sub.forEach((item, i) => {
+          if (parent.sub[i].name === sub.name) {
+            parent.sub[i].checked = 1;
+          }
+        });
+      }
+      parent.checked = 1;
+      if (this.cuisineDraw.length > 0) {
+        let existArr = $.grep(this.cuisineDraw, (obj) => {
+          return obj.name === parent.name;
+        });
+        if (existArr.length === 0) {
+          this.cuisineDraw.push(parent);
+        }
+      } else {
+        this.cuisineDraw.push(parent);
+      }
+    }
+    if (event && !sub) {
+      parent.checked = 1;
+      if (parent.sub) {
+        parent.sub.forEach((item, i) => {
+          parent.sub[i].checked = 1;
+        });
+      }
+      this.cuisineDraw.push(parent);
+    }
+
+    if (!event && parent && !sub) {
+      if (parent.sub) {
+        parent.sub.forEach((item, i) => {
+          parent.sub[i].checked = 0;
+        });
+      }
+      parent.checked = 0;
+      this.cuisineDraw = this.cuisineDraw.filter((el) => {
+        return el.name !== parent.name;
+      });
+    }
+    if (!event && parent && sub) {
+      parent.sub.forEach((item, i) => {
+        if (parent.sub[i].name === sub.name) {
+          parent.sub[i].checked = 0;
+        }
+      });
+    }
+
+    let totalCuisine = [];
+    this.cuisine = this.cuisineDraw;
+    if (this.cuisine) {
+      this.cuisine.forEach((item, j) => {
+        if (this.cuisine[j].checked) {
+          totalCuisine.push(this.cuisine[j].name);
+          if (this.cuisine[j].sub) {
+            this.cuisine[j].sub.forEach((subItem, i) => {
+              if (this.cuisine[j].sub[i].checked) {
+                totalCuisine.push(this.cuisine[j].sub[i].name);
+              }
+            });
+          }
+        }
+      });
+    }
+    this.totalCuisine = totalCuisine.length;
+  }
+
+  public bestChangeCheckBox(event, item) {
+    if (event) {
+      item.checked = true;
+      this.best.push(item);
+    } else {
+      item.checked = false;
+      this.best.splice(this.best.length - 1, 1);
+    }
+  }
+
+  public typeChangeCheckBox(event, item) {
+    if (event) {
+      item.checked = true;
+      this.type.push(item);
+    } else {
+      item.checked = false;
+      this.type.splice(this.type.length - 1, 1);
+    }
+  }
+
+  public rateCheckbox(event, rate) {
+    if (event) {
+      rate.checked = true;
+      this.currentRate.push(rate);
+    } else {
+      rate.checked = false;
+      let index = this.currentRate.indexOf(rate);
+      this.currentRate.splice(index, 1);
+    }
+  }
+
+  public centerChange(event) {
+    this.lat = event.lat;
+    this.lng = event.lng;
+    this.zoomChanged = false;
+  }
+
+  public boundsChange(event) {
+    this.route.params.subscribe((param) => {
+      if (param.location) {
+        this.mapZoom = 14;
+      }
+    });
+    this.items = [];
+    this.markers = [];
+    this.boundsChangeDefault.lat = event.getNorthEast().lat();
+    this.boundsChangeDefault.lng = event.getNorthEast().lng();
+    if (!this.zoomChanged) {
+      let latLngNew = new google.maps.Marker({
+        position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+        draggable: true
+      });
+      this.zoomChanged = true;
+      let mapCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.lat, this.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance: any = getDistance(searchCenter, latLngNew.getPosition());
+      this.params.lat = this.lat;
+      this.params.long = this.lng;
+      this.params.page = 0;
+      if (this.params.radius < 0.25) {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      } else {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+      }
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.shownotfound = false;
+      this.getDataModes();
+    }
+  }
+
+  private getPlaces(neighbourhood) {
+    this.items = [];
+    this.markers = [];
+    if (neighbourhood !== 'Singapore') {
+      this.mapZoom = 15;
+    } else {
+      this.mapZoom = 12;
+    }
+    this.mapsAPILoader.load().then(() => {
+      let geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+          address: neighbourhood + ' Xinh-ga-po',
+          region: 'sg'
+        },
+        (response, status) => {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
+              this.lat = response[0].geometry.location.lat();
+              this.lng = response[0].geometry.location.lng();
+              this.params.lat = response[0].geometry.location.lat();
+              this.params.long = response[0].geometry.location.lng();
+              let latLngNew = new google.maps.Marker({
+                position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
+                draggable: true
+              });
+              this.zoomChanged = true;
+              let mapCenter = new google.maps.Marker({
+                position: new google.maps.LatLng(this.lat, this.lng),
+                draggable: true
+              });
+              let searchCenter = mapCenter.getPosition();
+              let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
+              this.params.lat = this.lat;
+              this.params.long = this.lng;
+              this.params.page = 0;
+              this.params.radius = parseFloat((distance / 1000).toFixed(2));
+              this.getDataModes();
+            }
+          } else {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+            }
+          }
+        });
+    });
+
   }
 
   private clearParams() {
     if (this.cuisine) {
-      for (let i = 0; i < this.cuisine.length; i++) {
+      this.cuisine.forEach((item, i) => {
         this.cuisine[i].checked = false;
         if (this.cuisine[i].sub) {
-          for (let j = 0; j < this.cuisine[i].sub.length; j++) {
+          this.cuisine[i].sub.forEach((subItem, j) => {
             this.cuisine[i].sub[j].checked = false;
-          }
+          });
         }
-      }
+      });
     }
     if (this.best) {
-      for (let i = 0; i < this.best.length; i++) {
+      this.best.forEach((item, i) => {
         this.best[i].checked = false;
         if (this.best[i].sub) {
-          for (let j = 0; j < this.best[i].sub.length; j++) {
+          this.best[i].sub.forEach((subItem, j) => {
             this.best[i].sub[j].checked = false;
-          }
+          });
         }
-      }
+      });
     }
 
     if (this.type.length) {
-      for (let i = 0; i < this.type.length; i++) {
-        if(this.type[i].checked) {
+      this.type.forEach((item, i) => {
+        if (this.type[i].checked) {
           this.type[i].checked = false;
           if (this.type[i].sub) {
-            for (let j = 0; j < this.type[i].sub.length; j++) {
+            this.type[i].sub.forEach((subItem, j) => {
               this.type[i].sub[j].checked = false;
-            }
+            });
           }
         }
-      }
+      });
     }
 
-    if(this.currentRate){
-      for(let i = 0; i < this.currentRate.length; i ++){
-        this.currentRate[i].checked=false;
-      }
+    if (this.currentRate) {
+      this.currentRate.forEach((item, i) => {
+        this.currentRate[i].checked = false;
+      });
     }
 
     this.cuisine = [];
@@ -777,162 +725,129 @@ export class EatComponent implements OnInit {
     this.items = [];
   }
 
-  private cuisineDraw = [];
-
-  public selectCheckBox(event, parent, sub) {
-      if(sub && event){
-          if(parent.sub.length > 0){
-              for(let i = 0; i < parent.sub.length; i ++){
-                  if(parent.sub[i].name == sub.name){
-                      parent.sub[i].checked=1;
-                  }
-              }
-          }
-          parent.checked = 1;
-          if(this.cuisineDraw.length > 0){
-              let existArr=$.grep(this.cuisineDraw, function(obj) {
-                  return obj.name == parent.name;
-              });
-              if(existArr.length ==0){
-                  this.cuisineDraw.push(parent);
-              }
-          }else {
-              this.cuisineDraw.push(parent);
-          }
-      }
-      if(event && !sub){
-          parent.checked =1;
-          if(parent.sub){
-              for(let i = 0 ;i < parent.sub.length; i ++){
-                  parent.sub[i].checked=1;
-              }
-          }
-          this.cuisineDraw.push(parent);
-      }
-
-      if(!event && parent && !sub){
-          if(parent.sub) {
-            for (let i = 0; i < parent.sub.length; i++) {
-              parent.sub[i].checked = 0;
-            }
-          }
-          parent.checked =0;
-          this.cuisineDraw = this.cuisineDraw.filter((el)=>{
-              return el.name !== parent.name;
-          })
-      }
-      if(!event && parent && sub){
-          for(let i = 0 ; i < parent.sub.length; i ++){
-              if(parent.sub[i].name == sub.name){
-                  parent.sub[i].checked=0;
-              }
-          }
-
-      }
-
-      let totalCuisine = [];
-      this.cuisine = this.cuisineDraw;
-      if (this.cuisine) {
-          for (let j = 0; j < this.cuisine.length; j++) {
-              if(this.cuisine[j].checked){
-                  totalCuisine.push(this.cuisine[j].name);
-                  if (this.cuisine[j].sub) {
-                      for (let i = 0; i < this.cuisine[j].sub.length; i++) {
-                          if (this.cuisine[j].sub[i].checked) {
-                              totalCuisine.push(this.cuisine[j].sub[i].name);
-                          }
-                      }
-                  }
-              }
-
-          }
-      }
-      this.totalCuisine = totalCuisine.length;
-  }
-
-  public bestChangeCheckBox(event, item) {
-    //item.checked != item.checked;
-    if (event) {
-      item.checked = true;
-      this.best.push(item);
+  private getCategories(value) {
+    if (value === 'play' || value === 'eat') {
+      this.catParam.mode_type = 'mode_' + value;
     } else {
-      item.checked = false;
-      this.best.splice(this.best.length - 1, 1);
+      this.catParam.mode_type = '';
     }
-  }
+    let params = this.catParam;
+    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe((resp) => {
+      this.categoriesDraw = resp.data;
+      let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
 
-  public typeChangeCheckBox(event, item) {
-    //item.checked != item.checked;
-    if (event) {
-      item.checked = true;
-      this.type.push(item);
-    } else {
-      item.checked = false;
-      this.type.splice(this.type.length - 1, 1);
-    }
-  }
-
-  public rateCheckbox(event,rate){
-    if (event) {
-      rate.checked=true;
-      this.currentRate.push(rate);
-    } else {
-      rate.checked=false;
-      let index = this.currentRate.indexOf(rate);
-      this.currentRate.splice(index, 1);
-    }
-  }
-
-  public centerChange(event) {
-    this.lat = event.lat;
-    this.lng = event.lng;
-    this.zoomChanged = false;
-  }
-
-  public boundsChange(event) {
-    this.route.params.subscribe((param) => {
-      if (param.location) {
-        this.mapZoom=14;
+      let numCategories = Math.floor(menuWidth / 55) - 1;
+      if (this.categoriesDraw.length > numCategories) {
+        this.categories = this.categoriesDraw.slice(0, numCategories - 1);
+      } else {
+        this.categories = this.categoriesDraw.slice(0, 6);
       }
     });
 
-    this.items = [];
-    this.markers = [];
-    this.boundsChangeDefault.lat = event.getNorthEast().lat();
-    this.boundsChangeDefault.lng = event.getNorthEast().lng();
+  }
 
-    if (!this.zoomChanged) {
-      let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
-        draggable: true
-      });
+  private getFilter() {
+    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
+      this.filterData = resp.eat;
+    });
+  }
 
-      this.zoomChanged = true;
-      let mapCenter = new google.maps.Marker({
-        position: new google.maps.LatLng(this.lat, this.lng),
-        draggable: true
-      });
-
-      let searchCenter = mapCenter.getPosition();
-      let distance = this.getDistance(searchCenter, latLngNew.getPosition());
+  private setPosition(position) {
+    if (position.coords) {
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.page = 0;
-
-      // TODO: temporary fix just fixed code, need this more properly
-      if (this.innerWidth <= 900) {
-        distance = 18335.70326024872;
-      }
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      this.smallLoader.show();
-      this.shownotfound=false;
       this.getDataModes();
+    }
+  }
+
+  private getDataModes() {
+    if (this.requests.length) {
+      this.requests.forEach((req) => {
+        req.unsubscribe();
+      });
+      this.requests = [];
+    }
+    this.smallLoader.show();
+    const request = this.modeService.getModeData(this.params).subscribe(
+      (data) => {
+        this.total = data.total;
+        this.items = this.loadMore ? this.items.concat(data.company) : data.company;
+        this.shownotfound = data.total === 0;
+        this.endRecord = data.company.length === 0;
+        this.loadMore = false;
+        this.initMap();
+        this.loaderService.hide();
+        this.smallLoader.hide();
+      });
+    this.requests.push(request);
+  }
+
+  private initMap() {
+    this.currentHighlightedMarker = 0;
+    this.mapsAPILoader.load().then(() => {
+      for (let i = 0; i < this.items.length; i++) {
+        if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
+
+          let lat = this.items[i].YP_Address[6].split('/');
+          let lng = this.items[i].YP_Address[5].split('/');
+          let distance = this.items[i]._dict_;
+          let description: string;
+          if (this.items[i].Hylo_Activity_Description) {
+            description = this.items[i].Hylo_Activity_Description;
+          } else {
+            description = this.items[i].Company_Profile;
+          }
+          this.items[i].description = description;
+          if (distance) {
+            this.items[i].distance = (distance).toFixed(1);
+          }
+
+          this.markers.push({
+            lat: parseFloat(lat[1]),
+            lng: parseFloat(lng[1]),
+            label: this.items[i].Company_Name,
+            index: i,
+            opacity: 0.4,
+            isOpenInfo: false,
+            icon: 'assets/icon/locationmarker.png'
+          });
+
+        }
+      }
+      this.zoomChanged = false;
+    });
+  }
+
+  private highlightMarker(markerId: number): void {
+    if (this.markers[markerId]) {
+      this.markers.forEach((marker, index) => {
+        if (index === markerId) {
+          this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
+        } else {
+          this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
+        }
+      });
     }
 
   }
+
 }
 
-function sleep(delay) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
+function rad(x) {
+  return x * Math.PI / 180;
+}
+
+function getDistance(p1, p2) {
+  let R = 6378137; // Earth’s mean radius in meter
+  let dLat = rad(p2.lat() - p1.lat());
+  let dLong = rad(p2.lng() - p1.lng());
+  let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
 }

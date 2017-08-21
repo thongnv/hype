@@ -6,7 +6,7 @@
         [iconUrl]="m.icon"
         [opacity]="m.opacity"
 >
-    <sebm-google-map-info-window *ngIf="m.label">
+    <sebm-google-map-info-window [isOpen]="m.isOpenInfo">
 
       <div *ngFor="let event of m.events">
         <div class="marker-info">
@@ -14,6 +14,9 @@
           <h4><a [href]="event.link">{{event.label}}</a></h4>
           <p *ngIf="event.price">
             <span *ngFor="let p of event.price; let i = last">${{p}}{{i ? '' : ','}} </span>
+          </p>
+          <p *ngIf="event.created">
+            <span>{{event.created | amFromUnix | amDateFormat: 'YYYY-MM-DD'}}</span>
           </p>
         </div>
       </div>

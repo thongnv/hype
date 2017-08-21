@@ -78,11 +78,11 @@
       </div>
 
       <div [class.frameHidden]="!appGlobal.isShowRight" class="image-box col-xs-12 col-md-6" [style.width]="innerWidth > 1023 ? layoutWidth/2 - 20 + 'px' : ''">
-        <div formArrayName="listPlaces">
-          <div class="panel panel-default" *ngFor="let place of formData.controls.listPlaces.controls; let i=index">
+        <div formArrayName="places">
+          <div class="panel panel-default" *ngFor="let place of formData.controls.places.controls; let i=index">
             <div class="panel-heading">
               <span class="title-number-item"># {{i + 1}}</span>
-              <span class="glyphicon glyphicon-remove pull-right" *ngIf="formData.controls.listPlaces.controls.length > 1" (click)="removeAddress(i)">
+              <span class="glyphicon glyphicon-remove pull-right" *ngIf="formData.controls.places.controls.length > 1" (click)="removeAddress(i)">
               </span>
             </div>
             <div class="panel-body" [formGroupName]="i">

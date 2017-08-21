@@ -45,62 +45,6 @@ export class MainService {
       });
   }
 
-  public getCategoryTreeArticle(): Observable<Response> {
-    let headers = this.defaultHeaders;
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get(
-      AppSetting.API_ENDPOINT + 'api/v1/category/tree/?_format=json', options
-    )
-    .map((res) => {
-      return res.json();
-    })
-    .catch((error) => {
-      return Observable.throw(new Error(error));
-    });
-  }
-
-  public getCurate(filter, cate, page, limit): Observable<Response> {
-    let headers = this.defaultHeaders;
-    let searchParams = new URLSearchParams();
-    searchParams.set('_format', 'json');
-    searchParams.set('filter', filter);
-    if (limit) {
-      searchParams.set('limit', limit);
-    }
-    if (page) {
-      searchParams.set('page', page);
-    }
-    if (parseInt(cate, 10)) {
-      searchParams.set('cate', cate);
-    }
-
-    let options = new RequestOptions({
-      headers,
-      params: searchParams,
-      withCredentials: true
-    });
-
-    return this.http.get(AppSetting.API_ENDPOINT + 'api/v1/article', options)
-      .map((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
-  public getCurateTrending(): Observable<any> {
-    let headers = this.defaultHeaders;
-    let options = new RequestOptions({headers, withCredentials: true});
-    return this.http.get(AppSetting.API_ENDPOINT + 'api/v1/toparticle?_format=json', options)
-      .map((res) => {
-        return res.json();
-      })
-      .catch((error) => {
-        return Observable.throw(new Error(error));
-      });
-  }
-
   public postArticle(data): Observable<any> {
     let csrfToken = this.localStorageService.get('csrf_token');
     let headers = new Headers({'Content-Type': 'application/json', 'X-CSRF-Token': csrfToken});

@@ -124,12 +124,6 @@ export class EventService {
         return res.json();
       })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
       });
   }
@@ -144,12 +138,6 @@ export class EventService {
         return res.json();
       })
       .catch((error: any) => {
-        if (error.status === 404) {
-          this.router.navigate(['404'], {skipLocationChange: true}).then();
-        }
-        if (error.status === 500) {
-          this.router.navigate(['500'], {skipLocationChange: true}).then();
-        }
         return Observable.throw(new Error(error));
       });
   }

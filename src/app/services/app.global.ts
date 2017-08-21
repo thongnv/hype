@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AppGlobals {
-  // a isShowLeft data
   public isShowLeft = true;
   public isShowRight = true;
   public toggleMap = false;
@@ -24,12 +23,12 @@ export class AppGlobals {
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/pop-up-fair.png', name: 'pop-up fair'},
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/shopping.png', name: 'shopping'},
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/sports.png', name: 'sports'},
-    {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/tech.png', name: 'tech'},];
+    {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/tech.png', name: 'tech'}];
 
   // use this property for property binding
-  public isLocationAddress: BehaviorSubject<string> = new BehaviorSubject<string>('Singapore');
+  public neighbourhoodStorage: BehaviorSubject<string> = new BehaviorSubject<string>('Singapore');
 
-  public setLocationAddress(isLocation) {
-    this.isLocationAddress.next(isLocation);
+  public setLocationAddress(neighbourhood) {
+    this.neighbourhoodStorage.next(neighbourhood);
   }
 }

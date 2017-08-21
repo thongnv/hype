@@ -37,11 +37,12 @@ declare let google: any;
 export class HomeComponent implements OnInit {
   public gMapStyles: any;
   public localState = {value: ''};
-  public eventFilter: any[] = [];
+  public eventFilters: any[] = [];
+  public eventOrders: string[];
   public selectedEventFilter: any;
-  public eventOrder: any[] = [];
   public selectedEventOrder: any;
   public events: any = [];
+  public neighbourhood: string;
   public markers: any[] = [];
   public mapZoom: number = 12;
   public lat: number = 1.359;
@@ -53,7 +54,6 @@ export class HomeComponent implements OnInit {
   public showPrice: boolean = false;
   public showDate: boolean = false;
   public showAll: boolean = true;
-  public showCircle: boolean = false;
   public drawCategories: any[];
   public date: { year: number, month: number };
   public options: any = {
@@ -64,15 +64,13 @@ export class HomeComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
-  public markerLength: number = 0;
-
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
   private loadMore: boolean = false;
   private total: any;
   private boundsChangeDefault: any = {lat: any, lng: any};
   private endRecord: boolean = false;
-  private params: any = {
+  private params = {
     page: 0,
     limit: 20,
     start: 0,
@@ -80,14 +78,16 @@ export class HomeComponent implements OnInit {
     time: '',
     latest: '',
     when: '',
+    weekend: '',
+    order: '',
+    type: '',
     lat: this.lat,
     long: this.lng,
-    radius: '',
-    price: ''
+    radius: 0,
+    price: 0
   };
   private eventCate: any[] = [];
-
-  private requestings = [];
+  private requests = [];
 
   constructor(private titleService: Title,
               private homeService: HomeService,
@@ -98,35 +98,25 @@ export class HomeComponent implements OnInit {
               private route: Router,
               private location: Location,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals
-  ) {
-    window.scroll(0, 0);
+              public appGlobal: AppGlobals) {
   }
 
   public ngOnInit() {
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
-    this.eventFilter = [
-      {name: 'all'},
-      {name: 'today'},
-      {name: 'tomorrow'},
-      {name: 'this week'},
-    ];
-    this.eventOrder = [
-      {name: 'top 100'},
-      {name: 'latest'},
-    ];
+    window.scroll(0, 0);
+    this.eventFilters = ['all', 'today', 'tomorrow', 'this week'];
+    this.eventOrders = ['top 100', 'latest'];
+
+    this.selectedEventOrder = this.eventOrders[0];
+    this.selectedEventFilter = this.eventFilters[0];
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;
-    this.selectedEventOrder = this.eventOrder[0];
-    this.selectedEventFilter = this.eventFilter[0];
     this.selected = 'all';
-    if (this.selectedEventOrder.name === 'top 100') {
-      this.getTrending();
-    }
-    this.homeService.getCategories('event').map((resp) => resp.json()).subscribe((resp) => {
+
+    this.homeService.getCategories().subscribe((resp) => {
       this.drawCategories = resp.data;
       let numCategories = calculateNumCategories();
       this.categories = this.drawCategories.slice(0, numCategories);
@@ -134,7 +124,6 @@ export class HomeComponent implements OnInit {
 
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
@@ -142,10 +131,80 @@ export class HomeComponent implements OnInit {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
-
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
+
+    this.getTrendingEvents();
+
+    this.appGlobal.neighbourhoodStorage.subscribe((response) => {
+      this.neighbourhood = response;
+      if (this.params.latest) {
+        window.scroll(0, 0);
+        this.getEvents(this.neighbourhood);
+      }
+    });
+  }
+
+  public p() {
+    // hack to get rid of warning
+  }
+
+  public showAllEvents() {
+    this.clearParam();
+    this.selectedEventFilter = 'all';
+    this.params.time = '';
+    this.getTrendingEvents();
+  }
+
+  public showTodayEvents() {
+    this.clearParam();
+    this.selectedEventFilter = 'today';
+    this.params.time = 'today';
+    this.getTrendingEvents();
+  }
+
+  public showTomorrowEvents() {
+    this.clearParam();
+    this.selectedEventFilter = 'tomorrow';
+    this.params.time = 'today';
+    this.getTrendingEvents();
+  }
+
+  public showThisWeekEvents() {
+    this.clearParam();
+    this.selectedEventFilter = 'this week';
+    this.params.time = 'today';
+    this.getTrendingEvents();
+  }
+
+  public showTop100Events() {
+    this.mapZoom = 12;
+    this.selectedEventOrder = 'top 100';
+    this.params.time = '';
+    this.params.latest = '';
+    this.params.page = 0;
+    this.params.price = 0;
+    this.params.start = 0;
+    this.params.when = '0';
+    this.selected = 'all';
+    this.markers = [];
+    this.events = [];
+    this.getTrendingEvents();
+  }
+
+  public showLatestEvents() {
+    this.selectedEventOrder = 'latest';
+    this.params.time = '';
+    this.params.latest = '1';
+    this.params.page = 0;
+    this.params.price = 0;
+    this.params.start = 0;
+    this.params.when = '0';
+    this.selected = 'all';
+    this.markers = [];
+    this.events = [];
+    this.getEvents(this.neighbourhood);
   }
 
   public setPosition(position) {
@@ -187,11 +246,11 @@ export class HomeComponent implements OnInit {
     this.events = [];
     this.params.page = 0;
     this.smallLoader.show();
-    this.getTrending();
+    this.getTrendingEvents();
   }
 
   public onClearForm(): void {
-    this.selectedEventFilter = this.eventFilter[0];
+    this.selectedEventFilter = this.eventFilters[0];
     this.markers = [];
     this.events = [];
     this.categories.forEach((category, index) => {
@@ -199,72 +258,18 @@ export class HomeComponent implements OnInit {
     });
     this.eventCate = [];
     this.priceRange = [0, 50];
-    this.selected = false;
     this.showDate = false;
     this.showPrice = false;
-    this.smallLoader.show();
     this.params.limit = 20;
     this.params.start = 0;
     this.params.page = 0;
     this.params.tid = '';
     this.params.time = '';
-    this.params.price = '';
+    this.params.price = 0;
     this.params.order = '';
     this.params.when = '';
     this.selected = 'all';
-    this.getTrending();
-  }
-
-  public onSelectEventFilter(filter: any): void {
-    this.clearParam();
-    this.selectedEventFilter = filter;
-    if (filter.name === 'today') {
-      this.params.time = 'today';
-    } else if (filter.name === 'tomorrow') {
-      this.params.time = 'tomorrow';
-    } else if (filter.name === 'this week') {
-      this.params.time = 'week';
-    } else if (filter.name === 'all') {
-      this.params.time = '';
-    } else {
-      this.showCircle = this.selectedEventOrder.name !== 'top 100';
-    }
-    this.markers = [];
-    this.events = [];
-    this.smallLoader.show();
-    this.getTrending();
-  }
-
-  public onSelectEventOrder(order: any): void {
-    this.selectedEventOrder = order;
-    this.mapZoom = 12;
-    if (order.name === 'top 100') {
-      this.params.latest = '';
-    } else {
-      this.params.latest = 1;
-      let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-        draggable: true
-      });
-      this.zoomChanged = true;
-      let mapCenter = new google.maps.Marker({
-        position: new google.maps.LatLng(this.lat, this.lng),
-        draggable: true
-      });
-      let distance: any = getDistance(latLngNew.getPosition(), mapCenter.getPosition());
-      this.params.lat = this.lat;
-      this.params.long = this.lng;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
-    }
-    this.params.page = 0;
-    this.params.price = 0;
-    this.params.start = 0;
-    this.params.when = 0;
-    this.selected = 'all';
-    this.markers = [];
-    this.events = [];
-    this.smallLoader.show();
-    this.getTrending();
+    this.getTrendingEvents();
   }
 
   public onLikeEmit(item: any) {
@@ -291,9 +296,10 @@ export class HomeComponent implements OnInit {
   }
 
   public clickedMarker(marker) {
-    if ($('#v' + marker.nid).length) {
+    const markerSelector = $('#v' + marker.nid);
+    if (markerSelector.length) {
       $('html, body').animate({
-        scrollTop: $('#v' + marker.nid).offset().top - 80
+        scrollTop: markerSelector.offset().top - 80
       });
     }
     this.stopped = true;
@@ -305,9 +311,9 @@ export class HomeComponent implements OnInit {
     this.markers = [];
     this.events = [];
     this.params.page = 0;
-    this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')];
+    this.params.when = [moment(value.start).format('YYYY-MM-DD'), moment(value.end).format('YYYY-MM-DD')].toString();
     this.smallLoader.show();
-    this.getTrending();
+    this.getTrendingEvents();
   }
 
   public showAllCategory(e) {
@@ -329,7 +335,7 @@ export class HomeComponent implements OnInit {
     this.params.price = value.join(',');
     this.params.type = 'event';
     this.smallLoader.show();
-    this.getTrending();
+    this.getTrendingEvents();
   }
 
   public showRagePrice(showPrice) {
@@ -362,7 +368,7 @@ export class HomeComponent implements OnInit {
   public boundsChange(event) {
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    if (this.selectedEventOrder.name !== 'top 100') {
+    if (this.selectedEventOrder === 'latest') {
       if (!this.zoomChanged) {
         let latLngNew = new google.maps.Marker({
           position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
@@ -383,41 +389,44 @@ export class HomeComponent implements OnInit {
         } else {
           this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
         }
-        this.smallLoader.show();
         this.events = [];
         this.markers = [];
         this.params.page = 0;
         this.shownotfound = false;
-        this.getTrending();
+        this.getLatestEvents(this.params);
       }
     }
   }
 
+  public zoomChange(event) {
+    // DEBUG
+    // console.log('zoom: ', event);
+  }
+
   private clearParam() {
-    this.selectedEventFilter = this.eventFilter[0];
+    this.selectedEventFilter = this.eventFilters[0];
     this.markers = [];
     this.events = [];
     this.priceRange = [0, 50];
     this.selected = false;
     this.showDate = false;
     this.showPrice = false;
-    this.smallLoader.show();
     this.params.limit = 20;
     this.params.page = 0;
     this.params.tid = '';
     this.params.time = '';
     this.params.weekend = '';
-    this.params.price = '';
+    this.params.price = 0;
     this.params.order = '';
     this.selected = 'all';
     this.mapZoom = 12;
   }
 
-  private getTrending() {
-    if (this.selectedEventOrder.name === 'top 100') {
-      this.getTop100(this.params);
+  private getTrendingEvents() {
+    if (this.selectedEventOrder === 'top 100') {
+      this.getTop100Events(this.params);
     } else {
-      this.getEvents();
+      this.getLatestEvents(this.params);
     }
   }
 
@@ -433,7 +442,147 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private passerTop100(events) {
+  private handleScroll() {
+    let paramsUrl = this.location.path().split('/');
+    $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
+      $(window).scroll(() => {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+          if (this.selectedEventOrder === 'top 100') {
+            if (this.loadMore === false && this.endRecord === false) {
+              if (this.events.length > 10) {
+                this.loadMore = true;
+                this.params.start += 20;
+                this.getTrendingEvents();
+              }
+            }
+          } else {
+            if (this.loadMore === false && this.endRecord === false) {
+              this.loadMore = true;
+              this.smallLoader.show();
+              this.params.page++;
+              this.getTrendingEvents();
+            }
+          }
+        }
+
+        if (this.stopped) {
+          return false;
+        }
+        let scrollElements = $('#v-scrollable');
+        if (paramsUrl[1] === 'home' && scrollElements.length) {
+          let baseHeight = scrollElements[0].clientHeight;
+          let realScrollTop = $(window).scrollTop() + baseHeight;
+          let currentHeight: number = baseHeight;
+          let contentElement = scrollElements[0].children;
+          if (contentElement.length > 1) {
+            for (let i = 0; i < contentElement.length; i++) {
+              let currentClientH = contentElement[i].clientHeight;
+              currentHeight += currentClientH;
+              if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+                if (this.currentHighlightedMarker !== i) {
+                  this.currentHighlightedMarker = i;
+                  this.highlightMarker(i);
+                }
+              }
+            }
+          }
+        }
+      });
+    });
+  }
+
+  private getTop100Events(params) {
+    this.loading = true;
+    this.smallLoader.show();
+    this.homeService.getTop100(params).subscribe(
+      (resp) => {
+        this.total = resp.total;
+
+        this.shownotfound = resp.total === 0;
+
+        if (resp.data.length === 0) {
+          this.endRecord = true;
+        }
+        if (this.loadMore) {
+          this.events = this.events.concat(resp.data);
+        } else {
+          this.events = resp.data;
+        }
+        this.initMap(resp.data);
+        this.loadMore = false;
+        this.smallLoader.hide();
+        this.loading = false;
+      }
+    );
+  }
+
+  private getLatestEvents(params) {
+    this.loading = true;
+    this.smallLoader.show();
+    if (this.requests.length) {
+      this.requests.forEach((req) => {
+        req.unsubscribe();
+      });
+      this.requests = [];
+    }
+    const request = this.homeService.getLatestEvents(params).subscribe(
+      (data: any) => {
+        this.events = this.loadMore ? this.events.concat(data.data) : data.data;
+        this.endRecord = data.data.length === 0;
+        this.total = data.total;
+        this.shownotfound = data.total === 0;
+        this.initMap(data.data);
+        this.loadMore = false;
+        this.smallLoader.hide();
+        this.loading = false;
+      }
+    );
+    this.requests.push(request);
+  }
+
+  private getEvents(neighbourhood) {
+    if (neighbourhood !== 'Singapore') {
+      this.mapZoom = 15;
+    } else {
+      this.mapZoom = 12;
+    }
+    let geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+        address: neighbourhood + ' Xinh-ga-po',
+        region: 'sg'
+      },
+      (response, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+          if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
+            this.lat = response[0].geometry.location.lat();
+            this.lng = response[0].geometry.location.lng();
+            let latLngNew = new google.maps.Marker({
+              position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
+              draggable: true
+            });
+            this.zoomChanged = true;
+            let mapCenter = new google.maps.Marker({
+              position: new google.maps.LatLng(this.lat, this.lng),
+              draggable: true
+            });
+            let searchCenter = mapCenter.getPosition();
+            let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.params.page = 0;
+            this.params.radius = parseFloat((distance / 1000).toFixed(2));
+            this.loadMore = false;
+            this.getLatestEvents(this.params);
+          }
+        } else {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+          }
+        }
+      });
+  }
+
+  private initMap(events) {
     this.currentHighlightedMarker = 0;
 
     let mapCenter = new google.maps.Marker({
@@ -480,19 +629,19 @@ export class HomeComponent implements OnInit {
 
           // set icon for marker based on event type
           let eventMarkerIcon = 'assets/icon/locationmarker.png';
-          this.appGlobal.eventIcon.forEach(icon => {
-            const eventItemCategoryName = events[i].field_categories.name;
-            if (eventItemCategoryName && eventItemCategoryName.toLowerCase() === icon.name) {
-              eventMarkerIcon = icon.url;
+          this.appGlobal.eventIcon.forEach((icon) => {
+            if (events[i].field_categories.name) {
+              if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
+                eventMarkerIcon = icon.url;
+              }
             }
           });
-
 
           let marker = {
             lat: latitude,
             lng: longitude,
             label: events[i].title,
-            isOpenInfo: true,
+            isOpenInfo: false,
             nid: events[i].nid,
             avatar: events[i].field_images[0],
             link: events[i].alias,
@@ -500,6 +649,7 @@ export class HomeComponent implements OnInit {
             opacity: 0.4,
             price: [],
             nids: [],
+            created: events[i].created || 0,
             events: []
           };
 
@@ -514,7 +664,6 @@ export class HomeComponent implements OnInit {
           this.markers.push(marker);
         }
 
-        // console.log('markers: ', this.markers);
         // put all events has the same location together in one marker
         for (let i = 0, len = this.markers.length; i < len; i++) {
           for (let j = i + 1, length = this.markers.length; j < length; j++) {
@@ -534,133 +683,9 @@ export class HomeComponent implements OnInit {
           }
         }
 
-        sleep(50);
         this.zoomChanged = false;
       }
     );
-  }
-
-  private handleScroll() {
-    let paramsUrl = this.location.path().split('/');
-    $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
-      $(window).scroll(() => {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.selectedEventOrder.name === 'top 100') {
-            if (this.loadMore === false && this.endRecord === false) {
-              if (this.events.length > 10) {
-                this.loadMore = true;
-                this.params.start += 20;
-                this.smallLoader.show();
-                this.getTrending();
-              }
-            }
-          } else {
-            if (this.loadMore === false && this.endRecord === false) {
-              this.loadMore = true;
-              this.smallLoader.show();
-              this.params.page++;
-              this.getTrending();
-            }
-          }
-        }
-
-        if (this.stopped) {
-          return false;
-        }
-        let scrollElements = $('#v-scrollable');
-        if (paramsUrl[1] === 'home' && scrollElements.length) {
-          let baseHeight = scrollElements[0].clientHeight;
-          let realScrollTop = $(window).scrollTop() + baseHeight;
-          let currentHeight: number = baseHeight;
-          let contentElement = scrollElements[0].children;
-          if (contentElement.length > 1) {
-            for (let i = 0; i < contentElement.length; i++) {
-              let currentClientH = contentElement[i].clientHeight;
-              currentHeight += currentClientH;
-              if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                if (this.currentHighlightedMarker !== i) {
-                  this.currentHighlightedMarker = i;
-                  this.highlightMarker(i);
-                }
-              }
-            }
-          }
-        }
-      });
-    });
-  }
-
-  private getTop100(params) {
-    this.loading = true;
-    this.homeService.getTop100(params).map((resp) => resp.json()).subscribe(
-      (resp) => {
-        this.total = resp.total;
-
-        this.shownotfound = resp.total === 0;
-
-        if (resp.data.length === 0) {
-          this.endRecord = true;
-        }
-        if (this.loadMore) {
-          this.events = this.events.concat(resp.data);
-        } else {
-          this.events = resp.data;
-        }
-        this.passerTop100(resp.data);
-        this.loadMore = false;
-        this.loaderService.hide();
-        this.smallLoader.hide();
-        this.loading = false;
-      },
-      (err) => {
-        this.loadMore = true;
-        this.endRecord = true;
-        this.events = [];
-        this.total = 0;
-        this.loaderService.hide();
-        this.smallLoader.hide();
-        this.loading = false;
-      });
-  }
-
-  private getEvents() {
-    this.loading = true;
-    if (this.requestings.length > 0) {
-      this.requestings.forEach((req) => {
-        req.unsubscribe();
-      });
-    }
-
-    const req = this.homeService.getLatestEvents(this.params)
-      .subscribe(
-        (data) => {
-          this.events = this.loadMore ? this.events.concat(data.data) : data.data;
-          this.endRecord = data.data.length === 0;
-          this.total = data.total;
-          this.shownotfound = data.total === 0;
-
-          this.passerTop100(data.data);
-          this.loadMore = false;
-          this.loaderService.hide();
-          this.smallLoader.hide();
-          this.loading = false;
-        },
-        (error) => {
-          req.unsubscribe();
-
-          this.loadMore = false;
-          this.endRecord = false;
-          this.loaderService.hide();
-          this.smallLoader.hide();
-          this.loading = false;
-        },
-        () => {
-          req.unsubscribe();
-        }
-      );
-
-    this.requestings.push(req);
-
   }
 }
 
@@ -695,10 +720,4 @@ function calculateNumCategories(): number {
   }
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
-}
-function sleep(delay) {
-  let start = new Date().getTime();
-  while (new Date().getTime() < start + delay) {
-    // Sleep
-  }
 }
