@@ -45,7 +45,7 @@
     <div [class.frameHidden]="!appGlobal.isShowRight" class="col-xs-12 col-sm-12 col-md-6 map-box hidden-sm" id="right"
          [style.width]="innerWidth > 1023 ? layoutWidth - 1 + 'px' : '100%'" *ngIf="showMap">
       <div style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth - 1 + 'px' : '100%'">
-        <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="gMapStyles">
+        <sebm-google-map  [latitude]="lat" [longitude]="lng" [zoom]="zoom" [maxZoom]="15" [styles]="gMapStyles">
           <app-custom-marker *ngFor="let marker of markers; let index=index"
                              [marker]="marker" [index]="index"
                              (onClick)="markerClick(index)">
