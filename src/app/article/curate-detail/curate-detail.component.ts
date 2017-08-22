@@ -29,8 +29,8 @@ export class CurateDetailComponent implements OnInit {
   public noPause: boolean = false;
   public slides: any[] = [];
 
-  public lat: number = 1.290270;
-  public lng: number = 103.851959;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public zoom: number = 12;
   public layoutWidth: number;
   public innerWidth: number;
@@ -135,11 +135,9 @@ export class CurateDetailComponent implements OnInit {
   public markerClick(markerId) {
     this.currentHighlightedMarker = markerId;
     this.highlightMarker(markerId);
-
     const element = document.querySelector('#place-' + markerId);
     element.scrollIntoView({block: 'end', behavior: 'smooth'});
-
-    // TODO: fix highlight right marker and make scroll smoothly
+    window.scrollBy(0, -50);
   }
 
   private highlightMarker(markerId: number): void {
@@ -166,23 +164,16 @@ export class CurateDetailComponent implements OnInit {
 
       for (let place of article.field_places) {
         let marker = {
-          lat: 1.290270,
-          lng: 103.851959,
+          lat: +place.field_latitude || AppSetting.SingaporeLatLng.lat,
+          lng: +place.field_longitude || AppSetting.SingaporeLatLng.lng,
           opacity: 0.4,
           isOpenInfo: false,
           icon: 'assets/icon/locationmarker.png'
         };
-
-        if (place.field_latitude !== '0' && place.field_longitude !== '0') {
-          marker.lat = Number(place.field_latitude);
-          marker.lng = Number(place.field_longitude);
-
-          if (index === 0) {
-            marker.opacity = 1;
-            marker.isOpenInfo = true;
-          }
+        if (index === 0) {
+          marker.opacity = 1;
+          marker.isOpenInfo = true;
         }
-
         index++;
         this.markers.push(marker);
       }
