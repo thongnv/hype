@@ -7,6 +7,7 @@ import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-curate-new',
@@ -32,8 +33,8 @@ export class CurateNewComponent implements OnInit {
   public noTransition = false;
   public slides: any[] = [];
   public previewData: any;
-  public lat = 1.290270;
-  public lng = 103.851959;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public zoom = 12;
   public validateSize = true;
   public validateType = true;
@@ -257,8 +258,8 @@ export class CurateNewComponent implements OnInit {
     if (data.Title) {
       place.patchValue({
         keyword: data.Title,
-        lat: +data.Lat || 1.290270,
-        lng: +data.Long || 103.851959,
+        lat: +data.Lat || AppSetting.SingaporeLatLng.lat,
+        lng: +data.Long || AppSetting.SingaporeLatLng.lng,
         slug: data.Slug,
       });
     }

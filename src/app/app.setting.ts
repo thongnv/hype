@@ -387,4 +387,6 @@ export class AppSetting {
     showNav: true,
     acceptNotification: false,
   };
+
+  public static SingaporeLatLng = {lat: 1.290270, lng: 103.851959};
 }
