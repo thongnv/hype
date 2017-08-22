@@ -107,7 +107,7 @@
       <div class="form-actions clearfix">
         <div class="wrap-full-50">
           <button type="submit"
-                  [disabled]="previewUrls.length == 0 || !validCaptcha"
+                  [disabled]="!formData.valid || !previewUrls.length || !validCaptcha"
                   class="btn btn-primary">
             Update
           </button>

@@ -9,6 +9,7 @@ import { Article, Image, User } from '../../app.interface';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppGlobals } from '../../services/app.global';
+import { AppSetting } from '../../app.setting';
 
 @Component({
   selector: 'app-article-edit',
@@ -33,8 +34,8 @@ export class ArticleEditComponent implements OnInit {
   public noTransition: boolean = false;
   public slides = [];
 
-  public lat: number = 1.290270;
-  public lng: number = 103.851959;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public zoom: number = 12;
   public validateSize: boolean = true;
   public validateType: boolean = true;
@@ -102,7 +103,6 @@ export class ArticleEditComponent implements OnInit {
             this.categories = response.data;
           }
         );
-
         this.innerWidth = this.windowRef.nativeWindow.innerWidth;
         if (this.innerWidth <= 900) {
           this.appGlobal.isShowLeft = true;
@@ -113,10 +113,43 @@ export class ArticleEditComponent implements OnInit {
         }
         this.layoutWidth = (this.windowRef.rootContainer.width - 180);
         this.appGlobal.toggleMap = true;
-
         this.ready = true;
       });
     });
+  }
+
+  public onSubmit() {
+    let article = this.formData.value;
+    this.places = [];
+    let places = article.places;
+    for (let place of places) {
+      this.places.push({
+        field_place_comment: place.description,
+        field_latitude: place.lat,
+        field_longitude: place.lng,
+        field_slug: place.slug,
+        field_place_address: place.keyword,
+        field_place_images: [place.image],
+      });
+    }
+    article.id = this.article.id;
+    article.places = this.places;
+    article.listImages = this.previewUrls;
+    article.listCategory = this.processCategories(article.listCategory);
+    let data = mapArticle(article);
+    this.loaderService.show();
+    if (!this.submitted) {
+      this.mainService.updateArticle(data).subscribe(
+        (response) => {
+          this.submitted = false;
+          this.router.navigate([response.data.slug]).then();
+        },
+        (error) => {
+          this.loaderService.hide();
+          console.log(error);
+        }
+      );
+    }
   }
 
   public onAddPlace() {
@@ -188,40 +221,6 @@ export class ArticleEditComponent implements OnInit {
     }
   }
 
-  public onSubmit() {
-    let article = this.formData.value;
-    this.places = [];
-    let address = article.places;
-    for (let add of address) {
-      this.places.push({
-        field_place_comment: add.description,
-        field_latitude: add.lat,
-        field_longitude: add.lng,
-        field_slug: add.slug,
-        field_place_address: add.keyword,
-        field_place_images: [add.image],
-      });
-    }
-    article.id = this.article.id;
-    article.places = this.places;
-    article.listImages = this.previewUrls;
-    article.listCategory = this.processCategories(article.listCategory);
-    let data = mapArticle(article);
-    this.loaderService.show();
-    if (!this.submitted) {
-      this.mainService.updateArticle(data).subscribe(
-        (response) => {
-          this.submitted = false;
-          this.router.navigate([response.data.slug]).then();
-        },
-        (error) => {
-          this.loaderService.hide();
-          console.log(error);
-        }
-      );
-    }
-  }
-
   public onPreview() {
     this.previewData = this.formData.value;
     this.previewData.images = this.previewUrls;
@@ -283,8 +282,8 @@ export class ArticleEditComponent implements OnInit {
     if (data.Title) {
       place.patchValue({
         keyword: data.Title,
-        lat: +data.Lat || 1.290270,
-        lng: +data.Long || 103.851959,
+        lat: +data.Lat || AppSetting.SingaporeLatLng.lat,
+        lng: +data.Long || AppSetting.SingaporeLatLng.lng,
         slug: data.Slug,
       });
     }
@@ -353,32 +352,26 @@ export class ArticleEditComponent implements OnInit {
     this.formData.controls.listDescription.patchValue(res.body);
     const control = <FormArray> this.formData.controls.places;
     for (let place of res.field_places) {
-      if (place.field_latitude) {
-        let img = null;
-        if (place.field_place_images.length) {
-          img = {
-            fid: place.field_place_images[0].fid,
-            url: place.field_place_images[0].url,
-            value: '',
-            filename: '',
-            filemime: '',
-            filesize: 0
-          };
+      const img = place.field_place_images.length ? {
+        fid: place.field_place_images[0].fid,
+        url: place.field_place_images[0].url,
+        value: '',
+        filename: '',
+        filemime: '',
+        filesize: 0
+      } : null;
+      control.push(this.formBuilder.group(
+        {
+          fcl_id: place.fcl_id,
+          keyword: [place.field_place_address, Validators.required],
+          inputAddress: '',
+          description: [place.field_place_comment, Validators.required],
+          lat: [place.field_latitude, Validators.required],
+          lng: [place.field_longitude, Validators.required],
+          slug: place.field_slug,
+          image: img
         }
-        const placeControl = this.formBuilder.group(
-          {
-            fcl_id: place.fcl_id,
-            keyword: place.field_place_address,
-            inputAddress: '',
-            description: place.field_place_comment,
-            lat: place.field_latitude,
-            lng: place.field_longitude,
-            slug: place.field_slug,
-            image: img
-          }
-        );
-        control.push(placeControl);
-      }
+      ));
     }
   }
 
