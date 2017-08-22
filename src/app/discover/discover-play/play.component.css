@@ -63,6 +63,7 @@
 
 .filterFromMode .btn-block label:hover {
     box-shadow: none;
+    opacity: 0.8;
 }
 
 .filterFromMode .btn-block label.active {
@@ -117,12 +118,14 @@
     background: transparent;
 }
 
-.filterCategory .btn-filter-block label.active,
-.filterCategory .btn-filter-block label.active:hover {
+.filterCategory .btn-filter-block label.active{
     outline: none;
     background: transparent;
     border-radius: 0px;
     opacity: 1;
+}
+.filterCategory .btn-filter-block label.active:hover {
+    opacity: 0.4;
 }
 
 .filterCategory .btn-filter-block label {
@@ -167,7 +170,7 @@
 }
 
 #btnHeadFilter > label:hover {
-    opacity: 1;
+    opacity: 0.8;
 }
 
 /* Favourite button effect */
