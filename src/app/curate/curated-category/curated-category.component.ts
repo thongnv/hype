@@ -54,6 +54,7 @@ export class CuratedCategoryComponent implements OnInit {
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
+    this.appGlobal.emitActiveType('guides');
     this.titleService.setTitle('Hylo | Guides');
     this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;

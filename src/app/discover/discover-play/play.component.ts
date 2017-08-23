@@ -116,6 +116,7 @@ export class PlayComponent implements OnInit {
 
   public ngOnInit() {
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
+    this.appGlobal.emitActiveType('play');
     window.scroll(0, 0);
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'

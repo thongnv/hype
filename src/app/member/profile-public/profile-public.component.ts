@@ -9,6 +9,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import $ from 'jquery';
 import { Title } from '@angular/platform-browser';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-profile-public',
@@ -50,12 +51,14 @@ export class ProfilePublicComponent implements OnInit {
               private userService: UserService,
               private smallLoader: SmallLoaderService,
               private localStorageService: LocalStorageService,
+              private appGlobal: AppGlobals,
               private route: ActivatedRoute,
               private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
     this.loaderService.show();
+    this.appGlobal.emitActiveType('');
     this.selectedFavoriteType = 'event';
     let user = this.localStorageService.get('user') as User;
     if (user) {

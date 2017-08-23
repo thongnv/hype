@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/startWith';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -9,7 +9,6 @@ export class AppGlobals {
   public isShowRight = true;
   public toggleMap = false;
 
-  // events icon
   public eventIcon = [
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/art.png', name: 'art'},
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/camp.png', name: 'camp'},
@@ -25,10 +24,19 @@ export class AppGlobals {
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/sports.png', name: 'sports'},
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/tech.png', name: 'tech'}];
 
-  // use this property for property binding
   public neighbourhoodStorage: BehaviorSubject<string> = new BehaviorSubject<string>('Singapore');
+  @Output() public typeChangeEmitter: EventEmitter<any> = new EventEmitter();
 
   public setLocationAddress(neighbourhood) {
     this.neighbourhoodStorage.next(neighbourhood);
   }
+
+  public emitActiveType(type: string) {
+    this.typeChangeEmitter.emit(type);
+  }
+
+  public getEmittedActiveType() {
+    return this.typeChangeEmitter;
+  }
+
 }

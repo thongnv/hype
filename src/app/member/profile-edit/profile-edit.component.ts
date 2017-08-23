@@ -72,6 +72,7 @@ export class ProfileEditComponent implements OnInit {
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
+    this.appGlobal.emitActiveType('');
     this.loaderService.show();
     this.user = this.localStorageService.get('user') as User;
     this.layoutWidth = (this.windowRef.rootContainer.width - 80);

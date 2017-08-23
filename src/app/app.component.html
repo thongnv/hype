@@ -7,23 +7,19 @@
         <div class="left-nav-content">
           <aside class="sidebar">
             <ul class="navbar-collapse list-tap" [class.userMenu]="user" >
-              <li [routerLink]="['./home']" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{exact: true}">
+              <li [routerLink]="['./home']" [class.active]="eventActive">
                 <i class="left-nav-trending-events"><img src="/assets/icon/left-nav-trending-events.png"/> </i>
                 <span class="hidden-xs hidden-sm">Trending Events</span>
               </li>
-              <li [routerLink]="['./discover/eat']" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{exact: true}">
+              <li [routerLink]="['./discover/eat']" [class.active]="discoverEatActive">
                 <i class="left-nav-eat"><img src="/assets/icon/left-nav-eat.png"/></i>
                 <span class="hidden-xs hidden-sm">Eat</span>
               </li>
-              <li [routerLink]="['./discover/play']" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{exact: true}">
+              <li [routerLink]="['./discover/play']" [class.active]="discoverPlayActive">
                 <i class="left-nav-play"><img src="/assets/icon/left-nav-play.png"/></i>
                 <span class="hidden-xs hidden-sm">Play</span>
               </li>
-              <li [routerLink]="['/guides']" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{exact: true}">
+              <li [routerLink]="['/guides']" [class.active]="guidesActive">
                 <i class="left-nav-curated"><img src="/assets/icon/left-nav-curated.png"/></i>
                 <span class="hidden-xs hidden-sm">Guides</span>
               </li>

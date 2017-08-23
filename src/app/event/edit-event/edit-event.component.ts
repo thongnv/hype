@@ -11,6 +11,7 @@ import { AppSetting } from '../../app.setting';
 import { HyperSearchComponent } from '../../hyper-search/hyper-search.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { HyloEvent, Image, User } from '../../app.interface';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-edit-event',
@@ -92,11 +93,13 @@ export class EditEventComponent implements OnInit {
               public sanitizer: DomSanitizer,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
+              private appGlobal: AppGlobals,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
   public ngOnInit() {
+    this.appGlobal.emitActiveType('');
     this.user = this.localStorageService.get('user') as User;
     if (!this.user || this.user.isAnonymous) {
       this.router.navigate(['/login']).then();

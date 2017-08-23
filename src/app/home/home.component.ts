@@ -135,6 +135,7 @@ export class HomeComponent implements OnInit {
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
+    this.appGlobal.emitActiveType('event');
 
     this.getTrendingEvents();
 

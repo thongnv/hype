@@ -117,6 +117,7 @@ export class EatComponent implements OnInit {
 
   public ngOnInit() {
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
+    this.appGlobal.emitActiveType('eat');
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
     });

@@ -3,6 +3,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AppSetting } from '../../app.setting';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-logout',
@@ -14,10 +15,12 @@ export class LogoutComponent implements OnInit {
   public constructor(
      private localStorageService: LocalStorageService,
      private userService: UserService,
+     private appGlobal: AppGlobals,
      private router: Router) {
   }
 
   public ngOnInit() {
+    this.appGlobal.emitActiveType('');
     this.userService.logout().subscribe(
       (res) => {
         console.log(res);

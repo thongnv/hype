@@ -12,7 +12,6 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
 import { Location as LocationService } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-import {EventEmitterService} from '../../services/event-emitter.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -23,6 +22,7 @@ import {EventEmitterService} from '../../services/event-emitter.service';
 export class CompanyDetailComponent implements Company, OnInit {
   public id: string;
   public name: string;
+  public type: string;
   public description: string;
   public rating: number;
   public location: Location;
@@ -64,12 +64,12 @@ export class CompanyDetailComponent implements Company, OnInit {
               private router: Router,
               private locationService: LocationService,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals,
-              private _eventEmitter: EventEmitterService) {
+              public appGlobal: AppGlobals) {
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
 
@@ -80,7 +80,6 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public ngOnInit() {
-    this._eventEmitter.sendMessage('init company detail');
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
@@ -106,7 +105,7 @@ export class CompanyDetailComponent implements Company, OnInit {
         (resp) => {
           this.company = CompanyService.extractCompanyDetail(resp);
           this.loadData(this.company);
-          this.location.name = this.location.name.replace(/Address\//i, '');
+          this.appGlobal.emitActiveType(this.company.type);
           this.titleService.setTitle(this.company.name);
           // TODO: use this.instagramUrl instead
           this.companyService.getInstagramProfile(this.company.licenseNumber).subscribe(
@@ -252,7 +251,7 @@ export class CompanyDetailComponent implements Company, OnInit {
     this.website = data.website;
     this.reviews = data.reviews;
     this.name = data.name;
-    this.description = this.htmlEntities(data.description);
+    this.description = escapeHtml(data.description);
     this.rating = data.rating;
     this.rated = data.rated;
     this.bookmarked = data.bookmarked;
@@ -268,17 +267,6 @@ export class CompanyDetailComponent implements Company, OnInit {
     for (let img of images) {
       this.slides.push({image: img});
     }
-  }
-
-  private htmlEntities(str) {
-    return String(str)
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/\ufffd/g, '')
-      .replace(/\ufffdI/g, '')
-      .replace(/\ufffds/g, '');
   }
 
 }
@@ -300,4 +288,15 @@ function extractImages(data): Image[] {
     );
   }
   return images;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/\ufffd/g, '')
+    .replace(/\ufffdI/g, '')
+    .replace(/\ufffds/g, '');
 }

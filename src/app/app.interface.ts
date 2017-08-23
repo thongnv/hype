@@ -124,6 +124,7 @@ export interface SmallLoaderState {
 export interface Company {
   id: string;
   name: string;
+  type: string;
   description: string;
   rating: number;
   location: Location;
