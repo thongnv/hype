@@ -240,6 +240,7 @@ function extractPlaces(response): Company[] {
     const place: Company = {
       id: null,
       name: item.Company_Name,
+      type: '',
       description: item.Hylo_Activity_Description,
       rating: item.rating.average,
       location: null,
