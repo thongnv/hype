@@ -19,15 +19,15 @@ export class CurateDetailComponent implements OnInit {
   public article: any;
   public gMapStyles: any;
   public currentHighlightedMarker: any;
-  public markers: any[] = [];
-  public showMap: boolean = false;
-  public slugName: string = '';
+  public markers = [];
+  public showMap = false;
+  public slugName = '';
 
-  public NextPhotoInterval: number = 5000;
-  public noLoopSlides: boolean = false;
-  public noTransition: boolean = false;
-  public noPause: boolean = false;
-  public slides: any[] = [];
+  public NextPhotoInterval= 5000;
+  public noLoopSlides = false;
+  public noTransition = false;
+  public noPause = false;
+  public slides = [];
 
   public lat = AppSetting.SingaporeLatLng.lat;
   public lng = AppSetting.SingaporeLatLng.lng;
@@ -50,6 +50,7 @@ export class CurateDetailComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
@@ -61,11 +62,9 @@ export class CurateDetailComponent implements OnInit {
 
   public ngOnInit() {
     let user = this.localStorageService.get('user') as User;
-
     if (user) {
       this.user = user;
     }
-
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -123,15 +122,12 @@ export class CurateDetailComponent implements OnInit {
   }
 
   public getCenterMarkers() {
-
     let lat: number = 0;
     let lng: number = 0;
-
     this.markers.forEach((marker) => {
       lat += marker.lat;
       lng += marker.lng;
     });
-
     this.lat = lat / this.markers.length;
     this.lng = lng / this.markers.length;
   }
@@ -165,7 +161,6 @@ export class CurateDetailComponent implements OnInit {
 
     if (article.field_places && article.field_places.length) {
       let index = 0;
-
       for (let place of article.field_places) {
         let marker = {
           lat: +place.field_latitude || AppSetting.SingaporeLatLng.lat,
@@ -181,7 +176,6 @@ export class CurateDetailComponent implements OnInit {
         index++;
         this.markers.push(marker);
       }
-
       this.need2Zoom();
       this.showMap = true;
     }
@@ -192,7 +186,6 @@ export class CurateDetailComponent implements OnInit {
           this.slides.push({image: img.url, active: false});
         }
       }
-
     }
   }
 
@@ -206,9 +199,7 @@ export class CurateDetailComponent implements OnInit {
         }
       });
     });
-
     distances.sort((a, b) => a - b);
-
     let averageDistance = (distances[0] + distances[distances.length - 1]) / 2;
     let centerMarker = distances[Math.floor(distances.length / 2)];
 
@@ -218,9 +209,7 @@ export class CurateDetailComponent implements OnInit {
       this.lng = centerMarker.lng;
       this.zoom = 19;
     }
-
   }
-
 }
 
 function getDistance(p1, p2) {

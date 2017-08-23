@@ -47,14 +47,14 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public slug = '';
   public user = AppSetting.defaultUser;
   public NextPhotoInterval: number = 5000;
-  public noLoopSlides: boolean = false;
-  public noTransition: boolean = false;
-  public noThumbnail: boolean = false;
+  public noLoopSlides = false;
+  public noTransition = false;
+  public noThumbnail = false;
   public slides = [];
   public previewUrl: Image[] = [];
-  public userRating: number = 0;
-  public userRated: boolean = false;
-  public ready: boolean = false;
+  public userRating = 0;
+  public userRated = false;
+  public ready = false;
   public gMapStyles: any;
   public layoutWidth: number;
   public innerWidth: number;
@@ -86,6 +86,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
   }
@@ -114,7 +115,6 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         (resp) => {
           let event = EventService.extractEventDetail(resp);
           this.loadData(event);
-
           if (event.metaTags) {
             this.titleService.setTitle(event.metaTags.title);
             this.meta.updateTag({name: 'description', content: event.metaTags.description});
@@ -131,15 +131,9 @@ export class EventDetailComponent implements HyloEvent, OnInit {
               content: event.detail.replace(/<\/?[^>]+(>|$)/g, '').substring(0, 200)
             });
           }
-
           this.initSlide(this.images);
           this.isCurrentUser = event.creator.slug === this.user.slug;
-          let sumPrices = this.prices.reduce(
-            (sum, value) => {
-              return sum + Number(value);
-            },
-            0
-          );
+          let sumPrices = this.prices.reduce((sum, value) => sum + Number(value), 0);
           if (sumPrices === 0) {
             this.isFree = true;
           } else {
