@@ -6,6 +6,7 @@ import { SeoService } from './services/seo.service';
 import { UserService } from './services/user.service';
 import { WindowUtilService } from './services/window-ultil.service';
 import { User } from './app.interface';
+import {EventEmitterService} from './services/event-emitter.service';
 
 @Component({
   selector: 'app',
@@ -23,12 +24,14 @@ export class AppComponent implements OnInit, AfterContentInit {
   public appElementView: ElementRef;
 
   public user: User;
+  sub: any;
 
   constructor(private localStorageService: LocalStorageService,
               private seoService: SeoService,
               private userService: UserService,
               zone: NgZone,
-              private windowRef: WindowUtilService) {
+              private windowRef: WindowUtilService,
+              private _eventEmitter: EventEmitterService) {
     window.addEventListener('resize', (event) => {
       zone.run(() => {
         this.windowRef.rootContainer.innerWidth = window.innerWidth;
@@ -40,6 +43,9 @@ export class AppComponent implements OnInit, AfterContentInit {
   }
 
   public ngOnInit() {
+    // DEBUG
+    this.sub = this._eventEmitter.dataStream.subscribe(data => console.log('get data: ', data));
+
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;

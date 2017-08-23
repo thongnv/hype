@@ -12,6 +12,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
 import { Location as LocationService } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import {EventEmitterService} from '../../services/event-emitter.service';
 
 @Component({
   selector: 'app-company-detail',
@@ -63,7 +64,8 @@ export class CompanyDetailComponent implements Company, OnInit {
               private router: Router,
               private locationService: LocationService,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals) {
+              private appGlobal: AppGlobals,
+              private _eventEmitter: EventEmitterService) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -78,6 +80,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   }
 
   public ngOnInit() {
+    this._eventEmitter.sendMessage('init company detail');
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
