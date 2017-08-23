@@ -47,7 +47,7 @@
       <div class="row padding-top-20px">
         <div *ngFor="let article of articlesCategory.articles"
              class="col-xs-12 col-md-6 col-lg-3 height-420px">
-          <div style="overflow: hidden; text-align: center">
+          <div class="box-image">
             <div class="image-post-news" [routerLink]="[article.slug]">
               <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
             </div>

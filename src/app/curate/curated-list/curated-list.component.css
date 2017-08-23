@@ -35,6 +35,11 @@
   width: 80%;
 }
 
+.box-image {
+  overflow: hidden;
+  border-radius: 5px;
+}
+
 ul.list-category {
   list-style: none;
   padding-left: 0;

@@ -62,7 +62,7 @@
         <h4 class="head">Editors Pick</h4>
         <div *ngIf="editorsPickArticles" class="row col-md-10 padding-0">
           <div *ngFor="let article of editorsPickArticles" class=" col-xs-6 col-md-6 col-lg-3 post-news article-item">
-            <div style="overflow: hidden">
+            <div class="box-image">
               <div class="image-post-news" [routerLink]="[article.slug]">
                 <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
               </div>
@@ -151,7 +151,7 @@
         <div *ngIf="communityArticles" class="row col-md-10 padding-0">
           <div *ngFor="let article of communityArticles"
                class="col-xs-12 col-md-6 col-lg-3 height-420px">
-            <div style="overflow: hidden; text-align: center">
+            <div class="box-image">
               <div class="image-post-news" [routerLink]="[article.slug]">
                 <img class="post-content-img" [src]="article.field_images[0]" [alt]="article.title">
               </div>
