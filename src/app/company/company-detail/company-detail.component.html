@@ -17,7 +17,7 @@
                                    }">
               </app-slide-carousel>
               <a (click)="goBack()"><i class="sprite sprite-icon-left-white"></i></a>
-              <i class="icon-sm"
+              <i class="icon-sm cbutton cbutton-large"
                  [class.icon-heart]="!bookmarked"
                  [class.icon-heart-selected]="bookmarked"
                  (click)="toggleBookmark()" aria-hidden="true">
@@ -155,9 +155,11 @@
         </div>
     </div>
 
-    <div [class.frameHidden]="!appGlobal.isShowRight"  class="col-md-6  frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 - 1 + 'px' : '100%'" id="right" >
-      <div style="position: fixed; height: 100%;" [style.width]="innerWidth > 1023 ? layoutWidth / 2 - 1 + 'px' : ''">
-        <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="15">
+    <div [class.frameHidden]="!appGlobal.isShowRight"  class="col-md-6  frame_right"
+         [style.width]="innerWidth > 1023 ? layoutWidth/2 - 1 + 'px' : '100%'" id="right" >
+      <div style="position: fixed; height: 100%;"
+           [style.width]="innerWidth > 1023 ? layoutWidth / 2 - 1 + 'px' : '100%'">
+        <sebm-google-map [latitude]="location.lat" [longitude]="location.lng" [zoom]="12" [maxZoom]="15">
           <sebm-google-map-marker [latitude]="location.lat"
                                   [longitude]="location.lng" [iconUrl]="'assets/icon/locationmarker.png'">
           </sebm-google-map-marker>

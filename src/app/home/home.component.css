@@ -915,7 +915,32 @@ ul.mentioned-item {
   }
 }
 
+/* Favourite button effect */
+.cbutton-small:active:after {
+  top: 10px;
+  left: 0;
+}
 
+.cbutton-small:after {
+  top: -5px;
+  left: -15px;
+}
+
+.cbutton-large {
+  width: 35px;
+  height: 35px;
+}
+
+.cbutton-large:after {
+  top: -18px;
+  left: -18px;
+}
+
+.cbutton-large:active:after {
+  top: 0;
+  left: 0;
+}
+/* /Favourite button effect */
 
 .avatar-profile .avatar-picture, .article .list-item-overlay {
   cursor: pointer;

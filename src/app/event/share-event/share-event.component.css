@@ -1,13 +1,27 @@
 /*header start*/
 
+.border-bottom {
+  border-bottom: 1px solid #f7f7f7;
+}
+
+.padding-top-30 {
+  padding-top: 30px;
+}
+
+.padding-bottom-35 {
+  padding-bottom: 35px;
+}
+
+.wrap-primary-content-event {
+  padding: 0 40px 24px;
+}
+
 .new-list {
   padding: 0;
   margin-left: 180px;
 }
 
 header {
-  width: 50%;
-  border-right: 1px solid #eaeaea;
   background: transparent;
   box-shadow: 0 1px 3px 0 rgba(205, 205, 205, 0.5);
   padding: 6px 0;
@@ -242,13 +256,13 @@ input#event-date {
 }
 
 .list-preview-wrap .event-title {
-  margin: 24px;
   font-weight: bold;
+  padding: 38px 10px;
 }
 
 .list-preview-wrap .event-title img {
   float: left;
-  margin-top: 12px;
+  margin-top: 9px;
 }
 
 .list-preview-wrap .event-title span {
@@ -274,12 +288,13 @@ input#event-date {
 }
 
 .information-event {
-  padding-left: 30px;
-  padding-top: 15px;
+  width: 100%;
+  margin: 0;
 }
 
 .list-preview-wrap .detail-event {
-  margin: 10px 30px 10px 40px;
+  padding-bottom: 35px;
+  padding-top: 30px;
 }
 
 .list-preview-wrap .detail-event h5 {
@@ -357,7 +372,7 @@ input#event-date {
 }
 
 .dupplicate-event {
-  max-height: 100px;
+  max-height: 200px;
   overflow-x: hidden;
   overflow-y: auto;
   padding: 10px;
@@ -368,10 +383,11 @@ input#event-date {
 
 /*preview end*/
 
-.left-content-information-event {
+ul.left-content-information-event {
   list-style: none;
   float: left;
   width: 70%;
+  padding: 0;
 }
 
 .left-content-information-event > li {
@@ -515,6 +531,23 @@ span.dollar-character {
   padding-right: 25px;
 }
 
+.tags {
+  list-style: none;
+  padding-left: 0;
+  display: block;
+  float: left;
+  margin-top: 8px;
+}
+
+.tags li {
+  background-color: #ccc;
+  padding: 5px 10px;
+  font-weight: 300;
+  float: left;
+  margin-right: 15px;
+  text-transform: capitalize;
+}
+
 @media only screen and (min-width: 320px) and (max-width: 374px) {
 
   .input-box h3 {
@@ -607,11 +640,6 @@ span.dollar-character {
     margin: 10px 10px 10px 20px;
   }
 
-  .list-preview-wrap .post-experience {
-    margin: 20px 20px;
-
-  }
-
   .information-event {
     display: flex;
     flex-direction: column-reverse;
@@ -647,10 +675,6 @@ span.dollar-character {
 
   .list-mention {
     padding-left: 0;
-  }
-
-  .list-preview-wrap .left-content {
-    border-right: 0;
   }
 
   .new-list .recaptcha {
@@ -724,11 +748,13 @@ span.dollar-character {
     padding-left: 15px;
     padding-right: 15px;
   }
-  .new-list{
+
+  .new-list {
     margin-left: 0;
   }
+
   .new-list header,
-  .new-list header ul{
+  .new-list header ul {
     width: 100%
   }
 
@@ -737,8 +763,6 @@ span.dollar-character {
     margin-bottom: 50px;
 
   }
-
-
 
   .row {
     padding: 0 !important;
@@ -779,10 +803,6 @@ span.dollar-character {
 @media only screen and (min-width: 992px) {
   .new-list .form-wrap {
     padding: 5px 10px;
-  }
-
-  .list-preview-wrap .left-content {
-    border-right: 0;
   }
 
 }

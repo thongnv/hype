@@ -2,8 +2,8 @@
   <!--header start-->
   <header>
     <ul>
-      <li class="internal-link" (click)="switchView()" [class.active]="!showPreview">Event Info</li>
-      <li class="internal-link" (click)="switchView()" [class.active]="showPreview">Preview</li>
+      <li class="internal-link" (click)="showPreview = false" [class.active]="!showPreview">Event Info</li>
+      <li class="internal-link" (click)="showPreview = true" [class.active]="showPreview">Preview</li>
     </ul>
   </header>
   <!--header end-->
@@ -27,7 +27,7 @@
             Please enter event name.
           </small>
           <div class="dupplicate-event" *ngIf="existEvents.length > 0">
-            <b>These events similar your</b>
+            <b>Similar events</b>
             <ul class="exist-events">
               <li class="event-title" *ngFor="let eventItem of existEvents">
                 <a [routerLink]="eventItem.Slug" target="_blank">{{eventItem.Title}}</a>
@@ -75,7 +75,7 @@
           <label>Tags</label>
           <tag-input [(ngModel)]="eventTags" [modelAsStrings]="true"
                      [separatorKeyCodes]="[13, 32]"
-                     [separatorKeyCodes]="['RET', 'SPACE']"
+                     [separatorKeys]="['RET', 'SPACE']"
                      placeholder="E.g performance, liveband, concert, food"
                      formControlName="eventTags">
             <tag-input-dropdown [displayBy]="'name'"
@@ -87,10 +87,10 @@
           <label class="control-label">Images</label>
           <label class="control-label " id="list-img-label" for="listImg" *ngIf="addImage">
             <i class="fa fa-plus"></i>&nbsp;Add images
-            <input class="form-control col-xs-12" id="listImg"  type='file' accept="image/*"
+            <input class="form-control col-xs-12" id="listImg" type='file' accept="image/*"
                    (change)="readUrl($event)" multiple="multiple">
           </label>
-          <small *ngIf="!previewUrls.length" class="text-danger">
+          <small *ngIf="!previewImages.length" class="text-danger">
             Event images is required
           </small>
           <small *ngIf="!validSize || !validType" class="text-danger">
@@ -98,7 +98,7 @@
             Allowed file types: jpg, jpeg, png, gif, bmp.
           </small>
           <div class="list-img-wrap">
-            <div *ngFor="let img of previewUrls" class="preview-wrap">
+            <div *ngFor="let img of previewImages" class="preview-wrap">
               <img src="{{img.url}}"/>
               <a class="fa fa-times delete-btn" (click)="onRemovePreview(img)"></a>
             </div>
@@ -170,8 +170,7 @@
             <div>
               <input formControlName="eventOrganizer" id="event-organized"
                      class="form-control"
-                     type="text"
-              >
+                     type="text">
             </div>
           </div>
           <div class="form-group  mention-by-group">
@@ -195,7 +194,7 @@
         </re-captcha>
       </div>
       <div class="form-actions">
-        <button type="submit" [disabled]="eventForm.invalid || previewUrls.length == 0 || !validCaptcha"
+        <button type="submit" [disabled]="eventForm.invalid || previewImages.length == 0 || !validCaptcha"
                 class="btn btn-primary">
           Share
         </button>
@@ -209,17 +208,15 @@
 
   <!--list preview wrap start-->
   <div class="list-preview-wrap" [class.hide]="!showPreview" *ngIf="previewData">
-    <div class="row">
-      <div class="col-md-7 left-content frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
-        <div class="event-title">
-          <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
+    <div class="col-md-7 left-content frame_left" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
+      <div class="event-title border-bottom">
+        <img src="../../../assets/icon/icon-left/icon-left.png" srcset="../../../assets/icon/icon-left/icon-left@2x.png 2x,
              ../../../assets/icon/icon-left/icon-left@3x.png 3x" class="icon_left">
-          <span class="One-Direction-Concer" [innerHTML]="previewData.eventName"></span>
-        </div>
+        <span [innerHTML]="previewData.eventName || 'Untitled'"></span>
+      </div>
 
-        <hr>
-
-        <div class="row information-event">
+      <div class="wrap-primary-content-event">
+        <div class="row information-event padding-top-30 padding-0 border-bottom">
           <ul class="left-content-information-event">
             <li>
               <span class="info-label">
@@ -244,16 +241,18 @@
               <span class="info-value">{{endDate | date:'dd MMMM y, hh:mm a'}}</span>
               <div class="clear"></div>
             </li>
-            <li *ngIf="previewData.eventPrice !== ''">
+
+            <li>
               <span class="info-label"><i
                 class="sprite sprite-tag"></i><span>price range</span></span>
               <span class="info-value">
-                <span *ngFor="let price of prices; let i = index">
-                  ${{price}}<span *ngIf="i != prices.length - 1">, </span>
+                <span *ngFor="let price of prices; let last = last">
+                  {{price ? '$' + price : 'Free'}}{{last? '' : ', '}}
                 </span>
-                <span *ngIf="!prices.length">Free</span>
+                <span *ngIf="isFree">Free</span>
               </span>
             </li>
+
             <li *ngIf="previewData.call2action?.eventLink">
               <span class="info-label"><i class="sprite sprite-permalink-gray"></i><span>Booking</span>
               </span>
@@ -263,17 +262,17 @@
               </a>
             </span>
             </li>
-            <li *ngIf="previewData.organizer">
+            <li *ngIf="previewData.eventOrganizer">
               <span class="info-label"><i
                 class="sprite sprite-tag"></i><span>Organized by</span></span>
-              <span class="info-value col-md-7 no-padding-left">{{previewData.organizer}}
+              <span class="info-value">{{previewData.eventOrganizer}}
               </span>
             </li>
-            <li *ngIf="previewData.eventMentions?.length > 1">
+            <li *ngIf="previewData.eventMentions?.length">
               <span class="info-label mentioned_by">Mentioned by</span>
               <ul class="list-mention">
                 <li *ngFor="let mention of previewData.eventMentions">
-                  <a [href]="mention" target="_blank" *ngIf="mention !==''">
+                  <a [href]="mention" target="_blank" *ngIf="mention">
                     <img [src]="'https://www.google.com/s2/favicons?domain=' + mention">
                   </a>
                 </li>
@@ -294,15 +293,14 @@
           </div>
         </div>
 
-        <hr>
-
-        <div class="detail-event">
+        <div class="detail-event border-bottom clearfix">
           <h5 class="bold">Details</h5>
           <p [innerHTML]="previewData.eventDetail">
           </p>
+          <ul class="tags">
+            <li *ngFor="let tag of previewData.eventTags">{{tag}}</li>
+          </ul>
         </div>
-
-        <hr>
 
         <div class="post-experience">
           <h4 class="experiences-post-review">Experiences (0)</h4>
@@ -322,32 +320,33 @@
             <a>+ Add Images</a>
           </p>
         </div>
-        <div class="mobile-footer"></div>
       </div>
 
-      <div class="col-md-5 right-content frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
+      <div class="mobile-footer"></div>
+    </div>
 
-        <div class="row">
-          <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
-                    [carouselSlides]="slides">
-            <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
-                   [ngStyle]="{
+    <div class="col-md-5 right-content frame_right" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
+
+      <div class="row">
+        <carousel [interval]="NextPhotoInterval" [noWrap]="noLoopSlides" [noTransition]="noTransition"
+                  [carouselSlides]="slides">
+          <slide *ngFor="let slide of slides; let index=index" [active]="slide.active"
+                 [ngStyle]="{
                    'background-image': 'url(' + slide.image + ')',
                    'background-position': 'center, center',
                     'height': '480px', 'background-size': 'cover','border-radius':'4px'}">
-            </slide>
-          </carousel>
-        </div>
+          </slide>
+        </carousel>
+      </div>
 
-        <div class="event-location hidden-md hidden-xs hidden-sm">
-          <p>Location</p>
-          <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
-                           [zoom]="13" [styles]="gMapStyles">
-            <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
-                                    [iconUrl]="'assets/icon/locationmarker.png'">
-            </sebm-google-map-marker>
-          </sebm-google-map>
-        </div>
+      <div class="event-location hidden-md hidden-xs hidden-sm">
+        <p>Location</p>
+        <sebm-google-map [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
+                         [zoom]="13" [styles]="gMapStyles">
+          <sebm-google-map-marker [latitude]="previewData.eventPlace.lat" [longitude]="previewData.eventPlace.lng"
+                                  [iconUrl]="'assets/icon/locationmarker.png'">
+          </sebm-google-map-marker>
+        </sebm-google-map>
       </div>
     </div>
   </div>

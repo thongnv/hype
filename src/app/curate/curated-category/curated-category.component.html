@@ -90,13 +90,13 @@
             </div>
 
             <!--place item-->
-            <div *ngFor="let place of places" class="row margin-0 padding-10px border-bottom">
-              <div class="col-xs-3 col-md-3 padding-0">
-                <app-place-image [routerLink]="['/company', place.slugName]" [name]="place.name" [width]="129"
-                                 [height]="129" [licenseNumber]="place.licenseNumber">
+            <div *ngFor="let place of places" class="row margin-0 padding-10px border-bottom place-item">
+              <div class="col-xs-4 col-md-3 padding-0">
+                <app-place-image [routerLink]="['/company', place.slugName]" [name]="place.name" [width]="100"
+                                 [height]="100" [licenseNumber]="place.licenseNumber">
                 </app-place-image>
               </div>
-              <div class="col-xs-7 col-md-7">
+              <div class="col-xs-8 col-md-9 place-description">
                 <div>
                   <a class="title-hover" [routerLink]="place.slugName">
                     <h5 class="margin-0 custom-text-ellipsis-title">{{place.name}}</h5>
@@ -125,13 +125,13 @@
             </div>
 
             <!--event item-->
-            <div *ngFor="let event of events" class="row margin-0 padding-10px border-bottom">
+            <div *ngFor="let event of events" class="row margin-0 padding-10px border-bottom event-item">
               <div class="col-xs-3 col-md-3 padding-0">
                 <a class="avatar-picture">
-                  <img [src]="event.images[0].url">
+                  <img [src]="event.images[0].url" width="100">
                 </a>
               </div>
-              <div class="col-xs-7 col-md-7">
+              <div class="col-xs-7 col-md-7 event-description">
                 <div>
                   <a class="title-hover" [routerLink]="event.slug">
                     <h5 class="margin-0 custom-text-ellipsis-title">{{event.name}}</h5>

@@ -12,6 +12,18 @@ a:hover {
   height: 100%;
 }
 
+/* Favourite button effect */
+.cbutton-large:active:after {
+  top: 0;
+  left: 0;
+}
+
+.cbutton-large:after {
+  top: -16px;
+  left: -16px;
+}
+
+/* /Favourite button effect */
 
 
 .border-bottom {

@@ -167,8 +167,9 @@
                     {{item.comment_count}} {{ item.comment_count > 1 ? 'Comments' : 'Comment' }}
                   </span>
                 </li>
-                <li (click)="onLikeEmit(item)" class="heart-icon">
-                  <i class="sprite" [class.sprite-Unfavourites20x20]="!item.user_bookmark"
+                <li (click)="onLikeEmit(item)" class="heart-icon cbutton cbutton-small">
+                  <i class="sprite"
+                     [class.sprite-Unfavourites20x20]="!item.user_bookmark"
                      [class.sprite-Favourites20x20]="item.user_bookmark" aria-hidden="true"></i>
                 </li>
               </ul>
@@ -182,7 +183,7 @@
       </div>
       <div *ngIf="item.type=='article'" class="article">
         <div class="list-item">
-          <div class="heart" (click)="onLikeEmit(item)">
+          <div class="heart cbutton cbutton-large" (click)="onLikeEmit(item)">
             <i class="icon-sm" [class.icon-heart]="!item.user_bookmark"
                [class.icon-heart-selected]="item.user_bookmark" aria-hidden="true"></i>
           </div>

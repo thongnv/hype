@@ -1701,7 +1701,7 @@ body, html {
 
 .marker-info h4{
   font-size: 16px;
-  font-family: Roboto;
+  font-family: Roboto sans-serif;
   font-weight: bold;
   line-height: 1.38;
   text-align: left;
@@ -1716,4 +1716,50 @@ and (max-device-width: 480px) {
   #profile-public .member-nav > li {
     width: 50%;
   }
+}
+
+.cbutton {
+  position: relative;
+  border: none;
+  font-size: 28px;
+  color: #FFFFFF;
+  width: 30px;
+  height: 30px;
+  transform: scale(1);
+  text-align: center;
+  -webkit-transition-duration: 0.4s;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: 0.5s;
+  outline: none;
+}
+
+.cbutton:after {
+  content: "";
+  background: rgba(136, 140, 136, 0.3);
+  display: block;
+  position: absolute;
+  width: 200%;
+  z-index: 1;
+  height: 200%;
+  border-radius: 150px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.cbutton:active:after {
+  background: rgba(136, 140, 136, 0.3);
+  display: block;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  height: 100%;
+  border-radius: 150px;
+  opacity: 1;
+  transition: 0s;
+}
+
+.cbutton i {
+  top: 15px !important;
 }

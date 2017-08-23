@@ -1,3 +1,7 @@
+.navbar-header {
+  margin: 0;
+}
+
 .map-option .img-circle {
     margin-top: 15px;
     margin-right: 8px;

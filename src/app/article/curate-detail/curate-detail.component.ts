@@ -1,4 +1,4 @@
-import { Component, HostListener, Injectable, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../../services/main.service';
 import { LoaderService } from '../../helper/loader/loader.service';
@@ -9,7 +9,6 @@ import { User } from '../../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppGlobals } from '../../services/app.global';
 
-@Injectable()
 @Component({
   selector: 'app-curate-detail',
   templateUrl: './curate-detail.component.html',
@@ -20,18 +19,18 @@ export class CurateDetailComponent implements OnInit {
   public article: any;
   public gMapStyles: any;
   public currentHighlightedMarker: any;
-  public markers: any[] = [];
-  public showMap: boolean = false;
-  public slugName: string = '';
+  public markers = [];
+  public showMap = false;
+  public slugName = '';
 
-  public NextPhotoInterval: number = 5000;
-  public noLoopSlides: boolean = false;
-  public noTransition: boolean = false;
-  public noPause: boolean = false;
-  public slides: any[] = [];
+  public NextPhotoInterval= 5000;
+  public noLoopSlides = false;
+  public noTransition = false;
+  public noPause = false;
+  public slides = [];
 
-  public lat: number = 1.290270;
-  public lng: number = 103.851959;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public zoom: number = 12;
   public layoutWidth: number;
   public innerWidth: number;
@@ -54,15 +53,18 @@ export class CurateDetailComponent implements OnInit {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
+    if (this.innerWidth > 900) {
+      this.appGlobal.isShowLeft = true;
+      this.appGlobal.isShowRight = true;
+    }
   }
 
   public ngOnInit() {
     let user = this.localStorageService.get('user') as User;
-
     if (user) {
       this.user = user;
     }
-
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.loaderService.show();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
@@ -120,15 +122,12 @@ export class CurateDetailComponent implements OnInit {
   }
 
   public getCenterMarkers() {
-
     let lat: number = 0;
     let lng: number = 0;
-
     this.markers.forEach((marker) => {
       lat += marker.lat;
       lng += marker.lng;
     });
-
     this.lat = lat / this.markers.length;
     this.lng = lng / this.markers.length;
   }
@@ -136,11 +135,9 @@ export class CurateDetailComponent implements OnInit {
   public markerClick(markerId) {
     this.currentHighlightedMarker = markerId;
     this.highlightMarker(markerId);
-
     const element = document.querySelector('#place-' + markerId);
     element.scrollIntoView({block: 'end', behavior: 'smooth'});
-
-    // TODO: fix highlight right marker and make scroll smoothly
+    window.scrollBy(0, -50);
   }
 
   private highlightMarker(markerId: number): void {
@@ -164,30 +161,21 @@ export class CurateDetailComponent implements OnInit {
 
     if (article.field_places && article.field_places.length) {
       let index = 0;
-
       for (let place of article.field_places) {
         let marker = {
-          lat: 1.290270,
-          lng: 103.851959,
+          lat: +place.field_latitude || AppSetting.SingaporeLatLng.lat,
+          lng: +place.field_longitude || AppSetting.SingaporeLatLng.lng,
           opacity: 0.4,
           isOpenInfo: false,
           icon: 'assets/icon/locationmarker.png'
         };
-
-        if (place.field_latitude !== '0' && place.field_longitude !== '0') {
-          marker.lat = Number(place.field_latitude);
-          marker.lng = Number(place.field_longitude);
-
-          if (index === 0) {
-            marker.opacity = 1;
-            marker.isOpenInfo = true;
-          }
+        if (index === 0) {
+          marker.opacity = 1;
+          marker.isOpenInfo = true;
         }
-
         index++;
         this.markers.push(marker);
       }
-
       this.need2Zoom();
       this.showMap = true;
     }
@@ -198,7 +186,6 @@ export class CurateDetailComponent implements OnInit {
           this.slides.push({image: img.url, active: false});
         }
       }
-
     }
   }
 
@@ -212,9 +199,7 @@ export class CurateDetailComponent implements OnInit {
         }
       });
     });
-
     distances.sort((a, b) => a - b);
-
     let averageDistance = (distances[0] + distances[distances.length - 1]) / 2;
     let centerMarker = distances[Math.floor(distances.length / 2)];
 
@@ -224,9 +209,7 @@ export class CurateDetailComponent implements OnInit {
       this.lng = centerMarker.lng;
       this.zoom = 19;
     }
-
   }
-
 }
 
 function getDistance(p1, p2) {
