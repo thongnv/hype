@@ -36,6 +36,11 @@
   margin-bottom: 30px;
 }
 
+.box-image {
+  overflow: hidden;
+  border-radius: 5px;
+}
+
 .margin-bottom-5px {
   margin-bottom: 5px;
 }
