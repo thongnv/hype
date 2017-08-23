@@ -5,11 +5,11 @@
       <div class="top-content">
         <ul *ngIf="categories" class="list-category">
 
-          <li class="title-hover dropdown"
+          <li class="dropdown"
               *ngFor="let category of categories"
               [class.active]="category.name === 'all'">
 
-            <a [routerLink]="category.alias">{{category.name}}</a>
+            <a class="title-hover" [routerLink]="category.alias">{{category.name}}</a>
 
             <ul *ngIf="category.children.length" class="dropdown-menu sub-menu" aria-labelledby="dLabel">
               <li *ngFor="let child_category of category.children" class="dropdown">

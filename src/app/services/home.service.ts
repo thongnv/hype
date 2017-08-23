@@ -72,7 +72,7 @@ export class HomeService {
       '&latest=' + params.latest +
       '&when=' + params.when +
       '&lat=' + params.lat +
-      '&long=' + params.lng +
+      '&long=' + params.long +
       '&radius=' + params.radius +
       '&price=' + params.price +
       '&weekend=' + params.weekend +

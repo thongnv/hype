@@ -9,6 +9,7 @@ import { UserService } from '../services/user.service';
 import { Title } from '@angular/platform-browser';
 import { LoaderService } from '../helper/loader/loader.service';
 import { Router } from '@angular/router';
+import { AppGlobals } from '../services/app.global';
 
 @Component({
   selector: 'app-auth',
@@ -28,11 +29,13 @@ export class AuthComponent implements OnInit {
               private userService: UserService,
               private localStorageService: LocalStorageService,
               private loaderService: LoaderService,
-              private titleService: Title) {
+              private titleService: Title,
+              private appGlobal: AppGlobals) {
   }
 
   public ngOnInit() {
     this.titleService.setTitle('Login');
+    this.appGlobal.emitActiveType('');
     if (this.user) {
       window.location.href = '/home';
     } else {

@@ -5,3 +5,7 @@ div.event-info {
 div.event-info img {
   border-radius: 3px;
 }
+
+p.event-date span {
+  font-size: 7px;
+}

@@ -8,6 +8,7 @@ import { LoaderService } from '../../helper/loader/loader.service';
 import { UserService } from '../../services/user.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { AppSetting } from '../../app.setting';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-curate-new',
@@ -57,6 +58,7 @@ export class CurateNewComponent implements OnInit {
               public sanitizer: DomSanitizer,
               private loaderService: LoaderService,
               private router: Router,
+              public appGlobal: AppGlobals,
               private windowRef: WindowUtilService) {
   }
 
@@ -68,6 +70,7 @@ export class CurateNewComponent implements OnInit {
 
   public ngOnInit() {
     this.titleService.setTitle('Create A New List');
+    this.appGlobal.emitActiveType('');
     this.onAddPlace();
     document.getElementById('list-name').focus();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;

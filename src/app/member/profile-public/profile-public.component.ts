@@ -9,6 +9,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import $ from 'jquery';
 import { Title } from '@angular/platform-browser';
 import { WindowUtilService } from '../../services/window-ultil.service';
+import { AppGlobals } from '../../services/app.global';
 
 @Component({
   selector: 'app-profile-public',
@@ -50,12 +51,14 @@ export class ProfilePublicComponent implements OnInit {
               private userService: UserService,
               private smallLoader: SmallLoaderService,
               private localStorageService: LocalStorageService,
+              private appGlobal: AppGlobals,
               private route: ActivatedRoute,
               private windowRef: WindowUtilService) {
   }
 
   public ngOnInit() {
     this.loaderService.show();
+    this.appGlobal.emitActiveType('');
     this.selectedFavoriteType = 'event';
     let user = this.localStorageService.get('user') as User;
     if (user) {
@@ -172,7 +175,7 @@ export class ProfilePublicComponent implements OnInit {
 }
 
 function calculateArticlesPerPage(): number {
-  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numArticles: number;
   let containerWidth: number;
   let articleWidth = 225;
@@ -181,18 +184,14 @@ function calculateArticlesPerPage(): number {
   const borderWidth = 15;
   const carouselControlWidth = 40;
   if (screenWidth > 992) {
-    if (screenWidth < 1024) {
-      articleWidth = 175;
-    }
+    articleWidth = screenWidth * 0.17;
     containerWidth = screenWidth - navBarWidth - memberNavWith - borderWidth - carouselControlWidth;
   } else {
     if (screenWidth <= 320) {
       articleWidth = 135;
-    }
-    if (screenWidth <= 768) {
+    } else if (screenWidth <= 768) {
       articleWidth = 165;
     }
-
     containerWidth = screenWidth - carouselControlWidth;
   }
   numArticles = Math.round(containerWidth / articleWidth);

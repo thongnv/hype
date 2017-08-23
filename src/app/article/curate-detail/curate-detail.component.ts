@@ -61,6 +61,7 @@ export class CurateDetailComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.appGlobal.emitActiveType('guides');
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;

@@ -49,6 +49,7 @@ export class MemberComponent implements OnInit {
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
+    this.appGlobal.emitActiveType('');
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;

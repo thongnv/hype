@@ -108,6 +108,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
         }, 200);
       }
     });
+    this.appGlobal.emitActiveType('event');
     this.route.params.subscribe((e) => {
       this.slug = e.slug;
       this.loaderService.show();

@@ -13,6 +13,7 @@ export class CompanyService {
     return {
       id: data.ids_no,
       name: data.name,
+      type: data.type,
       description: data.description,
       rating: data.rating,
       rated: Boolean(data.is_rated),
@@ -139,7 +140,7 @@ function extractLocation(location): Location {
   let lng = location[5];
   return {
     id: null,
-    name: address.replace('Address/Fax ', ''),
+    name: address.replace('Address/Fax ', '').replace(/Address\//i, ''),
     lat: Number(lat.replace('Lat/', '')),
     lng: Number(lng.replace('Long/', ''))
   };

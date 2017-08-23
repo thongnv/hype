@@ -67,6 +67,7 @@ export class FavoriteComponent implements OnInit {
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
+    this.appGlobal.emitActiveType('');
     this.selectedFavoriteType = 'event';
     let user = this.localStorageService.get('user') as User;
     if (user) {

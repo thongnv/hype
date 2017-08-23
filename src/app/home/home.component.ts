@@ -44,19 +44,19 @@ export class HomeComponent implements OnInit {
   public events: any = [];
   public neighbourhood: string;
   public markers: any[] = [];
-  public mapZoom: number = 12;
-  public lat: number = 1.359;
-  public lng: number = 103.818;
+  public mapZoom = 12;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
   public currentHighlightedMarker: number = 1;
-  public showPrice: boolean = false;
-  public showDate: boolean = false;
-  public showAll: boolean = true;
+  public showPrice = false;
+  public showDate = false;
+  public showAll = true;
   public drawCategories: any[];
   public date: { year: number, month: number };
-  public options: any = {
+  public options = {
     locale: {format: 'D MMMM YYYY'},
     alwaysShowCalendars: false,
   };
@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
+
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
   private loadMore: boolean = false;
@@ -103,25 +104,22 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit() {
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
+    this.appGlobal.emitActiveType('event');
     window.scroll(0, 0);
     this.eventFilters = ['all', 'today', 'tomorrow', 'this week'];
     this.eventOrders = ['top 100', 'latest'];
-
     this.selectedEventOrder = this.eventOrders[0];
     this.selectedEventFilter = this.eventFilters[0];
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
     }
     this.gMapStyles = AppSetting.GMAP_STYLE;
     this.selected = 'all';
-
     this.homeService.getCategories().subscribe((resp) => {
       this.drawCategories = resp.data;
       let numCategories = calculateNumCategories();
       this.categories = this.drawCategories.slice(0, numCategories);
     });
-
     this.handleScroll();
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     if (this.innerWidth <= 900) {
@@ -132,11 +130,8 @@ export class HomeComponent implements OnInit {
       this.appGlobal.isShowRight = true;
     }
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
-
     this.appGlobal.toggleMap = true;
-
     this.getTrendingEvents();
-
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
       if (this.params.latest) {
@@ -158,30 +153,29 @@ export class HomeComponent implements OnInit {
   }
 
   public showTodayEvents() {
-    this.clearParam();
+    this.params.page = 0;
     this.selectedEventFilter = 'today';
     this.params.time = 'today';
     this.getTrendingEvents();
   }
 
   public showTomorrowEvents() {
-    this.clearParam();
+    this.params.page = 0;
     this.selectedEventFilter = 'tomorrow';
-    this.params.time = 'today';
+    this.params.time = 'tomorrow';
     this.getTrendingEvents();
   }
 
   public showThisWeekEvents() {
-    this.clearParam();
+    this.params.page = 0;
     this.selectedEventFilter = 'this week';
-    this.params.time = 'today';
+    this.params.time = 'week';
     this.getTrendingEvents();
   }
 
   public showTop100Events() {
     this.mapZoom = 12;
     this.selectedEventOrder = 'top 100';
-    this.params.time = '';
     this.params.latest = '';
     this.params.page = 0;
     this.params.price = 0;
@@ -195,7 +189,6 @@ export class HomeComponent implements OnInit {
 
   public showLatestEvents() {
     this.selectedEventOrder = 'latest';
-    this.params.time = '';
     this.params.latest = '1';
     this.params.page = 0;
     this.params.price = 0;
@@ -217,6 +210,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
@@ -637,6 +631,8 @@ export class HomeComponent implements OnInit {
             }
           });
 
+          // console.log(events[i]);
+
           let marker = {
             lat: latitude,
             lng: longitude,
@@ -650,7 +646,9 @@ export class HomeComponent implements OnInit {
             price: [],
             nids: [],
             created: events[i].created || 0,
-            events: []
+            events: [],
+            field_event_option: events[i].field_event_option,
+            type: events[i].type
           };
 
           if (i === 0) {

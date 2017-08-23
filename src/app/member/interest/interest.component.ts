@@ -37,12 +37,12 @@ export class InterestComponent implements OnInit {
               private userService: UserService,
               private notificationsService: NotificationsService,
               private windowRef: WindowUtilService,
-              private appGlobal: AppGlobals,
-  ) {
+              private appGlobal: AppGlobals) {
   }
 
   public ngOnInit() {
     this.appGlobal.toggleMap = false;
+    this.appGlobal.emitActiveType('');
     this.user = this.localStorageService.get('user') as User;
     if (!this.user) {
       this.router.navigate(['login']).then();

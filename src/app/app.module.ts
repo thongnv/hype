@@ -97,6 +97,7 @@ import { EditEventComponent } from './event/edit-event/edit-event.component';
 import { AppGlobals } from './services/app.global';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { CurateService } from './services/curate.service';
+import {EventEmitterService} from './services/event-emitter.service';
 
 enableProdMode();
 
@@ -213,7 +214,8 @@ type StoreType = {
     FollowService,
     WindowUtilService,
     WindowRefService,
-    AppGlobals
+    AppGlobals,
+    EventEmitterService
   ],
 })
 export class AppModule {

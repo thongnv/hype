@@ -13,10 +13,6 @@ export class FavoriteEventComponent {
   @Output('onClickDelete') public onClickDelete = new EventEmitter<any>();
   @Output('onClickVote') public onClickVote = new EventEmitter<any>();
 
-  // public onLikeEmit(item: any) {
-  //   item.selected = item.selected ? false : true;
-  //   this.onClickLike.emit(item);
-  // }
   public onDeleteEmit(item: any): void {
     this.onClickDelete.emit(item);
   }
