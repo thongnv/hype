@@ -639,6 +639,8 @@ export class HomeComponent implements OnInit {
             }
           });
 
+          // console.log(events[i]);
+
           let marker = {
             lat: latitude,
             lng: longitude,
@@ -652,7 +654,9 @@ export class HomeComponent implements OnInit {
             price: [],
             nids: [],
             created: events[i].created || 0,
-            events: []
+            events: [],
+            field_event_option: events[i].field_event_option,
+            type: events[i].type
           };
 
           if (i === 0) {

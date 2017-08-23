@@ -24,6 +24,7 @@ export class GeocodeMarkerComponent implements OnInit {
 
   public ngOnInit() {
     // TODO;
+    // console.log(this.markers);
   }
 
   public clickedMarker(index) {
