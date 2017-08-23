@@ -172,7 +172,7 @@ export class ProfilePublicComponent implements OnInit {
 }
 
 function calculateArticlesPerPage(): number {
-  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numArticles: number;
   let containerWidth: number;
   let articleWidth = 225;
@@ -181,18 +181,14 @@ function calculateArticlesPerPage(): number {
   const borderWidth = 15;
   const carouselControlWidth = 40;
   if (screenWidth > 992) {
-    if (screenWidth < 1024) {
-      articleWidth = 175;
-    }
+    articleWidth = screenWidth * 0.17;
     containerWidth = screenWidth - navBarWidth - memberNavWith - borderWidth - carouselControlWidth;
   } else {
     if (screenWidth <= 320) {
       articleWidth = 135;
-    }
-    if (screenWidth <= 768) {
+    } else if (screenWidth <= 768) {
       articleWidth = 165;
     }
-
     containerWidth = screenWidth - carouselControlWidth;
   }
   numArticles = Math.round(containerWidth / articleWidth);
