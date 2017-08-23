@@ -129,7 +129,15 @@ export class PlayComponent implements OnInit {
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
     this.gMapStyles = AppSetting.GMAP_STYLE;
-    this.getCategories('play');
+
+    this.catParam.mode_type = 'mode_play';
+    let params = this.catParam;
+    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe(
+      (resp) => {
+        this.categoriesDraw = resp.data;
+        let numCategories = calculateNumCategories();
+        this.categories = this.categoriesDraw.slice(0, numCategories);
+    });
     this.getFilter();
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -236,37 +244,8 @@ export class PlayComponent implements OnInit {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
-
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
-
-    let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-
-    let numCategories = Math.floor(menuWidth / 55) - 1;
-
-    if (this.screenWidth <= 768) {
-      if (this.categoriesDraw.length > numCategories) {
-
-        this.categories = this.categoriesDraw.slice(0, numCategories - 1);
-      } else {
-        this.categories = this.categoriesDraw;
-      }
-    } else {
-      if (this.categoriesDraw.length > numCategories) {
-        this.categories = this.categoriesDraw.slice(0, 6);
-      } else {
-        this.categories = this.categoriesDraw.slice(0, 6);
-      }
-    }
-    this.categories.unshift({tid: 0, name: 'All', icon: '../../../assets/img/icons/All.png', selected: true});
+    let numCategories = calculateNumCategories();
+    this.categories = this.categoriesDraw.slice(0, numCategories);
   }
 
   public clickedMarker(marker) {
@@ -276,7 +255,6 @@ export class PlayComponent implements OnInit {
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
     }, 'slow');
-
   }
 
   public changeCategory(item) {
@@ -373,28 +351,14 @@ export class PlayComponent implements OnInit {
 
   }
 
-  public showAllKind(e) {
+  public showAllCategories(e) {
     if (e) {
-      this.categories = this.categoriesDraw;
       this.showAll = false;
+      this.categories = this.categoriesDraw;
     } else {
-      let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-
-      let numCategories = Math.floor(menuWidth / 55) - 1;
-      if (this.screenWidth <= 768) {
-        if (this.categoriesDraw.length > numCategories) {
-          this.categories = this.categoriesDraw.slice(0, numCategories - 1);
-        } else {
-          this.categories = this.categoriesDraw;
-        }
-      } else {
-        if (this.categoriesDraw.length > numCategories) {
-          this.categories = this.categoriesDraw.slice(0, 6);
-        } else {
-          this.categories = this.categoriesDraw.slice(0, 6);
-        }
-      }
       this.showAll = true;
+      let numCategories = calculateNumCategories();
+      this.categories = this.categoriesDraw.slice(0, numCategories);
     }
   }
 
@@ -597,25 +561,6 @@ export class PlayComponent implements OnInit {
     this.lat = event.lat;
     this.lng = event.lng;
     this.zoomChanged = false;
-  }
-
-  private getCategories(value) {
-    if (value === 'play' || value === 'eat') {
-      this.catParam.mode_type = 'mode_' + value;
-    } else {
-      this.catParam.mode_type = '';
-    }
-    let params = this.catParam;
-    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.categoriesDraw = resp.data;
-      let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-      let numCategories = Math.floor(menuWidth / 55) - 1;
-      if (this.categoriesDraw.length > numCategories) {
-        this.categories = this.categoriesDraw.slice(0, numCategories - 1);
-      } else {
-        this.categories = this.categoriesDraw.slice(0, 7);
-      }
-    });
   }
 
   private getFilter() {
@@ -824,4 +769,22 @@ function getDistance(p1, p2) {
     Math.sin(dLong / 2) * Math.sin(dLong / 2);
   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+
+function calculateNumCategories(): number {
+  let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  let numCategories: number;
+  let containerWidth: number;
+  const categoryWidth = 76;
+  const navBarWidth = 80;
+  const borderWidth = 15;
+  const dotWidth = 43;
+  if (screenWidth > 992) {
+    const containerPercentage = 0.46;
+    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+  } else {
+    containerWidth = screenWidth - borderWidth - dotWidth;
+  }
+  numCategories = Math.floor(containerWidth / categoryWidth) - 1;
+  return numCategories;
 }

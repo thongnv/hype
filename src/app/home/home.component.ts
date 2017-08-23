@@ -44,19 +44,19 @@ export class HomeComponent implements OnInit {
   public events: any = [];
   public neighbourhood: string;
   public markers: any[] = [];
-  public mapZoom: number = 12;
-  public lat: number = 1.359;
-  public lng: number = 103.818;
+  public mapZoom = 12;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
   public currentHighlightedMarker: number = 1;
-  public showPrice: boolean = false;
-  public showDate: boolean = false;
-  public showAll: boolean = true;
+  public showPrice = false;
+  public showDate = false;
+  public showAll = true;
   public drawCategories: any[];
   public date: { year: number, month: number };
-  public options: any = {
+  public options = {
     locale: {format: 'D MMMM YYYY'},
     alwaysShowCalendars: false,
   };
@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
+
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
   private loadMore: boolean = false;
@@ -217,6 +218,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onResize(event): void {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
