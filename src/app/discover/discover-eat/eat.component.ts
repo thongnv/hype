@@ -17,6 +17,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
+import {CompanyService} from '../../services/company.service';
 
 declare let google: any;
 
@@ -110,7 +111,8 @@ export class EatComponent implements OnInit {
                      private location: Location,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
-                     public appGlobal: AppGlobals) {
+                     public appGlobal: AppGlobals,
+                     private companyService: CompanyService) {
   }
 
   public ngOnInit() {
@@ -222,6 +224,14 @@ export class EatComponent implements OnInit {
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
     }, 'slow');
+
+    // set image for info window
+    marker.avatar = 'assets/img/company/default_140x140.jpg';
+    this.companyService.getInstagramProfile(marker.licenseNumber).subscribe(
+      (profile) => marker.avatar = profile[0] ? profile[0] : 'assets/img/company/default_140x140.jpg',
+      (error) => {
+        console.log(error);
+      });
   }
 
   public changeCategory(item) {
@@ -776,7 +786,8 @@ export class EatComponent implements OnInit {
             index: i,
             opacity: 0.4,
             isOpenInfo: false,
-            icon: 'assets/icon/locationmarker.png'
+            icon: 'assets/icon/locationmarker.png',
+            licenseNumber: this.items[i].License_Number
           });
 
         }
