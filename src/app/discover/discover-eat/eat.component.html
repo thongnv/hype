@@ -224,12 +224,12 @@
       [styles]="gMapStyles"
       (centerChange)="centerChange($event)"
       (boundsChange)="boundsChange($event)"
-      [mapDraggable]="true"
-    >
-      <gmap-geocode-marker [markers]="markers" [showCircle]="showCircle"
+      [mapDraggable]="true">
+      <gmap-geocode-marker [markers]="markers"
                            [lat]="lat"
-                           (markerClick)="clickedMarker($event)"
-                           [lng]="lng"></gmap-geocode-marker>
+                           [lng]="lng"
+                           (markerClick)="clickedMarker($event)">
+      </gmap-geocode-marker>
 
     </sebm-google-map>
   </div>
