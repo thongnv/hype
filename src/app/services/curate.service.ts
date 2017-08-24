@@ -11,6 +11,7 @@ import {
   Article, ArticlesCategory, BaseUser, Category, Company, HyloEvent, Image
 } from '../app.interface';
 import { AppSetting } from '../app.setting';
+import { isUndefined } from 'util';
 
 const MOCK_ACTIONS = [
   'Buy Tickets',
@@ -42,19 +43,19 @@ export class CurateService {
       });
   }
 
-  public getFeaturedArticles(): Observable<Article[]> {
+  public getFeaturedArticles(): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/article/feature?_format=json', options
     )
       .map((res) => extractArticles(res.json()))
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getTrendingArticles(): Observable<Article[]> {
+  public getTrendingArticles(): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
@@ -90,26 +91,26 @@ export class CurateService {
       });
   }
 
-  public getEditorsPickArticles(pageNum): Observable<Article[]> {
+  public getEditorsPickArticles(pageNum): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/article/editorpick?_format=json&page=' + pageNum, options
     )
       .map((res) => extractArticles(res.json()))
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
 
-  public getCommunityArticles(pageNum): Observable<Article[]> {
+  public getCommunityArticles(pageNum): Observable<any> {
     let headers = this.defaultHeaders;
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.get(
       AppSetting.API_ENDPOINT + 'api/v1/article?_format=json&filter=latest&limit=8&page=' + pageNum, options
     )
       .map((res) => extractArticles(res.json()))
-      .catch((error: any) => {
+      .catch((error) => {
         return Observable.throw(new Error(error));
       });
   }
@@ -171,7 +172,7 @@ function extractCategories(response): Category[] {
   return categories;
 }
 
-function extractArticles(response): Article[] {
+function extractArticles(response) {
   const articles = [];
   const data = response.data;
   for (const item of data) {
@@ -188,7 +189,7 @@ function extractArticles(response): Article[] {
     };
     articles.push(article);
   }
-  return articles;
+  return isUndefined(response.total) ? articles : {total: response.total, articles};
 }
 
 function extractAuthor(userPost): BaseUser {
@@ -197,6 +198,34 @@ function extractAuthor(userPost): BaseUser {
     name: userPost.name,
     slug: ''
   };
+}
+
+function extractArticlesCategory(data): ArticlesCategory {
+  return {
+    total: data.total,
+    image: data.cat_image,
+    description: data.cat_description,
+    articles: extractCategoryArticles(data.data)
+  };
+}
+
+function extractCategoryArticles(data): Article[] {
+  const articles = [];
+  for (const item of data) {
+    const article: Article = {
+      id: item.nid,
+      title: item.title,
+      slug: item.alias,
+      body: item.body,
+      created: item.created,
+      field_category: null,
+      field_images: item.field_images,
+      field_places: null,
+      author: {avatar: null, name: item.user_post.name, slug: null}
+    };
+    articles.push(article);
+  }
+  return articles;
 }
 
 function extractEvents(response): HyloEvent[] {
@@ -275,32 +304,4 @@ function extractCompanyImages(data): Image[] {
     images.push(image);
   }
   return images;
-}
-
-function extractArticlesCategory(data): ArticlesCategory {
-  return {
-    total: data.total,
-    image: data.cat_image,
-    description: data.cat_description,
-    articles: extractCategoryArticles(data.data)
-  };
-}
-
-function extractCategoryArticles(data): Article[] {
-  const articles = [];
-  for (const item of data) {
-    const article: Article = {
-      id: item.nid,
-      title: item.title,
-      slug: item.alias,
-      body: item.body,
-      created: item.created,
-      field_category: null,
-      field_images: item.field_images,
-      field_places: null,
-      author: {avatar: null, name: item.user_post.name, slug: null}
-    };
-    articles.push(article);
-  }
-  return articles;
 }
