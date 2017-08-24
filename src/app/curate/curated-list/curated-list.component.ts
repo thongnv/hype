@@ -110,16 +110,20 @@ export class CuratedListComponent implements OnInit {
     );
 
     this.curateService.getEditorsPickArticles(this.currentEditorsPickPage).subscribe(
-      (response: Article[]) => {
-        this.editorsPickArticles = response;
+      (response) => {
+        let {total, articles} = response;
+        this.editorsPickArticles = articles;
+        this.noMoreEditorsPickArticles = articles.length >= total;
       }
     );
 
     this.showArticlesTab();
 
     this.curateService.getCommunityArticles(this.currentCommunityPage).subscribe(
-      (response: Article[]) => {
-        this.communityArticles = response;
+      (response) => {
+        let {total, articles} = response;
+        this.communityArticles = articles;
+        this.noMoreCommunityArticles = articles.length >= total;
       }
     );
 
@@ -163,11 +167,12 @@ export class CuratedListComponent implements OnInit {
       this.loadingEditorsPickArticles = true;
       this.smallLoader.show();
       this.curateService.getEditorsPickArticles(++this.currentEditorsPickPage).subscribe(
-        (response: Article[]) => {
-          this.editorsPickArticles = this.editorsPickArticles.concat(response);
+        (response) => {
+          let {total, articles} = response;
+          this.editorsPickArticles = this.editorsPickArticles.concat(articles);
           this.loadingEditorsPickArticles = false;
           this.smallLoader.hide();
-          this.noMoreEditorsPickArticles = response.length === 0;
+          this.noMoreEditorsPickArticles = (this.currentEditorsPickPage + 1) * 4 >= total;
         }
       );
     }
@@ -178,11 +183,12 @@ export class CuratedListComponent implements OnInit {
       this.loadingCommunityArticles = true;
       this.smallLoader.show();
       this.curateService.getCommunityArticles(++this.currentCommunityPage).subscribe(
-        (response: Article[]) => {
-          this.communityArticles = this.communityArticles.concat(response);
+        (response) => {
+          let {total, articles} = response;
+          this.communityArticles = this.communityArticles.concat(articles);
           this.loadingCommunityArticles = false;
+          this.noMoreCommunityArticles = (this.currentCommunityPage + 1) * 8 >= total;
           this.smallLoader.hide();
-          this.noMoreCommunityArticles = response.length === 0;
         }
       );
     }

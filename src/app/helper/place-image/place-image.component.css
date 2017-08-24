@@ -1,0 +1,6 @@
+@media only screen and (min-width: 320px) and (max-width: 543px) {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}

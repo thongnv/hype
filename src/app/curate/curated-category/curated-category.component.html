@@ -91,12 +91,12 @@
 
             <!--place item-->
             <div *ngFor="let place of places" class="row margin-0 padding-10px border-bottom place-item">
-              <div class="col-xs-4 col-md-3 padding-0">
+              <div class="col-xs-3 col-md-3 padding-0 avatar-picture">
                 <app-place-image [routerLink]="['/company', place.slugName]" [name]="place.name" [width]="100"
                                  [height]="100" [licenseNumber]="place.licenseNumber">
                 </app-place-image>
               </div>
-              <div class="col-xs-8 col-md-9 place-description">
+              <div class="col-xs-7 col-md-7 place-description">
                 <div>
                   <a class="title-hover" [routerLink]="place.slugName">
                     <h5 class="margin-0 custom-text-ellipsis-title">{{place.name}}</h5>
@@ -109,7 +109,7 @@
                   <rating [ngModel]="place.rating" [float]="true" [readonly]="true" emptyIcon="★"></rating>
                 </div>
               </div>
-              <div *ngIf="CTC" class="col-xs-2 col-md-2 padding-0">
+              <div *ngIf="place.CTC" class="col-xs-2 col-md-2 padding-0">
                 <button class="btn btn-default custom-btn">Book Now</button>
               </div>
             </div>
