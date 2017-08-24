@@ -140,7 +140,7 @@ export class PlayComponent implements OnInit {
         this.categoriesDraw = resp.data;
         let numCategories = calculateNumCategories();
         this.categories = this.categoriesDraw.slice(0, numCategories);
-    });
+      });
     this.getFilter();
     let width = window.innerWidth
       || document.documentElement.clientWidth
@@ -202,6 +202,7 @@ export class PlayComponent implements OnInit {
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.neighbourhood = neighbourhood;
       window.scroll(0, 0);
+      this.params.page = 0;
       this.getPlaces();
     });
   }
@@ -616,7 +617,6 @@ export class PlayComponent implements OnInit {
               let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
               this.params.lat = this.lat;
               this.params.long = this.lng;
-              // this.params.page = 0;
               this.params.radius = parseFloat((distance / 1000).toFixed(2));
               this.getDataModes();
             }
@@ -708,15 +708,9 @@ export class PlayComponent implements OnInit {
         });
       } else {
         this.markers.forEach((marker, index) => {
-          if (index === markerId) {
-            this.markers[index].opacity = 1;
-          } else {
-            this.markers[index].opacity = 0.4;
-          }
+          this.markers[index].opacity = index === markerId ? 1 : 0.4;
         });
       }
-
-
     }
 
   }
