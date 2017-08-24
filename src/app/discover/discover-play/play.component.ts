@@ -663,7 +663,7 @@ export class PlayComponent implements OnInit {
 
   private initMap(items) {
     this.currentHighlightedMarker = 0;
-
+    const currentIndex = this.markers.length;
     if (items.length) {
       this.mapsAPILoader.load().then(() => {
         for (let i = 0; i < items.length; i++) {
@@ -680,7 +680,7 @@ export class PlayComponent implements OnInit {
               lat: parseFloat(lat[1]),
               lng: parseFloat(lng[1]),
               label: items[i].Company_Name,
-              index: i,
+              index: currentIndex + i,
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png',
