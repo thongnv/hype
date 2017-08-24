@@ -5,9 +5,11 @@ import { AppGlobals } from '../../services/app.global';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { Article, ArticlesCategory, Category, Company, HyloEvent } from '../../app.interface';
+import { ArticlesCategory, Category, Company, HyloEvent } from '../../app.interface';
 import { ActivatedRoute } from '@angular/router';
 import { CurateService } from '../../services/curate.service';
+
+const ARTICLES_PER_PAGE = 8;
 
 @Component({
   selector: 'app-curated-category',
@@ -72,10 +74,8 @@ export class CuratedCategoryComponent implements OnInit {
         (response: ArticlesCategory) => {
           this.articlesCategory = response;
           this.ready = true;
+          this.noMoreArticles = response.total <= ARTICLES_PER_PAGE;
           this.loaderService.hide();
-          if ((this.currentPage + 1) * 8 >= response.total) {
-            this.noMoreArticles = true;
-          }
         }
       );
     });
@@ -114,9 +114,7 @@ export class CuratedCategoryComponent implements OnInit {
           this.articlesCategory.articles = this.articlesCategory.articles.concat(response.articles);
           this.smallLoader.hide();
           this.loadingArticles = false;
-          if ((this.currentPage + 1) * 8 >= response.total) {
-            this.noMoreArticles = true;
-          }
+          this.noMoreArticles = (this.currentPage + 1) * ARTICLES_PER_PAGE >= response.total;
         }
       );
     }
