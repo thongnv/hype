@@ -803,10 +803,8 @@ export class EatComponent implements OnInit {
       this.markers.forEach((marker, index) => {
         if (index === markerId) {
           this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
         } else {
           this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
         }
       });
     }
