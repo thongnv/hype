@@ -6,6 +6,7 @@ div.event-info img {
   border-radius: 3px;
 }
 
+p.price span,
 p.event-date span {
-  font-size: 7px;
+  font-size: 12px;
 }
