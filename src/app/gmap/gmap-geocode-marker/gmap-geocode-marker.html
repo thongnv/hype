@@ -32,7 +32,7 @@
             <span>{{m.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
             <span>{{m.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>
           </p>
-          <p *ngIf="m.price">
+          <p *ngIf="m.price" class="price">
             <span *ngFor="let p of m.price; let i = last">${{p}}{{i ? '' : ','}} </span>
           </p>
       </div>
