@@ -17,7 +17,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { Title } from '@angular/platform-browser';
-import {CompanyService} from '../../services/company.service';
+import { CompanyService } from '../../services/company.service';
 
 declare let google: any;
 
@@ -108,7 +108,6 @@ export class EatComponent implements OnInit {
                      private smallLoader: SmallLoaderService,
                      private route: ActivatedRoute,
                      private router: Router,
-                     private location: Location,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
                      public appGlobal: AppGlobals,
@@ -116,6 +115,7 @@ export class EatComponent implements OnInit {
   }
 
   public ngOnInit() {
+    window.scroll(0, 0);
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.appGlobal.emitActiveType('eat');
     this.filterCategory = this.formBuilder.group({
@@ -131,31 +131,22 @@ export class EatComponent implements OnInit {
     ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-    window.scroll(0, 0);
 
     this.gMapStyles = AppSetting.GMAP_STYLE;
 
     this.catParam.mode_type = 'mode_eat';
-    let params = this.catParam;
-    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe(
+    this.modeService.getCategories(this.catParam).map((resp) => resp.json()).subscribe(
       (resp) => {
         this.categoriesDraw = resp.data;
         let numCategories = calculateNumCategories();
         this.categories = this.categoriesDraw.slice(0, numCategories);
       });
-    this.getFilter();
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
+    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
+      this.filterData = resp.eat;
+    });
+    this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
-
-    let paramsUrl = this.location.path().split('/');
     $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
       $(window).scroll(() => {
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
@@ -171,8 +162,7 @@ export class EatComponent implements OnInit {
         }
         // index marker Highlight
         const contentSelector = $('#v-scrollable');
-        if (paramsUrl[1] === 'discover' && contentSelector.length) {
-
+        if (contentSelector.length) {
           let baseHeight = contentSelector[0].clientHeight;
           let realScrollTop = $(window).scrollTop() + baseHeight;
           let currentHeight: number = baseHeight;
@@ -184,7 +174,7 @@ export class EatComponent implements OnInit {
               if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
                 if (this.currentHighlightedMarker !== i) {
                   this.currentHighlightedMarker = i;
-                  this.highlightMarker(i);
+                  this.highlightMarker(i, 'scroll');
                 }
               }
             }
@@ -220,7 +210,7 @@ export class EatComponent implements OnInit {
 
   public clickedMarker(marker) {
     this.currentHighlightedMarker = marker.index;
-    this.highlightMarker(marker.index);
+    this.highlightMarker(marker.index, 'click');
     this.stopped = true;
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
@@ -701,33 +691,6 @@ export class EatComponent implements OnInit {
     this.items = [];
   }
 
-  private getCategories(value) {
-    if (value === 'play' || value === 'eat') {
-      this.catParam.mode_type = 'mode_' + value;
-    } else {
-      this.catParam.mode_type = '';
-    }
-    let params = this.catParam;
-    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe((resp) => {
-      this.categoriesDraw = resp.data;
-      let menuWidth = document.getElementById('btnHeadFilter').offsetWidth;
-
-      let numCategories = Math.floor(menuWidth / 55) - 1;
-      if (this.categoriesDraw.length > numCategories) {
-        this.categories = this.categoriesDraw.slice(0, numCategories - 1);
-      } else {
-        this.categories = this.categoriesDraw.slice(0, 6);
-      }
-    });
-
-  }
-
-  private getFilter() {
-    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
-      this.filterData = resp.eat;
-    });
-  }
-
   private setPosition(position) {
     if (position.coords) {
       this.lat = position.coords.latitude;
@@ -753,64 +716,67 @@ export class EatComponent implements OnInit {
         this.shownotfound = data.total === 0;
         this.endRecord = data.company.length === 0;
         this.loadMore = false;
-        this.initMap();
+        this.initMap(data.company);
         this.loaderService.hide();
         this.smallLoader.hide();
       });
     this.requests.push(request);
   }
 
-  private initMap() {
+  private initMap(companies) {
     this.currentHighlightedMarker = 0;
+    const currentIndex = this.markers.length;
     this.mapsAPILoader.load().then(() => {
       for (let i = 0; i < this.items.length; i++) {
-        if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
+        if (typeof companies[i].YP_Address !== 'undefined' || companies[i].YP_Address !== null) {
 
-          let lat = this.items[i].YP_Address[6].split('/');
-          let lng = this.items[i].YP_Address[5].split('/');
-          let distance = this.items[i]._dict_;
+          let lat = companies[i].YP_Address[6].split('/');
+          let lng = companies[i].YP_Address[5].split('/');
+          let distance = companies[i]._dict_;
           let description: string;
-          if (this.items[i].Hylo_Activity_Description) {
-            description = this.items[i].Hylo_Activity_Description;
+          if (companies[i].Hylo_Activity_Description) {
+            description = companies[i].Hylo_Activity_Description;
           } else {
-            description = this.items[i].Company_Profile;
+            description = companies[i].Company_Profile;
           }
-          this.items[i].description = description;
+          companies[i].description = description;
           if (distance) {
-            this.items[i].distance = (distance).toFixed(1);
+            companies[i].distance = (distance).toFixed(1);
           }
-
           this.markers.push({
             lat: parseFloat(lat[1]),
             lng: parseFloat(lng[1]),
-            label: this.items[i].Company_Name,
-            index: i,
+            label: companies[i].Company_Name,
+            index: currentIndex + i,
             opacity: 0.4,
             isOpenInfo: false,
             icon: 'assets/icon/locationmarker.png',
-            link: '/company/' + this.items[i].Company_Slug,
-            licenseNumber: this.items[i].License_Number
+            link: '/company/' + companies[i].Company_Slug,
+            licenseNumber: companies[i].License_Number
           });
-
         }
       }
       this.zoomChanged = false;
     });
   }
 
-  private highlightMarker(markerId: number): void {
-    if (this.markers[markerId]) {
+  private highlightMarker(markerId: number, type: string): void {
+    if (type === 'click') {
       this.markers.forEach((marker, index) => {
         if (index === markerId) {
           this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
         } else {
           this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
         }
       });
+    } else {
+      this.markers.forEach((marker, index) => {
+        this.markers[index].opacity = index === markerId ? 1 : 0.4;
+      });
     }
-
   }
-
 }
 
 function rad(x) {

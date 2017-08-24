@@ -1,43 +1,42 @@
 <sebm-google-map-marker
-        *ngFor="let m of markers; let i = index"
-        (markerClick)="clickedMarker(m)"
-        [latitude]="m.lat"
-        [longitude]="m.lng"
-        [iconUrl]="m.icon"
-        [opacity]="m.opacity"
->
-    <sebm-google-map-info-window [isOpen]="m.isOpenInfo">
+  *ngFor="let m of markers; let i = index"
+  (markerClick)="clickedMarker(m)"
+  [latitude]="m.lat"
+  [longitude]="m.lng"
+  [iconUrl]="m.icon"
+  [opacity]="m.opacity">
 
+  <sebm-google-map-info-window [isOpen]="m.isOpenInfo">
 
-      <div *ngIf="m.events && m.events.length > 0">
-        <div *ngFor="let event of m.events">
-          <div class="marker-info">
-            <img src="{{event.avatar}}">
-            <h4><a [href]="event.link">{{event.label}}</a></h4>
-            <p class="event-date" *ngIf="event.type === 'event'">
-              <span>{{event.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
-              <span>{{event.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>
-            </p>
-            <p *ngIf="event.price">
-              <span *ngFor="let p of event.price; let i = last">${{p}}{{i ? '' : ','}} </span>
-            </p>
-          </div>
+    <div *ngIf="m.events && m.events.length > 0">
+      <div *ngFor="let event of m.events">
+        <div class="marker-info">
+          <img src="{{event.avatar}}">
+          <h4><a [href]="event.link">{{event.label}}</a></h4>
+          <p class="event-date" *ngIf="event.type === 'event'">
+            <span>{{event.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
+            <span>{{event.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>
+          </p>
+          <p *ngIf="event.price">
+            <span *ngFor="let p of event.price; let i = last">${{p}}{{i ? '' : ','}} </span>
+          </p>
         </div>
       </div>
+    </div>
 
-      <div class="marker-info">
-          <img src="{{m.avatar}}">
-          <h4><a [href]="m.link">{{m.label}}</a></h4>
-          <p class="event-date" *ngIf="m.type === 'event'">
-            <span>{{m.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
-            <span>{{m.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>
-          </p>
-          <p *ngIf="m.price" class="price">
-            <span *ngFor="let p of m.price; let i = last">${{p}}{{i ? '' : ','}} </span>
-          </p>
-      </div>
+    <div class="marker-info">
+      <img src="{{m.avatar}}">
+      <h4><a [href]="m.link">{{m.label}}</a></h4>
+      <p class="event-date" *ngIf="m.type === 'event'">
+        <span>{{m.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
+        <span>{{m.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>
+      </p>
+      <p *ngIf="m.price" class="price">
+        <span *ngFor="let p of m.price; let i = last">${{p}}{{i ? '' : ','}} </span>
+      </p>
+    </div>
 
+  </sebm-google-map-info-window>
 
-    </sebm-google-map-info-window>
 </sebm-google-map-marker>
 
