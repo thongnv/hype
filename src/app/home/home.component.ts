@@ -153,6 +153,8 @@ export class HomeComponent implements OnInit {
   }
 
   public showTodayEvents() {
+    this.markers = [];
+    this.events = [];
     this.params.page = 0;
     this.selectedEventFilter = 'today';
     this.params.time = 'today';
@@ -160,6 +162,8 @@ export class HomeComponent implements OnInit {
   }
 
   public showTomorrowEvents() {
+    this.markers = [];
+    this.events = [];
     this.params.page = 0;
     this.selectedEventFilter = 'tomorrow';
     this.params.time = 'tomorrow';
@@ -167,6 +171,8 @@ export class HomeComponent implements OnInit {
   }
 
   public showThisWeekEvents() {
+    this.markers = [];
+    this.events = [];
     this.params.page = 0;
     this.selectedEventFilter = 'this week';
     this.params.time = 'week';

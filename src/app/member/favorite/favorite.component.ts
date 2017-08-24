@@ -61,8 +61,7 @@ export class FavoriteComponent implements OnInit {
                      private smallLoader: SmallLoaderService,
                      private notificationsService: NotificationsService,
                      private windowRef: WindowUtilService,
-                     private appGlobal: AppGlobals,
-  ) {
+                     private appGlobal: AppGlobals) {
   }
 
   public ngOnInit() {
