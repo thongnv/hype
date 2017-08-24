@@ -684,6 +684,7 @@ export class PlayComponent implements OnInit {
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png',
+              link: '/company/' + this.items[i].Company_Slug,
               licenseNumber: this.items[i].License_Number
             });
           }
