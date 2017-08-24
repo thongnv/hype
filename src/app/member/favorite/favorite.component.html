@@ -1,5 +1,5 @@
 <simple-notifications [options]="options"></simple-notifications>
-<div class="setting-wrap table-wrap">
+<div class="setting-wrap table-wrap" *ngIf="currentUser">
   <div class="col-xs-12 col-md-4 col-lg-3 col-left table-cell">
     <app-member-navigation [user]="user" [currentUser]="currentUser" *ngIf="ready"></app-member-navigation>
   </div>
@@ -27,7 +27,8 @@
           <app-small-loader></app-small-loader>
           <div class="list-bottom">
             <div class="end-of-list" *ngIf="!setEvent.loadingInProgress && !events.length">
-              You have no favorite events yet!
+              <p *ngIf="isCurrentUser">You have no favorite events yet!</p>
+              <p *ngIf="!isCurrentUser">{{currentUser.name}} has no favorite events yet!</p>
             </div>
           </div>
         </div>
@@ -40,7 +41,8 @@
           <app-small-loader></app-small-loader>
           <div class="list-bottom">
             <div class="end-of-list" *ngIf="!setList.loadingInProgress && !lists.length">
-              You have no favorite lists yet!
+              <p *ngIf="isCurrentUser">You have no favorite lists yet!</p>
+              <p *ngIf="!isCurrentUser">{{currentUser.name}} has no favorite lists yet!</p>
             </div>
           </div>
         </div>
@@ -53,7 +55,8 @@
           <app-small-loader></app-small-loader>
           <div class="list-bottom">
             <div class="end-of-list" *ngIf="!setPlace.loadingInProgress && !places.length">
-              You have no favorite places yet!
+              <p *ngIf="isCurrentUser">You have no favorite places yet!</p>
+              <p *ngIf="!isCurrentUser">{{currentUser.name}} has no favorite places yet!</p>
             </div>
           </div>
         </div>
