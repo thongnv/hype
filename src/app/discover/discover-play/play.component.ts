@@ -16,7 +16,7 @@ import { SmallLoaderService } from '../../helper/small-loader/small-loader.servi
 import { Title } from '@angular/platform-browser';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { WindowUtilService } from '../../services/window-ultil.service';
-import {CompanyService} from '../../services/company.service';
+import { CompanyService } from '../../services/company.service';
 
 declare let google: any;
 
@@ -178,7 +178,7 @@ export class PlayComponent implements OnInit {
               if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
                 if (this.currentHighlightedMarker !== i) {
                   this.currentHighlightedMarker = i;
-                  this.highlightMarker(i);
+                  this.highlightMarker(i, 'scroll');
                 }
               }
             }
@@ -244,7 +244,6 @@ export class PlayComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
@@ -253,7 +252,7 @@ export class PlayComponent implements OnInit {
 
   public clickedMarker(marker) {
     this.currentHighlightedMarker = marker.index;
-    this.highlightMarker(marker.index);
+    this.highlightMarker(marker.index, 'click');
     this.stopped = true;
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
@@ -617,7 +616,7 @@ export class PlayComponent implements OnInit {
               let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
               this.params.lat = this.lat;
               this.params.long = this.lng;
-              this.params.page = 0;
+              // this.params.page = 0;
               this.params.radius = parseFloat((distance / 1000).toFixed(2));
               this.getDataModes();
             }
@@ -655,37 +654,38 @@ export class PlayComponent implements OnInit {
         this.shownotfound = data.total === 0;
         this.endRecord = data.company.length === 0;
         this.loadMore = false;
-        this.initMap();
+        this.initMap(data.company);
         this.loaderService.hide();
         this.smallLoader.hide();
       });
     this.requests.push(request);
   }
 
-  private initMap() {
+  private initMap(items) {
     this.currentHighlightedMarker = 0;
-    if (this.items.length) {
-      this.mapsAPILoader.load().then(() => {
-        for (let i = 0; i < this.items.length; i++) {
-          if (typeof this.items[i].YP_Address !== 'undefined' || this.items[i].YP_Address !== null) {
 
-            let lat = this.items[i].YP_Address[6].split('/');
-            let lng = this.items[i].YP_Address[5].split('/');
-            let distance = this.items[i]._dict_;
+    if (items.length) {
+      this.mapsAPILoader.load().then(() => {
+        for (let i = 0; i < items.length; i++) {
+          if (typeof items[i].YP_Address !== 'undefined' || items[i].YP_Address !== null) {
+
+            let lat = items[i].YP_Address[6].split('/');
+            let lng = items[i].YP_Address[5].split('/');
+            let distance = items[i]._dict_;
 
             if (distance) {
-              this.items[i].distance = (distance).toFixed(1);
+              items[i].distance = (distance).toFixed(1);
             }
             this.markers.push({
               lat: parseFloat(lat[1]),
               lng: parseFloat(lng[1]),
-              label: this.items[i].Company_Name,
+              label: items[i].Company_Name,
               index: i,
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png',
-              link: '/company/' + this.items[i].Company_Slug,
-              licenseNumber: this.items[i].License_Number
+              link: '/company/' + items[i].Company_Slug,
+              licenseNumber: items[i].License_Number
             });
           }
         }
@@ -694,17 +694,29 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  private highlightMarker(markerId: number): void {
+  private highlightMarker(markerId: number, type: string): void {
     if (this.markers[markerId]) {
-      this.markers.forEach((marker, index) => {
-        if (index === markerId) {
-          this.markers[index].opacity = 1;
-          this.markers[index].isOpenInfo = true;
-        } else {
-          this.markers[index].opacity = 0.4;
-          this.markers[index].isOpenInfo = false;
-        }
-      });
+      if (type === 'click') {
+        this.markers.forEach((marker, index) => {
+          if (index === markerId) {
+            this.markers[index].opacity = 1;
+            this.markers[index].isOpenInfo = true;
+          } else {
+            this.markers[index].opacity = 0.4;
+            this.markers[index].isOpenInfo = false;
+          }
+        });
+      } else {
+        this.markers.forEach((marker, index) => {
+          if (index === markerId) {
+            this.markers[index].opacity = 1;
+          } else {
+            this.markers[index].opacity = 0.4;
+          }
+        });
+      }
+
+
     }
 
   }
