@@ -194,6 +194,7 @@ export class HomeComponent implements OnInit {
   }
 
   public showLatestEvents() {
+    this.loading = true;
     this.selectedEventOrder = 'latest';
     this.params.latest = '1';
     this.params.page = 0;
