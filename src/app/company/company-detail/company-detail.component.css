@@ -472,7 +472,7 @@ span.count-comments {
   max-height: 100%;
   transform: translateY(-50%);
   transition: all 3s ease-in-out;
-  height: 350px;
+  height: 420px;
 }
 
 .close-button{
