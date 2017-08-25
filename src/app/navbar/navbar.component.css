@@ -252,7 +252,7 @@
     margin-left: 50%;
   }
     .navbar-toggle {
-        padding: 9px 15px;
+        padding: 9px 0px;
     }
   .show>.extra-menu{
     display: none;
