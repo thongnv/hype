@@ -1,24 +1,50 @@
-import {
-  Component, OnInit, ViewEncapsulation,
-  EventEmitter, Output
-} from '@angular/core';
-
 import $ from 'jquery';
+import { isNull, isUndefined } from 'util';
+
+import { Component, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ModeService } from '../../services/mode.service';
+import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { LocalStorageService } from 'angular-2-local-storage';
 import { MapsAPILoader } from 'angular2-google-maps/core/services/maps-api-loader/maps-api-loader';
+
 import { LoaderService } from '../../helper/loader/loader.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AppSetting } from '../../app.setting';
 import { AppGlobals } from '../../services/app.global';
-import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
-import { Title } from '@angular/platform-browser';
-import { LocalStorageService } from 'angular-2-local-storage';
+import { ModeService } from '../../services/mode.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { CompanyService } from '../../services/company.service';
+import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
 
 declare let google: any;
+
+const DEFAULT_PARAMS = {
+  type: 'play',
+  kind: '',
+  price: '',
+  activity: '',
+  cuisine: '',
+  rate: '',
+  bestfor: '',
+  types: '',
+  order_by: 'Company_Name',
+  order_dir: 'ASC',
+  lat: AppSetting.SingaporeLatLng.lat,
+  long: AppSetting.SingaporeLatLng.lng,
+  radius: 0,
+  page: 0,
+  limit: 10
+};
+
+const SORT_BY = [
+  {id: 'all', name: 'Name'},
+  {id: 'ratings', name: 'Ratings'},
+  {id: 'reviews', name: 'Number of reviews'},
+  {id: 'views', name: 'Popularity (Pageviews)'},
+  {id: 'favorites', name: 'Number of favorites'},
+  {id: 'distance', name: 'Distance (KM)'}
+];
 
 @Component({
   moduleId: 'hylo-play',
@@ -31,73 +57,58 @@ declare let google: any;
 
 export class PlayComponent implements OnInit {
   @Output('onScrollToBottom') public onScrollToBottom = new EventEmitter<any>();
-
-  public markers: any = [];
-  public categories: any = [];
+  // company list
+  public places = [];
+  // gmap markers
+  public markers = [];
+  // categories
+  public categories = [];
   public categoriesDraw: any[];
-  public priceRange: number[] = [0, 50];
-  public filterCategory: FormGroup;
-  public items = [];
-  public filterData: any = [];
-  public currentHighlightedMarker: number = 1;
-  public currentRate: any = [];
-  public best: any = [];
-  public type: any = [];
-  public mapZoom: number = 12;
-  public lat: number = 1.359;
-  public lng: number = 103.818;
-  public currentRadius: any = 5000;
-  public showAll: boolean = true;
-  public showTab: boolean = true;
-  public showCircle: boolean = true;
-  public rateData: any = [{star: 1}, {star: 2}, {star: 3}, {star: 4}, {star: 5}];
-  public shownotfound: boolean = false;
-  public labelSort: string = 'Name';
-  public gMapStyles: any;
-  public screenWidth: number = 0;
-  public screenHeight: number = 0;
-  public totalCuisine: number = 0;
-  public layoutWidth: number;
-  public sortBy: any;
   public selected = 'all';
+  public selectedCategories = [];
+  public showAll = true;
+  // filter params
+  public filterCategory: FormGroup;
+  public priceRange: number[] = [0, 50];
+  public filterData = [];
+  public selectedRatings = [];
+  public best = [];
+  public type = [];
+  public labelSort = 'Name';
+  public sortBy = SORT_BY;
+  public activitiesCount = 0;
+  public ratings = [1, 2, 3, 4, 5];
+  public showTab = true;
+  public showPrice = false;
+  public showCuisine = false;
+  public showRate = false;
+  public showBest = false;
+  public showType = false;
+  // gmap
+  public gMapStyles: any;
+  public mapZoom = 12;
+  public lat = AppSetting.SingaporeLatLng.lat;
+  public lng = AppSetting.SingaporeLatLng.lng;
+  public currentRadius = 5000;
+
+  public screenWidth: number;
+  public screenHeight: number;
   public innerWidth: number;
-  public showPrice: boolean = false;
-  public showCuisine: boolean = false;
-  public showRate: boolean = false;
-  public showBest: boolean = false;
-  public showType: boolean = false;
+  public layoutWidth: number;
+
+  public showNotFound = false;
 
   private neighbourhood: string;
   private cuisineDraw = [];
-  private loadMore: boolean = false;
-  private categorySelected: any[] = [];
+  private loadMore = false;
   private cuisine: any;
-  private endRecord: boolean = false;
-  private stopped: boolean = false;
-  private catParam = {mode_type: ''};
-  private total: number = 0;
+  private endRecord = false;
+  private stopped = false;
+
+  private params = DEFAULT_PARAMS;
   private requests = [];
-
-  private params = {
-    type: 'play',
-    kind: '',
-    price: '',
-    activity: '',
-    cuisine: '',
-    rate: '',
-    bestfor: '',
-    types: '',
-    order_by: 'Company_Name',
-    order_dir: 'ASC',
-    lat: this.lat,
-    long: this.lng,
-    radius: 0,
-    page: 0,
-    limit: 10
-  };
-  private zoomChanged: boolean = false;
-
-  private boundsChangeDefault = {lat: '', lng: ''};
+  private zoomChanged = true;
+  private position = {lat: '', lng: ''};
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -106,7 +117,6 @@ export class PlayComponent implements OnInit {
                      private mapsAPILoader: MapsAPILoader,
                      private loaderService: LoaderService,
                      private smallLoader: SmallLoaderService,
-                     private route: ActivatedRoute,
                      private router: Router,
                      private localStorageService: LocalStorageService,
                      private windowRef: WindowUtilService,
@@ -115,78 +125,58 @@ export class PlayComponent implements OnInit {
   }
 
   public ngOnInit() {
+    window.scroll(0, 0);
     this.titleService.setTitle('Hylo - Discover things to do in Singapore today');
     this.appGlobal.emitActiveType('play');
-    window.scroll(0, 0);
+    this.gMapStyles = AppSetting.GMAP_STYLE;
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
     });
-    this.sortBy = [
-      {id: 'all', name: 'Name'},
-      {id: 'ratings', name: 'Ratings'},
-      {id: 'reviews', name: 'Number of reviews'},
-      {id: 'views', name: 'Popularity (Pageviews)'},
-      {id: 'favorites', name: 'Number of favorites'},
-      {id: 'distance', name: 'Distance (KM)'}
-    ];
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
-    this.gMapStyles = AppSetting.GMAP_STYLE;
-
-    this.catParam.mode_type = 'mode_play';
-    let params = this.catParam;
-    this.modeService.getCategories(params).map((resp) => resp.json()).subscribe(
+    this.modeService.getCategories({mode_type: 'mode_play'}).map((resp) => resp.json()).subscribe(
       (resp) => {
         this.categoriesDraw = resp.data;
-        let numCategories = calculateNumCategories();
+        const numCategories = calculateNumCategories();
         this.categories = this.categoriesDraw.slice(0, numCategories);
       });
-    this.getFilter();
-    let width = window.innerWidth
-      || document.documentElement.clientWidth
-      || document.body.clientWidth;
-
-    let height = window.innerHeight
-      || document.documentElement.clientHeight
-      || document.body.clientHeight;
-
-    this.screenWidth = width;
-    this.screenHeight = height;
+    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
+      this.filterData = resp.play;
+    });
 
     $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
       $(window).scroll(() => {
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
           if (this.loadMore === false && this.endRecord === false) {
+            console.log('load more');
             this.loadMore = true;
             this.params.page = this.params.page + 1;
-            this.getPlaces();
+            this.getPlaces(this.position);
           }
         }
         if (this.stopped) {
           return;
         }
-        const scrollElements = $('#v-scrollable');
-        if (scrollElements.length) {
-          let baseHeight = scrollElements[0].clientHeight;
-          let realScrollTop = $(window).scrollTop() + baseHeight;
-          let currentHeight: number = baseHeight;
-          let contentElement = scrollElements[0].children;
-          if (contentElement.length > 1) {
-            for (let i = 0; i < contentElement.length; i++) {
-              let currentClientH = contentElement[i].clientHeight;
-              currentHeight += currentClientH;
-              if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                if (this.currentHighlightedMarker !== i) {
-                  this.currentHighlightedMarker = i;
-                  this.highlightMarker(i, 'scroll');
-                }
-              }
-            }
+        const container = $('#v-scrollable')[0];
+        let currentHeight = container.clientHeight;
+        let top = $(window).scrollTop() + currentHeight;
+        let items = container.children;
+        for (let i = 0, x = items.length; i < x; i++) {
+          const currentClientH = items[i].clientHeight;
+          currentHeight += currentClientH;
+          if (currentHeight >= top && currentHeight - currentClientH <= top) {
+            this.markers.forEach((marker, index) => {
+              this.markers[index].opacity = index === i ? 1 : 0.4;
+            });
           }
         }
       });
     });
+
+    this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
@@ -195,56 +185,49 @@ export class PlayComponent implements OnInit {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
-
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
-
     this.appGlobal.toggleMap = true;
+
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.neighbourhood = neighbourhood;
       window.scroll(0, 0);
       this.params.page = 0;
-      this.getPlaces();
+      this.getPlaces(this.position);
     });
   }
 
+  public centerChange(event) {
+    this.zoomChanged = true;
+    this.lat = event.lat;
+    this.lng = event.lng;
+  }
+
   public boundsChange(event) {
-    this.route.params.subscribe((param) => {
-      if (param.location) {
-        this.mapZoom = 14;
-      }
-    });
-    this.boundsChangeDefault.lat = event.getNorthEast().lat();
-    this.boundsChangeDefault.lng = event.getNorthEast().lng();
-    if (!this.zoomChanged) {
-      let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+    if (this.zoomChanged && !this.stopped) {
+      this.position.lat = event.getNorthEast().lat();
+      this.position.lng = event.getNorthEast().lng();
+      this.zoomChanged = false;
+      let northEastPosition = new google.maps.Marker({
+        position: new google.maps.LatLng(this.position),
         draggable: true
       });
-
-      this.zoomChanged = true;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
-      let searchCenter = mapCenter.getPosition();
-      let distance: any = getDistance(searchCenter, latLngNew.getPosition());
+      let distance = getDistance(mapCenter.getPosition(), northEastPosition.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      if (this.params.radius < 0.25) {
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      } else {
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      }
-      this.smallLoader.show();
-      this.items = [];
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.places = [];
       this.markers = [];
-      this.shownotfound = false;
-      this.getPlaces();
+      this.showNotFound = false;
+      this.getPlaces(this.position);
     }
   }
 
   public onResize(event): void {
+    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories();
@@ -252,8 +235,7 @@ export class PlayComponent implements OnInit {
   }
 
   public clickedMarker(marker) {
-    this.currentHighlightedMarker = marker.index;
-    this.highlightMarker(marker.index, 'click');
+    this.highlightMarker(marker.index);
     this.stopped = true;
     $('html, body').animate({
       scrollTop: $('#v' + marker.index).offset().top - 80
@@ -262,51 +244,52 @@ export class PlayComponent implements OnInit {
     // set image for info window
     marker.avatar = 'assets/img/company/default_140x140.jpg';
     this.companyService.getInstagramProfile(marker.licenseNumber).subscribe(
-      (profile) => marker.avatar = profile[0] ? profile[0] : 'assets/img/company/default_140x140.jpg',
+      (profile) => {
+        marker.avatar = profile[0] ? profile[0] : 'assets/img/company/default_140x140.jpg';
+        this.stopped = false;
+      },
       (error) => {
         console.log(error);
+        this.stopped = false;
       });
 
   }
 
   public changeCategory(item) {
-    switch (item) {
-      case 'all':
-        this.categories.forEach((category, index) => {
-          this.categories[index].selected = false;
-        });
-        this.selected = 'all';
-        this.params.kind = '';
-        this.categorySelected = [];
-        break;
-      default:
-        this.selected = '';
-        if (item.selected) {
-          item.selected = false;
-          let index = this.categorySelected.indexOf(item.name);
-          this.categorySelected.splice(index, 1);
-        } else {
-          item.selected = true;
-          this.categorySelected.push(item.name);
-        }
-        this.params.kind = this.categorySelected.join(',');
-        break;
-    }
-    if (this.categorySelected.length === 0) {
+    if (item === 'all') {
+      this.categories.forEach((category, index) => {
+        this.categories[index].selected = false;
+      });
       this.selected = 'all';
+      this.params.kind = '';
+      this.selectedCategories = [];
+    } else {
+      this.selected = '';
+      if (item.selected) {
+        item.selected = false;
+        let index = this.selectedCategories.indexOf(item.name);
+        this.selectedCategories.splice(index, 1);
+      } else {
+        item.selected = true;
+        this.selectedCategories.push(item.name);
+      }
+      if (this.selectedCategories.length === 0) {
+        this.selected = 'all';
+      }
+      this.params.kind = this.selectedCategories.join(',');
     }
     this.params.limit = 20;
     this.params.page = 0;
     this.markers = [];
-    this.items = [];
-    this.getPlaces();
+    this.places = [];
+    this.getPlaces(this.position);
   }
 
   public filterSubmit() {
     let cuisine = [];
     let best = [];
     let type = [];
-    let rate = [];
+    let ratings = [];
     if (this.cuisine) {
       this.cuisine.forEach((item, j) => {
         cuisine.push(this.cuisine[j].name);
@@ -330,9 +313,9 @@ export class PlayComponent implements OnInit {
         type.push(t.name);
       }
     }
-    if (this.currentRate) {
-      for (let r of this.currentRate) {
-        rate.push(r.star);
+    if (this.selectedRatings) {
+      for (let rating of this.selectedRatings) {
+        ratings.push(rating);
       }
     }
     if (this.showPrice) {
@@ -345,21 +328,21 @@ export class PlayComponent implements OnInit {
       this.params.bestfor = best.join(',');
     }
     if (this.showRate) {
-      this.params.rate = rate.join(',');
+      this.params.rate = ratings.join(',');
     }
     if (this.type) {
       this.params.types = type.join(',');
     }
     this.markers = [];
-    this.items = [];
+    this.places = [];
     this.params.page = 0;
-    this.getPlaces();
+    this.getPlaces(this.position);
   }
 
   public filterCancel() {
     this.filterCategory.value.filterCategory = 'all';
     this.clearParams();
-    this.getPlaces();
+    this.getPlaces(this.position);
 
   }
 
@@ -380,18 +363,7 @@ export class PlayComponent implements OnInit {
       return;
     }
     item.is_favorite = !item.is_favorite;
-    this.modeService.favoritePlace(item.Ids_No).subscribe(
-      (resp) => {
-        console.log(resp);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  public showAllType(e) {
-    this.showTab = !e;
+    this.modeService.favoritePlace(item.Ids_No).subscribe();
   }
 
   public showRagePriceFind(e) {
@@ -436,40 +408,30 @@ export class PlayComponent implements OnInit {
 
   public changeSort(id, label) {
     this.labelSort = label;
-    this.params.order_dir = 'DESC';
-    if (id === 'ratings') {
-      this.params.order_by = 'ratings';
-    } else if (id === 'reviews') {
-      this.params.order_by = 'reviews';
-    } else if (id === 'favorites') {
-      this.params.order_by = 'favorites';
-    } else if (id === 'views') {
-      this.params.order_by = 'views';
-    } else if (id === 'distance') {
-      this.params.order_by = 'distance';
-    } else {// id === 'all'
+    if (id === 'all') {
       this.params.order_by = 'Company_Name';
       this.params.order_dir = 'ASC';
+    } else {
+      // id = ratings, reviews, favorites, views, distance
+      this.params.order_by = id;
+      this.params.order_dir = 'DESC';
     }
     this.params.page = 0;
-    this.items = [];
+    this.places = [];
     this.markers = [];
-    this.smallLoader.show();
-    this.getPlaces();
-
+    this.getPlaces(this.position);
   }
 
   public clearAllFilter() {
     this.clearParams();
     this.labelSort = 'Name';
-    this.totalCuisine = 0;
+    this.activitiesCount = 0;
     this.showCuisine = false;
     this.showPrice = false;
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.smallLoader.show();
-    this.getPlaces();
+    this.getPlaces(this.position);
   }
 
   public selectCheckBox(event, parent, sub) {
@@ -521,23 +483,23 @@ export class PlayComponent implements OnInit {
       });
     }
 
-    let totalCuisine = [];
+    let cuisines = [];
     this.cuisine = this.cuisineDraw;
     if (this.cuisine) {
       this.cuisine.forEach((item, j) => {
         if (this.cuisine[j].checked) {
-          totalCuisine.push(this.cuisine[j].name);
+          cuisines.push(this.cuisine[j].name);
           if (this.cuisine[j].sub) {
             this.cuisine[j].sub.forEach((subItem, i) => {
               if (this.cuisine[j].sub[i].checked) {
-                totalCuisine.push(this.cuisine[j].sub[i].name);
+                cuisines.push(this.cuisine[j].sub[i].name);
               }
             });
           }
         }
       });
     }
-    this.totalCuisine = totalCuisine.length;
+    this.activitiesCount = cuisines.length;
   }
 
   public bestChangeCheckBox(event, item) {
@@ -562,35 +524,20 @@ export class PlayComponent implements OnInit {
 
   public rateCheckbox(event, rate) {
     if (event) {
-      this.currentRate.push(rate);
+      this.selectedRatings.push(rate);
     } else {
-      let index = this.currentRate.indexOf(rate);
-      this.currentRate.splice(index, 1);
+      let index = this.selectedRatings.indexOf(rate);
+      this.selectedRatings.splice(index, 1);
     }
   }
 
-  public centerChange(event) {
-    this.lat = event.lat;
-    this.lng = event.lng;
-    this.zoomChanged = false;
-  }
-
-  private getFilter() {
-    this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
-      this.filterData = resp.play;
-    });
-  }
-
-  private getPlaces() {
+  private getPlaces(position) {
+    this.smallLoader.show();
     if (!this.loadMore) {
-      this.items = [];
+      this.places = [];
       this.markers = [];
     }
-    if (this.neighbourhood !== 'Singapore') {
-      this.mapZoom = 15;
-    } else {
-      this.mapZoom = 12;
-    }
+    this.mapZoom = this.neighbourhood === 'Singapore' ? 12 : 15;
     this.mapsAPILoader.load().then(() => {
       let geocoder = new google.maps.Geocoder();
       geocoder.geocode({
@@ -599,27 +546,23 @@ export class PlayComponent implements OnInit {
         },
         (response, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
-              this.lat = response[0].geometry.location.lat();
-              this.lng = response[0].geometry.location.lng();
-              this.params.lat = response[0].geometry.location.lat();
-              this.params.long = response[0].geometry.location.lng();
-              let latLngNew = new google.maps.Marker({
-                position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-                draggable: true
-              });
-              this.zoomChanged = true;
-              let mapCenter = new google.maps.Marker({
-                position: new google.maps.LatLng(this.lat, this.lng),
-                draggable: true
-              });
-              let searchCenter = mapCenter.getPosition();
-              let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
-              this.params.lat = this.lat;
-              this.params.long = this.lng;
-              this.params.radius = parseFloat((distance / 1000).toFixed(2));
-              this.getDataModes();
-            }
+            this.lat = response[0].geometry.location.lat();
+            this.lng = response[0].geometry.location.lng();
+            let latLngNew = new google.maps.Marker({
+              position: new google.maps.LatLng(position.lat, position.lng),
+              draggable: true
+            });
+            this.zoomChanged = true;
+            let mapCenter = new google.maps.Marker({
+              position: new google.maps.LatLng(this.lat, this.lng),
+              draggable: true
+            });
+            let searchCenter = mapCenter.getPosition();
+            let distance = getDistance(latLngNew.getPosition(), searchCenter);
+            this.params.lat = this.lat;
+            this.params.long = this.lng;
+            this.params.radius = parseFloat((distance / 1000).toFixed(2));
+            this.getDataModes(this.params);
           } else {
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
@@ -635,11 +578,11 @@ export class PlayComponent implements OnInit {
       this.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.getDataModes();
+      this.getDataModes(this.params);
     }
   }
 
-  private getDataModes() {
+  private getDataModes(params) {
     if (this.requests.length) {
       this.requests.forEach((req) => {
         req.unsubscribe();
@@ -647,11 +590,10 @@ export class PlayComponent implements OnInit {
       this.requests = [];
     }
     this.smallLoader.show();
-    const request = this.modeService.getModeData(this.params).subscribe(
+    const request = this.modeService.getModeData(params).subscribe(
       (data) => {
-        this.total = data.total;
-        this.items = this.loadMore ? this.items.concat(data.company) : data.company;
-        this.shownotfound = data.total === 0;
+        this.places = this.loadMore ? this.places.concat(data.company) : data.company;
+        this.showNotFound = data.total === 0;
         this.endRecord = data.company.length === 0;
         this.loadMore = false;
         this.initMap(data.company);
@@ -662,30 +604,28 @@ export class PlayComponent implements OnInit {
   }
 
   private initMap(items) {
-    this.currentHighlightedMarker = 0;
     const currentIndex = this.markers.length;
     if (items.length) {
       this.mapsAPILoader.load().then(() => {
         for (let i = 0; i < items.length; i++) {
-          if (typeof items[i].YP_Address !== 'undefined' || items[i].YP_Address !== null) {
-
-            let lat = items[i].YP_Address[6].split('/');
-            let lng = items[i].YP_Address[5].split('/');
-            let distance = items[i]._dict_;
-
+          const item = items[i];
+          if (!isUndefined(item.YP_Address) || !isNull(item.YP_Address)) {
+            let lat = item.YP_Address[6].split('/')[1];
+            let lng = item.YP_Address[5].split('/')[1];
+            let distance = item._dict_;
             if (distance) {
-              items[i].distance = (distance).toFixed(1);
+              item.distance = distance.toFixed(1);
             }
             this.markers.push({
-              lat: parseFloat(lat[1]),
-              lng: parseFloat(lng[1]),
-              label: items[i].Company_Name,
+              lat: parseFloat(lat),
+              lng: parseFloat(lng),
+              label: item.Company_Name,
               index: currentIndex + i,
               opacity: 0.4,
               isOpenInfo: false,
               icon: 'assets/icon/locationmarker.png',
-              link: '/company/' + items[i].Company_Slug,
-              licenseNumber: items[i].License_Number
+              link: '/company/' + item.Company_Slug,
+              licenseNumber: item.License_Number
             });
           }
         }
@@ -694,25 +634,11 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  private highlightMarker(markerId: number, type: string): void {
-    if (this.markers[markerId]) {
-      if (type === 'click') {
-        this.markers.forEach((marker, index) => {
-          if (index === markerId) {
-            this.markers[index].opacity = 1;
-            this.markers[index].isOpenInfo = true;
-          } else {
-            this.markers[index].opacity = 0.4;
-            this.markers[index].isOpenInfo = false;
-          }
-        });
-      } else {
-        this.markers.forEach((marker, index) => {
-          this.markers[index].opacity = index === markerId ? 1 : 0.4;
-        });
-      }
-    }
-
+  private highlightMarker(markerId: number): void {
+    this.markers.forEach((marker, index) => {
+      this.markers[index].isOpenInfo = index === markerId;
+      this.markers[index].opacity = index === markerId ? 1 : 0.4;
+    });
   }
 
   private clearParams() {
@@ -748,17 +674,17 @@ export class PlayComponent implements OnInit {
       });
     }
 
-    if (this.currentRate) {
-      this.currentRate.forEach((item, i) => {
-        this.currentRate[i].checked = false;
+    if (this.selectedRatings) {
+      this.selectedRatings.forEach((item, i) => {
+        this.selectedRatings[i].checked = false;
       });
     }
     this.cuisine = [];
     this.best = [];
     this.type = [];
-    this.totalCuisine = 0;
+    this.activitiesCount = 0;
     this.cuisineDraw = [];
-    this.currentRate = [];
+    this.selectedRatings = [];
     this.priceRange = [0, 50];
     this.params.cuisine = '';
     this.params.price = '';
@@ -771,7 +697,7 @@ export class PlayComponent implements OnInit {
     this.params.order_by = 'Company_Name';
     this.params.order_dir = 'ASC';
     this.markers = [];
-    this.items = [];
+    this.places = [];
   }
 
 }
@@ -807,4 +733,19 @@ function calculateNumCategories(): number {
   }
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
+}
+
+interface Rating {
+  rating: number;
+  selected: boolean;
+}
+
+function distance(lat1, lon1, lat2, lon2) {
+  let p = 0.017453292519943295;    // Math.PI / 180
+  let c = Math.cos;
+  let a = 0.5 - c((lat2 - lat1) * p) / 2 +
+    c(lat1 * p) * c(lat2 * p) *
+    (1 - c((lon2 - lon1) * p)) / 2;
+
+  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 }
