@@ -20,6 +20,7 @@ import { HomeService } from '../services/home.service';
 import { LoaderService } from '../helper/loader/loader.service';
 import { WindowUtilService } from '../services/window-ultil.service';
 
+import { HyloLocation } from '../app.interface';
 import { AppSetting } from '../app.setting';
 import { AppGlobals } from '../services/app.global';
 import { SmallLoaderService } from '../helper/small-loader/small-loader.service';
@@ -42,7 +43,7 @@ export class HomeComponent implements OnInit {
   public selectedEventFilter: any;
   public selectedEventOrder: any;
   public events: any = [];
-  public neighbourhood: string;
+  public neighbourhood: HyloLocation;
   public markers: any[] = [];
   public mapZoom = 12;
   public lat = AppSetting.SingaporeLatLng.lat;
@@ -60,7 +61,6 @@ export class HomeComponent implements OnInit {
     locale: {format: 'D MMMM YYYY'},
     alwaysShowCalendars: false,
   };
-  public shownotfound: boolean = false;
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
@@ -136,6 +136,7 @@ export class HomeComponent implements OnInit {
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
       if (this.params.latest) {
+        this.loading = true;
         window.scroll(0, 0);
         this.getEvents(this.neighbourhood);
       }
@@ -147,6 +148,7 @@ export class HomeComponent implements OnInit {
   }
 
   public showAllEvents() {
+    this.loading = true;
     this.clearParam();
     this.selectedEventFilter = 'all';
     this.params.time = '';
@@ -284,7 +286,7 @@ export class HomeComponent implements OnInit {
       slug: item.alias
     };
     this.smallLoader.show();
-    this.homeService.likeEvent(param).map((res) => res.json()).subscribe((res) => {
+    this.homeService.likeEvent(param).map((res) => res.json()).subscribe(() => {
       this.loaderService.hide();
     }, (err) => {
       if (err.status === 403) {
@@ -371,37 +373,33 @@ export class HomeComponent implements OnInit {
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (this.selectedEventOrder === 'latest') {
       if (!this.zoomChanged) {
-        let latLngNew = new google.maps.Marker({
-          position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
-          draggable: true
+        this.mapsAPILoader.load().then(() => {
+          let latLngNew = new google.maps.Marker({
+            position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+            draggable: true
+          });
+          // map change sleep call api
+          let mapCenter = new google.maps.Marker({
+            position: new google.maps.LatLng(this.lat, this.lng),
+            draggable: true
+          });
+          let searchCenter = mapCenter.getPosition();
+          let distance: any = getDistance(searchCenter, latLngNew.getPosition());
+          this.zoomChanged = true;
+          this.params.lat = this.lat;
+          this.params.long = this.lng;
+          if (this.params.radius < 0.25) {
+            this.params.radius = parseFloat((distance / 1000).toFixed(2));
+          } else {
+            this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+          }
+          this.events = [];
+          this.markers = [];
+          this.params.page = 0;
+          this.getLatestEvents(this.params);
         });
-        // map change sleep call api
-        let mapCenter = new google.maps.Marker({
-          position: new google.maps.LatLng(this.lat, this.lng),
-          draggable: true
-        });
-        this.zoomChanged = true;
-        let searchCenter = mapCenter.getPosition();
-        let distance: any = getDistance(searchCenter, latLngNew.getPosition());
-        this.params.lat = this.lat;
-        this.params.long = this.lng;
-        if (this.params.radius < 0.25) {
-          this.params.radius = parseFloat((distance / 1000).toFixed(2));
-        } else {
-          this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
-        }
-        this.events = [];
-        this.markers = [];
-        this.params.page = 0;
-        this.shownotfound = false;
-        this.getLatestEvents(this.params);
       }
     }
-  }
-
-  public zoomChange(event) {
-    // DEBUG
-    // console.log('zoom: ', event);
   }
 
   private clearParam() {
@@ -465,7 +463,6 @@ export class HomeComponent implements OnInit {
             }
           }
         }
-
         if (this.stopped) {
           return false;
         }
@@ -499,8 +496,6 @@ export class HomeComponent implements OnInit {
       (resp) => {
         this.total = resp.total;
 
-        this.shownotfound = resp.total === 0;
-
         if (resp.data.length === 0) {
           this.endRecord = true;
         }
@@ -518,7 +513,6 @@ export class HomeComponent implements OnInit {
   }
 
   private getLatestEvents(params) {
-    this.loading = true;
     this.smallLoader.show();
     if (this.requests.length) {
       this.requests.forEach((req) => {
@@ -531,7 +525,6 @@ export class HomeComponent implements OnInit {
         this.events = this.loadMore ? this.events.concat(data.data) : data.data;
         this.endRecord = data.data.length === 0;
         this.total = data.total;
-        this.shownotfound = data.total === 0;
         this.initMap(data.data);
         this.loadMore = false;
         this.smallLoader.hide();
@@ -542,45 +535,35 @@ export class HomeComponent implements OnInit {
   }
 
   private getEvents(neighbourhood) {
-    if (neighbourhood !== 'Singapore') {
+    this.loading = true;
+    if (neighbourhood.name !== 'Singapore') {
       this.mapZoom = 15;
     } else {
       this.mapZoom = 12;
     }
-    let geocoder = new google.maps.Geocoder();
-    geocoder.geocode({
-        address: neighbourhood + ' Xinh-ga-po',
-        region: 'sg'
-      },
-      (response, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (status !== google.maps.GeocoderStatus.ZERO_RESULTS) {
-            this.lat = response[0].geometry.location.lat();
-            this.lng = response[0].geometry.location.lng();
-            let latLngNew = new google.maps.Marker({
-              position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
-              draggable: true
-            });
-            this.zoomChanged = true;
-            let mapCenter = new google.maps.Marker({
-              position: new google.maps.LatLng(this.lat, this.lng),
-              draggable: true
-            });
-            let searchCenter = mapCenter.getPosition();
-            let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
-            this.params.lat = this.lat;
-            this.params.long = this.lng;
-            this.params.page = 0;
-            this.params.radius = parseFloat((distance / 1000).toFixed(2));
-            this.loadMore = false;
-            this.getLatestEvents(this.params);
-          }
-        } else {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-          }
-        }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
+    this.lat = neighbourhood.lat;
+    this.lng = neighbourhood.lng;
+    this.mapsAPILoader.load().then(() => {
+      let latLngNew = new google.maps.Marker({
+        position: new google.maps.LatLng(this.boundsChangeDefault.lat, this.boundsChangeDefault.lng),
+        draggable: true
       });
+      let mapCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.lat, this.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
+      this.zoomChanged = true;
+      this.params.lat = this.lat;
+      this.params.long = this.lng;
+      this.params.page = 0;
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.getLatestEvents(this.params);
+    });
   }
 
   private initMap(events) {
@@ -637,8 +620,6 @@ export class HomeComponent implements OnInit {
               }
             }
           });
-
-          // console.log(events[i]);
 
           let marker = {
             lat: latitude,
@@ -709,16 +690,17 @@ function getDistance(p1, p2) {
   return R * c;
 }
 
-function calculateNumCategories(layoutWidth): number {
+function calculateNumCategories(): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  let categoryWidth = 80;
+  const categoryWidth = 76;
+  const navBarWidth = 180;
   const borderWidth = 15;
-  let dotWidth = 45;
+  const dotWidth = 43;
   if (screenWidth > 992) {
-    dotWidth = 60;
-    containerWidth = layoutWidth - borderWidth - dotWidth;
+    const containerPercentage = 0.46;
+    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
   } else {
     containerWidth = screenWidth - borderWidth - dotWidth;
   }

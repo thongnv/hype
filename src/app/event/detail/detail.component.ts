@@ -12,7 +12,7 @@ import { WindowUtilService } from '../../services/window-ultil.service';
 import { AppSetting } from '../../app.setting';
 
 import {
-  Call2Action, Experience, HyloEvent, Icon, Location, BaseUser, Image, User,
+  Call2Action, Experience, HyloEvent, Icon, HyloLocation, BaseUser, Image, User,
   MetaTags
 } from '../../app.interface';
 
@@ -30,7 +30,7 @@ export class EventDetailComponent implements HyloEvent, OnInit {
   public id: number;
   public creator: BaseUser;
   public name: string = '';
-  public location: Location;
+  public location: HyloLocation;
   public detail: string = '';
   public category: any;
   public startDate: number = 0;

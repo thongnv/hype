@@ -92,7 +92,7 @@
         <div ngbDropdown>
           <a class="dropdown-toggle" id="drop1" role="button" aria-haspopup="true" aria-expanded="false"
              ngbDropdownToggle>
-            {{selectedNeighbourhood}}
+            {{selectedNeighbourhood.name}}
             <i class="icon-down-left-navbar sprite sprite-icon-down"></i>
           </a>
 
@@ -100,7 +100,7 @@
             <div>
 
               <li *ngFor="let neighbourhood of neighbourhoods" [class.active]="neighbourhood === selectedNeighbourhood"
-                  (click)="onSelectNeighbourhood(neighbourhood)" class="text-ellipsis">{{neighbourhood}}
+                  (click)="onSelectNeighbourhood(neighbourhood)" class="text-ellipsis">{{neighbourhood.name}}
               </li>
             </div>
           </ul>
