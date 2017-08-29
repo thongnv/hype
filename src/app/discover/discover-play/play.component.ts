@@ -731,7 +731,6 @@ function calculateNumCategories(layoutWidth): number {
   } else {
     containerWidth = screenWidth - borderWidth - dotWidth;
   }
-  console.log(screenWidth)
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
 }
