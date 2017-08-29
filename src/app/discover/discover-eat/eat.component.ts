@@ -133,12 +133,13 @@ export class EatComponent implements OnInit {
     this.rateConfig.readonly = false;
 
     this.gMapStyles = AppSetting.GMAP_STYLE;
-
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     this.catParam.mode_type = 'mode_eat';
     this.modeService.getCategories(this.catParam).map((resp) => resp.json()).subscribe(
       (resp) => {
         this.categoriesDraw = resp.data;
-        let numCategories = calculateNumCategories();
+        let numCategories = calculateNumCategories(this.layoutWidth);
         this.categories = this.categoriesDraw.slice(0, numCategories);
       });
     this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
@@ -182,7 +183,7 @@ export class EatComponent implements OnInit {
         }
       });
     });
-    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+
 
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
@@ -191,8 +192,6 @@ export class EatComponent implements OnInit {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = true;
     }
-
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     this.appGlobal.toggleMap = true;
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
@@ -204,7 +203,7 @@ export class EatComponent implements OnInit {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
-    let numCategories = calculateNumCategories();
+    let numCategories = calculateNumCategories(this.layoutWidth);
     this.categories = this.categoriesDraw.slice(0, numCategories);
   }
 
@@ -325,7 +324,7 @@ export class EatComponent implements OnInit {
       this.categories = this.categoriesDraw;
     } else {
       this.showAll = true;
-      let numCategories = calculateNumCategories();
+      let numCategories = calculateNumCategories(this.layoutWidth);
       this.categories = this.categoriesDraw.slice(0, numCategories);
     }
   }
@@ -794,17 +793,16 @@ function getDistance(p1, p2) {
   return R * c;
 }
 
-function calculateNumCategories(): number {
+function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  const categoryWidth = 76;
-  const navBarWidth = 80;
+  let categoryWidth = 80;
   const borderWidth = 15;
-  const dotWidth = 43;
+  let dotWidth = 45;
   if (screenWidth > 992) {
-    const containerPercentage = 0.46;
-    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+    dotWidth = 60;
+    containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {
     containerWidth = screenWidth - borderWidth - dotWidth;
   }

@@ -132,12 +132,18 @@ export class PlayComponent implements OnInit {
     this.filterCategory = this.formBuilder.group({
       filterCategory: 'all'
     });
+
+    this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
+    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
+
     this.rateConfig.max = 5;
     this.rateConfig.readonly = false;
     this.modeService.getCategories({mode_type: 'mode_play'}).map((resp) => resp.json()).subscribe(
       (resp) => {
         this.categoriesDraw = resp.data;
-        const numCategories = calculateNumCategories();
+        const numCategories = calculateNumCategories(this.layoutWidth);
         this.categories = this.categoriesDraw.slice(0, numCategories);
       });
     this.modeService.getFilterMode().map((resp) => resp.json()).subscribe((resp) => {
@@ -172,11 +178,6 @@ export class PlayComponent implements OnInit {
         }
       });
     });
-
-    this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    this.innerWidth = this.windowRef.nativeWindow.innerWidth;
-    this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
@@ -230,7 +231,7 @@ export class PlayComponent implements OnInit {
     console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
-    let numCategories = calculateNumCategories();
+    let numCategories = calculateNumCategories(this.layoutWidth);
     this.categories = this.categoriesDraw.slice(0, numCategories);
   }
 
@@ -352,7 +353,7 @@ export class PlayComponent implements OnInit {
       this.categories = this.categoriesDraw;
     } else {
       this.showAll = true;
-      let numCategories = calculateNumCategories();
+      let numCategories = calculateNumCategories(this.layoutWidth);
       this.categories = this.categoriesDraw.slice(0, numCategories);
     }
   }
@@ -717,17 +718,16 @@ function getDistance(p1, p2) {
   return R * c;
 }
 
-function calculateNumCategories(): number {
+function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  const categoryWidth = 76;
-  const navBarWidth = 80;
+  let categoryWidth = 80;
   const borderWidth = 15;
-  const dotWidth = 43;
+  let dotWidth = 45;
   if (screenWidth > 992) {
-    const containerPercentage = 0.46;
-    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+    dotWidth = 60;
+    containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {
     containerWidth = screenWidth - borderWidth - dotWidth;
   }

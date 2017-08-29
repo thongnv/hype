@@ -20,10 +20,11 @@
 .type-events ul {
   margin-top: 0;
   list-style: none;
-  padding-left: 0;
+  padding: 0 15px;
   display: block;
   float: left;
   margin-bottom: 8px;
+
 }
 
 .type-events .type-event-item.active {
@@ -34,7 +35,6 @@
   font-size: 12px;
   line-height: 14px;
   overflow: hidden;
-  width: 5em;
   display: block;
   margin-top: 4px;
 }
@@ -45,7 +45,7 @@
   opacity: .4;
   cursor: pointer;
   transition: opacity .3s;
-  margin: 10px 8px 10px;
+  width: 80px;
   height: 70px;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .type-events .type-event-more {
-  margin-left: 17px;
+  margin-left: 10px;
   margin-top: 15px;
   letter-spacing: 1px;
   height: 40px;
@@ -1003,7 +1003,7 @@ ul.mentioned-item {
   }
 
   .type-events .type-event-item {
-    width: 60px;
+    /*width: 60px;*/
   }
 
   .home-page .left-box {

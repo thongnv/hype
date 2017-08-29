@@ -133,13 +133,11 @@
     border: none;
     box-shadow: none;
     padding: 10px 0px;
-    width: 13%;
     text-align: center;
     outline: none;
     margin-bottom: 5px;
     opacity: 0.4;
-    min-width: 45px;
-    max-width: 80px;
+    width: 80px;
     font-size: 12px;
     display: inline-block;
     float: inherit;
@@ -644,7 +642,7 @@ select.form-control-static::-ms-expand {
 
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
-        width: auto;
+        /*width: auto;*/
     }
     .discover-page{width: 100%!important; margin: 0}
     .discover-page .left-box{
