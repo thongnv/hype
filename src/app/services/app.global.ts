@@ -1,3 +1,4 @@
+import { HyloLocation } from '../app.interface';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/startWith';
@@ -24,7 +25,7 @@ export class AppGlobals {
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/sports.png', name: 'sports'},
     {url: 'https://hylowebsite.s3.amazonaws.com/avatar/markers/tech.png', name: 'tech'}];
 
-  public neighbourhoodStorage: BehaviorSubject<string> = new BehaviorSubject<string>('Singapore');
+  public neighbourhoodStorage = new BehaviorSubject<HyloLocation>({name: 'Singapore', lat: 1.290270, lng: 103.851959});
   @Output() public typeChangeEmitter: EventEmitter<any> = new EventEmitter();
 
   public setLocationAddress(neighbourhood) {
