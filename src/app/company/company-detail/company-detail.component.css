@@ -158,7 +158,9 @@ p.avg-rating a {
 .content-detail-event {
   font-size: 13px;
 }
-
+.frame_right{
+  padding: 0;
+}
 /*detail event end*/
 
 /*experience area start*/
