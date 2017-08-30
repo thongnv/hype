@@ -108,7 +108,7 @@ export class PlayComponent implements OnInit {
 
   private params = DEFAULT_PARAMS;
   private requests = [];
-  private zoomChanged = false;
+  private zoomChanged = true;
   private boundPosition = {lat: '', lng: ''};
 
   public constructor(private titleService: Title,
@@ -149,10 +149,10 @@ export class PlayComponent implements OnInit {
       $(window).scroll(() => {
         if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
           if (this.loadMore === false && this.endRecord === false) {
-            console.log('load more');
+            this.zoomChanged = false;
             this.loadMore = true;
             this.params.page = this.params.page + 1;
-            this.getPlaces(this.boundPosition);
+            this.getDataModes(this.params);
           }
         }
         if (this.stopped) {
@@ -197,9 +197,9 @@ export class PlayComponent implements OnInit {
   }
 
   public centerChange(event) {
-    this.zoomChanged = true;
     this.lat = event.lat;
     this.lng = event.lng;
+    this.zoomChanged = true;
   }
 
   public boundsChange(event) {
@@ -207,7 +207,6 @@ export class PlayComponent implements OnInit {
     this.boundPosition.lng = event.getNorthEast().lng();
     if (this.zoomChanged) {
       this.zoomChanged = false;
-      console.log(this.boundPosition.lat, this.boundPosition.lng);
       this.mapsAPILoader.load().then(() => {
         let northEastPosition = new google.maps.Marker({
           position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
@@ -225,7 +224,7 @@ export class PlayComponent implements OnInit {
         this.places = [];
         this.markers = [];
         this.showNotFound = false;
-        this.getPlaces(this.neighbourhood);
+        this.getDataModes(this.params);
       });
     }
   }
@@ -286,7 +285,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.markers = [];
     this.places = [];
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public filterSubmit() {
@@ -435,7 +434,7 @@ export class PlayComponent implements OnInit {
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public selectCheckBox(event, parent, sub) {
@@ -549,10 +548,9 @@ export class PlayComponent implements OnInit {
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
       let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(this.boundPosition),
+        position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
         draggable: true
       });
-      this.zoomChanged = false;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true

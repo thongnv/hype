@@ -545,11 +545,11 @@ export class EatComponent implements OnInit {
   }
 
   public boundsChange(event) {
-    this.items = [];
-    this.markers = [];
     this.boundPosition.lat = event.getNorthEast().lat();
     this.boundPosition.lng = event.getNorthEast().lng();
     if (this.zoomChanged) {
+      this.items = [];
+      this.markers = [];
       this.mapsAPILoader.load().then(() => {
         let latLngNew = new google.maps.Marker({
           position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
@@ -581,7 +581,6 @@ export class EatComponent implements OnInit {
     this.items = [];
     this.markers = [];
     this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 15;
-    console.log(this.mapZoom);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
     }
