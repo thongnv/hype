@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Company, Experience, Image, Location } from '../app.interface';
+import { Company, Experience, Image, HyloLocation } from '../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Http, Headers, RequestOptions, Response, Jsonp } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -134,7 +134,7 @@ export class CompanyService {
   }
 }
 
-function extractLocation(location): Location {
+function extractLocation(location): HyloLocation {
   let address = location[0];
   let lat = location[6];
   let lng = location[5];

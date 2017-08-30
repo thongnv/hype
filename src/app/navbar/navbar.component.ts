@@ -7,7 +7,7 @@ import { NotificationComponent } from './notification/notification.component';
 import * as io from 'socket.io-client';
 import { AppSetting } from '../app.setting';
 import { ProfileService } from '../services/profile.service';
-import { User } from '../app.interface';
+import { HyloLocation, User } from '../app.interface';
 import { AppGlobals } from '../services/app.global';
 import { UserService } from '../services/user.service';
 
@@ -19,8 +19,8 @@ import { UserService } from '../services/user.service';
 export class NavbarComponent implements OnInit {
   public onSearch = false;
   public notifications: any;
-  public neighbourhoods: string[];
-  public selectedNeighbourhood: string;
+  public neighbourhoods: HyloLocation[];
+  public selectedNeighbourhood: HyloLocation;
   public notificationPage: number = 1;
   public totalUnread: number = 0;
   public totalPages: number = 0;
@@ -76,8 +76,7 @@ export class NavbarComponent implements OnInit {
       });
       this.getNotifications();
     }
-
-    this.selectedNeighbourhood = 'Singapore';
+    this.selectedNeighbourhood = AppSetting.NEIGHBOURHOODS[0];
 
     this.userService.getEmittedUser().subscribe(
       (data) => this.user = data
@@ -110,7 +109,7 @@ export class NavbarComponent implements OnInit {
     }, 1);
   }
 
-  public onSelectNeighbourhood(option: string): void {
+  public onSelectNeighbourhood(option: HyloLocation) {
     this.selectedNeighbourhood = option;
     this.appGlobal.setLocationAddress(option);
   }

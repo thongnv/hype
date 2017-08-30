@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CompanyService } from '../../services/company.service';
 import { slideInOutAnimation } from '../../animations/slide-in-out.animation';
-import { Company, Experience, Image, Location, User } from '../../app.interface';
+import { Company, Experience, Image, HyloLocation, User } from '../../app.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from '../../helper/loader/loader.service';
 import { AppSetting } from '../../app.setting';
@@ -25,7 +25,7 @@ export class CompanyDetailComponent implements Company, OnInit {
   public type: string;
   public description: string;
   public rating: number;
-  public location: Location;
+  public location: HyloLocation;
   public website: string;
   public phone: string;
   public openingHours: string[];
