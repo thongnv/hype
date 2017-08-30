@@ -551,7 +551,7 @@ export class EatComponent implements OnInit {
     if (this.zoomChanged) {
       this.mapsAPILoader.load().then(() => {
         let latLngNew = new google.maps.Marker({
-          position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
+          position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
           draggable: true
         });
         let mapCenter = new google.maps.Marker({
