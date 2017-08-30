@@ -16,6 +16,7 @@ import { ModeService } from '../../services/mode.service';
 import { WindowUtilService } from '../../services/window-ultil.service';
 import { CompanyService } from '../../services/company.service';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
+import { HyloLocation } from '../../app.interface';
 
 declare let google: any;
 
@@ -98,7 +99,7 @@ export class PlayComponent implements OnInit {
 
   public showNotFound = false;
 
-  private neighbourhood: string;
+  private neighbourhood: HyloLocation;
   private cuisineDraw = [];
   private loadMore = false;
   private cuisine: any;
@@ -107,8 +108,8 @@ export class PlayComponent implements OnInit {
 
   private params = DEFAULT_PARAMS;
   private requests = [];
-  private zoomChanged = true;
-  private position = {lat: '', lng: ''};
+  private zoomChanged = false;
+  private boundPosition = {lat: '', lng: ''};
 
   public constructor(private titleService: Title,
                      private formBuilder: FormBuilder,
@@ -151,7 +152,7 @@ export class PlayComponent implements OnInit {
             console.log('load more');
             this.loadMore = true;
             this.params.page = this.params.page + 1;
-            this.getPlaces(this.position);
+            this.getPlaces(this.boundPosition);
           }
         }
         if (this.stopped) {
@@ -191,7 +192,7 @@ export class PlayComponent implements OnInit {
       this.neighbourhood = neighbourhood;
       window.scroll(0, 0);
       this.params.page = 0;
-      this.getPlaces(this.position);
+      this.getPlaces(neighbourhood);
     });
   }
 
@@ -202,27 +203,30 @@ export class PlayComponent implements OnInit {
   }
 
   public boundsChange(event) {
-    if (this.zoomChanged && !this.stopped) {
-      this.position.lat = event.getNorthEast().lat();
-      this.position.lng = event.getNorthEast().lng();
+    this.boundPosition.lat = event.getNorthEast().lat();
+    this.boundPosition.lng = event.getNorthEast().lng();
+    if (this.zoomChanged) {
       this.zoomChanged = false;
-      let northEastPosition = new google.maps.Marker({
-        position: new google.maps.LatLng(this.position),
-        draggable: true
+      console.log(this.boundPosition.lat, this.boundPosition.lng);
+      this.mapsAPILoader.load().then(() => {
+        let northEastPosition = new google.maps.Marker({
+          position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
+          draggable: true
+        });
+        let mapCenter = new google.maps.Marker({
+          position: new google.maps.LatLng(this.lat, this.lng),
+          draggable: true
+        });
+        let distance = getDistance(mapCenter.getPosition(), northEastPosition.getPosition());
+        this.params.lat = this.lat;
+        this.params.long = this.lng;
+        this.params.page = 0;
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        this.places = [];
+        this.markers = [];
+        this.showNotFound = false;
+        this.getPlaces(this.neighbourhood);
       });
-      let mapCenter = new google.maps.Marker({
-        position: new google.maps.LatLng(this.lat, this.lng),
-        draggable: true
-      });
-      let distance = getDistance(mapCenter.getPosition(), northEastPosition.getPosition());
-      this.params.lat = this.lat;
-      this.params.long = this.lng;
-      this.params.page = 0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
-      this.places = [];
-      this.markers = [];
-      this.showNotFound = false;
-      this.getPlaces(this.position);
     }
   }
 
@@ -282,7 +286,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.markers = [];
     this.places = [];
-    this.getPlaces(this.position);
+    this.getPlaces(this.boundPosition);
   }
 
   public filterSubmit() {
@@ -336,13 +340,13 @@ export class PlayComponent implements OnInit {
     this.markers = [];
     this.places = [];
     this.params.page = 0;
-    this.getPlaces(this.position);
+    this.getPlaces(this.boundPosition);
   }
 
   public filterCancel() {
     this.filterCategory.value.filterCategory = 'all';
     this.clearParams();
-    this.getPlaces(this.position);
+    this.getPlaces(this.boundPosition);
 
   }
 
@@ -419,7 +423,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.places = [];
     this.markers = [];
-    this.getPlaces(this.position);
+    this.getPlaces(this.boundPosition);
   }
 
   public clearAllFilter() {
@@ -431,7 +435,7 @@ export class PlayComponent implements OnInit {
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.getPlaces(this.position);
+    this.getPlaces(this.boundPosition);
   }
 
   public selectCheckBox(event, parent, sub) {
@@ -531,44 +535,34 @@ export class PlayComponent implements OnInit {
     }
   }
 
-  private getPlaces(position) {
+  private getPlaces(neighbourhood) {
     this.smallLoader.show();
     if (!this.loadMore) {
       this.places = [];
       this.markers = [];
     }
-    this.mapZoom = this.neighbourhood === 'Singapore' ? 12 : 15;
+    this.mapZoom = this.neighbourhood.name === 'Singapore' ? 12 : 15;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
+    this.lat = neighbourhood.lat;
+    this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
-      let geocoder = new google.maps.Geocoder();
-      geocoder.geocode({
-          address: this.neighbourhood + ' Xinh-ga-po',
-          region: 'sg'
-        },
-        (response, status) => {
-          if (status === google.maps.GeocoderStatus.OK) {
-            this.lat = response[0].geometry.location.lat();
-            this.lng = response[0].geometry.location.lng();
-            let latLngNew = new google.maps.Marker({
-              position: new google.maps.LatLng(position.lat, position.lng),
-              draggable: true
-            });
-            this.zoomChanged = true;
-            let mapCenter = new google.maps.Marker({
-              position: new google.maps.LatLng(this.lat, this.lng),
-              draggable: true
-            });
-            let searchCenter = mapCenter.getPosition();
-            let distance = getDistance(latLngNew.getPosition(), searchCenter);
-            this.params.lat = this.lat;
-            this.params.long = this.lng;
-            this.params.radius = parseFloat((distance / 1000).toFixed(2));
-            this.getDataModes(this.params);
-          } else {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-            }
-          }
-        });
+      let latLngNew = new google.maps.Marker({
+        position: new google.maps.LatLng(this.boundPosition),
+        draggable: true
+      });
+      this.zoomChanged = false;
+      let mapCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.lat, this.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance = getDistance(latLngNew.getPosition(), searchCenter);
+      this.params.lat = this.lat;
+      this.params.long = this.lng;
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.getDataModes(this.params);
     });
   }
 
@@ -617,8 +611,8 @@ export class PlayComponent implements OnInit {
               item.distance = distance.toFixed(1);
             }
             this.markers.push({
-              lat: parseFloat(lat),
-              lng: parseFloat(lng),
+              lat: parseFloat(lat) || AppSetting.SingaporeLatLng.lat,
+              lng: parseFloat(lng) || AppSetting.SingaporeLatLng.lng,
               label: item.Company_Name,
               index: currentIndex + i,
               opacity: 0.4,
