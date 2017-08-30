@@ -31,7 +31,7 @@ export interface HyloEvent {
   slug: string;
   creator: BaseUser;
   name: string;
-  location: Location;
+  location: HyloLocation;
   detail: string;
   category: { 'name': string, 'tid': string };
   startDate: number;
@@ -48,8 +48,8 @@ export interface HyloEvent {
   metaTags: MetaTags;
 }
 
-export interface Location {
-  id: number;
+export interface HyloLocation {
+  id?: number;
   name: string;
   lat: number;
   lng: number;
@@ -127,7 +127,7 @@ export interface Company {
   type: string;
   description: string;
   rating: number;
-  location: Location;
+  location: HyloLocation;
   website: string;
   phone: string;
   openingHours: string[];

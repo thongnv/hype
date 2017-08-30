@@ -1,4 +1,4 @@
-import { User } from './app.interface';
+import { HyloLocation, User } from './app.interface';
 let _ENV = process.env.NODE_ENV || process.env.ENV || 'product';
 let PAGE_SIZE = 10;
 let API_ENDPOINT = '';
@@ -362,11 +362,32 @@ export class AppSetting {
     }
   ];
 
-  public static NEIGHBOURHOODS = [
-    'Singapore', 'Bugis', 'Bukit Timah', 'Changi', 'Chinatown', 'Clarke Quay',
-    'Dempsey Hill', 'East Coast', 'Harbourfront', 'Holland Village', 'Joochiat',
-    'Katong', 'Jurong', 'Kampong Glam', 'Little India', 'Marina Bay', 'Orchard',
-    'Punggol', 'Sentosa', 'Serangoon', 'Tanjong Pagar', 'Thomson', 'Tiong Baru', 'Toa Payoh'];
+  public static NEIGHBOURHOODS: HyloLocation[] = [
+    {name: 'Singapore', lat: 1.290270, lng: 103.851959},
+    {name: 'Bugis', lat: 1.3009033, lng: 103.85624889999997},
+    {name: 'Bukit Timah', lat: 1.3294113, lng: 103.80207769999993},
+    {name: 'Changi', lat: 1.3450101, lng: 103.98320890000002},
+    {name: 'Chinatown', lat: 1.2847875, lng: 103.84393120000004},
+    {name: 'Clarke Quay', lat: 1.291001, lng: 103.84449889999996},
+    {name: 'Dempsey Hill', lat: 1.3033106, lng: 103.80946059999997},
+    {name: 'East Coast', lat: 1.3007842, lng: 103.91218660000004},
+    {name: 'Harbourfront', lat: 1.264325, lng: 103.82030600000007},
+    {name: 'Holland Village', lat: 1.3119456, lng: 103.79623330000004},
+    {name: 'Joochiat', lat: 1.3099091, lng: 103.90202690000001},
+    {name: 'Katong', lat: 1.3039671, lng: 103.90128649999997},
+    {name: 'Jurong', lat: 1.3328572, lng: 103.74355220000007},
+    {name: 'Kampong Glam', lat: 1.3029735, lng: 103.85987499999999},
+    {name: 'Little India', lat: 1.3065597, lng: 103.85181899999998},
+    {name: 'Marina Bay', lat: 1.2914319, lng: 103.86390970000002},
+    {name: 'Orchard', lat: 1.3048425, lng: 103.8318243},
+    {name: 'Punggol', lat: 1.3984457, lng: 103.9072046},
+    {name: 'Sentosa', lat: 1.2494041, lng: 103.83032090000006},
+    {name: 'Serangoon', lat: 1.3553567, lng: 103.86787079999999},
+    {name: 'Tanjong Pagar', lat: 1.2764031, lng: 103.84685850000005},
+    {name: 'Thomson', lat: 1.3274912, lng: 103.8413329},
+    {name: 'Tiong Baru', lat: 1.2870812, lng: 103.82855440000003},
+    {name: 'Toa Payoh', lat: 1.3343035, lng: 103.85632650000002}
+  ];
 
   public static defaultUser: User = {
     id: 0,
