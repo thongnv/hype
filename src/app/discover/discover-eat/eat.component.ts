@@ -183,7 +183,6 @@ export class EatComponent implements OnInit {
       });
     });
 
-
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
