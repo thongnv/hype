@@ -690,17 +690,16 @@ function getDistance(p1, p2) {
   return R * c;
 }
 
-function calculateNumCategories(): number {
+function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  const categoryWidth = 76;
-  const navBarWidth = 180;
+  let categoryWidth = 80;
   const borderWidth = 15;
-  const dotWidth = 43;
+  let dotWidth = 45;
   if (screenWidth > 992) {
-    const containerPercentage = 0.46;
-    containerWidth = (screenWidth - navBarWidth - borderWidth) * containerPercentage - dotWidth;
+    dotWidth = 60;
+    containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {
     containerWidth = screenWidth - borderWidth - dotWidth;
   }
