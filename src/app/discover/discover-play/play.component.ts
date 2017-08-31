@@ -165,16 +165,18 @@ export class PlayComponent implements OnInit {
           return;
         }
         const container = $('#v-scrollable')[0];
-        let currentHeight = container.clientHeight;
-        let top = $(window).scrollTop() + currentHeight;
-        let items = container.children;
-        for (let i = 0, x = items.length; i < x; i++) {
-          const currentClientH = items[i].clientHeight;
-          currentHeight += currentClientH;
-          if (currentHeight >= top && currentHeight - currentClientH <= top) {
-            this.markers.forEach((marker, index) => {
-              this.markers[index].opacity = index === i ? 1 : 0.4;
-            });
+        if (container) {
+          let currentHeight = container.clientHeight;
+          let top = $(window).scrollTop() + currentHeight;
+          let items = container.children;
+          for (let i = 0, x = items.length; i < x; i++) {
+            const currentClientH = items[i].clientHeight;
+            currentHeight += currentClientH;
+            if (currentHeight >= top && currentHeight - currentClientH <= top) {
+              this.markers.forEach((marker, index) => {
+                this.markers[index].opacity = index === i ? 1 : 0.4;
+              });
+            }
           }
         }
       });

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Company, Experience, Image, HyloLocation } from '../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Http, Headers, RequestOptions, Response, Jsonp } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { AppSetting } from '../app.setting';
 import { Router } from '@angular/router';
@@ -26,7 +26,7 @@ export class CompanyService {
       instagramUrl: data.Hylo_Instagram,
       licenseNumber: data.License_Number,
       reviews: getReviews(data.review),
-      CTC: data.CTC,
+      CTC: data.CTC.replace('http:', 'https:'),
       slugName: data.slugName
     };
   }
@@ -39,8 +39,7 @@ export class CompanyService {
 
   constructor(private localStorageService: LocalStorageService,
               private http: Http,
-              private router: Router,
-              private jsonp: Jsonp) {
+              private router: Router) {
   }
 
   public getCompanyDetail(slugName): Observable<Company> {
@@ -73,17 +72,6 @@ export class CompanyService {
         return Observable.throw(new Error(error));
       });
   }
-
-  public getInstagramImages(userId: string): Observable<any> {
-    return this.jsonp.get(
-      'https://api.instagram.com/v1/users/' + userId + '/media/recent/' +
-      '?access_token=' + AppSetting.INSTAGRAM_ACCESS_TOKEN +
-      '&callback=JSONP_CALLBACK')
-        .map((res: Response) => res.json())
-        .catch((error: any) => {
-          return Observable.throw(new Error(error));
-        });
-    }
 
   public toggleBookmark(placeId: string): Observable<any> {
     let headers = this.defaultHeaders;
