@@ -107,7 +107,6 @@ export class CompanyDetailComponent implements Company, OnInit {
           this.loadData(this.company);
           this.appGlobal.emitActiveType(this.company.type);
           this.titleService.setTitle(this.company.name);
-          // TODO: use this.instagramUrl instead
           this.companyService.getInstagramProfile(this.company.licenseNumber).subscribe(
             (images) => {
               if (images.length) {
