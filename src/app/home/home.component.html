@@ -202,7 +202,7 @@
       </div>
     </div>
     <!--#sdhkas-->
-    <div *ngIf="!loading && !events.length" class="no-result-found" style="text-align: center">
+    <div *ngIf="showNotFound" class="no-result-found" style="text-align: center">
       <div class="sprite sprite-no-results-found" style="display: inline-block"></div>
       <h3>No Results Found</h3>
       <div>You can revise filters or <a (click)="onClearForm()" class="clear_filter">clear all filters</a>.</div>
