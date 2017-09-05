@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   public layoutWidth: number;
   public innerWidth: number;
   public loading = true;
+  public showNotFound = false;
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
@@ -395,6 +396,7 @@ export class HomeComponent implements OnInit {
           }
           this.events = [];
           this.markers = [];
+          this.showNotFound = false;
           this.params.page = 0;
           this.getLatestEvents(this.params);
         });
@@ -523,6 +525,7 @@ export class HomeComponent implements OnInit {
     const request = this.homeService.getLatestEvents(params).subscribe(
       (data: any) => {
         this.events = this.loadMore ? this.events.concat(data.data) : data.data;
+        this.showNotFound = data.total === 0;
         this.endRecord = data.data.length === 0;
         this.total = data.total;
         this.initMap(data.data);
