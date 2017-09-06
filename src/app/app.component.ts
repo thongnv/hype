@@ -53,13 +53,11 @@ export class AppComponent implements OnInit, AfterContentInit {
       (data) => this.user = data
     );
     this.setActivePath();
-    if (!this.localStorageService.get('csrf_token')) {
-      this.userService.getCsrfToken().subscribe(
-        (resp) => {
-          this.localStorageService.set('csrf_token', resp._body);
-        }
-      );
-    }
+    this.userService.getCsrfToken().subscribe(
+      (resp) => {
+        this.localStorageService.set('csrf_token', resp._body);
+      }
+    );
 
   }
 
