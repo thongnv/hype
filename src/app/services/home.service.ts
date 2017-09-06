@@ -102,7 +102,11 @@ export class HomeService {
   }
 
   public likeEvent(body: any) {
-    let headers = this.defaultHeaders;
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-CSRF-Token': this.localStorageService.get('csrf_token')
+    });
     let options = new RequestOptions({headers, withCredentials: true});
     return this.http.post(
       AppSetting.API_ENDPOINT + 'api/user/flag/bookmark?_format=json&slug=' + body.slug,
