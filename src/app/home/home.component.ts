@@ -425,6 +425,8 @@ export class HomeComponent implements OnInit {
 
   private getTrendingEvents() {
     if (this.selectedEventOrder === 'top 100') {
+      this.params.lat = 0;
+      this.params.long = 0;
       this.getTop100Events(this.params);
     } else {
       this.getLatestEvents(this.params);
