@@ -42,7 +42,7 @@ i#notif {
 }
 .user-option>a>.arrow-up{
     position: relative;
-    top: -14px;
+    top: -20px;
     right: -10px;
     z-index: 9;
     display: none;
