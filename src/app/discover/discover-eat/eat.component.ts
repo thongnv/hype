@@ -585,22 +585,24 @@ export class EatComponent implements OnInit {
     }
     this.lat = neighbourhood.lat;
     this.lng = neighbourhood.lng;
-    let latLngNew = new google.maps.Marker({
-      position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
-      draggable: true
+    this.mapsAPILoader.load().then(() => {
+      let latLngNew = new google.maps.Marker({
+        position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
+        draggable: true
+      });
+      let mapCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.lat, this.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
+      this.zoomChanged = false;
+      this.params.lat = this.lat;
+      this.params.long = this.lng;
+      this.params.page = 0;
+      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.getDataModes();
     });
-    let mapCenter = new google.maps.Marker({
-      position: new google.maps.LatLng(this.lat, this.lng),
-      draggable: true
-    });
-    let searchCenter = mapCenter.getPosition();
-    let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
-    this.zoomChanged = false;
-    this.params.lat = this.lat;
-    this.params.long = this.lng;
-    this.params.page = 0;
-    this.params.radius = parseFloat((distance / 1000).toFixed(2));
-    this.getDataModes();
   }
 
   private clearParams() {
