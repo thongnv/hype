@@ -508,6 +508,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.events = resp.data;
         }
+        this.showNotFound = this.events.length === 0;
         this.initMap(resp.data);
         this.loadMore = false;
         this.smallLoader.hide();
@@ -527,7 +528,7 @@ export class HomeComponent implements OnInit {
     const request = this.homeService.getLatestEvents(params).subscribe(
       (data: any) => {
         this.events = this.loadMore ? this.events.concat(data.data) : data.data;
-        this.showNotFound = data.total === 0;
+        this.showNotFound = this.events.length === 0;
         this.endRecord = data.data.length === 0;
         this.total = data.total;
         this.initMap(data.data);
