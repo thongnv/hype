@@ -288,7 +288,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.markers = [];
     this.places = [];
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public filterSubmit() {
@@ -342,13 +342,13 @@ export class PlayComponent implements OnInit {
     this.markers = [];
     this.places = [];
     this.params.page = 0;
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public filterCancel() {
     this.filterCategory.value.filterCategory = 'all';
     this.clearParams();
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
 
   }
 
@@ -425,7 +425,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.places = [];
     this.markers = [];
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public clearAllFilter() {
@@ -437,7 +437,7 @@ export class PlayComponent implements OnInit {
     this.showRate = false;
     this.showBest = false;
     this.showType = false;
-    this.getPlaces(this.boundPosition);
+    this.getDataModes(this.params);
   }
 
   public selectCheckBox(event, parent, sub) {
