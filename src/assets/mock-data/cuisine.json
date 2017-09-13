@@ -59,12 +59,10 @@
         "name": "Western"
       },
       {
-        "name": "Vegetarian",
-        "sub": [
-          {
-            "name": "Barbeque"
-          }
-        ]
+        "name": "Vegetarian"
+      },
+      {
+        "name": "Barbeque"
       },
       {
         "name": "Seafood"
