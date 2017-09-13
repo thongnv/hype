@@ -2,7 +2,7 @@
   "eat": {
     "cuisine": [
       {
-        "name": "China",
+        "name": "Chinese",
         "sub": [
           {
             "name": "Hotpot"
@@ -36,10 +36,10 @@
         ]
       },
       {
-        "name": "Korea"
+        "name": "Korean"
       },
       {
-        "name": "India"
+        "name": "Indian"
       },
       {
         "name": "French"
