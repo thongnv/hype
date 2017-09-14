@@ -574,15 +574,12 @@ export class HomeComponent implements OnInit {
 
   private initMap(events) {
     this.currentHighlightedMarker = 0;
-
-    let mapCenter = new google.maps.Marker({
-      position: new google.maps.LatLng(this.lat, this.lng),
-      draggable: true
-    });
-    let searchCenter = mapCenter.getPosition();
-
-    this.mapsAPILoader.load().then(
-      () => {
+    this.mapsAPILoader.load().then(() => {
+        let mapCenter = new google.maps.Marker({
+          position: new google.maps.LatLng(this.lat, this.lng),
+          draggable: true
+        });
+        let searchCenter = mapCenter.getPosition();
         for (let i = 0; i < events.length; i++) {
           let latitude: any;
           let longitude: any;
@@ -618,42 +615,36 @@ export class HomeComponent implements OnInit {
           this.events[i].distance = (distance / 1000).toFixed(1);
 
           // set icon for marker based on event type
-          let eventMarkerIcon = 'assets/icon/locationmarker.png';
           this.appGlobal.eventIcon.forEach((icon) => {
             if (events[i].field_categories.name) {
               if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
-                eventMarkerIcon = icon.url;
+                let marker = {
+                  lat: latitude,
+                  lng: longitude,
+                  label: events[i].title,
+                  isOpenInfo: false,
+                  nid: events[i].nid,
+                  avatar: events[i].field_images[0],
+                  link: events[i].alias,
+                  icon: icon.url,
+                  opacity: 0.4,
+                  price: [],
+                  nids: [],
+                  created: events[i].created || 0,
+                  events: [],
+                  field_event_option: events[i].field_event_option,
+                  type: events[i].type
+                };
+                if (i === 0) {
+                  marker.opacity = 1;
+                }
+                if (events[i].field_event_option.field_price) {
+                  marker.price = events[i].field_event_option.field_price;
+                }
+                this.markers.push(marker);
               }
             }
           });
-
-          let marker = {
-            lat: latitude,
-            lng: longitude,
-            label: events[i].title,
-            isOpenInfo: false,
-            nid: events[i].nid,
-            avatar: events[i].field_images[0],
-            link: events[i].alias,
-            icon: eventMarkerIcon,
-            opacity: 0.4,
-            price: [],
-            nids: [],
-            created: events[i].created || 0,
-            events: [],
-            field_event_option: events[i].field_event_option,
-            type: events[i].type
-          };
-
-          if (i === 0) {
-            marker.opacity = 1;
-          }
-
-          if (events[i].field_event_option.field_price) {
-            marker.price = events[i].field_event_option.field_price;
-          }
-
-          this.markers.push(marker);
         }
 
         // put all events has the same location together in one marker
