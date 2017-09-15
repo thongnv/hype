@@ -140,7 +140,7 @@
         <div ngbDropdown class="d-inline-block">
           <a href="javascript:;" id="dropdownSort" ngbDropdownToggle>{{labelSort}} <i class="caret" style="margin-left: 10px"></i></a>
           <div class="dropdown-menu dropdown-menu-left" aria-labelledby="dropdownSort">
-            <button class="dropdown-item" *ngFor="let sort of sortBy" (click)="changeSort(sort.id,or.name)">
+            <button class="dropdown-item" *ngFor="let sort of sortBy" (click)="changeSort(sort.id,sort.name)">
               {{sort.name}}
             </button>
           </div>
