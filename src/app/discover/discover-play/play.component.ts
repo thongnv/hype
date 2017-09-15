@@ -108,7 +108,7 @@ export class PlayComponent implements OnInit {
 
   private params = DEFAULT_PARAMS;
   private requests = [];
-  private zoomChanged = true;
+  private zoomChanged = false;
   private boundPosition = {lat: '', lng: ''};
 
   public constructor(private titleService: Title,
@@ -206,10 +206,10 @@ export class PlayComponent implements OnInit {
   }
 
   public boundsChange(event) {
+    this.markers = [];
     this.boundPosition.lat = event.getNorthEast().lat();
     this.boundPosition.lng = event.getNorthEast().lng();
     if (this.zoomChanged) {
-      this.zoomChanged = false;
       this.mapsAPILoader.load().then(() => {
         let northEastPosition = new google.maps.Marker({
           position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
@@ -219,14 +219,13 @@ export class PlayComponent implements OnInit {
           position: new google.maps.LatLng(this.lat, this.lng),
           draggable: true
         });
-        let distance = getDistance(mapCenter.getPosition(), northEastPosition.getPosition());
+        let searchCenter = mapCenter.getPosition();
+        let distance = getDistance(searchCenter, northEastPosition.getPosition());
+        this.zoomChanged = false;
         this.params.lat = this.lat;
         this.params.long = this.lng;
         this.params.page = 0;
         this.params.radius = parseFloat((distance / 1000).toFixed(2));
-        this.places = [];
-        this.markers = [];
-        this.showNotFound = false;
         this.getDataModes(this.params);
       });
     }
@@ -551,9 +550,10 @@ export class PlayComponent implements OnInit {
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
       let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
+        position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
+      this.zoomChanged = false;
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
@@ -727,11 +727,6 @@ function calculateNumCategories(layoutWidth): number {
   }
   numCategories = Math.floor(containerWidth / categoryWidth) - 1;
   return numCategories;
-}
-
-interface Rating {
-  rating: number;
-  selected: boolean;
 }
 
 function distance(lat1, lon1, lat2, lon2) {
