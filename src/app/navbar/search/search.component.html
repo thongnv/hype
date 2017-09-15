@@ -1,10 +1,10 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit($event)">
     <div class="input-group wrap-search-input">
-        <button [disabled]="searchForm.invalid" class="btn sprite sprite-icon-search search-icon" type="submit"></button>
+        <button class="btn sprite sprite-icon-search search-icon" type="submit"></button>
         <input #keyword formControlName="keyword"
                class="form-control input-keyword" minlength="3" placeholder="Search..."
                (keyup)="onSubmit($event, keyword.value)"
-               (click)="onOpenSuggestion()" (keydown)="onKeyDown($event)">
+               (click)="hideSearchResult = false">
         <div *ngIf="!hideSearchResult" class="search-location-search-area" id="global-search">
             <div class="arrow-up"></div>
             <div class="display-location-address">
@@ -22,7 +22,7 @@
                         <a>Lists</a>
                     </li>
                     <li *ngFor="let item of result.article;trackBy:item?.id">
-                        <a [routerLink]="[item.Slug]" class="item-link" (click)="onCloseSuggestion()">
+                        <a [routerLink]="[item.Slug]" class="item-link">
                             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
@@ -36,7 +36,7 @@
                         <a>Events</a>
                     </li>
                     <li *ngFor="let item of result.event;trackBy:item?.id">
-                        <a [routerLink]="[item.Slug]" class="item-link" (click)="onCloseSuggestion()">
+                        <a [routerLink]="[item.Slug]" class="item-link">
                             <img class="icon-location-address" [src]="item.images" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
@@ -50,7 +50,7 @@
                         <a>Companies</a>
                     </li>
                     <li *ngFor="let item of result.company;trackBy:item?.id">
-                        <a [routerLink]="['/company',item.Slug]" class="item-link" (click)="onCloseSuggestion()">
+                        <a [routerLink]="['/company',item.Slug]" class="item-link">
                             <img class="icon-location-address" src="assets/icon/default-logo.png" [alt]="item.Title" width="35" height="35">
                             <div class="result-info">
                                 <span class="keyword-search-input text-ellipsis">{{item.Title}}</span>
