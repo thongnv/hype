@@ -10,11 +10,13 @@
   <div class="tab-wrap" [style.width]="innerWidth > 1023 ? layoutWidth/2 + 'px' : ''">
     <div class="item-content" *ngFor="let item of items.data">
       <div class="wrap-each-items" *ngIf="item" [id]="currentType === 'place' ? item.Ids_No : item.nid">
-        <div class="avatar-profile" [routerLink]="currentType === 'place' ? '/company/' + item.Company_Slug : item.alias">
-          <div class="img-layer"></div>
-          <div class="fav-item-image">
+        <div class="avatar-profile avatar" [routerLink]="currentType === 'place' ? '/company/' + item.Company_Slug : item.alias">
+          <div *ngIf="currentType !== 'place'" class="fav-item-image">
             <img [src]="currentType === 'place' ? '/assets/img/company/default_140x140.jpg' : item.field_images" width="100" height="100">
           </div>
+          <app-place-image *ngIf="currentType === 'place'" [routerLink]="['/company',item.Company_Slug]" [name]="item.name" [width]="140"
+                           [height]="140" [licenseNumber]="item.License_Number">
+          </app-place-image>
           <div class="month" *ngIf="item.created">{{item.created | amFromUnix | date:'MMM'}}</div>
           <div class="date-number" *ngIf="item.created">{{item.created | amFromUnix | date:'dd '}}</div>
         </div>
