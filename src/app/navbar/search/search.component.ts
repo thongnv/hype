@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { MainService } from '../../services/main.service';
-import { WindowRefService } from "../../services/window-ref.service"
+import { WindowRefService } from '../../services/window-ref.service';
 
 @Component({
   selector: 'app-search',
@@ -12,7 +12,7 @@ import { WindowRefService } from "../../services/window-ref.service"
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  @ViewChild('keyword') keywords: ElementRef;
+  @ViewChild('keyword') public keywords: ElementRef;
 
   public searchForm: FormGroup;
   public hideSearchResult: boolean = true;
@@ -24,20 +24,12 @@ export class SearchComponent implements OnInit {
   private searchRoute = '/search';
 
   constructor(public fb: FormBuilder,
-              private sanitizer: DomSanitizer,
               private mainService: MainService,
               private windowRefService: WindowRefService,
-              private _elRef: ElementRef,
               private router: Router) {
   }
 
   @HostListener('document:click', ['$event'])
-
-  public onClick(event) {
-    if (!this._elRef.nativeElement.contains(event.target)) {
-      this.hideSearchResult = true;
-    }
-  }
 
   public ngOnInit() {
     this.searchForm = this.fb.group({
@@ -47,19 +39,22 @@ export class SearchComponent implements OnInit {
 
   public onSubmit(event, keyword?: string) {
     this.hideSearchResult = false;
-    const keyCode = event.which || event.keyCode;
-    this.searchToken = event.type === 'submit' ?
-      this.searchForm.value.keyword.trim() : keyword.trim();
-
-    // sanitize keywords
-    // this.searchToken = this.sanitizer.sanitize(SecurityContext.HTML, this.searchToken);
-
-    if (this.searchToken.length >= 3) {
-      if (keyCode == 13) {
-        this.hideSearchResult = true;
+    if (keyword) {
+      this.searchToken = keyword.trim();
+    }
+    let keywords = this.searchToken;
+    if (event.type === 'submit' || event.code === 'Enter') {
+      const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
+      if (isSearchResultPage) {
+        // component does not reload when keywords changes
+        this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
+      } else {
+        this.router.navigate([this.searchRoute], {queryParams: {keywords}}).then();
       }
-      // this.hideSearchResult = this.router.url.startsWith(this.searchRoute);
-      this.mainService.search(this.searchToken).subscribe((resp) => {
+      this.hideSearchResult = true;
+    }
+    if (keywords.length >= 3) {
+      this.mainService.search(keywords).subscribe((resp) => {
         this.result = resp;
         if (resp.event.length + resp.article.length + resp.company.length === 0) {
           this.hideNoResult = false;
@@ -75,27 +70,4 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  onKeyDown(event) {
-    let keywords = this.keywords.nativeElement.value;
-    // keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords.nativeElement.value);
-    const keyCode = event.which || event.keyCode;
-    const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
-
-    if (keyCode === 13 && keywords.trim() !== '') {
-      if (isSearchResultPage) {
-        // this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
-
-        // TODO: this for fix component does not reload when route change
-        this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
-      } else {
-        this.hideSearchResult = true;
-        this.router.navigate([this.searchRoute], {queryParams: {keywords: keywords}})
-      }
-    }
-
-  }
-
-  public onOpenSuggestion() {
-    this.hideSearchResult = false;
-  }
 }
