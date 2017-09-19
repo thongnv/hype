@@ -57,7 +57,7 @@ export class EatComponent implements OnInit {
   public rateData: any = [{star: 1}, {star: 2}, {star: 3}, {star: 4}, {star: 5}];
   public shownotfound: boolean = false;
   public sortBy: any;
-  public labelSort: string = 'Name';
+  public labelSort: string = 'Relevance';
   public totalCuisine: number = 0;
   public selected = 'all';
   public showPrice: boolean = false;
@@ -84,7 +84,7 @@ export class EatComponent implements OnInit {
     rate: '',
     bestfor: '',
     types: '',
-    order_by: 'Company_Name',
+    order_by: '',
     order_dir: 'ASC',
     lat: this.lat,
     long: this.lng,
@@ -121,7 +121,8 @@ export class EatComponent implements OnInit {
       filterCategory: 'all'
     });
     this.sortBy = [
-      {id: 'all', name: 'Name'},
+      {id: 'relevance', name: 'Relevance'},
+      {id: 'name', name: 'Name'},
       {id: 'ratings', name: 'Ratings'},
       {id: 'reviews', name: 'Number of reviews'},
       {id: 'views', name: 'Popularity (Pageviews)'},
@@ -391,8 +392,11 @@ export class EatComponent implements OnInit {
   }
 
   public changeSort(id, label) {
-    console.log(id);
     this.labelSort = label;
+    if (id === 'relevance') {
+      this.params.order_by = '';
+      this.params.order_dir = 'DESC';
+    }
     if (id === 'ratings') {
       this.params.order_by = 'ratings';
       this.params.order_dir = 'DESC';
@@ -413,7 +417,7 @@ export class EatComponent implements OnInit {
       this.params.order_by = 'distance';
       this.params.order_dir = 'DESC';
     }
-    if (id === 'all') {
+    if (id === 'name') {
       this.params.order_by = 'Company_Name';
       this.params.order_dir = 'ASC';
     }
@@ -426,7 +430,7 @@ export class EatComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.labelSort = 'Name';
+    this.labelSort = 'Relevance';
     this.totalCuisine = 0;
     this.showCuisine = false;
     this.showPrice = false;
@@ -661,7 +665,7 @@ export class EatComponent implements OnInit {
     this.params.page = 0;
     this.params.rate = '';
     this.params.types = '';
-    this.params.order_by = 'Company_Name';
+    this.params.order_by = '';
     this.params.order_dir = 'ASC';
     this.markers = [];
     this.items = [];
