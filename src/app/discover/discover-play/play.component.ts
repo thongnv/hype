@@ -29,7 +29,7 @@ const DEFAULT_PARAMS = {
   rate: '',
   bestfor: '',
   types: '',
-  order_by: 'Company_Name',
+  order_by: '',
   order_dir: 'ASC',
   lat: AppSetting.SingaporeLatLng.lat,
   long: AppSetting.SingaporeLatLng.lng,
@@ -39,7 +39,8 @@ const DEFAULT_PARAMS = {
 };
 
 const SORT_BY = [
-  {id: 'all', name: 'Name'},
+  {id: 'relevance', name: 'Relevance'},
+  {id: 'name', name: 'Name'},
   {id: 'ratings', name: 'Ratings'},
   {id: 'reviews', name: 'Number of reviews'},
   {id: 'views', name: 'Popularity (Pageviews)'},
@@ -75,7 +76,7 @@ export class PlayComponent implements OnInit {
   public selectedRatings = [];
   public best = [];
   public type = [];
-  public labelSort = 'Name';
+  public labelSort = 'Relevance';
   public sortBy = SORT_BY;
   public activitiesCount = 0;
   public ratings = [1, 2, 3, 4, 5];
@@ -413,11 +414,14 @@ export class PlayComponent implements OnInit {
 
   public changeSort(id, label) {
     this.labelSort = label;
-    if (id === 'all') {
+    if (id === 'name') {
       this.params.order_by = 'Company_Name';
       this.params.order_dir = 'ASC';
     } else {
       // id = ratings, reviews, favorites, views, distance
+      if (id === 'relevance') {
+        id = '';
+      }
       this.params.order_by = id;
       this.params.order_dir = 'DESC';
     }
@@ -429,7 +433,7 @@ export class PlayComponent implements OnInit {
 
   public clearAllFilter() {
     this.clearParams();
-    this.labelSort = 'Name';
+    this.labelSort = 'Relevance';
     this.activitiesCount = 0;
     this.showCuisine = false;
     this.showPrice = false;
@@ -689,7 +693,7 @@ export class PlayComponent implements OnInit {
     this.params.page = 0;
     this.params.rate = '0';
     this.params.types = '';
-    this.params.order_by = 'Company_Name';
+    this.params.order_by = '';
     this.params.order_dir = 'ASC';
     this.markers = [];
     this.places = [];
