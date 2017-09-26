@@ -454,7 +454,9 @@ export class HomeComponent implements OnInit {
             if (this.loadMore === false && this.endRecord === false) {
               if (this.events.length > 10) {
                 this.loadMore = true;
+                this.smallLoader.show();
                 this.params.start += 20;
+                this.params.page ++;
                 this.getTrendingEvents();
               }
             }
