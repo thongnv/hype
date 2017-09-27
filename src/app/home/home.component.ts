@@ -618,6 +618,9 @@ export class HomeComponent implements OnInit {
 
           // set icon for marker based on event type
           this.appGlobal.eventIcon.forEach((icon) => {
+            if (events[i].field_categories.name === undefined) {
+              events[i].field_categories.name = 'default';
+            }
             if (events[i].field_categories.name) {
               if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
                 let marker = {
