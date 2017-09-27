@@ -57,7 +57,6 @@ export class AuthComponent implements OnInit {
     };
     this.facebookService.login(loginOptions).then(
       (loginRes: LoginResponse) => {
-        console.log(loginRes);
         if (loginRes.authResponse.grantedScopes.indexOf('email') !== -1) {
           this.userService.login(loginRes.authResponse.accessToken).subscribe(
             (resp: any) => {

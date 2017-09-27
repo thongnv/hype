@@ -233,7 +233,6 @@ export class PlayComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
     let numCategories = calculateNumCategories(this.layoutWidth);

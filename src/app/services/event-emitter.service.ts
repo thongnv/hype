@@ -7,7 +7,6 @@ export class EventEmitterService {
   constructor() { }
 
   sendMessage(data: string) {
-    console.log('emit data: ', data);
     this.dataStream.emit(data);
   }
 

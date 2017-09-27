@@ -16,7 +16,6 @@ export class GmapComponent implements OnInit {
   public lng: number;
 
   public constructor(private gmapService: GmapService) {
-    console.log('component constructor');
   }
 
   public ngOnInit() {
@@ -26,12 +25,10 @@ export class GmapComponent implements OnInit {
   }
 
   public handleRadiusChange() {
-    console.log('radius change');
     this.updateGoogleMarkers();
   }
 
   public handleDrag() {
-    console.log('center change');
     this.updateGoogleMarkers();
   }
 

@@ -50,7 +50,6 @@ export class CurateDetailComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180) / 2;
 
@@ -98,7 +97,6 @@ export class CurateDetailComponent implements OnInit {
               this.meta.addTag({rel: 'canonical', href: metaTags.canonical_url});
             }
           } else {
-            console.log('here');
             this.titleService.setTitle(response.title);
             this.meta.updateTag({
               name: 'description',

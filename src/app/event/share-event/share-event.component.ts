@@ -96,7 +96,6 @@ export class ShareEventComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     this.layoutWidth = (this.windowRef.rootContainer.width - 180);
   }
