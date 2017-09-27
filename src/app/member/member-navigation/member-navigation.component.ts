@@ -29,7 +29,6 @@ export class MemberNavigationComponent implements OnInit {
   public toggleFollow() {
     this.userService.toggleFollow(this.currentUser.id).subscribe(
       (resp) => {
-        console.log(resp);
         this.currentUser.followed = !this.currentUser.followed;
         if (this.currentUser.followed) {
           this.currentUser.followerNumber++;

@@ -36,7 +36,6 @@ export class GeocodeMarkerComponent implements OnInit {
   }
 
   public markerDragEnd($event) {
-    console.log($event);
     if ($event.coords) {
       this.lat = $event.coords.lat;
       this.lng = $event.coords.lng;
@@ -45,7 +44,6 @@ export class GeocodeMarkerComponent implements OnInit {
   }
 
   public infoWindowClose($event) {
-    console.log($event);
   }
 
 }

@@ -200,7 +200,6 @@ export class ExperienceComponent implements Experience, OnInit {
       this.router.navigate(['login']).then();
       return;
     }
-    console.log('clicked: ', this.clickedLike);
     if (!this.clickedLike) {
       this.liked = !this.liked;
       this.likeNumber += this.liked ? 1 : -1;

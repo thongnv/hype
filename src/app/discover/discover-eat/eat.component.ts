@@ -583,7 +583,6 @@ export class EatComponent implements OnInit {
     this.items = [];
     this.markers = [];
     this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 15;
-    console.log(this.mapZoom);
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
     }

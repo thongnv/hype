@@ -447,7 +447,6 @@ export class HomeComponent implements OnInit {
         }
       });
     } else {
-      console.log(this.mapEventMarker);
       let markerIndex = this.mapEventMarker[markerId];
       this.markers.forEach((marker, index) => {
         this.markers[index].opacity = index === markerIndex ? 1 : 0.4;

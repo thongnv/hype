@@ -37,7 +37,6 @@ export class LogoutComponent implements OnInit {
     this.localStorageService.clearAll();
     this.router.navigate(['home']).then(
       (response) => {
-        console.log(response);
         this.userService.emitUser(AppSetting.defaultUser);
       }
     );

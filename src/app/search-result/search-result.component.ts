@@ -51,7 +51,7 @@ export class SearchResultComponent implements OnInit {
     // sanitize keywords
     // this.keywords = this.sanitizer.sanitize(SecurityContext.HTML, this.keywords);
 
-    console.log('got keywords: ', this.keywords);
+    // console.log('got keywords: ', this.keywords);
 
     // fetch data from server
     this.fetchData(this.keywords);

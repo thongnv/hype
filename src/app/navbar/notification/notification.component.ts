@@ -21,7 +21,6 @@ export class NotificationComponent {
   }
 
   public onClickItem(item: any) {
-    console.log(item);
     this.onMarkOneRead.emit(item);
   }
   public onScrollDown(event) {

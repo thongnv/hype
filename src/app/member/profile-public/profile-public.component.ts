@@ -117,7 +117,6 @@ export class ProfilePublicComponent implements OnInit {
   }
 
   public onResize(event): void {
-    console.log(event);
     this.innerWidth = this.windowRef.nativeWindow.innerWidth;
     let navBarWidth = 180;
     this.layoutWidth = this.windowRef.rootContainer.width - navBarWidth;
@@ -133,7 +132,6 @@ export class ProfilePublicComponent implements OnInit {
       this.reachedFirst = false;
       this.reachedEnd = this.articleIndex + this.articlesPerPage >= this.totalArticles;
       this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + this.articlesPerPage);
-      console.log(this.articleIndex);
     }
   }
 
@@ -148,14 +146,12 @@ export class ProfilePublicComponent implements OnInit {
       }
       this.latestArticles = this.articles.slice(this.articleIndex, this.articleIndex + this.articlesPerPage);
     }
-    console.log(this.articleIndex);
   }
 
   private getMoreEvents() {
     if (!this.loadingMore && !this.noMoreEvents) {
       this.loadingMore = true;
       this.smallLoader.show();
-      console.log(this.eventPageNum);
       this.userService.getEvents(this.slugName, ++this.eventPageNum).subscribe(
         (response) => {
           if (this.eventIndex < response.total) {
