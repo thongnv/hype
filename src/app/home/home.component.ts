@@ -43,6 +43,8 @@ export class HomeComponent implements OnInit {
   public selectedEventFilter: any;
   public selectedEventOrder: any;
   public events: any = [];
+  public offsetLength: number = 0;
+  public mapEventMarker: number[] = [];
   public neighbourhood: HyloLocation;
   public markers: any[] = [];
   public mapZoom = 12;
@@ -308,7 +310,7 @@ export class HomeComponent implements OnInit {
     }
     this.stopped = true;
     this.currentHighlightedMarker = marker.nid;
-    this.highlightMarker(marker.nid);
+    this.highlightMarker(marker.nid, 'click');
   }
 
   public selectedDate(value: any) {
@@ -433,16 +435,24 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private highlightMarker(markerId: number): void {
-    this.markers.forEach((marker, index) => {
-      if (marker.nid === markerId) {
-        this.markers[index].opacity = 1;
-        this.markers[index].isOpenInfo = true;
-      } else {
-        this.markers[index].opacity = 0.4;
-        this.markers[index].isOpenInfo = false;
-      }
-    });
+  private highlightMarker(markerId: number, type: string): void {
+    if (type === 'click') {
+      this.markers.forEach((marker, index) => {
+        if (marker.nid === markerId) {
+          this.markers[index].opacity = 1;
+          this.markers[index].isOpenInfo = true;
+        } else {
+          this.markers[index].opacity = 0.4;
+          this.markers[index].isOpenInfo = false;
+        }
+      });
+    } else {
+      console.log(this.mapEventMarker);
+      let markerIndex = this.mapEventMarker[markerId];
+      this.markers.forEach((marker, index) => {
+        this.markers[index].opacity = index === markerIndex ? 1 : 0.4;
+      });
+    }
   }
 
   private handleScroll() {
@@ -485,7 +495,7 @@ export class HomeComponent implements OnInit {
               if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
                 if (this.currentHighlightedMarker !== i) {
                   this.currentHighlightedMarker = i;
-                  this.highlightMarker(i);
+                  this.highlightMarker(i, 'scroll');
                 }
               }
             }
@@ -582,6 +592,7 @@ export class HomeComponent implements OnInit {
           draggable: true
         });
         let searchCenter = mapCenter.getPosition();
+        this.offsetLength = this.events.length - events.length;
         for (let i = 0; i < events.length; i++) {
           let latitude: any;
           let longitude: any;
@@ -614,8 +625,8 @@ export class HomeComponent implements OnInit {
             draggable: true
           });
           let distance = getDistance(latLngDistance.getPosition(), searchCenter);
-          this.events[i].distance = (distance / 1000).toFixed(1);
-
+          this.events[this.offsetLength + i].distance = (distance / 1000).toFixed(1);
+          this.mapEventMarker.push(this.offsetLength + i);
           // set icon for marker based on event type
           this.appGlobal.eventIcon.forEach((icon) => {
             if (events[i].field_categories.name === undefined) {
@@ -637,6 +648,7 @@ export class HomeComponent implements OnInit {
                   nids: [],
                   created: events[i].created || 0,
                   events: [],
+                  eventIndex: this.offsetLength + i,
                   field_event_option: events[i].field_event_option,
                   type: events[i].type
                 };
@@ -662,8 +674,10 @@ export class HomeComponent implements OnInit {
               const cond = markerI.lat === markerJ.lat && markerI.lng === markerJ.lng && markerI.nids.indexOf(markerJ.nid);
 
               if (cond) {
+                let eventIndex = markerJ.eventIndex;
                 this.markers[i].events.push(this.markers[j]);
                 this.markers[i].nids.push(this.markers[j].nid);
+                this.mapEventMarker[eventIndex] = i;
                 this.markers.splice(j, 1);
               }
             }
