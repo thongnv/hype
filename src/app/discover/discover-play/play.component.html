@@ -1,4 +1,5 @@
-<div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play" [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" >
+<div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-lg-5 col-xs-12 no-padding left-box frame_left page-play"
+     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" (window:scroll)="handleScroll($event)">
   <form [formGroup]="filterCategory" class="filterCategory">
     <div>
       <div id="btnHeadFilter" class="btn-block btn-filter-block"
