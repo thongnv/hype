@@ -148,42 +148,6 @@ export class EatComponent implements OnInit {
     this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     this.screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
-      $(window).scroll(() => {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.loadMore === false && this.endRecord === false && this.total > 10) {
-            this.loadMore = true;
-            this.params.page = this.params.page + 1;
-            this.getDataModes();
-          }
-        }
-
-        if (this.stopped) {
-          return true;
-        }
-        // index marker Highlight
-        const contentSelector = $('#v-scrollable');
-        if (contentSelector.length) {
-          let baseHeight = contentSelector[0].clientHeight;
-          let realScrollTop = $(window).scrollTop() + baseHeight;
-          let currentHeight: number = baseHeight;
-          let contentElement = contentSelector[0].children;
-          if (contentElement.length > 1) {
-            for (let i = 0; i < contentElement.length; i++) {
-              let currentClientH = contentElement[i].clientHeight;
-              currentHeight += currentClientH;
-              if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                if (this.currentHighlightedMarker !== i) {
-                  this.currentHighlightedMarker = i;
-                  this.highlightMarker(i, 'scroll');
-                }
-              }
-            }
-          }
-        }
-      });
-    });
-
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
@@ -195,6 +159,42 @@ export class EatComponent implements OnInit {
     this.appGlobal.toggleMap = true;
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.getPlaces(neighbourhood);
+    });
+  }
+
+  public handleScroll(event) {
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if (this.loadMore === false && this.endRecord === false && this.total > 10) {
+          this.loadMore = true;
+          this.params.page = this.params.page + 1;
+          this.getDataModes();
+        }
+      }
+
+      if (this.stopped) {
+        return true;
+      }
+      // index marker Highlight
+      const contentSelector = $('#v-scrollable');
+      if (contentSelector.length) {
+        let baseHeight = contentSelector[0].clientHeight;
+        let realScrollTop = $(window).scrollTop() + baseHeight;
+        let currentHeight: number = baseHeight;
+        let contentElement = contentSelector[0].children;
+        if (contentElement.length > 1) {
+          for (let i = 0; i < contentElement.length; i++) {
+            let currentClientH = contentElement[i].clientHeight;
+            currentHeight += currentClientH;
+            if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+              if (this.currentHighlightedMarker !== i) {
+                this.currentHighlightedMarker = i;
+                this.highlightMarker(i, 'scroll');
+              }
+            }
+          }
+        }
+      }
     });
   }
 

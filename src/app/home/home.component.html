@@ -1,5 +1,5 @@
 <div [class.frameHidden]="!appGlobal.isShowLeft" class="column col-sm-5 no-padding frame_left" id="main"
-     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''">
+     [style.width]="innerWidth > 1023 ? layoutWidth + 'px' : ''" (window:scroll)="handleScroll($event)">
   <div class="type-events">
     <ul [class.show-all]="!showAll" (window:resize)="onResize($event)">
       <li class="type-event-item" [class.active]="'all'==selected" (click)="onSelectEventType('all')">

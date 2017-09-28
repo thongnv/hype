@@ -456,51 +456,49 @@ export class HomeComponent implements OnInit {
 
   private handleScroll() {
     let paramsUrl = this.location.path().split('/');
-    $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
-      $(window).scroll(() => {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.selectedEventOrder === 'top 100') {
-            if (this.loadMore === false && this.endRecord === false) {
-              if (this.events.length > 10) {
-                this.loadMore = true;
-                this.smallLoader.show();
-                this.params.start += 20;
-                this.params.page ++;
-                this.getTrendingEvents();
-              }
-            }
-          } else {
-            if (this.loadMore === false && this.endRecord === false) {
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if (this.selectedEventOrder === 'top 100') {
+          if (this.loadMore === false && this.endRecord === false) {
+            if (this.events.length > 10) {
               this.loadMore = true;
               this.smallLoader.show();
-              this.params.page++;
+              this.params.start += 20;
+              this.params.page ++;
               this.getTrendingEvents();
             }
           }
+        } else {
+          if (this.loadMore === false && this.endRecord === false) {
+            this.loadMore = true;
+            this.smallLoader.show();
+            this.params.page++;
+            this.getTrendingEvents();
+          }
         }
-        if (this.stopped) {
-          return false;
-        }
-        let scrollElements = $('#v-scrollable');
-        if (paramsUrl[1] === 'home' && scrollElements.length) {
-          let baseHeight = scrollElements[0].clientHeight;
-          let realScrollTop = $(window).scrollTop() + baseHeight;
-          let currentHeight: number = baseHeight;
-          let contentElement = scrollElements[0].children;
-          if (contentElement.length > 1) {
-            for (let i = 0; i < contentElement.length; i++) {
-              let currentClientH = contentElement[i].clientHeight;
-              currentHeight += currentClientH;
-              if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
-                if (this.currentHighlightedMarker !== i) {
-                  this.currentHighlightedMarker = i;
-                  this.highlightMarker(i, 'scroll');
-                }
+      }
+      if (this.stopped) {
+        return false;
+      }
+      let scrollElements = $('#v-scrollable');
+      if (paramsUrl[1] === 'home' && scrollElements.length) {
+        let baseHeight = scrollElements[0].clientHeight;
+        let realScrollTop = $(window).scrollTop() + baseHeight;
+        let currentHeight: number = baseHeight;
+        let contentElement = scrollElements[0].children;
+        if (contentElement.length > 1) {
+          for (let i = 0; i < contentElement.length; i++) {
+            let currentClientH = contentElement[i].clientHeight;
+            currentHeight += currentClientH;
+            if (realScrollTop <= currentHeight && currentHeight - currentClientH <= realScrollTop) {
+              if (this.currentHighlightedMarker !== i) {
+                this.currentHighlightedMarker = i;
+                this.highlightMarker(i, 'scroll');
               }
             }
           }
         }
-      });
+      }
     });
   }
 

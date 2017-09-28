@@ -152,36 +152,6 @@ export class PlayComponent implements OnInit {
       this.filterData = resp.play;
     });
 
-    $('body').bind('DOMMouseScroll mousewheel touchmove', () => {
-      $(window).scroll(() => {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-          if (this.loadMore === false && this.endRecord === false) {
-            this.loadMore = true;
-            this.params.page = this.params.page + 1;
-            this.getDataModes(this.params);
-          }
-        }
-        if (this.stopped) {
-          return;
-        }
-        const container = $('#v-scrollable')[0];
-        if (container) {
-          let currentHeight = container.clientHeight;
-          let top = $(window).scrollTop() + currentHeight;
-          let items = container.children;
-          for (let i = 0, x = items.length; i < x; i++) {
-            const currentClientH = items[i].clientHeight;
-            currentHeight += currentClientH;
-            if (currentHeight >= top && currentHeight - currentClientH <= top) {
-              this.markers.forEach((marker, index) => {
-                this.markers[index].opacity = index === i ? 1 : 0.4;
-              });
-            }
-          }
-        }
-      });
-    });
-
     if (this.innerWidth <= 900) {
       this.appGlobal.isShowLeft = true;
       this.appGlobal.isShowRight = false;
@@ -196,6 +166,36 @@ export class PlayComponent implements OnInit {
       window.scroll(0, 0);
       this.params.page = 0;
       this.getPlaces(neighbourhood);
+    });
+  }
+
+  public handleScroll(event) {
+    $(window).scroll(() => {
+      if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
+        if (this.loadMore === false && this.endRecord === false) {
+          this.loadMore = true;
+          this.params.page = this.params.page + 1;
+          this.getDataModes(this.params);
+        }
+      }
+      if (this.stopped) {
+        return;
+      }
+      const container = $('#v-scrollable')[0];
+      if (container) {
+        let currentHeight = container.clientHeight;
+        let top = $(window).scrollTop() + currentHeight;
+        let items = container.children;
+        for (let i = 0, x = items.length; i < x; i++) {
+          const currentClientH = items[i].clientHeight;
+          currentHeight += currentClientH;
+          if (currentHeight >= top && currentHeight - currentClientH <= top) {
+            this.markers.forEach((marker, index) => {
+              this.markers[index].opacity = index === i ? 1 : 0.4;
+            });
+          }
+        }
+      }
     });
   }
 
