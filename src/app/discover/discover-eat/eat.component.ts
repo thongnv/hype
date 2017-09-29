@@ -93,6 +93,7 @@ export class EatComponent implements OnInit {
     limit: 20
   };
   private zoomChanged = false;
+  private neighbourhoodChanged = false;
 
   private boundPosition = {lat: '', lng: ''};
 
@@ -158,6 +159,7 @@ export class EatComponent implements OnInit {
 
     this.appGlobal.toggleMap = true;
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
+      this.neighbourhoodChanged = true;
       this.getPlaces(neighbourhood);
     });
   }
@@ -549,7 +551,7 @@ export class EatComponent implements OnInit {
   public boundsChange(event) {
     this.boundPosition.lat = event.getNorthEast().lat();
     this.boundPosition.lng = event.getNorthEast().lng();
-    if (this.zoomChanged) {
+    if (this.zoomChanged && !this.neighbourhoodChanged) {
       this.items = [];
       this.markers = [];
       this.mapsAPILoader.load().then(() => {
@@ -572,7 +574,6 @@ export class EatComponent implements OnInit {
         } else {
           this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
         }
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
         this.shownotfound = false;
         this.getDataModes();
       });
@@ -597,13 +598,11 @@ export class EatComponent implements OnInit {
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
-      let searchCenter = mapCenter.getPosition();
-      let distance: any = getDistance(latLngNew.getPosition(), searchCenter);
       this.zoomChanged = false;
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.params.radius = 2.5;
       this.getDataModes();
     });
   }
@@ -695,6 +694,7 @@ export class EatComponent implements OnInit {
         this.shownotfound = data.total === 0;
         this.endRecord = data.company.length === 0;
         this.loadMore = false;
+        this.neighbourhoodChanged = false;
         this.initMap(data.company);
         this.loaderService.hide();
         this.smallLoader.hide();

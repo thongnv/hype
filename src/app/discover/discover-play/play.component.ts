@@ -110,6 +110,7 @@ export class PlayComponent implements OnInit {
   private params = DEFAULT_PARAMS;
   private requests = [];
   private zoomChanged = false;
+  private neighbourhoodChanged = false;
   private boundPosition = {lat: '', lng: ''};
 
   public constructor(private titleService: Title,
@@ -162,6 +163,7 @@ export class PlayComponent implements OnInit {
     this.appGlobal.toggleMap = true;
 
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
+      this.neighbourhoodChanged = true;
       this.neighbourhood = neighbourhood;
       window.scroll(0, 0);
       this.params.page = 0;
@@ -209,7 +211,7 @@ export class PlayComponent implements OnInit {
     this.markers = [];
     this.boundPosition.lat = event.getNorthEast().lat();
     this.boundPosition.lng = event.getNorthEast().lng();
-    if (this.zoomChanged) {
+    if (this.zoomChanged && !this.neighbourhoodChanged) {
       this.mapsAPILoader.load().then(() => {
         let northEastPosition = new google.maps.Marker({
           position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
@@ -225,7 +227,11 @@ export class PlayComponent implements OnInit {
         this.params.lat = this.lat;
         this.params.long = this.lng;
         this.params.page = 0;
-        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        if (this.params.radius < 0.25) {
+          this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        } else {
+          this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+        }
         this.getDataModes(this.params);
       });
     }
@@ -560,11 +566,9 @@ export class PlayComponent implements OnInit {
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
-      let searchCenter = mapCenter.getPosition();
-      let distance = getDistance(latLngNew.getPosition(), searchCenter);
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      this.params.radius = 2.5;
       this.getDataModes(this.params);
     });
   }
@@ -593,6 +597,7 @@ export class PlayComponent implements OnInit {
         this.showNotFound = data.total === 0;
         this.endRecord = data.company.length === 0;
         this.loadMore = false;
+        this.neighbourhoodChanged = false;
         this.initMap(data.company);
         this.loaderService.hide();
         this.smallLoader.hide();

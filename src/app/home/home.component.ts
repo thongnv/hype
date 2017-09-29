@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit {
 
   private stopped: boolean = false;
   private zoomChanged: boolean = false;
+  private neighbourhoodChanged = false;
   private loadMore: boolean = false;
   private total: any;
   private boundsChangeDefault: any = {lat: any, lng: any};
@@ -139,6 +140,7 @@ export class HomeComponent implements OnInit {
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
       if (this.params.latest) {
+        this.neighbourhoodChanged = true;
         this.loading = true;
         window.scroll(0, 0);
         this.getEvents(this.neighbourhood);
@@ -375,7 +377,7 @@ export class HomeComponent implements OnInit {
     this.boundsChangeDefault.lat = event.getNorthEast().lat();
     this.boundsChangeDefault.lng = event.getNorthEast().lng();
     if (this.selectedEventOrder === 'latest') {
-      if (!this.zoomChanged) {
+      if (!this.zoomChanged && !this.neighbourhoodChanged) {
         this.mapsAPILoader.load().then(() => {
           let latLngNew = new google.maps.Marker({
             position: new google.maps.LatLng(event.getNorthEast().lat(), event.getNorthEast().lng()),
@@ -544,6 +546,7 @@ export class HomeComponent implements OnInit {
         this.loadMore = false;
         this.smallLoader.hide();
         this.loading = false;
+        this.neighbourhoodChanged = false;
       }
     );
     this.requests.push(request);
@@ -575,8 +578,11 @@ export class HomeComponent implements OnInit {
       this.zoomChanged = true;
       this.params.lat = this.lat;
       this.params.long = this.lng;
+      this.params.radius = 2.5;
+      this.events = [];
+      this.markers = [];
+      this.showNotFound = false;
       this.params.page = 0;
-      this.params.radius = parseFloat((distance / 1000).toFixed(2));
       this.getLatestEvents(this.params);
     });
   }
