@@ -25,16 +25,24 @@ export class SearchComponent implements OnInit {
 
   constructor(public fb: FormBuilder,
               private mainService: MainService,
+              private _elRef: ElementRef,
               private windowRefService: WindowRefService,
               private router: Router) {
   }
 
   @HostListener('document:click', ['$event'])
 
+  public onClick(event) {
+    if (!this._elRef.nativeElement.contains(event.target)) {
+      this.hideSearchResult = true;
+    }
+  }
+
   public ngOnInit() {
     this.searchForm = this.fb.group({
       keyword: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
     });
+    this.hideSearchResult = true;
   }
 
   public onSubmit(event, keyword?: string) {
@@ -43,16 +51,7 @@ export class SearchComponent implements OnInit {
       this.searchToken = keyword.trim();
     }
     let keywords = this.searchToken;
-    if (event.type === 'submit' || event.code === 'Enter') {
-      const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
-      if (isSearchResultPage) {
-        // component does not reload when keywords changes
-        this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
-      } else {
-        this.router.navigate([this.searchRoute], {queryParams: {keywords}}).then();
-      }
-      this.hideSearchResult = true;
-    }
+
     if (keywords.length >= 3) {
       this.mainService.search(keywords).subscribe((resp) => {
         this.result = resp;
@@ -68,6 +67,21 @@ export class SearchComponent implements OnInit {
       this.result = {};
       this.hideNoResult = false;
     }
+
+    if (event.type === 'submit' || event.code === 'Enter') {
+      const isSearchResultPage = this.router.url.startsWith(this.searchRoute);
+      if (isSearchResultPage) {
+        // component does not reload when keywords changes
+        this.windowRefService.nativeWindow.location = `/search?keywords=${keywords}`;
+      } else {
+        this.router.navigate([this.searchRoute], {queryParams: {keywords}}).then();
+      }
+      this.hideSearchResult = true;
+    }
+  }
+
+  public onCloseSuggestion() {
+    this.hideSearchResult = true;
   }
 
 }
