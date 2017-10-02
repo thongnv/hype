@@ -622,9 +622,6 @@ export class EatComponent implements OnInit {
       } else {
         this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
       }
-
-      this.params.radius = this.params.radius > 2.2 ? 2.2 : this.params.radius;
-
       this.getDataModes();
     });
   }
