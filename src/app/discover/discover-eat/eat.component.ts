@@ -46,6 +46,10 @@ export class EatComponent implements OnInit {
   public mapZoom: number = 12;
   public lat: number = AppSetting.SingaporeLatLng.lat;
   public lng: number = AppSetting.SingaporeLatLng.lng;
+  public userLatLng = {
+    lat : this.lat,
+    lng : this.lng
+  };
   public showAll: boolean = true;
   public showTab: boolean = true;
   public showCircle: boolean = true;
@@ -158,6 +162,9 @@ export class EatComponent implements OnInit {
     }
 
     this.appGlobal.toggleMap = true;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.neighbourhoodChanged = true;
       this.getPlaces(neighbourhood);
@@ -583,10 +590,10 @@ export class EatComponent implements OnInit {
   private getPlaces(neighbourhood) {
     this.items = [];
     this.markers = [];
-    this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 15;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
+    this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 14;
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    // }
     this.lat = neighbourhood.lat;
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
@@ -594,15 +601,30 @@ export class EatComponent implements OnInit {
         position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
         draggable: true
       });
+
       let mapCenter = new google.maps.Marker({
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
+
+      let mapUserCenter = new google.maps.Marker({
+        position: new google.maps.LatLng(this.userLatLng.lat, this.userLatLng.lng),
+        draggable: true
+      });
+      let searchCenter = mapCenter.getPosition();
+      let distance: any = getDistance(searchCenter, latLngNew.getPosition());
       this.zoomChanged = false;
       this.params.lat = this.lat;
       this.params.long = this.lng;
       this.params.page = 0;
-      this.params.radius = 2.5;
+      if (this.params.radius < 0.25) {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      } else {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+      }
+
+      this.params.radius = this.params.radius > 2.2 ? 2.2 : this.params.radius;
+
       this.getDataModes();
     });
   }
@@ -671,11 +693,10 @@ export class EatComponent implements OnInit {
 
   private setPosition(position) {
     if (position.coords) {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
+      this.lat = this.userLatLng.lat = position.coords.latitude;
+      this.lng = this.userLatLng.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.getDataModes();
     }
   }
 

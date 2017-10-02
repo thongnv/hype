@@ -91,6 +91,10 @@ export class PlayComponent implements OnInit {
   public mapZoom = 12;
   public lat = AppSetting.SingaporeLatLng.lat;
   public lng = AppSetting.SingaporeLatLng.lng;
+  public userLatLng = {
+    lat : this.lat,
+    lng : this.lng
+  };
   public currentRadius = 5000;
 
   public screenWidth: number;
@@ -161,7 +165,9 @@ export class PlayComponent implements OnInit {
       this.appGlobal.isShowRight = true;
     }
     this.appGlobal.toggleMap = true;
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
     this.appGlobal.neighbourhoodStorage.subscribe((neighbourhood) => {
       this.neighbourhoodChanged = true;
       this.neighbourhood = neighbourhood;
@@ -550,10 +556,10 @@ export class PlayComponent implements OnInit {
       this.places = [];
       this.markers = [];
     }
-    this.mapZoom = this.neighbourhood.name === 'Singapore' ? 12 : 15;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
+    this.mapZoom = this.neighbourhood.name === 'Singapore' ? 12 : 14;
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    // }
     this.lat = neighbourhood.lat;
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
@@ -566,20 +572,27 @@ export class PlayComponent implements OnInit {
         position: new google.maps.LatLng(this.lat, this.lng),
         draggable: true
       });
+      let searchCenter = mapCenter.getPosition();
+      let distance: any = getDistance(searchCenter, latLngNew.getPosition());
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = 2.5;
+      if (this.params.radius < 0.25) {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      } else {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+      }
+
+      this.params.radius = this.params.radius > 2.2 ? 2.2 : this.params.radius;
       this.getDataModes(this.params);
     });
   }
 
   private setPosition(position) {
     if (position.coords) {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
+      this.lat = this.userLatLng.lat = position.coords.latitude;
+      this.lng = this.userLatLng.lat = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.getDataModes(this.params);
     }
   }
 

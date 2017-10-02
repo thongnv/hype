@@ -50,6 +50,10 @@ export class HomeComponent implements OnInit {
   public mapZoom = 12;
   public lat = AppSetting.SingaporeLatLng.lat;
   public lng = AppSetting.SingaporeLatLng.lng;
+  public userLatLng = {
+    lat : this.lat,
+    lng : this.lng
+  };
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
@@ -217,8 +221,8 @@ export class HomeComponent implements OnInit {
 
   public setPosition(position) {
     if (position.coords) {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
+      this.lat = this.userLatLng.lat = position.coords.latitude;
+      this.lng = this.userLatLng.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
     }
@@ -554,14 +558,10 @@ export class HomeComponent implements OnInit {
 
   private getEvents(neighbourhood) {
     this.loading = true;
-    if (neighbourhood.name !== 'Singapore') {
-      this.mapZoom = 15;
-    } else {
-      this.mapZoom = 12;
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
+    this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 14;
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    // }
     this.lat = neighbourhood.lat;
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
@@ -578,7 +578,12 @@ export class HomeComponent implements OnInit {
       this.zoomChanged = true;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = 2.5;
+      if (this.params.radius < 0.25) {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2));
+      } else {
+        this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+      }
+      this.params.radius = this.params.radius > 2.2 ? 2.2 : this.params.radius;
       this.events = [];
       this.markers = [];
       this.showNotFound = false;
@@ -591,7 +596,7 @@ export class HomeComponent implements OnInit {
     this.currentHighlightedMarker = 0;
     this.mapsAPILoader.load().then(() => {
         let mapCenter = new google.maps.Marker({
-          position: new google.maps.LatLng(this.lat, this.lng),
+          position: new google.maps.LatLng(this.userLatLng, this.userLatLng),
           draggable: true
         });
         let searchCenter = mapCenter.getPosition();
