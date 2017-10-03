@@ -564,7 +564,7 @@ export class PlayComponent implements OnInit {
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
       let latLngNew = new google.maps.Marker({
-        position: new google.maps.LatLng(this.lat, this.lng),
+        position: new google.maps.LatLng(this.boundPosition.lat, this.boundPosition.lng),
         draggable: true
       });
       this.zoomChanged = false;
