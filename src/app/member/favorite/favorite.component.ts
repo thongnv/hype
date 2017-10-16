@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../services/main.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppSetting } from '../../app.setting';
 import { SmallLoaderService } from '../../helper/small-loader/small-loader.service';
@@ -57,6 +57,7 @@ export class FavoriteComponent implements OnInit {
   public constructor(private mainService: MainService,
                      private userService: UserService,
                      private route: ActivatedRoute,
+                     private router: Router,
                      private localStorageService: LocalStorageService,
                      private smallLoader: SmallLoaderService,
                      private notificationsService: NotificationsService,
@@ -71,6 +72,9 @@ export class FavoriteComponent implements OnInit {
     let user = this.localStorageService.get('user') as User;
     if (user) {
       this.user = user;
+    } else {
+      this.router.navigate(['login']).then();
+      return;
     }
     this.user.showNav = true;
     this.layoutWidth = (this.windowRef.rootContainer.width - 80);
