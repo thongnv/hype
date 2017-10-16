@@ -559,7 +559,7 @@ button.btn.btn-default.active {
 .information-title .real-title {
   font-size: 18px;
   width: calc(100% - 85px);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .detail-information {
@@ -778,6 +778,7 @@ ul.mentioned-item {
 
 .bottom-content .pull-right .list-inline {
   margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .list-inline > li {

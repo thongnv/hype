@@ -26,7 +26,7 @@
 
     <div class="marker-info">
       <img src="{{m.avatar}}">
-      <h4><a [href]="m.link">{{m.label}}</a></h4>
+      <h4><a [href]="m.link">{{m.label | truncate : 50}}</a></h4>
       <p class="event-date" *ngIf="m.type === 'event'">
         <span>{{m.field_event_option?.field_start_date_time | amFromUnix | date:'dd MMM y'}}</span> -
         <span>{{m.field_event_option?.field_end_date_time | amFromUnix | date:'dd MMM y'}}</span>

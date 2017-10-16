@@ -442,6 +442,7 @@ nouislider.ng2-nouislider {
 .itemSort {
     border: none;
     padding: 10px 15px;
+  margin: 0;
 }
 
 .itemSort li.type {
