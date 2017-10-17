@@ -718,10 +718,14 @@ function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  let categoryWidth = 80;
+  let categoryWidth = 60;
   const borderWidth = 15;
   let dotWidth = 45;
+  if (screenWidth <= 320) {
+    categoryWidth = 52;
+  }
   if (screenWidth > 992) {
+    categoryWidth = 80;
     dotWidth = 60;
     containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {

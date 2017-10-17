@@ -79,9 +79,9 @@ ul.list-category li.active {
   border-bottom: 1px solid #eaeaea;
 }
 
-.primary-content > h4 {
+.head {
+  font-size: 27px;
   font-weight: bold;
-  margin: 40px 0 20px 0;
   clear: both;
 }
 
@@ -385,9 +385,8 @@ app-place-image{
 }
 
 @media only screen and (min-width: 769px) {
-  .primary-content h4.head {
-    padding: 15px;
-    margin: 20px 0 20px;
+  .head {
+    padding: 25px;
   }
 
   .title-trending {
@@ -411,7 +410,7 @@ app-place-image{
 }
 
 @media only screen and (min-width: 320px) and (max-width: 374px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
   }
@@ -436,7 +435,7 @@ app-place-image{
 }
 
 @media only screen and (min-width: 320px) and (max-width: 543px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
     font-size: 24px !important;
@@ -499,7 +498,7 @@ app-place-image{
 }
 
 @media only screen and (min-width: 545px) and (max-width: 767px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
   }

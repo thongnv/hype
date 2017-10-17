@@ -324,22 +324,11 @@ button.btn.btn-default.active {
   font-weight: bold;
 }
 
-.information-title {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 18px;
-  height: 18px;
-  line-height: 18px;
-  margin-bottom: 14px;
-  cursor: pointer;
-}
-
 .information-title .real-title {
   font-size: 18px;
 }
 
 .information-title .real-title, .detail-information {
-  width: calc(100% - 65px);
   overflow: hidden;
   line-height: 23px;
 }
@@ -476,6 +465,8 @@ button.btn.btn-default.active {
   font-size: 12px;
   float: left;
   clear: both;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /*
@@ -550,16 +541,8 @@ button.btn.btn-default.active {
 .information-title {
   font-weight: bold;
   font-size: 18px;
-  height: 20px;
   line-height: 18px;
-  margin-bottom: 14px;
-  margin-top: 0;
-}
-
-.information-title .real-title {
-  font-size: 18px;
-  width: calc(100% - 85px);
-  margin-bottom: 14px;
+  height: auto;
 }
 
 .detail-information {
@@ -567,7 +550,7 @@ button.btn.btn-default.active {
   height: 40px;
   line-height: 20px;
   overflow: hidden;
-  margin-top: 10px;
+  margin: 0;
   float: left;
   clear: both;
   width: 100%;
@@ -778,6 +761,7 @@ ul.mentioned-item {
 
 .bottom-content .pull-right .list-inline {
   margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .list-inline > li {
@@ -1058,16 +1042,12 @@ ul.mentioned-item {
 @media only screen and (max-width: 800px) {
 
   .wrap-each-items {
-    padding: 15px;
+    padding: 10px;
   }
 
   .home-page {
     width: 100%;
     margin: 0;
-  }
-
-  .detail-information {
-    margin-bottom: 5px;
   }
 
   .mentioned-item {
@@ -1153,6 +1133,19 @@ ul.mentioned-item {
     padding: 5px 0 0;
   }
 
+  .type-events ul{
+    padding: 0;
+  }
+
+  .type-events .type-event-item {
+    height: 60px;
+    width: 67px;
+  }
+
+  .information-title .real-title {
+    margin-bottom: 3px;
+  }
+
   .btn-default {
     width: auto;
   }
@@ -1214,6 +1207,11 @@ ul.mentioned-item {
 }
 
 @media only screen and (max-width: 380px) {
+  .type-events .type-event-item {
+    height: 60px;
+    width: 61px;
+  }
+
   #timeFilter {
     width: 65%;
   }
@@ -1237,6 +1235,11 @@ ul.mentioned-item {
 }
 
 @media only screen and (max-width: 320px) {
+
+  .type-events .type-event-item {
+    width: 52px;
+  }
+
   .btn {
     padding: 2px;
     font-size: 11px;
@@ -1259,8 +1262,6 @@ ul.mentioned-item {
   .wrap-search-input {
     width: 100% !important;
   }
-
-  .tags{ clear: both;}
 
   .avatar-profile {
     margin-top: 5px !important;
