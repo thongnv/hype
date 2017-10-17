@@ -41,14 +41,6 @@
   border-radius: 5px;
 }
 
-.margin-bottom-5px {
-  margin-bottom: 5px;
-}
-
-.margin-right-8px {
-  margin-right: 8px;
-}
-
 .box-shadow {
   box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
@@ -76,10 +68,6 @@
 
 .align-self-center {
   margin: 0 auto;
-}
-
-.margin-0 {
-  margin: 0;
 }
 
 .margin-top-30px {
@@ -208,10 +196,6 @@ span.time-posts {
 
 .content-post-news {
   clear: both;
-}
-
-.padding-0 {
-  padding: 0;
 }
 
 .new-info {

@@ -248,20 +248,15 @@ ul.itemSort li a i {
 
 .avatar .heart-icon {
     position: absolute;
-    /*top: 5px;*/
-    right: 0px;
+    top: 10px;
+    right: 0;
 }
-
-/*.avatar .heart-icon i {*/
-/*color: #fff;*/
-/*transform: scale(0.5);*/
-/*}*/
 
 .list-items {
     display: block;
     background: white;
     font-size: 1em;
-    height: 130px;
+    height: 100px;
     line-height: 1.2em;
 }
 
@@ -282,7 +277,7 @@ ul.itemSort li a i {
 }
 
 .items {
-    padding: 7px;
+    padding: 10px;
     border-bottom: 1px solid #d1dadf;
     position: relative;
 }
@@ -290,8 +285,7 @@ ul.itemSort li a i {
 .item-content {
     display: inline-block;
     padding: 5px;
-    vertical-align: middle;
-    margin-top: 10px;
+    vertical-align: top;
     margin-left: 15px;
     width: calc(100% - 115px);
 }
@@ -639,7 +633,36 @@ select.form-control-static::-ms-expand {
     padding: 0;
 }
 
+@media only screen and (max-width: 420px) {
+  .filterCategory .btn-filter-block label {
+    width: 65px;
+  }
+}
 
+@media only screen and (max-width: 380px) {
+  .filterCategory .btn-filter-block label {
+    width: 55px;
+  }
+}
+
+/* iPhone 6 */
+@media only screen and (max-width: 375px) {
+  .filterCategory .btn-filter-block label {
+    width: 59px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .filterCategory .btn-filter-block label {
+    width: 57px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .filterCategory .btn-filter-block label {
+    width: 49px;
+  }
+}
 
 @media only screen and (max-width: 800px) {
     .filterCategory .btn-filter-block label {
@@ -686,7 +709,7 @@ select.form-control-static::-ms-expand {
     .list-items .item-content {
         display: table-cell;
         float: none;
-        padding-left: 20px;
+        padding-left: 10px;
     }
 
     .item-content .distance {
@@ -696,8 +719,8 @@ select.form-control-static::-ms-expand {
     }
 
   .filterCategory{
-    margin-left: 0px;
-    padding-left: 15px;
+    margin-left: 0;
+    padding-left: 8px;
   }
   .filterCategory .btn-filter-block label img{
     width: 30px!important; height: 30px!important;
@@ -707,22 +730,19 @@ select.form-control-static::-ms-expand {
 
 @media only screen and (min-width: 544px) and (max-width: 767px) {
 
-    .list-items {
-        height: auto;
-    }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 543px) {
 
-    .list-items {
-        height: auto;
-    }
-
     .item-content .review {
-        margin-left: 0px;
+        margin-left: 0;
         display: block;
         padding-top: 10px;
     }
+
+  .avatar img {
+    height: 100px !important;
+  }
 }
 
 @media only screen and (min-width: 1200px) {

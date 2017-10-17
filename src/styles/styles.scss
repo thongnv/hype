@@ -76,6 +76,14 @@ body, html {
   margin-right: 0 !important;
 }
 
+.padding-0 {
+  padding: 0 !important;
+}
+
+.margin-0 {
+  margin: 0 !important;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -131,6 +139,14 @@ body, html {
 
 .btn-group .btn + .btn {
   margin-left: 0 !important;
+}
+
+.margin-bottom-5px {
+  margin-bottom: 5px;
+}
+
+.margin-right-8px {
+  margin-right: 8px;
 }
 
 .hype {
