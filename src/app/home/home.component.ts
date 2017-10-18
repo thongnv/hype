@@ -232,28 +232,21 @@ export class HomeComponent implements OnInit {
   }
 
   public onSelectEventType(event): void {
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
     if (event === 'all') {
       this.selected = 'all';
       this.params.tid = '';
-      this.categories.forEach((category, index) => {
-        this.categories[index].selected = false;
-      });
     } else {
-      if (event.selected) {
-        event.selected = false;
-        let index = this.eventCate.indexOf(event.tid);
-        this.eventCate.splice(index, 1);
-      } else {
-        event.selected = true;
-        this.eventCate.push(event.tid);
-      }
+      event.selected = true;
+      this.eventCate = [event.tid];
       this.selected = event.tid;
-      this.params.tid = this.eventCate.join(',');
+      this.params.tid = event.tid;
     }
     this.markers = [];
     this.events = [];
     this.params.page = 0;
-    this.smallLoader.show();
     this.getTrendingEvents();
   }
 

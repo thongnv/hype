@@ -226,30 +226,16 @@ export class EatComponent implements OnInit {
   }
 
   public changeCategory(item) {
-    switch (item) {
-      case 'all':
-        this.categories.forEach((category, index) => {
-          this.categories[index].selected = false;
-        });
-        this.selected = 'all';
-        this.params.kind = '';
-        this.categorySelected = [];
-        break;
-      default:
-        this.selected = '';
-        if (item.selected) {
-          item.selected = false;
-          let index = this.categorySelected.indexOf(item.name);
-          this.categorySelected.splice(index, 1);
-        } else {
-          item.selected = true;
-          this.categorySelected.push(item.name);
-        }
-        this.params.kind = this.categorySelected.join(',');
-        break;
-    }
-    if (this.categorySelected.length === 0) {
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
+    if (item === 'all') {
       this.selected = 'all';
+      this.params.kind = '';
+    } else {
+      this.selected = '';
+      item.selected = true;
+      this.params.kind = item.name;
     }
     this.params.limit = 20;
     this.params.page = 0;
