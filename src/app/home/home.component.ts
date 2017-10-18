@@ -595,32 +595,20 @@ export class HomeComponent implements OnInit {
         let searchCenter = mapCenter.getPosition();
         this.offsetLength = this.events.length - events.length;
         for (let i = 0; i < events.length; i++) {
+          let event = events[i];
+          if (event.type !== 'event') {
+            continue;
+          }
           let latitude: any;
           let longitude: any;
 
-          if (events[i].type === 'event') {
-            if (typeof events[i].field_location_place.field_latitude !== null) {
-              latitude = events[i].field_location_place.field_latitude;
-            }
-
-            if (typeof events[i].field_location_place.field_longitude !== null) {
-              longitude = events[i].field_location_place.field_longitude;
-            }
+          if (typeof event.field_location_place.field_latitude !== null) {
+            latitude = event.field_location_place.field_latitude;
           }
 
-          if (events[i].type === 'article') {
-            if (events[i].field_location_place.length > 0) {
-
-              if (typeof events[i].field_location_place[0].field_latitude !== null) {
-                latitude = events[i].field_location_place[0].field_latitude;
-              }
-
-              if (typeof events[i].field_location_place[0].field_longitude !== null) {
-                longitude = events[i].field_location_place[0].field_longitude;
-              }
-            }
+          if (typeof event.field_location_place.field_longitude !== null) {
+            longitude = event.field_location_place.field_longitude;
           }
-
           let latLngDistance = new google.maps.Marker({
             position: new google.maps.LatLng(latitude, longitude),
             draggable: true
@@ -630,34 +618,34 @@ export class HomeComponent implements OnInit {
           this.mapEventMarker.push(this.offsetLength + i);
           // set icon for marker based on event type
           this.appGlobal.eventIcon.forEach((icon) => {
-            if (events[i].field_categories.name === undefined) {
-              events[i].field_categories.name = 'default';
+            if (event.field_categories.name === undefined) {
+              event.field_categories.name = 'default';
             }
-            if (events[i].field_categories.name) {
-              if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
+            if (event.field_categories.name) {
+              if (event.field_categories.name.toLocaleLowerCase() === icon.name) {
                 let marker = {
                   lat: latitude,
                   lng: longitude,
-                  label: events[i].title,
+                  label: event.title,
                   isOpenInfo: false,
-                  nid: events[i].nid,
-                  avatar: events[i].field_images[0],
-                  link: events[i].alias,
+                  nid: event.nid,
+                  avatar: event.field_images[0],
+                  link: event.alias,
                   icon: icon.url,
                   opacity: 0.4,
                   price: [],
                   nids: [],
-                  created: events[i].created || 0,
+                  created: event.created || 0,
                   events: [],
                   eventIndex: this.offsetLength + i,
-                  field_event_option: events[i].field_event_option,
-                  type: events[i].type
+                  field_event_option: event.field_event_option,
+                  type: event.type
                 };
                 if (i === 0) {
                   marker.opacity = 1;
                 }
-                if (events[i].field_event_option.field_price) {
-                  marker.price = events[i].field_event_option.field_price;
+                if (event.field_event_option.field_price) {
+                  marker.price = event.field_event_option.field_price;
                 }
                 this.markers.push(marker);
               }
