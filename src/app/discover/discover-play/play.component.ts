@@ -272,26 +272,17 @@ export class PlayComponent implements OnInit {
   }
 
   public changeCategory(item) {
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
     if (item === 'all') {
-      this.categories.forEach((category, index) => {
-        this.categories[index].selected = false;
-      });
       this.selected = 'all';
       this.params.kind = '';
       this.selectedCategories = [];
     } else {
       this.selected = '';
-      if (item.selected) {
-        item.selected = false;
-        let index = this.selectedCategories.indexOf(item.name);
-        this.selectedCategories.splice(index, 1);
-      } else {
-        item.selected = true;
-        this.selectedCategories.push(item.name);
-      }
-      if (this.selectedCategories.length === 0) {
-        this.selected = 'all';
-      }
+      item.selected = true;
+      this.selectedCategories = item.name;
       this.params.kind = this.selectedCategories.join(',');
     }
     this.params.limit = 20;
