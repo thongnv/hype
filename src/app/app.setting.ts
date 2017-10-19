@@ -10,8 +10,8 @@ if (_ENV === 'development') {
 }
 
 if (_ENV === 'production') {
-  API_ENDPOINT = 'https://api-hl.iypuat.com/';
-  NODE_JS = 'https://hylo2.iypuat.com:8080';
+  API_ENDPOINT = 'https://admin.hylo.sg/';
+  NODE_JS = 'https://notifications.hylo.sg/api/v1/notification';
 }
 
 export class AppSetting {
