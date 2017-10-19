@@ -1,5 +1,5 @@
 import { HyloLocation, User } from './app.interface';
-let _ENV = process.env.NODE_ENV || process.env.ENV || 'product';
+let _ENV = process.env.NODE_ENV || process.env.ENV;
 let PAGE_SIZE = 10;
 let API_ENDPOINT = '';
 let NODE_JS = '';
@@ -7,12 +7,11 @@ let NODE_JS = '';
 if (_ENV === 'development') {
   API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
   NODE_JS = 'http://192.168.35.56:9696';
-} else {
-  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
-  NODE_JS = 'http://192.168.35.56:9696';
+}
 
-  // API_ENDPOINT = 'https://api-hl.iypuat.com/';
-  // NODE_JS = 'https://hylo2.iypuat.com:8080';
+if (_ENV === 'production') {
+  API_ENDPOINT = 'https://api-hl.iypuat.com/';
+  NODE_JS = 'https://hylo2.iypuat.com:8080';
 }
 
 export class AppSetting {
