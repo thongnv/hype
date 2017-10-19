@@ -11,7 +11,7 @@ if (_ENV === 'development') {
 
 if (_ENV === 'production') {
   API_ENDPOINT = 'https://admin.hylo.sg/';
-  NODE_JS = 'https://notifications.hylo.sg/api/v1/notification';
+  NODE_JS = 'https://notifications.hylo.sg';
 }
 
 export class AppSetting {
