@@ -6,7 +6,6 @@ deploy:
     - git checkout staging
     - git pull origin staging
     - npm i
-    - npm run build:prod
+    - npm run build:dev
   only:
   - staging
-
