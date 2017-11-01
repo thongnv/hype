@@ -233,30 +233,16 @@ export class EatComponent implements OnInit {
   }
 
   public changeCategory(item) {
-    switch (item) {
-      case 'all':
-        this.categories.forEach((category, index) => {
-          this.categories[index].selected = false;
-        });
-        this.selected = 'all';
-        this.params.kind = '';
-        this.categorySelected = [];
-        break;
-      default:
-        this.selected = '';
-        if (item.selected) {
-          item.selected = false;
-          let index = this.categorySelected.indexOf(item.name);
-          this.categorySelected.splice(index, 1);
-        } else {
-          item.selected = true;
-          this.categorySelected.push(item.name);
-        }
-        this.params.kind = this.categorySelected.join(',');
-        break;
-    }
-    if (this.categorySelected.length === 0) {
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
+    if (item === 'all') {
       this.selected = 'all';
+      this.params.kind = '';
+    } else {
+      this.selected = '';
+      item.selected = true;
+      this.params.kind = item.name;
     }
     this.params.limit = 20;
     this.params.page = 0;
@@ -800,10 +786,14 @@ function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  let categoryWidth = 80;
+  let categoryWidth = 60;
   const borderWidth = 15;
   let dotWidth = 45;
+  if (screenWidth <= 320) {
+    categoryWidth = 52;
+  }
   if (screenWidth > 992) {
+    categoryWidth = 80;
     dotWidth = 60;
     containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {

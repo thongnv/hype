@@ -191,8 +191,7 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'this week';
     this.params.time = 'week';
-    // this.getTrendingEvents();
-    this.getEvents(this.neighbourhood);
+    this.getTrendingEvents();
   }
 
   public showTop100Events() {
@@ -206,8 +205,7 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.markers = [];
     this.events = [];
-    // this.getTrendingEvents();
-    this.getEvents(this.neighbourhood);
+    this.getTrendingEvents();
   }
 
   public showLatestEvents() {
@@ -226,8 +224,8 @@ export class HomeComponent implements OnInit {
 
   public setPosition(position) {
     if (position.coords) {
-      this.lat = this.userLatLng.lat = position.coords.latitude;
-      this.lng = this.userLatLng.lng = position.coords.longitude;
+      this.lat = position.coords.latitude;
+      this.lng = position.coords.longitude;
       this.params.lat = this.lat;
       this.params.long = this.lng;
     }
@@ -241,28 +239,21 @@ export class HomeComponent implements OnInit {
   }
 
   public onSelectEventType(event): void {
+    this.categories.forEach((category, index) => {
+      this.categories[index].selected = false;
+    });
     if (event === 'all') {
       this.selected = 'all';
       this.params.tid = '';
-      this.categories.forEach((category, index) => {
-        this.categories[index].selected = false;
-      });
     } else {
-      if (event.selected) {
-        event.selected = false;
-        let index = this.eventCate.indexOf(event.tid);
-        this.eventCate.splice(index, 1);
-      } else {
-        event.selected = true;
-        this.eventCate.push(event.tid);
-      }
+      event.selected = true;
+      this.eventCate = [event.tid];
       this.selected = event.tid;
-      this.params.tid = this.eventCate.join(',');
+      this.params.tid = event.tid;
     }
     this.markers = [];
     this.events = [];
     this.params.page = 0;
-    this.smallLoader.show();
     this.getTrendingEvents();
   }
 
@@ -613,23 +604,25 @@ export class HomeComponent implements OnInit {
     this.currentHighlightedMarker = 0;
     this.mapsAPILoader.load().then(() => {
         let mapCenter = new google.maps.Marker({
-          position: new google.maps.LatLng(this.userLatLng, this.userLatLng),
+          position: new google.maps.LatLng(this.lat, this.lng),
           draggable: true
         });
         let searchCenter = mapCenter.getPosition();
         this.offsetLength = this.events.length - events.length;
         for (let i = 0; i < events.length; i++) {
+          let event = events[i];
+          if (event.type !== 'event') {
+            continue;
+          }
           let latitude: any;
           let longitude: any;
 
-          if (events[i].type === 'event') {
-            if (typeof events[i].field_location_place.field_latitude !== null) {
-              latitude = events[i].field_location_place.field_latitude;
-            }
+          if (typeof event.field_location_place.field_latitude !== null) {
+            latitude = event.field_location_place.field_latitude;
+          }
 
-            if (typeof events[i].field_location_place.field_longitude !== null) {
-              longitude = events[i].field_location_place.field_longitude;
-            }
+          if (typeof event.field_location_place.field_longitude !== null) {
+            longitude = event.field_location_place.field_longitude;
           }
 
           // if (events[i].type === 'article') {
@@ -654,34 +647,34 @@ export class HomeComponent implements OnInit {
           this.mapEventMarker.push(this.offsetLength + i);
           // set icon for marker based on event type
           this.appGlobal.eventIcon.forEach((icon) => {
-            if (events[i].field_categories.name === undefined) {
-              events[i].field_categories.name = 'default';
+            if (event.field_categories.name === undefined) {
+              event.field_categories.name = 'default';
             }
-            if (events[i].field_categories.name) {
-              if (events[i].field_categories.name.toLocaleLowerCase() === icon.name) {
+            if (event.field_categories.name) {
+              if (event.field_categories.name.toLocaleLowerCase() === icon.name) {
                 let marker = {
                   lat: latitude,
                   lng: longitude,
-                  label: events[i].title,
+                  label: event.title,
                   isOpenInfo: false,
-                  nid: events[i].nid,
-                  avatar: events[i].field_images[0],
-                  link: events[i].alias,
+                  nid: event.nid,
+                  avatar: event.field_images[0],
+                  link: event.alias,
                   icon: icon.url,
                   opacity: 0.4,
                   price: [],
                   nids: [],
-                  created: events[i].created || 0,
+                  created: event.created || 0,
                   events: [],
                   eventIndex: this.offsetLength + i,
-                  field_event_option: events[i].field_event_option,
-                  type: events[i].type
+                  field_event_option: event.field_event_option,
+                  type: event.type
                 };
                 if (i === 0) {
                   marker.opacity = 1;
                 }
-                if (events[i].field_event_option.field_price) {
-                  marker.price = events[i].field_event_option.field_price;
+                if (event.field_event_option.field_price) {
+                  marker.price = event.field_event_option.field_price;
                 }
                 this.markers.push(marker);
               }

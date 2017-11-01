@@ -41,14 +41,6 @@
   border-radius: 5px;
 }
 
-.margin-bottom-5px {
-  margin-bottom: 5px;
-}
-
-.margin-right-8px {
-  margin-right: 8px;
-}
-
 .box-shadow {
   box-shadow: 1px 1px 3px 0 #d8d8d8;
 }
@@ -76,10 +68,6 @@
 
 .align-self-center {
   margin: 0 auto;
-}
-
-.margin-0 {
-  margin: 0;
 }
 
 .margin-top-30px {
@@ -161,12 +149,6 @@ ul.list-category li.active {
   border-bottom: 1px solid #eaeaea;
 }
 
-.primary-content > h4 {
-  font-weight: bold;
-  margin: 40px 0 20px 0;
-  clear: both;
-}
-
 .post-content {
   width: 33%;
   float: left;
@@ -214,10 +196,6 @@ span.time-posts {
 
 .content-post-news {
   clear: both;
-}
-
-.padding-0 {
-  padding: 0;
 }
 
 .new-info {
@@ -433,9 +411,8 @@ ul.list-items li a img {
 }
 
 @media only screen and (min-width: 769px) {
-  .primary-content h4.head {
-    padding: 15px;
-    margin: 20px 0 20px;
+  .head {
+    padding: 25px;
   }
 
   .title-trending {
@@ -461,7 +438,7 @@ ul.list-items li a img {
 }
 
 @media only screen and (min-width: 320px) and (max-width: 374px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
   }
@@ -490,7 +467,7 @@ ul.list-items li a img {
 }
 
 @media only screen and (min-width: 320px) and (max-width: 543px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
     font-size: 24px !important;
@@ -571,7 +548,7 @@ ul.list-items li a img {
 }
 
 @media only screen and (min-width: 545px) and (max-width: 767px) {
-  .primary-content h4.head {
+  .head {
     padding: 15px;
     margin: 10px 0;
   }

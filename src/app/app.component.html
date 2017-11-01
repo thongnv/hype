@@ -23,7 +23,7 @@
                 <i class="left-nav-curated"><img src="/assets/icon/left-nav-curated.png"/></i>
                 <span class="hidden-xs hidden-sm">Guides</span>
               </li>
-              <li *ngIf="user && !user.isAnonymous" [routerLink]="['/'+user.slug+'/favorite']"
+              <li [routerLink]="['/'+user?.slug+'/favorite']"
                   routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <i class="left-nav-favorites"><img src="/assets/icon/left-nav-favorites.png"/></i>
                 <span class="hidden-xs hidden-sm">Favorites</span>

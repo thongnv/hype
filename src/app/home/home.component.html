@@ -102,20 +102,22 @@
         </div>
         <div class="information-profile">
           <div class="top-content">
-            <h4 class="information-title pointer">
+            <h4 class="information-title pointer col-md-9 padding-0 margin-0">
               <a class="pull-left real-title title-hover"
                  *ngIf="item.title" [routerLink]="[item.alias]">
                 {{item.title}}
               </a>
+            </h4>
+
+            <div class="margin-bottom-5px">
               <span class="distance" *ngIf="item.distance">{{item.distance}} km</span>
               <span *ngIf="item.field_event_option.field_price.length"
                     class="free-price-button text-capitalize pull-right">
-                ${{item.field_event_option.field_price[0]}}
+                  ${{item.field_event_option.field_price[0]}}
               </span>
-
               <span *ngIf="!item.field_event_option.field_price.length"
                     class="free-price-button text-capitalize pull-right free-price">Free</span>
-            </h4>
+            </div>
 
             <a *ngIf="item.field_location_place.field_location_address"
                href="javascript:;" class="location_place">
@@ -167,7 +169,7 @@
                     {{item.comment_count}} {{ item.comment_count > 1 ? 'Comments' : 'Comment' }}
                   </span>
                 </li>
-                <li (click)="onLikeEmit(item)" class="heart-icon cbutton cbutton-small">
+                <li (click)="onLikeEmit(item)" class="heart-icon cbutton-small">
                   <i class="sprite"
                      [class.sprite-Unfavourites20x20]="!item.user_bookmark"
                      [class.sprite-Favourites20x20]="item.user_bookmark" aria-hidden="true"></i>
