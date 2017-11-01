@@ -50,6 +50,10 @@ export class HomeComponent implements OnInit {
   public mapZoom = 12;
   public lat = AppSetting.SingaporeLatLng.lat;
   public lng = AppSetting.SingaporeLatLng.lng;
+  public userLatLng = {
+    lat : this.lat,
+    lng : this.lng
+  };
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
@@ -88,7 +92,7 @@ export class HomeComponent implements OnInit {
     type: '',
     lat: this.lat,
     long: this.lng,
-    radius: 0,
+    radius: 2,
     price: 0
   };
   private eventCate: any[] = [];
@@ -136,15 +140,15 @@ export class HomeComponent implements OnInit {
     this.handleScroll();
 
     this.appGlobal.toggleMap = true;
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
-      if (this.params.latest) {
-        this.neighbourhoodChanged = true;
-        this.loading = true;
-        window.scroll(0, 0);
-        this.getEvents(this.neighbourhood);
-      }
+      // if (this.params.latest) {
+      this.neighbourhoodChanged = true;
+      this.loading = true;
+      window.scroll(0, 0);
+      this.getEvents(this.neighbourhood);
+      // }
     });
   }
 
@@ -157,7 +161,8 @@ export class HomeComponent implements OnInit {
     this.clearParam();
     this.selectedEventFilter = 'all';
     this.params.time = '';
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showTodayEvents() {
@@ -166,7 +171,8 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'today';
     this.params.time = 'today';
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showTomorrowEvents() {
@@ -175,7 +181,8 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'tomorrow';
     this.params.time = 'tomorrow';
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showThisWeekEvents() {
@@ -184,7 +191,8 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'this week';
     this.params.time = 'week';
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showTop100Events() {
@@ -198,7 +206,8 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.markers = [];
     this.events = [];
-    this.getTrendingEvents();
+    // this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showLatestEvents() {
@@ -400,7 +409,9 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-
+  public zoomChange(event){
+    this.mapZoom = event;
+  }
   private clearParam() {
     this.selectedEventFilter = this.eventFilters[0];
     this.markers = [];
@@ -417,7 +428,7 @@ export class HomeComponent implements OnInit {
     this.params.price = 0;
     this.params.order = '';
     this.selected = 'all';
-    this.mapZoom = 12;
+    // this.mapZoom = 12;
   }
 
   private getTrendingEvents() {
@@ -517,6 +528,7 @@ export class HomeComponent implements OnInit {
         this.loadMore = false;
         this.smallLoader.hide();
         this.loading = false;
+        this.neighbourhoodChanged = false;
       }
     );
   }
@@ -571,12 +583,26 @@ export class HomeComponent implements OnInit {
       this.zoomChanged = true;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      this.params.radius = 2.5;
+      if (this.params.radius < 0.25) {
+        if (distance) {
+          this.params.radius = parseFloat((distance / 1000).toFixed(2));
+        }
+      } else {
+        if (distance) {
+          // this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+          this.params.radius = 2;
+        }
+      }
+      this.params.radius = this.params.radius > 2 ? 2 : this.params.radius;
       this.events = [];
       this.markers = [];
       this.showNotFound = false;
       this.params.page = 0;
-      this.getLatestEvents(this.params);
+      if (this.params.latest) {
+        this.getLatestEvents(this.params);
+      }else {
+        this.getTop100Events(this.params);
+      }
     });
   }
 
