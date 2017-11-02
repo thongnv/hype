@@ -196,7 +196,7 @@ export class HomeComponent implements OnInit {
   }
 
   public showTop100Events() {
-    this.mapZoom = 12;
+    this.mapZoom = this.neighbourhood.name === 'Singapore' ? 12 : 14;
     this.selectedEventOrder = 'top 100';
     this.params.latest = '';
     this.params.page = 0;
