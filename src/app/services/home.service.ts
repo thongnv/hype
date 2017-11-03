@@ -62,8 +62,7 @@ export class HomeService {
       withCredentials: true
     });
     return this.http.get(
-      // AppSetting.API_ENDPOINT + 'api/v1/top' +
-      AppSetting.API_ENDPOINT_TRENDING +
+      AppSetting.API_ENDPOINT + 'api/v1/trending?_format=json' +
       '&page=' + params.page +
       '&limit=20' +
       '&start=' + params.start +

@@ -5,7 +5,7 @@ let API_ENDPOINT = '';
 let NODE_JS = '';
 
 if (_ENV === 'development') {
-  API_ENDPOINT = 'http://hypeweb.iypuat.com:5656/';
+  API_ENDPOINT = 'https://admin.hylo.sg/';
   NODE_JS = 'http://192.168.35.56:9696';
 }
 
