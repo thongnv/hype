@@ -50,10 +50,6 @@ export class HomeComponent implements OnInit {
   public mapZoom = 12;
   public lat = AppSetting.SingaporeLatLng.lat;
   public lng = AppSetting.SingaporeLatLng.lng;
-  public userLatLng = {
-    lat : this.lat,
-    lng : this.lng
-  };
   public priceRange: number[] = [0, 50];
   public categories: any[];
   public selected: any = 'all';
@@ -95,7 +91,7 @@ export class HomeComponent implements OnInit {
     radius: 2,
     price: 0
   };
-  private eventCate: any[] = [];
+  private eventCate = [];
   private requests = [];
 
   constructor(private titleService: Title,
@@ -140,15 +136,12 @@ export class HomeComponent implements OnInit {
     this.handleScroll();
 
     this.appGlobal.toggleMap = true;
-    // this.getTrendingEvents();
     this.appGlobal.neighbourhoodStorage.subscribe((response) => {
       this.neighbourhood = response;
-      // if (this.params.latest) {
       this.neighbourhoodChanged = true;
       this.loading = true;
       window.scroll(0, 0);
       this.getEvents(this.neighbourhood);
-      // }
     });
   }
 
@@ -161,7 +154,6 @@ export class HomeComponent implements OnInit {
     this.clearParam();
     this.selectedEventFilter = 'all';
     this.params.time = '';
-    // this.getTrendingEvents();
     this.getEvents(this.neighbourhood);
   }
 
@@ -171,7 +163,6 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'today';
     this.params.time = 'today';
-    // this.getTrendingEvents();
     this.getEvents(this.neighbourhood);
   }
 
@@ -181,7 +172,6 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'tomorrow';
     this.params.time = 'tomorrow';
-    // this.getTrendingEvents();
     this.getEvents(this.neighbourhood);
   }
 
@@ -191,7 +181,7 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'this week';
     this.params.time = 'week';
-    this.getTrendingEvents();
+    this.getEvents(this.neighbourhood);
   }
 
   public showTop100Events() {
@@ -407,7 +397,7 @@ export class HomeComponent implements OnInit {
       }
     }
   }
-  public zoomChange(event){
+  public zoomChange(event) {
     this.mapZoom = event;
   }
   private clearParam() {
@@ -577,24 +567,23 @@ export class HomeComponent implements OnInit {
       this.zoomChanged = true;
       this.params.lat = this.lat;
       this.params.long = this.lng;
-      if (this.params.radius < 0.25) {
-        if (distance) {
+      if (distance) {
+        if (this.params.radius < 0.25) {
           this.params.radius = parseFloat((distance / 1000).toFixed(2));
-        }
-      } else {
-        if (distance) {
-          // this.params.radius = parseFloat((distance / 1000).toFixed(2)) - 0.25;
+        } else {
           this.params.radius = 2;
         }
       }
-      this.params.radius = this.params.radius > 2 ? 2 : this.params.radius;
+      if (this.params.radius > 2) {
+        this.params.radius = 2;
+      }
       this.events = [];
       this.markers = [];
       this.showNotFound = false;
       this.params.page = 0;
       if (this.params.latest) {
         this.getLatestEvents(this.params);
-      }else {
+      } else {
         this.getTop100Events(this.params);
       }
     });
