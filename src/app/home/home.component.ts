@@ -191,8 +191,7 @@ export class HomeComponent implements OnInit {
     this.params.page = 0;
     this.selectedEventFilter = 'this week';
     this.params.time = 'week';
-    // this.getTrendingEvents();
-    this.getEvents(this.neighbourhood);
+    this.getTrendingEvents();
   }
 
   public showTop100Events() {
@@ -206,8 +205,7 @@ export class HomeComponent implements OnInit {
     this.selected = 'all';
     this.markers = [];
     this.events = [];
-    // this.getTrendingEvents();
-    this.getEvents(this.neighbourhood);
+    this.getTrendingEvents();
   }
 
   public showLatestEvents() {
@@ -559,14 +557,10 @@ export class HomeComponent implements OnInit {
 
   private getEvents(neighbourhood) {
     this.loading = true;
-    if (neighbourhood.name !== 'Singapore') {
-      this.mapZoom = 15;
-    } else {
-      this.mapZoom = 12;
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
+    this.mapZoom = neighbourhood.name === 'Singapore' ? 12 : 14;
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    // }
     this.lat = neighbourhood.lat;
     this.lng = neighbourhood.lng;
     this.mapsAPILoader.load().then(() => {
@@ -630,6 +624,20 @@ export class HomeComponent implements OnInit {
           if (typeof event.field_location_place.field_longitude !== null) {
             longitude = event.field_location_place.field_longitude;
           }
+
+          // if (events[i].type === 'article') {
+          //   if (events[i].field_location_place.length > 0) {
+          //
+          //     if (typeof events[i].field_location_place[0].field_latitude !== null) {
+          //       latitude = events[i].field_location_place[0].field_latitude;
+          //     }
+          //
+          //     if (typeof events[i].field_location_place[0].field_longitude !== null) {
+          //       longitude = events[i].field_location_place[0].field_longitude;
+          //     }
+          //   }
+          // }
+
           let latLngDistance = new google.maps.Marker({
             position: new google.maps.LatLng(latitude, longitude),
             draggable: true
@@ -720,14 +728,10 @@ function calculateNumCategories(layoutWidth): number {
   let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   let numCategories: number;
   let containerWidth: number;
-  let categoryWidth = 60;
+  let categoryWidth = 80;
   const borderWidth = 15;
   let dotWidth = 45;
-  if (screenWidth <= 320) {
-    categoryWidth = 52;
-  }
   if (screenWidth > 992) {
-    categoryWidth = 80;
     dotWidth = 60;
     containerWidth = layoutWidth - borderWidth - dotWidth;
   } else {

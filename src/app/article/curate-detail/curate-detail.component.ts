@@ -8,6 +8,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { User } from '../../app.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { AppGlobals } from '../../services/app.global';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-curate-detail',
@@ -134,9 +135,18 @@ export class CurateDetailComponent implements OnInit {
   public markerClick(markerId) {
     this.currentHighlightedMarker = markerId;
     this.highlightMarker(markerId);
-    const element = document.querySelector('#place-' + markerId);
-    element.scrollIntoView({block: 'end', behavior: 'smooth'});
-    window.scrollBy(0, -50);
+    $('html').animate({
+      scrollTop: $('#place-' + markerId).offset().top - 40
+    }, 1000);
+  }
+
+  public onScroll(event) {
+    $('.place-item-wrap').each((index, value) => {
+      if ($(window).scrollTop() >= $(value).offset().top - 40) {
+        this.currentHighlightedMarker = index;
+      }
+    });
+    this.highlightMarker(this.currentHighlightedMarker);
   }
 
   private highlightMarker(markerId: number): void {
